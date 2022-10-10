@@ -35,4 +35,4 @@ Gaming is one of the many ways I like to spend my free time. I am a huge Soulsbo
 
 ## So, Yeah… That’s Me!
 
-Feel free to [contact me](mailto: kartikeychauhan27@gmail.com) if you want to connect.
+Feel free to [contact](mailto:kartikeychauhan27@gmail.com) me if you want to connect.
