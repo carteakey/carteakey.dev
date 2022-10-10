@@ -228,5 +228,3 @@ Optionally, set up Shortcuts to pull, add and commit.
 - Just do a `git push` through iSH in the end.
 
 Use any of these methods to sync and take your notes everywhere (and never open them xD).
-
-Comments and feedback are welcome!
