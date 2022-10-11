@@ -47,6 +47,8 @@ Some references that helped me in this endeavor:
 
 ## Conclusion
 
-The site in its current state is quite barebones, but I can already feel the benefits. I plan to keep it minimal but will keep on adding features and sharing my experiences alongside.
+The site in its current state is quite barebones, but I can already feel the benefits.
+
+I plan to keep it minimal but will keep on adding features and sharing my experiences alongside.
 
 Anyhow, it was a weekend well spent :)
