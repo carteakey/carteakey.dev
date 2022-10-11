@@ -222,8 +222,9 @@ Armed with this knowledge, we can set up a workflow to use Working Copy as the m
 
 - Once any changes are made to the iOS Device - add & commit through Working Copy.
 
+:::info
 Optionally, set up Shortcuts to pull, add and commit.
-{: .notice--info}
+:::
 
 - Just do a `git push` through iSH in the end.
 

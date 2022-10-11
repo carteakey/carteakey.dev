@@ -3,6 +3,8 @@ const fs = require("fs");
 const { DateTime } = require("luxon");
 const markdownIt = require("markdown-it");
 const markdownItAnchor = require("markdown-it-anchor");
+const markdownItEmoji = require("markdown-it-emoji");
+const markdownItContainer = require("markdown-it-container");
 
 const pluginSyntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
 const pluginNavigation = require("@11ty/eleventy-navigation");
@@ -66,16 +68,27 @@ module.exports = function (eleventyConfig) {
   let markdownLibrary = markdownIt({
     html: true,
     linkify: true,
-  }).use(markdownItAnchor, {
-    permalink: markdownItAnchor.permalink.ariaHidden({
-      placement: "after",
-      class: "direct-link",
-      symbol: "#",
-    }),
-    level: [1, 2, 3, 4],
-    slugify: eleventyConfig.getFilter("slugify"),
-  });
+  })
+    .use(markdownItAnchor, {
+      permalink: markdownItAnchor.permalink.ariaHidden({
+        placement: "after",
+        class: "direct-link",
+        symbol: "#",
+      }),
+      level: [1, 2, 3, 4],
+      slugify: eleventyConfig.getFilter("slugify"),
+    })
+    .use(markdownItEmoji)
+    .use(markdownItContainer);
   eleventyConfig.setLibrary("md", markdownLibrary);
+
+  // //Use markdown-it-emoji & markdown-it-container
+  // eleventyConfig.amendLibrary("md", (markdownLibrary) =>
+  //   markdownLibrary.use(markdownItEmoji)
+  // );
+  // eleventyConfig.amendLibrary("md", (markdownLibrary) =>
+  //   mdLib.use(markdownItContainer)
+  // );
 
   // Override Browsersync defaults (used only with --serve)
   eleventyConfig.setBrowserSyncConfig({
