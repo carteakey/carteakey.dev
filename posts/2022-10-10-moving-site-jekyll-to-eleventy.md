@@ -1,7 +1,7 @@
 ---
 title: Moving my site from Jekyll to Eleventy
 description: I revamped my personal site
-date: 2022-08-31
+date: 2022-10-10
 tags:
   - Jekyll
   - Blog
