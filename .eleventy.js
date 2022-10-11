@@ -78,8 +78,8 @@ module.exports = function (eleventyConfig) {
       level: [1, 2, 3, 4],
       slugify: eleventyConfig.getFilter("slugify"),
     })
-    .use(markdownItEmoji)
-    .use(markdownItContainer);
+    .use(markdownItEmoji);
+  // .use(markdownItContainer);
   eleventyConfig.setLibrary("md", markdownLibrary);
 
   // //Use markdown-it-emoji & markdown-it-container

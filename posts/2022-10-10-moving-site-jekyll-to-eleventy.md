@@ -30,7 +30,7 @@ However, I chose [Eleventy](https://www.11ty.dev/) as the new framework.
 - It supports multiple templating systems out of the box (including Liquid - the one used by Jekyll)
 - It is much easier for someone equally unskilled in Javascript & Ruby to build, customize and deploy.
 - It feels the closest to Jekyll than other jamstack generators, yet makes it much more simple and more accessible.
-- And most importantly, it's **_new and shiny_**.
+- And most importantly, it's **_new and shiny_**. (Atleast for me - it has been around for a while now)
 
 I tried my hand at other popular [options](https://jamstack.org/generators/) - A lot of them (e.g. Next, Gatsby) are simply overkill - they involve cognitive load associated with taking care of an unnecessarily complex system when you just wanted to render some text, with some occasional images.
 
