@@ -33,11 +33,12 @@ The easiest way to set up sync, in this case, would be to use iCloud Drive.
 - Install [iCloud Drive](https://www.microsoft.com/store/apps/9PKTQ5699M62) on your desktop from the Microsoft Store.
 
 - Open the application and Enable the iCloud Drive option.
-  ![iCloud Drive on Windows](/img/obsidian-sync/icloud_pc.png)
+
+{% image "./img/obsidian-sync/icloud_pc.png", "iCloud Drive on Windows" %}
 
 - You should now have an access to iCloud Drive in Windows Explorer.
 
-  ![iCloud Drive on Windows Explorer](/img/obsidian-sync/icloud_pc_2.png)
+{% image "./img/obsidian-sync/icloud_pc_2.png", "iCloud Drive on Windows Explorer" %}
 
 - Open Obsidian on your iOS device, and "Create new vault".
 
@@ -48,13 +49,13 @@ The easiest way to set up sync, in this case, would be to use iCloud Drive.
 
   (_If you have an existing vault in your PC, enter the same name here._)
 
-  ![Obsidian on iOS](/img/obsidian-sync/obsidian-ios.png)
+{% image "./img/obsidian-sync/obsidian-ios.png", "Obsidian on iOS" %}
 
 - Wait for the iCloud to sync on your PC and you should see the "Obsidian" folder containing the vault directory. To migrate your existing notes, copy all files from your existing vault to that directory.
 
 - Open this directory as an existing vault in your Desktop app.
 
-  ![Open folder as vault](/img/obsidian-sync/obsidian_open_folder.png)
+{% image "./img/obsidian-sync/obsidian_open_folder.png", "Open folder as vault" %}
 
 - Voila! Add or update notes and see them instantly sync across your devices.
 
@@ -123,8 +124,8 @@ echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config
 /usr/sbin/sshd
 ```
 
-_You should now be able to ssh to your device with username root and the password you typed._
-{: .notice--info}
+| :info: | _You should now be able to ssh to your device with username root and the password you typed._ |
+| ------ | --------------------------------------------------------------------------------------------- |
 
 - Install and configure Git in iSH.
 

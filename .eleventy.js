@@ -11,11 +11,13 @@ const pluginNavigation = require("@11ty/eleventy-navigation");
 
 const Image = require("@11ty/eleventy-img");
 
-async function imageShortcode(src, alt, sizes) {
+async function imageShortcode(src, alt) {
   let metadata = await Image(src, {
     widths: [300, 600],
     formats: ["avif", "jpeg"],
   });
+
+  sizes = "(min-width: 30em) 50vw, 100vw";
 
   let imageAttributes = {
     alt,
@@ -44,6 +46,11 @@ module.exports = function (eleventyConfig) {
       "dd LLL yyyy"
     );
   });
+
+  //Image Plugin
+  eleventyConfig.addNunjucksAsyncShortcode("image", imageShortcode);
+  eleventyConfig.addLiquidShortcode("image", imageShortcode);
+  eleventyConfig.addJavaScriptFunction("image", imageShortcode);
 
   // https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#valid-date-string
   eleventyConfig.addFilter("htmlDateString", (dateObj) => {
