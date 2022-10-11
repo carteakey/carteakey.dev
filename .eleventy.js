@@ -3,9 +3,35 @@ const fs = require("fs");
 const { DateTime } = require("luxon");
 const markdownIt = require("markdown-it");
 const markdownItAnchor = require("markdown-it-anchor");
+const markdownItEmoji = require("markdown-it-emoji");
+const markdownItContainer = require("markdown-it-container");
 
 const pluginSyntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
 const pluginNavigation = require("@11ty/eleventy-navigation");
+
+const Image = require("@11ty/eleventy-img");
+
+async function imageShortcode(src, alt) {
+  let metadata = await Image(src, {
+    widths: [300, 600],
+    formats: ["avif"],
+    outputDir: "._site/img/",
+  });
+
+  sizes = "(min-width: 30em) 50vw, 100vw";
+
+  let imageAttributes = {
+    alt,
+    sizes,
+    loading: "lazy",
+    decoding: "async",
+  };
+
+  // You bet we throw an error on missing alt in `imageAttributes` (alt="" works okay)
+  return Image.generateHTML(metadata, imageAttributes, {
+    whitespaceMode: "inline",
+  });
+}
 
 module.exports = function (eleventyConfig) {
   // Copy the `img` and `css` folders to the output
@@ -21,6 +47,11 @@ module.exports = function (eleventyConfig) {
       "dd LLL yyyy"
     );
   });
+
+  //Image Plugin
+  eleventyConfig.addNunjucksAsyncShortcode("image", imageShortcode);
+  eleventyConfig.addLiquidShortcode("image", imageShortcode);
+  eleventyConfig.addJavaScriptFunction("image", imageShortcode);
 
   // https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#valid-date-string
   eleventyConfig.addFilter("htmlDateString", (dateObj) => {
@@ -66,16 +97,27 @@ module.exports = function (eleventyConfig) {
   let markdownLibrary = markdownIt({
     html: true,
     linkify: true,
-  }).use(markdownItAnchor, {
-    permalink: markdownItAnchor.permalink.ariaHidden({
-      placement: "after",
-      class: "direct-link",
-      symbol: "#",
-    }),
-    level: [1, 2, 3, 4],
-    slugify: eleventyConfig.getFilter("slugify"),
-  });
+  })
+    .use(markdownItAnchor, {
+      permalink: markdownItAnchor.permalink.ariaHidden({
+        placement: "after",
+        class: "direct-link",
+        symbol: "#",
+      }),
+      level: [1, 2, 3, 4],
+      slugify: eleventyConfig.getFilter("slugify"),
+    })
+    .use(markdownItEmoji);
+  // .use(markdownItContainer);
   eleventyConfig.setLibrary("md", markdownLibrary);
+
+  // //Use markdown-it-emoji & markdown-it-container
+  // eleventyConfig.amendLibrary("md", (markdownLibrary) =>
+  //   markdownLibrary.use(markdownItEmoji)
+  // );
+  // eleventyConfig.amendLibrary("md", (markdownLibrary) =>
+  //   mdLib.use(markdownItContainer)
+  // );
 
   // Override Browsersync defaults (used only with --serve)
   eleventyConfig.setBrowserSyncConfig({

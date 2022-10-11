@@ -18,43 +18,44 @@ Since the files are stored locally, you can use your methods of syncing these no
 
 This article is a guide for people who have a Linux / Windows desktop and want to sync their notes with their iPads & iPhones, to get access to all your notes on the go!
 
-macOS / Android users can take a look at this article instead > [Sync your notes across devices](https://help.obsidian.md/Getting+started/Sync+your+notes+across+devices)
-{: .notice}
+| :memo: | macOS / Android users can take a look at this article instead > [Sync your notes across devices](https://help.obsidian.md/Getting+started/Sync+your+notes+across+devices) |
+| ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
 ## Windows + iOS
 
 The easiest way to set up sync, in this case, would be to use iCloud Drive.
 
-The free version offers 5GB storage, which should be more than enough to store all your notes, provided you do not use it already for images or have a paid storage plan.
-{: .notice--info}
+| :memo: | The free version offers 5GB storage, which should be more than enough to store all your notes, provided you do not use it already for images or have a paid storage plan. |
+| ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
 - Install Obsidian on your PC and iOS device. (duh)
 
 - Install [iCloud Drive](https://www.microsoft.com/store/apps/9PKTQ5699M62) on your desktop from the Microsoft Store.
 
 - Open the application and Enable the iCloud Drive option.
-  ![iCloud Drive on Windows](/img/obsidian-sync/icloud_pc.png)
+
+{% image "./img/obsidian-sync/icloud_pc.png", "iCloud Drive on Windows" %}
 
 - You should now have an access to iCloud Drive in Windows Explorer.
 
-  ![iCloud Drive on Windows Explorer](/img/obsidian-sync/icloud_pc_2.png)
+{% image "./img/obsidian-sync/icloud_pc_2.png", "iCloud Drive on Windows Explorer" %}
 
 - Open Obsidian on your iOS device, and "Create new vault".
 
-Vault is nothing but a folder where all your notes and preferences will be stored. You can create multiple vaults to store different categories of notes, think of them as different notebooks.
-{: .notice}
+| :memo: | Vault is nothing but a folder where all your notes and preferences will be stored. You can create multiple vaults to store different categories of notes, think of them as different notebooks. |
+| ------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
 - Give a name to your vault and select the "Store in iCloud" option.
 
   (_If you have an existing vault in your PC, enter the same name here._)
 
-  ![Obsidian on iOS](/img/obsidian-sync/obsidian-ios.png)
+{% image "./img/obsidian-sync/obsidian-ios.png", "Obsidian on iOS" %}
 
 - Wait for the iCloud to sync on your PC and you should see the "Obsidian" folder containing the vault directory. To migrate your existing notes, copy all files from your existing vault to that directory.
 
 - Open this directory as an existing vault in your Desktop app.
 
-  ![Open folder as vault](/img/obsidian-sync/obsidian_open_folder.png)
+{% image "./img/obsidian-sync/obsidian_open_folder.png", "Open folder as vault" %}
 
 - Voila! Add or update notes and see them instantly sync across your devices.
 
@@ -107,8 +108,8 @@ mkdir <your_vault_name>
 mount -t ios-unsafe . <your_vault_name>/
 ```
 
-**Quick Note (optional):** If your fingers are tired from typing these commands on your possibly tiny touch input device, use ssh to login into your iSH terminal and easily run these commands from your desktop instead. Here's a quick step step-by-step step guide for running an ssh server.
-{: .notice--info}
+> **Quick Note (optional):** If your fingers are tired from typing these commands on your possibly tiny touch > input device, use ssh to login into your iSH terminal and easily run these commands from your desktop
+> instead. Here's a quick step step-by-step step guide for running an ssh server.
 
 ```bash
 #install the ssh tools and the ssh server.
@@ -123,8 +124,8 @@ echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config
 /usr/sbin/sshd
 ```
 
-_You should now be able to ssh to your device with username root and the password you typed._
-{: .notice--info}
+| :info: | _You should now be able to ssh to your device with username root and the password you typed._ |
+| ------ | --------------------------------------------------------------------------------------------- |
 
 - Install and configure Git in iSH.
 
@@ -162,9 +163,11 @@ git add .
 git push
 ```
 
-**Note:** iSH is known to sometimes freeze when running on a large git repository.
-A known workaround is to config git to run single-threaded. Also, look at `git gc --aggressive` and [Remove Commit History](https://stackoverflow.com/questions/13716658/how-to-delete-all-commit-history-in-github) to make your notes repo lightweight.
-{: .notice--warning}
+| :warning: | **Note:** iSH is known to sometimes freeze when running on a large git repository. A known workaround is to config git to run single-threaded. A |
+| --------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+
+| :warning: | Also, look at `git gc --aggressive` and [Remove Commit History](https://stackoverflow.com/questions/13716658/how-to-delete-all-commit-history-in-github) to make your notes repo lightweight. |
+| --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
 ```bash
 git config --global pack.threads "1"
@@ -209,8 +212,8 @@ But we have a way around that too :)
 
 ### Using Working Copy + iSH
 
-Both Obsidian Sync and Working Copy are well worth their money. This option is just an excellent free alternative!
-{: .notice--danger}
+| :exclamation: | Both Obsidian Sync and Working Copy are well worth their money. This option is just an excellent free alternative! |
+| ------------- | ------------------------------------------------------------------------------------------------------------------ |
 
 Armed with this knowledge, we can set up a workflow to use Working Copy as the main application for syncing, and use iSH to just perform the `git push`(ergo, the paid feature) once any changes are made. This allows for a completely free and operational sync solution. (Albeit you will have 3 applications for your note-taking, with how good obsidian is, it might just be worth it!)
 
@@ -222,8 +225,8 @@ Armed with this knowledge, we can set up a workflow to use Working Copy as the m
 
 - Once any changes are made to the iOS Device - add & commit through Working Copy.
 
-Optionally, set up Shortcuts to pull, add and commit.
-{: .notice--info}
+| :memo: | Optionally, set up Shortcuts to pull, add and commit. |
+| ------ | :---------------------------------------------------- |
 
 - Just do a `git push` through iSH in the end.
 
