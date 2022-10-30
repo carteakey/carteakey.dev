@@ -5,6 +5,7 @@ const markdownIt = require("markdown-it");
 const markdownItAnchor = require("markdown-it-anchor");
 const markdownItEmoji = require("markdown-it-emoji");
 const markdownItContainer = require("markdown-it-container");
+const eleventyGoogleFonts = require("eleventy-google-fonts");
 
 const pluginSyntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
 const pluginNavigation = require("@11ty/eleventy-navigation");
@@ -41,6 +42,7 @@ module.exports = function (eleventyConfig) {
   // Add plugins
   eleventyConfig.addPlugin(pluginSyntaxHighlight);
   eleventyConfig.addPlugin(pluginNavigation);
+  eleventyConfig.addPlugin(eleventyGoogleFonts);
 
   eleventyConfig.addFilter("readableDate", (dateObj) => {
     return DateTime.fromJSDate(dateObj, { zone: "utc" }).toFormat(
