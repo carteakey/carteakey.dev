@@ -31,43 +31,44 @@
     <link rel="alternate" href="{{ metadata.feed.path | url }}" type="application/atom+xml" title="{{ metadata.title }}">
     <link rel="alternate" href="{{ metadata.jsonfeed.path | url }}" type="application/json" title="{{ metadata.title }}">
   </head>
-  <body class="bg-gray-50">
 
-    <div class="flex flex-col justify-center px-8">
+  <body class="bg-gray-50 ">
 
-      <nav class="flex w-full relative max-w-2xl border-gray-200 mx-auto pt-8 pb-8 sm:pb-16 text-gray-900 bg-gray-50
-            bg-opacity-60">
+    <div class="flex flex-col justify-center md:items-center" >
 
-        <h1 class="font-semibold text-gray-800 rounded-md p-1 sm:px-3 sm:py-2 hover:bg-gray-200 transition-all" >
-          <a href="{{ '/' | url }}">{{ metadata.title }}</a>
-        </h1>
+      <div class ="md:max-w-prose">
 
-        {#- Read more about `eleventy-navigation` at https://www.11ty.dev/docs/plugins/navigation/ #}
-        {% set navPages = collections.all | eleventyNavigation %}
-        <ul class="justify-end">
-          {%- for entry in navPages %}
-            <li 
-              {% if entry.url == page.url %} class="font-semibold text-gray-800 md:inline-block p-1 sm:px-3 sm:py-2 rounded-md hover:bg-gray-200 transition-all" {% endif %} class="md:inline-block p-1 sm:px-3 sm:py-2 rounded-md hover:bg-gray-200 transition-all font-normal text-gray-600">
-              <a href="{{ entry.url }}">{{ entry.title }}</a>
-            </li>
-          {%- endfor %}
-        </ul>
+        <div class="prose lg:prose-lg px-4 " >
 
-      </nav>
+          <nav class="flex w-full  justify-between pt-8 pb-8 text-gray-900">
 
-      <div class="flex flex-col justify-center px-8 max-w-3xl">
+            {#- Read more about `eleventy-navigation` at https://www.11ty.dev/docs/plugins/navigation/ #}
+            {% set navPages = collections.all | eleventyNavigation %}
+            <a class="self-center font-bold rounded-md p-1 sm:px-3 sm:py-2 hover:bg-gray-200 transition-all" href="{{ '/' | url }}">{{ metadata.title }}</a>
 
-        <main 
+            <ul class="list-none">
+              {%- for entry in navPages %}
+                <span class="font-normal rounded-md p-1 sm:px-3 sm:py-2 hover:bg-gray-200 transition-all ">
+                  <a href="{{ entry.url }}">{{ entry.title }}</a>
+                </span>
+              {%- endfor %}
+
+            </ul>
+          </nav>
+
+          <main 
           {% if templateClass %} 
             class="{{ templateClass }}" 
           {% endif %} 
         >
-          <article class="prose lg:prose-xl">
             {{ content | safe }}
-          </article>
-        </main>
+          </main>
 
-        <footer></footer>
+          <footer></footer>
+        </div>
       </div>
-    </body>
-  </html>
+
+    </div>
+
+  </body>
+</html>
