@@ -3,12 +3,12 @@ layout: layouts/post.njk
 title: About Me
 templateClass: tmpl-post
 eleventyNavigation:
-  key: About Me
+  key: About
   order: 3
 ---
 
 > The illiterate of the 21st century will not be those who cannot read and write, but those who
-> cannot learn, unlearn, and relearn. – _Alvin Toffler_ |
+> cannot learn, unlearn, and relearn. – _Alvin Toffler_
 
 Hi 👋🏼, Thanks for dropping by!
 

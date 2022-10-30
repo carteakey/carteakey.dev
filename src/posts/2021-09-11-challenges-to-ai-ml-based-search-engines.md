@@ -1,5 +1,5 @@
 ---
-title: Challenges to AI-ML-based search engines
+title: Challenges to AI-ML-based search engines.
 description: Do privacy laws have an impact?
 date: 2021-09-11
 tags:

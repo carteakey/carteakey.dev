@@ -1,5 +1,5 @@
 ---
-title: Migrating Heroku Postgres Database to a Cloud VM
+title: Migrating Heroku Postgres Database to a Cloud VM.
 description: Here's what you can do
 date: 2022-08-31
 tags:

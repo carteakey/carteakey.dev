@@ -1,62 +1,63 @@
 <!doctype html>
 <html lang="{{ metadata.language }}">
-  <div class="bg-gray-50">
-    <head>
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-DKK1XXJY42"></script>
-      <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() {
-          dataLayer.push(arguments);
-        }
-        gtag('js', new Date());
+  <head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DKK1XXJY42"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
 
-        gtag('config', 'G-DKK1XXJY42');
-      </script>
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>{{ title or metadata.title }}</title>
-      <meta name="description" content="{{ description or metadata.description }}">
+      gtag('config', 'G-DKK1XXJY42');
+    </script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title or metadata.title }}</title>
+    <meta name="description" content="{{ description or metadata.description }}">
 
-      {# Google Fonts #}
-      {% eleventyGoogleFonts 'https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400&display=swap' %}
+    {# Google Fonts #}
+    {% eleventyGoogleFonts 'https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400&display=swap' %}
 
-      {#- Uncomment this if you’d like folks to know that you used Eleventy to build your site!  #}
-      {#- <meta name="generator" content="{{ eleventy.generator }}"> #}
+    {#- Uncomment this if you’d like folks to know that you used Eleventy to build your site!  #}
+    {#- <meta name="generator" content="{{ eleventy.generator }}"> #}
 
-      <link rel="stylesheet" href="{{ '/css/tailwind.css' | url }}">
-      {# <link rel="stylesheet" href="{{ '/css/index.css' | url }}"> #}
+    <link rel="stylesheet" href="{{ '/css/tailwind.css' | url }}">
+    {# <link rel="stylesheet" href="{{ '/css/index.css' | url }}"> #}
 
-      {# Syntax Highlighting #}
-      <link href="https://unpkg.com/prismjs@1.20.0/themes/prism-okaidia.css" rel="stylesheet">
+    {# Syntax Highlighting #}
+    <link href="https://unpkg.com/prismjs@1.20.0/themes/prism-okaidia.css" rel="stylesheet">
 
-      <link rel="alternate" href="{{ metadata.feed.path | url }}" type="application/atom+xml" title="{{ metadata.title }}">
-      <link rel="alternate" href="{{ metadata.jsonfeed.path | url }}" type="application/json" title="{{ metadata.title }}">
-    </head>
-    <body>
+    <link rel="alternate" href="{{ metadata.feed.path | url }}" type="application/atom+xml" title="{{ metadata.title }}">
+    <link rel="alternate" href="{{ metadata.jsonfeed.path | url }}" type="application/json" title="{{ metadata.title }}">
+  </head>
+  <body class="bg-gray-50">
 
-      <div class="flex flex-col justify-center px-8">
+    <div class="flex flex-col justify-center px-8">
 
-        <nav class="flex w-full relative max-w-2xl border-gray-200 mx-auto pt-8 pb-8 sm:pb-16 text-gray-900 bg-gray-50
+      <nav class="flex w-full relative max-w-2xl border-gray-200 mx-auto pt-8 pb-8 sm:pb-16 text-gray-900 bg-gray-50
             bg-opacity-60">
 
-          <h1 class="font-semibold text-gray-800 rounded-md p-1 sm:px-3 sm:py-2 hover:bg-gray-200 transition-all" >
-            <a href="{{ '/' | url }}">{{ metadata.title }}</a>
-          </h1>
+        <h1 class="font-semibold text-gray-800 rounded-md p-1 sm:px-3 sm:py-2 hover:bg-gray-200 transition-all" >
+          <a href="{{ '/' | url }}">{{ metadata.title }}</a>
+        </h1>
 
-          {#- Read more about `eleventy-navigation` at https://www.11ty.dev/docs/plugins/navigation/ #}
-          {% set navPages = collections.all | eleventyNavigation %}
-          <ul class="justify-end">
-            {%- for entry in navPages %}
-              <li 
+        {#- Read more about `eleventy-navigation` at https://www.11ty.dev/docs/plugins/navigation/ #}
+        {% set navPages = collections.all | eleventyNavigation %}
+        <ul class="justify-end">
+          {%- for entry in navPages %}
+            <li 
               {% if entry.url == page.url %} class="font-semibold text-gray-800 md:inline-block p-1 sm:px-3 sm:py-2 rounded-md hover:bg-gray-200 transition-all" {% endif %} class="md:inline-block p-1 sm:px-3 sm:py-2 rounded-md hover:bg-gray-200 transition-all font-normal text-gray-600">
-                <a href="{{ entry.url }}">{{ entry.title }}</a>
-              </li>
-            {%- endfor %}
-          </ul>
+              <a href="{{ entry.url }}">{{ entry.title }}</a>
+            </li>
+          {%- endfor %}
+        </ul>
 
-        </nav>
+      </nav>
 
-        <main class="flex flex-col justify-center px-8 bg-gray-50 max-w-2xl"
+      <div class="flex flex-col justify-center px-8 max-w-3xl">
+
+        <main 
           {% if templateClass %} 
             class="{{ templateClass }}" 
           {% endif %} 
@@ -69,5 +70,4 @@
         <footer></footer>
       </div>
     </body>
-  </div>
-</html>
+  </html>
