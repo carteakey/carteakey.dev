@@ -98,6 +98,8 @@ code {
 }
 pre {
   font-size: 14px;
+  display: block;
+  width: 600px;
   line-height: 1.375;
   direction: ltr;
   text-align: left;
@@ -163,7 +165,7 @@ code {
 .postlist-item:before {
   display: inline-block;
   pointer-events: none;
-  content: "" counter(start-from, decimal-leading-zero) ". ";
+  /* content: "" counter(start-from, decimal-leading-zero) ". "; */
   line-height: 100%;
   text-align: right;
 }

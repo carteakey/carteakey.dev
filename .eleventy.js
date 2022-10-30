@@ -36,7 +36,7 @@ async function imageShortcode(src, alt) {
 module.exports = function (eleventyConfig) {
   // Copy the `img` and `css` folders to the output
   eleventyConfig.addPassthroughCopy("img");
-  eleventyConfig.addPassthroughCopy("css");
+  eleventyConfig.addPassthroughCopy("./src/css");
 
   // Add plugins
   eleventyConfig.addPlugin(pluginSyntaxHighlight);

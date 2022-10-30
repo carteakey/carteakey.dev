@@ -25,22 +25,22 @@ Mesa have an option to `-Dvideo-codecs=h264dec,h264enc,h265dec,h265enc,vc1dec` t
 ```bash
 cd $HOME
 sudo dnf install rpmdevtools
-rpmdev-setuptree 	\\Create RPM build tree within user's home directory
+rpmdev-setuptree 	#Create RPM build tree within user's home directory
 ```
 
 Download Mesa Source and build dependencies
 
 ```bash
-dnf download --source mesa \\Download the source rpm.
-sudo dnf builddep mesa \\Install whatever is needed to build the given .src.rpm, .nosrc.rpm or .spec file.
-rpm --install *.src.rpm \\Install the source rpm.
+dnf download --source mesa #Download the source rpm.
+sudo dnf builddep mesa #Install whatever is needed to build the given .src.rpm, .nosrc.rpm or .spec file.
+rpm --install *.src.rpm #Install the source rpm.
 ```
 
 Add the missing `-Dvideo-codecs=h264dec,h264enc,h265dec,h265enc,vc1dec` to the mesa.spec file.
 
 ```bash
 cd $HOME/rpmbuild/SPECS
-sed -i '/^%meson \\/a \ \ -Dvideo-codecs=h264dec,h264enc,h265dec,h265enc,vc1dec \\' mesa.spec
+sed -i '/^%meson #/a \ \ -Dvideo-codecs=h264dec,h264enc,h265dec,h265enc,vc1dec #' mesa.spec
 ```
 
 Install the newly compiled rpms.
@@ -59,6 +59,6 @@ vainfo
 
 It should show something like this
 
-{% image "./img/vainfo.png", "vainfo showing supported codecs" %}
+{% image "./src/img/vainfo.png", "vainfo showing supported codecs" %}
 
 While this may not be ideal, this should serve as a workaround until better solutions are in place.
