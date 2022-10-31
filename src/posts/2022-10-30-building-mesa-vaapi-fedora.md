@@ -1,5 +1,5 @@
 ---
-title: Building Mesa from Source (with VA-API) on Fedora
+title: Building Mesa from Source (with VA-API) on Fedora.
 description: Get back HW accelerated video playback on Fedora.
 date: 2022-10-30
 tags:
@@ -16,11 +16,11 @@ H26X's are currently the world’s most used HD video compression standards. Wit
 
 ## Workaround / Fix
 
-If you're on Fedora 37 Beta and have an AMD GPU, ne of the easiest ways to get x264 hardware accelerated encoding back would be to build Mesa drivers from source. Until we eventually get an [RPM Fusion](https://bugzilla.rpmfusion.org/show_bug.cgi?id=6426) package.
+If you're on Fedora 37 Beta and have an AMD GPU, one of the easiest ways to get x264 hardware accelerated encoding back would be to build Mesa drivers from source. (Until we eventually get an [RPM Fusion](https://bugzilla.rpmfusion.org/show_bug.cgi?id=6426) package.)
 
-Mesa have an option to `-Dvideo-codecs=h264dec,h264enc,h265dec,h265enc,vc1dec` to do just that.
+Mesa have an option `-Dvideo-codecs=h264dec,h264enc,h265dec,h265enc,vc1dec` to do just that. (Credits to [iceixia](https://www.reddit.com/user/iceixia/) for his script)
 
-(Credits to [iceixia](https://www.reddit.com/user/iceixia/) for his script)
+## Steps
 
 ```bash
 cd $HOME
@@ -36,11 +36,17 @@ sudo dnf builddep mesa #Install whatever is needed to build the given .src.rpm, 
 rpm --install *.src.rpm #Install the source rpm.
 ```
 
-Add the missing `-Dvideo-codecs=h264dec,h264enc,h265dec,h265enc,vc1dec` to the mesa.spec file.
+Add the missing video codec option to the mesa.spec file.
 
 ```bash
 cd $HOME/rpmbuild/SPECS
 sed -i '/^%meson #/a \ \ -Dvideo-codecs=h264dec,h264enc,h265dec,h265enc,vc1dec #' mesa.spec
+```
+
+Build the RPM package from spec. This should take a few minutes.
+
+```bash
+rpmbuild -bb mesa.spec
 ```
 
 Install the newly compiled rpms.
