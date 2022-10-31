@@ -43,6 +43,12 @@ cd $HOME/rpmbuild/SPECS
 sed -i '/^%meson #/a \ \ -Dvideo-codecs=h264dec,h264enc,h265dec,h265enc,vc1dec #' mesa.spec
 ```
 
+Build the RPM package from spec
+
+```bash
+rpmbuild -bb mesa.spec
+```
+
 Install the newly compiled rpms.
 
 ```bash
