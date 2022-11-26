@@ -38,9 +38,9 @@
 
       <div class ="md:max-w-prose">
 
-        <div class="prose lg:prose-lg px-4 " >
+        <div class="prose lg:prose-lg px-4" >
 
-          <nav class="flex w-full  justify-between pt-8 pb-8 text-gray-900">
+          <nav class="flex w-full pt-8 pb-8 text-gray-900 justify-between">
 
             {#- Read more about `eleventy-navigation` at https://www.11ty.dev/docs/plugins/navigation/ #}
             {% set navPages = collections.all | eleventyNavigation %}
@@ -52,8 +52,8 @@
                   <a href="{{ entry.url }}">{{ entry.title }}</a>
                 </span>
               {%- endfor %}
-
             </ul>
+          
           </nav>
 
           <main 
@@ -64,7 +64,10 @@
             {{ content | safe }}
           </main>
 
-          <footer></footer>
+          <footer class="flex w-full pt-8 pb-8 flex-row justify-end">   
+              <a class="self-center rounded-md p-1 sm:px-3 sm:py-2 hover:bg-gray-200 transition-all" href="https://www.linkedin.com/in/kartikeychauhan/" title="LinkedIn" alt="LinkedIn">{% feather "linkedin" %}</i></a>
+              <a class="self-center rounded-md p-1 sm:px-3 sm:py-2 hover:bg-gray-200 transition-all" href="https://github.com/carteakey" title="GitHub" alt="GitHub">{% feather "github" %}</i></a> 
+          </footer>
         </div>
       </div>
 

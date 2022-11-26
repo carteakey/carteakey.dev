@@ -9,6 +9,8 @@ const eleventyGoogleFonts = require("eleventy-google-fonts");
 
 const pluginSyntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
 const pluginNavigation = require("@11ty/eleventy-navigation");
+const eleventyPluginFeathericons = require('eleventy-plugin-feathericons');
+
 
 const Image = require("@11ty/eleventy-img");
 
@@ -43,6 +45,7 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPlugin(pluginSyntaxHighlight);
   eleventyConfig.addPlugin(pluginNavigation);
   eleventyConfig.addPlugin(eleventyGoogleFonts);
+  eleventyConfig.addPlugin(eleventyPluginFeathericons);
 
   eleventyConfig.addFilter("readableDate", (dateObj) => {
     return DateTime.fromJSDate(dateObj, { zone: "utc" }).toFormat(
