@@ -10,3 +10,7 @@
     Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New,
     Courier, monospace;
 }
+
+.direct-link {
+  display: none;
+}
