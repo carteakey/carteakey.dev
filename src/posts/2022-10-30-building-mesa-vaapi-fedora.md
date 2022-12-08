@@ -63,17 +63,11 @@ sudo dnf install libva-utils
 vainfo
 ```
 
-Verify the settings for VA-API by running vainfo, which is provided by libva-utils:
+It should show the supported profiles like this.
 
 ```bash
 $ vainfo
 libva info: VA-API version 0.39.4
-libva info: va_getDriverName() returns 0
-libva info: Trying to open /usr/lib/dri/i965_drv_video.so
-libva info: Found init function __vaDriverInit_0_39
-libva info: va_openDriver() returns 0
-vainfo: VA-API version: 0.39 (libva 1.7.3)
-vainfo: Driver version: Intel i965 driver for Intel(R) Skylake - 1.7.3
 vainfo: Supported profile and entrypoints
       VAProfileMPEG2Simple            :	VAEntrypointVLD
       VAProfileMPEG2Simple            :	VAEntrypointEncSlice

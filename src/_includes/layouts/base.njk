@@ -32,23 +32,24 @@
     <link rel="alternate" href="{{ metadata.jsonfeed.path | url }}" type="application/json" title="{{ metadata.title }}">
   </head>
 
-  <body class="bg-gray-50 dark:bg-gray-900 ">
+  <body class="bg-gray-50 dark:bg-gray-800 ">
 
     <div class="flex flex-col justify-center md:items-center" >
 
+      {# Gotta fix some min width shit here #}
       <div class ="md:max-w-prose">
 
-        <div class="prose prose-img:rounded-lg prose-code:text-sm dark:prose-invert lg:prose-md px-4" >
+        <div class="prose prose-slate prose-img:rounded-lg prose-code:sm dark:prose-invert lg:prose-md px-4" >
 
           <nav class="flex w-full pt-8 pb-8 text-gray-900 justify-between">
 
             {#- Read more about `eleventy-navigation` at https://www.11ty.dev/docs/plugins/navigation/ #}
             {% set navPages = collections.all | eleventyNavigation %}
-            <a class="self-center font-bold rounded-md p-1 sm:px-3 sm:py-2 hover:bg-gray-200 hover:dark:bg-gray-800 transition-all" href="{{ '/' | url }}">{{ metadata.title }}</a>
+            <a class="self-center font-bold rounded-md p-1 sm:px-3 sm:py-2 hover:bg-gray-200 hover:dark:bg-gray-600 transition-all" href="{{ '/' | url }}">{{ metadata.title }}</a>
 
             <ul class="list-none">
               {%- for entry in navPages %}
-                <span class="font-normal rounded-md p-1 sm:px-3 sm:py-2 hover:bg-gray-200 hover:dark:bg-gray-800 transition-all ">
+                <span class="font-normal rounded-md p-1 sm:px-3 sm:py-2 hover:bg-gray-200 hover:dark:bg-gray-600 transition-all ">
                   <a href="{{ entry.url }}">{{ entry.title }}</a>
                 </span>
               {%- endfor %}
