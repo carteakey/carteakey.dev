@@ -15,8 +15,6 @@ eleventyNavigation:
 
 {% image "./src/img/lands.jpeg", "Kartikey" %}
 
-
-
 Hi 👋🏼, Thanks for dropping by!
 
 My name's Kartikey. Most people pronounce it as **_carteakey_** - which stuck with me and hence is the [site](https://carteakey.dev)'s name.
