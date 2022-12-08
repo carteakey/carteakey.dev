@@ -18,7 +18,7 @@ H26X's are currently the world’s most used HD video compression standards. Wit
 
 If you're on Fedora 37 Beta and have an AMD GPU, one of the easiest ways to get x264 hardware accelerated encoding back would be to build Mesa drivers from source. (Until we eventually get an [RPM Fusion](https://bugzilla.rpmfusion.org/show_bug.cgi?id=6426) package.)
 
-Mesa have an option `-Dvideo-codecs=h264dec,h264enc,h265dec,h265enc,vc1dec` to do just that. (Credits to [iceixia](https://www.reddit.com/user/iceixia/) for his script)
+Mesa have an option `-Dvideo-codecs` to do just that. (Credits to [iceixia](https://www.reddit.com/user/iceixia/) for his script)
 
 ## Steps
 
