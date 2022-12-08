@@ -18,14 +18,14 @@ Since the files are stored locally, you can use your methods of syncing these no
 
 This article is a guide for people who have a Linux / Windows desktop and want to sync their notes with their iPads & iPhones, to get access to all your notes on the go!
 
-| :memo: | macOS / Android users can take a look at this article instead > [Sync your notes across devices](https://help.obsidian.md/Getting+started/Sync+your+notes+across+devices) |
+| :information_source: | macOS / Android users can take a look at this article instead > [Sync your notes across devices](https://help.obsidian.md/Getting+started/Sync+your+notes+across+devices) |
 | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
 ## Windows + iOS
 
 The easiest way to set up sync, in this case, would be to use iCloud Drive.
 
-| :memo: | The free version offers 5GB storage, which should be more than enough to store all your notes, provided you do not use it already for images or have a paid storage plan. |
+| :information_source: | The free version offers 5GB storage, which should be more than enough to store all your notes, provided you do not use it already for images or have a paid storage plan. |
 | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
 - Install Obsidian on your PC and iOS device. (duh)
@@ -42,7 +42,7 @@ The easiest way to set up sync, in this case, would be to use iCloud Drive.
 
 - Open Obsidian on your iOS device, and "Create new vault".
 
-| :memo: | Vault is nothing but a folder where all your notes and preferences will be stored. You can create multiple vaults to store different categories of notes, think of them as different notebooks. |
+| :information_source: | Vault is nothing but a folder where all your notes and preferences will be stored. You can create multiple vaults to store different categories of notes, think of them as different notebooks. |
 | ------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
 - Give a name to your vault and select the "Store in iCloud" option.
@@ -124,7 +124,7 @@ echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config
 /usr/sbin/sshd
 ```
 
-| :info: | _You should now be able to ssh to your device with username root and the password you typed._ |
+| :information_source: | _You should now be able to ssh to your device with username root and the password you typed._ |
 | ------ | --------------------------------------------------------------------------------------------- |
 
 - Install and configure Git in iSH.
@@ -225,7 +225,7 @@ Armed with this knowledge, we can set up a workflow to use Working Copy as the m
 
 - Once any changes are made to the iOS Device - add & commit through Working Copy.
 
-| :memo: | Optionally, set up Shortcuts to pull, add and commit. |
+| :information_source: | Optionally, set up Shortcuts to pull, add and commit. |
 | ------ | :---------------------------------------------------- |
 
 - Just do a `git push` through iSH in the end.
