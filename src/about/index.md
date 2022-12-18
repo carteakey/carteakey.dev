@@ -12,7 +12,7 @@ eleventyNavigation:
 
 
 <div class="float-right m-1 mr-3 p-4 w-32 h-32 relative flex justify-center items-center overflow-hidden rounded-full bg-gray-400  dark:bg-gray-300">
-<img alt="name" src="/img/py8jlnWXod-710.png" class='rounded-full'/>
+<img alt="name" src="/img/avatar.png" class='rounded-full'/>
 </div>
 
 > The illiterate of the 21st century will not be those who cannot read and write, but those who
