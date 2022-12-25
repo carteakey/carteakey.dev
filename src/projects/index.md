@@ -1,7 +1,15 @@
 ---
-layout: layouts/post.njk
-title: "Projects"
+layout: layouts/home.njk
+title: Projects
+templateClass: tmpl-post
+eleventyNavigation:
+  key: Projects
+  order: 4
 ---
+
+<h1>Projects</h1>
+
+
 
 feature_row1:
 
