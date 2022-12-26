@@ -1,0 +1,23 @@
+---
+layout: layouts/home.njk
+title: Projects
+templateClass: tmpl-post
+eleventyNavigation:
+  key: Projects
+  order: 4
+---
+
+<h1>Projects</h1>
+
+<div class="grid grid-cols-2 gap-4">
+  {% for project in projects %}
+  <div
+    class="project-card p-4 bg-gray-100 border-2 border-gray-200 rounded-lg overflow-hidden"
+  >
+    {% image project.image_path, alt=title %}
+    <h3 class="text-xl font-bold mb-2">{{ project.title }}</h3>
+    <p class="mb-4">{{ project.description }}</p>
+    <button class="justify-end" href="{{ project.url }}" class="btn btn-primary">Link</button>
+  </div>
+  {% endfor %}
+</div>

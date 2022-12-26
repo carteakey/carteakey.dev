@@ -1,0 +1,37 @@
+{
+  "projects": [
+    {
+      "title": "carteakey.dev",
+      "description": "This website! Gotta pump those numbers up.",
+      "image_path": "./src/img/portfolio/vizima.png",
+      "url": "https://www.vizima.in",
+      "tags": "Systems"
+    },
+    {
+      "title": "Vizima Website",
+      "description": "Website for a hospitality company using Nextjs. Featured in Chakra UI showcase.",
+      "image_path": "./src/img/portfolio/vizima.png",
+      "url": "https://www.vizima.in",
+      "tags": "Systems"
+    },
+    {
+      "title": "Recomovi",
+      "description": "Content-based movie recommendation App & IMDb dataset generator written in Python.",
+      "image_path": "./src/img/portfolio/recomovi.png",
+      "url": "https://www.vizima.in",
+      "tags": "Systems"
+    },
+    {
+      "title": "MicroHMS",
+      "description": "Hotel Management System for small hotel owners to track bookings and generate professional looking invoices.",
+      "image_path": "./src/img/portfolio/microhms.png",
+      "tags": "Systems"
+    },
+    {
+      "title": "carteakey.github.io",
+      "description": "Blog and Portfolio Website. Built using Jekyll and Minimal Mistakes",
+      "image_path": "./src/img/portfolio/carteakey.png",
+      "tags": "Systems"
+    }
+  ]
+}

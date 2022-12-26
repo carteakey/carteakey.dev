@@ -14,3 +14,22 @@
 .direct-link {
   display: none;
 }
+
+.project-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.project-card {
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.project-card {
+  background-color: #f7fafc;
+  color: #2d3748;
+}
+
+.dark:project-card {
+  background-color: #2d3748;
+  color: #f7fafc;
+}

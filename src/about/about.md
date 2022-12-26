@@ -22,7 +22,7 @@ Hi 👋🏼, Thanks for dropping by!
 
 My name's Kartikey. Most people pronounce it as **_carteakey_** - hence the [site](https://carteakey.dev) :| 
 ### Work
-I'm a Software Consultant from India.
+I'm a Software Engineer from India.
 
 Much of my experience has been with clients in the **Supply Chain** & **Banking** industries, where I helped analyze, design & implement business applications.
 
