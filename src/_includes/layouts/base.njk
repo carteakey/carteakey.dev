@@ -1,73 +1,148 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="{{ metadata.language }}">
   <head>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DKK1XXJY42"></script>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <!-- 180×180 -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-DKK1XXJY42"
+    ></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag() {
         dataLayer.push(arguments);
       }
-      gtag('js', new Date());
+      gtag("js", new Date());
 
-      gtag('config', 'G-DKK1XXJY42');
+      gtag("config", "G-DKK1XXJY42");
     </script>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script>
+      const isDarkMode = () =>
+        localStorage.theme === "dark" ||
+        (!("theme" in localStorage) &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches);
+      if (isDarkMode()) {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+    </script>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{{ title or metadata.title }}</title>
-    <meta name="description" content="{{ description or metadata.description }}">
+    <meta
+      name="description"
+      content="{{ description or metadata.description }}"
+    />
 
-    {# Google Fonts #}
-    {% eleventyGoogleFonts 'https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400&display=swap' %}
+    {# Google Fonts #} {% eleventyGoogleFonts
+    'https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400&display=swap'
+    %} {#- Uncomment this if you’d like folks to know that you used Eleventy to
+    build your site! #} {#-
+    <meta name="generator" content="{{ eleventy.generator }}" />
+    #}
 
-    {#- Uncomment this if you’d like folks to know that you used Eleventy to build your site!  #}
-    {#- <meta name="generator" content="{{ eleventy.generator }}"> #}
+    <link rel="stylesheet" href="{{ '/css/tailwind.css' | url }}" />
+    {#
+    <link rel="stylesheet" href="{{ '/css/index.css' | url }}" />
+    #} {# Syntax Highlighting #}
+    <link
+      href="https://unpkg.com/prismjs@1.20.0/themes/prism-okaidia.css"
+      rel="stylesheet"
+    />
 
-    <link rel="stylesheet" href="{{ '/css/tailwind.css' | url }}">
-    {# <link rel="stylesheet" href="{{ '/css/index.css' | url }}"> #}
-
-    {# Syntax Highlighting #}
-    <link href="https://unpkg.com/prismjs@1.20.0/themes/prism-okaidia.css" rel="stylesheet">
-
-    <link rel="alternate" href="{{ metadata.feed.path | url }}" type="application/atom+xml" title="{{ metadata.title }}">
-    <link rel="alternate" href="{{ metadata.jsonfeed.path | url }}" type="application/json" title="{{ metadata.title }}">
+    <link
+      rel="alternate"
+      href="{{ metadata.feed.path | url }}"
+      type="application/atom+xml"
+      title="{{ metadata.title }}"
+    />
+    <link
+      rel="alternate"
+      href="{{ metadata.jsonfeed.path | url }}"
+      type="application/json"
+      title="{{ metadata.title }}"
+    />
   </head>
 
   <body class="bg-gray-50 dark:bg-gray-800">
+    <script>
+      document
+        .getElementById("toggleDarkMode")
+        .addEventListener("click", function () {
+          if (isDarkMode()) {
+            localStorage.theme = "light";
+            document.documentElement.classList.remove("dark");
+          } else {
+            localStorage.theme = "dark";
+            document.documentElement.classList.add("dark");
+          }
+        });
+    </script>
 
-    <div class="md:max-w-prose mx-auto" >
-      {# Gotta fix some min width shit here #} 
+    <div class="md:max-w-prose mx-auto">
+      {# Gotta fix some min width shit here #}
 
-        <div class="prose prose-slate prose-img:rounded-lg prose-code:sm dark:prose-invert lg:prose-md px-4" >
+      <div
+        class="prose prose-slate prose-img:rounded-lg prose-code:sm dark:prose-invert lg:prose-md px-4"
+      >
+        <nav class="flex w-full py-8 text-gray-900 justify-between">
+          {#- Read more about `eleventy-navigation` at
+          https://www.11ty.dev/docs/plugins/navigation/ #} {% set navPages =
+          collections.all | eleventyNavigation %} {#
+          <a
+            class="self-center font-bold rounded-md p-1 sm:px-3 sm:py-2 hover:bg-gray-200 hover:dark:bg-gray-600 transition-all"
+            href="{{ '/' | url }}"
+            >{{ metadata.title }}</a
+          >
+          #}
 
-          <nav class="flex w-full py-8 text-gray-900 justify-between">
+          <ul class="list-none mx-0 px-0">
+            {%- for entry in navPages %}
+            <span
+              class="font-normal rounded-md p-1 sm:px-3 sm:py-2 hover:bg-gray-200 hover:dark:bg-gray-600 transition-all"
+            >
+              <a class="no-underline hover:underline" href="{{ entry.url }}">{{
+                entry.title
+              }}</a>
+            </span>
+            {%- endfor %}
+          </ul>
+          <button
+            id="toggleDarkMode"
+            class="self-center font-bold rounded-md p-1 sm:px-3 sm:py-2 hover:bg-gray-200 hover:dark:bg-gray-600 transition-all"
+            href="{{ '/' | url }}"
+          >
+            {% feather "sun" %}
+          </button>
+        </nav>
 
-            {#- Read more about `eleventy-navigation` at https://www.11ty.dev/docs/plugins/navigation/ #}
-            {% set navPages = collections.all | eleventyNavigation %}
-            {# <a class="self-center font-bold rounded-md p-1 sm:px-3 sm:py-2 hover:bg-gray-200 hover:dark:bg-gray-600 transition-all" href="{{ '/' | url }}">{{ metadata.title }}</a> #}
+        <main {% if templateClass %} class="{{ templateClass }}" {% endif %}>
+          {{ content | safe }}
+        </main>
 
-            <ul class="list-none mx-0 px-0">
-              {%- for entry in navPages %}
-                <span class="font-normal rounded-md p-1 sm:px-3 sm:py-2 hover:bg-gray-200 hover:dark:bg-gray-600 transition-all ">
-                  <a class="no-underline hover:underline" href="{{ entry.url }}">{{ entry.title }}</a>
-                </span>
-              {%- endfor %}
-            </ul>
-            <button class="self-center font-bold rounded-md p-1 sm:px-3 sm:py-2 hover:bg-gray-200 hover:dark:bg-gray-600 transition-all" href="{{ '/' | url }}"> {% feather "sun" %}</button>
-            </nav>
-            
-          <main 
-          {% if templateClass %} 
-            class="{{ templateClass }}" 
-          {% endif %} 
-        >
-            {{ content | safe }}
-          </main>
-
-          <footer class="flex w-full pt-8 pb-8 flex-row justify-end">   
-              <a class="self-center rounded-md p-1 sm:px-3 sm:py-2 hover:bg-gray-200 transition-all" href="https://www.linkedin.com/in/kartikeychauhan/" title="LinkedIn" alt="LinkedIn">{% feather "linkedin" %}</i></a>
-              <a class="self-center rounded-md p-1 sm:px-3 sm:py-2 hover:bg-gray-200 transition-all" href="https://github.com/carteakey" title="GitHub" alt="GitHub">{% feather "github" %}</i></a> 
-          </footer>
-        </div>
+        <footer class="flex w-full pt-8 pb-8 flex-row justify-end">
+          <a
+            class="self-center rounded-md p-1 sm:px-3 sm:py-2 hover:bg-gray-200 transition-all"
+            href="https://www.linkedin.com/in/kartikeychauhan/"
+            title="LinkedIn"
+            alt="LinkedIn"
+            >{% feather "linkedin" %}</a
+          >
+          <a
+            class="self-center rounded-md p-1 sm:px-3 sm:py-2 hover:bg-gray-200 transition-all"
+            href="https://github.com/carteakey"
+            title="GitHub"
+            alt="GitHub"
+            >{% feather "github" %}</a
+          >
+        </footer>
       </div>
+    </div>
   </body>
 </html>

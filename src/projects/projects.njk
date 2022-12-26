@@ -14,14 +14,17 @@ eleventyNavigation:
   <div
     class="project-card p-4 bg-gray-100 border-2 border-gray-200 rounded-lg overflow-hidden"
   >
-  <a href ="{{ project.url }}" class="no-underline">
-  <div class="mx-auto">{% image project.image_path, alt=title %}</div>
-  </a>
+    <a href="{{ project.url }}" class="no-underline">
+      <div class="w-full h-40 items-stretch">
+        {% image project.image_path, alt=project.title %}
+      </div>
+    </a>
+
     <h3 class="text-xl font-bold mb-2">{{ project.title }}</h3>
-    <p class="mb-4">{{ project.description }}</p>
+    <p class="text-md mb-2">{{ project.description }}</p>
 
     {# {% for tag in project.tags %}
-    <i>#{{ tag }}</i>
+    <i>#{{ tag }}</i> 
     {% endfor %} #}
 
     <div class="flex flex-row justify-end">

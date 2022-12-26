@@ -19,7 +19,7 @@
       "title": "carteakey.dev",
       "description": "This website! Gotta pump those numbers up.",
       "image_path": "./src/img/portfolio/carteakey.dev.png",
-      "url": "https://www.vizima.in",
+      "url": "https://carteakey.dev",
       "github": "https://github.com/carteakey/carteakey.dev",
       "tags": ["Eleventy", "Tailwind"]
     },
@@ -28,14 +28,14 @@
       "description": "Hotel Management System for small hotel owners to track bookings and generate professional looking invoices.",
       "image_path": "./src/img/portfolio/microhms.png",
       "tags": "Systems",
-      "url": "https://www.vizima.in",
+      "url": "https://microhms.fly.dev",
       "github":"https://github.com/carteakey/microhms"
     },
     {
       "title": "carteakey.github.io",
       "description": "My old Blog and Portfolio Website. Built using Jekyll and Minimal Mistakes",
       "image_path": "./src/img/portfolio/carteakey.png",
-      "url": "https://www.vizima.in",
+      "url": "https://carteakey.github.io",
       "github":"https://github.com/carteakey/carteakey.github.io",
       "tags": "Systems"
     }
