@@ -9,15 +9,39 @@ eleventyNavigation:
 
 <h1>Projects</h1>
 
-<div class="grid grid-cols-2 gap-4">
+<div class="grid md:grid-cols-2 gap-4">
   {% for project in projects %}
   <div
     class="project-card p-4 bg-gray-100 border-2 border-gray-200 rounded-lg overflow-hidden"
   >
-    {% image project.image_path, alt=title %}
+  <a href ="{{ project.url }}" class="no-underline">
+  <div class="mx-auto">{% image project.image_path, alt=title %}</div>
+  </a>
     <h3 class="text-xl font-bold mb-2">{{ project.title }}</h3>
     <p class="mb-4">{{ project.description }}</p>
-    <button class="justify-end" href="{{ project.url }}" class="btn btn-primary">Link</button>
+
+    {# {% for tag in project.tags %}
+    <i>#{{ tag }}</i>
+    {% endfor %} #}
+
+    <div class="flex flex-row justify-end">
+      {% if project.github %}
+      <button
+        class="self-center font-bold rounded-md p-1 sm:px-2 sm:py-1 hover:bg-gray-200 hover:dark:bg-gray-600 transition-all"
+        ref="{{ project.github }}"
+        class="btn btn-primary"
+      >
+        {% feather "github" %}
+      </button>
+      {% endif %}
+      <button
+        class="self-center font-bold rounded-md p-1 sm:px-2 sm:py-2 hover:bg-gray-200 hover:dark:bg-gray-600 transition-all"
+        ref="{{ project.url }}"
+        class="btn btn-primary"
+      >
+        {% feather "external-link" %}
+      </button>
+    </div>
   </div>
   {% endfor %}
 </div>

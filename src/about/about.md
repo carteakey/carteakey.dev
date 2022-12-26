@@ -20,7 +20,7 @@ eleventyNavigation:
 
 Hi 👋🏼, Thanks for dropping by!
 
-My name's Kartikey. Most people pronounce it as **_carteakey_** - hence the [site](https://carteakey.dev) :| 
+My name's Kartikey. Most people pronounce it as **_carteakey_** - hence the [site](https://carteakey.dev) 
 ### Work
 I'm a Software Engineer from India.
 
