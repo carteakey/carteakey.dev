@@ -40,6 +40,7 @@ module.exports = function (eleventyConfig) {
   // Copy the `img` and `css` folders to the output
   eleventyConfig.addPassthroughCopy("./src/img");
   eleventyConfig.addPassthroughCopy("css");
+  eleventyConfig.addPassthroughCopy({ "./src/img/favicon": "/" });
 
   // Add plugins
   eleventyConfig.addPlugin(pluginSyntaxHighlight);
