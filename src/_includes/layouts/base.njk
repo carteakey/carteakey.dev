@@ -71,20 +71,6 @@
   </head>
 
   <body class="bg-gray-50 dark:bg-gray-800">
-    <script>
-      document
-        .getElementById("toggleDarkMode")
-        .addEventListener("click", function () {
-          if (isDarkMode()) {
-            localStorage.theme = "light";
-            document.documentElement.classList.remove("dark");
-          } else {
-            localStorage.theme = "dark";
-            document.documentElement.classList.add("dark");
-          }
-        });
-    </script>
-
     <div class="md:max-w-prose mx-auto">
       {# Gotta fix some min width shit here #}
 
@@ -113,10 +99,10 @@
             </span>
             {%- endfor %}
           </ul>
+
           <button
             id="toggleDarkMode"
             class="self-center font-bold rounded-md p-1 sm:px-3 sm:py-2 hover:bg-gray-200 hover:dark:bg-gray-600 transition-all"
-            href="{{ '/' | url }}"
           >
             {% feather "sun" %}
           </button>
@@ -124,6 +110,20 @@
 
         <main {% if templateClass %} class="{{ templateClass }}" {% endif %}>
           {{ content | safe }}
+          <script>
+            document
+              .getElementById("toggleDarkMode")
+              .addEventListener("click", function () {
+                console.log("Button Click!");
+                if (isDarkMode()) {
+                  localStorage.theme = "light";
+                  document.documentElement.classList.remove("dark");
+                } else {
+                  localStorage.theme = "dark";
+                  document.documentElement.classList.add("dark");
+                }
+              });
+          </script>
         </main>
 
         <footer class="flex w-full pt-8 pb-8 flex-row justify-end">

@@ -25,7 +25,7 @@
     },
     {
       "title": "MicroHMS",
-      "description": "Hotel Management System for small hotel owners to track bookings and generate professional looking invoices.",
+      "description": "PMS for small hotels to track bookings and generate invoices.",
       "image_path": "./src/img/portfolio/microhms.png",
       "tags": "Systems",
       "url": "https://microhms.fly.dev",
@@ -33,7 +33,7 @@
     },
     {
       "title": "carteakey.github.io",
-      "description": "My old Blog and Portfolio Website. Built using Jekyll and Minimal Mistakes",
+      "description": "My old(er) Blog and Portfolio Website. Built using Jekyll and Minimal Mistakes",
       "image_path": "./src/img/portfolio/carteakey.png",
       "url": "https://carteakey.github.io",
       "github":"https://github.com/carteakey/carteakey.github.io",
