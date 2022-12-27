@@ -3,9 +3,7 @@ title: Sync Obsidian notes between iOS and PC.
 description: Take your second brain everywhere with you.
 date: 2022-06-05
 tags:
-  - Note-taking
   - Obsidian
-  - Markdown
   - iOS
 layout: layouts/post.njk
 ---
