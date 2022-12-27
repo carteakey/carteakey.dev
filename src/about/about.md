@@ -18,8 +18,10 @@ eleventyNavigation:
 
 Hi 👋🏼, Thanks for dropping by!
 
-My name's Kartikey. Most people pronounce it as **_carteakey_** - hence the [site](https://carteakey.dev) 
+My name's Kartikey. Most people pronounce it as **_carteakey_** - hence the [site](https://carteakey.dev)
+
 ### Work
+
 I'm a Software Engineer from India.
 
 Much of my experience has been with clients in the **Supply Chain** & **Banking** industries, where I helped analyze, design & implement business applications.
@@ -43,3 +45,6 @@ Gaming is one of the many ways I like to spend my free time. I am a huge Soulsbo
 ### So, Yeah… That’s Me!
 
 Feel free to [contact](mailto:kartikeychauhan27@gmail.com) me if you want to connect.
+
+
+<a href="https://twitter.com/kartychauhan?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false">@kartychauhan</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
