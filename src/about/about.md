@@ -7,9 +7,7 @@ eleventyNavigation:
   order: 3
 ---
 
-
 <h1>About Me</h1>
-
 
 <div class="float-right m-1 mr-3 p-4 w-32 h-32 relative flex justify-center items-center overflow-hidden rounded-full bg-gray-400  dark:bg-gray-300">
 <img alt="name" src="/img/avatar.png" class='rounded-full'/>

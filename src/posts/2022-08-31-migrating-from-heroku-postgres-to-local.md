@@ -5,7 +5,7 @@ date: 2022-08-31
 tags:
   - Heroku
   - Postgres
-  - OCI
+  - Databases
 layout: layouts/post.njk
 ---
 

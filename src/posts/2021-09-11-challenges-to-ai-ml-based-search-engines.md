@@ -5,7 +5,6 @@ date: 2021-09-11
 tags:
   - AI
   - Privacy
-  - GDPR
 layout: layouts/post.njk
 ---
 

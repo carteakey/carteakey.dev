@@ -4,7 +4,7 @@ description: Get back HW accelerated video playback on Fedora.
 date: 2022-10-30
 tags:
   - Fedora
-  - Mesa
+  - Linux
 layout: layouts/post.njk
 ---
 

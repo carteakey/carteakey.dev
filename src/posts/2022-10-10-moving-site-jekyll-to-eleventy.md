@@ -4,7 +4,6 @@ description: I revamped my personal site
 date: 2022-10-10
 tags:
   - Jekyll
-  - Blog
   - Eleventy
 layout: layouts/post.njk
 ---
