@@ -5,13 +5,13 @@
   "scripts": {
     "build": "npm-run-all -s build:*",
     "build:11ty": "npx @11ty/eleventy",
-    "build:css": "tailwindcss -i ./src/css/tailwind.css -o ./_site/css/tailwind.css --minify --postcss",
+    "build:css": "tailwindcss -i ./src/assets/css/tailwind.css -o ./_site/css/tailwind.css --minify --postcss",
     "bench": "DEBUG=Eleventy:Benchmark* npx @11ty/eleventy",
     "watch": "npx @11ty/eleventy --watch",
     "serve": "npx @11ty/eleventy --serve",
     "start": "npm-run-all -p start:*",
     "start:11ty": "npx @11ty/eleventy --serve",
-    "start:css": "tailwindcss -i ./src/css/tailwind.css -o ./_site/css/tailwind.css --watch --postcss",
+    "start:css": "tailwindcss -i ./src/assets/css/tailwind.css -o ./_site/css/tailwind.css --watch --postcss",
     "debug": "DEBUG=* npx @11ty/eleventy"
   },
   "repository": {

@@ -40,8 +40,6 @@
       content="{{ description or metadata.description }}"
     />
 
-    {# Google Fonts #} {% eleventyGoogleFonts
-    'https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400&display=swap'%}
     {#- Uncomment this if you’d like folks to know that you used Eleventy to
     build your site! #} {#-
     <meta name="generator" content="{{ eleventy.generator }}" />
@@ -52,7 +50,7 @@
     <link rel="stylesheet" href="{{ '/css/index.css' | url }}" />
     #} {# Syntax Highlighting #}
     <link
-      href="/css/prism-a11y-dark.css"
+      href="/assets/css/prism-a11y-dark.css"
       rel="stylesheet"
     />
 
@@ -76,7 +74,7 @@
       {# Gotta fix some min width shit here #}
 
       <div
-        class="prose prose-lg prose-gray prose-h1:text-4xl dark:prose-invert px-4 sm:px-0"
+        class="prose prose-gray prose-h1:text-4xl dark:prose-invert px-4 sm:px-0"
       >
         <nav class="flex w-full py-8 justify-between">
           {#- Read more about `eleventy-navigation` at
@@ -92,7 +90,7 @@
           <ul class="list-none mx-0 px-0">
             {%- for entry in navPages %}
             <span
-              class="font-normal px-3 py-2 hover:bg-gray-200 hover:dark:bg-gray-600 transition-all"
+              class="font-normal px-3 py-2 hover:bg-gray-200 hover:dark:bg-gray-600 transition-all" 
             >
               <a class="no-underline hover:underline" href="{{ entry.url }}">{{
                 entry.title

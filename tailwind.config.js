@@ -3,7 +3,11 @@ module.exports = {
   content: ["./src/**/*.{njk,md}"],
   darkMode: 'class',
   theme: {
-    extend: {},
+    extend: {
+    fontFamily: {
+      plex: ['"IBM Plex Sans"']
+    }
+    }
   },
   plugins: [require("@tailwindcss/typography")],
 };

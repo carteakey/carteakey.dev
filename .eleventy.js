@@ -38,9 +38,9 @@ async function imageShortcode(src, alt) {
 
 module.exports = function (eleventyConfig) {
   // Copy the `img` and `css` folders to the output
-  eleventyConfig.addPassthroughCopy("./src/img");
-  eleventyConfig.addPassthroughCopy("./src/css/prism-a11y-dark.css");
-  eleventyConfig.addPassthroughCopy({ "./src/img/favicon": "/" });
+  eleventyConfig.addPassthroughCopy({"./src/assets/img":"/img/"});
+  eleventyConfig.addPassthroughCopy("./src/assets/css/prism-a11y-dark.css");
+  eleventyConfig.addPassthroughCopy({ "./src/assets/img/favicon": "/" });
 
   // Add plugins
   eleventyConfig.addPlugin(pluginSyntaxHighlight);
