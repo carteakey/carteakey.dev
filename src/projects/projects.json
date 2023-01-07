@@ -6,14 +6,14 @@
       "image_path": "./src/img/portfolio/recomovi.png",
       "url": "https://recomovi.streamlit.app",
       "github":"https://github.com/carteakey/recomovi",
-      "tags": "Systems"
+      "tags": ["Python", "Streamlit"]
     },
     {
       "title": "Vizima Website",
       "description": "Website for a hospitality company using Nextjs. Featured in Chakra UI showcase.",
       "image_path": "./src/img/portfolio/vizima.png",
       "url": "https://www.vizima.in",
-      "tags": ["Chakra UI", "Next.js", "TypeScript"]
+      "tags": ["Next.js", "Firebase"]
     },
     {
       "title": "carteakey.dev",
@@ -27,9 +27,9 @@
       "title": "MicroHMS",
       "description": "PMS for small hotels to track bookings and generate invoices.",
       "image_path": "./src/img/portfolio/microhms.png",
-      "tags": "Systems",
       "url": "https://microhms.fly.dev",
-      "github":"https://github.com/carteakey/microhms"
+      "github":"https://github.com/carteakey/microhms",
+      "tags": ["Flask", "PostgreSQL"]
     },
     {
       "title": "carteakey.github.io",
@@ -37,7 +37,7 @@
       "image_path": "./src/img/portfolio/carteakey.png",
       "url": "https://carteakey.github.io",
       "github":"https://github.com/carteakey/carteakey.github.io",
-      "tags": "Systems"
+      "tags": ["Systems"]
     }
   ]
 }

@@ -41,8 +41,8 @@
     />
 
     {# Google Fonts #} {% eleventyGoogleFonts
-    'https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400&display=swap'
-    %} {#- Uncomment this if you’d like folks to know that you used Eleventy to
+    'https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400&display=swap'%}
+    {#- Uncomment this if you’d like folks to know that you used Eleventy to
     build your site! #} {#-
     <meta name="generator" content="{{ eleventy.generator }}" />
     #}
@@ -52,7 +52,7 @@
     <link rel="stylesheet" href="{{ '/css/index.css' | url }}" />
     #} {# Syntax Highlighting #}
     <link
-      href="https://unpkg.com/prismjs@1.20.0/themes/prism-okaidia.css"
+      href="/css/prism-a11y-dark.css"
       rel="stylesheet"
     />
 
@@ -62,6 +62,7 @@
       type="application/atom+xml"
       title="{{ metadata.title }}"
     />
+
     <link
       rel="alternate"
       href="{{ metadata.jsonfeed.path | url }}"
@@ -75,7 +76,7 @@
       {# Gotta fix some min width shit here #}
 
       <div
-        class="prose prose-slate prose-img:rounded-lg prose-code:sm dark:prose-invert lg:prose-md px-4"
+        class="prose prose-lg prose-gray prose-h1:text-4xl dark:prose-invert sm:px-4 md:px-0"
       >
         <nav class="flex w-full py-8 justify-between">
           {#- Read more about `eleventy-navigation` at
@@ -91,7 +92,7 @@
           <ul class="list-none mx-0 px-0">
             {%- for entry in navPages %}
             <span
-              class="font-normal rounded-md p-1 sm:px-3 sm:py-2 hover:bg-gray-200 hover:dark:bg-gray-600 transition-all"
+              class="font-normal px-3 py-2 hover:bg-gray-200 hover:dark:bg-gray-600 transition-all"
             >
               <a class="no-underline hover:underline" href="{{ entry.url }}">{{
                 entry.title
@@ -102,7 +103,7 @@
 
           <button
             id="toggleDarkMode"
-            class="self-center font-bold rounded-md p-1 sm:px-3 sm:py-2 hover:bg-gray-200 hover:dark:bg-gray-600 transition-all"
+            class="self-center font-bold p-1 sm:px-3 sm:py-2 hover:bg-gray-200 hover:dark:bg-gray-600 transition-all"
           >
             {% feather "sun" %}
           </button>

@@ -16,7 +16,7 @@ const Image = require("@11ty/eleventy-img");
 
 async function imageShortcode(src, alt) {
   let metadata = await Image(src, {
-    widths: ["auto"],
+    widths: [300, 600],
     formats: ["auto"],
     outputDir: "./_site/img/",
   });
@@ -39,7 +39,7 @@ async function imageShortcode(src, alt) {
 module.exports = function (eleventyConfig) {
   // Copy the `img` and `css` folders to the output
   eleventyConfig.addPassthroughCopy("./src/img");
-  eleventyConfig.addPassthroughCopy("css");
+  eleventyConfig.addPassthroughCopy("./src/css/prism-a11y-dark.css");
   eleventyConfig.addPassthroughCopy({ "./src/img/favicon": "/" });
 
   // Add plugins
@@ -47,11 +47,18 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPlugin(pluginNavigation);
   eleventyConfig.addPlugin(eleventyGoogleFonts);
   eleventyConfig.addPlugin(eleventyPluginFeathericons);
+  
+  // https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#valid-date-string
+  eleventyConfig.addFilter("htmlDateString", (dateObj) => {
+    return DateTime.fromJSDate(dateObj, { zone: "utc" }).toFormat("yyyy-LL-dd");
+  });
+
+  eleventyConfig.addFilter("postDate", (dateObj) => {
+    return DateTime.fromJSDate(dateObj).toLocaleString(DateTime.DATE_MED);
+  });
 
   eleventyConfig.addFilter("readableDate", (dateObj) => {
-    return DateTime.fromJSDate(dateObj, { zone: "utc" }).toFormat(
-      "dd LLL yyyy"
-    );
+    return DateTime.fromJSDate(dateObj).toLocaleString(DateTime.DATE_FULL)
   });
 
   //Image Plugin
@@ -59,10 +66,6 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addLiquidShortcode("image", imageShortcode);
   eleventyConfig.addJavaScriptFunction("image", imageShortcode);
 
-  // https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#valid-date-string
-  eleventyConfig.addFilter("htmlDateString", (dateObj) => {
-    return DateTime.fromJSDate(dateObj, { zone: "utc" }).toFormat("yyyy-LL-dd");
-  });
 
   // Get the first `n` elements of a collection.
   eleventyConfig.addFilter("head", (array, n) => {

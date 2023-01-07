@@ -18,17 +18,17 @@ eleventyNavigation:
 
 Hi 👋🏼, Thanks for dropping by!
 
-My name's Kartikey. Most people pronounce it as **_carteakey_** - hence the [site](https://carteakey.dev)
+My name's Kartikey. Most people pronounce it as **_carteakey_** - hence the [site](https://carteakey.dev).
 
 ### Work
 
 I'm a Software Engineer from India.
 
-Much of my experience has been with clients in the **Supply Chain** & **Banking** industries, where I helped analyze, design & implement business applications.
+Most of my experience has been with clients in the **Supply Chain** & **Banking** industries, where I helped analyze, design & implement business applications.
 
 My professional programming experience has been developing applications and automating stuff (the boring one, of course) in **Python**, **PL/SQL** & working with databases like **Oracle** & **Netezza**.
 
-I won't bore you too much with my work history; that's what my [LinkedIn](https://www.linkedin.com/in/kartikeychauhan) is for.
+You can find more about my work history on [LinkedIn](https://www.linkedin.com/in/kartikeychauhan).
 
 ### Passion
 
@@ -40,7 +40,7 @@ Outside of work, I try to strike a balance between tinkering with tech and havin
 
 I like to write about linux, data science, and other things I find interesting, on this blog.
 
-Gaming is one of the many ways I like to spend my free time. I am a huge Soulsborne fan, and love reading about intricate lore and mythical stuff (looking at you, Bloodborne)
+Gaming is one of the many ways I like to spend my free time. I am a huge Soulsborne fan, and love reading about intricate lore and mythical stuff (looking at you, Bloodborne).
 
 ### So, Yeah… That’s Me!
 
