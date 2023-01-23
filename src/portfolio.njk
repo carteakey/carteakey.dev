@@ -1,0 +1,100 @@
+---
+layout: layouts/home.njk
+title: Portfolio
+templateClass: tmpl-post
+eleventyNavigation:
+  key: Portfolio
+  order: 4
+---
+<h1>Portfolio</h1>
+
+<p>
+  Download my resume <a href="/assets/Kartikey-Chauhan-Resume-2023.pdf">here</a>.
+</p>
+
+<hr>
+
+<h2>Projects</h2>
+
+<h3>Work</h3>
+<p> 
+  Below are some the of the key projects I've worked on my professional capacity.
+</p>
+
+
+
+<div class="grid md:grid-cols-2 gap-5">
+  {% for project in work_projects.projects %}
+    <div class="p-4 border-2 border-gray-200 shadow-sm dark:border-gray-600  flex flex-col">
+      
+      {% image project.image_path, alt=project.title %}
+
+      <div class="flex flex-row justify-between">
+
+      <a href=" {% if project.url %} {{ project.url }} {% endif %}" title="View Project" >
+        <h3 class="text-xl font-bold my-0">{{ project.title }}</h3>
+      </a>
+
+      {% if project.github %} 
+      <a class="self-center  hover:bg-gray-200 hover:dark:bg-gray-600 transition-all" title="View Code" href="{{ project.github }}"> 
+        {% feather "code" %}
+      </a>
+      {% endif %}
+    </div>
+    <p class="my-1"> 
+      {{ project.description }}
+    </p>  
+      <ul class="flex flex-row list-none text-sm mx-0 px-0 my-2">
+        {% for tag in project.tags %}<li class="bg-gray-200 dark:bg-gray-600 p-1 mx-2">{{ tag }}</li>{% endfor %}
+      </ul>
+
+      <ul class="flex flex-col my-1"> 
+        {% for point in project.points %}<li class="text-sm  mx-2">{{ point | safe }}</li>{% endfor %}
+      </ul>
+     
+    </div>
+  {% endfor %}
+</div>
+
+<h3>Personal</h3>
+<p> 
+  Here are some on the personal projects I've worked on.
+</p>
+<div class="grid md:grid-cols-2 gap-5">
+  {% for project in projects.projects %}
+    <div class="p-4 border-2 border-gray-200 shadow-sm dark:border-gray-600  flex flex-col">
+      
+      {% image project.image_path, alt=project.title %}
+
+      <div class="flex flex-row justify-between">
+
+      <a href=" {% if project.url %} {{ project.url }} {% endif %}" title="View Project" >
+        <h3 class="text-xl font-bold my-0">{{ project.title }}</h3>
+      </a>
+
+      {% if project.github %} 
+      <a class="self-center  hover:bg-gray-200 hover:dark:bg-gray-600 transition-all" title="View Code" href="{{ project.github }}"> 
+        {% feather "code" %}
+      </a>
+      {% endif %}
+    </div>
+    <p class="my-1"> 
+      {{ project.description }}
+    </p>  
+      <ul class="flex flex-row list-none text-sm mx-0 px-0 my-2">
+        {% for tag in project.tags %}<li class="bg-gray-200 dark:bg-gray-600 p-1 mx-2">{{ tag }}</li>{% endfor %}
+      </ul>
+
+      <ul class="flex flex-col my-1"> 
+        {% for point in project.points %}<li class="text-sm  mx-2">{{ point | safe }}</li>{% endfor %}
+      </ul>
+     
+    </div>
+  {% endfor %}
+  <div class="p-4 overflow-hidden items-center align-middle justify-center">
+    <p>
+      .. explore the rest on my
+      <a href="https://github.com/carteakey?tab=repositories">github</a>
+    </p>
+  </div>
+</div>

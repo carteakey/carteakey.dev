@@ -16,7 +16,7 @@ const Image = require("@11ty/eleventy-img");
 
 async function imageShortcode(src, alt) {
   let metadata = await Image(src, {
-    widths: [300, 600],
+    widths: ["auto"],
     formats: ["auto"],
     outputDir: "./_site/img/",
   });
@@ -40,6 +40,7 @@ module.exports = function (eleventyConfig) {
   // Copy the `img` and `css` folders to the output
   eleventyConfig.addPassthroughCopy({"./src/assets/img":"/img/"});
   eleventyConfig.addPassthroughCopy("./src/assets/css/prism-a11y-dark.css");
+  eleventyConfig.addPassthroughCopy("./src/assets/Kartikey-Chauhan-Resume-2023.pdf");
   eleventyConfig.addPassthroughCopy({ "./src/assets/img/favicon": "/" });
 
   // Add plugins
@@ -62,10 +63,7 @@ module.exports = function (eleventyConfig) {
   });
 
   //Image Plugin
-  eleventyConfig.addNunjucksAsyncShortcode("image", imageShortcode);
-  eleventyConfig.addLiquidShortcode("image", imageShortcode);
-  eleventyConfig.addJavaScriptFunction("image", imageShortcode);
-
+  eleventyConfig.addAsyncShortcode("image", imageShortcode);
 
   // Get the first `n` elements of a collection.
   eleventyConfig.addFilter("head", (array, n) => {
