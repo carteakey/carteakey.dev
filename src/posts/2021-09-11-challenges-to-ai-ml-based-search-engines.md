@@ -8,7 +8,7 @@ tags:
 layout: layouts/post.njk
 ---
 
-The power of search engines is astonishing. You go to your favorite search engine, enter in a few terms, and it magically crawls the entire internet for the most relevant search result for each query.
+The power of search engines is astonishing. You go to your favorite search engine, enter a few terms, and it magically crawls the entire internet for the most relevant search result for each query.
 
 With Google Search, Google has achieved verbal dominion over a whole category of digital experience, which is a rare feat for a tech business. A trademarked title becoming so ubiquitous that it has entered common usage is not something that one sees happening every day.
 
@@ -38,13 +38,13 @@ Simply put, AI systems rely on data, and any attempt to prohibit or limit access
 
 ### What Do We Understand About Our Data?
 
-The topic of digital privacy has hardly been out of the news. There is significant debate in governments, boardrooms, and the media about how data is gathered, stored, and used, as well as what level of ownership the public should have over their data.
+The topic of digital privacy has hardly been out of the news. There is significant debate in governments, boardrooms, and the media about how data is gathered, stored and used and what level of ownership the public should have over their data.
 
 People realize that there are trade-offs when they use digital services, but many are unaware of the amount of information collected, how it is used, and with whom it is shared. It's easy to think of an email address or a birth date as a single, separate puzzle piece, but when small amounts of data are constantly fed into an ever-consuming, ever-calculating algorithm, they add up to a startlingly complete picture.
 
 ### Challenges to AI-ML based search engines
 
-One o byf the most revolutionary aspects of the [GDPR](https://gdpr-info.eu/) was the “right to be forgotten” — a debated right that is sometimes interpreted as empowering individuals to request the erasure of their information on the internet, most commonly from search engines or social networks.
+One of the most revolutionary aspects of the [GDPR](https://gdpr-info.eu/) was the “right to be forgotten” — a debated right that is sometimes interpreted as empowering individuals to request the erasure of their information on the internet, most commonly from search engines or social networks.
 
 This data privacy principle simply means that any European consumer can request that a corporation erase and permanently remove any data that has been saved about them.
 
@@ -68,6 +68,6 @@ Companies such as Google have already started to come up with new methods of pri
 
 Moreover, it also paves the way for new companies to showcase their privacy-oriented services, encouraging competition in an otherwise dominated industry.
 
-For example, DuckDuckGo is a search engine service that is gaining traction very rapidly and claims to collect no personal information, yet is nearly as effective as Google. It also offers users the non-existence of the "filter bubble" phenomenon of personalized search results i.e. the search results will effectively be the same, regardless of the user.
+For example, DuckDuckGo is a search engine service that is gaining traction rapidly and claims to collect no personal information, yet is nearly as effective as Google. It also offers users the non-existence of the "filter bubble" phenomenon of personalized search results i.e. the search results will effectively be the same, regardless of the user.
 
-With a privacy-first approach to development and a better understanding of how data travels inside an organization, data laws and AI can coexist. IncreasedAI-ML-based regulation will likely have a good impact on AI's future, driving us to be more innovative and adopt a new perspective that balances data access with privacy.
+With a privacy-first approach to development and a better understanding of how data travels inside an organization, data laws, and AI can coexist. Increased AI-ML-based regulation will likely have a good impact on AI's future, driving us to be more innovative and adopt a new perspective that balances data access with privacy.
