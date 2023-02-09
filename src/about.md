@@ -13,8 +13,26 @@ eleventyNavigation:
 <img alt="name" src="/img/avatar.png" class='rounded-full'/>
 </div>
 
-> The illiterate of the 21st century will not be those who cannot read and write, but those who
-> cannot learn, unlearn, and relearn. – _Alvin Toffler_
+<!-- Quote Animation -->
+<blockquote id="qotd"></blockquote>
+
+<!-- The script itself, loaded AFTER your root element. -->
+<script src="https://unpkg.com/typeit@8.7.1/dist/index.umd.js"></script>
+<script>
+  new TypeIt("#qotd", {
+    speed: 30,
+    waitUntilVisible: true
+  })
+  .type("The illiterate of the 21st century will not be those who cannot read and write, but those who cannot learn, unlearn, and relearn.")
+  .break({ delay: 500 })
+  .type("<em>- ChatGPT</em>")
+  .pause(500)
+  .delete(7)
+  .pause(500)
+  .type("<em>Alvin Toffler</em>")
+  .go();
+</script>
+
 
 Hi 👋🏼, Thanks for dropping by!
 
