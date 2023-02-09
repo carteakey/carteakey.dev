@@ -1,5 +1,5 @@
 ---
-title: Building Mesa from Source (with VA-API) on Fedora.
+title: Building Mesa (with VA-API) on Fedora from Source.
 description: Get back HW accelerated video playback on Fedora.
 date: 2022-10-30
 tags:
