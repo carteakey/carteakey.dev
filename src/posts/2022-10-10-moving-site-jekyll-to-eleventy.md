@@ -50,4 +50,4 @@ The site in its current state is quite barebones, but I can already feel the ben
 
 I plan to keep it minimal but will keep on adding features and sharing my experiences alongside.
 
-Anyhow, it was a weekend well spent :)
+Anyhow, it was a weekend well spent. :)

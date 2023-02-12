@@ -1,56 +1,56 @@
 ---
 projects:
-- title: Recomovi
-  description: Movie Recommender & IMDb Dataset Generator.
-  image_path: "./src/static/img/projects/recomovi.png"
-  url: https://recomovi.streamlit.app
-  github: https://github.com/carteakey/recomovi
-  tags:
-  - Python
-  - Streamlit
-  points:
-  - Content-based movie recommendation app.
-  - Configurable scraper for realtime IMDb dataset and keyword generation.
-  - Scrapes IMDb Advanced Search Page using beautifulsoup. Dataset of approx 8000
-    movies.
-  - Rake to extract keywords from plot summary. Cosine Similarity Index to filter
-    top 10 similar movies.
-- title: MicroHMS
-  description: Hotel Management System to track bookings and generate invoices.
-  image_path: "./src/static/img/projects/microhms.png"
-  url: https://microhms.onrender.com
-  github: https://github.com/carteakey/microhms
-  tags:
-  - Flask
-  - PostgreSQL
-  points:
-  - Create & manage bookings, send booking acknowledgements via email
-  - Store guest details and identification, and verify guests through OTP.
-  - Role-based access to functionality, with separate access for admins and regular
-    users.
-  - Create and manage billing entries, and generate professional invoices using the
-    system's built-in template.
-- title: Vizima.in
-  description: Website for a hospitality company.
-  image_path: "./src/static/img/projects/vizima.png"
-  url: https://www.vizima.in
-  tags:
-  - Next.js
-  - Firebase
-  - Chakra UI
-  points:
-  - The website was developed for an Indian hospitality company and features a modern
-    and clean design, built using Next.js, Firebase, and TypeScript.
-  - Featured in Chakra UI <a href='https://github.com/chakra-ui/awesome-chakra-ui'>showcase.</a>
-  - Contact & Registration forms are powered by Firestore NoSQL.
-- title: carteakey.dev
-  description: 'This website! '
-  image_path: "./src/static/img/projects/carteakey.png"
-  url: https://carteakey.dev
-  github: https://github.com/carteakey/carteakey.dev
-  tags:
-  - Eleventy
-  - Tailwind
-  points:
-  - Blog and Portfolio with a focus on minimalistic design.
-  - Fast and Lightweight with a Lighthouse score of 97/100.
+  - title: Recomovi
+    description: Movie Recommender & IMDb Dataset Generator.
+    image_path: "./src/static/img/projects/recomovi.png"
+    url: https://recomovi.streamlit.app
+    github: https://github.com/carteakey/recomovi
+    tags:
+    - Python
+    - Streamlit
+    points:
+    - Content-based movie recommendation app.
+    - Configurable scraper for realtime IMDb dataset and keyword generation.
+    - Scrapes IMDb Advanced Search Page using beautifulsoup. Dataset of approx 8000
+      movies.
+    - Rake to extract keywords from plot summary. Cosine Similarity Index to filter
+      top 10 similar movies.
+  - title: MicroHMS
+    description: Hotel Management System to track bookings and generate invoices.
+    image_path: "./src/static/img/projects/microhms.png"
+    url: https://microhms.onrender.com
+    github: https://github.com/carteakey/microhms
+    tags:
+    - Flask
+    - PostgreSQL
+    points:
+    - Create & manage bookings, send booking acknowledgements via email
+    - Store guest details and identification, and verify guests through OTP.
+    - Role-based access to functionality, with separate access for admins and regular
+      users.
+    - Create and manage billing entries, and generate professional invoices using the
+      system's built-in template.
+  - title: Vizima.in
+    description: Website for a hospitality company.
+    image_path: "./src/static/img/projects/vizima.png"
+    url: https://www.vizima.in
+    tags:
+    - Next.js
+    - Firebase
+    - Chakra UI
+    points:
+    - The website was developed for an Indian hospitality company and features a modern
+      and clean design, built using Next.js, Firebase, and TypeScript.
+    - Featured in Chakra UI <a href='https://github.com/chakra-ui/awesome-chakra-ui'>showcase.</a>
+    - Contact & Registration forms are powered by Firestore NoSQL.
+  - title: carteakey.dev
+    description: 'This website! '
+    image_path: "./src/static/img/projects/carteakey.png"
+    url: https://carteakey.dev
+    github: https://github.com/carteakey/carteakey.dev
+    tags:
+    - Eleventy
+    - Tailwind
+    points:
+    - Blog and Portfolio with a focus on minimalistic design.
+    - Fast and Lightweight with a Lighthouse score of 97/100.

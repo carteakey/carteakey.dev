@@ -24,8 +24,7 @@ For devs looking to migrate their apps & databases from Heroku to another free s
 
 While these options are great, there is another way to host your application with zero / minimal costs. These can be by running a VM by any of the top-level providers.
 
-| :exclamation: | Or you could go complete r/selfhosted by running your application on a Raspberry Pi! |
-| ------------- | ------------------------------------------------------------------------------------ |
+> :exclamation: Or you could go complete r/selfhosted by running your application on a Raspberry Pi! 
 
 - Google Cloud Platform
 - AWS
@@ -165,7 +164,6 @@ SSH back to the VM and just run the pg_restore command
 pg_restore --verbose --clean --no-acl --no-owner -h localhost -U <your_user_name> -d <your_db_name> latest.dump
 ```
 
-| :exclamation: | There may be a bunch of warnings, but we can ignore them as long as the final database looks fine. |
-| ------------- | -------------------------------------------------------------------------------------------------- |
+> :exclamation:  There may be a bunch of warnings, but we can ignore them as long as the final database looks fine. 
 
 And that's it - our database has been successfully migrated.

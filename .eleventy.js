@@ -5,7 +5,6 @@ const { DateTime } = require("luxon");
 const markdownIt = require("markdown-it");
 const markdownItAnchor = require("markdown-it-anchor");
 const markdownItEmoji = require("markdown-it-emoji");
-const markdownItContainer = require("markdown-it-container");
 const eleventyGoogleFonts = require("eleventy-google-fonts");
 
 const pluginSyntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
@@ -45,10 +44,6 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy({ "./src/static/img/favicon": "/" });
   eleventyConfig.addPassthroughCopy({ "./src/admin/config.yml": "./admin/config.yml" });
   
-  //yaml support
-  module.exports = eleventyConfig => {
-    eleventyConfig.addDataExtension("yaml", contents => yaml.load(contents));
-  };
 
   // Add plugins
   eleventyConfig.addPlugin(pluginSyntaxHighlight);
@@ -141,6 +136,9 @@ module.exports = function (eleventyConfig) {
     ui: false,
     ghostMode: false,
   });
+
+  //yaml support
+  eleventyConfig.addDataExtension("yaml", (contents) => yaml.load(contents));
 
   return {
     // Control which files Eleventy will process
