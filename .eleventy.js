@@ -42,6 +42,8 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("./src/assets/css/prism-a11y-dark.css");
   eleventyConfig.addPassthroughCopy("./src/assets/Kartikey-Chauhan-Resume-2023.pdf");
   eleventyConfig.addPassthroughCopy({ "./src/assets/img/favicon": "/" });
+  eleventyConfig.addPassthroughCopy({ "./src/admin/config.yml": "./admin/config.yml" });
+  
 
   // Add plugins
   eleventyConfig.addPlugin(pluginSyntaxHighlight);
