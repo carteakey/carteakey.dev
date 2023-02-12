@@ -46,7 +46,7 @@ I will be using the VM instance provided by Oracle Cloud (yes I know you hate Or
 Let's start by taking a snapshot of your database in Heroku. We will need the Heroku CLI. [Install](https://devcenter.heroku.com/articles/heroku-cli) it if you haven't already (either on your PC or on the VM itself will do).
 
 ```bash
-curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
+curl https://cli-static.heroku.com/install-ubuntu.sh | sh
 ```
 
 Login using your browser

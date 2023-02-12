@@ -3,7 +3,7 @@ backend:
   branch: main 
 
 # publish_mode: editorial_workflow
-media_folder: "src/assets/img" # Media files will be stored in the repo under src/assets/img
+media_folder: "src/static/img" # Media files will be stored in the repo under src/static/img
 public_folder: "/img"
 
 collections:
@@ -13,7 +13,7 @@ collections:
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}" # Filename template, e.g., YYYY-MM-DD-title.md
     editor:
-      preview: false
+      preview: true
     fields:
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Description", name: "description", widget: "string" }

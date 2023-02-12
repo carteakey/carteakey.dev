@@ -5,13 +5,13 @@
   "scripts": {
     "build": "npm-run-all -s build:*",
     "build:11ty": "npx @11ty/eleventy",
-    "build:css": "tailwindcss -i ./src/assets/css/tailwind.css -o ./_site/css/tailwind.css --minify --postcss",
+    "build:css": "tailwindcss -i ./src/static/css/tailwind.css -o ./_site/css/tailwind.css --minify --postcss",
     "bench": "DEBUG=Eleventy:Benchmark* npx @11ty/eleventy",
     "watch": "npx @11ty/eleventy --watch",
     "serve": "npx @11ty/eleventy --serve",
     "start": "npm-run-all -p start:*",
     "start:11ty": "npx @11ty/eleventy --serve",
-    "start:css": "tailwindcss -i ./src/assets/css/tailwind.css -o ./_site/css/tailwind.css --watch --postcss",
+    "start:css": "tailwindcss -i ./src/static/css/tailwind.css -o ./_site/css/tailwind.css --watch --postcss",
     "debug": "DEBUG=* npx @11ty/eleventy"
   },
   "repository": {
@@ -31,7 +31,6 @@
     "luxon": "^2.4.0",
     "markdown-it": "^13.0.1",
     "markdown-it-anchor": "^8.6.4",
-    "markdown-it-container": "^3.0.0",
     "markdown-it-emoji": "^2.0.2",
     "npm-run-all": "^4.1.5",
     "steamwidgets": "^1.0.4"

@@ -1,4 +1,5 @@
 const fs = require("fs");
+const yaml = require("js-yaml");
 
 const { DateTime } = require("luxon");
 const markdownIt = require("markdown-it");
@@ -38,12 +39,16 @@ async function imageShortcode(src, alt) {
 
 module.exports = function (eleventyConfig) {
   // Copy the `img` and `css` folders to the output
-  eleventyConfig.addPassthroughCopy({"./src/assets/img":"/img/"});
-  eleventyConfig.addPassthroughCopy("./src/assets/css/prism-a11y-dark.css");
-  eleventyConfig.addPassthroughCopy("./src/assets/Kartikey-Chauhan-Resume-2023.pdf");
-  eleventyConfig.addPassthroughCopy({ "./src/assets/img/favicon": "/" });
+  eleventyConfig.addPassthroughCopy({"./src/static/img":"/img/"});
+  eleventyConfig.addPassthroughCopy("./src/static/css/prism-a11y-dark.css");
+  eleventyConfig.addPassthroughCopy("./src/static/Kartikey-Chauhan-Resume-2023.pdf");
+  eleventyConfig.addPassthroughCopy({ "./src/static/img/favicon": "/" });
   eleventyConfig.addPassthroughCopy({ "./src/admin/config.yml": "./admin/config.yml" });
   
+  //yaml support
+  module.exports = eleventyConfig => {
+    eleventyConfig.addDataExtension("yaml", contents => yaml.load(contents));
+  };
 
   // Add plugins
   eleventyConfig.addPlugin(pluginSyntaxHighlight);
@@ -117,16 +122,7 @@ module.exports = function (eleventyConfig) {
       slugify: eleventyConfig.getFilter("slugify"),
     })
     .use(markdownItEmoji);
-  // .use(markdownItContainer);
   eleventyConfig.setLibrary("md", markdownLibrary);
-
-  // //Use markdown-it-emoji & markdown-it-container
-  // eleventyConfig.amendLibrary("md", (markdownLibrary) =>
-  //   markdownLibrary.use(markdownItEmoji)
-  // );
-  // eleventyConfig.amendLibrary("md", (markdownLibrary) =>
-  //   mdLib.use(markdownItContainer)
-  // );
 
   // Override Browsersync defaults (used only with --serve)
   eleventyConfig.setBrowserSyncConfig({

@@ -1,0 +1,31 @@
+---
+projects:
+- title: Supply Chain Analytics Tool
+  description: Tool to classify cause of order misses.
+  image_path: "./src/static/img/projects/falldown.png"
+  tags:
+  - PL/SQL
+  - Oracle EBS
+  points:
+  - The solution analyzed the supply, demand, shipping and delivery information for
+    each open customer order in a specific interval.
+  - This data was fed to an evolving decision matrix, that could classify the cause
+    of an order failing to reach on time.
+  - The matrix was developed through identifying patterns in past order data, classifying
+    misses into 4 segments (Order, Ship, Delivery and Quantity).
+  - Objective was to achieve the desired Ship Reliability Matrix with KPIs and enabled
+    the business to monitor their customer serviceability percentage.
+- title: Basel 3.1 Reforms
+  description: Updating ETL to comply with Basel 3.1.
+  image_path: "./src/static/img/projects/basel-iii-pillars.png"
+  tags:
+  - Python
+  - Netezza
+  - Linux
+  points:
+  - The project involved the development and testing of ETL processes that were used
+    to generate reports required for compliance with Basel 3.1 regulations.
+  - It required collaboration with teams to troubleshoot data issues and incorporate
+    techniques for data auditing and data quality assurance.
+  - These techniques and workflows were implemented using Netezza SQL, Python (pandas,
+    xlrd..) & Bash.
