@@ -13,9 +13,9 @@ eleventyNavigation:
   Download my resume <a href="/static/Kartikey-Chauhan-Resume-2023.pdf">here</a>.
 </p>
 
-<hr>
+<hr class="-mt-1">
 
-<h2>Projects</h2>
+<h2 class="-mt-6">Projects</h2>
 
 <h3>Work</h3>
 <p> 
@@ -37,7 +37,7 @@ eleventyNavigation:
       </a>
 
       {% if project.github %} 
-      <a class="self-center  hover:bg-gray-200 hover:dark:bg-gray-600 transition-all" title="View Code" href="{{ project.github }}"> 
+      <a class="self-center   transition-all" title="View Code" href="{{ project.github }}"> 
         {% feather "code" %}
       </a>
       {% endif %}
@@ -46,7 +46,7 @@ eleventyNavigation:
       {{ project.description }}
     </p>  
       <ul class="flex flex-row list-none text-sm mx-0 px-0 my-2">
-        {% for tag in project.tags %}<li class="bg-gray-200 dark:bg-gray-600 p-1 mx-2">{{ tag }}</li>{% endfor %}
+        {% for tag in project.tags %}<li class="border p-1 mx-2">{{ tag }}</li>{% endfor %}
       </ul>
 
       <ul class="flex flex-col my-1"> 
@@ -76,7 +76,7 @@ eleventyNavigation:
       </a>
 
       {% if project.github %} 
-      <a class="self-center  hover:bg-gray-200 hover:dark:bg-gray-600 transition-all" title="View Code" href="{{ project.github }}"> 
+      <a class="self-center   transition-all" title="View Code" href="{{ project.github }}"> 
         {% feather "code" %}
       </a>
       {% endif %}
@@ -85,7 +85,7 @@ eleventyNavigation:
       {{ project.description }}
     </p>  
       <ul class="flex flex-row list-none text-sm mx-0 px-0 my-2">
-        {% for tag in project.tags %}<li class="bg-gray-200 dark:bg-gray-600 p-1 mx-2">{{ tag }}</li>{% endfor %}
+        {% for tag in project.tags %}<li class="border p-1 mx-2">{{ tag }}</li>{% endfor %}
       </ul>
 
       <ul class="flex flex-col my-1"> 

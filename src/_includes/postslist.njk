@@ -1,18 +1,35 @@
-<ul reversed class="postlist" style="counter-reset: start-from {{ (postslistCounter or postslist.length) + 1 }}">
+<ul reversed class="postlist w-full list-none" style="counter-reset: start-from {{ (postslistCounter or postslist.length) + 1 }}">
   {% for post in postslist | reverse %}
     <li class="postlist-item{% if post.url == url %} postlist-item-active{% endif %}">
-      <a href="{{ post.url | url }}" class="postlist-link">
+      <div class="grid grid-cols-4">
+      
+      <time class="float-right postlist-date hidden sm:block" datetime="{{ post.date | postDate }}">{{ post.date | postDate }}</time>
+      
+      <a href="{{ post.url | url }}" class="col-span-3 hover:underline">
         {% if post.data.title %}
           {{ post.data.title }}
         {% else %}
           <code>{{ post.url }}</code>
         {% endif %}
       </a>
-      <time class="float-right postlist-date hidden sm:block" datetime="{{ post.date | postDate }}">{{ post.date | postDate }}</time>
-      {# {% for tag in post.data.tags | filterTagList %}
+
+      <div class="flex flex-row text-sm items -mx-1 py-1">
+        {% for tag in post.data.tags | filterTagList %}
         {% set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
-        <a href="{{ tagUrl | url }}" class="post-tag">{{ tag }}</a>
-      {% endfor %} #}
+        <a href="{{ tagUrl | url }}" class="px-1 font-light">{{ tag }}</a>
+        {% endfor %}
+      </div>
+
+      <div class='col-span-3  text-gray-600 dark:text-gray-300 font-light'>
+        {{ post.data.description }}
+      </div>
+
+
+
+    </div>
+
+      
+
     </li>
   {% endfor %}
 </ul>

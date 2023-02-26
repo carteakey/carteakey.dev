@@ -4,68 +4,78 @@ templateClass: tmpl-post
 ---
 
 <h1>{{ title }}</h1>
-Posted on <time datetime="{{ page.date | readableDate }}">{{ page.date | readableDate }}</time> 
-
-{%- for tag in tags | filterTagList %}
-  {%- set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
-  <a href="{{ tagUrl | url }}" class="post-tag bg-gray-200 dark:bg-gray-500 no-underline float-right px-2 mx-1">{{ tag }}</a>
-{%- endfor %}
-
+<div class="flex flex-col float-right -mt7 text-right text-sm">
+  <time datetime="{{ page.date | readableDate }}">{{page.date | readableDate}}</time>
+  <div class="-mx-1">
+    {%- for tag in tags | filterTagList %} {%- set tagUrl %}/tags/{{
+      tag | slugify
+    }}/{% endset %}
+    <a
+      href="{{ tagUrl | url }}"
+      class="font-light float-right p-1"
+      >{{ tag }}</a
+    >
+    {%- endfor %}
+  </div>
+</div>
+<h2 class="font-light -mt-7  text-gray-600 dark:text-gray-300">{{ description }}</h2>
+<hr class="w-9/12">
 
 {{ content | safe }}
-{%- if collections.posts %}
-  {%- set nextPost = collections.posts | getNextCollectionItem(page) %}
-  {%- set previousPost = collections.posts | getPreviousCollectionItem(page) %}
-  {%- if nextPost or previousPost %}
-    <hr>
-    <ul>
-      {%- if nextPost %}
-        <li>Next:
-            <a href="{{ nextPost.url | url }}">{{ nextPost.data.title }}</a>
-        </li>
-      {% endif %}
-      {%- if previousPost %}
-        <li>Previous:
-            <a href="{{ previousPost.url | url }}">{{ previousPost.data.title }}</a>
-        </li>
-      {% endif %}
-    </ul>
-  {%- endif %}
-{%- endif %}
+{%- if collections.posts %} {%- set nextPost = collections.posts |
+getNextCollectionItem(page) %} {%- set previousPost = collections.posts |
+getPreviousCollectionItem(page) %} {%- if nextPost or previousPost %}
+<hr />
+<ul>
+  {%- if nextPost %}
+  <li>
+    Next:
+    <a href="{{ nextPost.url | url }}">{{ nextPost.data.title }}</a>
+  </li>
+  {% endif %} {%- if previousPost %}
+  <li>
+    Previous:
+    <a href="{{ previousPost.url | url }}">{{ previousPost.data.title }}</a>
+  </li>
+  {% endif %}
+</ul>
+{%- endif %} {%- endif %}
 
 <div class="comments">
   <script>
-      // load utteranc comment
-      var getTheme = window.localStorage && window.localStorage.getItem("theme");
-      getTheme = getTheme == null ? 'light' : getTheme;
+    // load utteranc comment
+    var getTheme = window.localStorage && window.localStorage.getItem("theme");
+    getTheme = getTheme == null ? "light" : getTheme;
 
-      let theme = getTheme === 'dark' ? 'github-dark' : 'github-light';
-      let s = document.createElement('script');
-      s.src = 'https://utteranc.es/client.js';
-      s.setAttribute('repo', 'carteakey/carteakey.dev');
-      s.setAttribute('issue-term', 'pathname');
-      s.setAttribute('theme', theme);
-      s.setAttribute('crossorigin', 'anonymous');
-      s.setAttribute('async', '');
-      document.querySelector('div.comments').innerHTML = '';
-      document.querySelector('div.comments').appendChild(s);
+    let theme = getTheme === "dark" ? "github-dark" : "github-light";
+    let s = document.createElement("script");
+    s.src = "https://utteranc.es/client.js";
+    s.setAttribute("repo", "carteakey/carteakey.dev");
+    s.setAttribute("issue-term", "pathname");
+    s.setAttribute("theme", theme);
+    s.setAttribute("crossorigin", "anonymous");
+    s.setAttribute("async", "");
+    document.querySelector("div.comments").innerHTML = "";
+    document.querySelector("div.comments").appendChild(s);
 
-      // auto swith utteranc theme by body class change
-      const mutationObserver = new MutationObserver((mutationsList, observer) => {
-          mutationsList.forEach(mutation => {
-              if (mutation.attributeName === "class") {
-                  if (document.querySelector('.utterances-frame')) {
-                      const theme = mutation.target.classList.contains("dark-theme") ? 'github-dark' : 'github-light'
-                      const message = {
-                          type: 'set-theme',
-                          theme: theme
-                      };
-                      const iframe = document.querySelector('.utterances-frame');
-                      iframe.contentWindow.postMessage(message, 'https://utteranc.es');
-                  }
-              }
-          })
+    // auto switch utteranc theme by body class change
+    const mutationObserver = new MutationObserver((mutationsList, observer) => {
+      mutationsList.forEach((mutation) => {
+        if (mutation.attributeName === "class") {
+          if (document.querySelector(".utterances-frame")) {
+            const theme = mutation.target.classList.contains("dark-theme")
+              ? "github-dark"
+              : "github-light";
+            const message = {
+              type: "set-theme",
+              theme: theme,
+            };
+            const iframe = document.querySelector(".utterances-frame");
+            iframe.contentWindow.postMessage(message, "https://utteranc.es");
+          }
+        }
       });
-      mutationObserver.observe(document.body, { attributes: true });
+    });
+    mutationObserver.observe(document.body, { attributes: true });
   </script>
 </div>

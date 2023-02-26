@@ -84,7 +84,7 @@
           https://www.11ty.dev/docs/plugins/navigation/ #} {% set navPages =
           collections.all | eleventyNavigation %} {#
           <a
-            class="self-center font-bold rounded-md p-1 sm:px-3 sm:py-2 hover:bg-gray-200 hover:dark:bg-gray-600 transition-all"
+            class="self-center font-bold rounded-md p-1 sm:px-3 sm:py-2  transition-all"
             href="{{ '/' | url }}"
             >{{ metadata.title }}</a
           >
@@ -93,7 +93,7 @@
           <ul class="list-none mx-0 px-0">
             {%- for entry in navPages %}
             <span
-              class="font-normal px-3 py-2 hover:bg-gray-200 hover:dark:bg-gray-600 transition-all" 
+              class="font-normal px-3 py-2  transition-all" 
             >
               <a class="no-underline hover:underline" href="{{ entry.url }}">{{
                 entry.title
@@ -104,7 +104,7 @@
 
           <button
             id="toggleDarkMode"
-            class="self-center font-bold p-1 sm:px-3 sm:py-2 hover:bg-gray-200 hover:dark:bg-gray-600 transition-all"
+            class="self-center font-bold p-1 sm:px-3 sm:py-2  transition-all"
           >
             {% feather "sun" %}
           </button>
@@ -132,14 +132,14 @@
 
         <footer class="flex w-full pt-8 pb-8 flex-row justify-end">
           <a
-            class="self-center p-1 sm:px-3 sm:py-2 hover:bg-gray-200 hover:dark:bg-gray-600 transition-all"
+            class="self-center p-1 sm:px-3 sm:py-2  transition-all"
             href="https://www.linkedin.com/in/kartikeychauhan/"
             title="LinkedIn"
             alt="LinkedIn"
             >{% feather "linkedin" %}</a
           >
           <a
-            class="self-center p-1 sm:px-3 sm:py-2 hover:bg-gray-200 hover:dark:bg-gray-600 transition-all"
+            class="self-center p-1 sm:px-3 sm:py-2  transition-all"
             href="https://github.com/carteakey"
             title="GitHub"
             alt="GitHub"
