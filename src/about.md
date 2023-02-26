@@ -64,5 +64,3 @@ Gaming is one of the many ways I like to spend my free time. I am a huge Soulsbo
 
 Feel free to [contact](mailto:kartikeychauhan27@gmail.com) me if you want to connect.
 
-
-<a href="https://twitter.com/kartychauhan?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false">@kartychauhan</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
