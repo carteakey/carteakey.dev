@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ metadata.language }}">
+<html lang="{{ metadata.language }}" class="scroll-smooth">
   <head>
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
@@ -72,12 +72,12 @@
     />
   </head>
 
-  <body class="bg-gray-50 dark:bg-gray-800">
+  <body class="bg-gray-50 dark:bg-gray-800 ">
     <div class="md:max-w-prose mx-auto">
       {# Gotta fix some min width shit here #}
 
       <div
-        class="prose prose-gray prose-h1:text-4xl dark:prose-invert px-4 sm:px-0"
+        class="prose prose-gray prose-h1:text-4xl dark:prose-invert px-4 md:px-0"
       >
         <nav class="flex w-full py-8 justify-between">
           {#- Read more about `eleventy-navigation` at
@@ -104,10 +104,17 @@
 
           <button
             id="toggleDarkMode"
-            class="self-center font-bold p-1 sm:px-3 sm:py-2  transition-all"
-          >
+            class="self-center font-bold p-1 sm:px-3 sm:py-2 transition-all">
+            
+            {% if localStorage.theme = "light" %}}
+            {% feather "moon" %}
+            {% else %}
             {% feather "sun" %}
+            {% endif %}
+            
           </button>
+
+
         </nav>
 
         <main {% if templateClass %} class="{{ templateClass }}" {% endif %}>
