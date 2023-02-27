@@ -14,7 +14,7 @@ The site has come a long way from back when I posted the original article ([This
 
 Here’s what I’ve been able to add so far.
 
-#### Tailwind CSS
+### Tailwind CSS
 
 I wanted to build my own minimal design system, so Tailwind seemed perfect for it. It abstracts CSS by providing much easier-to-understand utility classes. Yes, the class names become huge, but the tradeoff of readability for building fast is very much worth it. I know there's no end to this discussion, but using Tailwind has been the easiest front-end building experience, in my limited time building frontends.
 
@@ -59,7 +59,7 @@ Use the built stylesheet in the base template.
 <link rel="stylesheet" href="{{ '/css/tailwind.css' | url }}" />
 ```
 
-#### Dark Mode
+### Dark Mode
 
 Here's where my transition started to pay off. Adding dark mode with Tailwind was trivial.
 
@@ -124,7 +124,7 @@ Add dark mode class variants to your preference wherever applicable. (Tailwind w
 
 And that's it. Fully functional dark mode with just a few lines of code.
 
-#### Tailwind Typography
+### Tailwind Typography
 
 I wanted my site to have proper readability. As before, Tailwind comes to the rescue with its typography plugin.
 
@@ -160,7 +160,7 @@ Add prose classes to your base template's parent element.
 
 This was a real shocker, with a few lines of code, the site changed from a shady 90's HTML site to a clean and modern design. 
 
-#### Centered Content with Readable line length
+### Centered Content & Readable line length
 
 This took me embarrassingly long to figure out, but the solution was a simple one. We use the `max-w-prose` utility class provided to limit the width of the container.
 
@@ -174,7 +174,7 @@ This took me embarrassingly long to figure out, but the solution was a simple on
 </body>
 ```
 
-#### Comments with Utterances
+### Comments with Utterances
 
 I used Disqus on my old site, and it was time to move to an open-source and no lock-in alternative. 
 
@@ -235,9 +235,9 @@ I wanted it to dynamically sync the theme of the comments with the site's theme,
 </div>
 ```
 
-#### Netlify CMS
+### Netlify CMS
 
-Since I was already using Netlify as my hosting solution, it made sense to use the CMS(https://www.netlifycms.org) as well, to make editing and publishing new posts easier. I could do it directly, but I always end up working on the site's code, instead of posting blogs, which is why the whole site exists, ugh... 
+Since I was already using Netlify as my hosting solution, it made sense to use the [CMS](https://www.netlifycms.org) as well, to make editing and publishing new posts easier. I could do it directly, but I always end up working on the site's code, instead of posting blogs, which is why the whole site exists, ugh... 
 
 The habit won't go away anytime soon, so a CMS helps separate code from the content and helps me focus on writing more. 
 
@@ -296,13 +296,11 @@ collections:
         min: 1
 ```
 
-#### Notices in Markdown
+### Notices in Markdown
 
 Github-flavored markdown offers an easy way to have tips/callouts in your article, to call attention to a block of text.
 
-
-![](/img/github_callouts.png)
-
+{% image "./src/static/img/github_callouts.png", "Github Callouts", "50vw" %}
 
 There's no such thing here, and I have to rely on blockquote + emoji, or single row table + emoji instead e.g.
 

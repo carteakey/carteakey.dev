@@ -10,19 +10,21 @@ const eleventyGoogleFonts = require("eleventy-google-fonts");
 const pluginSyntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
 const pluginNavigation = require("@11ty/eleventy-navigation");
 const eleventyPluginFeathericons = require('eleventy-plugin-feathericons');
-
+const pluginTOC = require('eleventy-plugin-toc')
 
 const Image = require("@11ty/eleventy-img");
 
-async function imageShortcode(src, alt) {
+async function imageShortcode(src, alt, sizes) {
   let metadata = await Image(src, {
     widths: ["auto"],
     formats: ["auto"],
     outputDir: "./_site/img/",
   });
 
-  sizes = "(min-width: 30em) 50vw, 100vw";
-
+  if(sizes == null) {
+    sizes = "(min-width: 30em) 50vw, 100vw";
+  }
+  
   let imageAttributes = {
     alt,
     sizes,
@@ -118,7 +120,11 @@ module.exports = function (eleventyConfig) {
     })
     .use(markdownItEmoji);
   eleventyConfig.setLibrary("md", markdownLibrary);
-
+  //Table of Contents
+  eleventyConfig.addPlugin(pluginTOC, {
+    ul: true
+  })
+  
   // Override Browsersync defaults (used only with --serve)
   eleventyConfig.setBrowserSyncConfig({
     callbacks: {

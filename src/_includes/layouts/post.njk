@@ -24,6 +24,12 @@ templateClass: tmpl-post
 <hr class="w-3/5 sm:w-9/12">
 
 {{ content | safe }}
+
+<aside class="fixed top-1/4 right-5 xl:right-20 w-40 xl:w-56 h-screen sm:translate-x-0 text-sm hidden lg:block" aria-label="Sidebar">
+  <p class="text-lg my-0">Outline</p>
+  {{ content | toc | safe }}
+</aside>
+
 {%- if collections.posts %} {%- set nextPost = collections.posts |
 getNextCollectionItem(page) %} {%- set previousPost = collections.posts |
 getPreviousCollectionItem(page) %} {%- if nextPost or previousPost %}
