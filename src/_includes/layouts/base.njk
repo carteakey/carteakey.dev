@@ -105,15 +105,9 @@
           <button
             id="toggleDarkMode"
             class="self-center font-bold p-1 sm:px-3 sm:py-2 transition-all">
-            
-            {% if localStorage.theme = "light" %}}
-            {% feather "moon" %}
-            {% else %}
-            {% feather "sun" %}
-            {% endif %}
-            
+            {% feather "moon" , class="block dark:hidden" %}
+            {% feather "sun" , class="hidden dark:block"%}
           </button>
-
 
         </nav>
 
