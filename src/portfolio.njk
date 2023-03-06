@@ -64,7 +64,7 @@ eleventyNavigation:
 </p>
 
 
-<div class="grid md:grid-cols-2 gap-5">
+<div class="grid md:grid-cols-2 gap-5 ">
   {% for project in projects.projects %}
     <div class="p-4 border-2 border-gray-200 shadow-sm dark:border-gray-600  flex flex-col">
       
@@ -107,10 +107,11 @@ eleventyNavigation:
 <p>
   Here are some of the courses and certificates i've done.
 </p>
-<div class="grid grid-cols-2 md:grid-cols-4">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
   {% for badge in badges.badges %}
-  <div data-iframe-width="150" data-iframe-height="270" data-share-badge-id= {{badge.badge_id}} data-share-badge-host="https://www.credly.com"></div><script type="text/javascript" async src="//cdn.credly.com/assets/utilities/embed.js"></script>
-  {# <div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="d18435bc-bc9f-45a3-bb5c-b6337bebdb9a" data-share-badge-host="https://www.credly.com"></div><script type="text/javascript" async src="//cdn.credly.com/assets/utilities/embed.js"></script>
-   #}
+  <div class='bg-gray-50 dark:bg-gray-300 border-gray-200 dark:border-gray-600 border-2 shadow-sm h-52 overflow-hidden text-sm w-fit'>
+    <div data-iframe-width="150" data-iframe-height="270" data-share-badge-id= {{badge.badge_id}} data-share-badge-host="https://www.credly.com"></div><script type="text/javascript" async src="//cdn.credly.com/assets/utilities/embed.js"></script>
+  </div>
   {% endfor %} 
+  
 </div>
