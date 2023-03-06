@@ -1,25 +1,59 @@
 ---
 layout: layouts/home.njk
-eleventyNavigation:
-  key: Home
-  order: 1
+templateEngineOverride: njk
 ---
+{# eleventyNavigation: key: carteakey.dev order: 1 #}
+<div class="intro flex flex-col md:flex-row">
+  <img alt="name"
+       src="/img/mugshot.png"
+       class="rounded-full md:m-10 ml-0 w-28 h-28 self-center md:self-auto"/>
+  <div class="max-w-md">
+    <p>
+      Hi 👋🏼, I'm <span class="font-bold">Kartikey</span>, and welcome to my
+      website!
+      <br />
+    </p>
+    <p class="-mt-2">
+      I'm a software engineer at
+      <a href="https://www.tcs.com/who-we-are/worldwide/tcs-na"
+         class="no-underline"><span class="font-bold">TCS Canada</span></a
+        >. Outside work, I spend my time tinkering with tech and building fun
+        <a href="" class="no-underline"><span class="font-bold">projects</span></a
+          >.
+          <br />
+        </p>
+        <p class="-mt-2">
+          Here, I like to write about software, data science, and other things I
+          find interesting — so grab a cup of coffee and feel free to look around!
+        </p>
+      </div>
+    </div>
+    <hr class="mt-4" />
 
+    {% set maxPosts = collections.posts.length | min(3) %} 
 
-{% set maxPosts = collections.posts.length | min(3) %}
+    <h1>Recent Posts</h1>
+    {% set postslist = collections.posts | head(-3) %} {% set postslistCounter =
+    collections.posts | length %}
+    {% include "postslist.njk" %}
+    <p>
+      More posts can be found in <a href="{{ '/posts/' | url }}">the blog</a>.
+    </p>
 
+    <hr class="mt-4" />
 
-{# <h1>Latest
-  {% if maxPosts == 1 %}Post
-  {% else %}
-    {{ maxPosts }} Posts{% endif %}
-</h1> #}
-<h1>
-Recent Posts
-</h1>
+    <h2>Quote of the Day</h2>
+    
+    <blockquote id="qotd">
+      {{qotd.quote}}
+    </blockquote>
+    <!-- The script itself, loaded AFTER your root element. -->
+    <script src="https://unpkg.com/typeit@8.7.1/dist/index.umd.js"></script>
+    <script>
+      const instance = new TypeIt("#qotd", {
+        speed: 30,
+        waitUntilVisible: true
+      })
 
-{% set postslist = collections.posts | head(-3) %}
-{% set postslistCounter = collections.posts | length %}
-{% include "postslist.njk" %}
-<p>More posts can be found in
-  <a href="{{ '/posts/' | url }}">the blog</a>.</p>
+      instance.go();
+    </script>
