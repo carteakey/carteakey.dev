@@ -15,7 +15,8 @@ eleventyNavigation:
 
 <hr class="-mt-1">
 
-<h2 class="-mt-6">Projects</h2>
+
+<h2 class="-mt-6" >Projects</h2>
 
 <h3>Work</h3>
 <p> 
@@ -32,7 +33,7 @@ eleventyNavigation:
 
       <div class="flex flex-row justify-between">
 
-      <a href=" {% if project.url %} {{ project.url }} {% endif %}" title="View Project" >
+      <a style="pointer-events: none; cursor: default;" title="View Project" >
         <h3 class="text-xl font-bold my-0">{{ project.title }}</h3>
       </a>
 
@@ -100,4 +101,16 @@ eleventyNavigation:
       <a href="https://github.com/carteakey?tab=repositories">github</a>
     </p>
   </div>
+</div>
+
+<h2 class="-mt-2">Certifications</h2>
+<p>
+  Here are some of the courses and certificates i've done.
+</p>
+<div class="grid grid-cols-2 md:grid-cols-4">
+  {% for badge in badges.badges %}
+  <div data-iframe-width="150" data-iframe-height="270" data-share-badge-id= {{badge.badge_id}} data-share-badge-host="https://www.credly.com"></div><script type="text/javascript" async src="//cdn.credly.com/assets/utilities/embed.js"></script>
+  {# <div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="d18435bc-bc9f-45a3-bb5c-b6337bebdb9a" data-share-badge-host="https://www.credly.com"></div><script type="text/javascript" async src="//cdn.credly.com/assets/utilities/embed.js"></script>
+   #}
+  {% endfor %} 
 </div>
