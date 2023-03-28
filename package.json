@@ -37,6 +37,7 @@
     "markdown-it": "^13.0.1",
     "markdown-it-anchor": "^8.6.7",
     "markdown-it-emoji": "^2.0.2",
+    "node-fetch": "2.6.7",
     "npm-check-updates": "^16.8.0",
     "npm-run-all": "^4.1.5",
     "openai": "^3.2.1",
@@ -47,6 +48,7 @@
     "autoprefixer": "^10.4.14",
     "eleventy-google-fonts": "^0.1.0",
     "eleventy-plugin-feathericons": "^1.0.1",
+    "netlify-plugin-cache": "^1.0.3",
     "postcss": "^8.4.21",
     "tailwindcss": "^3.2.7"
   }
