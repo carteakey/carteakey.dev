@@ -7,8 +7,8 @@ eleventyNavigation:
   key: Portfolio
   order: 4
 ---
+
 <h1>Portfolio</h1>
-{{ templateClass | log }}
 <p>
   Download my resume <a href="/static/Kartikey-Chauhan-Resume-2023.pdf">here</a>.
 </p>
@@ -28,8 +28,8 @@ eleventyNavigation:
 <div class="grid md:grid-cols-2 gap-5">
   {% for project in projects_work.projects %}
     <div class="p-4 border-2 border-gray-200 shadow-sm dark:border-gray-600  flex flex-col">
-      
-      {% image project.image_path, alt=project.title %}
+
+      {% image project.image_path, project.title %}
 
       <div class="flex flex-row justify-between">
 
@@ -68,7 +68,7 @@ eleventyNavigation:
   {% for project in projects.projects %}
     <div class="p-4 border-2 border-gray-200 shadow-sm dark:border-gray-600  flex flex-col">
       
-      {% image project.image_path, alt=project.title %}
+      {% image project.image_path, project.title %}
 
       <div class="flex flex-row justify-between">
 

@@ -141,27 +141,38 @@
           </script>
         </main>
 
-        <footer class="flex w-full pt-8 pb-8 flex-row justify-end">
-          
-          <a class="self-center p-1 sm:px-3 sm:py-2  transition-all" 
-          rel="me" href="https://mstdn.ca/@carteakey">
-          <img height="30" width="30" src="/img/mastodon.svg" />
-          </a>
+        <footer class="flex w-full pt-8 pb-8 flex-row justify-between">
+          {% if spotify.nowPlaying %}
+          <div class="flex items-center not-prose">
+            <img id="track-image" class="w-10 h-10 rounded-full mr-2 animate-spin-slow" src="{{ spotify.nowPlaying.albumImageUrl }}" alt="Album Art">
+            <div class=''>
+              <a href="https://open.spotify.com/track/29kUiQdEvB9q7joHiYZNJ3" target='_blank' class='hover:underline'><p id="track-name" class="text-sm font-bold ">{{ spotify.nowPlaying.title }}</p></a>  
+              <p id="artist-name" class="text-xs text-gray-400">{{ spotify.nowPlaying.artist }}</p>
+            </div>
+          </div>
+          {% endif %}
+          <div class='flex flex-row links'>
 
-          <a
-            class="self-center p-1 sm:px-3 sm:py-2  transition-all"
-            href="https://www.linkedin.com/in/kartikeychauhan/"
-            title="LinkedIn"
-            alt="LinkedIn"
-            >{% feather "linkedin" %}</a
-          >
-          <a
-            class="self-center p-1 sm:px-3 sm:py-2  transition-all"
-            href="https://github.com/carteakey"
-            title="GitHub"
-            alt="GitHub"
-            >{% feather "github" %}</a
-          >
+            <a class="self-center p-1 sm:px-3 sm:py-2  transition-all" 
+            rel="me" href="https://mstdn.ca/@carteakey">
+            <img height="30" width="30" src="/img/mastodon.svg" />
+            </a>
+
+            <a
+              class="self-center p-1 sm:px-3 sm:py-2  transition-all"
+              href="https://www.linkedin.com/in/kartikeychauhan/"
+              title="LinkedIn"
+              alt="LinkedIn"
+              >{% feather "linkedin" %}</a
+            >
+            <a
+              class="self-center p-1 sm:px-3 sm:py-2  transition-all"
+              href="https://github.com/carteakey"
+              title="GitHub"
+              alt="GitHub"
+              >{% feather "github" %}</a
+            >
+          </div>
 
    
         </footer>

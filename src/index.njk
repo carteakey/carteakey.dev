@@ -47,6 +47,7 @@ templateEngineOverride: njk
     <blockquote id="qotd">
       {{qotd.quote}}
     </blockquote>
+    <p class='p-0 -mt-2 float-right italic text-xs' id='who'>Powered by ChatGPT</p>
     <!-- The script itself, loaded AFTER your root element. -->
     <script src="https://unpkg.com/typeit@8.7.1/dist/index.umd.js"></script>
     <script>
@@ -54,6 +55,13 @@ templateEngineOverride: njk
         speed: 30,
         waitUntilVisible: true
       })
-
       instance.go();
+
+      const instance2 = new TypeIt("#who", {
+        speed: 30,
+        waitUntilVisible: true,
+        startDelay:4000
+      })
+      instance2.go().destroy();
+
     </script>
