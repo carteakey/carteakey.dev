@@ -11,21 +11,21 @@ const pluginSyntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
 const pluginNavigation = require("@11ty/eleventy-navigation");
 const eleventyPluginFeathericons = require('eleventy-plugin-feathericons');
 const pluginTOC = require('eleventy-plugin-toc')
+const pluginWebc = require('@11ty/eleventy-plugin-webc')
+
 
 const Image = require("@11ty/eleventy-img");
 
 require('dotenv').config()
 
-async function imageShortcode(src, alt, sizes) {
+async function imageShortcode(src, alt) {
   let metadata = await Image(src, {
     widths: ["auto"],
     formats: ["auto"],
     outputDir: "./_site/img/",
   });
 
-  if(sizes == null) {
-    sizes = "(min-width: 30em) 50vw, 100vw";
-  }
+  sizes = "(min-width: 30em) 50vw, 100vw";
   
   let imageAttributes = {
     alt,
@@ -54,6 +54,7 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPlugin(pluginNavigation);
   eleventyConfig.addPlugin(eleventyGoogleFonts);
   eleventyConfig.addPlugin(eleventyPluginFeathericons);
+  eleventyConfig.addPlugin(pluginWebc);
   
   // https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#valid-date-string
   eleventyConfig.addFilter("htmlDateString", (dateObj) => {
