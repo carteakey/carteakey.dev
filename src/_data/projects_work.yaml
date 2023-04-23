@@ -1,6 +1,6 @@
 ---
 projects:
-  - title: Supply Chain Analytics Tool
+  - title: Supply Chain Analytics 
     description: Tool to classify cause of order misses.
     image_path: "./src/static/img/projects/falldown.png"
     tags:

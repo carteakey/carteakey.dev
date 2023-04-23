@@ -3,10 +3,10 @@ module.exports = {
   content: ["./src/**/*.{njk,md}"],
   darkMode: "class",
   theme: {
+    fontFamily: {
+      'cp': "'Courier Prime', monospace"
+        },
     extend: {
-      fontFamily: {
-        'inter': ['Inter', 'sans-serif'],
-      },
       animation: {
         "spin-slow": "spin 7s linear infinite",
       },

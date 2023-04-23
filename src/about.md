@@ -12,7 +12,7 @@ Hi 👋🏼, Thanks for dropping by!
 My name's Kartikey. Most people pronounce it as **_carteakey_** - hence the [site](https://carteakey.dev).
 
 ## Work
-I'm a Software Engineer currently living in Toronto.
+I'm a Data Engineer (sort of) currently living in Toronto.
 
 Most of my experience has been with clients in **Supply Chain** & **Banking**, where I helped develop applications and automating stuff (the boring one, of course).
 

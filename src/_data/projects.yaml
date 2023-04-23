@@ -26,7 +26,6 @@ projects:
     tags:
       - Next.js
       - Firebase
-      - Chakra UI
 
   - title: carteakey.dev
     description: "This website! "
