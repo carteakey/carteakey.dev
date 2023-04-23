@@ -16,10 +16,8 @@ eleventyNavigation:
 <hr class="-mt-1">
 
 
-<h2 class="-mt-6" >Projects</h2>
-
-<h3>Work</h3>
-<p> 
+<h2>Work</h2>
+<p>
   Below are some the of the key projects I've worked on my professional capacity.
 </p>
 
@@ -27,73 +25,73 @@ eleventyNavigation:
 
 <div class="grid md:grid-cols-2 gap-5">
   {% for project in projects_work.projects %}
-    <div class="p-4 border-2 border-gray-200 shadow-sm dark:border-gray-600  flex flex-col">
+  <div class="p-4 border-2 border-gray-200 shadow-sm dark:border-gray-600  flex flex-col">
 
-      {% image project.image_path, project.title %}
+    {% image project.image_path, project.title %}
 
-      <div class="flex flex-row justify-between">
+    <div class="flex flex-row justify-between">
 
-      <a style="pointer-events: none; cursor: default;" title="View Project" >
+      <a style="pointer-events: none; cursor: default;" title="View Project">
         <h3 class="text-xl font-bold my-0">{{ project.title }}</h3>
       </a>
 
-      {% if project.github %} 
-      <a class="self-center   transition-all" title="View Code" href="{{ project.github }}"> 
+      {% if project.github %}
+      <a class="self-center   transition-all" title="View Code" href="{{ project.github }}">
         {% feather "code" %}
       </a>
       {% endif %}
     </div>
-    <p class="my-1"> 
+    <p class="my-1">
       {{ project.description }}
-    </p>  
-      <ul class="flex flex-row list-none text-sm mx-0 px-0 my-2">
-        {% for tag in project.tags %}<li class="border p-1 mx-2">{{ tag }}</li>{% endfor %}
-      </ul>
+    </p>
+    <ul class="flex flex-row list-none text-sm mx-0 px-0 my-2">
+      {% for tag in project.tags %}<li class="border p-1 mx-2">{{ tag }}</li>{% endfor %}
+    </ul>
 
-      <ul class="flex flex-col my-1"> 
-        {% for point in project.points %}<li class="text-sm  mx-2">{{ point | safe }}</li>{% endfor %}
-      </ul>
-     
-    </div>
+    <ul class="flex flex-col my-1">
+      {% for point in project.points %}<li class="text-sm  mx-2">{{ point | safe }}</li>{% endfor %}
+    </ul>
+
+  </div>
   {% endfor %}
 </div>
 
-<h3>Personal</h3>
-<p> 
+<h2>Personal</h2>
+<p>
   Here are some on the personal projects I've worked on.
 </p>
 
 
 <div class="grid md:grid-cols-2 gap-5 ">
   {% for project in projects.projects %}
-    <div class="p-4 border-2 border-gray-200 shadow-sm dark:border-gray-600  flex flex-col">
-      
-      {% image project.image_path, project.title %}
+  <div class="px-4 border-2 border-gray-200 shadow-sm dark:border-gray-600  flex flex-col">
 
-      <div class="flex flex-row justify-between">
+    {% image project.image_path, project.title %}
 
-      <a href=" {% if project.url %} {{ project.url }} {% endif %}" title="View Project" >
+    <div class="flex flex-row justify-between">
+
+      <a href=" {% if project.url %} {{ project.url }} {% endif %}" title="View Project">
         <h3 class="text-xl font-bold my-0">{{ project.title }}</h3>
       </a>
 
-      {% if project.github %} 
-      <a class="self-center   transition-all" title="View Code" href="{{ project.github }}"> 
+      {% if project.github %}
+      <a class="self-center   transition-all" title="View Code" href="{{ project.github }}">
         {% feather "code" %}
       </a>
       {% endif %}
     </div>
-    <p class="my-1"> 
+    <p class="my-1">
       {{ project.description }}
-    </p>  
-      <ul class="flex flex-row list-none text-sm mx-0 px-0 my-2">
-        {% for tag in project.tags %}<li class="border p-1 mx-2">{{ tag }}</li>{% endfor %}
-      </ul>
+    </p>
+    <ul class="flex flex-row list-none text-sm mx-0 px-0 my-1">
+      {% for tag in project.tags %}<li class="border p-1 mx-2">{{ tag }}</li>{% endfor %}
+    </ul>
 
-      <ul class="flex flex-col my-1"> 
-        {% for point in project.points %}<li class="text-sm  mx-2">{{ point | safe }}</li>{% endfor %}
-      </ul>
-     
-    </div>
+    <ul class="flex flex-col my-1">
+      {% for point in project.points %}<li class="text-sm  mx-2">{{ point | safe }}</li>{% endfor %}
+    </ul>
+
+  </div>
   {% endfor %}
   <div class="p-4 overflow-hidden items-center align-middle justify-center">
     <p>
@@ -103,15 +101,18 @@ eleventyNavigation:
   </div>
 </div>
 
-<h2 class="-mt-2">Certifications</h2>
+<h2>Certifications</h2>
 <p>
   Here are some of the courses and certificates i've done.
 </p>
 <div class="grid grid-cols-2 md:grid-cols-4 gap-3 ">
   {% for badge in badges.badges %}
-  <div class='bg-gray-50 dark:bg-gray-300 border-gray-200 dark:border-gray-600 border-2 shadow-sm h-56 overflow-hidden text-sm w-fit'>
-    <div data-iframe-width="150" data-iframe-height="270" data-share-badge-id= {{badge.badge_id}} data-share-badge-host="https://www.credly.com"></div><script type="text/javascript" async src="//cdn.credly.com/assets/utilities/embed.js"></script>
+  <div
+    class='bg-gray-50 dark:bg-gray-300 border-gray-200 dark:border-gray-600 border-2 shadow-sm overflow-hidden text-xs h-fit'>
+    <div data-iframe-width="150" data-iframe-height="255" data-share-badge-id={{badge.badge_id}}
+      data-share-badge-host="https://www.credly.com"></div>
+    <script type="text/javascript" async src="//cdn.credly.com/assets/utilities/embed.js"></script>
   </div>
-  {% endfor %} 
-  
+  {% endfor %}
+
 </div>

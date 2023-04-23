@@ -102,7 +102,7 @@ module.exports = async function () {
       const songUrl = song.item.external_urls.spotify;
 
       nowPlaying = {
-        'nowPlaying': {
+        nowPlaying: {
           album,
           albumImageUrl,
           artist,
