@@ -3,11 +3,14 @@
   {% for post in postslist | reverse %}
   <li class="postlist-item{% if post.url == url %} postlist-item-active{% endif %} my-5 px-0 mx-0">
     <div class="grid grid-cols-10">
-
-      <time class="col-span-3 postlist-date md:text-sm py-1"
+      
+      <div class="align-text-bottom col-span-4 md:col-span-3 flex flex-row items-end ">
+        <time class=" postlist-date md:text-sm py-1 "
         datetime="{{ post.date | postDate }}">{{ post.date | postDate }}</time>
+      </div>
+     
 
-      <a href="{{ post.url | url }}" class="col-span-7">
+      <a href="{{ post.url | url }}" class="col-span-6 md:col-span-7">
         {% if post.data.title %}
         {{ post.data.title }}
         {% else %}
@@ -15,14 +18,14 @@
         {% endif %}
       </a>
 
-      <div class="col-span-3 flex flex-col md:flex-row text-sm -mx-1">
+      <div class="col-span-4 md:col-span-3 flex flex-col md:flex-row text-sm -mx-1">
         {% for tag in post.data.tags | filterTagList %}
         {% set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
         <a href="{{ tagUrl | url }}" class="px-1 font-light">{{ tag }}</a>
         {% endfor %}
       </div>
 
-      <div class='col-span-7 text-gray-600 dark:text-gray-300 font-light'>
+      <div class='col-span-6 md:col-span-7 text-gray-600 dark:text-gray-300 font-light'>
         {{ post.data.description }}
       </div>
     </div>
