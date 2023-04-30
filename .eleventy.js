@@ -128,6 +128,11 @@ module.exports = function (eleventyConfig) {
     ul: true
   })
   
+  markdownLibrary.renderer.rules.code_inline = (tokens, idx, { langPrefix = "" }) => {
+    const token = tokens[idx];
+    return `<code class="${langPrefix}">${markdownLibrary.utils.escapeHtml(token.content)}</code>`;
+  };
+
   // Override Browsersync defaults (used only with --serve)
   eleventyConfig.setBrowserSyncConfig({
     callbacks: {
