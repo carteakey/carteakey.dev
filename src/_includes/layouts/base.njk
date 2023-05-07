@@ -9,7 +9,8 @@
   <!-- 180×180 -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;200;300;400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/prismjs@1.20.0/themes/prism-coy.css">
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-DKK1XXJY42"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -31,6 +32,23 @@
     } else {
       document.documentElement.classList.remove("dark");
     }
+
+    function switchPrismTheme() {
+      if (isDarkMode()) {
+        var themeLink = document.querySelector('link[href="https://unpkg.com/prismjs@1.20.0/themes/prism-coy.css"]');
+        if (themeLink){
+          themeLink.setAttribute('href', 'https://unpkg.com/prismjs@1.20.0/themes/prism-okaidia.css');
+        }
+      } else {
+        var themeLink = document.querySelector('link[href="https://unpkg.com/prismjs@1.20.0/themes/prism-okaidia.css"]');
+        if (themeLink){
+          themeLink.setAttribute('href', 'https://unpkg.com/prismjs@1.20.0/themes/prism-coy.css');
+        }
+      }
+      Prism.highlightAll();
+    }
+    switchPrismTheme();
+
   </script>
 
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
@@ -40,8 +58,8 @@
   <meta name="description" content="{{ description or metadata.description }}" />
   <meta name="generator" content="{{ eleventy.generator }}" />
   <link rel="stylesheet" href="{{ '/css/tailwind.css' | url }}" />
-  <link href="https://unpkg.com/prismjs@1.20.0/themes/prism-funky.css" rel="stylesheet">
 
+  
   <link rel="alternate" href="{{ metadata.feed.path | url }}" type="application/atom+xml"
     title="{{ metadata.title }}" />
 
@@ -49,9 +67,9 @@
     title="{{ metadata.title }}" />
 </head>
 
-<body class="bg-gray-50 dark:bg-gray-800 font-cp">
+<body class="bg-gray-50 dark:bg-gray-900 font-serif">
   <div class="md:max-w-prose mx-auto">
-    <div class="prose prose-sm prose-blue dark:prose-a:text-blue-40 prose-h1:text-4xl prose-h1:my-5 prose-h2:my-4 dark:prose-invert px-4 md:px-0">
+    <div class="prose prose-sky prose-h1:text-4xl prose-h1:my-5 prose-h2:my-4 dark:prose-invert px-4 md:px-0">
       <nav class="flex w-full py-8 justify-end">
 
         {% set navPages = collections.all | eleventyNavigation %}
@@ -85,20 +103,39 @@
 
         {{ content | safe }}
 
-        <script>
-          document
-            .getElementById("toggleDarkMode")
-            .addEventListener("click", function () {
-              console.log("Button Click!");
-              if (isDarkMode()) {
-                localStorage.theme = "light";
-                document.documentElement.classList.remove("dark");
-              } else {
-                localStorage.theme = "dark";
-                document.documentElement.classList.add("dark");
-              }
-            });
-        </script>
+          <script>
+            document
+              .getElementById("toggleDarkMode")
+              .addEventListener("click", function () {
+                // console.log("Button Click!");
+                if (isDarkMode()) {
+                  localStorage.theme = "light";
+                  document.documentElement.classList.remove("dark");
+                } else {
+                  localStorage.theme = "dark";
+                  document.documentElement.classList.add("dark");
+                }
+
+                function switchPrismTheme() {
+                  if (isDarkMode()) {
+                    var themeLink = document.querySelector('link[href="https://unpkg.com/prismjs@1.20.0/themes/prism-coy.css"]');
+                    if (themeLink){
+                      themeLink.setAttribute('href', 'https://unpkg.com/prismjs@1.20.0/themes/prism-okaidia.css');
+                    }
+                  } else {
+                    var themeLink = document.querySelector('link[href="https://unpkg.com/prismjs@1.20.0/themes/prism-okaidia.css"]');
+                    if (themeLink){
+                      themeLink.setAttribute('href', 'https://unpkg.com/prismjs@1.20.0/themes/prism-coy.css');
+                    }
+                    
+                  }
+                  Prism.highlightAll();
+                }
+                switchPrismTheme();
+
+              });
+
+          </script>
       </main>
 
       <footer class="flex w-full pt-8 pb-8 flex-row justify-between">

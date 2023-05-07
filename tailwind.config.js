@@ -4,7 +4,7 @@ module.exports = {
   darkMode: "class",
   theme: {
     fontFamily: {
-      'cp': "'Courier Prime', monospace"
+      'serif': "'Roboto Slab', serif"
         },
     extend: {
       animation: {

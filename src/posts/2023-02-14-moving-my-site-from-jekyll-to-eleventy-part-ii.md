@@ -306,8 +306,6 @@ There's no such thing here, and I have to rely on blockquote + emoji, or single 
 
 * Blockquote + Emoji (I use the [markdown-it-emoji](https://github.com/markdown-it/markdown-it-emoji) plugin) 
 
-E.g.
-
 ```markdown
 > :exclamation: This is important
 ```
@@ -316,8 +314,8 @@ E.g.
 
 * Single-row table + Emoji
 
-```
-| :exclamation:        | This is very important    |
+```markdown
+| :exclamation: | This is very important  |
 |---------------|:------------------------|
 ```
 
