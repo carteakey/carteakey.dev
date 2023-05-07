@@ -32,7 +32,7 @@ templateEngineOverride: njk
 
     {% set maxPosts = collections.posts.length | min(3) %} 
 
-    <h1>Recent Posts</h1>
+    <h2>Recent Posts</h2>
     {% set postslist = collections.posts | head(-3) %} {% set postslistCounter =
     collections.posts | length %}
     {% include "postslist.njk" %}
