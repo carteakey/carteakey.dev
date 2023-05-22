@@ -1,0 +1,29 @@
+---
+layout: layouts/home.njk
+title: CV
+templateClass: tmpl-post
+eleventyNavigation:
+  key: CV
+  order: 2
+---
+<h1>CV</h1>
+<p>
+  Download my resume <a href="/static/Kartikey_Chauhan_Resume_2023.pdf">here</a>.
+</p>
+<hr>
+
+
+<h2>Certifications</h2>
+<p>
+  Here are some of the courses and certificates i've done.
+</p>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+  {% for badge in badges.badges %}
+  <div
+    class='bg-gray-50 dark:bg-gray-300 border-gray-200 dark:border-gray-600 border-2 shadow-sm overflow-hidden w-fit h-40'>
+    <div data-iframe-width="125" data-iframe-height="150" data-share-badge-id={{badge.badge_id}}
+      data-share-badge-host="https://www.credly.com"></div>
+    <script type="text/javascript" async src="//cdn.credly.com/assets/utilities/embed.js"></script>
+  </div>
+  {% endfor %}
+</div>
