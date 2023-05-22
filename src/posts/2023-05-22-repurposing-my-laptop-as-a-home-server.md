@@ -3,11 +3,10 @@ title: "Repurposing my laptop as a Home Server "
 description: Put your old hardware to good use
 date: 2023-05-22T16:38:56.031Z
 tags:
-  - linux
-  - docker
-  - home-server
+  - Linux
+  - Docker
 ---
-I﻿ recently switched to a Macbook Air (M2) as my primary computer, leaving behind a loud and heavy ASUS-FX505 which I had bought as a gaming PC and served me well for over 3 years. It was still a quite capable device (Ryzen 3550h, 16gigs of RAM, SSD + 1 TB HDD), therefore it made sense to make it act as a secondary computing device, where I can offload my media and development computes.
+I recently switched to a Macbook Air (M2) as my primary computer, leaving behind a loud and heavy ASUS-FX505 which I had bought as a gaming PC and served me well for over 3 years. It was still a quite capable device (Ryzen 3550h, 16gigs of RAM, SSD + 1 TB HDD), therefore it made sense to make it act as a secondary computing device, where I can offload my media and development computes.
 
 There is a whole universe around self-hosting (see r/selfhosted) where having a home server can serve many purposes including, but not limited to -
 
