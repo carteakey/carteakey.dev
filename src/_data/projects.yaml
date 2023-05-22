@@ -1,6 +1,23 @@
 ---
 projects:
 
+  - title: cinemattr.ca
+    description: Search movies using AI and vector databases.
+    image_path: "./src/static/img/projects/cinemattr.png"
+    url: https://cinemattr.ca
+    github: https://github.com/carteakey/cinemattr.ca
+    tags:
+      - LangChain
+      - SvelteKit
+  
+  - title: server-compose
+    description: A collection of sample docker compose files for self-hosted applications.
+    image_path: "./src/static/img/projects/server-compose.png"
+    github: https://github.com/carteakey/server-compose
+    tags:
+      - Docker
+      - Linux
+  
   - title: Recomovi
     description: Movie Recommender & IMDb Dataset Generator.
     image_path: "./src/static/img/projects/recomovi.png"
