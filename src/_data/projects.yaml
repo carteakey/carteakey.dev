@@ -53,3 +53,12 @@ projects:
       - Eleventy
       - Tailwind
     
+  - title: carteakey.github.io
+    description: "My old blog."
+    image_path: "./src/static/img/projects/carteakey.github.png"
+    url: https://carteakey.github.io
+    github: https://github.com/carteakey/carteakey.github.io
+    tags:
+      - Jekyll
+      - Github Pages
+    

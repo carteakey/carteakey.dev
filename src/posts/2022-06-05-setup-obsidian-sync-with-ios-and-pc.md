@@ -8,7 +8,7 @@ tags:
 layout: layouts/post.njk
 ---
 
-[Obsidian](https://obsidian.md) is a great note-taking application. It acts as your second brain, where notes are connected through links, much like the human brain works.
+[Obsidian](https://obsidian.md) is a great note-taking application. It acts as your second brain, where notes are connected through links, much like how the human brain works.
 
 Moreover, it uses a local folder to store the notes in plain-text Markdown format, making it future-proof and giving total control over your knowledge base.
 

@@ -1,6 +1,6 @@
 ---
 title: "Repurposing my laptop as a Home Server "
-description: Put your old hardware to good use
+description: Putting old hardware to good use
 date: 2023-05-22T16:38:56.031Z
 tags:
   - Linux
@@ -25,11 +25,11 @@ Windows + WSL2 is great, you get the best of both worlds (Windows and Linux).
 
 However, it makes sense when the device in question is your primary PC. As a home server, windows becomes too much bloat, period. If you prefer a Linux development environment, remoting into WSL looks like this (Although recent versions of WSL have made this even harder).
 
-`M﻿ac > Windows > Linux (WSL2)`
+`Mac > Windows > Linux (WSL2)`
 
 If you  create docker environments it becomes
 
-`M﻿ac > Windows > Docker (WSL2) > Linux Image`
+`Mac > Windows > Docker (WSL2) > Linux Image`
 
 ![](/img/inception-deeper.gif "OS within an OS within an OS")
 
@@ -39,7 +39,7 @@ Nevertheless, too much work and performance overhead, when we have a much better
 
 ## Choosing a server distro.
 
-Can't go wrong with Ubuntu server or Debian. There are Fedora, RHEL, and others as well. If you're new to with Ubuntu server, its popularity has the advantage that any problems you face will likely have been faced by someone else already and would have an online forum on it. 
+Can't go wrong with Ubuntu server or Debian. There are Fedora, RHEL, and others as well. If you're new, better to go with Ubuntu server, its popularity has the advantage that any problems you face will likely have been faced by someone else already and would have an online forum on it. 
 
 Moreover, docker has changed the game and introduced another abstraction, where your base OS (as long as it's Linux) starts mattering less and less.
 
@@ -69,6 +69,11 @@ To ...
 
 ```bash
 HandleLidSwitch=ignore
+```
+
+Restart logind service
+```bash
+sudo systemctl restart systemd-logind.service 
 ```
 
 ### Automatic Suspend on defined intervals.
@@ -138,7 +143,7 @@ WantedBy=multi-user.target
 
 3. Enable & Start the service
 
-```
+```bash
 sudo systemctl daemon-reload
 sudo systemctl enable power-monitor.service
 sudo systemctl start power-monitor.service
