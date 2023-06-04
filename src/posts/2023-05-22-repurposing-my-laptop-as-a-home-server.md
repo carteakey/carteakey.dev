@@ -1,6 +1,6 @@
 ---
-title: "Repurposing my laptop as a Home Server "
-description: Putting old hardware to good use
+title: "Repurposing my laptop as a Home Server."
+description: Putting old hardware to good use.
 date: 2023-05-22T16:38:56.031Z
 tags:
   - Linux
