@@ -37,7 +37,7 @@ We need to set up the SSH server on Windows to allow SSH connections. Here are s
 4. Start the service.
 5. Assuming you have a single-user system (See [here](https://superuser.com/a/1651276) for more details) - Remove the below line from your `C:\ProgramData\ssh\sshd_config` file. This will allow the authorized keys to work (in our next steps).
 
-```
+```bash
 Match Group administrators
        AuthorizedKeysFile __PROGRAMDATA__/ssh/administrators_authorized_keys
 ```
@@ -46,7 +46,7 @@ Match Group administrators
 
 1. SSH into Windows device. (The password will be the one you use to sign into your Microsoft account)
 
-```
+```bash
 ssh username@<ip_of_your_windows_pc> 
 ```
 
@@ -61,7 +61,7 @@ cd ~/.ssh
 
 Create an SFTP session and transfer the `id_rsa.pub` key and rename it to `authorized_keys`.
 
-```
+```bash
 sftp username@<ip_of_your_windows_pc> 
 cd .ssh
 put id_rsa.pub authorized_keys
@@ -69,7 +69,7 @@ put id_rsa.pub authorized_keys
 
 4. SSH should now work without the password.
 
-```
+```bash
 ssh <username>@<ip_of_your_windows_pc> 
 ```
 
@@ -77,7 +77,7 @@ ssh <username>@<ip_of_your_windows_pc>
 
 Example `$HOME/.ssh/config` - replace `windows` with your preference.
 
-```
+```yaml
 Host windows
         User <username>
         HostName <ip_of_your_windows_pc> 
@@ -94,19 +94,19 @@ This one should be much easier. Below steps are for Ubuntu WSL.
 
 Install `openssh-server`.
 
-```
+```bash
 sudo apt install openssh-server
 ```
 
 Enable the ssh service.
 
-```
+```bash
 sudo systemctl enable --now ssh
 ```
 
 Copy the same `authorized_keys` we previously created to WSL as well. (Simplest approach).
 
-```
+```bash
 cd /mnt/c/Users/<username>/.ssh
 cp authorized_keys ~/.ssh/
 ```
@@ -115,14 +115,13 @@ cp authorized_keys ~/.ssh/
 
 Again, lots of heavy solutions out there, the one that I find easy enough is just setting Default Terminal in Windows Terminal to wsl and running it on startup.
 
-
-![](/img/image.png)
+![](/img/wsl_startup.png)
 
 ### Proxy Jumping
 
 With all done, we should be now able to SSH directly into WSL using the below ssh command.
 
-```
+```bash
 ssh -J <windows_host_username>@<ip_of_your_windows_pc> <wsl_username>@localhost
 ```
 
@@ -130,7 +129,7 @@ If this works, let's add this to our SSH config to make it as simple as an `ssh 
 
 Our final `$HOME/.ssh/config` should look like this.
 
-```
+```yaml
 Host windows
         User <username>
         HostName <ip_of_your_windows_pc> 
