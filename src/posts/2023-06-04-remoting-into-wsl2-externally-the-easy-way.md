@@ -1,5 +1,5 @@
 ---
-title: Remoting into WSL2 externally - the simple way.
+title: Remoting into WSL2 externally - the easy way.
 description: Simple is better than complex.
 date: 2023-06-04T19:07:39.634Z
 tags:
