@@ -47,10 +47,10 @@ eleventyNavigation:
   </div>
   {% endfor %}
 </div>
-
+<hr />
 <h2>Personal</h2>
 <p>
-  Here are some on the personal projects I've worked on.
+  Here are some of my personal projects
 </p>
 
 
@@ -85,10 +85,44 @@ eleventyNavigation:
 
   </div>
   {% endfor %}
-  <div class="p-4 overflow-hidden items-center align-middle justify-center">
+  {# <div class="p-4 overflow-hidden items-center align-middle justify-center">
     <p>
       .. explore the rest on my
       <a href="https://github.com/carteakey?tab=repositories">github</a>
     </p>
-  </div>
+  </div> #}
 </div>
+<hr />
+<h2>Projects on GitHub</h2>
+<p>
+  Here are the rest of my projects on <a href="https://github.com/carteakey?tab=repositories">GitHub</a>.
+</p>
+<table>
+  <thead>
+    <tr>
+      <th>Updated</th>
+      <th>Name</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody id="repoTableBody">
+    {% for repo in github.repos %}
+    <tr>
+      <td class="">
+        <time class=" postlist-date">{{ repo.repo_updated | formatDate }}</time>
+      </td>
+
+      <td>
+        <a href={{ repo.repo_url }}>
+          {{ repo.repo_name }}
+        </a>
+      </td>
+      <td>
+        {{ repo.repo_description }}
+      </td>
+
+
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>

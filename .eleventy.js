@@ -12,6 +12,7 @@ const pluginNavigation = require("@11ty/eleventy-navigation");
 const eleventyPluginFeathericons = require('eleventy-plugin-feathericons');
 const pluginTOC = require('eleventy-plugin-toc')
 const pluginWebc = require('@11ty/eleventy-plugin-webc')
+const { EleventyRenderPlugin } = require("@11ty/eleventy");
 
 
 const Image = require("@11ty/eleventy-img");
@@ -54,6 +55,7 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPlugin(pluginNavigation);
   eleventyConfig.addPlugin(eleventyGoogleFonts);
   eleventyConfig.addPlugin(eleventyPluginFeathericons);
+  eleventyConfig.addPlugin(EleventyRenderPlugin);
   eleventyConfig.addPlugin(pluginWebc);
   
   // https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#valid-date-string
@@ -63,6 +65,10 @@ module.exports = function (eleventyConfig) {
 
   eleventyConfig.addFilter("postDate", (dateObj) => {
     return DateTime.fromJSDate(dateObj).toLocaleString(DateTime.DATE_MED);
+  });
+
+  eleventyConfig.addFilter("formatDate", (dateObj) => {
+    return DateTime.fromISO(dateObj).toFormat("MMM-yy");
   });
 
   eleventyConfig.addFilter("readableDate", (dateObj) => {
