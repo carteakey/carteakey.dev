@@ -7,7 +7,3 @@ package = "netlify-plugin-cache"
 
   [plugins.inputs]
   paths = [ ".cache" ]
-
-[[redirects]]
-  from = "/cv"
-  to = "https://carteakey.notion.site/Kartikey-Chauhan-bf55cc5510eb43949e6949bcbfffa469?pvs=4"
