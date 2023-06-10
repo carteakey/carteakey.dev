@@ -48,8 +48,6 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("./src/static/Kartikey_Chauhan_Resume_2023.pdf");
   eleventyConfig.addPassthroughCopy({ "./src/static/img/favicon": "/" });
   eleventyConfig.addPassthroughCopy({ "./src/admin/config.yml": "./admin/config.yml" });
-  eleventyConfig.addPassthroughCopy('./src/_redirects');
-  
 
   // Add plugins
   eleventyConfig.addPlugin(pluginSyntaxHighlight);
