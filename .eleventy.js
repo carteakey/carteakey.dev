@@ -45,6 +45,7 @@ module.exports = function (eleventyConfig) {
   // Copy the `img` and `css` folders to the output
   eleventyConfig.addPassthroughCopy({"./src/static/img":"/img/"});
   eleventyConfig.addPassthroughCopy("./src/static/css/prism-a11y-dark.css");
+  eleventyConfig.addPassthroughCopy("./src/_redirects");
   eleventyConfig.addPassthroughCopy("./src/static/Kartikey_Chauhan_Resume_2023.pdf");
   eleventyConfig.addPassthroughCopy({ "./src/static/img/favicon": "/" });
   eleventyConfig.addPassthroughCopy({ "./src/admin/config.yml": "./admin/config.yml" });
