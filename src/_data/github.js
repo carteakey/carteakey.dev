@@ -4,7 +4,8 @@ const api_endpoint = "https://api.github.com/users/carteakey/repos?sort=updated&
 
 module.exports = async function () {
   let repos = new AssetCache("repos");
-
+  let fetch = require("node-fetch");
+  
   if (repos.isCacheValid("1d")) {
     // return cached data.
     return repos.getCachedValue(); // a promise
