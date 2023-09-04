@@ -4,3 +4,5 @@ package-lock.json
 .env
 .cache
 **/.DS_Store
+*.md2
+*lighthouse*.html
