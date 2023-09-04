@@ -10,7 +10,7 @@ I recently switched to a Macbook Air (M2) as my primary computer, leaving behind
 
 There is a whole universe around self-hosting (see r/selfhosted) where having a home server can serve many purposes including, but not limited to -
 
-* Remote development, with your server doing all the hard work and long builds and jobs.
+* Remote development, with your server doing all the **hard** work and long-running builds and jobs.
 * Media server, using services like Plex, Jellyfin, Navidrome.
 * Network drives (NextCloud, rdrive)
 * and a lot more...
