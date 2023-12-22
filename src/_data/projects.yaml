@@ -1,6 +1,15 @@
 ---
 projects:
 
+  - title: world-energy-stats
+    description: World Energy Statistics using various data tools.
+    image_path: "./src/static/img/projects/cinemattr.png"
+    url: https://world-energy-stats.fly.dev
+    github: https://github.com/carteakey/world-energy-stats
+    tags:
+      - Spark
+      - Dash
+
   - title: cinemattr.ca
     description: Search movies using AI and vector databases.
     image_path: "./src/static/img/projects/cinemattr.png"
