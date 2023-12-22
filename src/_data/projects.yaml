@@ -3,7 +3,7 @@ projects:
 
   - title: world-energy-stats
     description: World Energy Statistics using various data tools.
-    image_path: "./src/static/img/projects/cinemattr.png"
+    image_path: "./src/static/img/projects/world-energy-stats.png"
     url: https://world-energy-stats.fly.dev
     github: https://github.com/carteakey/world-energy-stats
     tags:
