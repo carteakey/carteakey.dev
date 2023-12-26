@@ -1,12 +1,11 @@
 ---
 layout: layouts/home.njk
-templateEngineOverride: njk
+htmlTemplateEngine: "webc"
 ---
 {# eleventyNavigation: key: carteakey.dev order: 1 #}
 <div class="intro flex flex-col md:flex-row">
-  <img alt="name"
-       src="/img/mugshot.png"
-       class="rounded-full md:m-10 ml-0 w-28 h-28 self-center md:self-auto"/>
+    {% image "./src/static/img/mugshot.png" , "me", "rounded-full md:m-10 ml-0 w-28 h-28 self-center md:self-auto" %}
+
   <div class="max-w-md">
     <p>
       Hi 👋🏼, I'm <span class="font-bold ">Kartikey</span>, and welcome to my

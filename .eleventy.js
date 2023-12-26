@@ -11,7 +11,7 @@ const pluginSyntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
 const pluginNavigation = require("@11ty/eleventy-navigation");
 const eleventyPluginFeathericons = require('eleventy-plugin-feathericons');
 const pluginTOC = require('eleventy-plugin-toc')
-const pluginWebc = require('@11ty/eleventy-plugin-webc')
+const eleventyWebcPlugin = require("@11ty/eleventy-plugin-webc");
 const { EleventyRenderPlugin } = require("@11ty/eleventy");
 
 
@@ -19,7 +19,7 @@ const Image = require("@11ty/eleventy-img");
 
 require('dotenv').config()
 
-async function imageShortcode(src, alt) {
+async function imageShortcode(src, alt, css) {
   let metadata = await Image(src, {
     widths: ["auto"],
     formats: ["auto"],
@@ -29,6 +29,7 @@ async function imageShortcode(src, alt) {
   sizes = "(min-width: 30em) 50vw, 100vw";
   
   let imageAttributes = {
+    class: css,
     alt,
     sizes,
     loading: "lazy",
@@ -56,7 +57,15 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPlugin(eleventyGoogleFonts);
   eleventyConfig.addPlugin(eleventyPluginFeathericons);
   eleventyConfig.addPlugin(EleventyRenderPlugin);
-  eleventyConfig.addPlugin(pluginWebc);
+
+  // WebC
+	eleventyConfig.addPlugin(eleventyWebcPlugin, {
+		components: [
+			// …
+			// Add as a global WebC component
+			"npm:@11ty/eleventy-img/*.webc",
+		]
+	});
   
   // https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#valid-date-string
   eleventyConfig.addFilter("htmlDateString", (dateObj) => {

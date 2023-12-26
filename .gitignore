@@ -6,3 +6,4 @@ package-lock.json
 **/.DS_Store
 *.md2
 *lighthouse*.html
+cv.njk
