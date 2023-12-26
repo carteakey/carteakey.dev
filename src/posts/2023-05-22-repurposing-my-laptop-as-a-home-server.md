@@ -2,6 +2,7 @@
 title: "Repurposing my laptop as a Home Server."
 description: Putting old hardware to good use.
 date: 2023-05-22T16:38:56.031Z
+updated: 2023-12-26
 tags:
   - Linux
   - Docker
@@ -23,23 +24,18 @@ Here are some of my opinions, tips, and tricks on doing so. This is going to be 
 
 Windows + WSL2 is great, you get the best of both worlds (Windows and Linux). 
 
-However, it makes sense when the device in question is your primary PC. As a home server, windows becomes too much bloat, period. If you prefer a Linux development environment, remoting into WSL looks like this (Although recent versions of WSL have made this even harder).
+However, it makes sense when the device in question is your primary PC. As a home server, using WSL on windows becomes too much bloat, especially because of
 
-`Mac > Windows > Linux (WSL2)`
-
-If you  create docker environments it becomes
-
-`Mac > Windows > Docker (WSL2) > Linux Image`
-
+- Hard to SSH into (without some [advanced config](https://www.carteakey.dev/remoting-into-wsl2-externally-the-easy-way/) or using VPN like Taiscale.)
+- WSL has really bad performance on files outside the WSL system e.g. a NTFS hard drive connected to your PC (even [Microsoft recommends against it](https://learn.microsoft.com/en-us/windows/wsl/filesystems)).
+- If you use docker the system is 3 levels deep. - `Windows > WSL2 > Docker Image` - That's some unnecessary overhead.
 ![](/img/inception-deeper.gif "OS within an OS within an OS")
 
-Nevertheless, too much work and performance overhead, when we have a much better solution, going all Linux.
-
-`Mac > Linux`
+The best option is going all Linux.
 
 ## Choosing a server distro.
 
-Can't go wrong with Ubuntu server or Debian. There are Fedora, RHEL, and others as well. If you're new, better to go with Ubuntu server, its popularity has the advantage that any problems you face will likely have been faced by someone else already and would have an online forum on it. 
+Can't go wrong with Ubuntu server or Debian. There are Fedora, RHEL, and others as well. If you're new, better to go with Ubuntu server, its popularity has the advantage that any problems you face will likely have been faced by someone else already and would have discussed it in an online forum. 
 
 Moreover, docker has changed the game and introduced another abstraction, where your base OS (as long as it's Linux) starts mattering less and less.
 
@@ -47,11 +43,9 @@ Moreover, docker has changed the game and introduced another abstraction, where 
 
 Gone are the days where you have to worry about dependencies, correct version, adding repositories, bloating your main os, worrying about cleanup etc. Almost all popular services now offer a docker image, which you can spin up by just downloading a compose file and running `docker compose up -d`. 
 
-I also have a repository [server-compose](https://github.com/carteakey/server-compose), a collection of sample docker-compose files for popular self-hosted applications. 
+See this repository [server-compose](https://github.com/carteakey/server-compose), a collection of sample docker-compose files for popular self-hosted applications. 
 
 ## Ubuntu Server tips & tricks.
-
-I bashed my head, so you don't have to :(
 
 ### Don't suspend on lid close.
 
@@ -161,9 +155,8 @@ There are also apps like UpSnap, which can wrap this up in a simple dashboard wi
 
 If your laptop only supports Wake-on-LAN, you can connect it to your router through a LAN cable and send the magic packet to the ethernet Mac address.
 
-However, in my case, not only it did not support Wake-on-LAN, but my router was also way too far to hook it up, which meant I needed something always on and connected to the home server through the ethernet and sending magic packets through that. Fortunately, I had a Raspberry Pi lying around. This warrants another article :D
+However, in my case, not only it did not support Wake-on-LAN, but my router was also way too far to hook it up, which meant I needed something always on and connected to the home server through the ethernet and sending magic packets through that. Fortunately, I had a Raspberry Pi lying around (Maybe a separate article).
 
 ## Wrapping up
 
-That's a wrap for this one! 
 Self-hosting and home servers are a time sink! But it's a fun way of learning about Linux, Docker, and Networking in general, which is always good to have. Not to mention some very useful and powerful use cases that come out of it.
