@@ -114,8 +114,7 @@ cp authorized_keys ~/.ssh/
 ## Running WSL on Startup
 
 Again, lots of extensive solutions out there, the one that I find easy enough is just setting Default Terminal in **Windows Terminal** to wsl and running it on startup.
-
-![](/img/wsl_startup.png)
+{% image_cc "./src/static/img/wsl_startup.png" ,"" ,"", "Running WSL on Startup" %}
 
 ## Proxy Jumping
 
