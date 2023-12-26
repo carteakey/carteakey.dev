@@ -19,6 +19,12 @@ templateClass: tmpl-post
 
 {{ content | safe }}
 
+{% if updated %}
+<p class='flex flex-col float-right -mt7 text-right text-sm'>
+  Updated: <time datetime="{{ updated | readableDate }}">{{updated | readableDate}}</time>
+</p> 
+{%- endif %}
+
 <aside class="fixed top-1/4 right-5 xl:right-20 w-40 xl:w-56 h-screen sm:translate-x-0 text-sm hidden lg:block"
   aria-label="Sidebar">
   <p class="text-lg my-0">Outline</p>
