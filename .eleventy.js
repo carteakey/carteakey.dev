@@ -22,7 +22,7 @@ require('dotenv').config()
 async function imageShortcode(src, alt, css) {
   let metadata = await Image(src, {
     widths: ["auto"],
-    formats: ["auto"],
+    formats: ['avif', 'webp', 'jpeg'],
     outputDir: "./_site/img/",
   });
 
