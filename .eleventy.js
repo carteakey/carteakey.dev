@@ -42,6 +42,31 @@ async function imageShortcode(src, alt, css) {
   });
 }
 
+async function imageShortcodeWithCaptions(src, alt, css, caption) {
+  let metadata = await Image(src, {
+    widths: ["auto"],
+    formats: ['avif', 'webp', 'jpeg'],
+    outputDir: "./_site/img/",
+  });
+
+  sizes = "(min-width: 30em) 50vw, 100vw";
+  
+  let imageAttributes = {
+    class: css,
+    alt,
+    sizes,
+    loading: "lazy",
+    decoding: "async",
+  };
+
+  const imageMarkup = Image.generateHTML(metadata, imageAttributes, {
+    whitespaceMode: "inline",
+  });
+
+  return `<figure>${imageMarkup}${caption ? `<figcaption class="font-thin italic -mt-5">${caption}</figcaption>` : ""}</figure>`;
+}
+
+
 module.exports = function (eleventyConfig) {
   // Copy the `img` and `css` folders to the output
   eleventyConfig.addPassthroughCopy({"./src/static/img":"/img/"});
@@ -86,6 +111,8 @@ module.exports = function (eleventyConfig) {
 
   //Image Plugin
   eleventyConfig.addAsyncShortcode("image", imageShortcode);
+  eleventyConfig.addAsyncShortcode("image_cc",imageShortcodeWithCaptions);
+
 
   // Get the first `n` elements of a collection.
   eleventyConfig.addFilter("head", (array, n) => {
