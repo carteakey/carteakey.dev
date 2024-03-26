@@ -2,6 +2,7 @@
 title: Running your own Copilot in VSCode on a Mac.
 description: With Codellama, Ollama and Continue.
 date: 2023-09-04T16:39:26.330Z
+updated: 2024-03-26T03:11:06.365Z
 tags:
   - LLM
   - Mac
@@ -19,9 +20,11 @@ There are three sizes (7b, 13b, 34b) as well as three flavours (base model, Pyth
 Our choice boils down to few questions - 
 
 * How much memory your Macbook has? 
-> 7b should run on most configs, and be fast enough. 13b model should run on systems with > 16Gb RAM, while 34B requires > 32GB RAM while also being the most capable.
+
+  > 7b should run on most configs, and be fast enough. 13b model should run on systems with > 16Gb RAM, while 34B requires > 32GB RAM while also being the most capable.
 * Do you develop mostly in Python? 
-> Code Llama - Python is a language-specialized variation of Code Llama further trained on Python code and should perform better in python specific scenarios.
+
+  > Code Llama - Python is a language-specialized variation of Code Llama further trained on Python code and should perform better in python specific scenarios.
 
 We will use the 13b base model for our example.
 
@@ -38,7 +41,7 @@ ollama run codellama:13b
 ```
 
 4. By default, the Ollama should already be serving the REST API, which we will use in the next step. Test it by sending a request to the API.
-   
+
 ```bash
 # Run the server, if not running already.
 ollama serve
@@ -54,6 +57,20 @@ curl -X POST http://localhost:11434/api/generate -d '{
 ## Setting up Continue in VSCode
 
 The VSCode integration is achieved with the [Continue](https://continue.dev) extension, which provides a lot of options to integrate LLM services as a Copilot.
+
+**2024 Update:** The extension has been updated to use a config.json instead. Just install the extension, open it in the sidebar, click on the settings icon and add the ollama config in the models prop
+
+```json
+{
+      "model": "AUTODETECT",
+      "title": "Ollama",
+      "completionOptions": {},
+      "apiBase": "http://localhost:11434",
+      "provider": "ollama"
+ }
+```
+
+**2023:** 
 
 To set it up with Ollama, we will need to open the `~/.continue/config.py` file on our machine with any text editor and adding below code.
 
