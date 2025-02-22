@@ -4,8 +4,8 @@ module.exports = {
   darkMode: "class",
   theme: {
     fontFamily: {
-      'serif': "'Roboto Slab', serif",
-      'caveat': "Caveat, serif"
+      'serif': "'Inter', sans-serif", // i know this is not a serif font, but it's a good default
+      'et-book': "et-book, serif"
         },
     extend: {
       animation: {
