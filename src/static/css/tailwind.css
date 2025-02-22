@@ -2,36 +2,83 @@
 @tailwind components;
 @tailwind utilities;
 
-*:focus{ outline:0px !important; -webkit-appearance:none; }
+*:focus {
+  outline: 0px !important;
+  -webkit-appearance: none;
+}
+
+
+@font-face {
+  font-family: "et-book";
+  src:
+    url("/static/fonts/etbookot-roman-webfont.woff2") format("woff2"),
+    url("/static/fonts/etbookot-roman-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "et-book";
+  src:
+    url("/static/fonts/etbookot-italic-webfont.woff2") format("woff2"),
+    url("/static/fonts/etbookot-italic-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "et-book";
+  src:
+    url("/static/fonts/etbookot-bold-webfont.woff2") format("woff2"),
+    url("/static/fonts/etbookot-bold-webfont.woff") format("woff");
+  font-weight: bold;
+  font-style: normal;
+} 
+
+@layer base {
+  :root {
+    @apply font-serif;
+    font-feature-settings: 'liga' 1, 'calt' 1; 
+  }
+  @supports (font-variation-settings: normal) {
+    :root {
+      @apply font-serif;
+    }
+  }
+} 
 
 .direct-link {
   display: none;
 }
 
-pre[class*="language-" ],
+pre[class*="language-"],
 code[class*="language-"] {
-    /* white-space: normal; */
-    /* overflow: auto; */
-    /* word-break: break-word; */
-    font-size: 0.8rem !important;
+  /* white-space: normal; */
+  /* overflow: auto; */
+  /* word-break: break-word; */
+  font-size: 0.6rem !important;
 }
 
 .project-card:hover {
   transform: scale(1.05);
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  box-shadow:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
 .project-card {
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  transition:
+    transform 0.2s ease-in-out,
+    box-shadow 0.2s ease-in-out;
 }
 
 /* hide quotes for quote blocks */
 blockquote p::before {
-  display : none;
-  }
+  display: none;
+}
 
 blockquote p:after {
-  display : none;
+  display: none;
 }
 
 figure {
