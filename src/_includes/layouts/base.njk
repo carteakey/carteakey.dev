@@ -6,12 +6,23 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
   <link rel="manifest" href="/site.webmanifest" />
-  <!-- 180×180 -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
+
+  <link rel="preconnect" href="https://rsms.me/">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+  
+  {# Moved away from Google Fonts to self-hosted fonts #}
+  {# Moved away from PrismJS to highlight.js #}
+  {# <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;200;300;400&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Caveat&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://unpkg.com/prismjs@1.20.0/themes/prism-coy.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;200;300;400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/prismjs@1.20.0/themes/prism-coy.css">  #}
+
+<script>hljs.highlightAll();</script>
+
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-DKK1XXJY42"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -33,25 +44,26 @@
     } else {
       document.documentElement.classList.remove("dark");
     }
-
-    function switchPrismTheme() {
-      if (isDarkMode()) {
-        var themeLink = document.querySelector('link[href="https://unpkg.com/prismjs@1.20.0/themes/prism-coy.css"]');
-        if (themeLink){
-          themeLink.setAttribute('href', 'https://unpkg.com/prismjs@1.20.0/themes/prism-twilight.css');
-        }
-      } else {
-        var themeLink = document.querySelector('link[href="https://unpkg.com/prismjs@1.20.0/themes/prism-twilight.css"]');
-        if (themeLink){
-          themeLink.setAttribute('href', 'https://unpkg.com/prismjs@1.20.0/themes/prism-coy.css');
-        }
-      }
-      Prism.highlightAll();
-    }
-    switchPrismTheme();
+ 
 
   </script>
 
+  {# function switchPrismTheme() {
+    if (isDarkMode()) {
+      var themeLink = document.querySelector('link[href="https://unpkg.com/prismjs@1.20.0/themes/prism-coy.css"]');
+      if (themeLink){
+        themeLink.setAttribute('href', 'https://unpkg.com/prismjs@1.20.0/themes/prism-twilight.css');
+      }
+    } else {
+      var themeLink = document.querySelector('link[href="https://unpkg.com/prismjs@1.20.0/themes/prism-twilight.css"]');
+      if (themeLink){
+        themeLink.setAttribute('href', 'https://unpkg.com/prismjs@1.20.0/themes/prism-coy.css');
+      }
+    }
+    Prism.highlightAll();
+  }
+  switchPrismTheme(); 
+   #}
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -78,11 +90,11 @@
         <div class='justify-between flex flex-row w-full'>
 
           <span class="transition-all justify-self-start mt-5 px-0 hidden md:block">
-            <a class="font-bold no-underline hover:underline font-caveat text-xl " href="{{ '/' | url }}">Kartikey Chauhan</a>
+            <a class="no-underline hover:underline font-et-book font-bold text-xl " href="{{ '/' | url }}">Kartikey Chauhan</a>
           </span>
 
           <span class="transition-all justify-self-start mt-5 px-0 ">
-            <a class="font-bold no-underline hover:underline font-caveat md:hidden block text-xl " href="{{ '/' | url }}">{% feather "home" , class="block" %}</a>
+            <a class="no-underline hover:underline font-et-book font-bold md:hidden block text-xl " href="{{ '/' | url }}">{% feather "home" , class="block" %}</a>
           </span>
 
           <ul class="list-none mx-0 px-0">
@@ -97,9 +109,9 @@
             <span class="px-1 py-2 transition-all self-end">
               <a class="font-bold no-underline hover:underline" href="https://cv.carteakey.dev">CV</a>
             </span>
-            <span class="px-1 py-2 transition-all self-end">
+            {# <span class="px-1 py-2 transition-all self-end">
               <a class="font-bold no-underline hover:underline" href="https://notes.carteakey.dev">Notes</a>
-            </span>
+            </span> #}
 
           </ul>
           
