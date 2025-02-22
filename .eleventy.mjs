@@ -1,23 +1,30 @@
-const fs = require("fs");
-const yaml = require("js-yaml");
+import { readFileSync } from "fs";
+import { load } from "js-yaml";
 
-const { DateTime } = require("luxon");
-const markdownIt = require("markdown-it");
-const markdownItAnchor = require("markdown-it-anchor");
-const markdownItEmoji = require("markdown-it-emoji");
-const eleventyGoogleFonts = require("eleventy-google-fonts");
+import { DateTime } from "luxon";
+import markdownIt from "markdown-it";
+import markdownItAnchor, { permalink as _permalink } from "markdown-it-anchor";
+import markdownItEmoji from "markdown-it-emoji";
+import eleventyGoogleFonts from "eleventy-google-fonts";
 
-const pluginSyntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
-const pluginNavigation = require("@11ty/eleventy-navigation");
-const eleventyPluginFeathericons = require('eleventy-plugin-feathericons');
-const pluginTOC = require('eleventy-plugin-toc')
-const eleventyWebcPlugin = require("@11ty/eleventy-plugin-webc");
-const { EleventyRenderPlugin } = require("@11ty/eleventy");
+import pluginSyntaxHighlight from "@11ty/eleventy-plugin-syntaxhighlight";
+import pluginNavigation from "@11ty/eleventy-navigation";
+import eleventyPluginFeathericons from 'eleventy-plugin-feathericons';
+import pluginTOC from 'eleventy-plugin-toc';
+import eleventyWebcPlugin from "@11ty/eleventy-plugin-webc";
+import { EleventyRenderPlugin } from "@11ty/eleventy";
 
 
-const Image = require("@11ty/eleventy-img");
+import Image, { generateHTML } from "@11ty/eleventy-img";
 
 require('dotenv').config()
+
+const UpgradeHelper = require("@11ty/eleventy-upgrade-help");
+
+module.exports = function(eleventyConfig) {
+  // If you have other `addPlugin` calls, UpgradeHelper should be listed last.
+  eleventyConfig.addPlugin(UpgradeHelper);
+};
 
 async function imageShortcode(src, alt, css) {
   let metadata = await Image(src, {
@@ -37,7 +44,7 @@ async function imageShortcode(src, alt, css) {
   };
 
   // You bet we throw an error on missing alt in `imageAttributes` (alt="" works okay)
-  return Image.generateHTML(metadata, imageAttributes, {
+  return generateHTML(metadata, imageAttributes, {
     whitespaceMode: "inline",
   });
 }
@@ -59,7 +66,7 @@ async function imageShortcodeWithCaptions(src, alt, css, caption) {
     decoding: "async",
   };
 
-  const imageMarkup = Image.generateHTML(metadata, imageAttributes, {
+  const imageMarkup = generateHTML(metadata, imageAttributes, {
     whitespaceMode: "inline",
   });
 
@@ -67,9 +74,10 @@ async function imageShortcodeWithCaptions(src, alt, css, caption) {
 }
 
 
-module.exports = function (eleventyConfig) {
+export default function (eleventyConfig) {
   // Copy the `img` and `css` folders to the output
   eleventyConfig.addPassthroughCopy({"./src/static/img":"/img/"});
+  eleventyConfig.addPassthroughCopy("./src/static/fonts");
   eleventyConfig.addPassthroughCopy("./src/static/css/prism-a11y-dark.css");
   eleventyConfig.addPassthroughCopy("./src/_redirects");
   eleventyConfig.addPassthroughCopy("./src/static/Kartikey_Chauhan_Resume_2023.pdf");
@@ -155,7 +163,7 @@ module.exports = function (eleventyConfig) {
     linkify: true,
   })
     .use(markdownItAnchor, {
-      permalink: markdownItAnchor.permalink.ariaHidden({
+      permalink: _permalink.ariaHidden({
         placement: "after",
         class: "direct-link",
         symbol: "#",
@@ -179,7 +187,7 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.setBrowserSyncConfig({
     callbacks: {
       ready: function (err, browserSync) {
-        const content_404 = fs.readFileSync("_site/404.html");
+        const content_404 = readFileSync("_site/404.html");
 
         browserSync.addMiddleware("*", (req, res) => {
           // Provides the 404 content without redirect.
@@ -194,7 +202,7 @@ module.exports = function (eleventyConfig) {
   });
 
   //yaml support
-  eleventyConfig.addDataExtension("yaml", (contents) => yaml.load(contents));
+  eleventyConfig.addDataExtension("yaml", (contents) => load(contents));
 
   return {
     // Control which files Eleventy will process
