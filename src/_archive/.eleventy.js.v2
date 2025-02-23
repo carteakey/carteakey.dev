@@ -1,30 +1,23 @@
-import { readFileSync } from "fs";
-import { load } from "js-yaml";
+const fs = require("fs");
+const yaml = require("js-yaml");
 
-import { DateTime } from "luxon";
-import markdownIt from "markdown-it";
-import markdownItAnchor, { permalink as _permalink } from "markdown-it-anchor";
-import markdownItEmoji from "markdown-it-emoji";
-import eleventyGoogleFonts from "eleventy-google-fonts";
+const { DateTime } = require("luxon");
+const markdownIt = require("markdown-it");
+const markdownItAnchor = require("markdown-it-anchor");
+const markdownItEmoji = require("markdown-it-emoji");
+const eleventyGoogleFonts = require("eleventy-google-fonts");
 
-import pluginSyntaxHighlight from "@11ty/eleventy-plugin-syntaxhighlight";
-import pluginNavigation from "@11ty/eleventy-navigation";
-import eleventyPluginFeathericons from 'eleventy-plugin-feathericons';
-import pluginTOC from 'eleventy-plugin-toc';
-import eleventyWebcPlugin from "@11ty/eleventy-plugin-webc";
-import { EleventyRenderPlugin } from "@11ty/eleventy";
-
-
-import Image, { generateHTML } from "@11ty/eleventy-img";
-
-require('dotenv').config()
-
+const pluginSyntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
+const pluginNavigation = require("@11ty/eleventy-navigation");
+const eleventyPluginFeathericons = require('eleventy-plugin-feathericons');
+const pluginTOC = require('eleventy-plugin-toc')
+const eleventyWebcPlugin = require("@11ty/eleventy-plugin-webc");
+const { EleventyRenderPlugin } = require("@11ty/eleventy");
 const UpgradeHelper = require("@11ty/eleventy-upgrade-help");
 
-module.exports = function(eleventyConfig) {
-  // If you have other `addPlugin` calls, UpgradeHelper should be listed last.
-  eleventyConfig.addPlugin(UpgradeHelper);
-};
+const Image = require("@11ty/eleventy-img");
+
+require('dotenv').config()
 
 async function imageShortcode(src, alt, css) {
   let metadata = await Image(src, {
@@ -44,7 +37,7 @@ async function imageShortcode(src, alt, css) {
   };
 
   // You bet we throw an error on missing alt in `imageAttributes` (alt="" works okay)
-  return generateHTML(metadata, imageAttributes, {
+  return Image.generateHTML(metadata, imageAttributes, {
     whitespaceMode: "inline",
   });
 }
@@ -66,7 +59,7 @@ async function imageShortcodeWithCaptions(src, alt, css, caption) {
     decoding: "async",
   };
 
-  const imageMarkup = generateHTML(metadata, imageAttributes, {
+  const imageMarkup = Image.generateHTML(metadata, imageAttributes, {
     whitespaceMode: "inline",
   });
 
@@ -74,10 +67,12 @@ async function imageShortcodeWithCaptions(src, alt, css, caption) {
 }
 
 
-export default function (eleventyConfig) {
+export default function(eleventyConfig) {
+  // If you have other `addPlugin` calls, UpgradeHelper should be listed last.
+  eleventyConfig.addPlugin(UpgradeHelper);
+
   // Copy the `img` and `css` folders to the output
   eleventyConfig.addPassthroughCopy({"./src/static/img":"/img/"});
-  eleventyConfig.addPassthroughCopy("./src/static/fonts");
   eleventyConfig.addPassthroughCopy("./src/static/css/prism-a11y-dark.css");
   eleventyConfig.addPassthroughCopy("./src/_redirects");
   eleventyConfig.addPassthroughCopy("./src/static/Kartikey_Chauhan_Resume_2023.pdf");
@@ -99,7 +94,10 @@ export default function (eleventyConfig) {
 			"npm:@11ty/eleventy-img/*.webc",
 		]
 	});
-  
+    // If you have other `addPlugin` calls, UpgradeHelper should be listed last.
+    eleventyConfig.addPlugin(UpgradeHelper);
+
+    
   // https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#valid-date-string
   eleventyConfig.addFilter("htmlDateString", (dateObj) => {
     return DateTime.fromJSDate(dateObj, { zone: "utc" }).toFormat("yyyy-LL-dd");
@@ -163,7 +161,7 @@ export default function (eleventyConfig) {
     linkify: true,
   })
     .use(markdownItAnchor, {
-      permalink: _permalink.ariaHidden({
+      permalink: markdownItAnchor.permalink.ariaHidden({
         placement: "after",
         class: "direct-link",
         symbol: "#",
@@ -187,7 +185,7 @@ export default function (eleventyConfig) {
   eleventyConfig.setBrowserSyncConfig({
     callbacks: {
       ready: function (err, browserSync) {
-        const content_404 = readFileSync("_site/404.html");
+        const content_404 = fs.readFileSync("_site/404.html");
 
         browserSync.addMiddleware("*", (req, res) => {
           // Provides the 404 content without redirect.
@@ -202,7 +200,7 @@ export default function (eleventyConfig) {
   });
 
   //yaml support
-  eleventyConfig.addDataExtension("yaml", (contents) => load(contents));
+  eleventyConfig.addDataExtension("yaml", (contents) => yaml.load(contents));
 
   return {
     // Control which files Eleventy will process
