@@ -12,76 +12,75 @@ eleventyNavigation:
 {# 
 <h2>Work</h2>
 <p>
-  Below are some of the key projects I've worked on in my professional capacity.
+  A showcase of some of the key projects I've worked on in my professional life.
 </p>
 
-<div class="grid md:grid-cols-2 gap-5">
+<div class="grid md:grid-cols-3 gap-3">
   {% for project in projects_work.projects %}
-  <div class="p-4 border-2 border-gray-200 shadow-sm dark:border-gray-600  flex flex-col">
+  <div class=" py-0 px-1 border-2 border-gray-200 shadow-xs dark:border-gray-600  flex flex-col">
 
-    {% image project.image_path, project.title %}
+    {% image project.image_path, project.title ,"-mt-2 h-28 object-contain"%}
 
-    <div class="flex flex-row justify-between">
-
-      <a style="pointer-events: none; cursor: default;" title="View Project">
-        <h3 class="text-xl font-bold my-0">{{ project.title }}</h3>
+    <div class="flex flex-col items-center">
+      <a href="{% if project.url %}{{ project.url }}{% endif %}" title="View Project">
+        <h3 class="items-center font-bold -mt-2">{{ project.title }}</h3>
       </a>
-
-      {% if project.github %}
-      <a class="self-center   transition-all" title="View Code" href="{{ project.github }}">
-        {% feather "code" %}
-      </a>
-      {% endif %}
+      <p class="text-center text-sm/6 -mt-2 text-gray-600 dark:text-gray-300 ">
+        {{ project.description }}
+      </p>
     </div>
-    <p class="my-1">
-      {{ project.description }}
-    </p>
-    <ul class="flex flex-row list-none text-sm mx-0 px-0 my-2">
-      {% for tag in project.tags %}<li class="border p-1 mx-2">{{ tag }}</li>{% endfor %}
+    <div class="flex flex-row justify-between -mt-7">
+  
+    <ul class="flex flex-row list-none text-xs mx-0 px-0 my-0">
+      {% for tag in project.tags %}<li class="border p-1 mx-1 my-0">#{{ tag }}</li>{% endfor %}
     </ul>
-
-    <ul class="flex flex-col my-1">
-      {% for point in project.points %}<li class="text-sm  mx-2">{{ point | safe }}</li>{% endfor %}
+    {% if project.github %}
+    <a class="self-center float-right" title="View Code" href="{{ project.github }}">
+      {% feather "code" %}
+    </a>
+    {% endif %}
+  </div>
+    <ul class="flex flex-col -mt-2">
+      {% for point in project.points %}<li class="text-xs mx-2">{{ point | safe }}</li>{% endfor %}
     </ul>
-
   </div>
   {% endfor %}
-</div>
+
+</div> #}
 <hr />
 <h2>Personal</h2>
 <p>
   Here are some of my personal projects
-</p> #}
+</p>
 
-
-<div class="grid md:grid-cols-2 gap-3">
+<div class="grid md:grid-cols-3 gap-3">
   {% for project in projects.projects %}
-  <div class="px-4 border-2 border-gray-200 shadow-sm dark:border-gray-600  flex flex-col">
+  <div class=" py-0 px-1 border-2 border-gray-200 shadow-xs dark:border-gray-600  flex flex-col">
 
-    {% image project.image_path, project.title ,"h-40 object-contain"%}
+    {% image project.image_path, project.title ,"-mt-2 h-28 object-contain"%}
 
-    <div class="flex flex-row justify-between">
+    <div class="flex flex-col items-center">
       <a href="{% if project.url %}{{ project.url }}{% endif %}" title="View Project">
-        <h4 class="text-lg font-bold my-0">{{ project.title }}</h4>
+        <h4 class="items-center font-bold -mt-2">{{ project.title }}</h4>
       </a>
-
-      {% if project.github %}
-      <a class="self-center transition-all" title="View Code" href="{{ project.github }}">
-        {% feather "code" %}
-      </a>
-      {% endif %}
+      <p class="text-center text-xs -mt-2 text-gray-600 dark:text-gray-300 ">
+        {{ project.description }}
+      </p>
     </div>
-    <p class="text-sm text-gray-600 dark:text-gray-300">
-      {{ project.description }}
-    </p>
-    <ul class="flex flex-row list-none text-sm mx-0 px-0 my-1">
-      {% for tag in project.tags %}<li class="border p-1 mx-1">#{{ tag }}</li>{% endfor %}
+    <div class="flex flex-row justify-between -mt-2">
+  
+    <ul class="flex flex-row list-none text-xs mx-0 px-0 my-0">
+      {% for tag in project.tags %}<li class="border p-1 mx-1 my-0">#{{ tag }}</li>{% endfor %}
     </ul>
-
-    <ul class="flex flex-col my-1">
+    {% if project.github %}
+    <a class="self-center float-right" title="View Code" href="{{ project.github }}">
+      {% feather "code" %}
+    </a>
+    {% endif %}
+  </div>
+    {# <ul class="flex flex-col">
       {% for point in project.points %}<li class="text-sm mx-2">{{ point | safe }}</li>{% endfor %}
-    </ul>
-
+    </ul> #}
   </div>
   {% endfor %}
   {# <div class="p-4 overflow-hidden items-center align-middle justify-center">
