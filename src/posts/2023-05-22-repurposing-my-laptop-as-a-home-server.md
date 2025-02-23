@@ -1,11 +1,11 @@
 ---
-title: "Repurposing my laptop as a Home Server."
+title: "Repurposing my laptop as a Home Server - Part I"
 description: Putting old hardware to good use.
 date: 2023-05-22T16:38:56.031Z
 updated: 2023-12-26
 tags:
+  - Self-Host
   - Linux
-  - Docker
 ---
 I recently switched to a Macbook Air (M2) as my primary computer, leaving behind a loud and heavy ASUS-FX505 which I had bought as a gaming PC and served me well for over 3 years. It was still a quite capable device (Ryzen 3550h, 16gigs of RAM, SSD + 1 TB HDD), therefore it made sense to make it act as a secondary computing device, where I can offload my media and development computes.
 
@@ -26,7 +26,7 @@ Windows + WSL2 is great, you get the best of both worlds (Windows and Linux).
 
 However, it makes sense when the device in question is your primary PC. As a home server, using WSL on windows becomes too much bloat, especially because of
 
-- Hard to SSH into (without some [advanced config](https://www.carteakey.dev/remoting-into-wsl2-externally-the-easy-way/) or using VPN like Taiscale.)
+- Hard to SSH into (without some [advanced config](https://www.carteakey.dev/remoting-into-wsl2-externally-the-easy-way/) or using VPN like Tailscale.)
 - WSL has really bad performance on files outside the WSL system e.g. a NTFS hard drive connected to your PC (even [Microsoft recommends against it](https://learn.microsoft.com/en-us/windows/wsl/filesystems)).
 - If you use docker the system is 3 levels deep. - `Windows > WSL2 > Docker Image` - That's some unnecessary overhead.
 ![](/img/inception-deeper.gif "OS within an OS within an OS")
