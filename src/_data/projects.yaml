@@ -1,6 +1,14 @@
 ---
 projects:
-
+  - title: carteakey.dev
+    description: "This website!"
+    image_path: "./src/static/img/projects/carteakey.png"
+    url: https://carteakey.dev
+    github: https://github.com/carteakey/carteakey.dev
+    tags:
+      - eleventy
+      - tailwind
+    
   - title: world-energy-stats
     description: World Energy Statistics using various data tools.
     image_path: "./src/static/img/projects/world-energy-stats.png"
@@ -53,15 +61,7 @@ projects:
       - next.js
       - firebase
 
-  - title: carteakey.dev
-    description: "This website!"
-    image_path: "./src/static/img/projects/carteakey.png"
-    url: https://carteakey.dev
-    github: https://github.com/carteakey/carteakey.dev
-    tags:
-      - eleventy
-      - tailwind
-    
+
   - title: carteakey.github.io
     description: My old blog.
     image_path: "./src/static/img/projects/carteakey.github.png"
