@@ -51,6 +51,6 @@
     "eleventy-plugin-feathericons": "^1.0.1",
     "netlify-plugin-cache": "^1.0.3",
     "postcss": "^8.4.21",
-    "tailwindcss": "^3.2.7"
+    "tailwindcss": "^4.0.8"
   }
 }
