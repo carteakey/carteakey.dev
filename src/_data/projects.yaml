@@ -7,8 +7,8 @@ projects:
     url: https://world-energy-stats.fly.dev
     github: https://github.com/carteakey/world-energy-stats
     tags:
-      - Spark
-      - Dash
+      - spark
+      - dash
 
   - title: cinemattr.ca
     description: Search movies using AI and vector databases.
@@ -16,25 +16,25 @@ projects:
     url: https://cinemattr.ca
     github: https://github.com/carteakey/cinemattr.ca
     tags:
-      - LangChain
-      - SvelteKit
+      - langchain
+      - sveltekit
   
   - title: server-compose
     description: A collection of sample docker compose files for self-hosted applications.
     image_path: "./src/static/img/projects/server-compose.png"
     github: https://github.com/carteakey/server-compose
     tags:
-      - Docker
-      - Linux
+      - docker
+      - linux
   
-  - title: Recomovi
+  - title: recomovi
     description: Movie Recommender & IMDb Dataset Generator.
     image_path: "./src/static/img/projects/recomovi.png"
     url: https://recomovi.streamlit.app
     github: https://github.com/carteakey/recomovi
     tags:
-      - Python
-      - Streamlit
+      - python
+      - streamlit
     
   - title: MicroHMS
     description: Hotel Management System to track bookings and generate invoices.
@@ -42,32 +42,31 @@ projects:
     url: https://microhms.onrender.com
     github: https://github.com/carteakey/microhms
     tags:
-      - Flask
-      - PostgreSQL
+      - flask
+      - postgresql
     
-  - title: Vizima.in
+  - title: vizima.in
     description: Website for a hospitality company. Featured in Chakra UI.
     image_path: "./src/static/img/projects/vizima.png"
     url: https://www.vizima.in
     tags:
-      - Next.js
-      - Firebase
+      - next.js
+      - firebase
 
   - title: carteakey.dev
-    description: "This website! "
+    description: "This website!"
     image_path: "./src/static/img/projects/carteakey.png"
     url: https://carteakey.dev
     github: https://github.com/carteakey/carteakey.dev
     tags:
-      - Eleventy
-      - Tailwind
+      - eleventy
+      - tailwind
     
   - title: carteakey.github.io
-    description: "My old blog."
+    description: My old blog.
     image_path: "./src/static/img/projects/carteakey.github.png"
     url: https://carteakey.github.io
     github: https://github.com/carteakey/carteakey.github.io
     tags:
-      - Jekyll
-      - Github Pages
-    
+      - jekyll
+      - github pages

@@ -5,3 +5,5 @@
 This is my personal website.
 
 It is built using [Eleventy](https://www.11ty.dev/) and deployed to [Netlify](https://www.netlify.com/).
+
+npm i -g npm-check-updates && ncu -u && npm i

@@ -4,7 +4,7 @@ import { load } from "js-yaml";
 import { DateTime } from "luxon";
 import markdownIt from "markdown-it";
 import markdownItAnchor from "markdown-it-anchor";
-import markdownItEmoji from "markdown-it-emoji";
+import { full as emoji } from 'markdown-it-emoji'
 import eleventyGoogleFonts from "eleventy-google-fonts";
 
 import syntaxHighlight from "@11ty/eleventy-plugin-syntaxhighlight";
@@ -13,7 +13,6 @@ import eleventyPluginFeathericons from 'eleventy-plugin-feathericons';
 import pluginTOC from 'eleventy-plugin-toc';
 import eleventyWebcPlugin from "@11ty/eleventy-plugin-webc";
 import { EleventyRenderPlugin } from "@11ty/eleventy";
-import UpgradeHelper from "@11ty/eleventy-upgrade-help";
 import { EleventyHtmlBasePlugin } from "@11ty/eleventy";
 
 import Image, { generateHTML } from "@11ty/eleventy-img";
@@ -88,8 +87,6 @@ export const config = {
 export default function(eleventyConfig) {
   eleventyConfig.setTemplateFormats("md,njk,html,liquid");
   eleventyConfig.addPlugin(EleventyHtmlBasePlugin)
-  // If you have other `addPlugin` calls, UpgradeHelper should be listed last.
-  eleventyConfig.addPlugin(UpgradeHelper);
   eleventyConfig.addWatchTarget("./src/**/*/*.css");
   // Copy the `img` and `css` folders to the output
   eleventyConfig.addPassthroughCopy({"./src/static/img":"/img/"});
@@ -116,10 +113,7 @@ export default function(eleventyConfig) {
 			"npm:@11ty/eleventy-img/*.webc",
 		]
 	});
-    // If you have other `addPlugin` calls, UpgradeHelper should be listed last.
-    eleventyConfig.addPlugin(UpgradeHelper);
-
-    
+   
   // https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#valid-date-string
   eleventyConfig.addFilter("htmlDateString", (dateObj) => {
     return DateTime.fromJSDate(dateObj, { zone: "utc" }).toFormat("yyyy-LL-dd");
@@ -191,7 +185,7 @@ export default function(eleventyConfig) {
       level: [1, 2, 3, 4],
       slugify: eleventyConfig.getFilter("slugify"),
     })
-    .use(markdownItEmoji);
+    .use(emoji);
   eleventyConfig.setLibrary("md", markdownLibrary);
   //Table of Contents
   eleventyConfig.addPlugin(pluginTOC, {

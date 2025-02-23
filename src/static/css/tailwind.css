@@ -1,7 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+@plugin "@tailwindcss/typography";
 *:focus {
   outline: 0px !important;
   -webkit-appearance: none;
@@ -34,17 +34,6 @@
   font-style: normal;
 } 
 
-@layer base {
-  :root {
-    @apply font-serif;
-    font-feature-settings: 'liga' 1, 'calt' 1; 
-  }
-  @supports (font-variation-settings: normal) {
-    :root {
-      @apply font-serif;
-    }
-  }
-} 
 
 .direct-link {
   display: none;
