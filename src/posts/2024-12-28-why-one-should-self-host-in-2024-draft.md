@@ -4,9 +4,8 @@ description: and maybe why you should not...
 date: 2024-12-28T07:06:35.251Z
 updated: 2024-12-28T07:06:35.257Z
 tags:
-  - self-host
-  - linux
-  - docker
+  - Self-Host
+  - Linux
 ---
 **Note:** Inspired by [arch](https://architchandra.com/articles/the-perfectionists-guide-to-deploying-a-statamic-website-to-vercel), I have decided to publish drafts even if they are not  complete, makes writing less stressful.
 
