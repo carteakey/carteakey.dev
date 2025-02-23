@@ -1,9 +1,8 @@
-<ul reversed class="postlist w-full list-none pl-0 sm:pl-6"
+<ul reversed class="postlist w-full list-none sm:pl-6"
   style="counter-reset: start-from {{ (postslistCounter or postslist.length) + 1 }}">
   {% for post in postslist | reverse %}
-  <li class="postlist-item{% if post.url == url %} postlist-item-active{% endif %} my-5 px-0 mx-0">
+  <li class="postlist-item{% if post.url == url %} postlist-item-active{% endif %} my-5 py-1 px-0 mx-0">
     <div class="grid grid-cols-10">
-      
       <div class="align-text-bottom col-span-4 md:col-span-3 flex flex-row items-end ">
         <time class=" postlist-date "
         datetime="{{ post.date | postDate }}">{{ post.date | postDate }}</time>
