@@ -1,3 +1,8 @@
+import { AssetCache } from "@11ty/eleventy-fetch";
+import Fetch from "@11ty/eleventy-fetch";
+import querystring from "querystring";
+import fetch from "node-fetch";
+
 const {
   SPOTIFY_CLIENT_ID: client_id,
   SPOTIFY_CLIENT_SECRET: client_secret,
@@ -7,12 +12,8 @@ const {
 const api_endpoint = "https://api.spotify.com/v1/me/player/currently-playing";
 const auth_endpoint = "https://accounts.spotify.com/api/token";
 
-const { AssetCache } = require("@11ty/eleventy-fetch");
-
 async function fetchAccessToken() {
   let accessToken = "";
-  let querystring = require("querystring");
-  let fetch = require("node-fetch");
 
   //Cache access token
   let accessTokenCache = new AssetCache("token");
@@ -23,13 +24,13 @@ async function fetchAccessToken() {
     accessToken = await accessTokenCache.getCachedValue(); // a promise
     console.log(accessToken);
   } else {
-    response = await fetch(auth_endpoint, {
+    let response = await fetch(auth_endpoint, {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
         Authorization:
           "Basic " +
-          new Buffer.from(client_id + ":" + client_secret).toString("base64"),
+          Buffer.from(client_id + ":" + client_secret).toString("base64"),
       },
       body: querystring.stringify({
         grant_type: "refresh_token",
@@ -53,9 +54,8 @@ async function fetchAccessToken() {
   return accessToken;
 }
 
-module.exports = async function () {
+export default async function () {
   let nowPlaying = "";
-  let fetch = require("node-fetch");
   let accessToken = await fetchAccessToken();
   let nowPlayingCache = new AssetCache("now-playing");
 
@@ -65,7 +65,7 @@ module.exports = async function () {
     nowPlaying = await nowPlayingCache.getCachedValue();
     console.log(nowPlaying);
   } else {
-    response = await fetch(api_endpoint, {
+    let response = await fetch(api_endpoint, {
       headers: {
         Authorization: "Bearer " + accessToken,
       },
@@ -116,4 +116,4 @@ module.exports = async function () {
     }
   }
   return nowPlaying;
-};
+}

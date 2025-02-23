@@ -1,16 +1,14 @@
-const { AssetCache } = require("@11ty/eleventy-fetch");
+import fetch from "node-fetch";
+import { AssetCache } from "@11ty/eleventy-fetch";
 
 const api_endpoint = "https://api.github.com/users/carteakey/repos?sort=updated&direction=desc";
 
-module.exports = async function () {
+export default async function () {
   let repos = new AssetCache("repos");
-  let fetch = require("node-fetch");
-  
   if (repos.isCacheValid("1d")) {
     // return cached data.
     return repos.getCachedValue(); // a promise
   }
-
   try {
     const repos_data = await fetch(api_endpoint);
     const repos_json = await repos_data.json();
@@ -28,11 +26,9 @@ module.exports = async function () {
       };
     });
 
-    repos_final = {
+    const repos_final = {
       repos: repos_list,
     };
-
-    repos.save(repos_final, "json");
 
     return repos_final;
   } catch (e) {
@@ -41,4 +37,4 @@ module.exports = async function () {
       repos: [],
     };
   }
-};
+}

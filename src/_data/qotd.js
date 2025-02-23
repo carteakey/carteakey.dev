@@ -1,23 +1,19 @@
-const { AssetCache } = require("@11ty/eleventy-fetch");
+import  OpenAI  from 'openai';
+import { AssetCache } from "@11ty/eleventy-fetch";
 
-module.exports = async function () {
+export default async function () {
   let qotd = new AssetCache("qotd");
 
   if (qotd.isCacheValid("1d")) {
-    // return cached data.
-    return qotd.getCachedValue(); // a promise
+    return qotd.getCachedValue();
   }
 
   try {
-    const { Configuration, OpenAIApi } = require("openai");
-
-    const configuration = new Configuration({
-      apiKey: process.env.OPENAI_API_KEY,
+    const client = new OpenAI({
+      apiKey: process.env['OPENAI_API_KEY'], // This is the default and can be omitted
     });
 
-    const openai = new OpenAIApi(configuration);
-
-    const completion = await openai.createChatCompletion({
+    const completion = await client.chat.completions.create({
       model: "gpt-3.5-turbo",
       messages: [
         {
@@ -27,7 +23,7 @@ module.exports = async function () {
       ],
     });
 
-    quote = {
+    const quote = {
       quote: completion.data.choices[0].message.content,
     };
 
@@ -39,10 +35,8 @@ module.exports = async function () {
   } catch (e) {
     console.log(e);
     return {
-      // my failure fallback 
       quote:
         "The illiterate of the 21st century will not be those who cannot read and write, but those who cannot learn, unlearn, and relearn. - Alvin Toffler",
     };
   }
-
-};
+}
