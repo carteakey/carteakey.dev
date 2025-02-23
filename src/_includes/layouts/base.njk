@@ -79,9 +79,9 @@
     title="{{ metadata.title }}" />
 </head>
 
-<body class="bg-gray-50 dark:bg-gray-900 font-serif">
-  <div class="md:max-w-prose mx-auto">
-    <div class="prose prose-sky prose-h1:text-4xl prose-h1:my-5 prose-h2:my-4 dark:prose-invert px-4 md:px-0">
+<body class="bg-gray-50 dark:bg-black font-et-book">
+  <div class="md:max-w-xl mx-auto">
+    <div class="prose prose-amber prose-lg prose-h1:text-3xl  prose-h2:my-4 dark:prose-invert px-4 md:px-0">
       <nav class="flex w-full py-8 justify-end">
 
         {% set navPages = collections.all | eleventyNavigation %}
@@ -89,14 +89,14 @@
         <div class='justify-between flex flex-row w-full'>
 
           <span class="transition-all justify-self-start mt-5 px-0 hidden md:block">
-            <a class="no-underline hover:underline font-et-book font-bold text-xl " href="{{ '/' | url }}">Kartikey Chauhan</a>
+            <a class="no-underline hover:underline  font-bold text-xl " href="{{ '/' | url }}">Kartikey Chauhan</a>
           </span>
 
           <span class="transition-all justify-self-start mt-5 px-0 ">
-            <a class="no-underline hover:underline font-et-book font-bold md:hidden block text-xl " href="{{ '/' | url }}">{% feather "home" , class="block" %}</a>
+            <a class="no-underline hover:underline  font-bold md:hidden block text-xl " href="{{ '/' | url }}">{% feather "home" , class="block" %}</a>
           </span>
 
-          <ul class="list-none mx-0 px-0">
+          <ul class="list-none mt-5 px-0  text-xl">
 
             {%- for entry in navPages %}
             <span class="px-1 py-2 transition-all self-end">
@@ -105,9 +105,9 @@
                 }}</a>
             </span>
             {%- endfor %}
-            <span class="px-1 py-2 transition-all self-end">
+            {# <span class="px-1 py-2 transition-all self-end">
               <a class="font-bold no-underline hover:underline" href="https://cv.carteakey.dev">CV</a>
-            </span>
+            </span> #}
             {# <span class="px-1 py-2 transition-all self-end">
               <a class="font-bold no-underline hover:underline" href="https://notes.carteakey.dev">Notes</a>
             </span> #}
@@ -116,7 +116,7 @@
           
 
         </div>
-        <button id="toggleDarkMode" class="self-center font-bold p-1 sm:px-3 sm:py-2 transition-all">
+        <button id="toggleDarkMode" class="self-center font-bold text-xs px-1 sm:px-3 sm:py-0 -mt-2 transition-all">
           {% feather "moon" , class="block dark:hidden" %}
           {% feather "sun" , class="hidden dark:block"%}
         </button>
