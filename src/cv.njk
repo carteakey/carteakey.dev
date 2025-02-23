@@ -3,131 +3,133 @@ layout: layouts/home.njk
 title: CV
 templateClass: tmpl-post
 eleventyNavigation:
-  hide: True
+  key: CV
+  order: 5
 ---
-
 <h1>CV</h1>
-{# <p>
-  Download my resume <a href="/static/Kartikey_Chauhan_Resume_2023.pdf">here</a>.
+
+{# 
+<p>
+  Download my resume <a href="/static/Kartikey Chauhan - Resume.pdf">here</a>.
 </p> #}
 
-<hr>
+<style>
+.job-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-top: 0rem;
+}
+</style>
 
-<h1>Kartikey Chauhan</h1>
-
-<div class=" grid md:grid-cols-2">
-  <div class='bg-gray-200 py-1 px-4'>
-    <p>Experienced data professional specializing in data warehousing, analytical, and transactional solutions. Skilled in Python and SQL with a strong focus on problem-solving and delivering robust data-driven solutions for Supply Chain and Banking domains
-    </p>
+<div class="grid md:grid-cols-2">
+  <div class="p-0 my-2 bg-gray-200 dark:bg-gray-900 ">
+    <h3 class="mx-4 md:mt-0">Summary</h3>
+    <p class="px-4">Data professional with 5+ years of experience in analytics and data-driven decision-making. Strong background in statistical analysis, pattern recognition, and transforming complex data into actionable insights. </p>
   </div>
-  <div class="p-1 my-2 justify-center flex flex-col">
+  <div class="p-1 my-2 justify-self-start flex flex-col">
     <h3 class="mx-4 md:mt-0">Contact</h3>
     <ul class="list-outside">
-      <li><a href='https://carteakey.dev'>👨🏻‍💻 carteakey.dev</a></li>
+      <li><a href="https://carteakey.dev">👨🏻‍💻 carteakey.dev</a></li>
       <li><a href="mailto:kartychauhan@gmail.com">📧 kartychauhan@gmail.com</a></li>
       <li><a href="https://github.com/carteakey">👾 github/carteakey</a></li>
-      <li><a href="http://twitter.com/kartychan">🐦 twitter/kartychan</a></li>
       <li><a href="https://www.linkedin.com/in/kartikeychauhan/">🔗 linkedin/kartikeychauhan</a></li>
     </ul>
   </div>
 </div>
 
-{% renderTemplate "md" %}
-<hr />
-
-## Skills
-
-- **Languages:** Python · PLSQL · SQL · HTML/CSS · Shell Scripting
-- **Tools/Databases:** Git · Linux · Docker · Oracle · Netezza · Postgres · DBT
-- **Frameworks:** Pandas · NumPy · Flask · Matplotlib · Scikit-learn
-- **Platforms:** Azure · Oracle EBS/Cloud · ServiceNow
-
-## Experience
-
-### **ETL Analyst**
-
-***Tata Consultancy Services Canada**, Toronto, Canada - (Jul 2022 - Present)*
-- Part of the **Enterprise Risk & Basel reporting** team and responsible for ensuring compliance and governance of **ETL
-pipelines** and **reports** for a **Big 5** bank.
-- Played a key role in crucial projects - **BASEL 3.1 reforms, Mergers & Acquisitions, etc.**
-- Implemented **data quality** and **validation workflows** utilizing pandas, pytest, and pyodbc, which replaced shell
-scripts and reduced technical debt, inaccuracy, and manual efforts by 90%.
-- Collaborated with **cross-functional teams** to ensure seamless data flow from source to
-reporting.
-- Responsible for managing delivery and coaching offshore members in an agile environment with multiple parallel
-projects, migrations, and continuous releases.
-
-**Technology**: *Python · Shell scripting· SQL · Pandas · Extract, Transform, Load*
-
-**Domain:** *Data Quality · Data Governance · Basel III · BCAR · Financial Reporting · Requirement Analysis · Data
-Validation · Project Management · Banking*
-
-<hr />
-
-### Oracle EBS Developer
-
-***Tata Consultancy Services**, Mumbai, India  (Jul 2019 - Jul 2022)*
-
-- Enhanced and provided production support for the ERP of an F500 MFG company.
-- Implemented a **Supply Chain Analytics** solution utilizing an evolving decision matrix that
-identified patterns in past order data to classify the cause of order misses, reducing 90%
-of manual data entries.
-- Developed **dynamic billing & repricing** transactional flows that aided in multi-million $
-increased revenue & significantly reduced customer claims.
-- Improved order processing time by 5x through the implementation of an **event-driven
-system**.
-- Reduced **ERP-MES integration** failures to a 0.01% error rate by addressing design gaps
-and defects.
-- Designed and developed a **Data Adjustment utility** that reduced effort & resolution time for
-critical data issues from 4 hours to 15 mins.
-- Implemented the continuous code quality monitoring workflow using SonarQube.
-- Incorporated various automation & process improvements, leading to soft savings of >$100k/yr.
-
-**Technology**: *PL/SQL · Oracle Database · Oracle E-Business Suite · Python · Oracle BI Publisher · OA Framework ·
-JDeveloper · Java · Git*
-
-**Domain:** *Data Analytics · Supply Chain Management · Enterprise Resource Planning (ERP) · Business Intelligence (BI)*
-
-<hr />
-
-## Education
-<!--
-### Master of Science - Data Science and Analytics *(Upcoming)*
-*Toronto Metropolitan University, Toronto, Canada (2023 - 2024)*
--->
-
-### Bachelor of Technology - Electronics and Communication
-*JSS Academy of Technical Education, Noida, India (2015 - 2019)*
-<hr />
-{% endrenderTemplate %}
-
-<h2>Courses & Certificates</h2>
-<ul class="grid grid-cols-2 gap-2 mx-0 px-0  list-none">
-  {% for badge in badges.badges %}
-  <li class="border border-gray-200 flex gap-2 content-center items-center my-0 py-0">
-    <div class="flex items-center ">
-      <div class="w-12 h-16  items-center flex">
-        {% image badge.image_path, badge.title %}
-      </div>
-    </div>
-    </span>
-    <span class="text-sm ">
-      <a href="https://www.credly.com/badges/{{badge.badge_id}}/public_url">
-        {{ badge.title }}
-    </span>
-  </li>
-  {% endfor %}
-
+<h2 class="-mt-2">Skills</h2>
+<hr  class="mt-1 -mb-1"/>
+<ul>
+  <li><strong>Programming:</strong> Python (NumPy, Pandas, Polars, Scikit-learn) · SQL · PL/SQL</li>
+  <li><strong>Data Processing:</strong> ETL · Data Mining · Data Quality Analysis · Process Optimization</li>
+  <li><strong>Big Data & Cloud:</strong> PySpark · Airflow · DBT · Azure ML · AWS Lambda · Oracle Cloud</li>
+  <li><strong>Visualization:</strong> Plotly · Matplotlib · Seaborn</li>
+  <li><strong>Additional:</strong> Statistical Testing · Project Management · Stakeholder Communication</li>
 </ul>
 
-{#
-<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<h2 class="-mt-2">Experience</h2>
+<hr  class="mt-1 -mb-1"/>
+<div class="job-header -mt-2">
+  <h3>Senior Data Analyst</h3>
+  <em>Feb 2025 - Present</em>
+</div>
+<p class="-mt-2"><em>McAfee - Toronto, Canada</em></p>
+{# <p><strong>Technology:</strong> Data</p> #}
+{# <p><strong>Domain:</strong> Enterprise Risk · Basel III · Financial Reporting · Data Quality · Data Governance</p> #}
+<hr  class="mt-1 -mb-1"/>
+
+<div class="job-header -mt-2">
+  <h3>Senior Data Analyst</h3>
+  <em>Aug 2022 - Jan 2025</em>
+</div>
+<p class="-mt-2"><em>Big 5 Bank, Tata Consultancy Services Canada - Toronto, Canada</em></p>
+<ul>
+  <li>Developed a <strong>data quality framework</strong> for <strong>Enterprise Risk & Basel reporting</strong> using Python (<strong>Polars, NumPy, Pandas</strong>) and SQL, reducing manual validation effort by <strong>90%</strong>.</li>
+  <li>Engineered a <strong>synthetic data generation system</strong> to validate Basel reporting requirements, ensuring full regulatory coverage.</li>
+  <li>Built an <strong>internal Python library</strong> automating <strong>data validation and reporting workflows</strong>, processing <strong>10,000+</strong> data points efficiently.</li>
+  <li>Implemented an <strong>automated monitoring system</strong> to detect trends and anomalies in risk data.</li>
+  <li>Collaborated with business analysts to transform complex data patterns into actionable insights.</li>
+</ul>
+<p><strong>Technology:</strong> Python · Polars · Pandas · NumPy · SQL · Pyodbc</p>
+<p><strong>Domain:</strong> Enterprise Risk · Basel III · Financial Reporting · Data Quality · Data Governance</p>
+
+<hr  class="mt-1 -mb-1"/>
+
+<div class="job-header">
+  <h3>Technical Consultant</h3>
+  <em>Jul 2019 - Jul 2022</em>
+</div>
+<p class="-mt-2"><em>F500 Manufacturing Company, Tata Consultancy Services - Mumbai, India</em></p>
+<ul>
+  <li>Developed an <strong>analytics tool</strong> using <strong>decision trees and pattern recognition</strong> to classify order anomalies, achieving <strong>85% accuracy</strong> in predicting order delays.</li>
+  <li>Engineered an <strong>event-driven data processing system</strong>, improving order processing efficiency by <strong>5x</strong>.</li>
+  <li>Created an <strong>automated data adjustment utility</strong>, reducing resolution time from <strong>4 hours to 15 minutes</strong>.</li>
+  <li>Built a <strong>dynamic pricing and revenue optimization system</strong>, generating <strong>$100k+ annual savings</strong>.</li>
+</ul>
+<p><strong>Technology:</strong> PL/SQL · Oracle Database · Python · Oracle E-Business Suite · Java · Git</p>
+<p><strong>Domain:</strong> Supply Chain Analytics · ERP · Business Intelligence</p>
+
+
+<h2 class="-mt-2">Education</h2>
+<hr  class="mt-1 -mb-1"/>
+
+<div class="job-header">
+  <h3>MSc - Data Science and Analytics</h3>
+  <em>Sep 2023 - Sep 2024</em>
+</div>
+<p class="-mt-2"><em>Toronto Metropolitan University, Toronto, Canada</em></p>
+<ul>
+  <li><strong>GPA:</strong> 4.33/4.33</li>
+  <li><strong>Coursework:</strong> Deep Learning, Big Data, NLP, Data Mining</li>
+  <li><strong>Research:</strong> Developed an <strong>LLM-augmented recommendation system</strong>, improving prediction accuracy by <strong>5-10%</strong></li>
+  <li>Conducted comparative analysis of classification algorithms for <strong>tabular data</strong></li>
+  <li>Analyzed world energy consumption trends using <strong>Hive and Spark</strong></li>
+  <li>Designed <strong>NLP models</strong> for text analysis</li>
+</ul>
+
+<div class="job-header">
+  <h3>B.Tech - Electronics & Communication</h3>
+  <em>2015 - 2019</em>
+</div>
+<p class="-mt-2"><em>JSS Academy of Technical Education, Noida, India</em></p>
+
+<h2 class="-mt-2">Courses & Certificates</h2>
+<hr  class="mt-1 mb-1"/>
+
+<div class="grid grid-cols-2 gap-2 -mx-2">
   {% for badge in badges.badges %}
-  <div
-    class='bg-gray-50 dark:bg-gray-300 border-gray-200 dark:border-gray-600 border-2 shadow-sm overflow-hidden w-fit h-40'>
-    <div data-iframe-width="125" data-iframe-height="150" data-share-badge-id={{badge.badge_id}}
-      data-share-badge-host="https://www.credly.com"></div>
-    <script type="text/javascript" async src="//cdn.credly.com/assets/utilities/embed.js"></script>
-  </div>
+    <div class="border border-gray-200 flex gap-2 content-center items-center px-2 my-0 py-0">
+      <div class="flex items-center">
+        <div class="w-10 h-16 items-center flex">
+          {% image badge.image_path, badge.title %}
+        </div>
+      </div>
+      <span class="text-sm">
+        <a href="https://www.credly.com/badges/{{badge.badge_id}}/public_url">
+          {{ badge.title }}
+        </a>
+      </span>
+    </div>
   {% endfor %}
-</div> #}
+</div>
