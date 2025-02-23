@@ -7,7 +7,7 @@ import markdownItAnchor from "markdown-it-anchor";
 import markdownItEmoji from "markdown-it-emoji";
 import eleventyGoogleFonts from "eleventy-google-fonts";
 
-import pluginSyntaxHighlight from "@11ty/eleventy-plugin-syntaxhighlight";
+import syntaxHighlight from "@11ty/eleventy-plugin-syntaxhighlight";
 import pluginNavigation from "@11ty/eleventy-navigation";
 import eleventyPluginFeathericons from 'eleventy-plugin-feathericons';
 import pluginTOC from 'eleventy-plugin-toc';
@@ -98,9 +98,11 @@ export default function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy("./src/static/Kartikey_Chauhan_Resume_2023.pdf");
   eleventyConfig.addPassthroughCopy({ "./src/static/img/favicon": "/" });
   eleventyConfig.addPassthroughCopy({ "./src/admin/config.yml": "./admin/config.yml" });
+  eleventyConfig.addPassthroughCopy({ "./src/static/fonts": "/static/fonts" });
+
 
   // Add plugins
-  eleventyConfig.addPlugin(pluginSyntaxHighlight);
+  eleventyConfig.addPlugin(syntaxHighlight);
   eleventyConfig.addPlugin(pluginNavigation);
   eleventyConfig.addPlugin(eleventyGoogleFonts);
   eleventyConfig.addPlugin(eleventyPluginFeathericons);
