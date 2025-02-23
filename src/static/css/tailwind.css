@@ -1,7 +1,36 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+@plugin '@tailwindcss/typography';
 @plugin "@tailwindcss/typography";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --font-*: initial;
+  --font-serif: 'Inter', sans-serif;
+  --font-et-book: et-book, serif;
+
+  --animate-spin-slow: spin 7s linear infinite;
+}
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
+
 *:focus {
   outline: 0px !important;
   -webkit-appearance: none;
@@ -44,7 +73,7 @@ code[class*="language-"] {
   white-space: normal;
   overflow: auto; 
   word-break: break-word;
-  font-size: 0.9rem !important;
+  font-size: 0.8rem !important;
 } 
 
 .project-card:hover {
