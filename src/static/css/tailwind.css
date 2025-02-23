@@ -70,9 +70,9 @@
 
 pre[class*="language-"],
 code[class*="language-"] {
-  white-space: normal;
-  overflow: auto; 
-  word-break: break-word;
+  /* white-space: normal; */
+  /* overflow: auto;  */
+  /* word-break: break-word; */
   font-size: 0.8rem !important;
 } 
 
