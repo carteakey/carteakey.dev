@@ -6,3 +6,5 @@ package-lock.json
 **/.DS_Store
 *.md2
 *lighthouse*.html
+# Local Netlify folder
+.netlify

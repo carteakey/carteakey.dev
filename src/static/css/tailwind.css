@@ -103,3 +103,13 @@ figure {
   display: table;
   margin: 10px auto; /* not needed unless you want centered */
 }
+
+/* Upvote button styles */
+.upvote-button.upvoted {
+  transform: scale(1.1);
+  transition: transform 0.2s ease;
+}
+
+.upvote-button:focus {
+  outline: none;
+}
