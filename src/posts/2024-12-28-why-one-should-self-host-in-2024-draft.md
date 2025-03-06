@@ -1,5 +1,5 @@
 ---
-title: Why one should self-host in 2024 (draft)
+title: Why one should self-host in 2025 (draft)
 description: and maybe why you should not...
 date: 2024-12-28T07:06:35.251Z
 updated: 2024-12-28T07:06:35.257Z
@@ -11,22 +11,22 @@ tags:
 
 2024 comes to a close, and AI hasn't taken over humanity (yet). The LLM's however, seem to be taking over the internet - [The Internet is Becoming an Ocean of LLM-Generated Junk.](https://www.trevorlasn.com/blog/the-internet-is-becoming-an-ocean-of-llm-generated-junk)
 
-\# Why you should
+## Why you should
 
-\## Data is getting crazy
+### Data is getting crazy
 
-\## Subscriptions....
+### Subscriptions....
 
-\## SaaS deaths
+### SaaS deaths out of nowhere
 
-\## Great f\*\*\*\* apps
+### Great f\*\*\*\* apps
 
-\## Gain IT Skills
+### Gain IT Skills
 
-\## Its fun
+### Its fun
 
-\# Why you should not
+## Why you should not
 
-\## Don't inflict your hobby on others
+### Don't inflict your hobby on others
 
-\## Support good apps
+### Support good apps
