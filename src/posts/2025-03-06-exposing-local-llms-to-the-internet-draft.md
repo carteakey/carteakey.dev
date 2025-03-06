@@ -20,15 +20,15 @@ Instead of throwing more money into the OpenAI pit, I decided to spin up my own 
 1. **Download & Install Ollama**: <https://ollama.com/download>
 2. **Allow all incoming requests:** Set OLLAMA_HOST variable to 0.0.0.0 to allow all incoming connections See <https://github.com/ollama/ollama/blob/main/docs/faq.md#how-do-i-configure-ollama-server>
 3. **Select a Model**: Just run `ollama pull llama3.1` (or pick another model you prefer).
-4. **Expose to the Web**: **Expose to the Web**: Safely route through a reverse proxy for secure access. The simplest option is Tailscale—install it and execute:
+4. **Expose to the Web**: Safely route through a reverse proxy for secure access. The simplest option is Tailscale—install it and execute:
 
-   ```
+   ```bash
    tailscale funnel 11434
    ```
 
    Voilà, reverse proxy done! Alternatively, Cloudflare Tunnels is another easy option.
 
-   ```
+   ```bash
    tailscale funnel 11434
    Available on the internet:
    https://amelie-workstation.pango-lin.ts.net
