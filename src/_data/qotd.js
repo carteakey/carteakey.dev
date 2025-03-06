@@ -1,5 +1,17 @@
-import  OpenAI  from 'openai';
+import OpenAI from 'openai';
 import { AssetCache } from "@11ty/eleventy-fetch";
+import axios from 'axios';
+
+async function checkOllamaAvailable() {
+  try {
+    const ollamaUrl = process.env['OLLAMA_API_URL'] || 'http://localhost:11434/v1';
+    await axios.get(ollamaUrl.replace('/v1', '/api/tags'));
+    return true;
+  } catch (e) {
+    console.log('Ollama not available, falling back to ChatGPT');
+    return false;
+  }
+}
 
 export default async function () {
   let qotd = new AssetCache("qotd");
@@ -9,34 +21,54 @@ export default async function () {
   }
 
   try {
-    const client = new OpenAI({
-      apiKey: process.env['OPENAI_API_KEY'], // This is the default and can be omitted
-    });
+    const useOllama = await checkOllamaAvailable();
+    
+    if (useOllama) {
+      const client = new OpenAI({
+        baseURL: process.env['OLLAMA_API_URL'] || 'http://localhost:11434/v1',
+        apiKey: 'ollama', // required but unused
+      });
 
-    const completion = await client.chat.completions.create({
-      model: "gpt-3.5-turbo",
-      messages: [
-        {
-          role: "user",
-          content: "Tell me a rare inspirational quote and its author",
-        },
-      ],
-    });
+      const completion = await client.chat.completions.create({
+        model: process.env['OLLAMA_MODEL'] || "llama3.1:8b-instruct-q6_K",
+        messages: [
+          {
+            role: "user",
+            content: "Tell me a rare inspirational quote and its author. Just the quote and the author, please.",
+          },
+        ],
+      });
 
-    const quote = {
-      quote: completion.data.choices[0].message.content,
-    };
+      return {
+        quote: completion.choices[0].message.content,
+        provider: 'Ollama'
+      };
+    } else {
+      // Fallback to OpenAI
+      const client = new OpenAI({
+        apiKey: process.env['OPENAI_API_KEY'],
+      });
 
-    console.log(quote);
+      const completion = await client.chat.completions.create({
+        model: process.env['OPENAI_MODEL'] || "gpt-4o-mini",
+        messages: [
+          {
+            role: "user",
+            content: "Tell me a rare inspirational quote and its author",
+          },
+        ],
+      });
 
-    await qotd.save(quote, "json");
-
-    return quote;
+      return {
+        quote: completion.choices[0].message.content,
+        provider: 'ChatGPT'
+      };
+    }
   } catch (e) {
     console.log(e);
     return {
-      quote:
-        "The illiterate of the 21st century will not be those who cannot read and write, but those who cannot learn, unlearn, and relearn. - Alvin Toffler",
+      quote: "The illiterate of the 21st century will not be those who cannot read and write, but those who cannot learn, unlearn, and relearn. - Alvin Toffler",
+      provider: 'Fallback'
     };
   }
 }

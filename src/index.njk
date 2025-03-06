@@ -46,7 +46,7 @@ htmlTemplateEngine: "webc"
   <blockquote id="qotd" class="font-normal">
     {{qotd.quote}}
   </blockquote>
-  <p class='p-0 -mt-2 float-right italic text-xs' id='who'>Powered by ChatGPT</p>
+  <p class='p-0 -mt-2 float-right italic text-xs' id='who'>Powered by {{qotd.provider}}</p>
   <!-- The script itself, loaded AFTER your root element. -->
   <script src="https://unpkg.com/typeit@8.7.1/dist/index.umd.js"></script>
   <script>
