@@ -1,0 +1,97 @@
+---
+layout: layouts/base.njk
+title: Photos
+eleventyNavigation:
+  key: Photos
+  order: 5
+---
+
+<div class="container mx-auto px-4 not-prose">
+  <h1 class="text-3xl font-bold mb-6">Photos</h1>
+  
+  <div class="mb-8 p-4 bg-gray-100 dark:bg-gray-800 rounded">
+    <p class="text-sm">
+      This is a collection of photographs I've taken and screenshots from various games. 
+      Photography is just a hobby for me - I enjoy capturing both real and virtual moments that look ~aesthetic~.
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="gallery">
+    {% for photo in photos %}
+    <figure class="relative overflow-hidden rounded-lg shadow-lg cursor-pointer min-h-[300px]" 
+            data-pswp-src="{{ photo.path | url }}"
+            data-pswp-width="1920"
+            data-pswp-height="1080">
+      <img src="{{ photo.path | url }}" 
+           alt="{{ photo.title }}"
+           class="w-full h-[300px] object-cover transition-transform duration-300 hover:scale-105"
+           loading="lazy">
+      <div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white p-4">
+        <h3 class="text-lg font-semibold">{{ photo.title }}</h3>
+        <div class="text-sm">
+          {% if photo.category == "real" %}
+            <p>📍 {{ photo.location }}</p>
+            <p>📱 {{ photo.device }}</p>
+          {% else %}
+            <p>🎮 {{ photo.game }}</p>
+            <p>💻 {{ photo.platform }}</p>
+          {% endif %}
+          <p>📅 {{ photo.date }}</p>
+        </div>
+      </div>
+    </figure>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- PhotoSwipe -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@5.3.8/dist/photoswipe.css">
+<script type="module">
+import PhotoSwipeLightbox from 'https://cdn.jsdelivr.net/npm/photoswipe@5.3.8/dist/photoswipe-lightbox.esm.min.js'
+import PhotoSwipe from 'https://cdn.jsdelivr.net/npm/photoswipe@5.3.8/dist/photoswipe.esm.min.js'
+
+const lightbox = new PhotoSwipeLightbox({
+  gallery: '#gallery',
+  children: 'figure',
+  pswpModule: PhotoSwipe,
+  showHideAnimationType: 'fade'
+})
+
+lightbox.init()
+</script>
+
+<!-- PhotoSwipe Template -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="pswp__bg"></div>
+  <div class="pswp__scroll-wrap">
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    <div class="pswp__ui pswp__ui--hidden">
+      <div class="pswp__top-bar">
+        <div class="pswp__counter"></div>
+        <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+        <button class="pswp__button pswp__button--share" title="Share"></button>
+        <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+        <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+        <div class="pswp__preloader">
+          <div class="pswp__preloader__icn">
+            <div class="pswp__preloader__cut">
+              <div class="pswp__preloader__donut"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+        <div class="pswp__share-tooltip"></div>
+      </div>
+      <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+      <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+      <div class="pswp__caption">
+        <div class="pswp__caption__center"></div>
+      </div>
+    </div>
+  </div>
+</div>

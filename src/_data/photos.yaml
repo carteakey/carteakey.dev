@@ -1,0 +1,13 @@
+- title: "CN Tower in the mist"
+  category: "real"
+  path: "/img/photography/real/cn-tower-gloomy.jpg"
+  location: "Toronto, Canada"
+  device: "Canon EOS M50"
+  date: "2024-12-26"
+
+# - title: "Example Virtual Photo"
+#   category: "virtual"
+#   path: "/static/img/photography/virtual/example.jpg"
+#   game: "Sample Game"
+#   platform: "PC"
+#   date: "2024-03-09"
