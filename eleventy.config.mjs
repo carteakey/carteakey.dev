@@ -135,6 +135,25 @@ export default function(eleventyConfig) {
   eleventyConfig.addAsyncShortcode("image", imageShortcode);
   eleventyConfig.addAsyncShortcode("image_cc",imageShortcodeWithCaptions);
 
+  // Generate thumbnails for gallery images
+  async function galleryImageShortcode(src) {
+    let metadata = await Image(src, {
+      widths: [400], // thumbnail width
+      formats: ['webp'],
+      outputDir: "./_site/img/thumbnails/",
+      urlPath: "/img/thumbnails/",
+      filenameFormat: function (id, src, width, format, options) {
+        const extension = format;
+        const name = src.split('/').pop().split('.')[0];
+        return `${name}-${width}w.${extension}`;
+      }
+    });
+
+    return metadata.webp[0].url;
+  }
+
+  eleventyConfig.addAsyncShortcode("thumbnail", galleryImageShortcode);
+
 
   // Get the first `n` elements of a collection.
   eleventyConfig.addFilter("head", (array, n) => {
