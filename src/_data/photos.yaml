@@ -4,6 +4,18 @@
   location: "Toronto, Canada"
   device: "Canon EOS M50"
   date: "2024-12-26"
+  width: 2400
+  height: 1600
+
+- title: "Downtown Toronto"
+  category: "real"
+  path: "/img/photography/real/downtown.jpg"
+  location: "Toronto, Canada"
+  device: "Canon EOS M50"
+  date: "2024-12-26"
+  width: 2400
+  height: 1600
+
 
 # - title: "Example Virtual Photo"
 #   category: "virtual"
