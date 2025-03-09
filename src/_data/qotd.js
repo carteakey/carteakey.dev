@@ -5,7 +5,7 @@ import axios from 'axios';
 async function checkOllamaAvailable() {
   try {
     const ollamaUrl = process.env['OLLAMA_API_URL'] || 'http://localhost:11434/v1';
-    await axios.get(ollamaUrl.replace('/v1', '/api/tags'));
+    await axios.get(ollamaUrl.replace('/v1', '/api/tags'), { timeout: 2000 });
     return true;
   } catch (e) {
     console.log('Ollama not available, falling back to ChatGPT');
