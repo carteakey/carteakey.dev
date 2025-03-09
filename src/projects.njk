@@ -47,11 +47,19 @@ eleventyNavigation:
   {% endfor %}
 
 </div> #}
-<hr />
+{# <hr />
 <h2>Personal</h2>
 <p>
-  Here are some of my personal projects
-</p>
+  
+</p> #}
+
+<div class="md:max-w-xl mx-auto">
+  <div class="mb-8 p-4 bg-gray-100 dark:bg-gray-800 rounded">
+  <p class="text-sm">
+    Here are some of my personal projects
+  </p>
+</div>
+
 
 <div class="grid md:grid-cols-3 gap-3">
   {% for project in projects.projects %}
