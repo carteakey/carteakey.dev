@@ -1,11 +1,11 @@
 - title: "CN Tower in the mist"
   category: "real"
-  path: "/img/photography/real/cn-tower-gloomy.jpg"
+  path: "/img/photography/real/cn-tower.jpg"
   location: "Toronto, Canada"
   device: "Canon EOS M50"
   date: "2024-12-26"
-  width: 2400
-  height: 1600
+  width: 1533
+  height: 1675
 
 - title: "Downtown Toronto"
   category: "real"
@@ -13,13 +13,25 @@
   location: "Toronto, Canada"
   device: "Canon EOS M50"
   date: "2024-12-26"
-  width: 2400
-  height: 1600
+  width: 2976
+  height: 1680
 
 
-# - title: "Example Virtual Photo"
-#   category: "virtual"
-#   path: "/static/img/photography/virtual/example.jpg"
-#   game: "Sample Game"
-#   platform: "PC"
-#   date: "2024-03-09"
+- title: "Robin"
+  category: "real"
+  path: "/img/photography/real/robin.jpg"
+  location: "Markham, Canada"
+  device: "Canon EOS M50"
+  date: "2024-11-30"
+  width: 2976
+  height: 1680
+
+- title: "Erdtree"
+  category: "virtual"
+  path: "/img/photography/virtual/erdtree.png"
+  date: "2024-11-02"
+  width: 1920
+  height: 1080
+  game: "Elden Ring"
+  platform: "PC"
+  
