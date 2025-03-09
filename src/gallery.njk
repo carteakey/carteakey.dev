@@ -1,34 +1,41 @@
 ---
 layout: layouts/base.njk
-title: Photos
+title: Gallery
 eleventyNavigation:
-  key: Photos
+  key: Gallery
   order: 5
 ---
 
 <div class="not-prose">
-  <h1 class="text-3xl font-bold mb-6">Photos</h1>
+  <h1 class="text-3xl font-bold mb-6">Gallery</h1>
   
   <div class="mb-8 p-4 bg-gray-100 dark:bg-gray-800 rounded">
     <p class="text-sm">
-      This is a collection of photographs I've taken and screenshots from various games. 
-      Photography is just a hobby for me - I enjoy capturing both real and virtual moments that look ~aesthetic~.
+      Collection of photographs I've taken in real and virtual lives. 
+      Just a hobby - I enjoy capturing both moments that look ~aesthetic~.
     </p>
   </div>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="gallery">
-    {% for photo in photos %}
-    <figure class="overflow-hidden rounded-lg shadow-lg cursor-pointer group min-h-[400px] hover:shadow-xl transition-shadow duration-300" 
-            data-pswp-src="{{ photo.path }}"
-            data-pswp-width="{{ photo.width }}"
-            data-pswp-height="{{ photo.height }}"
-            data-pswp-title="{{ photo.title }}"
-            data-pswp-description="{% if photo.category == 'real' %}📍 {{ photo.location }}&#10;📱 {{ photo.device }}{% else %}🎮 {{ photo.game }}&#10;💻 {{ photo.platform }}{% endif %}&#10;📅 {{ photo.date }}">
-      <img src="{{ photo.path }}" 
-           alt="{{ photo.title }}"
-           class="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105"
-           loading="lazy">
-    </figure>
+  <div class="grid grid-cols-2 gap-4" id="gallery">
+    {% set columns = 4 %}
+    {% for i in range(0, columns) %}
+    <div class="grid gap-4">
+      {% for photo in photos %}
+      {% if loop.index0 % columns == i %}
+      <figure class="overflow-hidden rounded-lg shadow-lg cursor-pointer group hover:shadow-xl transition-shadow duration-300" 
+              data-pswp-src="{{ photo.path }}"
+              data-pswp-width="{{ photo.width }}"
+              data-pswp-height="{{ photo.height }}"
+              data-pswp-title="{{ photo.title }}"
+              data-pswp-description="{% if photo.category == 'real' %}📍 {{ photo.location }}&#10;📱 {{ photo.device }}{% else %}🎮 {{ photo.game }}&#10;💻 {{ photo.platform }}{% endif %}&#10;📅 {{ photo.date }}">
+        <img src="{{ photo.path }}" 
+             alt="{{ photo.title }}"
+             class="h-auto max-w-full rounded-lg transition-transform duration-300 group-hover:scale-105"
+             loading="lazy">
+      </figure>
+      {% endif %}
+      {% endfor %}
+    </div>
     {% endfor %}
   </div>
 </div>
