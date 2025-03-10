@@ -7,22 +7,75 @@
   width: 1533
   height: 1675
 
-- title: "Downtown Toronto"
-  category: "real"
-  path: "/img/photography/real/downtown.jpg"
-  location: "Toronto, Canada"
-  device: "Canon EOS M50"
-  date: "2024-12-26"
-  width: 2976
-  height: 1680
-
-
-- title: "Robin"
+- title: "Little robin red breast"
   category: "real"
   path: "/img/photography/real/robin.jpg"
   location: "Markham, Canada"
   device: "Canon EOS M50"
   date: "2024-11-30"
+  width: 2976
+  height: 1680
+
+- title: "Dam son"
+  category: "real"
+  path: "/img/photography/real/dam.jpg"
+  location: "Milne Dam Conservation Park, Canada"
+  device: "iPhone 12 Mini"
+  date: "2024-10-27"
+  width: 3024
+  height: 4032
+
+- title: "Sleeping beauty"
+  category: "real"
+  path: "/img/photography/real/caesar.jpg"
+  location: "Noida, India"
+  device: "OnePlus 5"
+  date: "2018-11-23"
+  width: 4608
+  height: 3456
+   
+- title: "Sunset drive"
+  category: "real"
+  path: "/img/photography/real/drive.jpeg"
+  location: "Hillcrest Village, Canada"
+  device: "iPhone 12 Mini"
+  date: "2023-11-15"
+  width: 3024
+  height: 4032
+
+- title: "Amongst the hills"
+  category: "real"
+  path: "/img/photography/real/auli.jpg"
+  location: "Auli, India"
+  device: "OnePlus 5"
+  date: "2019-01-09"
+  width: 6436
+  height: 2486
+   
+- title: "Tutorial Boss"
+  category: "virtual"
+  path: "/img/photography/virtual/sekiro.png"
+  date: "2019-01-09"
+  width: 2560
+  height: 1080
+  game: "Sekiro"
+  platform: "PC"
+  
+- title: "The fire burns"
+  category: "real"
+  path: "/img/photography/real/fire.jpeg"
+  location: "Clarington, Canada"
+  device: "iPhone 16"
+  date: "2025-01-04"
+  width: 3024
+  height: 4032
+
+- title: "Downtown with someone special"
+  category: "real"
+  path: "/img/photography/real/downtown.jpg"
+  location: "Toronto, Canada"
+  device: "Canon EOS M50"
+  date: "2024-12-26"
   width: 2976
   height: 1680
 

@@ -19,10 +19,14 @@ eleventyNavigation:
       </div>
     </div>
 
-    <div class="grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] auto-rows-[200px] gap-3 w-full px-4 md:px-6 mb-8" id="gallery">
+    <div class="grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] auto-rows-[100px] gap-3 w-full px-4 md:px-6 mb-8" id="gallery">
       {% for photo in photos %}
-      <div class="relative w-full h-full">
-        <figure class="overflow-hidden rounded-lg shadow-lg cursor-pointer group hover:shadow-xl transition-all duration-300 absolute inset-0" 
+      {% if photo.height > photo.width %}
+      <div class="relative w-full h-full row-span-3">
+      {% else %}
+      <div class="relative w-full h-full row-span-2">
+      {% endif %}
+        <figure class="overflow-hidden rounded-lg shadow-lg cursor-pointer group hover:shadow-xl transition-all duration-300 h-full" 
               data-pswp-src="{{ photo.path }}"
               data-pswp-width="{{ photo.width }}"
               data-pswp-height="{{ photo.height }}"
