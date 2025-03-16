@@ -63,6 +63,7 @@
   </script>
   
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{{ title or metadata.title }}</title>
@@ -105,15 +106,19 @@
               {% endif %}
             {%- endfor %}
 
-            {# Dropdown for Gallery and Snippets - Hidden on mobile #}
-            <div class=" relative group">
+            {# Dropdown for Gallery and Snippets #}
+            <div class="relative group" x-data="{ open: false }">
               <span class="px-1 py-2 transition-all self-end cursor-pointer">
-                <button class="font-bold hover:underline inline-flex items-center gap-1">
+                <button @click="open = !open" class="font-bold hover:underline inline-flex items-center gap-1">
                   ...
-                  {% feather "chevron-down", class="w-4 h-4 mt-1 transition-transform group-hover:rotate-180" %}
+                  {% feather "chevron-down", class="w-4 h-4 mt-1 transition-transform" %}
                 </button>
               </span>
-              <div class="absolute right-0 hidden group-hover:block bg-gray-50 dark:bg-black border border-amber-200/20 dark:border-amber-700/20 rounded py-1 mt-1 min-w-[120px] shadow-lg">
+              <div
+                class="absolute right-0 hidden md:group-hover:block bg-gray-50 dark:bg-black border border-amber-200/20 dark:border-amber-700/20 rounded py-1 mt-1 min-w-[120px] shadow-lg"
+                :class="{ 'block': open, 'hidden': !open }"
+                @click.away="open = false"
+              >
                 {%- for entry in navPages %}
                   {% if entry.title == "Gallery" or entry.title == "Snippets" %}
                     <a class="block px-4 py-2 no-underline hover:underline font-bold" href="{{ entry.url }}">{{ entry.title }}</a>
