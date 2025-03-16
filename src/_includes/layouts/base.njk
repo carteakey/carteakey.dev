@@ -87,30 +87,51 @@
 
         <div class='justify-between flex flex-row w-full'>
 
-          <span class="transition-all justify-self-start mt-5 px-0 hidden md:block">
+          <span class="transition-all justify-self-start mt-5 px-0 py-2 hidden md:block">
             <a class="no-underline hover:underline  font-bold text-xl " href="{{ '/' | url }}">Kartikey Chauhan</a>
           </span>
 
-          <span class="transition-all justify-self-start mt-5 px-0 ">
-            <a class="no-underline hover:underline  font-bold md:hidden block text-xl " href="{{ '/' | url }}">{% feather "home" , class="block" %}</a>
+          <span class="transition-all justify-self-start mt-5 px-0  py-2  md:hidden block">
+            <a class="no-underline hover:underline  font-bold text-xl " href="{{ '/' | url }}">{% feather "home" , class="block" %}</a>
           </span>
 
-          <ul class="list-none mt-5 px-0  text-xl">
-
+          <ul class="list-none mt-5 px-0 text-xl flex items-center">
+            {# Main navigation items #}
             {%- for entry in navPages %}
-            <span class="px-1 py-2 transition-all self-end">
-              <a class="font-bold no-underline hover:underline" href="{{ entry.url }}">{{
-                entry.title
-                }}</a>
-            </span>
+              {% if entry.title == "About" or entry.title == "Blog" or entry.title == "Projects" or entry.title == "CV" %}
+                <span class="px-1 py-2 transition-all self-end">
+                  <a class="font-bold no-underline hover:underline" href="{{ entry.url }}">{{ entry.title }}</a>
+                </span>
+              {% endif %}
             {%- endfor %}
-            {# <span class="px-1 py-2 transition-all self-end">
-              <a class="font-bold no-underline hover:underline" href="https://cv.carteakey.dev">CV</a>
-            </span> #}
-            {# <span class="px-1 py-2 transition-all self-end">
-              <a class="font-bold no-underline hover:underline" href="https://notes.carteakey.dev">Notes</a>
-            </span> #}
 
+            {# Dropdown for Gallery and Snippets - Hidden on mobile #}
+            <div class=" relative group">
+              <span class="px-1 py-2 transition-all self-end cursor-pointer">
+                <button class="font-bold hover:underline inline-flex items-center gap-1">
+                  ...
+                  {% feather "chevron-down", class="w-4 h-4 mt-1 transition-transform group-hover:rotate-180" %}
+                </button>
+              </span>
+              <div class="absolute right-0 hidden group-hover:block bg-gray-50 dark:bg-black border border-amber-200/20 dark:border-amber-700/20 rounded py-1 mt-1 min-w-[120px] shadow-lg">
+                {%- for entry in navPages %}
+                  {% if entry.title == "Gallery" or entry.title == "Snippets" %}
+                    <a class="block px-4 py-2 no-underline hover:underline font-bold" href="{{ entry.url }}">{{ entry.title }}</a>
+                  {% endif %}
+                {%- endfor %}
+              </div>
+            </div>
+
+            {# Mobile: Show all navigation items
+            <div class="md:hidden">
+              {%- for entry in navPages %}
+                {% if entry.title == "Gallery" or entry.title == "Snippets" %}
+                  <span class="px-1 py-2 transition-all self-end">
+                    <a class="font-bold no-underline hover:underline" href="{{ entry.url }}">{{ entry.title }}</a>
+                  </span>
+                {% endif %}
+              {%- endfor %}
+            </div> #}
           </ul>
           
 
@@ -122,7 +143,7 @@
 
       </nav>
 
-      <main class="{% if fullWidth %}-mx-[calc(50vw-50%)] w-screen{% endif %} {% if templateClass %}{{ templateClass }}{% endif %}">
+      <main class="{% if fullWidth %}-mx-[calc(50vw-50%)] w-screen px-4 md:px-8{% endif %} {% if templateClass %}{{ templateClass }}{% endif %}">
 
         {{ content | safe }}
 
