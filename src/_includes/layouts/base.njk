@@ -107,16 +107,21 @@
             {%- endfor %}
 
             {# Dropdown for Gallery and Snippets #}
-            <div class="relative group" x-data="{ open: false }">
+            <div class="relative" x-data="{ open: false, hover: false }" 
+                 @mouseenter="hover = $screen('md')" 
+                 @mouseleave="hover = false">
               <span class="px-1 py-2 transition-all self-end cursor-pointer">
                 <button @click="open = !open" class="font-bold hover:underline inline-flex items-center gap-1">
                   ...
-                  {% feather "chevron-down", class="w-4 h-4 mt-1 transition-transform" %}
+                  <span class="transform transition-transform duration-200" :class="{ 'rotate-180': open }">
+                    {% feather "chevron-down", class="w-4 h-4 mt-1" %}
+                  </span>
                 </button>
               </span>
               <div
-                class="absolute right-0 hidden md:group-hover:block bg-gray-50 dark:bg-black border border-amber-200/20 dark:border-amber-700/20 rounded py-1 mt-1 min-w-[120px] shadow-lg"
-                :class="{ 'block': open, 'hidden': !open }"
+                class="absolute right-0 bg-gray-50 dark:bg-black border border-amber-200/20 dark:border-amber-700/20 rounded py-1 mt-1 min-w-[120px] shadow-lg z-50"
+                x-show="open || hover"
+                x-transition
                 @click.away="open = false"
               >
                 {%- for entry in navPages %}
