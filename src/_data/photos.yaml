@@ -87,4 +87,40 @@
   height: 1080
   game: "Elden Ring"
   platform: "PC"
-  
+
+- title: "The Noble Watch"
+  category: "real"
+  path: "/img/photography/real/caesar-2.png"
+  location: "Unknown"
+  device: "Unknown"
+  date: "Unknown"
+  width: 864
+  height: 1152
+
+- title: "Golder Slumber"
+  category: "real"
+  path: "/img/photography/real/slumber.png"
+  location: "Joshimath, India"
+  device: "OnePlus 5"
+  date: "2019-01-07"
+  width: 947
+  height: 711
+
+- title: "Twilight Waves"
+  category: "real"
+  path: "/img/photography/real/waves.jpg"
+  location: "Mumbai, India"
+  device: "OnePlus 5"
+  date: "2019-08-15"
+  width: 4608 
+  height: 3456
+
+- title: "Himalayan Haven"
+  category: "real"
+  path: "/img/photography/real/morning.jpg"
+  location: "Joshimath, India"
+  device: "OnePlus 5"
+  date: "2019-01-07"
+  width: 1179
+  height: 885
+
