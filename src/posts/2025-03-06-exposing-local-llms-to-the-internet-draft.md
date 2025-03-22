@@ -23,17 +23,20 @@ Instead of throwing more money into the OpenAI pit, I decided to spin up my own 
 4. **Expose to the Web**: Safely route through a reverse proxy for secure access. The simplest option is Tailscale—install it and execute:
 
    ```bash
-   tailscale funnel 11434
+   tailscale funnel 11434 # add -bg to run in the background
    ```
 
-   Voilà, reverse proxy done! Alternatively, Cloudflare Tunnels is another easy option.
+   Voilà, reverse proxy done! Alternatively, Cloudflare Tunnels is another easy option. 
 
    ```bash
-   tailscale funnel 11434
+   tailscale funnel -bg 11434
    Available on the internet:
    https://amelie-workstation.pango-lin.ts.net
 
    |-- / proxy http://127.0.0.1:11434
+
+   Funnel started and running in the background.
+   To disable the proxy, run: tailscale funnel --https=443 off
 
    Press Ctrl+C to exit.
    ```
