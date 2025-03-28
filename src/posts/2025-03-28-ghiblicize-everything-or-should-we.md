@@ -13,6 +13,6 @@ We are witnessing something extraordinary: computational power effortlessly crea
 
 Does the ease of generating something with a prompt undermine the countless hours, blood, sweat, and tears artists invest into mastering their craft? Or does it open a new frontier where artistic expression becomes more accessible and democratized? Does the very fact that anything can be turned into an artstyle that was very restricted in its quantity due to the artistic barriers - lessen the authenticity and makes us more "bored" of it?
 
-Two truths can co-exist, and this case - seem to be very conflicting.
+Two truths can co-exist, and in this case - seem to be very conflicting.
 
 ![](/img/eternal_sunshine.png)
