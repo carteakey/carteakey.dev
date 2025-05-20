@@ -5,6 +5,7 @@ date: 2025-05-03T22:01:26.448Z
 updated: 2025-05-03T22:01:26.455Z
 tags:
   - windows
+hidden: true
 ---
 Probably a remnant of my Android ROMing days, I've always loved updates—hot take, I know. They keep me on my toes, prevent me from getting too comfortable with one system, and allow me to constantly explore new features and form opinions.
 
