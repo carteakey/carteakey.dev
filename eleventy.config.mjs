@@ -190,6 +190,31 @@ export default function(eleventyConfig) {
     return filterTagList([...tagSet]);
   });
 
+  // Custom posts collection: hide posts with hidden: true or future date
+  eleventyConfig.addCollection("posts", function(collectionApi) {
+    const now = new Date();
+    return collectionApi.getFilteredByGlob("./src/posts/*.md").filter(post => {
+      // Hide if hidden: true in frontmatter
+      if (post.data.hidden === true) return false;
+      // Hide if date is in the future
+      if (post.date && post.date > now) return false;
+      return true;
+    });
+  });
+
+  // Custom allPages collection: like collections.all but hides hidden:true and future-dated posts
+  eleventyConfig.addCollection("allPages", function(collectionApi) {
+    const now = new Date();
+    return collectionApi.getAll().filter(page => {
+      // Only filter posts, not all pages, for hidden/future
+      if (page.inputPath && page.inputPath.includes("/posts/")) {
+        if (page.data.hidden === true) return false;
+        if (page.date && page.date > now) return false;
+      }
+      return true;
+    });
+  });
+
   // Customize Markdown library and settings:
   let markdownLibrary = markdownIt({
     html: true,
