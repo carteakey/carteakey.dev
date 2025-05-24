@@ -1,0 +1,73 @@
+---
+layout: layouts/base.njk
+title: Snippets
+description: A collection of useful code snippets and quick tips
+eleventyNavigation:
+  key: Snippets
+  order: 3
+---
+
+<h1>{{ title }}</h1>
+
+<div class="mb-8">
+  <input type="text" id="searchInput" placeholder="Search snippets..." 
+    class="w-full p-2 border rounded dark:bg-gray-800 dark:border-gray-700">
+</div>
+
+<div class="snippets-container">
+  {%- for snippet in collections.snippets | reverse -%}
+    <article class="snippet-card mb-8 p-4 border rounded hover:shadow-lg transition-shadow dark:border-gray-700">
+      <h2 class="mb-2">
+        <a href="{{ snippet.url }}" class="no-underline hover:underline">{{ snippet.data.title }}</a>
+      </h2>
+      
+      <div class="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400">
+        <time datetime="{{ snippet.date | htmlDateString }}">
+          {{ snippet.date | readableDate }}
+        </time>
+        
+        {% if snippet.data.language %}
+        <span class="language badge">{{ snippet.data.language }}</span>
+        {% endif %}
+      </div>
+
+      {% if snippet.data.tags %}
+      <div class="mt-2 flex flex-wrap gap-2">
+        {% for tag in snippet.data.tags | filterTagList %}
+          <a href="/snippets/tags/{{ tag | slugify }}/" 
+            class="text-sm text-blue-600 dark:text-blue-400 hover:underline">#{{ tag }}</a>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </article>
+  {%- endfor -%}
+</div>
+
+<script>
+  const searchInput = document.getElementById('searchInput');
+  const snippetCards = document.querySelectorAll('.snippet-card');
+
+  searchInput.addEventListener('input', (e) => {
+    const searchTerm = e.target.value.toLowerCase();
+
+    snippetCards.forEach(card => {
+      const title = card.querySelector('h2').textContent.toLowerCase();
+      const tags = Array.from(card.querySelectorAll('.text-blue-600')).map(tag => tag.textContent.toLowerCase());
+      const language = card.querySelector('.language')?.textContent.toLowerCase() || '';
+
+      const isVisible = 
+        title.includes(searchTerm) || 
+        tags.some(tag => tag.includes(searchTerm)) ||
+        language.includes(searchTerm);
+
+      card.style.display = isVisible ? 'block' : 'none';
+    });
+  });
+</script>
+
+<style>
+.badge {
+  @apply px-2 py-1 rounded bg-gray-200 dark:bg-gray-700;
+}
+</style>
+

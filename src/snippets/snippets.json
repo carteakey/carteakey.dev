@@ -1,0 +1,7 @@
+{
+  "layout": "layouts/snippet.njk",
+  "tags": ["snippets"],
+  "eleventyComputed": {
+    "permalink": "/snippets/{{ page.fileSlug }}.html"
+  }
+}

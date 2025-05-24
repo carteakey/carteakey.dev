@@ -174,18 +174,34 @@ export default function(eleventyConfig) {
 
   function filterTagList(tags) {
     return (tags || []).filter(
-      (tag) => ["all", "nav", "post", "posts"].indexOf(tag) === -1
+      (tag) => ["all", "nav", "post", "posts", "snippets"].indexOf(tag) === -1
     );
   }
 
   eleventyConfig.addFilter("filterTagList", filterTagList);
 
-  // Create an array of all tags
+
+  // Add snippet tags collection
+  eleventyConfig.addCollection("snippetTags", function(collection) {
+    let tagSet = new Set();
+    collection.getFilteredByTag("snippets").forEach(item => {
+      (item.data.tags || []).forEach(tag => {
+        if (tag !== "snippets") {
+          tagSet.add(tag);
+        }
+      });
+    });
+    return [...tagSet];
+  });
+
+  // Create an array of all tags (excluding snippet tags)
   eleventyConfig.addCollection("tagList", function (collection) {
     let tagSet = new Set();
-    collection.getAll().forEach((item) => {
-      (item.data.tags || []).forEach((tag) => tagSet.add(tag));
-    });
+    collection.getAll()
+      .filter(item => !item.data.tags?.includes("snippets")) // Only include non-snippet content
+      .forEach((item) => {
+        (item.data.tags || []).forEach((tag) => tagSet.add(tag));
+      });
 
     return filterTagList([...tagSet]);
   });
@@ -236,4 +252,4 @@ export default function(eleventyConfig) {
 
   //yaml support
   eleventyConfig.addDataExtension("yaml", (contents) => load(contents));
-};
+}

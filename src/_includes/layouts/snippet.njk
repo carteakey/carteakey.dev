@@ -1,0 +1,56 @@
+---
+layout: layouts/base.njk
+---
+
+<article class="snippet">
+  <h1>{{ title }}</h1>
+  
+  <div class="snippet-meta">
+    <time datetime="{{ page.date | htmlDateString }}">
+      {{ page.date | readableDate }}
+    </time>
+    {% if tags %}
+    <div class="tags">
+      {% for tag in tags | filterTagList %}
+        <a href="/snippets/tags/{{ tag | slugify }}/" class="tag">#{{ tag }}</a>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+
+  <div class="snippet-content">
+    {{ content | safe }}
+  </div>
+
+  {% if language %}
+  <div class="language-info text-sm text-gray-500 mt-4">
+    Language: {{ language }}
+  </div>
+  {% endif %}
+</article>
+
+<script>
+  // Add copy button to code blocks
+  document.querySelectorAll('pre code').forEach((block) => {
+    const button = document.createElement('button');
+    button.className = 'copy-button absolute right-2 top-2 px-2 py-1 text-sm bg-gray-700 text-white rounded hover:bg-gray-600';
+    button.textContent = 'Copy';
+    
+    const pre = block.parentNode;
+    pre.style.position = 'relative';
+    pre.insertBefore(button, block);
+
+    button.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(block.textContent);
+        button.textContent = 'Copied!';
+        setTimeout(() => {
+          button.textContent = 'Copy';
+        }, 2000);
+      } catch (err) {
+        console.error('Failed to copy:', err);
+        button.textContent = 'Error';
+      }
+    });
+  });
+</script>
