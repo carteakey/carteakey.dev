@@ -18,3 +18,14 @@ While it’s true that updates can occasionally break functionality, complicate 
 Veteran tech enthusiasts or professionals often become increasingly cautious of updates over time—not necessarily because updates themselves worsen, but due to the decreasing availability of time or energy to fix issues and adapt to frequent changes, especially when something mission-critical is at stake.
 
 Regardless of personal preferences toward updates, one thing remains clear: the control over software updates on your system should always be entirely in your hands. And this is my primary frustration with Windows.
+
+Fortunately, using tools, registry edits, and group policy edits can allow you to control Windows updates, offering more granular management than the default settings. For instance, applications like InControl can simplify this process.
+
+### Forcing Updates
+To force updates, 
+
+
+
+### Blocking Updates
+To block updates, we use a similar approach.  
+
