@@ -99,7 +99,7 @@
           <ul class="list-none mt-5 px-0 text-xl flex items-center">
             {# Main navigation items #}
             {%- for entry in navPages %}
-              {% if entry.title == "About" or entry.title == "Blog" or entry.title == "Projects" or entry.title == "CV" %}
+              {% if entry.title == "About" or entry.title == "Blog" or entry.title == "Now" %}
                 <span class="px-1 py-2 transition-all self-end">
                   <a class="font-bold no-underline hover:underline" href="{{ entry.url }}">{{ entry.title }}</a>
                 </span>
@@ -125,7 +125,7 @@
                 @click.away="open = false"
               >
                 {%- for entry in navPages %}
-                  {% if entry.title == "Gallery" or entry.title == "Snippets" %}
+                  {% if entry.title == "Gallery" or entry.title == "Snippets" or entry.title == "Projects" or entry.title == "CV" %}
                     <a class="block px-4 py-2 no-underline hover:underline font-bold" href="{{ entry.url }}">{{ entry.title }}</a>
                   {% endif %}
                 {%- endfor %}
@@ -135,7 +135,7 @@
             {# Mobile: Show all navigation items
             <div class="md:hidden">
               {%- for entry in navPages %}
-                {% if entry.title == "Gallery" or entry.title == "Snippets" %}
+                {% if entry.title == "Gallery" or entry.title == "Snippets" or entry.title == "Projects" or entry.title == "CV" %}
                   <span class="px-1 py-2 transition-all self-end">
                     <a class="font-bold no-underline hover:underline" href="{{ entry.url }}">{{ entry.title }}</a>
                   </span>
