@@ -231,6 +231,16 @@ export default function(eleventyConfig) {
     });
   });
 
+  // Add a collection for now page lookbacks
+  eleventyConfig.addCollection("nowLookback", function(collectionApi) {
+    return collectionApi.getFilteredByGlob("src/now/lookback/*.md");
+  });
+
+  // Add a collection for now page archive
+  eleventyConfig.addCollection("nowArchive", function(collectionApi) {
+    return collectionApi.getFilteredByGlob("src/now/archive/*.md");
+  });
+
   // Customize Markdown library and settings:
   let markdownLibrary = markdownIt({
     html: true,

@@ -7,3 +7,6 @@ author:
   name: Kartikey Chauhan
   email: kartychauhan@gmail.com
   url: https://carteakey.dev/about
+nav:
+  - key: Now
+    order: 3
