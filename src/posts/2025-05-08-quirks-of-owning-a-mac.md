@@ -5,6 +5,7 @@ date: 2025-05-03T22:01:26.448Z
 updated: 2025-05-03T22:01:26.455Z
 tags:
   - windows
+hidden: true
 ---
 
 I try to avoid any negativity in my posts (or my life). But boy there are some moments where the devil on the left shoulder just takes over. This is one of those times. Mac's, especially the latest M-series machines, are peak hardware and are leagues above the competition. My M2 Macbook Air is hands down the most impressive piece of hardware i've owned.
