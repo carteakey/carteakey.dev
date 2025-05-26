@@ -1,0 +1,22 @@
+---
+eleventyNavigation:
+  key: Vibes
+  title: Vibes
+  order: 5 
+---
+{% extends "layouts/base.njk" %}
+
+{% block head %}
+    <title>Vibes Board</title>
+    {# We might add specific CSS or JS links here later if needed #}
+{% endblock %}
+
+{% block content %}
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold text-center mb-8">My Vibes Board</h1>
+        <div id="vibes-container" class="relative bg-gray-100 min-h-screen rounded-lg shadow-inner p-4">
+            {# Images will be added here by JavaScript #}
+        </div>
+        <script src="/static/js/vibes.js" defer></script>
+    </div>
+{% endblock %}
