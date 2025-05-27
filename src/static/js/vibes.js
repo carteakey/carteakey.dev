@@ -1,46 +1,34 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const vibesContainer = document.getElementById('vibes-container');
+    const vibesContainer = document.getElementById('vibes-container'); // Still needed to get container dimensions if we want to be very precise, but for now, percentages work well.
+    const imagesToPosition = document.querySelectorAll('.vibe-image');
 
     if (!vibesContainer) {
         console.error('Error: Vibes container not found!');
         return;
     }
 
-    const images = [
-        { src: '/static/img/alvin.png', alt: 'Alvin pixel art' },
-        { src: '/static/img/bilbo.jpg', alt: 'Bilbo Baggins' },
-        { src: '/static/img/caves.jpg', alt: 'Scenic cave' },
-        { src: '/static/img/codellama.png', alt: 'CodeLlama' },
-        { src: '/static/img/eternal_sunshine.png', alt: 'Eternal Sunshine movie poster' },
-        { src: '/static/img/good-night.png', alt: 'Good night message' },
-        { src: '/static/img/inception-deeper.gif', alt: 'Inception spinning top gif' },
-        { src: '/static/img/photography/real/auli.jpg', alt: 'Auli landscape' },
-        { src: '/static/img/potter.jpeg', alt: 'Harry Potter art' }
-    ];
+    if (imagesToPosition.length === 0) {
+        console.warn('No images with class "vibe-image" found to position.');
+        return;
+    }
 
-    images.forEach(imageData => {
-        const imgElement = document.createElement('img');
-        imgElement.src = imageData.src;
-        imgElement.alt = imageData.alt;
-
-        // Apply Tailwind classes for basic styling
-        imgElement.className = 'absolute rounded-lg shadow-xl w-auto h-auto max-w-xs max-h-xs object-contain'; // Added max-w-xs and max-h-xs for better control, object-contain
-
+    imagesToPosition.forEach(imgElement => {
         // Calculate random positions (percentages)
-        // Ensure images are not too close to the edges, e.g., within 5% to 85%
-        const randomTop = Math.random() * 80 + 5; // 5% to 85%
-        const randomLeft = Math.random() * 80 + 5; // 5% to 85%
+        // Ensure images are not too close to the edges, e.g., within 5% to 85% for top/left if container is full viewport.
+        // If images are smaller, the range might need adjustment or be based on image size vs container size.
+        // The current CSS max-w-xs / max-h-xs helps control image size.
+        const randomTop = Math.random() * 75; // 0% to 75% to leave space, assuming max-h-xs (12rem)
+        const randomLeft = Math.random() * 80; // 0% to 80% to leave space, assuming max-w-xs (20rem)
 
-        imgElement.style.position = 'absolute'; // Already handled by 'absolute' class, but explicit for clarity
+        // The 'absolute' class is already applied by the shortcode.
+        // We just need to set the dynamic styles.
         imgElement.style.top = `${randomTop}%`;
         imgElement.style.left = `${randomLeft}%`;
         
         // Optional: Add random rotation
         const randomRotation = Math.random() * 20 - 10; // -10 to +10 degrees
         imgElement.style.transform = `rotate(${randomRotation}deg)`;
-
-        vibesContainer.appendChild(imgElement);
     });
 
-    console.log('Vibes board populated with images.');
+    console.log(`Vibes board: ${imagesToPosition.length} images positioned.`);
 });

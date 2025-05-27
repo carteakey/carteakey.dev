@@ -1,0 +1,11 @@
+[
+  { "src": "./src/static/img/alvin.png", "alt": "Alvin pixel art" },
+  { "src": "./src/static/img/bilbo.jpg", "alt": "Bilbo Baggins" },
+  { "src": "./src/static/img/caves.jpg", "alt": "Scenic cave" },
+  { "src": "./src/static/img/codellama.png", "alt": "CodeLlama" },
+  { "src": "./src/static/img/eternal_sunshine.png", "alt": "Eternal Sunshine movie poster" },
+  { "src": "./src/static/img/good-night.png", "alt": "Good night message" },
+  { "src": "./src/static/img/inception-deeper.gif", "alt": "Inception spinning top gif" },
+  { "src": "./src/static/img/photography/real/auli.jpg", "alt": "Auli landscape" },
+  { "src": "./src/static/img/potter.jpeg", "alt": "Harry Potter art" }
+]
