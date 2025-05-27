@@ -15,6 +15,7 @@ import eleventyWebcPlugin from "@11ty/eleventy-plugin-webc";
 import { EleventyRenderPlugin } from "@11ty/eleventy";
 import { EleventyHtmlBasePlugin } from "@11ty/eleventy";
 import mermaidPlugin from '@kevingimbel/eleventy-plugin-mermaid';
+import pluginRss from "@11ty/eleventy-plugin-rss";
 
 import Image, { generateHTML } from "@11ty/eleventy-img";
 import 'dotenv/config';
@@ -106,6 +107,7 @@ export default function(eleventyConfig) {
   eleventyConfig.addPlugin(eleventyPluginFeathericons);
   eleventyConfig.addPlugin(EleventyRenderPlugin);
   eleventyConfig.addPlugin(mermaidPlugin);
+  eleventyConfig.addPlugin(pluginRss);
 
   // WebC
 	eleventyConfig.addPlugin(eleventyWebcPlugin, {
