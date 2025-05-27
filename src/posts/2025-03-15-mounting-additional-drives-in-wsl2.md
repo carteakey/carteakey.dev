@@ -22,8 +22,10 @@ Native ext4 drive for
 2) Remove all partitions
 
 3) Mount as bare drive
+wsl --mount \\.\PHYSICALDRIVE5 --bare
 
 4) Format as ext4
+sudo mkfs.ext4 /dev/sdd
 
 5) Unmount and mount as filesystem.
 
