@@ -35,7 +35,7 @@ Ultimately, every brain is different and a natural growth of a system is what wo
 - Obsidian is not meant for table-based data, or task management. Dont @ me.
 - And most importantly, do not listen to me :) 
 
-So I wanted to share my own approach that has evolved over time. I call it "Vault 76" (inspired by the Fallout universe) and it serves as a comprehensive knowledge management system for all my personal, professional, and academic content.
+So I wanted to share my own approach that has evolved over time. I call it "Vault 76" and it serves as a comprehensive knowledge management system for all my personal, professional, and academic content.
 
 ## The Vault 76 System
 
