@@ -35,6 +35,7 @@ async function imageShortcode(src, alt, css) {
     sizes,
     loading: "lazy",
     decoding: "async",
+    style: "max-width: 100%; height: auto;",
   };
 
   // You bet we throw an error on missing alt in `imageAttributes` (alt="" works okay)
@@ -58,6 +59,7 @@ async function imageShortcodeWithCaptions(src, alt, css, caption) {
     sizes,
     loading: "lazy",
     decoding: "async",
+    style: "max-width: 100%; height: auto;",
   };
 
   const imageMarkup = generateHTML(metadata, imageAttributes, {
