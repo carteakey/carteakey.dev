@@ -15,6 +15,7 @@ import eleventyWebcPlugin from "@11ty/eleventy-plugin-webc";
 import { EleventyRenderPlugin } from "@11ty/eleventy";
 import { EleventyHtmlBasePlugin } from "@11ty/eleventy";
 import mermaidPlugin from '@kevingimbel/eleventy-plugin-mermaid';
+import { feedPlugin } from "@11ty/eleventy-plugin-rss";
 
 import Image, { generateHTML } from "@11ty/eleventy-img";
 import 'dotenv/config';
@@ -34,6 +35,7 @@ async function imageShortcode(src, alt, css) {
     sizes,
     loading: "lazy",
     decoding: "async",
+    style: "max-width: 100%; height: auto;",
   };
 
   // You bet we throw an error on missing alt in `imageAttributes` (alt="" works okay)
@@ -57,6 +59,7 @@ async function imageShortcodeWithCaptions(src, alt, css, caption) {
     sizes,
     loading: "lazy",
     decoding: "async",
+    style: "max-width: 100%; height: auto;",
   };
 
   const imageMarkup = generateHTML(metadata, imageAttributes, {
@@ -106,6 +109,24 @@ export default function(eleventyConfig) {
   eleventyConfig.addPlugin(eleventyPluginFeathericons);
   eleventyConfig.addPlugin(EleventyRenderPlugin);
   eleventyConfig.addPlugin(mermaidPlugin);
+  eleventyConfig.addPlugin(feedPlugin, {
+    type: "atom", // Specify Atom feed
+    outputPath: "/feed.xml", // Desired output path
+    collection: {
+      name: "posts", // Use the 'posts' collection
+      limit: 10,     // Number of posts to include (0 for all)
+    },
+    metadata: {
+      language: "en", // From site metadata
+      title: "carteakey.dev", // From site metadata
+      subtitle: "Data Science, Python, SQL, Linux", // From site metadata
+      base: "https://carteakey.dev/", // From site metadata (metadata.url)
+      author: {
+        name: "Kartikey Chauhan", // From site metadata
+        email: "kartychauhan@gmail.com" // From site metadata
+      }
+    }
+  });
 
   // WebC
 	eleventyConfig.addPlugin(eleventyWebcPlugin, {
