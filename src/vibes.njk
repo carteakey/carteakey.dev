@@ -1,0 +1,30 @@
+---
+layout: layouts/base.njk
+title: Vibes
+fullWidth: true
+eleventyNavigation:
+  key: Vibes
+  title: Vibes
+  order: 5
+---
+
+<h1 class="text-2xl font-bold mb-6">Vibe Images</h1>
+
+{% if vibes.vibes and vibes.vibes.length %}
+  <div
+    id="vibes-container"
+    class="
+      /* masonry columns */
+      columns-1 sm:columns-2 lg:columns-3 xl:columns-4
+      gap-4
+    ">
+    {#-- shuffle for a new order each build --#}
+    {% for item in vibes.vibes %}
+      <figure class="break-inside-avoid mb-4">
+        {% image item.src, item.alt, "vibe-image w-full rounded-lg shadow-lg" %}
+      </figure>
+    {% endfor %}
+  </div>
+{% else %}
+  <p class="text-gray-500">No images found for the vibes board.</p>
+{% endif %}

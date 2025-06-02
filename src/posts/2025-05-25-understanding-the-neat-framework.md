@@ -3,7 +3,8 @@ title: "The TEA Framework: How I Built This Site"
 description: "The tech stack powering this site and all the services that make it tick"
 date: 2025-05-25
 tags:
-  - xx
+  - Eleventy
+  - Blog
 hidden: true
 ---
 
