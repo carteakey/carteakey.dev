@@ -26,14 +26,15 @@ The systems that I have tried (and was inspired from) include:
 
 Ultimately, every brain is different and a natural growth of a system is what works best for you. Here's a quick list of dos and don'ts:
 
-- Do what works for you! 
+- Do what works for you! Ask yourself what you need from your notes and how you use them. 
 - Having an inbox folder is a great way to quickly capture ideas and notes without worrying about where they go.
-- Tags are powerful but don't overthink.
-- Do not be affected by the pretty vaults and nice graphs and the productivity gurus' advice on how to structure your notes.
+- Tags are powerful but don't overthink the need to tag everything.
+- Do not be affected by the pretty vaults and nice graphs and the productivity gurus' advice on how to structure your notes (that might or might not include me).
 - Do not feel obligated to turn Obsidian into your everything app. It's just a note-taking app.
 - *Try* not falling into the trap of fake productivity, where you spend more time organizing your notes than actually using them. Trying doesn't hurt.
-- Obsidian is not meant for table-based data, or task management. Dont @ me.
-- And most importantly, do not listen to me :) 
+- Obsidian is not meant for table-based data just yet. Dont @ me.
+
+The bottom line is "Can you find what you need when you need it?".
 
 So I wanted to share my own approach that has evolved over time. I call it "Vault 76" and it serves as a comprehensive knowledge management system for all my personal, professional, and academic content.
 

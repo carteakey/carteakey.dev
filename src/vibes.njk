@@ -1,6 +1,6 @@
 ---
 layout: layouts/base.njk
-title: Gallery
+title: Vibes
 fullWidth: true
 eleventyNavigation:
   key: Vibes
@@ -8,23 +8,23 @@ eleventyNavigation:
   order: 5
 ---
 
-<h1>Vibe Screenshots</h1>
+<h1 class="text-2xl font-bold mb-6">Vibe Images</h1>
 
-<div>
-  <div class="flex flex-col min-h-screen">
-    <div class="container mx-auto px-4 py-8">
-      <div
-        id="vibes-container"
-        class="relative bg-gray-100 min-h-screen rounded-lg shadow-inner p-4"
-      >
-        {{ vibes.vibes | log }}
-        {% if vibes.vibes  %} {% for item in vibes.vibes %} {%
-        image item.src, item.alt, "vibe-image absolute rounded-lg shadow-xl
-        max-w-xs max-h-xs object-contain" %} {% endfor %} {% else %}
-        <p>No images found for the vibes board.</p>
-        {% endif %}
-      </div>
-      <script src="/static/js/vibes.js" defer></script>
-    </div>
+{% if vibes.vibes and vibes.vibes.length %}
+  <div
+    id="vibes-container"
+    class="
+      /* masonry columns */
+      columns-1 sm:columns-2 lg:columns-3 xl:columns-4
+      gap-4
+    ">
+    {#-- shuffle for a new order each build --#}
+    {% for item in vibes.vibes %}
+      <figure class="break-inside-avoid mb-4">
+        {% image item.src, item.alt, "vibe-image w-full rounded-lg shadow-lg" %}
+      </figure>
+    {% endfor %}
   </div>
-</div>
+{% else %}
+  <p class="text-gray-500">No images found for the vibes board.</p>
+{% endif %}
