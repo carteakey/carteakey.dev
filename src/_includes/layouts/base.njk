@@ -71,12 +71,7 @@
   <meta name="generator" content="{{ eleventy.generator }}" />
   <link rel="stylesheet" href="{{ '/css/tailwind.css' | url }}" />
 
-  
-  <link rel="alternate" href="{{ metadata.feed.path | url }}" type="application/atom+xml"
-    title="{{ metadata.title }}" />
-
-  <link rel="alternate" href="{{ metadata.jsonfeed.path | url }}" type="application/json"
-    title="{{ metadata.title }}" />
+  <link rel="alternate" type="application/atom+xml" title="{{ metadata.title }} - Atom Feed" href="{{ '/feed.xml' | url }}">
 </head>
 <body class="bg-gray-50 dark:bg-black font-et-book">
   <div class="md:max-w-xl mx-auto">
@@ -207,9 +202,10 @@
         <div class='flex flex-row links'>
 
           <a class="self-center p-1 sm:px-3 sm:py-2  transition-all" href="https://www.linkedin.com/in/kartikeychauhan/"
-            title="LinkedIn" alt="LinkedIn">{% feather "linkedin" %}</a>
+            title="LinkedIn" aria-label="LinkedIn">{% feather "linkedin" %}</a>
           <a class="self-center p-1 sm:px-3 sm:py-2  transition-all" href="https://github.com/carteakey" title="GitHub"
-            alt="GitHub">{% feather "github" %}</a>
+            aria-label="GitHub">{% feather "github" %}</a>
+          <a class="self-center p-1 sm:px-3 sm:py-2 transition-all" href="{{ '/feed.xml' | url }}" title="Atom Feed" aria-label="Atom Feed">{% feather "rss" %}</a>
         </div>
       </footer>
     </div>
