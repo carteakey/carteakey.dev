@@ -4,7 +4,7 @@ description: which side are you on?
 date: 2025-05-28
 updated: 2025-05-28
 tags:
-  - life
+  - Life
   - philosophy
 hidden: true
 ---
