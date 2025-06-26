@@ -9,6 +9,10 @@ permalink: /now/archive/
 
 <ul>
   {%- for snap in collections.nowArchive | reverse %}
-    <li><a href="{{ snap.url }}">{{ snap.data.title or snap.fileSlug }}</a>{% if loop.first %} (current){% endif %}</li>
+    {% if loop.first %}
+      <li><a href="/now/">{{ snap.data.archiveDate | archiveReadableDate }}</a> (current)</li>
+    {% else %}
+      <li><a href="{{ snap.url }}">{{ snap.data.archiveDate | archiveReadableDate }}</a></li>
+    {% endif %}
   {%- endfor %}
 </ul>

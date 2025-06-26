@@ -5,7 +5,11 @@ title: Workouts
 
 <div class="container">
     <h1>Recent Workouts</h1>
-    <p>Here are my latest activities from Strava.</p>
+      <div class="mb-8 p-4 bg-gray-100 dark:bg-gray-800 rounded">
+        <p class="text-sm">
+            Here are my latest activities from Strava.
+        </p>
+    </div>
     <div class="posts">
         <ul class="list-disc list-inside">
             {% for activity in strava %}
@@ -13,7 +17,7 @@ title: Workouts
                     <a href="{{ activity.url }}" target="_blank" rel="noopener noreferrer">
                         <strong>{{ activity.name }}</strong>
                     </a>
-                    - {{ activity.type }} on {{ activity.start_date | postDate }}
+                    - {{ activity.type }} on {{ activity.start_date | readableDate }}
                     <p>{{ activity.distance }} miles in {{ activity.moving_time }} minutes.</p>
                     {% if activity.mapImageUrl %}
                         <img src="{{ activity.mapImageUrl }}" alt="Map of {{ activity.name }}" loading="lazy" decoding="async" style="max-width: 100%; height: auto;">
