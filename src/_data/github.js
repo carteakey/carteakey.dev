@@ -12,18 +12,6 @@ export default async function () {
   try {
     const repos_data = await fetch(api_endpoint);
     const repos_json = await repos_data.json();
-    
-    // Check if the response is an error or not an array
-    if (!Array.isArray(repos_json)) {
-      console.error("GitHub API did not return an array. Response:", repos_json);
-      await repos.save({
-        repos: [],
-      }, "1d");
-      return {
-        repos: [],
-      };
-    }
-    
     const repos_list = repos_json.map((repo) => {
       return {
         repo_name: repo.name,
@@ -42,13 +30,9 @@ export default async function () {
       repos: repos_list,
     };
 
-    await repos.save(repos_final, "1d");
     return repos_final;
   } catch (e) {
-    console.error("Error fetching GitHub repos:", e);
-    await repos.save({
-      repos: [],
-    }, "1d");
+    console.log(e);
     return {
       repos: [],
     };
