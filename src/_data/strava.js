@@ -17,7 +17,17 @@ async function getAccessToken() {
 
     if (tokenCache.isCacheValid("1h")) {
         console.log("Using cached Strava token");
-        return tokenCache.getCachedValue();
+        try {
+            const cachedToken = tokenCache.getCachedValue();
+            if (cachedToken && typeof cachedToken === 'string') {
+                return cachedToken;
+            }
+            console.log("Invalid cached token, clearing cache");
+            await tokenCache.destroy();
+        } catch (error) {
+            console.log("Error reading cached token, clearing cache:", error.message);
+            await tokenCache.destroy();
+        }
     }
 
     const response = await fetch(auth_endpoint, {
@@ -50,16 +60,22 @@ export default async function() {
 
     if (activityCache.isCacheValid("15m")) {
         console.log("Using cached Strava activities");
-        const cachedData = activityCache.getCachedValue();
-        // Ensure cached data is an array and convert date strings back to Date objects
-        if (Array.isArray(cachedData)) {
-            return cachedData.map(activity => ({
-                ...activity,
-                start_date: new Date(activity.start_date)
-            }));
+        try {
+            const cachedData = activityCache.getCachedValue();
+            // Ensure cached data is an array and convert date strings back to Date objects
+            if (Array.isArray(cachedData) && cachedData.length >= 0) {
+                return cachedData.map(activity => ({
+                    ...activity,
+                    start_date: new Date(activity.start_date)
+                }));
+            }
+            // If cached data is invalid, clear cache and continue
+            console.log("Invalid cached data, clearing cache");
+            await activityCache.destroy();
+        } catch (error) {
+            console.log("Error reading cached data, clearing cache:", error.message);
+            await activityCache.destroy();
         }
-        // If cached data is invalid, clear cache and continue
-        console.log("Invalid cached data, clearing cache");
     }
 
     const accessToken = await getAccessToken();

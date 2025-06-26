@@ -119,7 +119,7 @@
                 @click.away="open = false"
               >
                 {%- for entry in navPages %}
-                  {% if entry.title == "Gallery" or entry.title == "Snippets" or entry.title == "Projects" or entry.title == "CV" %}
+                  {% if entry.title == "Gallery" or entry.title == "Snippets" or entry.title == "Projects" or entry.title == "CV" or entry.title == "...More" %}
                     <a class="block px-4 py-2 no-underline hover:underline font-bold" href="{{ entry.url }}">{{ entry.title }}</a>
                   {% endif %}
                 {%- endfor %}
