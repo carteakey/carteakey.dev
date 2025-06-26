@@ -14,7 +14,6 @@ import pluginTOC from 'eleventy-plugin-toc';
 import eleventyWebcPlugin from "@11ty/eleventy-plugin-webc";
 import { EleventyRenderPlugin } from "@11ty/eleventy";
 import { EleventyHtmlBasePlugin } from "@11ty/eleventy";
-import mermaidPlugin from '@kevingimbel/eleventy-plugin-mermaid';
 import { feedPlugin } from "@11ty/eleventy-plugin-rss";
 
 import Image, { generateHTML } from "@11ty/eleventy-img";
@@ -66,7 +65,7 @@ async function imageShortcodeWithCaptions(src, alt, css, caption) {
     whitespaceMode: "inline",
   });
 
-  return `<figure>${imageMarkup}${caption ? `<figcaption class="font-thin italic -mt-5">${caption}</figcaption>` : ""}</figure>`;
+  return `<figure>${imageMarkup}${caption ? `<figcaption class="font-thin italic">${caption}</figcaption>` : ""}</figure>`;
 }
 
 export const config = {
@@ -108,7 +107,6 @@ export default function(eleventyConfig) {
   eleventyConfig.addPlugin(eleventyGoogleFonts);
   eleventyConfig.addPlugin(eleventyPluginFeathericons);
   eleventyConfig.addPlugin(EleventyRenderPlugin);
-  eleventyConfig.addPlugin(mermaidPlugin);
   eleventyConfig.addPlugin(feedPlugin, {
     type: "atom", // Specify Atom feed
     outputPath: "/feed.xml", // Desired output path
@@ -151,7 +149,55 @@ export default function(eleventyConfig) {
   });
 
   eleventyConfig.addFilter("readableDate", (dateObj) => {
-    return DateTime.fromJSDate(dateObj).toLocaleString(DateTime.DATE_FULL)
+    return DateTime.fromJSDate(dateObj).toLocaleString(DateTime.DATE_FULL);
+  });
+
+  // Archive-specific date filters
+  eleventyConfig.addFilter("archiveTitle", (dateInput) => {
+    let dateTime;
+    if (typeof dateInput === 'string') {
+      dateTime = DateTime.fromISO(dateInput);
+    } else if (dateInput instanceof Date) {
+      dateTime = DateTime.fromJSDate(dateInput);
+    } else {
+      dateTime = DateTime.fromISO(dateInput.toString());
+    }
+    return `Now (${dateTime.toFormat("MMM d, yyyy")})`;
+  });
+
+  eleventyConfig.addFilter("archiveHeading", (dateInput) => {
+    let dateTime;
+    if (typeof dateInput === 'string') {
+      dateTime = DateTime.fromISO(dateInput);
+    } else if (dateInput instanceof Date) {
+      dateTime = DateTime.fromJSDate(dateInput);
+    } else {
+      dateTime = DateTime.fromISO(dateInput.toString());
+    }
+    return dateTime.toFormat("MMM d, yyyy");
+  });
+
+  eleventyConfig.addFilter("archivePermalink", (dateInput) => {
+    let dateString;
+    if (typeof dateInput === 'string') {
+      dateString = dateInput;
+    } else if (dateInput instanceof Date) {
+      dateString = DateTime.fromJSDate(dateInput).toFormat("yyyy-MM-dd");
+    } else {
+      dateString = dateInput.toString();
+    }
+    return `/now/archive/${dateString}/`;
+  });
+
+  eleventyConfig.addFilter("archiveReadableDate", (dateInput) => {
+    // Handle both string and Date object inputs
+    if (typeof dateInput === 'string') {
+      return DateTime.fromISO(dateInput).toFormat("MMM d, yyyy");
+    } else if (dateInput instanceof Date) {
+      return DateTime.fromJSDate(dateInput).toFormat("MMM d, yyyy");
+    } else {
+      return DateTime.fromISO(dateInput.toString()).toFormat("MMM d, yyyy");
+    }
   });
 
   //Image Plugin
@@ -261,7 +307,8 @@ export default function(eleventyConfig) {
 
   // Add a collection for now page archive
   eleventyConfig.addCollection("nowArchive", function(collectionApi) {
-    return collectionApi.getFilteredByGlob("src/now/archive/*.md");
+    return collectionApi.getFilteredByGlob("src/now/archive/*.md")
+      .filter(item => !item.inputPath.includes('_template.md'));
   });
 
   // Customize Markdown library and settings:
