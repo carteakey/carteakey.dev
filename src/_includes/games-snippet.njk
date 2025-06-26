@@ -1,0 +1,29 @@
+{% if steam and steam.length > 0 %}
+<div> 
+    <div class="steam-snippet">
+        <h3>Latest Games</h3>
+         <div class="grid md:grid-cols-2 gap-3">
+        {% for game in steam | head(2) %}
+        <div class="py-0 px-1 border-2 border-gray-200 shadow-xs dark:border-gray-600 flex flex-col">
+            <img src="{{ game.library_hero }}" alt="{{ game.name }} hero" loading="lazy" decoding="async" class="-mt-2 h-28 object-cover rounded-t">
+            
+            <div class="flex flex-col items-center p-2">
+                <a href="{{ game.url }}" target="_blank" rel="noopener noreferrer" title="View on Steam">
+                    <h4 class="items-center font-bold -mt-2">{{ game.name }}</h4>
+                </a>
+                <p class="text-center text-xs -mt-2 text-gray-600 dark:text-gray-300">
+                    {% if game.playtime_2weeks > 0 %}
+                        {{ game.playtime_2weeks }}h last 2 weeks
+                    {% endif %}
+                    {% if game.playtime_forever > 0 %}
+                        {% if game.playtime_2weeks > 0 %} • {% endif %}{{ game.playtime_forever }}h total
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+        <p class="mt-2"><a href="/games">View all recent games &rarr;</a></p>
+    </div>
+{% endif %}

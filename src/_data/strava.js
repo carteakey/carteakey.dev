@@ -50,7 +50,16 @@ export default async function() {
 
     if (activityCache.isCacheValid("15m")) {
         console.log("Using cached Strava activities");
-        return activityCache.getCachedValue();
+        const cachedData = activityCache.getCachedValue();
+        // Ensure cached data is an array and convert date strings back to Date objects
+        if (Array.isArray(cachedData)) {
+            return cachedData.map(activity => ({
+                ...activity,
+                start_date: new Date(activity.start_date)
+            }));
+        }
+        // If cached data is invalid, clear cache and continue
+        console.log("Invalid cached data, clearing cache");
     }
 
     const accessToken = await getAccessToken();
@@ -76,13 +85,16 @@ export default async function() {
             ? `https://api.mapbox.com/styles/v1/mapbox/dark-v10/static/path-5+f44-0.7(${encodeURIComponent(polyline)})/auto/600x400@2x?access_token=${mapboxApiKey}`
             : null;
 
+        // Parse the date - Strava returns ISO string format
+        const startDate = new Date(a.start_date_local);
+
         return {
             name: a.name,
             type: a.type,
             distance: (a.distance / 1609.34).toFixed(2), // meters to miles
             moving_time: Math.round(a.moving_time / 60), // seconds to minutes
             url: `https://www.strava.com/activities/${a.id}`,
-            start_date: new Date(a.start_date_local),
+            start_date: startDate,
             mapImageUrl,
         };
     });
