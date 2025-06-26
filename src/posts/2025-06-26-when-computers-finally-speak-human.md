@@ -20,10 +20,6 @@ Instead, I had conversations. I told an AI agent "I want a workout tracking page
 
 Every few decades, programming gets easier to think about:
 
-# The Evolution of Programming Abstraction
-
-Every few decades, programming gets easier to think about:
-
 - **1940s: Machine code** → Flip switches, punch cards, think in pure binary
 - **1950s: Assembly** → Mnemonics replace binary, but you still manage memory by hand
 - **1960s-70s: Structured programming** → FORTRAN, COBOL, C—variables and functions, but still close to the machine
