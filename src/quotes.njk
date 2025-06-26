@@ -1,0 +1,41 @@
+---
+layout: layouts/base.njk
+title: Quotes
+permalink: /quotes/
+eleventyNavigation:
+  key: Quotes
+  order: 7
+---
+
+<div class="md:max-w-xl mx-auto">
+    <h1>Quotes</h1>
+    
+    <!-- Quote of the Day Section -->
+    <h2>Quote of the Day</h2>
+    <blockquote id="qotd" class="font-normal">
+        {{qotd.quote}}
+    </blockquote>
+    <p class='p-0 -mt-2 float-right italic text-xs' id='who'>Powered by {{qotd.provider}}</p>
+    
+    <hr class="mt-4" />
+
+    <!-- Static Quotes Section -->
+    <div class="space-y-4">
+        {% for quote in quotes %}
+        <blockquote class="font-normal border-l-4 border-amber-400 pl-4 italic">
+            "{{ quote.quote }}"
+            <cite class="block text-sm text-gray-600 dark:text-gray-400 mt-2 not-italic">— {{ quote.author }}</cite>
+        </blockquote>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- The script itself, loaded AFTER your root element. -->
+<script src="https://unpkg.com/typeit@8.7.1/dist/index.umd.js"></script>
+<script>
+    const instance = new TypeIt("#qotd", {
+    speed: 30,
+    waitUntilVisible: true
+    })
+    instance.go();
+</script>
