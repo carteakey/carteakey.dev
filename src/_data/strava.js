@@ -72,11 +72,9 @@ export default async function() {
     const activities = await response.json();
     const filteredActivities = activities.map(a => {
         const polyline = a.map.summary_polyline;
-        console.log(`Activity: ${a.name}, Polyline: ${polyline}`);
         const mapImageUrl = polyline && mapboxApiKey
             ? `https://api.mapbox.com/styles/v1/mapbox/dark-v10/static/path-5+f44-0.7(${encodeURIComponent(polyline)})/auto/600x400@2x?access_token=${mapboxApiKey}`
             : null;
-        console.log(`Generated Map URL: ${mapImageUrl}`);
 
         return {
             name: a.name,

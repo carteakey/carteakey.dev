@@ -2,7 +2,12 @@
     {% set latest_activity = strava[0] %}
     <div class="strava-snippet">
         <h3>Latest Workout</h3>
-        <p>
+        {% if latest_activity.mapImageUrl %}
+            <a href="{{ latest_activity.url }}" target="_blank" rel="noopener noreferrer">
+                <img src="{{ latest_activity.mapImageUrl }}" alt="Map of {{ latest_activity.name }}" loading="lazy" decoding="async" style="max-width: 100%; height: auto; border-radius: 8px; margin-top: 1rem;">
+            </a>
+        {% endif %}
+        <p style="margin-top: 1rem;">
             <a href="{{ latest_activity.url }}" target="_blank" rel="noopener noreferrer">
                 <strong>{{ latest_activity.name }}</strong>
             </a>
