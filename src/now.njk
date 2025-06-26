@@ -1,0 +1,44 @@
+---
+layout: layouts/base.njk
+title: Now
+permalink: /now/
+eleventyNavigation:
+  key: Now
+  order: 3
+lastUpdated: 2025-06-22
+---
+
+<div class="md:max-w-xl mx-auto">
+    <h1>Now</h1>
+
+    <p>This is my now page, inspired by <a href="https://nownownow.com/about">nownownow.com</a>.</p>
+
+    <ul>
+        <li>I got a bike! (or what the reddit community calls a Bike Shaped Object). For some reason i find it more exciting than getting a car.</li>
+    </ul>
+
+    {% image "./src/static/img/bike.jpeg", "My new bike" %}
+
+    <ul>
+        <li>Had the pleasure to be back at my alma mater TMU as a guest speaker.</li>
+        <li>Finally playing Doom Eternal. Rip and tear!</li>
+        <li>Trying to setup an agent to find meetup events in my area and register for the ones I like.</li>
+        <li>Gonna turn 28 in a few days, and as my friend said "Your subscription free body maintenance ends soon".</li>
+        <li>Listening to "Disintegration" by The Cure, and "Hail to the Thief" by Radiohead.</li>
+    </ul>
+
+    {% include "workouts-snippet.njk" %}
+
+    {% include "games-snippet.njk" %}
+
+    {% if lastUpdated %}
+    <p class='flex flex-col float-right -mt7 text-right text-sm'>
+      Updated: <time datetime="{{ lastUpdated | readableDate }}">{{lastUpdated | readableDate}}</time>
+    </p> 
+    {%- endif %}
+
+    <hr>
+
+    <p>Want to see how this page has changed over time? Check out the <a href="/now/archive/">archives</a>.</p>
+
+</div>
