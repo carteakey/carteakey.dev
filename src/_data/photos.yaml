@@ -1,126 +1,214 @@
-- title: "CN Tower in the mist"
-  category: "real"
-  path: "/img/photography/real/cn-tower.jpg"
-  location: "Toronto, Canada"
-  device: "Canon EOS M50"
-  date: "2024-12-26"
+- title: End of a Day's Work on the Empty Beach.
+  category: real
+  path: /img/photography/real/end-of-a-days-work-on-the-empty-beach.jpg
+  device: Unknown
+  make: Unknown
+  lens: Unknown
+  focalLength: Unknown
+  aperture: Unknown
+  iso: Unknown
+  shutterSpeed: Unknown
+  date: '2025-07-27'
+  width: 1529
+  height: 1147
+  description: >-
+    As the sun sets over this vast, nearly-empty beach, a weathered,
+    blue-and-white fishing boat is all that remains to serve as a reminder of a
+    day's work long since done.
+  location: Unknown
+- title: A Beautiful Sunset at the Beach with Great Sky and Air.
+  category: real
+  path: >-
+    /img/photography/real/a-beautiful-sunset-at-the-beach-with-great-sky-and-air.jpg
+  device: Unknown
+  make: Unknown
+  lens: Unknown
+  focalLength: Unknown
+  aperture: Unknown
+  iso: Unknown
+  shutterSpeed: Unknown
+  date: '2025-07-27'
+  width: 4656
+  height: 3496
+  description: >-
+    It seems like you want this piece of software to generate writing according
+    to what you've provided it. This piece of software, a large language model,
+    uses a specific task and response structure in training. The task is to
+    generate a one-sentence description and a title based on the given prompt.
+    This answer can't be more creative and precise, as your specific prompt and
+    the previous answer provide it with the required information. It can be more
+    evocative and creative but not in an innovative way. The requested answer
+    provides a single-sentence description and a title as per the requirement.
+    However, it is generated based on the previous answer; and for more
+    creative, evocative, and precise results, using this software as it is, you
+    can provide it with new prompts for responses.
+  location: Unknown
+- title: Autumnal Serenity
+  category: real
+  path: /img/photography/real/autumnal-serenity.jpg
+  device: Unknown
+  make: Unknown
+  lens: Unknown
+  focalLength: Unknown
+  aperture: Unknown
+  iso: Unknown
+  shutterSpeed: Unknown
+  date: '2025-07-27'
+  width: 3072
+  height: 4080
+  description: >-
+    A serene and peaceful park bench is nestled under a tree with lush green
+    leaves to the right, offering a gentle contrast to the nearby lake's
+    tranquil waters, creating a sense of calm and relaxation.
+  location: Unknown
+- title: Cozy Afternoon in a Vibrant Fall Scene
+  category: real
+  path: /img/photography/real/cozy-afternoon-in-a-vibrant-fall-scene.jpg
+  device: Unknown
+  make: Unknown
+  lens: Unknown
+  focalLength: Unknown
+  aperture: Unknown
+  iso: Unknown
+  shutterSpeed: Unknown
+  date: '2025-07-27'
+  width: 3072
+  height: 4080
+  description: >-
+    The photograph showcases the vibrant colors of the changing seasons, with
+    sunlight casting a warm glow on the leaves, trees, and ground, creating a
+    sense of coziness and serenity.
+  location: Unknown
+- title: Cityscape at Dusk
+  category: real
+  path: /img/photography/real/cityscape-at-dusk.jpg
+  device: Unknown
+  make: Unknown
+  lens: Unknown
+  focalLength: Unknown
+  aperture: Unknown
+  iso: Unknown
+  shutterSpeed: Unknown
+  date: '2025-07-27'
+  width: 1529
+  height: 1147
+  description: >-
+    The image offers a striking city skyline set against a backdrop of an
+    expansive body of water, with the cityscape becoming increasingly indistinct
+    as it recedes into the distance. The water's surface appears calm and grey,
+    reflecting the dull and grey sky. A darkly shaded breakwater made of large,
+    irregularly shaped rocks adds a touch of rustic beauty to the image,
+    creating an atmosphere of serenity and quietude.
+  location: Unknown
+- title: CN Tower in the mist
+  category: real
+  path: /img/photography/real/cn-tower.jpg
+  location: Toronto, Canada
+  device: Canon EOS M50
+  date: '2024-12-26'
   width: 1533
   height: 1675
-
-- title: "Little robin red breast"
-  category: "real"
-  path: "/img/photography/real/robin.jpg"
-  location: "Markham, Canada"
-  device: "Canon EOS M50"
-  date: "2024-11-30"
+- title: Little robin red breast
+  category: real
+  path: /img/photography/real/robin.jpg
+  location: Markham, Canada
+  device: Canon EOS M50
+  date: '2024-11-30'
   width: 2976
   height: 1680
-
-- title: "Dam son"
-  category: "real"
-  path: "/img/photography/real/dam.jpg"
-  location: "Milne Dam Conservation Park, Canada"
-  device: "iPhone 12 Mini"
-  date: "2024-10-27"
+- title: Dam son
+  category: real
+  path: /img/photography/real/dam.jpg
+  location: Milne Dam Conservation Park, Canada
+  device: iPhone 12 Mini
+  date: '2024-10-27'
   width: 3024
   height: 4032
-
-- title: "Sleeping beauty"
-  category: "real"
-  path: "/img/photography/real/caesar.jpg"
-  location: "Noida, India"
-  device: "OnePlus 5"
-  date: "2018-11-23"
+- title: Sleeping beauty
+  category: real
+  path: /img/photography/real/caesar.jpg
+  location: Noida, India
+  device: OnePlus 5
+  date: '2018-11-23'
   width: 4608
   height: 3456
-   
-- title: "Sunset drive"
-  category: "real"
-  path: "/img/photography/real/drive.jpeg"
-  location: "Hillcrest Village, Canada"
-  device: "iPhone 12 Mini"
-  date: "2023-11-15"
+- title: Sunset drive
+  category: real
+  path: /img/photography/real/drive.jpeg
+  location: Hillcrest Village, Canada
+  device: iPhone 12 Mini
+  date: '2023-11-15'
   width: 3024
   height: 4032
-
-- title: "Amongst the hills"
-  category: "real"
-  path: "/img/photography/real/auli.jpg"
-  location: "Auli, India"
-  device: "OnePlus 5"
-  date: "2019-01-09"
+- title: Amongst the hills
+  category: real
+  path: /img/photography/real/auli.jpg
+  location: Auli, India
+  device: OnePlus 5
+  date: '2019-01-09'
   width: 6436
   height: 2486
-   
-- title: "Tutorial Boss"
-  category: "virtual"
-  path: "/img/photography/virtual/sekiro.png"
-  date: "2019-01-09"
+- title: Tutorial Boss
+  category: virtual
+  path: /img/photography/virtual/sekiro.png
+  date: '2019-01-09'
   width: 2560
   height: 1080
-  game: "Sekiro"
-  platform: "PC"
-  
-- title: "The fire burns"
-  category: "real"
-  path: "/img/photography/real/fire.jpeg"
-  location: "Clarington, Canada"
-  device: "iPhone 16"
-  date: "2025-01-04"
+  game: Sekiro
+  platform: PC
+- title: The fire burns
+  category: real
+  path: /img/photography/real/fire.jpeg
+  location: Clarington, Canada
+  device: iPhone 16
+  date: '2025-01-04'
   width: 3024
   height: 4032
-
-- title: "Downtown with someone special"
-  category: "real"
-  path: "/img/photography/real/downtown.jpg"
-  location: "Toronto, Canada"
-  device: "Canon EOS M50"
-  date: "2024-12-26"
+- title: Downtown with someone special
+  category: real
+  path: /img/photography/real/downtown.jpg
+  location: Toronto, Canada
+  device: Canon EOS M50
+  date: '2024-12-26'
   width: 2976
   height: 1680
-
-- title: "Erdtree"
-  category: "virtual"
-  path: "/img/photography/virtual/erdtree.png"
-  date: "2024-11-02"
+- title: Erdtree
+  category: virtual
+  path: /img/photography/virtual/erdtree.png
+  date: '2024-11-02'
   width: 1920
   height: 1080
-  game: "Elden Ring"
-  platform: "PC"
-
-- title: "The Noble Watch"
-  category: "real"
-  path: "/img/photography/real/caesar-2.png"
-  location: "Unknown"
-  device: "Unknown"
-  date: "Unknown"
+  game: Elden Ring
+  platform: PC
+- title: The Noble Watch
+  category: real
+  path: /img/photography/real/caesar-2.png
+  location: Unknown
+  device: Unknown
+  date: Unknown
   width: 864
   height: 1152
-
-- title: "Golder Slumber"
-  category: "real"
-  path: "/img/photography/real/slumber.png"
-  location: "Joshimath, India"
-  device: "OnePlus 5"
-  date: "2019-01-07"
+- title: Golder Slumber
+  category: real
+  path: /img/photography/real/slumber.png
+  location: Joshimath, India
+  device: OnePlus 5
+  date: '2019-01-07'
   width: 947
   height: 711
-
-- title: "Twilight Waves"
-  category: "real"
-  path: "/img/photography/real/waves.jpg"
-  location: "Mumbai, India"
-  device: "OnePlus 5"
-  date: "2019-08-15"
-  width: 4608 
+- title: Twilight Waves
+  category: real
+  path: /img/photography/real/waves.jpg
+  location: Mumbai, India
+  device: OnePlus 5
+  date: '2019-08-15'
+  width: 4608
   height: 3456
-
-- title: "Himalayan Haven"
-  category: "real"
-  path: "/img/photography/real/morning.jpg"
-  location: "Joshimath, India"
-  device: "OnePlus 5"
-  date: "2019-01-07"
+- title: Himalayan Haven
+  category: real
+  path: /img/photography/real/morning.jpg
+  location: Joshimath, India
+  device: OnePlus 5
+  date: '2019-01-07'
   width: 1179
   height: 885
-
