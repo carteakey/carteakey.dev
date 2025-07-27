@@ -12,23 +12,52 @@ import { hideBin } from "yargs/helpers";
 
 dotenv.config();
 
-const OLLAMA_API_URL = process.env.OLLAMA_API_URL ? `${process.env.OLLAMA_API_URL}/api/generate` : "http://localhost:11434/api/generate";
 const PHOTOS_YAML_PATH = "src/_data/photos.yaml";
 const IMAGE_DIR = "src/static/img/photography";
 
+function slugify(text) {
+  return text
+    .toString()
+    .toLowerCase()
+    .replace(/\s+/g, "-") // Replace spaces with -
+    .replace(/[^\w-]+/g, "") // Remove all non-word chars
+    .replace(/--+/g, "-") // Replace multiple - with single -
+    .replace(/^-+/, "") // Trim - from start of text
+    .replace(/-+$/, ""); // Trim - from end of text
+}
+
 async function getOllamaDescription(imagePath) {
   try {
-    const imageAsBase64 = await fs.readFile(imagePath, { encoding: "base64" });
-    const response = await axios.post(OLLAMA_API_URL, {
-      model: "llava",
-      prompt:
-        "Describe this image for a photography portfolio. Focus on the subject, composition, and mood. Be creative and evocative. Generate a title as well, in the format Title: [title here]",
-      images: [imageAsBase64],
-      stream: false,
+    const ollamaUrl = (process.env["OLLAMA_API_URL"] || "http://localhost:11434") ;
+    console.log("Using Ollama API URL:", ollamaUrl);
+    const client = new OpenAI({
+      baseURL: ollamaUrl,
+      apiKey: "ollama", // required but unused
     });
-    return response.data.response;
+
+    const imageAsBase64 = await fs.readFile(imagePath, { encoding: "base64" });
+    const response = await client.chat.completions.create({
+      model: "llama3.2-vision",
+      messages: [
+        {
+          role: "user",
+          content: [
+            {
+              type: "text",
+              text: "Generate a one-sentence description for a photography portfolio, focusing on the subject, composition, and mood. Be creative and evocative. After the description, on a new line, provide a title in the format 'Title: [title here]'. The response must only contain the single sentence description and the title.",
+            },
+            {
+              type: "image_url",
+              image_url: `data:image/jpeg;base64,${imageAsBase64}`,
+            },
+          ],
+        },
+      ],
+    });
+    return response.choices[0].message.content;
   } catch (error) {
     console.error("Error getting description from Ollama:", error.message);
+    if (error.response) console.error(error.response.data);
     return null;
   }
 }
@@ -38,14 +67,14 @@ async function getOpenAIDescription(imagePath) {
     const openai = new OpenAI();
     const imageAsBase64 = await fs.readFile(imagePath, { encoding: "base64" });
     const response = await openai.chat.completions.create({
-      model: "gpt-4-vision-preview",
+      model: "gpt-4-turbo",
       messages: [
         {
           role: "user",
           content: [
             {
               type: "text",
-              text: "Describe this image for a photography portfolio. Focus on the subject, composition, and mood. Be creative and evocative. Generate a title as well, in the format Title: [title here]",
+              text: "Generate a one-sentence description for a photography portfolio, focusing on the subject, composition, and mood. Be creative and evocative. After the description, on a new line, provide a title in the format 'Title: [title here]'. The response must only contain the single sentence description and the title.",
             },
             {
               type: "image_url",
@@ -66,22 +95,21 @@ async function reverseGeocode(lat, lon) {
   try {
     const response = await axios.get(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`);
     const { address } = response.data;
-    return `${address.city || ''}, ${address.state || ''}, ${address.country || ''}`.replace(/ ,/g, '').trim();
+    return `${address.city || ""}, ${address.state || ""}, ${address.country || ""}`.replace(/ ,/g, "").trim();
   } catch (error) {
-    console.error('Error reverse geocoding:', error.message);
-    return 'Unknown';
+    console.error("Error reverse geocoding:", error.message);
+    return "Unknown";
   }
 }
 
 async function main() {
   const argv = yargs(hideBin(process.argv))
-    .option('dry-run', {
-      alias: 'd',
-      type: 'boolean',
-      description: 'Run the script without saving changes',
+    .option("dry-run", {
+      alias: "d",
+      type: "boolean",
+      description: "Run the script without saving changes",
     })
-    .help()
-    .argv;
+    .help().argv;
 
   const { imagePath } = await inquirer.prompt([
     {
@@ -103,7 +131,7 @@ async function main() {
   const image = sharp(imagePath);
   const metadata = await image.metadata();
   const { width, height, exif } = metadata;
-  const exifReader = (await import('exif-reader')).default;
+  const exifReader = (await import("exif-reader")).default;
   const exifData = exif ? exifReader(exif) : {};
   const device = exifData?.image?.Model || "Unknown";
   const make = exifData?.image?.Make || "Unknown";
@@ -139,7 +167,7 @@ async function main() {
       type: "input",
       name: "date",
       message: "What is the date of the photo (YYYY-MM-DD)?",
-      default: exifDate ? exifDate.toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
+      default: exifDate ? exifDate.toISOString().split("T")[0] : new Date().toISOString().split("T")[0],
     },
     {
       type: "input",
@@ -168,25 +196,37 @@ async function main() {
   // Generate description and title
   let description, title;
   let rawDescription;
-  if (model === 'Ollama') {
+  if (model === "Ollama") {
     rawDescription = await getOllamaDescription(imagePath);
   } else {
     rawDescription = await getOpenAIDescription(imagePath);
   }
 
-  if (rawDescription) {
-    const titleMatch = rawDescription.match(/Title: (.*)/);
-    title = titleMatch ? titleMatch[1] : "Untitled";
-    description = rawDescription.replace(/Title: .*/, "").trim();
-  } else {
-    title = "Untitled";
-    description = "No description available.";
+  if (!rawDescription) {
+    console.error("Failed to get description. Aborting.");
+    return;
+  }
+
+  const titleMatch = rawDescription.match(/Title: (.*)/);
+  title = titleMatch ? titleMatch[1].trim() : "Untitled";
+  description = rawDescription.replace(/Title: .*/, "").trim();
+
+  if (title === "Untitled" || description.length === 0) {
+    console.error("Could not parse title or description from the AI response. Aborting.");
+    console.log("Raw response:", rawDescription);
+    return;
   }
 
   // Move and rename the image
-  const imageName = path.basename(imagePath);
+  const originalImageName = path.basename(imagePath);
+  const imageExt = path.extname(originalImageName);
+  let imageName;
+  if (title !== "Untitled" && title.length > 0) {
+    imageName = `${slugify(title)}${imageExt}`;
+  } else {
+    imageName = originalImageName;
+  }
   const newImagePath = path.join(IMAGE_DIR, allAnswers.category, imageName);
-  await fs.copyFile(imagePath, newImagePath);
 
   // Update photos.yaml
   const photosYaml = await fs.readFile(PHOTOS_YAML_PATH, "utf-8");
@@ -230,4 +270,4 @@ async function main() {
   }
 }
 
-main().catch(error => console.error("Error processing image:", error));
+main().catch((error) => console.error("Error processing image:", error));
