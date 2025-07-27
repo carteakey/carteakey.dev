@@ -26,9 +26,19 @@ function slugify(text) {
     .replace(/-+$/, ""); // Trim - from end of text
 }
 
+function convertDMSToDD(dms, ref) {
+  if (!dms || dms.length !== 3) return null;
+  const [degrees, minutes, seconds] = dms;
+  let dd = degrees + minutes / 60 + seconds / 3600;
+  if (ref === "S" || ref === "W") {
+    dd = dd * -1;
+  }
+  return dd;
+}
+
 async function getOllamaDescription(imagePath) {
   try {
-    const ollamaUrl = (process.env["OLLAMA_API_URL"] || "http://localhost:11434") ;
+    const ollamaUrl = (process.env["OLLAMA_API_URL"] || "http://localhost:11434");
     console.log("Using Ollama API URL:", ollamaUrl);
     const client = new OpenAI({
       baseURL: ollamaUrl,
@@ -116,6 +126,10 @@ async function main() {
       type: "input",
       name: "imagePath",
       message: "What is the path to the image file?",
+      filter: (input) => {
+        // Handle paths that are quoted or have escaped spaces, e.g. from drag-and-drop
+        return input.trim().replace(/^['"]|['"]$/g, "").replace(/\\ /g, " ");
+      },
       validate: async (input) => {
         try {
           await fs.access(input);
@@ -133,18 +147,23 @@ async function main() {
   const { width, height, exif } = metadata;
   const exifReader = (await import("exif-reader")).default;
   const exifData = exif ? exifReader(exif) : {};
-  const device = exifData?.image?.Model || "Unknown";
-  const make = exifData?.image?.Make || "Unknown";
-  const lens = exifData?.exif?.LensModel || "Unknown";
-  const focalLength = exifData?.exif?.FocalLength ? `${exifData.exif.FocalLength}mm` : "Unknown";
-  const aperture = exifData?.exif?.FNumber ? `f/${exifData.exif.FNumber}` : "Unknown";
-  const iso = exifData?.exif?.ISO || "Unknown";
-  const shutterSpeed = exifData?.exif?.ExposureTime ? `1/${Math.round(1 / exifData.exif.ExposureTime)}s` : "Unknown";
-  const exifDate = exifData?.exif?.DateTimeOriginal ? new Date(exifData.exif.DateTimeOriginal) : null;
-  const gps = exifData?.gps;
+
+  const device = exifData?.Image?.Model || "Unknown";
+  const make = exifData?.Image?.Make || "Unknown";
+  const lens = exifData?.Photo?.LensModel || "Unknown";
+  const focalLength = exifData?.Photo?.FocalLength ? `${exifData.Photo.FocalLength}mm` : "Unknown";
+  const aperture = exifData?.Photo?.FNumber ? `f/${exifData.Photo.FNumber}` : "Unknown";
+  const iso = exifData?.Photo?.ISOSpeedRatings || "Unknown";
+  const shutterSpeed = exifData?.Photo?.ExposureTime ? `1/${Math.round(1 / exifData.Photo.ExposureTime)}s` : "Unknown";
+  const exifDate = exifData?.Photo?.DateTimeOriginal ? new Date(exifData.Photo.DateTimeOriginal) : null;
+  const gps = exifData?.GPSInfo;
   let locationFromExif = "Unknown";
-  if (gps && gps.GPSLatitude && gps.GPSLongitude) {
-    locationFromExif = await reverseGeocode(gps.GPSLatitude, gps.GPSLongitude);
+  if (gps && gps.GPSLatitude && gps.GPSLongitude && gps.GPSLatitudeRef && gps.GPSLongitudeRef) {
+    const lat = convertDMSToDD(gps.GPSLatitude, gps.GPSLatitudeRef);
+    const lon = convertDMSToDD(gps.GPSLongitude, gps.GPSLongitudeRef);
+    if (lat !== null && lon !== null) {
+      locationFromExif = await reverseGeocode(lat, lon);
+    }
   }
 
   const { model } = await inquirer.prompt([
