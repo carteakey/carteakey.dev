@@ -1,3 +1,111 @@
+- title: Lakefront Serenity at Sunset
+  category: real
+  path: /img/photography/real/lakefront-serenity-at-sunset.jpeg
+  device: iPhone 16
+  make: Apple
+  lens: iPhone 16 back dual wide camera 5.96mm f/1.6
+  focalLength: 5.960000038146973mm
+  aperture: f/1.6
+  iso: 40
+  shutterSpeed: 1/10101s
+  date: '2025-06-22'
+  width: 1280
+  height: 840
+  description: >-
+    The image captures a scenic lake view at sunset, with the vibrant hues of
+    the sky and the lush greenery of the surrounding trees creating a tranquil
+    atmosphere.
+  location: Unknown
+- title: 'Toronto Towers: A Glimpse into Urban Urban Vitality | [2023].'
+  category: real
+  path: >-
+    /img/photography/real/toronto-towers-a-glimpse-into-urban-urban-vitality-2023.jpeg
+  device: iPhone 16
+  make: Apple
+  lens: iPhone 16 back dual wide camera 5.96mm f/1.6
+  focalLength: 5.960000038146973mm
+  aperture: f/1.6
+  iso: 32
+  shutterSpeed: 1/14493s
+  date: '2025-05-25'
+  width: 1280
+  height: 1190
+  description: >-
+    The image captures a cityscape of towering skyscrapers and broad, tree-lined
+    avenues, evoking a sense of urban vitality through its bustling streets and
+    vibrant architecture.
+  location: Unknown
+- title: Serenity of the Golden Hour
+  category: real
+  path: /img/photography/real/serenity-of-the-golden-hour.jpeg
+  device: iPhone 16
+  make: Apple
+  lens: iPhone 16 back dual wide camera 5.96mm f/1.6
+  focalLength: 5.960000038146973mm
+  aperture: f/1.6
+  iso: 32
+  shutterSpeed: 1/14493s
+  date: '2025-06-11'
+  width: 960
+  height: 1280
+  description: >-
+    The image captures a serene and peaceful scene as a couple canoes down a
+    tranquil river or lake, bathed in the golden light of sunset.
+  location: Unknown
+- title: '''Tranquil Serenity'''
+  category: real
+  path: /img/photography/real/tranquil-serenity.jpeg
+  device: iPhone 16
+  make: Apple
+  lens: iPhone 16 back dual wide camera 5.96mm f/1.6
+  focalLength: 5.960000038146973mm
+  aperture: f/1.6
+  iso: 25
+  shutterSpeed: 1/4630s
+  date: '2025-05-11'
+  width: 960
+  height: 1280
+  description: >-
+    The photograph presents a serene and tranquil atmosphere of the outdoor
+    environment, creating an impression of calmness and relaxation.
+  location: Unknown
+- title: Rainbow Over Rainy City
+  category: real
+  path: /img/photography/real/rainbow-over-rainy-city.jpg
+  device: ONEPLUS A5000
+  make: OnePlus
+  lens: Unknown
+  focalLength: 4.103000164031982mm
+  aperture: Unknown
+  iso: Unknown
+  shutterSpeed: Unknown
+  date: '2020-05-31'
+  width: 5262
+  height: 2279
+  description: >-
+    The image captures a serene cityscape on a rainy day, with a vibrant rainbow
+    stretching across the sky, as a heavy rain cloud casts a shadow over the
+    buildings in the background, contrasting with the bright rainbow in the
+    foreground.
+  location: Unknown
+- title: Serene Sunset Reflections.
+  category: real
+  path: /img/photography/real/serene-sunset-reflections.jpeg
+  device: iPhone 16
+  make: Apple
+  lens: iPhone 16 back dual wide camera 5.96mm f/1.6
+  focalLength: 5.960000038146973mm
+  aperture: f/1.6
+  iso: 40
+  shutterSpeed: 1/10101s
+  date: '2025-06-22'
+  width: 1280
+  height: 840
+  description: >-
+    The image captures a serene moment of a sunset over a body of water, with a
+    subtle haze of mist rising from the surface, evoking a sense of peacefulness
+    and tranquility.
+  location: Unknown
 - title: Parked Cars in the Rain
   category: real
   path: /img/photography/real/parked-cars-in-the-rain.jpg
@@ -31,24 +139,6 @@
   description: >-
     This image captures a vibrant orange sports car parked on the street, with
     its rear end facing the camera, in front of a row of buildings.
-  location: Unknown
-- title: Urban Rainbow
-  category: real
-  path: /img/photography/real/urban-rainbow.jpg
-  device: ONEPLUS A5000
-  make: OnePlus
-  lens: Unknown
-  focalLength: 4.103000164031982mm
-  aperture: Unknown
-  iso: Unknown
-  shutterSpeed: Unknown
-  date: '2020-05-31'
-  width: 5262
-  height: 2279
-  description: >-
-    A double rainbow stretches across a darkening sky above the dense urban
-    landscape of a city, with sunlight illuminating high-rise buildings on the
-    horizon.
   location: Unknown
 - title: Tennis Stadium with Overcast Sky
   category: real
