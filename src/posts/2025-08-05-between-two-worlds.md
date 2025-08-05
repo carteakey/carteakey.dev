@@ -4,8 +4,8 @@ description: My experiences as a first-generation immigrant
 date: 2025-08-05T21:19:59.349Z
 updated: 2025-08-05T21:19:59.355Z
 tags:
-  - life
-  - other
+  - Life
+  - Other
 ---
 Taking a break from tech posts to share something more personal... Following is the icebreaker speech I gave at my local Toastmasters group.
 
