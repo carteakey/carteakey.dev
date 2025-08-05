@@ -7,7 +7,7 @@ tags:
 hidden: true
 ---
 
-When I moved away from Jekyll a couple years ago, I didn't expect to end up with what I now call the "TEA" framework. It wasn't planned - it just evolved as I added features and tried to keep things simple. TEA stands for **Tailwind, Eleventy, and Alpine** (with Netlify as the hosting), but honestly, it started as just "I want to write Markdown and have a fast website."
+When I moved away from Jekyll a couple years ago, I didn't expect to end up with what I now call the "TEA" framework. It wasn't planned - it just evolved as I added features and tried to keep things simple. TEA stands for **Tailwind, Eleventy, and Alpine** (with Netlify as the hosting), but it started as just "I want to write Markdown and have a fast website."
 
 *Disclaimer: This TEA has no affiliation with actual tea, though it pairs surprisingly well with a good cup*
 
@@ -15,71 +15,33 @@ When I moved away from Jekyll a couple years ago, I didn't expect to end up with
 
 Here's the thing about my setup - I didn't sit down and architect this system. I started with Eleventy because it felt the most like Jekyll (which I was migrating from), added Tailwind because writing CSS is painful, discovered Alpine.js when I needed some JavaScript sprinkles, and Netlify just made deployment ridiculously easy.
 
-```mermaid
-graph TB
-    subgraph "Content Management"
-        A[Netlify CMS]
-        B[Markdown Posts]
-        C[YAML Data Files]
-    end
-    
-    subgraph "External APIs"
-        D[GitHub API]
-        E[Spotify API]
-        F[OpenAI/Ollama]
-    end
-    
-    subgraph "Build Process"
-        G[Netlify Functions]
-        H[GitHub Actions]
-    end
-    
-    subgraph "The TEA stack - Core"
-        J[Tailwind CSS]
-        I[Eleventy]
-        K[Alpine.js]
-    end
-    
-    subgraph "Hosting & Functions"
-        P[Netlify]
-    end
-    
-    subgraph "User Experience"
-        L[Prism CSS]
-        M[Giscus Comments]
-        N[Google Analytics]
-        O[Redis Cache]
-    end
-    
-    A --> I
-    B --> I
-    C --> I
-    
-    D --> G
-    E --> G
-    F --> G
-    
-    G --> I
-    I --> L
-    I --> M
-    I --> N
-    I --> O
-    P --> I
-    
-    classDef tea fill:#e1f5fe
-    classDef external fill:#fff3e0
-    classDef content fill:#f3e5f5
-    classDef user fill:#e8f5e8
-    classDef build fill:#fce4ec
-    classDef hosting fill:#e8eaf6
-    
-    class I,J,K tea
-    class D,E,F,M,N,O external
-    class A,B,C content
-    class L user
-    class G,H build
-    class P hosting
+### TEA Framework Architecture
+
 ```
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│  Content Mgmt   │    │  External APIs  │    │  Build Process  │
+│                 │    │                 │    │                 │
+│ • Netlify CMS   │    │ • GitHub API    │    │ • Netlify Funcs │
+│ • Markdown      │───▶│ • Spotify API   │───▶│ • GitHub Actions│
+│ • YAML Data     │    │ • OpenAI/Ollama │    │                 │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+          │                       │                       │
+          ▼                       ▼                       ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                    TEA Stack - Core                             │
+│                                                                 │
+│          Tailwind CSS  •  Eleventy  •  Alpine.js                │
+└─────────────────────────────────────────────────────────────────┘
+                                  │
+                                  ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                      Netlify Hosting                            │
+│                                                                 │
+│  Enhanced with: Prism CSS • Giscus Comments • Analytics         │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+*Architecture overview: Content sources feed into the TEA core stack, which integrates with external APIs and build processes, ultimately delivering a fast, interactive website through Netlify hosting.*
 
 The beauty is that each piece does one thing well, and I can swap them out if needed. It's like building with LEGO blocks instead of casting concrete.
 
