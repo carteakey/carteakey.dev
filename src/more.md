@@ -22,10 +22,15 @@ This is a sitemap of all pages on my site. It's inspired by [slashpages.net](htt
 - [/projects](/projects/): things I've built
 - [/quotes](/quotes/): quotes I like
 - [/snippets](/snippets/): code snippets and quick notes
+- [/stats](/stats/): site statistics and metrics
 - [/workouts](/workouts/): my fitness journey
 
 ### Coming Soon
 - [/ai](/ai/): my AI usage, personally
+- **/blogroll**: blogs I like and follow
+{# - **/reading-time**: estimated reading times for posts #}
+{# - **/breadcrumbs**: better navigation paths #}
+{# - **/search**: full-text search across content #}
 
 
 

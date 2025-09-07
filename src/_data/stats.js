@@ -24,56 +24,10 @@ const calculateStreak = function(posts) {
   return streak;
 };
 
-export default function(data) {
-  const posts = data.collections.posts || [];
-  const snippets = data.collections.snippets || [];
-  const allPages = data.collections.all || [];
-  const tagList = data.collections.tagList || [];
-  const snippetTags = data.collections.snippetTags || [];
-  
-  const countWords = (content) => {
-    if (!content) return 0;
-    // Remove HTML tags and count words
-    const text = content.replace(/<[^>]*>/g, '');
-    return text.split(/\s+/).filter(word => word.length > 0).length;
-  };
-  
-  const postWords = posts.reduce((total, post) => {
-    return total + countWords(post.templateContent || post.content);
-  }, 0);
-  
-  const snippetWords = snippets.reduce((total, snippet) => {
-    return total + countWords(snippet.templateContent || snippet.content);
-  }, 0);
-  
-  // Calculate site age
-  const oldestPost = posts.length > 0 ? 
-    posts.reduce((oldest, post) => 
-      new Date(post.date) < new Date(oldest.date) ? post : oldest
-    ) : null;
-  
-  const siteAge = oldestPost ? 
-    Math.floor((new Date() - new Date(oldestPost.date)) / (1000 * 60 * 60 * 24)) : 0;
-  
-  // Posts by month for the last 12 months
-  const now = new Date();
-  const monthlyActivity = [];
-  for (let i = 11; i >= 0; i--) {
-    const date = new Date(now.getFullYear(), now.getMonth() - i, 1);
-    const monthPosts = posts.filter(post => {
-      const postDate = new Date(post.date);
-      return postDate.getFullYear() === date.getFullYear() && 
-             postDate.getMonth() === date.getMonth();
-    }).length;
-    
-    monthlyActivity.push({
-      month: date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' }),
-      posts: monthPosts
-    });
-  }
-
-  return {
-    posts: {
+export default {
+  posts: function(data) {
+    const posts = data.collections.posts || [];
+    return {
       total: posts.length,
       published: posts.filter(post => !post.data.draft).length,
       drafts: posts.filter(post => post.data.draft).length,
@@ -84,41 +38,103 @@ export default function(data) {
         return postDate.getFullYear() === now.getFullYear() && 
                postDate.getMonth() === now.getMonth();
       }).length
-    },
-    
-    snippets: {
+    };
+  },
+  
+  snippets: function(data) {
+    const snippets = data.collections.snippets || [];
+    return {
       total: snippets.length,
       published: snippets.filter(snippet => !snippet.data.draft).length,
       languages: [...new Set(snippets.map(s => s.data.language).filter(Boolean))].length
-    },
-    
-    tags: {
+    };
+  },
+  
+  tags: function(data) {
+    const tagList = data.collections.tagList || [];
+    const snippetTags = data.collections.snippetTags || [];
+    return {
       total: tagList.length,
       snippetTags: snippetTags.length,
       combined: [...new Set([...tagList, ...snippetTags])].length
-    },
+    };
+  },
+  
+  words: function(data) {
+    const posts = data.collections.posts || [];
+    const snippets = data.collections.snippets || [];
     
-    words: {
+    const countWords = (content) => {
+      if (!content) return 0;
+      // Remove HTML tags and count words
+      const text = content.replace(/<[^>]*>/g, '');
+      return text.split(/\s+/).filter(word => word.length > 0).length;
+    };
+    
+    const postWords = posts.reduce((total, post) => {
+      return total + countWords(post.templateContent || post.content);
+    }, 0);
+    
+    const snippetWords = snippets.reduce((total, snippet) => {
+      return total + countWords(snippet.templateContent || snippet.content);
+    }, 0);
+    
+    return {
       posts: postWords,
       snippets: snippetWords,
       total: postWords + snippetWords,
       average: posts.length > 0 ? Math.round(postWords / posts.length) : 0
-    },
+    };
+  },
+  
+  site: function(data) {
+    const allPages = data.collections.all || [];
+    const posts = data.collections.posts || [];
     
-    site: {
+    // Calculate site age
+    const oldestPost = posts.length > 0 ? 
+      posts.reduce((oldest, post) => 
+        new Date(post.date) < new Date(oldest.date) ? post : oldest
+      ) : null;
+    
+    const siteAge = oldestPost ? 
+      Math.floor((new Date() - new Date(oldestPost.date)) / (1000 * 60 * 60 * 24)) : 0;
+    
+    return {
       totalPages: allPages.length,
       siteAgeDays: siteAge,
       siteAgeYears: Math.floor(siteAge / 365),
       lastUpdated: new Date().toISOString(),
       buildDate: new Date().toISOString()
-    },
+    };
+  },
+  
+  activity: function(data) {
+    const posts = data.collections.posts || [];
+    const now = new Date();
     
-    activity: {
+    // Posts by month for the last 12 months
+    const monthlyActivity = [];
+    for (let i = 11; i >= 0; i--) {
+      const date = new Date(now.getFullYear(), now.getMonth() - i, 1);
+      const monthPosts = posts.filter(post => {
+        const postDate = new Date(post.date);
+        return postDate.getFullYear() === date.getFullYear() && 
+               postDate.getMonth() === date.getMonth();
+      }).length;
+      
+      monthlyActivity.push({
+        month: date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' }),
+        posts: monthPosts
+      });
+    }
+    
+    return {
       monthly: monthlyActivity,
       streak: calculateStreak(posts),
       mostActiveMonth: monthlyActivity.reduce((max, current) => 
         current.posts > max.posts ? current : max, { posts: 0 }
       )
-    }
-  };
-}
+    };
+  }
+};

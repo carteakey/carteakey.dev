@@ -249,6 +249,62 @@ export default function(eleventyConfig) {
 
   eleventyConfig.addFilter("filterTagList", filterTagList);
 
+  // Add utility filters for stats page
+  eleventyConfig.addFilter("max", function(value, max) {
+    return Math.max(value, max);
+  });
+
+  eleventyConfig.addFilter("min", function(value, max) {
+    return Math.min(value, max);
+  });
+
+  eleventyConfig.addFilter("round", function(value, decimals = 0) {
+    return decimals === 0 ? Math.round(value) : Math.round(value * Math.pow(10, decimals)) / Math.pow(10, decimals);
+  });
+
+  eleventyConfig.addFilter("uniq", function(array) {
+    return [...new Set(array)];
+  });
+
+  eleventyConfig.addFilter("map", function(array, property) {
+    return array.map(item => item[property]);
+  });
+
+  eleventyConfig.addFilter("date", function(date, format) {
+    if (!date) return '';
+    const dateObj = typeof date === 'string' ? new Date(date) : date;
+    
+    // Simple date formatting - extend as needed
+    if (format === 'MMMM d, yyyy "at" h:mm a') {
+      return dateObj.toLocaleString('en-US', {
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: '2-digit',
+        hour12: true
+      });
+    }
+    
+    return dateObj.toLocaleDateString();
+  });
+
+  eleventyConfig.addFilter("truncate", function(str, length = 100) {
+    if (!str || str.length <= length) return str;
+    return str.substring(0, length) + '...';
+  });
+
+  eleventyConfig.addFilter("uniq", function(array) {
+    return [...new Set(array)];
+  });
+
+  eleventyConfig.addFilter("keys", function(obj) {
+    return Object.keys(obj);
+  });
+
+  eleventyConfig.addFilter("head", function(array, count) {
+    return array.slice(0, count);
+  });
 
   // Add snippet tags collection
   eleventyConfig.addCollection("snippetTags", function(collection) {
