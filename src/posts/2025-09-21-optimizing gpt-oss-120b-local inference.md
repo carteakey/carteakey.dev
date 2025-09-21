@@ -256,10 +256,10 @@ Top-K sampling is a fancy name for “keep only `K` most probable tokens” al
 
 Overall, I'm very happy with the results. The model is usable for interactive coding tasks now and is a joy to use. I’ll keep updating this post as I find more optimizations and as llama.cpp matures. 
 
-Some of the params I haven’t experimented with yet but seem promising:
-- Kv cache quantization (`--kv-cache-quantization`)
-- Rop offloading MoE layers to CPU (`--cpu-moe-rope`)
-- Fine tuned override tensor regex (`--override-tensor`) instead of `--n-cpu-moe`
+{# Some of the params I haven’t experimented with yet but seem promising:
+- Kv cache quantization (``)
+- Fine tuned override tensor regex (`--override-tensor`) instead of `--n-cpu-moe` #}
+
 
 
 ## Appendix
