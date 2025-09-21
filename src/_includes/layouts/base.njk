@@ -144,7 +144,7 @@
                 @click.away="open = false"
               >
                 {%- for entry in navPages %}
-                  {% if entry.title == "Gallery" or entry.title == "Snippets" or entry.title == "Projects" or entry.title == "CV" or entry.title == "...More" %}
+                  {% if entry.title == "Gallery" or entry.title == "Vibes" or entry.title == "Snippets" or entry.title == "Projects" or entry.title == "CV" or entry.title == "...More" %}
                     <a class="block px-4 py-2 no-underline hover:underline font-bold" href="{{ entry.url }}">{{ entry.title }}</a>
                   {% endif %}
                 {%- endfor %}
@@ -346,6 +346,11 @@
             <a href="{{ '/gallery' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
               {% feather "camera", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
               <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">Gallery</span>
+            </a>
+            
+            <a href="{{ '/vibes' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
+              {% feather "image", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
+              <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">Vibes</span>
             </a>
             
             <a href="{{ '/snippets' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">

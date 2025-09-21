@@ -1,0 +1,149 @@
+---
+title: Vibes
+layout: layouts/base.njk
+permalink: /vibes/
+fullWidth: true
+eleventyNavigation:
+  key: Vibes
+  order: 6
+---
+
+<style>
+  /* Container fills the viewport width; images absolutely positioned */
+  #vibes-container { position: relative; min-height: 80vh; }
+  #vibes-container img { box-shadow: 0 1px 8px rgba(0,0,0,0.15); border-radius: 6px; }
+  .vibes-note { position: sticky; top: 0; background: transparent; backdrop-filter: blur(3px); z-index: 5; }
+  .vibes-note a { text-decoration: underline; }
+</style>
+
+<div class="vibes-note mb-6">
+  <h1 class="mt-0">Vibe Board</h1>
+  {# <p class="mt-1 text-sm opacity-80">Drop images and memes into <code>src/static/img/vibes/</code>. They’ll be shuffled and laid out without overlapping text. The page is client-rendered for a fun, chaotic feel.</p> #}
+  {% if (vibes.list | length) == 0 %}
+  <p class="mt-2 text-rose-600">No images found. Add some to <code>src/static/img/vibes/</code> and rebuild.</p>
+  {% endif %}
+  {# <a class="text-sm" href="https://girl.surgery/website_vibes/" target="_blank" rel="noopener">Inspired by cis_girl sophia’s vibes</a> #}
+  {# <hr/>
+  <p class="text-xs opacity-70">Tip: This is sometimes called a "mood board" or "inspo wall". I’m calling it a "Vibes Board" here.</p>
+  <hr/> #}
+</div>
+
+<script type="application/json" id="vibes-data">{{ vibes.list | dump | safe }}</script>
+<div id="vibes-container"></div>
+
+<script>
+  // Hydrate image list from Eleventy data stored in a JSON script tag
+  const vibesData = JSON.parse(document.getElementById('vibes-data').textContent || '[]');
+
+  function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  }
+
+  (function initVibes(){
+    const container = document.getElementById('vibes-container');
+    if (!container) return;
+
+    const key_values = shuffleArray([...vibesData]);
+
+    const rect = container.getBoundingClientRect();
+    let screen_width = rect.width || window.innerWidth;
+
+    // Slightly larger images: use a bigger goal size and scale up final size by ~15%
+    const pairs = key_values.map(([key, dims]) => {
+      const [w, h] = dims;
+      const goal_pixels = 650*360; // up from 500*300
+      const actual_pixels = w*h;
+      if (actual_pixels/goal_pixels > 16) return [parseInt(w/7), parseInt(h/7)];
+      if (actual_pixels/goal_pixels > 4) return [parseInt(w/3.5), parseInt(h/3.5)];
+      return [parseInt(w/1.8), parseInt(h/1.8)];
+    }).map(([w, h]) => {
+      // Scale up by 15% but clamp to screen width minus 10px
+      let ww = Math.min(Math.round(w * 1.15), Math.max(50, screen_width - 10));
+      let hh = Math.round(h * (ww / w));
+      return [ww, hh];
+    });
+
+    // Gather text nodes on page so images don't cover them
+    const textNodes = [];
+    const treeWalker = document.createTreeWalker(
+      document.body,
+      NodeFilter.SHOW_TEXT,
+      { acceptNode: (node) => node.textContent.trim() ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT }
+    );
+    while (treeWalker.nextNode()) textNodes.push(treeWalker.currentNode);
+
+    const positions = [];
+    let i = 0;
+    let heightCap = 600;
+    container.style.minHeight = heightCap + 'px';
+
+    const interval = setInterval(() => {
+      if (i >= key_values.length) { clearInterval(interval); return; }
+
+      let height = heightCap;
+      const [w, h] = pairs[i];
+      while (true) {
+        let found_place = false;
+        const w_max = Math.max(0, screen_width - w);
+        const h_max = Math.max(0, height - h);
+        for (let _ = 0; _ < 50; _++) {
+          const a_left = Math.random() * (w_max || 1);
+          const a_top = Math.random() * (h_max || 1);
+          const a_right = a_left + w;
+          const a_bottom = a_top + h;
+
+          let intersects = false;
+          for (let j = 0; j < positions.length; j++) {
+            const [b_left, b_top] = positions[j];
+            const b_right = b_left + pairs[j][0];
+            const b_bottom = b_top + pairs[j][1];
+            if (a_left < b_right && a_right > b_left && a_bottom > b_top && a_top < b_bottom) {
+              intersects = true; break;
+            }
+          }
+
+          for (const node of textNodes) {
+            const range = document.createRange();
+            range.selectNodeContents(node);
+            const rect = range.getBoundingClientRect();
+            const node_top = rect.top + window.pageYOffset;
+            const node_left = rect.left + window.pageXOffset;
+            if (a_left < (node_left+rect.width) && a_right > node_left && a_bottom > node_top && a_top < (node_top+rect.height)) {
+              intersects = true; break;
+            }
+          }
+
+          if (!intersects) {
+            found_place = true;
+            positions.push([parseInt(a_left), parseInt(a_top)]);
+            break;
+          }
+        }
+        if (found_place) break; else height += 50;
+      }
+
+      // Create the image element
+      const img = document.createElement('img');
+      img.src = key_values[i][0];
+      img.width = pairs[i][0];
+      img.height = pairs[i][1];
+      img.style.width = pairs[i][0] + 'px';
+      img.style.height = pairs[i][1] + 'px';
+      img.style.position = 'absolute';
+      img.style.top = positions[i][1] + 'px';
+      img.style.left = positions[i][0] + 'px';
+      img.loading = 'lazy';
+      container.appendChild(img);
+
+      heightCap = Math.max(heightCap, positions[i][1] + pairs[i][1] + 50);
+      container.style.minHeight = heightCap + 'px';
+
+      i++;
+      if (i === key_values.length) clearInterval(interval);
+    }, 100);
+  })();
+</script>

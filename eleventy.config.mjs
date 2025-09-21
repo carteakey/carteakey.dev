@@ -92,6 +92,7 @@ export default function(eleventyConfig) {
   eleventyConfig.addPlugin(EleventyHtmlBasePlugin)
   eleventyConfig.addWatchTarget("./src/**/*/*.css");
   // Copy the `img` and `css` folders to the output
+  // Copy all static images (includes subfolders like /static/img/vibes)
   eleventyConfig.addPassthroughCopy({"./src/static/img":"/img/"});
   eleventyConfig.addPassthroughCopy("./src/static/css/prism-a11y-dark.css");
   eleventyConfig.addPassthroughCopy("./src/_redirects");
