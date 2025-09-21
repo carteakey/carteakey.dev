@@ -135,11 +135,6 @@ Here's some notes after wandering in [r/LocalLLaMA](https://www.reddit.com/r/Loc
 
 > :information_source: Always use the original [MXFP4 model files](https://huggingface.co/ggml-org/gpt-oss-120b-GGUF). The `gpt-oss` models are natively "quantized". I.e. they are trained in the MXFP4 format which is roughly equivalent to `ggml`'s `Q4_0`. The main difference with `Q4_0` is that the MXFP4 models get to keep their full quality. This means that no quantization in the usual sense is necessary.  
 
-### Prerequisites
-- Ubuntu 24.04 (or any recent distro) with CUDA 13.0 and driver ≥ 580.65.
-- Build llama.cpp (see the short command below).
-- 64 GiB RAM, 12 GiB VRAM.  
-- The three GGUF shards of `gpt‑oss‑120b‑mxfp4` placed in a single directory.
 
 ### Optimization checklist (in order of impact)
 
@@ -160,7 +155,7 @@ Here's some notes after wandering in [r/LocalLLaMA](https://www.reddit.com/r/Loc
 
 - If you've got enough VRAM to load this model, you may leave.
 
-{% image_cc "./src/static/img/happy-for-you.png", "To all VRAM owners", "w-1/2 justify-center" , "To all > 64GB VRAM owners" %}
+{% image_cc "./src/static/img/happy-for-you.png", "To all VRAM owners", "10vw align-center justify-center" , "To all > 64GB VRAM owners" %}
 
 - Unified Memory, like on Apple Silicon, is the next best thing. AMD Strix Halo is one of the best options for Windows users.
 
@@ -194,7 +189,6 @@ You can still fine-tune by  customize the regex in the `--override-tensor`, som
 -  `-ot ".ffn_(up|down)_exps.=CPU"` This offloads up and down projection MoE layers.
 - `-ot ".ffn_(up)_exps.=CPU"` offloads only up projection MoE layers.
 - `-ot "\.(6|7|8|9|[0-9][0-9]|[0-9][0-9][0-9])\.ffn_(gate|up|down)_exps.=CPU"` means to offload gate, up and down MoE layers but only from the 6th layer onwards.
-- `--override-tensor '([4-9]+).ffn_.*_exps.=CPU'`
 
 ### iGPU utilization
 
@@ -203,7 +197,6 @@ You can still fine-tune by  customize the regex in the `--override-tensor`, som
 
 - Plug in the HDMI / Displayport in the motherboard port instead of GPU (this only applies to PC's)
 - Switch to iGPU as the primary GPU in the BIOS
-- Set it to be the primary GPU
 	
 Here's my card running with 0% utilization
 
@@ -245,8 +238,6 @@ Intel CPU (12th gen onwards) come with a 6 performance cores and 4 efficiency (E
 This can be controlled using the `-t` parameter. More threads isn't really beneficial and in general, the devs recommend setting it equal to the amount of performance cores - 1  you have.
 
 Efficiency cores effect on performance has been known for a while and the standard way to avoid to avoid efficiency cores has been to leave the number of threads low.
-https://github.com/ggml-org/llama.cpp/discussions/572
-https://github.com/ggml-org/llama.cpp/discussions/9996
 
 e.g. on my `Intel Core i5-12600K Desktop Processor 10 (6P+4E)` - i would be using this to strictly bind the threads to CPU cores 0-5, one thread per core.
 
@@ -292,11 +283,14 @@ Write a Python program that shows 20 balls bouncing inside a spinning heptagon:
 
 ### Reference Articles
 - Some excellent stuff from the official big guys --> https://github.com/ggml-org/llama.cpp/discussions/15396
-- https://www.reddit.com/r/LocalLLaMA/comments/1ng0fmv/psarfc_kv_cache_quantization_forces_excess/
-- https://www.reddit.com/r/LocalLLaMA/comments/1n4pt0x/topk_0_vs_100_on_gptoss120b/
+
+Lots of help from the community on reddit and github discussions
+- https://www.reddit.com/r/LocalLLaMA/comments/1ng0fmv/psarfc_kv_cache_quantization_forces_excess
+- https://www.reddit.com/r/LocalLLaMA/comments/1n4pt0x/topk_0_vs_100_on_gptoss120b
 - [guide : running gpt-oss with llama.cpp #15396](https://github.com/ggml-org/llama.cpp/discussions/15396)
 - [llama.cpp: Offloading MoE layers to CPU #15077](https://github.com/ggml-org/llama.cpp/discussions/15077)
 - [llama-cli CPU Control | Pin to Physical Cores #9996](https://github.com/ggml-org/llama.cpp/discussions/9996)
+- [Performance 3x better when use performance core only on Intel gen 12th cpu #572 ](https://github.com/ggml-org/llama.cpp/discussions/572)
 
 
 ### Measuring tps incrementally
