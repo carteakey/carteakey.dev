@@ -19,7 +19,26 @@ import { feedPlugin } from "@11ty/eleventy-plugin-rss";
 import Image, { generateHTML } from "@11ty/eleventy-img";
 import 'dotenv/config';
 
+function mapSrcToPublicUrl(src) {
+  // If already an absolute URL or starts with site public path, return as-is
+  if (/^https?:\/\//i.test(src) || src.startsWith("/")) {
+    return src;
+  }
+  // Map common source path to passthrough public path
+  if (src.startsWith("./src/static/img")) {
+    return src.replace("./src/static/img", "/img");
+  }
+  // Default: return unchanged
+  return src;
+}
+
 async function imageShortcode(src, alt, css) {
+  // Preserve animation for GIFs by bypassing transformation
+  if (/\.gif$/i.test(src)) {
+    const publicSrc = mapSrcToPublicUrl(src);
+    const sizes = "(min-width: 30em) 50vw, 100vw";
+    return `<img src="${publicSrc}" alt="${alt ?? ''}" class="${css ?? ''}" loading="lazy" decoding="async" sizes="${sizes}" style="max-width: 100%; height: auto;" />`;
+  }
   let metadata = await Image(src, {
     widths: ["auto"],
     formats: ['avif', 'webp', 'jpeg'],
@@ -44,6 +63,13 @@ async function imageShortcode(src, alt, css) {
 }
 
 async function imageShortcodeWithCaptions(src, alt, css, caption) {
+  // Preserve animation for GIFs by bypassing transformation
+  if (/\.gif$/i.test(src)) {
+    const publicSrc = mapSrcToPublicUrl(src);
+    const sizes = "(min-width: 30em) 50vw, 100vw";
+    const imageMarkup = `<img src="${publicSrc}" alt="${alt ?? ''}" class="${css ?? ''}" loading="lazy" decoding="async" sizes="${sizes}" style="max-width: 100%; height: auto;" />`;
+    return `<figure>${imageMarkup}${caption ? `<figcaption class="font-thin italic">${caption}</figcaption>` : ""}</figure>`;
+  }
   let metadata = await Image(src, {
     widths: ["auto"],
     formats: ['avif', 'webp', 'jpeg'],
