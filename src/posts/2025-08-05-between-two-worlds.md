@@ -6,7 +6,9 @@ updated: 2025-08-05T21:19:59.355Z
 tags:
   - Life
   - Other
+hidden: true
 ---
+
 Taking a break from tech posts to share something more personal... Following is the icebreaker speech I gave at my local Toastmasters group.
 
 ---
