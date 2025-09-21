@@ -14,6 +14,13 @@ eleventyNavigation:
   #vibes-container img { box-shadow: 0 1px 8px rgba(0,0,0,0.15); border-radius: 6px; }
   .vibes-note { position: sticky; top: 0; background: transparent; backdrop-filter: blur(3px); z-index: 5; }
   .vibes-note a { text-decoration: underline; }
+  .vibes-actions { display: flex; gap: .5rem; align-items: center; }
+  .vibes-btn { display: inline-flex; align-items: center; gap: .5rem; padding: .35rem .6rem; border-radius: .5rem; border: 1px solid var(--border, rgba(0,0,0,.12)); background: var(--bg, rgba(0,0,0,0.03)); cursor: pointer; }
+  .vibes-btn:hover { background: rgba(0,0,0,0.06); }
+  @media (prefers-color-scheme: dark) {
+    .vibes-btn { border-color: rgba(255,255,255,.16); background: rgba(255,255,255,.06); }
+    .vibes-btn:hover { background: rgba(255,255,255,.10); }
+  }
 </style>
 
 <div class="vibes-note mb-6">
@@ -22,16 +29,35 @@ eleventyNavigation:
   {% if (vibes.list | length) == 0 %}
   <p class="mt-2 text-rose-600">No images found. Add some to <code>src/static/img/vibes/</code> and rebuild.</p>
   {% endif %}
-  {# <a class="text-sm" href="https://girl.surgery/website_vibes/" target="_blank" rel="noopener">Inspired by cis_girl sophia’s vibes</a> #}
+  {# <a class="text-sm" href="https://guzey.com/vibes/" target="_blank" rel="noopener">Inspired by guzey</a> #}
   {# <hr/>
   <p class="text-xs opacity-70">Tip: This is sometimes called a "mood board" or "inspo wall". I’m calling it a "Vibes Board" here.</p>
   <hr/> #}
+  <div class="vibes-actions mt-2">
+    <button id="shuffle-btn" class="vibes-btn" type="button" title="Shuffle">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <polyline points="16 3 21 3 21 8"></polyline>
+        <line x1="4" y1="20" x2="21" y2="3"></line>
+        <polyline points="21 16 21 21 16 21"></polyline>
+        <line x1="15" y1="15" x2="21" y2="21"></line>
+        <line x1="4" y1="4" x2="9" y2="9"></line>
+      </svg>
+      <span class="text-sm">Shuffle</span>
+    </button>
+  </div>
 </div>
 
 <script type="application/json" id="vibes-data">{{ vibes.list | dump | safe }}</script>
 <div id="vibes-container"></div>
 
-<script>
+<!-- PhotoSwipe CSS for lightbox -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@5.3.8/dist/photoswipe.css">
+
+<script type="module">
+  // Import PhotoSwipe (same version/config as in Gallery)
+  import PhotoSwipeLightbox from 'https://cdn.jsdelivr.net/npm/photoswipe@5.3.8/dist/photoswipe-lightbox.esm.min.js'
+  import PhotoSwipe from 'https://cdn.jsdelivr.net/npm/photoswipe@5.3.8/dist/photoswipe.esm.min.js'
+
   // Hydrate image list from Eleventy data stored in a JSON script tag
   const vibesData = JSON.parse(document.getElementById('vibes-data').textContent || '[]');
 
@@ -43,31 +69,31 @@ eleventyNavigation:
     return array;
   }
 
-  (function initVibes(){
-    const container = document.getElementById('vibes-container');
-    if (!container) return;
+  const container = document.getElementById('vibes-container');
+  const shuffleBtn = document.getElementById('shuffle-btn');
+  let placementIntervalId = null;
+  let currentOrder = [];
 
-    const key_values = shuffleArray([...vibesData]);
+  function computeSizes(list, screenWidth) {
+    const key_values = [...list];
+    const pairs = key_values
+      .map(([_, dims]) => {
+        const [w, h] = dims;
+        const goal_pixels = 650 * 360; // larger baseline than before
+        const actual_pixels = w * h;
+        if (actual_pixels / goal_pixels > 16) return [parseInt(w / 7), parseInt(h / 7)];
+        if (actual_pixels / goal_pixels > 4) return [parseInt(w / 3.5), parseInt(h / 3.5)];
+        return [parseInt(w / 1.8), parseInt(h / 1.8)];
+      })
+      .map(([w, h]) => {
+        let ww = Math.min(Math.round(w * 1.15), Math.max(50, screenWidth - 10));
+        let hh = Math.round(h * (ww / w));
+        return [ww, hh];
+      });
+    return pairs;
+  }
 
-    const rect = container.getBoundingClientRect();
-    let screen_width = rect.width || window.innerWidth;
-
-    // Slightly larger images: use a bigger goal size and scale up final size by ~15%
-    const pairs = key_values.map(([key, dims]) => {
-      const [w, h] = dims;
-      const goal_pixels = 650*360; // up from 500*300
-      const actual_pixels = w*h;
-      if (actual_pixels/goal_pixels > 16) return [parseInt(w/7), parseInt(h/7)];
-      if (actual_pixels/goal_pixels > 4) return [parseInt(w/3.5), parseInt(h/3.5)];
-      return [parseInt(w/1.8), parseInt(h/1.8)];
-    }).map(([w, h]) => {
-      // Scale up by 15% but clamp to screen width minus 10px
-      let ww = Math.min(Math.round(w * 1.15), Math.max(50, screen_width - 10));
-      let hh = Math.round(h * (ww / w));
-      return [ww, hh];
-    });
-
-    // Gather text nodes on page so images don't cover them
+  function gatherTextNodes() {
     const textNodes = [];
     const treeWalker = document.createTreeWalker(
       document.body,
@@ -75,14 +101,39 @@ eleventyNavigation:
       { acceptNode: (node) => node.textContent.trim() ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT }
     );
     while (treeWalker.nextNode()) textNodes.push(treeWalker.currentNode);
+    return textNodes;
+  }
+
+  function clearIntervalIfAny() {
+    if (placementIntervalId) {
+      clearInterval(placementIntervalId);
+      placementIntervalId = null;
+    }
+  }
+
+  function renderVibes({ shuffle = true } = {}) {
+    if (!container) return;
+    clearIntervalIfAny();
+    container.innerHTML = '';
+
+    // Order images (preserve current shuffle on resize)
+    if (shuffle || currentOrder.length === 0) {
+      currentOrder = shuffleArray([...vibesData]);
+    }
+    const ordered = [...currentOrder];
+
+    const rect = container.getBoundingClientRect();
+    const screen_width = rect.width || window.innerWidth;
+    const pairs = computeSizes(ordered, screen_width);
+    const textNodes = gatherTextNodes();
 
     const positions = [];
     let i = 0;
-    let heightCap = 600;
+    let heightCap = Math.max(600, Math.round(window.innerHeight * 0.8));
     container.style.minHeight = heightCap + 'px';
 
-    const interval = setInterval(() => {
-      if (i >= key_values.length) { clearInterval(interval); return; }
+    placementIntervalId = setInterval(() => {
+      if (i >= ordered.length) { clearIntervalIfAny(); return; }
 
       let height = heightCap;
       const [w, h] = pairs[i];
@@ -112,7 +163,7 @@ eleventyNavigation:
             const rect = range.getBoundingClientRect();
             const node_top = rect.top + window.pageYOffset;
             const node_left = rect.left + window.pageXOffset;
-            if (a_left < (node_left+rect.width) && a_right > node_left && a_bottom > node_top && a_top < (node_top+rect.height)) {
+            if (a_left < (node_left + rect.width) && a_right > node_left && a_bottom > node_top && a_top < (node_top + rect.height)) {
               intersects = true; break;
             }
           }
@@ -126,24 +177,85 @@ eleventyNavigation:
         if (found_place) break; else height += 50;
       }
 
-      // Create the image element
-      const img = document.createElement('img');
-      img.src = key_values[i][0];
-      img.width = pairs[i][0];
-      img.height = pairs[i][1];
-      img.style.width = pairs[i][0] + 'px';
-      img.style.height = pairs[i][1] + 'px';
-      img.style.position = 'absolute';
-      img.style.top = positions[i][1] + 'px';
-      img.style.left = positions[i][0] + 'px';
-      img.loading = 'lazy';
-      container.appendChild(img);
+      // Create a clickable figure for PhotoSwipe
+      const fig = document.createElement('figure');
+      const src = ordered[i][0];
+      const [origW, origH] = ordered[i][1];
+      fig.dataset.pswpSrc = src;
+      fig.dataset.pswpWidth = String(origW);
+      fig.dataset.pswpHeight = String(origH);
+      fig.style.position = 'absolute';
+      fig.style.top = positions[i][1] + 'px';
+      fig.style.left = positions[i][0] + 'px';
+      fig.style.width = w + 'px';
+      fig.style.height = h + 'px';
+      fig.style.margin = '0';
 
-      heightCap = Math.max(heightCap, positions[i][1] + pairs[i][1] + 50);
+      const img = document.createElement('img');
+      img.src = src;
+      img.alt = src.split('/').pop() || 'vibe image';
+      img.width = w; // intrinsic dimensions help prevent CLS
+      img.height = h;
+      img.style.width = '100%';
+      img.style.height = '100%';
+      img.style.objectFit = 'cover';
+      img.loading = 'lazy';
+
+      fig.appendChild(img);
+      container.appendChild(fig);
+
+      heightCap = Math.max(heightCap, positions[i][1] + h + 50);
       container.style.minHeight = heightCap + 'px';
 
       i++;
-      if (i === key_values.length) clearInterval(interval);
-    }, 100);
-  })();
+      if (i === ordered.length) clearIntervalIfAny();
+    }, 60);
+  }
+
+  // Initialize PhotoSwipe Lightbox (delegated on #vibes-container figures)
+  const lightbox = new PhotoSwipeLightbox({
+    gallery: '#vibes-container',
+    children: 'figure',
+    pswpModule: PhotoSwipe,
+    padding: { top: 20, bottom: 20, left: 20, right: 20 },
+    maxZoomLevel: 4,
+    imageClickAction: 'zoom',
+    tapAction: 'zoom',
+    preloadFirstSlide: true,
+    showHideAnimationType: 'fade'
+  });
+
+  lightbox.on('itemData', (e) => {
+    const { itemData } = e;
+    if (!itemData.src) {
+      itemData.src = itemData.element?.dataset?.pswpSrc;
+    }
+    if (!itemData.w || !itemData.h) {
+      itemData.w = parseInt(itemData.element?.dataset?.pswpWidth || '0', 10);
+      itemData.h = parseInt(itemData.element?.dataset?.pswpHeight || '0', 10);
+    }
+  });
+
+  lightbox.init();
+
+  // Render initial layout
+  renderVibes({ shuffle: true });
+
+  // Shuffle button handler
+  if (shuffleBtn) {
+    shuffleBtn.addEventListener('click', () => {
+      renderVibes({ shuffle: true });
+      lightbox.refresh();
+    });
+  }
+
+  // Debounced resize reflow (preserve order, just re-place)
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      renderVibes({ shuffle: false });
+      lightbox.refresh();
+    }, 200);
+  }, { passive: true });
 </script>
