@@ -8,12 +8,12 @@ tags:
   - AI
 
 ---
-> **Note:** Parts of this post were drafted/refined with the help of gpt‑oss‑120b itself.
+> **Note:** Parts of this post were drafted/refined with the help of gpt‑oss‑120b itself. How meta!
 
 ## **TL;DR** 
 
 - **Hardware**: i5‑12600K (6P + 4E), RTX 4070 (12 GB), 64 GB DDR5 RAM, Linux (Ubuntu 24.04, CUDA 13.0).
-- **Result**: 191 tokens/s prompt processing, 10 tokens/s generation for 32k context → usable for interactive coding tasks.
+- **Result**: 190 tokens/s prompt processing, 11 tokens/s generation for 32k context → usable for interactive coding tasks.
 - **Key flags** that made it possible:
   - `--n-cpu-moe 31` (keep most MoE layers on CPU)
   - `--n-gpu-layers 99` (only 5 layers on GPU)
@@ -21,55 +21,64 @@ tags:
   - `-fa` (flash‑attention)
 
 
-Final run script (save as `run-gpt-oss-120b.sh` and tweak paths as needed):
-
+Final run script (save as `run-gpt-oss-120b.sh`, and tweak paths as needed):
 
 ```bash
 #!/usr/bin/env bash
-# ---------------------------------------------------------------
-#  gpt‑oss‑120b local inference (CPU+GPU) – tuned for i5‑12600K + RTX‑4070
-# ---------------------------------------------------------------
 
-# Environment ----------------------------------------------------
-export LLAMA_SET_ROWS=1               # 1 row per thread → better CPU cache locality
-
-# Model path -----------------------------------------------------
+export LLAMA_SET_ROWS=1
 MODEL="/home/carteakey/lllms/models/ggml-org/gpt-oss-120b-GGUF/gpt-oss-120b-mxfp4-00001-of-00003.gguf"
 
-# ----------------------------------------------------------------
-# Server command (llama.cpp `llama-server`)
-# ----------------------------------------------------------------
 ./vendor/llama.cpp/build/bin/llama-server \
-    -m "$MODEL" \
-    --n-cpu-moe 31 \                      # This model has 36 layers. Keep first 31 MoE layers on CPU (5 stay on GPU)
-    --n-gpu-layers 99 \                   # Offload the rest to the GPU
-    --ctx-size 24576 \                    # 24 K context (fits comfortably in 12 GB VRAM)
-    --no-mmap \                           # Faster prompt processing when the whole model fits in RAM
-    --no-warmup \                         # Skip the 1‑pass warm‑up 
-    -b 2048 \                             # 
-    -ub 2048 \                            # 
-    --threads 14 \                        # Strangely, more threads help in my case. YMMV
-    --cpu-range 0-5 \                     # Pin threads to the 6 performance cores only
-    --cpu-strict 1 \                      # Strictly enforce the above
-    --temp 1.0 \                          # 
-    --top-k 100 \                         # Limit sampling to the top‑100 tokens (speed boost)
-    --min-p 0.0 \                         # 
-    --top-p 1.0 \                         # 
-    -fa \                                 # Enable flash‑attention (CUDA kernels)
-    --jinja \                             # For tool-calling
-    --reasoning-format none \             # 
-    --chat-template-kwargs '{"reasoning_effort":"high"}' \  # Proper way to select reasoning
-    --chat-template-file /home/carteakey/lllms/chat-template.jinja \
-    --host 0.0.0.0 --port 8502 \
-    --api-key "dummy" \
+  -m "$MODEL" \
+  --n-cpu-moe 31 \
+  --n-gpu-layers 99 \
+  --ctx-size 24576 \
+  --no-mmap \
+  --no-warmup \
+  -b 2048 \
+  -ub 2048 \
+  --threads 14 \
+  --cpu-range 0-5 \
+  --cpu-strict 1 \
+  --temp 1.0 \
+  --top-k 100 \
+  --min-p 0.0 \
+  --top-p 1.0 \
+  -fa on \
+  --jinja \
+  --reasoning-format none \
+  --chat-template-kwargs '{"reasoning_effort":"high"}' \
+  --chat-template-file /home/carteakey/lllms/chat-template.jinja \
+  --host 0.0.0.0 --port 8502 \
+  --api-key "dummy"
+
+
+# Notes:
+# LLAMA_SET_ROWS=1: 1 row per thread for better CPU cache locality.
+# --n-cpu-moe 31: keep first 31 MoE layers on CPU (model has 36 → ~5 left for GPU).
+# --n-gpu-layers 99: offload as many non-CPU-forced layers as possible to GPU.
+# --ctx-size 24576: 24K context sized for 12 GB VRAM.
+# --no-mmap: faster prompt processing when the model sits in RAM.
+# --no-warmup: skip initial warm-up pass.
+# -b 2048 / -ub 2048: batch sizes for eval/compute; tune per VRAM.
+# --threads 14: higher thread count helped on this setup; YMMV.
+# --cpu-range 0-5 and --cpu-strict 1: pin to P-cores only on i5-12600K.
+# --temp, --top-k, --top-p, --min-p: sampling controls; top-k=100 gives a small speed boost.
+# -fa: enable flash-attention CUDA kernels.
+# --jinja and --chat-template-file: enable/use Jinja chat template and tools.
+# --reasoning-format none + --chat-template-kwargs: select reasoning via template (reasoning_effort=high).
+# --host/--port and --api-key: bind server and require a trivial API key.
+
 ```
+
 
 
 <br/>
 
 ## Introduction
 
-**gpt-oss-120b** is arguably the best **pound-for-pound** open source model right now. While OpenAI’s licensing and content‑filtering policies can be restrictive, the model is amazing for coding and agentic workloads. The MXFP4 quantization and the sparse MoE architecture are well thought-out from a consumer hardware perspective. It's little brother (or sister) **gpt-oss-20b** is great as well, and can trade blows with models much larger than it.
+**gpt-oss-120b** is arguably the best **pound-for-pound** open source model right now. While OpenAI’s licensing and content‑filtering policies can be restrictive, the model is amazing for coding and agentic workloads. The MXFP4 quantization and the sparse MoE architecture are well thought-out from a consumer hardware perspective. Its little brother (or sister) **gpt-oss-20b** is great as well, and can trade blows with models much larger than it.
 
 
 {% image_cc "./src/static/img/most-attractive-quadrant.png", "Most Attractive Quadrant","", "GPT-OSS-120B and Qwen-3-30B-A3B are the most attractive local models in the current landscape" %}
@@ -79,7 +88,11 @@ See https://artificialanalysis.ai/methodology/intelligence-benchmarking
 However, the model is still very large (120B parameters) and requires a lot of RAM/VRAM to run. The [official recommendation](https://huggingface.co/ggml-org/gpt-oss-120b-GGUF) is an single 80GB GPU (like NVIDIA H100 or AMD MI300X). Not exactly consumer hardware. 
 
 ## Motivation
-As a selfhosting enthusiast, its fun to have the option of running very capable intelligence, for free (my utilities are included in my rent :P). Having a local model is great for privacy, offline use, and avoiding vendor lock-in. No API keys, no rate limits, no "we have to change our pricing model" surprises. While I still use paid services for most tasks, having a local model is a great fallback option (and when the AI winter comes, i'll still have something to fall back on).
+As a selfhosting enthusiast, its fun to have the option of running very capable intelligence, for free (my utilities are included in my rent :P). 
+
+Having a local model is great for privacy, offline use, and avoiding vendor lock-in. No API keys, no rate limits, no "we have to change our pricing model" surprises. 
+
+While I still use paid services for most tasks, having a local model is a great fallback option (and when the AI winter comes, i'll still have something to fall back on).
 
 
 # **Results**
@@ -90,7 +103,7 @@ With the magic of llama.cpp and some tinkering, I've managed to get it running o
 - **GPU**: RTX 4070 (12GB VRAM)
 - **RAM**: 64 GB DDR5 (4 sticks of 16GB running with XMP at 6000 Mhz, praise the silicon lottery)
 
-I can squeeze 10 tok/s on large outputs at 32k context length (considering decay + me being GPU poor). [According to reddit](https://www.reddit.com/r/LocalLLaMA/comments/162pgx9/what_do_yall_consider_acceptable_tokens_per/), 10 tok/s is the bare minimum for general use.
+I can squeeze 10-11 tok/s on large outputs at 32k context length (considering decay + me being GPU poor). [According to reddit](https://www.reddit.com/r/LocalLLaMA/comments/162pgx9/what_do_yall_consider_acceptable_tokens_per/), 10 tok/s is the bare minimum for general use.
 
 {% image_cc "./src/static/img/acceptable-tps.png", "Acceptable TPS","", "7-10 tps is around the human reading speed as well" %}
 
@@ -102,10 +115,10 @@ I can squeeze 10 tok/s on large outputs at 32k context length (considering decay
 | Measure               |     First Attempt |   Current Attempt |    GPT-OSS-20B (same settings) |
 |-----------------------|----------:|----------:|---------:|
 | PP (tps)              |      4.40 |    191.71 |  1707.81 |
-| TG (tps)              |      5.32 |     10.10 |   107.35 |
-| Prompt tokens         |        69 |      3750 |      993 |
-| Eval tokens           |        37 |       618 |     1023 |
-| Total tokens          |       106 |      4368 |     2016 |
+| TG (tps)              |      5.32 |     10.95 |   107.35 |
+| Prompt tokens         |        69 |      5501 |      993 |
+| Eval tokens           |        37 |      1968 |     1023 |
+| Total tokens          |       106 |      7469 |     2016 |
 
 > :information_source: PP and TG come from llama.cpp’s performance metrics.
 - PP (tps): tokens per second during prompt evaluation (“ppNNN” tests in llama-bench).
@@ -128,7 +141,7 @@ Here's some notes after wandering in [r/LocalLLaMA](https://www.reddit.com/r/Loc
 - 64 GiB RAM, 12 GiB VRAM.  
 - The three GGUF shards of `gpt‑oss‑120b‑mxfp4` placed in a single directory.
 
-#### Optimization checklist (in order of impact)
+### Optimization checklist (in order of impact)
 
 1. **Run on Linux** – +≈ 20 % TPS (CUDA driver + scheduler).  
 2. **Build llama.cpp with CUDA & CUBLAS** (`-DLLAMA_CUBLAS=ON`).  
@@ -291,13 +304,13 @@ Write a Python program that shows 20 balls bouncing inside a spinning heptagon:
 ##### No params
 ```bash
 ./vendor/llama.cpp/build/bin/llama-bench \
-    -m /home/kchauhan/Desktop/repos/lllms/models/ggml-org/gpt-oss-120b-GGUF/gpt-oss-120b-mxfp4-00001-of-00003.gguf
+    -m /home/carteakey/repos/lllms/models/ggml-org/gpt-oss-120b-GGUF/gpt-oss-120b-mxfp4-00001-of-00003.gguf
 ```
 
 ##### n-cpu-moe
 ```bash
 ./vendor/llama.cpp/build/bin/llama-bench \
-    -m /home/kchauhan/Desktop/repos/lllms/models/ggml-org/gpt-oss-120b-GGUF/gpt-oss-120b-mxfp4-00001-of-00003.gguf \
+    -m /home/carteakey/repos/lllms/models/ggml-org/gpt-oss-120b-GGUF/gpt-oss-120b-mxfp4-00001-of-00003.gguf \
     --n-cpu-moe 31 \
     --n-gpu-layers 999
 
@@ -318,7 +331,7 @@ build: da30ab5f (6531)
 ##### threads (cpu-range doesn't behave nicely with llama-bench for some reason)
 ```bash
 ./vendor/llama.cpp/build/bin/llama-bench \
-    -m /home/kchauhan/Desktop/repos/lllms/models/ggml-org/gpt-oss-120b-GGUF/gpt-oss-120b-mxfp4-00001-of-00003.gguf \
+    -m /home/carteakey/repos/lllms/models/ggml-org/gpt-oss-120b-GGUF/gpt-oss-120b-mxfp4-00001-of-00003.gguf \
     --n-cpu-moe 31 \
     --n-gpu-layers 999 \
     --threads 6 
