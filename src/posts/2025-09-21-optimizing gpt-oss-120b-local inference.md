@@ -17,7 +17,7 @@ tags:
 - **Key flags** that made it possible:
   - `--n-cpu-moe 31` (keep most MoE layers on CPU)
   - `--n-gpu-layers 99` (only 5 layers on GPU)
-  - `--cpu-range 0‑5` (P‑core only)
+  - `taskset -c 0-11` (P‑core threads only)
   - `-fa` (flash‑attention)
 
 
@@ -267,7 +267,7 @@ Some of the options I haven’t experimented with yet but seem promising:
 
 ## Post-mortem / Changelog
 - 2025-09-21 - Initial draft
-- 2025-09-22 - Updated threads to 11 as per Reddit suggestion. This means using 11/12 threads (only P-cores) to not choke the CPU.
+- 2025-09-22 - Updated threads to 10 as per Reddit suggestion. This means using 10/12 threads (only P-cores) to not choke the CPU.
 - 2025-09-22 - Updated CPU pinning to use taskset instead of llama.cpp's cpu-range, thanks to [this Reddit suggestion](https://www.reddit.com/r/LocalLLaMA/comments/1nn72ji/comment/nfihoid). This better isolates the process to P-cores only. I think
 
 
