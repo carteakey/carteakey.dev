@@ -8,3 +8,4 @@ package-lock.json
 *lighthouse*.html
 # Local Netlify folder
 .netlify
+.vscode/tasks.json
