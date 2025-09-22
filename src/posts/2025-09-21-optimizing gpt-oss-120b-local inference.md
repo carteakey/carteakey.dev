@@ -292,7 +292,7 @@ Write a Python program that shows 20 balls bouncing inside a spinning heptagon:
 ```
 
 ### Reference Articles
-- Some excellent stuff from the official big guys --> https://github.com/ggml-org/llama.cpp/discussions/15396
+- Some excellent stuff from the official big guys --> [guide : running gpt-oss with llama.cpp #15396](https://github.com/ggml-org/llama.cpp/discussions/15396)
 
 Lots of help from the community on reddit and github discussions
 - [PSA/RFC: KV Cache quantization forces excess processing onto CPU in llama.cpp](https://www.reddit.com/r/LocalLLaMA/comments/1ng0fmv/psarfc_kv_cache_quantization_forces_excess)
