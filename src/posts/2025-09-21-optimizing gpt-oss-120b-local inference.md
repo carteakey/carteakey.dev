@@ -29,29 +29,29 @@ Final run script (save as `run-gpt-oss-120b.sh`, and tweak paths as needed):
 export LLAMA_SET_ROWS=1
 MODEL="/home/carteakey/lllms/models/ggml-org/gpt-oss-120b-GGUF/gpt-oss-120b-mxfp4-00001-of-00003.gguf"
 
-./vendor/llama.cpp/build/bin/llama-server \
-  -m "$MODEL" \
-  --n-cpu-moe 31 \
-  --n-gpu-layers 99 \
-  --ctx-size 24576 \
-  --no-mmap \
-  --no-warmup \
-  -b 2048 \
-  -ub 2048 \
-  --threads 14 \
-  --cpu-range 0-5 \
-  --cpu-strict 1 \
-  --temp 1.0 \
-  --top-k 100 \
-  --min-p 0.0 \
-  --top-p 1.0 \
-  -fa on \
-  --jinja \
-  --reasoning-format none \
-  --chat-template-kwargs '{"reasoning_effort":"high"}' \
-  --chat-template-file /home/carteakey/lllms/chat-template.jinja \
-  --host 0.0.0.0 --port 8502 \
-  --api-key "dummy"
+taskset -c 0-11 ./vendor/llama.cpp/build/bin/llama-server \
+-m "$MODEL" \
+--n-cpu-moe 31 \
+--n-gpu-layers 99 \
+--ctx-size 24576 \
+--no-warmup \
+-b 2048 \
+-ub 2048 \
+--threads 10 \
+--threads-batch 10 \
+--temp 1.0 \
+--top-k 100 \
+--min-p 0.0 \
+--top-p 1.0 \
+--mlock \
+--no-mmap \
+-fa on \
+--jinja \
+--reasoning-format none \
+--chat-template-kwargs '{"reasoning_effort":"high"}' \
+--chat-template-file /home/kchauhan/Desktop/repos/lllms/chat-template.jinja \
+--host 0.0.0.0 --port 8502 \
+--api-key "dummy"
 
 
 # Notes:
@@ -60,6 +60,7 @@ MODEL="/home/carteakey/lllms/models/ggml-org/gpt-oss-120b-GGUF/gpt-oss-120b-mxfp
 # --n-gpu-layers 99: offload as many non-CPU-forced layers as possible to GPU.
 # --ctx-size 24576: 24K context sized for 12 GB VRAM.
 # --no-mmap: faster prompt processing when the model sits in RAM.
+# --mlock: lock model in RAM to avoid paging.
 # --no-warmup: skip initial warm-up pass.
 # -b 2048 / -ub 2048: batch sizes for eval/compute; tune per VRAM.
 # --threads 14: higher thread count helped on this setup; YMMV.
@@ -235,14 +236,15 @@ kchauhan@kpc:~$ nvidia-smi
 ### P cores only
 
 Intel CPU (12th gen onwards) come with a 6 performance cores and 4 efficiency (E) cores. The P-cores clock at 4.90 GHz while E-cores clock at 3.60 GHz. Running LLM inference on e-cores causes slowdowns. 
-This can be controlled using the `-t` parameter. More threads isn't really beneficial and in general, the devs recommend setting it equal to the amount of performance cores - 1  you have.
 
 Efficiency cores effect on performance has been known for a while and the standard way to avoid to avoid efficiency cores has been to leave the number of threads low.
+
+This can be controlled using the `-t` parameter. More threads isn't really beneficial and in general, the devs recommend setting it equal to the amount of performance cores - 1  you have.
 
 e.g. on my `Intel Core i5-12600K Desktop Processor 10 (6P+4E)` - i would be using this to strictly bind the threads to CPU cores 0-5, one thread per core.
 
 ```bash
--t 6 --cpu-range 0-5 --cpu-strict 1
+taskset -c 0-11 ./vendor/llama.cpp/build/bin/llama-server ...
 ```
 
 ### Top-k
@@ -256,12 +258,17 @@ Top-K sampling is a fancy name for “keep only `K` most probable tokens” al
 
 Overall, I'm very happy with the results. The model is usable for interactive coding tasks now and is a joy to use. I’ll keep updating this post as I find more optimizations and as llama.cpp matures. 
 
-Some of the params I haven’t experimented with yet but seem promising:
-- Kv cache quantization
-- Vulkan backend
+Some of the options I haven’t experimented with yet but seem promising:
+- Kv cache quantization (preliminary tests show it worsened performance for me but ymmv) 
+- Vulkan backend instead of CUDA (haven't tried yet)
 - Using alternative llama.cpp forks like ik_llama.cpp
 - Using other ways to pin CPU cores like `taskset` or `numactl`
 - Fine tuned override tensor regex (`--override-tensor`) instead of `--n-cpu-moe`
+
+## Post-mortem / Changelog
+- 2025-09-21 - Initial draft
+- 2025-09-22 - Updated threads to 11 as per Reddit suggestion. This means using 11/12 threads (only P-cores) to not choke the CPU.
+- 2025-09-22 - Updated CPU pinning to use taskset instead of llama.cpp's cpu-range, thanks to [this Reddit suggestion](https://www.reddit.com/r/LocalLLaMA/comments/1nn72ji/comment/nfihoid). This better isolates the process to P-cores only. I think
 
 
 
