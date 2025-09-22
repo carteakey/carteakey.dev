@@ -319,11 +319,11 @@
   platform: PC
 - title: Son Wukong
   category: virtual
-  path: /img/photography/virtual/wukong.png
+  path: /img/photography/virtual/wukong.jpg
   date: '2025-09-09'
   width: 2560
   height: 1080
-  game: Black Myth: Wukong
+  game: 'Black Myth Wukong'
   platform: PC
 
 - title: The fire burns

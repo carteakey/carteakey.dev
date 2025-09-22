@@ -32,8 +32,8 @@ htmlTemplateEngine: "webc"
   {% set maxPosts = collections.posts.length | min(3) %} 
 
   <h2>Recent Posts</h2>
-  {% set postslist = collections.posts | head(-3) %} {% set postslistCounter =
-  collections.posts | length %}
+  {% set postslist = collections.posts |  head(3) | reverse %}
+  {% set postslistCounter = collections.posts | length %}
   {% include "postslist.njk" %}
   <p>
     More posts can be found in <a href="{{ '/posts/' | url }}">the blog</a>.

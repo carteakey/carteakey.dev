@@ -360,15 +360,18 @@ export default function(eleventyConfig) {
 
   // Custom posts collection: hide posts with hidden: true or future date
   eleventyConfig.addCollection("posts", function(collectionApi) {
-    const now = new Date();
-    return collectionApi.getFilteredByGlob("./src/posts/*.md").filter(post => {
-      // Hide if hidden: true in frontmatter
-      if (post.data.hidden === true) return false;
-      // Hide if date is in the future
-      if (post.date && post.date > now) return false;
-      return true;
+      const now = new Date();
+      return collectionApi
+        .getFilteredByGlob("./src/posts/**/*.md")
+        .filter(post => {
+       // Hide if hidden: true in frontmatter
+        if (post.data.hidden === true) return false;
+        // Hide if date is in the future
+        if (post.date && post.date > now) return false;
+        return true;
+        })
+        .sort((a, b) => b.date - a.date); // newest first
     });
-  });
 
   // Custom allPages collection: like collections.all but hides hidden:true and future-dated posts
   eleventyConfig.addCollection("allPages", function(collectionApi) {
