@@ -295,10 +295,10 @@ Write a Python program that shows 20 balls bouncing inside a spinning heptagon:
 - Some excellent stuff from the official big guys --> https://github.com/ggml-org/llama.cpp/discussions/15396
 
 Lots of help from the community on reddit and github discussions
-- https://www.reddit.com/r/LocalLLaMA/comments/1ng0fmv/psarfc_kv_cache_quantization_forces_excess
-- https://www.reddit.com/r/LocalLLaMA/comments/1n4pt0x/topk_0_vs_100_on_gptoss120b
-- https://www.reddit.com/r/LocalLLaMA/comments/1ndit0a/1631_toksec_on_gpt_oss_120b 
-- https://www.reddit.com/r/LocalLLaMA/comments/1mke7ef/120b_runs_awesome_on_just_8gb_vram 
+- [PSA/RFC: KV Cache quantization forces excess processing onto CPU in llama.cpp](https://www.reddit.com/r/LocalLLaMA/comments/1ng0fmv/psarfc_kv_cache_quantization_forces_excess)
+- [Top-k 0 vs 100 on GPT-OSS-120b](https://www.reddit.com/r/LocalLLaMA/comments/1n4pt0x/topk_0_vs_100_on_gptoss120b)
+- [16→31 Tok/Sec on GPT OSS 120B](https://www.reddit.com/r/LocalLLaMA/comments/1ndit0a/1631_toksec_on_gpt_oss_120b )
+- [120B runs awesome on just 8GB VRAM!](https://www.reddit.com/r/LocalLLaMA/comments/1mke7ef/120b_runs_awesome_on_just_8gb_vram)
 
 - [guide : running gpt-oss with llama.cpp #15396](https://github.com/ggml-org/llama.cpp/discussions/15396)
 - [llama.cpp: Offloading MoE layers to CPU #15077](https://github.com/ggml-org/llama.cpp/discussions/15077)
