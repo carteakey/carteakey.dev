@@ -7,8 +7,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
   <link rel="manifest" href="/site.webmanifest" />
 
-  {# <link rel="preconnect" href="https://rsms.me/">
-  <link rel="stylesheet" href="https://rsms.me/inter/inter.css"> #}
+  {# Using locally hosted fonts (Plus Jakarta Sans + ET Book). Inter CDN removed. #}
   {# <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script> #}
   {# Moved away from Google Fonts to self-hosted fonts #}
@@ -98,8 +97,8 @@
 
   <link rel="alternate" type="application/atom+xml" title="{{ metadata.title }} - Atom Feed" href="{{ '/feed.xml' | url }}">
 </head>
-<body class="bg-gray-50 dark:bg-black font-et-book">
-  <div class="md:max-w-xl mx-auto">
+<body class="bg-gray-50 dark:bg-black font-sans">
+  <div class="md:max-w-2xl lg:max-w-3xl mx-auto">
     <div class="prose prose-amber prose-lg prose-h1:text-3xl prose-h2:my-4 dark:prose-invert px-4 md:px-0">
       <nav class="flex w-full py-8 justify-end">
 
@@ -108,11 +107,11 @@
         <div class='justify-between flex flex-row w-full'>
 
           <span class="transition-all justify-self-start mt-5 px-0 py-2 hidden md:block">
-            <a class="no-underline hover:underline  font-bold text-xl " href="{{ '/' | url }}">Kartikey Chauhan</a>
+            <a class="no-underline hover:underline font-bold text-xl " href="{{ '/' | url }}">Kartikey Chauhan</a>
           </span>
 
           <span class="transition-all justify-self-start mt-5 px-0  py-2  md:hidden block">
-            <a class="no-underline hover:underline  font-bold text-xl " href="{{ '/' | url }}">{% feather "home" , class="block" %}</a>
+            <a class="no-underline hover:underline font-bold text-xl " href="{{ '/' | url }}">{% feather "home" , class="block" %}</a>
           </span>
 
           <ul class="list-none mt-5 px-0 text-xl flex items-center">
