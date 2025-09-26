@@ -1,14 +1,10 @@
 <ul reversed class="postlist w-full list-none sm:pl-6"
   style="counter-reset: start-from {{ (postslistCounter or postslist.length) + 1 }}">
   {% for post in postslist | reverse %}
-  <li class="postlist-item{% if post.url == url %} postlist-item-active{% endif %} my-5 py-1 px-0 mx-0">
-    <div class="grid grid-cols-10">
-      <div class="align-text-bottom col-span-4 md:col-span-3 flex flex-row items-end ">
-        <time class=" postlist-date "
-        datetime="{{ post.date | postDate }}">{{ post.date | postDate }}</time>
-      </div>
-     
-      <a href="{{ post.url | url }}" class="col-span-6 md:col-span-7">
+  <li class="postlist-item{% if post.url == url %} postlist-item-active{% endif %} my-6 py-1 px-0 mx-0">
+    <div class="md:grid md:grid-cols-10 md:gap-x-4 gap-y-1 sm:gap-y-2">
+      {# Title first on mobile; sits to the right on desktop #}
+      <a href="{{ post.url | url }}" class="block order-1 md:order-2 md:col-span-7 font-medium leading-snug hover:underline">
         {% if post.data.title %}
         {{ post.data.title }}
         {% else %}
@@ -16,15 +12,34 @@
         {% endif %}
       </a>
 
-      <div class="col-span-4 md:col-span-3 flex flex-col md:flex-row -mx-1">
+      {# Desktop-only: Date in left column #}
+      <div class="hidden md:flex md:order-1 md:col-span-3 items-end text-sm">
+        <time class="postlist-date text-gray-500 dark:text-gray-400" datetime="{{ post.date | postDate }}">{{ post.date | postDate }}</time>
+      </div>
+
+      {# Description appears directly under title on desktop #}
+      <div class='order-2 md:order-4 md:col-span-7 text-gray-600 dark:text-gray-300 font-light'>
+        {{ post.data.description }}
+      </div>
+
+      {# Desktop-only: Tags after description #}
+      <div class="hidden md:flex md:order-3 md:col-span-3 flex-wrap items-center gap-2 ">
         {% for tag in post.data.tags | filterTagList %}
         {% set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
-        <a href="{{ tagUrl | url }}" class="px-1 font-light">{{ tag }}</a>
+        <a href="{{ tagUrl | url }}" class="no-underline hover:underline">{{ tag }}</a>
         {% endfor %}
       </div>
 
-      <div class='col-span-6 md:col-span-7 text-gray-600 dark:text-gray-300 font-light'>
-        {{ post.data.description }}
+      {# Mobile meta row: date + tags (compact) #}
+      <div class="order-3 md:hidden flex flex-wrap items-center gap-x-2 gap-y-2 mt-1 text-sm">
+        <time class="postlist-date text-xs text-gray-500 dark:text-gray-400" datetime="{{ post.date | postDate }}">{{ post.date | postDate }}</time>
+        <span class="text-gray-300 dark:text-gray-600">•</span>
+        <div class="flex flex-wrap items-center gap-2">
+          {% for tag in post.data.tags | filterTagList %}
+          {% set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
+          <a href="{{ tagUrl | url }}" class="text-xs no-underline hover:underline">{{ tag }}</a>
+          {% endfor %}
+        </div>
       </div>
     </div>
   </li>

@@ -23,6 +23,7 @@ This is a sitemap of all pages on my site. It's inspired by [slashpages.net](htt
 - [/quotes](/quotes/): quotes I like
 - [/snippets](/snippets/): code snippets and quick notes
 - [/stats](/stats/): site statistics and metrics
+- [/vibes](/vibes/): random images/memes I like
 - [/workouts](/workouts/): my fitness journey
 
 ### Coming Soon
