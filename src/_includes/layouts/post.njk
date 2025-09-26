@@ -129,10 +129,12 @@ templateClass: tmpl-post
   });
 </script>
 
-<aside class="fixed top-1/4 right-5 xl:right-20 w-40 xl:w-56 h-screen sm:translate-x-0 text-sm hidden lg:block"
+<aside class="fixed top-1/4 right-5 xl:right-20 w-40 xl:w-56 h-screen sm:translate-x-0 text-sm hidden lg:block overflow-hidden"
   aria-label="Sidebar">
   <p class="text-lg my-0">Outline</p>
-  {{ content | toc | safe }}
+  <div class="overflow-y-auto pr-2" style="max-height: 70vh;">
+    {{ content | toc | safe }}
+  </div>
 </aside>
 
 {%- if collections.posts %} {%- set nextPost = collections.posts |
