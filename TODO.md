@@ -8,7 +8,7 @@
 - [x] Add sitemap.xml - Already present at `/sitemap.xml`
 - [x] Implement breadcrumbs - Better navigation
 - [x] Add meta tags optimization (Open Graph, Twitter Cards)
-- [ ] Add JSON-LD structured data for blog posts
+- [x] Add JSON-LD structured data for blog posts
 
 ### User Experience
 - [ ] Add estimated reading time - User experience enhancement

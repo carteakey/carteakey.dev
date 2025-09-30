@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.0.0] - 2025-01-14
 
 ### Added
+- JSON-LD structured data for enhanced SEO
+  - BlogPosting schema for blog posts with headline, description, author, dates, keywords
+  - WebSite schema for homepage with SearchAction potential
+  - Proper author and publisher information
+  - Integration with existing metadata
 - SEO meta tags optimization for social media sharing
   - Open Graph meta tags for Facebook and LinkedIn sharing
   - Twitter Card meta tags for enhanced Twitter previews

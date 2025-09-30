@@ -3,6 +3,34 @@ layout: layouts/base.njk
 templateClass: tmpl-post
 ---
 
+{# JSON-LD Structured Data for Blog Posts #}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "{{ title }}",
+  "description": "{{ description }}",
+  "image": {% if image %}"{{ metadata.url }}{{ image }}"{% else %}"{{ metadata.url }}/img/avatar.png"{% endif %},
+  "datePublished": "{{ page.date | htmlDateString }}",
+  {% if updated %}"dateModified": "{{ updated | htmlDateString }}",{% endif %}
+  "author": {
+    "@type": "Person",
+    "name": "{{ metadata.author.name }}",
+    "url": "{{ metadata.author.url }}"
+  },
+  "publisher": {
+    "@type": "Person",
+    "name": "{{ metadata.author.name }}",
+    "url": "{{ metadata.url }}"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "{{ metadata.url }}{{ page.url }}"
+  },
+  "keywords": "{{ tags | filterTagList | join(', ') }}"
+}
+</script>
+
 {% include "components/breadcrumbs.njk" %}
 
 <h1>{{ title }}</h1>

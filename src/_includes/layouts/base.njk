@@ -145,6 +145,35 @@
   <link rel="stylesheet" href="{{ '/css/tailwind.css' | url }}" />
 
   <link rel="alternate" type="application/atom+xml" title="{{ metadata.title }} - Atom Feed" href="{{ '/feed.xml' | url }}">
+  
+  {# JSON-LD Structured Data for Website #}
+  {% if page.url == "/" %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "{{ metadata.title }}",
+    "url": "{{ metadata.url }}",
+    "description": "{{ metadata.description }}",
+    "author": {
+      "@type": "Person",
+      "name": "{{ metadata.author.name }}",
+      "email": "{{ metadata.author.email }}",
+      "url": "{{ metadata.author.url }}"
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "{{ metadata.author.name }}",
+      "url": "{{ metadata.url }}"
+    },
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "{{ metadata.url }}/search?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+  {% endif %}
 </head>
 <body class="bg-gray-50 dark:bg-black font-sans">
   <div class="md:max-w-2xl lg:max-w-3xl mx-auto">
