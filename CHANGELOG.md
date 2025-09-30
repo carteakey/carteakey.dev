@@ -5,6 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.1] - 2025-01-14
+
+### Fixed
+- Easter egg features now working correctly
+  - Konami code (↑↑↓↓←→←→BA) key detection fixed with proper case-insensitive comparison
+  - Double-click site title detection improved with timestamp-based logic
+  - Triple-click footer sparkle mode now properly detects clicks in footer area
+  - Shift+click theme slider achievement counter wrapped in DOMContentLoaded
+- Reading time layout in post list view
+  - Desktop: Date and reading time now displayed in single left column (stacked vertically)
+  - Tags moved to separate row below description in left column
+  - Mobile: Maintains horizontal inline layout with proper separators
+
+### Added
+- Comprehensive testing guide (TESTING_GUIDE.md)
+  - Step-by-step instructions for testing all easter eggs
+  - Methods to validate JSON-LD structured data
+  - Tools and techniques for testing Open Graph and Twitter Card tags
+  - Troubleshooting section for common issues
+  - Production testing checklist
+
 ## [1.0.0] - 2025-01-14
 
 ### Added

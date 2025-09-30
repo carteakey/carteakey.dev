@@ -479,8 +479,11 @@
       let konamiIndex = 0;
       
       document.addEventListener('keydown', (e) => {
-        const key = e.key.toLowerCase();
-        if (key === konamiCode[konamiIndex] || key === konamiCode[konamiIndex].toLowerCase()) {
+        const expectedKey = konamiCode[konamiIndex];
+        const actualKey = e.key;
+        
+        // Check if the key matches (case-insensitive for letters)
+        if (actualKey === expectedKey || actualKey.toLowerCase() === expectedKey.toLowerCase()) {
           konamiIndex++;
           if (konamiIndex === konamiCode.length) {
             triggerKonamiEasterEgg();
@@ -556,23 +559,25 @@
 
     // Easter Egg 2: Secret Message on Double-Click Site Title
     (() => {
-      const titles = document.querySelectorAll('a[href="/"]');
-      titles.forEach(title => {
-        let clickCount = 0;
-        let timer;
+      document.addEventListener('DOMContentLoaded', () => {
+        const siteTitles = document.querySelectorAll('nav a[href="/"], nav a[href="{{ "/" | url }}"]');
         
-        title.addEventListener('click', (e) => {
-          clickCount++;
-          if (clickCount === 1) {
-            timer = setTimeout(() => {
-              clickCount = 0;
-            }, 300);
-          } else if (clickCount === 2) {
-            clearTimeout(timer);
-            clickCount = 0;
-            e.preventDefault();
-            showSecretMessage();
-          }
+        siteTitles.forEach(titleLink => {
+          let lastClickTime = 0;
+          
+          titleLink.addEventListener('click', (e) => {
+            const currentTime = new Date().getTime();
+            const timeDiff = currentTime - lastClickTime;
+            
+            if (timeDiff < 400 && timeDiff > 0) {
+              // Double click detected
+              e.preventDefault();
+              showSecretMessage();
+              lastClickTime = 0; // Reset to prevent triple click
+            } else {
+              lastClickTime = currentTime;
+            }
+          });
         });
       });
       
@@ -605,39 +610,38 @@
       }
     })();
 
-    // Easter Egg 3: Sparkle Trail on Mouse Move (activated by triple-clicking footer heart)
+    // Easter Egg 3: Sparkle Trail on Mouse Move (activated by triple-clicking footer)
     (() => {
       let sparkleMode = false;
-      const footer = document.querySelector('footer');
+      let footerClickCount = 0;
+      let footerClickTimer;
       
-      if (footer) {
-        const heart = footer.querySelector('.not-prose');
-        let clickCount = 0;
-        let clickTimer;
+      document.addEventListener('DOMContentLoaded', () => {
+        const footer = document.querySelector('footer');
         
-        document.addEventListener('click', (e) => {
-          if (e.target.closest('footer')) {
-            clickCount++;
-            clearTimeout(clickTimer);
+        if (footer) {
+          footer.addEventListener('click', (e) => {
+            footerClickCount++;
+            clearTimeout(footerClickTimer);
             
-            if (clickCount === 3) {
+            if (footerClickCount === 3) {
               sparkleMode = !sparkleMode;
-              clickCount = 0;
+              footerClickCount = 0;
               showSparkleNotification(sparkleMode);
+            } else {
+              footerClickTimer = setTimeout(() => {
+                footerClickCount = 0;
+              }, 500);
             }
-            
-            clickTimer = setTimeout(() => {
-              clickCount = 0;
-            }, 500);
-          }
-        });
+          });
+        }
         
         document.addEventListener('mousemove', (e) => {
           if (sparkleMode && Math.random() > 0.9) {
             createSparkle(e.clientX, e.clientY);
           }
         });
-      }
+      });
       
       function createSparkle(x, y) {
         const sparkle = document.createElement('div');
@@ -671,48 +675,50 @@
 
     // Easter Egg 4: Secret Click Counter (Shift + Click on theme slider)
     (() => {
-      let secretClicks = parseInt(localStorage.getItem('secretClicks') || '0');
-      const themeSlider = document.querySelector('input[type="range"]');
-      
-      if (themeSlider) {
-        themeSlider.addEventListener('click', (e) => {
-          if (e.shiftKey) {
-            secretClicks++;
-            localStorage.setItem('secretClicks', secretClicks);
-            
-            if (secretClicks % 10 === 0) {
-              showMilestone(secretClicks);
+      document.addEventListener('DOMContentLoaded', () => {
+        let secretClicks = parseInt(localStorage.getItem('secretClicks') || '0');
+        const themeSlider = document.querySelector('input[type="range"]');
+        
+        if (themeSlider) {
+          themeSlider.addEventListener('click', (e) => {
+            if (e.shiftKey) {
+              secretClicks++;
+              localStorage.setItem('secretClicks', secretClicks);
+              
+              if (secretClicks % 10 === 0) {
+                showMilestone(secretClicks);
+              }
             }
-          }
-        });
-      }
-      
-      function showMilestone(count) {
-        const msg = document.createElement('div');
-        const achievements = {
-          10: '🥉 Bronze Clicker!',
-          50: '🥈 Silver Clicker!',
-          100: '🥇 Gold Clicker!',
-          500: '💎 Diamond Clicker!',
-          1000: '👑 Legendary Clicker!'
-        };
+          });
+        }
         
-        const achievement = achievements[count] || `🎯 ${count} Secret Clicks!`;
-        
-        msg.innerHTML = `
-          <div style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
-                      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); 
-                      color: white; padding: 2rem 3rem; border-radius: 1rem; 
-                      font-size: 1.5rem; font-weight: bold; z-index: 9999;
-                      box-shadow: 0 10px 40px rgba(0,0,0,0.3); animation: bounce 0.5s;
-                      text-align: center;">
-            ${achievement}<br>
-            <span style="font-size: 1rem; opacity: 0.9;">Total: ${count} clicks</span>
-          </div>
-        `;
-        document.body.appendChild(msg);
-        setTimeout(() => msg.remove(), 3000);
-      }
+        function showMilestone(count) {
+          const msg = document.createElement('div');
+          const achievements = {
+            10: '🥉 Bronze Clicker!',
+            50: '🥈 Silver Clicker!',
+            100: '🥇 Gold Clicker!',
+            500: '💎 Diamond Clicker!',
+            1000: '👑 Legendary Clicker!'
+          };
+          
+          const achievement = achievements[count] || `🎯 ${count} Secret Clicks!`;
+          
+          msg.innerHTML = `
+            <div style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+                        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); 
+                        color: white; padding: 2rem 3rem; border-radius: 1rem; 
+                        font-size: 1.5rem; font-weight: bold; z-index: 9999;
+                        box-shadow: 0 10px 40px rgba(0,0,0,0.3); animation: bounce 0.5s;
+                        text-align: center;">
+              ${achievement}<br>
+              <span style="font-size: 1rem; opacity: 0.9;">Total: ${count} clicks</span>
+            </div>
+          `;
+          document.body.appendChild(msg);
+          setTimeout(() => msg.remove(), 3000);
+        }
+      });
     })();
 
     // Add CSS animations
