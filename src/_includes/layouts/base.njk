@@ -93,6 +93,55 @@
   <title>{{ title or metadata.title }}</title>
   <meta name="description" content="{{ description or metadata.description }}" />
   <meta name="generator" content="{{ eleventy.generator }}" />
+  
+  {# Open Graph / Facebook Meta Tags #}
+  <meta property="og:type" content="{% if templateClass == 'tmpl-post' %}article{% else %}website{% endif %}" />
+  <meta property="og:url" content="{{ metadata.url }}{{ page.url }}" />
+  <meta property="og:site_name" content="{{ metadata.title }}" />
+  <meta property="og:title" content="{{ title or metadata.title }}" />
+  <meta property="og:description" content="{{ description or metadata.description }}" />
+  {% if image %}
+  <meta property="og:image" content="{{ metadata.url }}{{ image }}" />
+  {% else %}
+  <meta property="og:image" content="{{ metadata.url }}/img/avatar.png" />
+  {% endif %}
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="en_US" />
+  
+  {# Article specific Open Graph tags #}
+  {% if templateClass == 'tmpl-post' %}
+  <meta property="article:published_time" content="{{ page.date | htmlDateString }}" />
+  {% if updated %}
+  <meta property="article:modified_time" content="{{ updated | htmlDateString }}" />
+  {% endif %}
+  <meta property="article:author" content="{{ metadata.author.name }}" />
+  {% for tag in tags | filterTagList %}
+  <meta property="article:tag" content="{{ tag }}" />
+  {% endfor %}
+  {% endif %}
+  
+  {# Twitter Card Meta Tags #}
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="{{ metadata.url }}{{ page.url }}" />
+  <meta name="twitter:title" content="{{ title or metadata.title }}" />
+  <meta name="twitter:description" content="{{ description or metadata.description }}" />
+  {% if image %}
+  <meta name="twitter:image" content="{{ metadata.url }}{{ image }}" />
+  {% else %}
+  <meta name="twitter:image" content="{{ metadata.url }}/img/avatar.png" />
+  {% endif %}
+  <meta name="twitter:creator" content="@carteakey" />
+  <meta name="twitter:site" content="@carteakey" />
+  
+  {# Additional SEO Meta Tags #}
+  <meta name="author" content="{{ metadata.author.name }}" />
+  <link rel="canonical" href="{{ metadata.url }}{{ page.url }}" />
+  
+  {# Theme Color for mobile browsers #}
+  <meta name="theme-color" content="#f59e0b" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
+  
   <link rel="stylesheet" href="{{ '/css/tailwind.css' | url }}" />
 
   <link rel="alternate" type="application/atom+xml" title="{{ metadata.title }} - Atom Feed" href="{{ '/feed.xml' | url }}">

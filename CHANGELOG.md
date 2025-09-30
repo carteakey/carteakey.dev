@@ -8,6 +8,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.0.0] - 2025-01-14
 
 ### Added
+- SEO meta tags optimization for social media sharing
+  - Open Graph meta tags for Facebook and LinkedIn sharing
+  - Twitter Card meta tags for enhanced Twitter previews
+  - Article-specific Open Graph tags for blog posts (published_time, author, tags)
+  - Canonical URLs for SEO
+  - Theme color meta tags for mobile browsers
+  - Fallback to avatar.png for social media preview images
 - Breadcrumb navigation component for better site navigation
   - Added reusable breadcrumbs component (`src/_includes/components/breadcrumbs.njk`)
   - Integrated breadcrumbs into post, snippet, home, and major page layouts
