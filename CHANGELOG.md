@@ -8,6 +8,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.0.0] - 2025-01-14
 
 ### Added
+- Breadcrumb navigation component for better site navigation
+  - Added reusable breadcrumbs component (`src/_includes/components/breadcrumbs.njk`)
+  - Integrated breadcrumbs into post, snippet, home, and major page layouts
+  - Custom `split` filter added to Eleventy config for URL parsing
+  - Breadcrumbs show hierarchical navigation with home icon and chevron separators
+  - Special handling for known sections (Blog, Now, Snippets, Gallery, etc.)
+  - Responsive design with proper dark mode support
 - Easter egg features for enhanced user engagement:
   - Konami Code easter egg (↑↑↓↓←→←→BA) triggers floating animated icons and celebratory message
   - Secret message reveal on double-clicking site title/logo

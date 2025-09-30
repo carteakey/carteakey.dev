@@ -8,6 +8,8 @@ eleventyNavigation:
 permalink: /stats/
 ---
 
+{% include "components/breadcrumbs.njk" %}
+
 {% set totalPosts = collections.posts.length %}
 {% set totalSnippets = collections.snippets.length %}
 {% set totalTags = collections.tagList.length %}

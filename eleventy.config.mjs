@@ -276,6 +276,12 @@ export default function(eleventyConfig) {
 
   eleventyConfig.addFilter("filterTagList", filterTagList);
 
+  // Add split filter for breadcrumbs
+  eleventyConfig.addFilter("split", function(str, separator) {
+    if (typeof str !== 'string') return [];
+    return str.split(separator);
+  });
+
   // Add utility filters for stats page
   eleventyConfig.addFilter("max", function(value, max) {
     return Math.max(value, max);

@@ -4,12 +4,10 @@
 
 - [x] Drop some easter eggs in the site (fun, hidden features) using feather icons and TailwindCSS animations or anything else.
 
-
 ### SEO & Navigation
 - [x] Add sitemap.xml - Already present at `/sitemap.xml`
-- [ ] Implement breadcrumbs - Better navigation
+- [x] Implement breadcrumbs - Better navigation
 - [ ] Add meta tags optimization (Open Graph, Twitter Cards)
-- [ ] Add JSON-LD structured data for blog posts
 
 ### User Experience
 - [ ] Add estimated reading time - User experience enhancement
@@ -23,8 +21,6 @@
 - [ ] Newsletter signup - Simple email collection via Netlify Forms
 - [ ] Create bookmarks/reading list - Curated list of articles you recommend
 - [ ] Add post reactions - Beyond upvotes, add emoji reactions
-- [ ] Blog series navigation - Group related posts with prev/next
-- [ ] Add print styles - Better printing experience
 
 ## Medium Priority
 
@@ -37,17 +33,12 @@
 
 ### Interactive Features
 - [ ] Tag filtering - Interactive tag-based post filtering
-- [ ] Comment threading - Enhanced Giscus comments
 - [ ] Code snippet favorites - Let visitors save useful snippets
-- [ ] Live typing effect - Animate text on homepage
 
 ### Analytics & Insights
-- [ ] Popular posts widget - Most upvoted content
 - [ ] GitHub contribution graph integration
 - [ ] Learning progress tracker
 - [ ] View count tracking (privacy-friendly)
-
-## Low Priority
 
 ### Content Organization
 - [ ] Archive page improvements
@@ -58,10 +49,22 @@
 
 ### Future Enhancements
 - [ ] Dark/light mode improvements
+
+
+## Maybe Later
+
+- [ ] Add print styles - Better printing experience
+- [ ] Add JSON-LD structured data for blog posts
+- [ ] Comment threading - Enhanced Giscus comments
+- [ ] Live typing effect - Animate text on homepage
+- [ ] Popular posts widget - Most upvoted content
+- [ ] Blog series navigation - Group related posts with prev/next
 - [ ] Custom fonts optimization
 - [ ] Progressive web app features
 - [ ] Advanced search with filters
 - [ ] Multi-language support
+
+
 
 ## Completed Features ✅
 - [x] Upvote system

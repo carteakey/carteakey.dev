@@ -1,0 +1,87 @@
+{# Breadcrumbs Component #}
+{# This component generates breadcrumb navigation based on the current page URL #}
+
+{% set breadcrumbItems = [] %}
+{% set segments = page.url | replace("/", "") | split("/") %}
+{% set currentPath = "" %}
+
+{# Add home #}
+{% set breadcrumbItems = (breadcrumbItems.push({
+  label: "Home",
+  url: "/",
+  isHome: true
+}), breadcrumbItems) %}
+
+{# Build breadcrumb items from URL segments #}
+{% for segment in segments %}
+  {% if segment %}
+    {% set currentPath = currentPath + "/" + segment %}
+    {% set label = segment | replace("-", " ") | capitalize %}
+    
+    {# Special handling for known sections #}
+    {% if segment == "posts" %}
+      {% set label = "Blog" %}
+    {% elif segment == "now" %}
+      {% set label = "Now" %}
+    {% elif segment == "snippets" %}
+      {% set label = "Snippets" %}
+    {% elif segment == "gallery" %}
+      {% set label = "Gallery" %}
+    {% elif segment == "projects" %}
+      {% set label = "Projects" %}
+    {% elif segment == "tags" %}
+      {% set label = "Tags" %}
+    {% elif segment == "cv" %}
+      {% set label = "CV" %}
+    {% elif segment == "about" %}
+      {% set label = "About" %}
+    {% elif segment == "vibes" %}
+      {% set label = "Vibes" %}
+    {% elif segment == "games" %}
+      {% set label = "Games" %}
+    {% elif segment == "workouts" %}
+      {% set label = "Workouts" %}
+    {% elif segment == "quotes" %}
+      {% set label = "Quotes" %}
+    {% elif segment == "archive" %}
+      {% set label = "Archive" %}
+    {% endif %}
+    
+    {# For post pages, use the actual title if available #}
+    {% if title and loop.last and segment != "posts" and segment != "tags" %}
+      {% set label = title %}
+    {% endif %}
+    
+    {% set breadcrumbItems = (breadcrumbItems.push({
+      label: label,
+      url: currentPath,
+      isLast: loop.last
+    }), breadcrumbItems) %}
+  {% endif %}
+{% endfor %}
+
+{# Render breadcrumbs #}
+{% if breadcrumbItems.length > 1 %}
+<nav aria-label="Breadcrumb" class="not-prose mb-6 text-sm">
+  <ol class="flex items-center flex-wrap gap-2">
+    {% for item in breadcrumbItems %}
+      <li class="flex items-center">
+        {% if not item.isLast %}
+          <a href="{{ item.url | url }}" class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors flex items-center gap-1">
+            {% if item.isHome %}
+              {% feather "home", class="w-4 h-4" %}
+            {% else %}
+              {{ item.label }}
+            {% endif %}
+          </a>
+          <span class="mx-2 text-gray-400 dark:text-gray-500">{% feather "chevron-right", class="w-4 h-4" %}</span>
+        {% else %}
+          <span class="text-gray-900 dark:text-gray-100 font-medium">
+            {{ item.label }}
+          </span>
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ol>
+</nav>
+{% endif %}
