@@ -2,6 +2,9 @@
 
 ## High Priority Features
 
+- [x] Drop some easter eggs in the site (fun, hidden features) using feather icons and TailwindCSS animations or anything else.
+
+
 ### SEO & Navigation
 - [x] Add sitemap.xml - Already present at `/sitemap.xml`
 - [ ] Implement breadcrumbs - Better navigation
