@@ -13,13 +13,13 @@
 ### User Experience
 - [x] Add estimated reading time - User experience enhancement
 - [x] Create stats page - Site statistics (Posts count, total words, visitors)
-- [ ] Add search functionality - Full-text search across posts and snippets
-- [ ] Implement related posts - Show similar posts based on tags or content
-- [ ] Add loading states for dynamic content
+- [x] Add search functionality - Full-text search across posts and snippets
+- [x] Implement related posts - Show similar posts based on tags or content
+- [x] Add loading states for dynamic content
 
 ### Content Features
-- [ ] Add blogroll section - Curated list of blogs you recommend
-- [ ] Newsletter signup - Simple email collection via Netlify Forms
+- [x] Add blogroll section - Curated list of blogs you recommend
+- [x] Newsletter signup - Simple email collection via Netlify Forms
 - [ ] Create bookmarks/reading list - Curated list of articles you recommend
 - [ ] Add post reactions - Beyond upvotes, add emoji reactions
 

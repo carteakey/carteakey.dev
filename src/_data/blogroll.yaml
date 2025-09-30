@@ -1,0 +1,40 @@
+blogroll:
+  - name: Josh W Comeau
+    url: https://www.joshwcomeau.com/
+    description: Interactive tutorials and in-depth articles about React, CSS, and web development
+    tags: [CSS, React, Web Dev]
+  
+  - name: Xe Iaso
+    url: https://xeiaso.net/
+    description: Technical blog about Go, Nix, and distributed systems
+    tags: [Go, Nix, Systems]
+  
+  - name: Julia Evans
+    url: https://jvns.ca/
+    description: Zines and blog posts explaining complex technical concepts simply
+    tags: [Linux, Networking, DevOps]
+  
+  - name: Maggie Appleton
+    url: https://maggieappleton.com/
+    description: Digital gardening, design, and anthropology of technology
+    tags: [Design, UX, Digital Garden]
+  
+  - name: Dan Abramov
+    url: https://overreacted.io/
+    description: Personal blog about programming and other topics
+    tags: [React, JavaScript, Web Dev]
+  
+  - name: CSS-Tricks
+    url: https://css-tricks.com/
+    description: Daily articles about CSS, HTML, JavaScript, and web design
+    tags: [CSS, HTML, Web Design]
+  
+  - name: Smashing Magazine
+    url: https://www.smashingmagazine.com/
+    description: Web design and development articles
+    tags: [Web Dev, Design, UX]
+  
+  - name: Simon Willison
+    url: https://simonwillison.net/
+    description: Co-creator of Django, writes about AI, databases, and web development
+    tags: [Python, Django, AI]

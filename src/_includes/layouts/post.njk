@@ -66,6 +66,9 @@ templateClass: tmpl-post
     <span id="upvoteCount" class="ml-2 text-sm font-medium text-gray-600 dark:text-gray-300">
       {{ upvotes.posts[page.fileSlug] | default(0) }}
     </span>
+    <span id="upvoteLoading" class="ml-2 hidden">
+      <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-amber-500"></div>
+    </span>
   </button>
   <span id="upvoteMessage" class="ml-2 text-sm text-gray-500 dark:text-gray-400 hidden">Thanks for your upvote!</span>
 </div>
@@ -75,12 +78,16 @@ templateClass: tmpl-post
     const upvoteButton = document.getElementById('upvoteButton');
     const upvoteCount = document.getElementById('upvoteCount');
     const upvoteMessage = document.getElementById('upvoteMessage');
+    const upvoteLoading = document.getElementById('upvoteLoading');
     const postSlug = '{{ page.fileSlug }}';
     const storageKey = `upvote_${postSlug}`;
     
     // Function to fetch current upvote count
     async function fetchUpvoteCount() {
       try {
+        upvoteLoading.classList.remove('hidden');
+        upvoteCount.classList.add('opacity-50');
+        
         const response = await fetch(`/.netlify/functions/upvote?slug=${postSlug}`, {
           method: 'GET'
         });
@@ -89,6 +96,9 @@ templateClass: tmpl-post
         upvoteCount.textContent = data.count;
       } catch (error) {
         console.error('Error fetching upvote count:', error);
+      } finally {
+        upvoteLoading.classList.add('hidden');
+        upvoteCount.classList.remove('opacity-50');
       }
     }
 
@@ -171,10 +181,60 @@ templateClass: tmpl-post
   </div>
 </aside>
 
-{%- if collections.posts %} {%- set nextPost = collections.posts |
-getNextCollectionItem(page) %} {%- set previousPost = collections.posts |
-getPreviousCollectionItem(page) %} {%- if nextPost or previousPost %}
-<hr />
+{%- if collections.posts %}
+{%- set currentTags = tags | filterTagList %}
+{%- set relatedPosts = [] %}
+
+{# Find related posts based on shared tags #}
+{%- for post in collections.posts %}
+  {%- if post.url != page.url %}
+    {%- set postTags = post.data.tags | filterTagList %}
+    {%- set sharedTags = [] %}
+    {%- for tag in currentTags %}
+      {%- if tag in postTags %}
+        {%- set sharedTags = (sharedTags.push(tag), sharedTags) %}
+      {%- endif %}
+    {%- endfor %}
+    {%- if sharedTags.length > 0 %}
+      {%- set relatedPosts = (relatedPosts.push({post: post, score: sharedTags.length}), relatedPosts) %}
+    {%- endif %}
+  {%- endif %}
+{%- endfor %}
+
+{# Sort by score and take top 3 #}
+{%- set sortedRelated = relatedPosts | sort(attribute='score') | reverse %}
+
+{%- if sortedRelated.length > 0 %}
+<hr class="my-8" />
+<div class="related-posts">
+  <h3 class="text-xl font-semibold mb-4 flex items-center gap-2">
+    {% feather "link", class="w-5 h-5" %}
+    Related Posts
+  </h3>
+  <div class="grid gap-4 md:grid-cols-1">
+    {%- for item in sortedRelated | head(3) %}
+    <article class="border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:border-amber-500 dark:hover:border-amber-500 transition-colors">
+      <a href="{{ item.post.url | url }}" class="text-lg font-semibold hover:text-amber-600 dark:hover:text-amber-400">
+        {{ item.post.data.title }}
+      </a>
+      <p class="text-gray-600 dark:text-gray-300 text-sm mt-1">{{ item.post.data.description }}</p>
+      <div class="flex flex-wrap gap-2 mt-2">
+        {%- for tag in item.post.data.tags | filterTagList | head(3) %}
+        <span class="text-xs px-2 py-1 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded">
+          {{ tag }}
+        </span>
+        {%- endfor %}
+      </div>
+    </article>
+    {%- endfor %}
+  </div>
+</div>
+<hr class="my-8" />
+{%- endif %}
+
+{%- set nextPost = collections.posts | getNextCollectionItem(page) %} 
+{%- set previousPost = collections.posts | getPreviousCollectionItem(page) %} 
+{%- if nextPost or previousPost %}
 <ul>
   {%- if nextPost %}
   <li>
@@ -188,7 +248,8 @@ getPreviousCollectionItem(page) %} {%- if nextPost or previousPost %}
   </li>
   {% endif %}
 </ul>
-{%- endif %} {%- endif %}
+{%- endif %} 
+{%- endif %}
 
 <div class="comments">
   <script>

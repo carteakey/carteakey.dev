@@ -1,0 +1,194 @@
+---
+layout: layouts/base.njk
+title: Search
+description: Search across posts and snippets
+eleventyNavigation:
+  key: Search
+  order: 10
+---
+
+<div class="max-w-4xl mx-auto">
+  <h1>Search</h1>
+  <p class="text-gray-600 dark:text-gray-300 mb-8">Find posts and snippets across the site</p>
+
+  <div class="mb-8">
+    <div class="relative">
+      <input 
+        type="text" 
+        id="searchInput" 
+        placeholder="Type to search..." 
+        class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-amber-500"
+        autocomplete="off"
+      />
+      <div class="absolute right-3 top-3">
+        {% feather "search", class="w-6 h-6 text-gray-400" %}
+      </div>
+    </div>
+    
+    <div id="searchStats" class="mt-2 text-sm text-gray-500 dark:text-gray-400 hidden">
+      <span id="resultCount">0</span> results found
+    </div>
+  </div>
+
+  <div id="searchResults" class="space-y-6">
+    <p class="text-gray-500 dark:text-gray-400">Start typing to search...</p>
+  </div>
+
+  <div id="loadingState" class="hidden">
+    <div class="flex items-center justify-center py-8">
+      <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-amber-500"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  let searchIndex = [];
+  let isIndexLoaded = false;
+
+  // Build search index from posts and snippets
+  async function buildSearchIndex() {
+    if (isIndexLoaded) return;
+    
+    const loadingState = document.getElementById('loadingState');
+    loadingState.classList.remove('hidden');
+
+    try {
+      // Fetch posts
+      const posts = [
+        {%- for post in collections.posts %}
+        {
+          title: {{ post.data.title | dump | safe }},
+          description: {{ post.data.description | dump | safe }},
+          url: {{ post.url | dump | safe }},
+          tags: {{ post.data.tags | filterTagList | dump | safe }},
+          content: {{ post.templateContent | striptags | dump | safe }},
+          type: 'post',
+          date: {{ post.date | dump | safe }}
+        }{% if not loop.last %},{% endif %}
+        {%- endfor %}
+      ];
+
+      // Fetch snippets
+      const snippets = [
+        {%- for snippet in collections.snippets %}
+        {
+          title: {{ snippet.data.title | dump | safe }},
+          description: {{ snippet.data.description | dump | safe }},
+          url: {{ snippet.url | dump | safe }},
+          tags: {{ snippet.data.tags | filterTagList | dump | safe }},
+          content: {{ snippet.templateContent | striptags | dump | safe }},
+          type: 'snippet',
+          date: {{ snippet.date | dump | safe }}
+        }{% if not loop.last %},{% endif %}
+        {%- endfor %}
+      ];
+
+      searchIndex = [...posts, ...snippets];
+      isIndexLoaded = true;
+    } catch (error) {
+      console.error('Error building search index:', error);
+    } finally {
+      loadingState.classList.add('hidden');
+    }
+  }
+
+  // Perform search
+  function search(query) {
+    if (!query.trim()) {
+      return [];
+    }
+
+    const lowerQuery = query.toLowerCase();
+    const results = searchIndex.filter(item => {
+      const titleMatch = item.title.toLowerCase().includes(lowerQuery);
+      const descMatch = item.description.toLowerCase().includes(lowerQuery);
+      const contentMatch = item.content.toLowerCase().includes(lowerQuery);
+      const tagMatch = item.tags.some(tag => tag.toLowerCase().includes(lowerQuery));
+      
+      return titleMatch || descMatch || contentMatch || tagMatch;
+    });
+
+    // Sort by relevance (title matches first, then description, then content)
+    return results.sort((a, b) => {
+      const aTitle = a.title.toLowerCase().includes(lowerQuery) ? 3 : 0;
+      const bTitle = b.title.toLowerCase().includes(lowerQuery) ? 3 : 0;
+      const aDesc = a.description.toLowerCase().includes(lowerQuery) ? 2 : 0;
+      const bDesc = b.description.toLowerCase().includes(lowerQuery) ? 2 : 0;
+      const aTag = a.tags.some(tag => tag.toLowerCase().includes(lowerQuery)) ? 1 : 0;
+      const bTag = b.tags.some(tag => tag.toLowerCase().includes(lowerQuery)) ? 1 : 0;
+      
+      return (bTitle + bDesc + bTag) - (aTitle + aDesc + aTag);
+    });
+  }
+
+  // Display search results
+  function displayResults(results, query) {
+    const resultsContainer = document.getElementById('searchResults');
+    const statsContainer = document.getElementById('searchStats');
+    const resultCount = document.getElementById('resultCount');
+
+    if (!query.trim()) {
+      resultsContainer.innerHTML = '<p class="text-gray-500 dark:text-gray-400">Start typing to search...</p>';
+      statsContainer.classList.add('hidden');
+      return;
+    }
+
+    if (results.length === 0) {
+      resultsContainer.innerHTML = '<p class="text-gray-500 dark:text-gray-400">No results found.</p>';
+      statsContainer.classList.add('hidden');
+      return;
+    }
+
+    resultCount.textContent = results.length;
+    statsContainer.classList.remove('hidden');
+
+    const html = results.map(item => {
+      const typeIcon = item.type === 'post' ? 'file-text' : 'code';
+      const typeBadge = item.type === 'post' ? 'Post' : 'Snippet';
+      
+      return `
+        <article class="border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:border-amber-500 dark:hover:border-amber-500 transition-colors">
+          <div class="flex items-start justify-between mb-2">
+            <a href="${item.url}" class="text-xl font-semibold hover:text-amber-600 dark:hover:text-amber-400">
+              ${item.title}
+            </a>
+            <span class="ml-2 px-2 py-1 text-xs rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400">
+              ${typeBadge}
+            </span>
+          </div>
+          <p class="text-gray-600 dark:text-gray-300 mb-2">${item.description}</p>
+          ${item.tags.length > 0 ? `
+            <div class="flex flex-wrap gap-2 mt-2">
+              ${item.tags.map(tag => `
+                <a href="/tags/${tag.toLowerCase()}/" class="text-xs px-2 py-1 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded hover:bg-amber-100 dark:hover:bg-amber-900">
+                  ${tag}
+                </a>
+              `).join('')}
+            </div>
+          ` : ''}
+        </article>
+      `;
+    }).join('');
+
+    resultsContainer.innerHTML = html;
+  }
+
+  // Initialize search
+  document.addEventListener('DOMContentLoaded', async () => {
+    await buildSearchIndex();
+
+    const searchInput = document.getElementById('searchInput');
+    let debounceTimer;
+
+    searchInput.addEventListener('input', (e) => {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => {
+        const results = search(e.target.value);
+        displayResults(results, e.target.value);
+      }, 300);
+    });
+
+    // Auto-focus search input
+    searchInput.focus();
+  });
+</script>
