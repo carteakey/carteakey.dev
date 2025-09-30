@@ -39,6 +39,10 @@ templateClass: tmpl-post
 
 <div class="flex flex-col float-right -mt7 text-right text-sm">
   <time datetime="{{ page.date | readableDate }}">{{page.date | readableDate}}</time>
+  <span class="text-gray-500 dark:text-gray-400 flex items-center justify-end gap-1 mt-1">
+    {% feather "clock", class="w-4 h-4" %}
+    {{ content | readingTime }}
+  </span>
   <div class="-mx-1">
     {%- for tag in tags | filterTagList %} {%- set tagUrl %}/tags/{{tag | slugify}}/{% endset %}
     <a href="{{ tagUrl | url }}" class="font-light float-right p-1">{{ tag }}</a>

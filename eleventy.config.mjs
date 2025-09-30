@@ -339,6 +339,24 @@ export default function(eleventyConfig) {
     return array.slice(0, count);
   });
 
+  // Add reading time filter (estimates based on average reading speed of 200 words per minute)
+  eleventyConfig.addFilter("readingTime", function(content) {
+    if (!content) return "1 min read";
+    
+    // Strip HTML tags and count words
+    const text = content.replace(/<[^>]+>/g, '');
+    const wordCount = text.split(/\s+/).filter(word => word.length > 0).length;
+    
+    // Average reading speed: 200 words per minute
+    const readingTimeMinutes = Math.ceil(wordCount / 200);
+    
+    if (readingTimeMinutes === 1) {
+      return "1 min read";
+    } else {
+      return `${readingTimeMinutes} min read`;
+    }
+  });
+
   // Add snippet tags collection
   eleventyConfig.addCollection("snippetTags", function(collection) {
     let tagSet = new Set();

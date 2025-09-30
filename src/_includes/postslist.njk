@@ -24,15 +24,25 @@
 
       {# Desktop-only: Tags after description #}
       <div class="hidden md:flex md:order-3 md:col-span-3 flex-wrap items-center gap-2 ">
+        <span class="text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1">
+          {% feather "clock", class="w-3 h-3" %}
+          {{ post.templateContent | readingTime }}
+        </span>
+        <span class="text-gray-300 dark:text-gray-600">•</span>
         {% for tag in post.data.tags | filterTagList %}
         {% set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
         <a href="{{ tagUrl | url }}" class="no-underline hover:underline">{{ tag }}</a>
         {% endfor %}
       </div>
 
-      {# Mobile meta row: date + tags (compact) #}
+      {# Mobile meta row: date + reading time + tags (compact) #}
       <div class="order-3 md:hidden flex flex-wrap items-center gap-x-2 gap-y-2 mt-1 text-sm">
         <time class="postlist-date text-xs text-gray-500 dark:text-gray-400" datetime="{{ post.date | postDate }}">{{ post.date | postDate }}</time>
+        <span class="text-gray-300 dark:text-gray-600">•</span>
+        <span class="text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1">
+          {% feather "clock", class="w-3 h-3" %}
+          {{ post.templateContent | readingTime }}
+        </span>
         <span class="text-gray-300 dark:text-gray-600">•</span>
         <div class="flex flex-wrap items-center gap-2">
           {% for tag in post.data.tags | filterTagList %}

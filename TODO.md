@@ -11,7 +11,7 @@
 - [x] Add JSON-LD structured data for blog posts
 
 ### User Experience
-- [ ] Add estimated reading time - User experience enhancement
+- [x] Add estimated reading time - User experience enhancement
 - [x] Create stats page - Site statistics (Posts count, total words, visitors)
 - [ ] Add search functionality - Full-text search across posts and snippets
 - [ ] Implement related posts - Show similar posts based on tags or content

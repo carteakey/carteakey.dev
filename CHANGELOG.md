@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.0.0] - 2025-01-14
 
 ### Added
+- Estimated reading time feature for blog posts
+  - Added `readingTime` filter calculating based on 200 words per minute
+  - Display reading time with clock icon in post layouts
+  - Show reading time in post list views (both mobile and desktop)
+  - Automatic word count from content with HTML tag stripping
 - JSON-LD structured data for enhanced SEO
   - BlogPosting schema for blog posts with headline, description, author, dates, keywords
   - WebSite schema for homepage with SearchAction potential
