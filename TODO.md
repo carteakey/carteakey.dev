@@ -5,14 +5,17 @@
 - [x] Blogroll - increase information density
 - [x] Newsletter signup - add to footer as icon
 - [x] Stats page - add lighthouse score
-- [x] Stats Page - fix days since last post bug - currently shows first post date
 - [x] Remove Search, Blogroll, Newsletter from nav - keep only in footer
-- [ ] Organize footer links better - group related links together 
-- [ ] Add alt text to all images - improve accessibility
-- [ ] Stats - Add total visitors count *maybe capture the existing count from Google Analytics* or Redis
-- [ ] Add gitub contributions graph to projects page
-- [ ] Add bookmarks/reading list - curated list of articles you recommend
+- [x] Organize footer links better - group related links together 
+- [x] Add alt text to all images - improve accessibility
+- [x] Stats - Add total visitors count *maybe capture the existing count from Google Analytics* or Redis
+- [x] Add gitub contributions graph to projects page
+- [x] Add bookmarks/reading list - curated list of articles you recommend
 
+- [x] Stats Page - fix days since last post bug - currently shows first post date
+1450
+Days Since Last Post
+Challenges to AI-ML
 
 - [x] Drop some easter eggs in the site (fun, hidden features) using feather icons and TailwindCSS animations or anything else.
 

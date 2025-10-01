@@ -117,8 +117,10 @@ permalink: /stats/
   <div class="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
     <div class="flex items-center justify-between">
       <div>
-        {% set latestPost = collections.posts | reverse | first %}
-        {% set daysSincePost = ((page.date - latestPost.date) / (1000 * 60 * 60 * 24)) | round %}
+        {% set latestPost = collections.posts | last %}
+        {% set nowDate = "now" | date("X") %}
+        {% set latestPostDate = latestPost.date | date("X") %}
+        {% set daysSincePost = ((nowDate - latestPostDate) / (60 * 60 * 24)) | round %}
         <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ daysSincePost }}</p>
         <p class="text-sm text-gray-600 dark:text-gray-400">Days Since Last Post</p>
       </div>
@@ -147,6 +149,27 @@ permalink: /stats/
       <span class="text-green-600 dark:text-green-400 font-medium">A11y: 77</span>
       <span class="mx-2">•</span>
       <span class="text-blue-600 dark:text-blue-400 font-medium">SEO: 91</span>
+    </div>
+  </div>
+
+  <!-- Total Upvotes -->
+  <div class="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
+    <div class="flex items-center justify-between">
+      <div>
+        {% set totalUpvotes = 0 %}
+        {% for slug, count in upvotes.posts %}
+          {% set totalUpvotes = totalUpvotes + count %}
+        {% endfor %}
+        <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ totalUpvotes }}</p>
+        <p class="text-sm text-gray-600 dark:text-gray-400">Total Upvotes</p>
+      </div>
+      <div class="p-3 bg-pink-100 dark:bg-pink-900 rounded-full">
+        {% feather "heart", class="w-6 h-6 text-pink-600 dark:text-pink-400" %}
+      </div>
+    </div>
+    <div class="mt-4 flex items-center text-sm text-gray-600 dark:text-gray-400">
+      <span class="text-pink-600 dark:text-pink-400 font-medium">{{ upvotes.posts | keys | length }}</span>
+      <span class="ml-1">posts with upvotes</span>
     </div>
   </div>
 

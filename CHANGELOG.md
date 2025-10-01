@@ -5,6 +5,30 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2025-09-30
+
+### Added
+- Bookmarks page: New curated reading list of recommended articles and resources
+  - Organized by categories (Development, Career, Learning, Communication, etc.)
+  - 10+ carefully selected links with descriptions and tags
+  - External link indicators for better UX
+- Stats page: Total upvotes metric showing aggregate engagement across all posts
+- Projects page: GitHub contributions graph visualization
+  - Shows yearly contribution activity
+  - Integrated using ghchart.rshah.org service
+- Footer: Better alt text for Spotify album artwork (accessibility improvement)
+
+### Changed
+- Footer: Reorganized links into logical groups (Social, Discover, Subscribe)
+  - Improved visual hierarchy with labels and separators
+  - Better mobile responsiveness with flex layout
+  - Clearer categorization for easier navigation
+
+### Fixed
+- Stats page: Fixed "Days Since Last Post" calculation bug
+  - Now correctly uses the latest post date instead of build date
+  - Accurate day count display
+
 ## [1.1.1] - 2025-01-14
 
 ### Changed

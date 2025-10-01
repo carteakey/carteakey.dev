@@ -288,11 +288,11 @@
           </script>
       </main>
 
-      <footer class="flex w-full pt-8 pb-4 flex-row justify-between">
+      <footer class="flex w-full pt-8 pb-4 flex-col md:flex-row justify-between gap-4">
         {% if spotify.nowPlaying %}
         <div class="flex items-center not-prose">
           <img id="track-image" class="w-10 h-10 rounded-full mr-2 animate-spin-slow"
-            src="{{ spotify.nowPlaying.albumImageUrl }}" alt="Album Art">
+            src="{{ spotify.nowPlaying.albumImageUrl }}" alt="Album artwork for {{ spotify.nowPlaying.title }} by {{ spotify.nowPlaying.artist }}">
           <div class=''>
             <a href={{ spotify.nowPlaying.songUrl }} target='_blank' class='hover:underline'>
               <p id="track-name" class="text-sm font-bold ">{{ spotify.nowPlaying.title }}</p>
@@ -301,15 +301,29 @@
           </div>
         </div>
         {% endif %}
-        <div class='flex flex-row links'>
-          <a class="self-center p-1 sm:px-3 sm:py-2  transition-all" href="https://www.linkedin.com/in/kartikeychauhan/"
-            title="LinkedIn" aria-label="LinkedIn">{% feather "linkedin" %}</a>
-          <a class="self-center p-1 sm:px-3 sm:py-2  transition-all" href="https://github.com/carteakey" title="GitHub"
-            aria-label="GitHub">{% feather "github" %}</a>
-          <a class="self-center p-1 sm:px-3 sm:py-2 transition-all" href="{{ '/feed.xml' | url }}" title="Atom Feed" aria-label="Atom Feed">{% feather "rss" %}</a>
-          <a class="self-center p-1 sm:px-3 sm:py-2 transition-all" href="{{ '/newsletter/' | url }}" title="Newsletter" aria-label="Newsletter">{% feather "mail" %}</a>
-          <a class="self-center p-1 sm:px-3 sm:py-2 transition-all" href="{{ '/search/' | url }}" title="Search" aria-label="Search">{% feather "search" %}</a>
-          <a class="self-center p-1 sm:px-3 sm:py-2 transition-all" href="{{ '/blogroll/' | url }}" title="Blogroll" aria-label="Blogroll">{% feather "bookmark" %}</a>
+        <div class='flex flex-col md:flex-row gap-4 md:gap-2'>
+          {# Social Links Group #}
+          <div class='flex flex-row items-center gap-1 border-b md:border-b-0 md:border-r border-gray-200 dark:border-gray-700 pb-2 md:pb-0 md:pr-2'>
+            <span class="text-xs text-gray-500 dark:text-gray-400 mr-1">Social:</span>
+            <a class="p-1 sm:px-2 transition-all" href="https://www.linkedin.com/in/kartikeychauhan/"
+              title="LinkedIn" aria-label="LinkedIn">{% feather "linkedin" %}</a>
+            <a class="p-1 sm:px-2 transition-all" href="https://github.com/carteakey" title="GitHub"
+              aria-label="GitHub">{% feather "github" %}</a>
+          </div>
+          
+          {# Content Discovery Group #}
+          <div class='flex flex-row items-center gap-1 border-b md:border-b-0 md:border-r border-gray-200 dark:border-gray-700 pb-2 md:pb-0 md:pr-2'>
+            <span class="text-xs text-gray-500 dark:text-gray-400 mr-1">Discover:</span>
+            <a class="p-1 sm:px-2 transition-all" href="{{ '/search/' | url }}" title="Search" aria-label="Search">{% feather "search" %}</a>
+            <a class="p-1 sm:px-2 transition-all" href="{{ '/blogroll/' | url }}" title="Blogroll" aria-label="Blogroll">{% feather "bookmark" %}</a>
+          </div>
+          
+          {# Subscribe Group #}
+          <div class='flex flex-row items-center gap-1'>
+            <span class="text-xs text-gray-500 dark:text-gray-400 mr-1">Subscribe:</span>
+            <a class="p-1 sm:px-2 transition-all" href="{{ '/feed.xml' | url }}" title="Atom Feed" aria-label="Atom Feed">{% feather "rss" %}</a>
+            <a class="p-1 sm:px-2 transition-all" href="{{ '/newsletter/' | url }}" title="Newsletter" aria-label="Newsletter">{% feather "mail" %}</a>
+          </div>
         </div>
       </footer>
 
