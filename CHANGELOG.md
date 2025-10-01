@@ -17,12 +17,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Shows yearly contribution activity
   - Integrated using ghchart.rshah.org service
 - Footer: Better alt text for Spotify album artwork (accessibility improvement)
+- Footer navigation: Categorized site navigation into logical groups
+  - Main (About, Now, Blog, CV)
+  - Work (Projects, Snippets)
+  - Content (Gallery, Vibes, Quotes)
+  - Lifestyle (Games, Workouts)
+  - Resources (Search, Stats, Blogroll, Bookmarks, Newsletter, More)
 
 ### Changed
-- Footer: Reorganized links into logical groups (Social, Discover, Subscribe)
-  - Improved visual hierarchy with labels and separators
+- Footer: Reorganized icon links into visual groups with separators (no labels)
+  - Social icons (LinkedIn, GitHub)
+  - Discovery icons (Search, Blogroll)
+  - Subscribe icons (RSS, Newsletter)
   - Better mobile responsiveness with flex layout
-  - Clearer categorization for easier navigation
+- More page: Updated to reflect new categorized structure matching footer navigation
 
 ### Fixed
 - Stats page: Fixed "Days Since Last Post" calculation bug
