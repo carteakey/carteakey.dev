@@ -5,6 +5,43 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2025-09-30
+
+### Added
+- **Stats Page**: Dedicated Lighthouse Performance section with all 4 categories (Performance: 94, Accessibility: 95, Best Practices: 100, SEO: 91)
+  - Visual progress bars for each metric
+  - Color-coded cards with gradient backgrounds
+  - Individual icons for each category (zap, users, shield, search)
+- **Stats Page**: Total words written metric (estimated ~800 words per post)
+  - Shows total words in thousands (k) format
+  - Displays average words per post
+- **Stats Page**: Total visitors count tracked via Redis
+  - Real-time visitor tracking from Upstash Redis
+  - Integrated with existing analytics infrastructure
+- **Stats Page**: Denser, more informative meta information section
+  - Now displays 12 technical details in compact grid layout
+  - Added: CSS Framework (Tailwind CSS v4), JS Framework (Alpine.js), Hosting (Netlify)
+  - Added: Template Engine (Nunjucks), Syntax Highlighting (PrismJS), Comments (Giscus)
+  - Added: Analytics (Upstash Redis), Build Time
+  - Improved visual hierarchy with uppercase labels and better spacing
+- **Feed Page**: New unified activity feed at `/feed/`
+  - Combines posts and snippets in reverse chronological order
+  - Visual indicators for content type (Post vs Snippet)
+  - Color-coded borders (blue for posts, purple for snippets)
+  - Displays tags, dates, and descriptions for each item
+  - Added to navigation menu (order: 10)
+- **Homepage**: Replaced "Recent Posts" section with "Recent Activity" feed
+  - Shows latest 5 items from unified feed
+  - Includes both posts and code snippets
+  - Better visual design with type badges and borders
+  - Links to full activity feed, posts, and snippets pages
+
+### Changed
+- **Data Layer**: Created `visitors.js` data file for Redis-based visitor tracking
+- **Collections**: Added new "feed" collection that merges posts and snippets
+  - Each item tagged with `feedType` property for easy filtering
+  - Maintains proper date sorting across content types
+
 ## [1.2.0] - 2025-09-30
 
 ### Added

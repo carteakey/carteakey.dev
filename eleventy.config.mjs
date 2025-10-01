@@ -421,6 +421,37 @@ export default function(eleventyConfig) {
       .filter(item => !item.inputPath.includes('_template.md'));
   });
 
+  // Add a unified feed collection: posts, snippets, and microposts combined
+  eleventyConfig.addCollection("feed", function(collectionApi) {
+    const now = new Date();
+    
+    // Get posts
+    const posts = collectionApi
+      .getFilteredByGlob("./src/posts/**/*.md")
+      .filter(post => {
+        if (post.data.hidden === true) return false;
+        if (post.date && post.date > now) return false;
+        return true;
+      });
+    
+    // Add feedType to posts
+    posts.forEach(post => {
+      post.data.feedType = 'post';
+    });
+    
+    // Get snippets
+    const snippets = collectionApi.getFilteredByTag("snippets");
+    
+    // Add feedType to snippets
+    snippets.forEach(snippet => {
+      snippet.data.feedType = 'snippet';
+    });
+    
+    // Combine and sort by date (newest first)
+    return [...posts, ...snippets]
+      .sort((a, b) => b.date - a.date);
+  });
+
   // Customize Markdown library and settings:
   let markdownLibrary = markdownIt({
     html: true,
