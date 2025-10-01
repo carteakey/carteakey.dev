@@ -207,25 +207,18 @@ templateClass: tmpl-post
 {%- if sortedRelated.length > 0 %}
 <hr class="my-8" />
 <div class="related-posts">
-  <h3 class="text-xl font-semibold mb-4 flex items-center gap-2">
-    {% feather "link", class="w-5 h-5" %}
+  <h3 class="text-lg font-semibold mb-3 flex items-center gap-2">
+    {% feather "link", class="w-4 h-4" %}
     Related Posts
   </h3>
-  <div class="grid gap-4 md:grid-cols-1">
+  <div class="space-y-2">
     {%- for item in sortedRelated | head(3) %}
-    <article class="border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:border-amber-500 dark:hover:border-amber-500 transition-colors">
-      <a href="{{ item.post.url | url }}" class="text-lg font-semibold hover:text-amber-600 dark:hover:text-amber-400">
+    <div class="border-l-2 border-gray-300 dark:border-gray-600 pl-3 py-1">
+      <a href="{{ item.post.url | url }}" class="font-medium hover:text-amber-600 dark:hover:text-amber-400">
         {{ item.post.data.title }}
       </a>
-      <p class="text-gray-600 dark:text-gray-300 text-sm mt-1">{{ item.post.data.description }}</p>
-      <div class="flex flex-wrap gap-2 mt-2">
-        {%- for tag in item.post.data.tags | filterTagList | head(3) %}
-        <span class="text-xs px-2 py-1 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded">
-          {{ tag }}
-        </span>
-        {%- endfor %}
-      </div>
-    </article>
+      <p class="text-gray-600 dark:text-gray-300 text-sm mt-0.5">{{ item.post.data.description }}</p>
+    </div>
     {%- endfor %}
   </div>
 </div>

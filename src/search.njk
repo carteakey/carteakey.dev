@@ -68,12 +68,13 @@ eleventyNavigation:
         {%- endfor %}
       ];
 
-      // Fetch snippets
+      // Fetch snippets - check if collection exists
       const snippets = [
+        {%- if collections.snippets %}
         {%- for snippet in collections.snippets %}
         {
           title: {{ snippet.data.title | dump | safe }},
-          description: {{ snippet.data.description | dump | safe }},
+          description: {{ (snippet.data.description or '') | dump | safe }},
           url: {{ snippet.url | dump | safe }},
           tags: {{ snippet.data.tags | filterTagList | dump | safe }},
           content: {{ snippet.templateContent | striptags | dump | safe }},
@@ -81,6 +82,7 @@ eleventyNavigation:
           date: {{ snippet.date | dump | safe }}
         }{% if not loop.last %},{% endif %}
         {%- endfor %}
+        {%- endif %}
       ];
 
       searchIndex = [...posts, ...snippets];

@@ -13,16 +13,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Search by title, description, content, or tags
   - Results sorted by relevance
   - Clean UI with result count display
+  - Search icon in footer for easy access
 - Related posts feature
   - Automatically shows up to 3 related posts based on shared tags
+  - Compact design with border accent
   - Displays at the bottom of each blog post
-  - Shows post title, description, and tags
 - Loading states for dynamic content
   - Added loading spinner for upvote count fetching
   - Smooth opacity transition during loading
   - Newsletter form submission loading state
 - Blogroll page
-  - Curated list of recommended blogs and websites
+  - Expanded to 30+ recommended blogs and websites
+  - Includes web dev, self-hosting, AI/ML, and data science resources
   - Organized with descriptions and topic tags
   - External link indicators
 - Newsletter signup page
@@ -31,6 +33,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Success/error states with clear messaging
   - Honeypot spam protection
   - Links to RSS feed as alternative
+  - Focused on AI, data science, and self-hosting topics
+
+### Changed
+- Post list layout: date and reading time now stack vertically in left column (desktop)
+- Navigation: Added Search, Blogroll, and Newsletter to dropdown menu
+- More page: Updated with all new pages including search, blogroll, and newsletter
+- Newsletter wording updated to focus on AI, data science, and self-hosting content
+- Related posts section made more compact with cleaner design
+
+### Fixed
+- Search functionality now properly handles snippets collection
+- Search results display correctly with all content types
 
 ## [1.0.1] - 2025-01-14
 
