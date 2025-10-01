@@ -113,7 +113,44 @@ permalink: /stats/
     </div>
   </div>
 
-  <!-- Last Updated -->
+  <!-- Blog Activity -->
+  <div class="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
+    <div class="flex items-center justify-between">
+      <div>
+        {% set latestPost = collections.posts | reverse | first %}
+        {% set daysSincePost = ((page.date - latestPost.date) / (1000 * 60 * 60 * 24)) | round %}
+        <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ daysSincePost }}</p>
+        <p class="text-sm text-gray-600 dark:text-gray-400">Days Since Last Post</p>
+      </div>
+      <div class="p-3 bg-cyan-100 dark:bg-cyan-900 rounded-full">
+        {% feather "clock", class="w-6 h-6 text-cyan-600 dark:text-cyan-400" %}
+      </div>
+    </div>
+    <div class="mt-4 flex items-center text-sm text-gray-600 dark:text-gray-400">
+      <span class="text-cyan-600 dark:text-cyan-400 font-medium">{{ latestPost.data.title | truncate(20) }}</span>
+      <span class="ml-1">latest</span>
+    </div>
+  </div>
+
+  <!-- Lighthouse Score -->
+  <div class="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
+    <div class="flex items-center justify-between">
+      <div>
+        <p class="text-2xl font-bold text-gray-900 dark:text-white">94</p>
+        <p class="text-sm text-gray-600 dark:text-gray-400">Performance Score</p>
+      </div>
+      <div class="p-3 bg-green-100 dark:bg-green-900 rounded-full">
+        {% feather "zap", class="w-6 h-6 text-green-600 dark:text-green-400" %}
+      </div>
+    </div>
+    <div class="mt-4 flex items-center text-sm text-gray-600 dark:text-gray-400">
+      <span class="text-green-600 dark:text-green-400 font-medium">A11y: 77</span>
+      <span class="mx-2">•</span>
+      <span class="text-blue-600 dark:text-blue-400 font-medium">SEO: 91</span>
+    </div>
+  </div>
+
+  <!-- Build Info -->
   <div class="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
     <div class="flex items-center justify-between">
       <div>
@@ -127,25 +164,6 @@ permalink: /stats/
     <div class="mt-4 flex items-center text-sm text-gray-600 dark:text-gray-400">
       <span class="text-red-600 dark:text-red-400 font-medium">{{ page.date | date('h:mm a') }}</span>
       <span class="ml-1">today</span>
-    </div>
-  </div>
-
-  <!-- Blog Activity -->
-  <div class="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
-    <div class="flex items-center justify-between">
-      <div>
-        {% set latestPost = collections.posts | last %}
-        {% set daysSincePost = ((page.date - latestPost.date) / (1000 * 60 * 60 * 24)) | round %}
-        <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ daysSincePost }}</p>
-        <p class="text-sm text-gray-600 dark:text-gray-400">Days Since Last Post</p>
-      </div>
-      <div class="p-3 bg-cyan-100 dark:bg-cyan-900 rounded-full">
-        {% feather "clock", class="w-6 h-6 text-cyan-600 dark:text-cyan-400" %}
-      </div>
-    </div>
-    <div class="mt-4 flex items-center text-sm text-gray-600 dark:text-gray-400">
-      <span class="text-cyan-600 dark:text-cyan-400 font-medium">{{ latestPost.data.title | truncate(20) }}</span>
-      <span class="ml-1">latest</span>
     </div>
   </div>
 </div>

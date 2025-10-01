@@ -221,7 +221,7 @@
                 @click.away="open = false"
               >
                 {%- for entry in navPages %}
-                  {% if entry.title == "Gallery" or entry.title == "Vibes" or entry.title == "Snippets" or entry.title == "Projects" or entry.title == "CV" or entry.title == "Search" or entry.title == "Blogroll" or entry.title == "Newsletter" or entry.title == "...More" %}
+                  {% if entry.title == "Gallery" or entry.title == "Vibes" or entry.title == "Snippets" or entry.title == "Projects" or entry.title == "CV" or entry.title == "...More" %}
                     <a class="block px-4 py-2 no-underline hover:underline font-bold" href="{{ entry.url }}">{{ entry.title }}</a>
                   {% endif %}
                 {%- endfor %}
@@ -307,7 +307,9 @@
           <a class="self-center p-1 sm:px-3 sm:py-2  transition-all" href="https://github.com/carteakey" title="GitHub"
             aria-label="GitHub">{% feather "github" %}</a>
           <a class="self-center p-1 sm:px-3 sm:py-2 transition-all" href="{{ '/feed.xml' | url }}" title="Atom Feed" aria-label="Atom Feed">{% feather "rss" %}</a>
+          <a class="self-center p-1 sm:px-3 sm:py-2 transition-all" href="{{ '/newsletter/' | url }}" title="Newsletter" aria-label="Newsletter">{% feather "mail" %}</a>
           <a class="self-center p-1 sm:px-3 sm:py-2 transition-all" href="{{ '/search/' | url }}" title="Search" aria-label="Search">{% feather "search" %}</a>
+          <a class="self-center p-1 sm:px-3 sm:py-2 transition-all" href="{{ '/blogroll/' | url }}" title="Blogroll" aria-label="Blogroll">{% feather "bookmark" %}</a>
         </div>
       </footer>
 

@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.1] - 2025-01-14
+
+### Changed
+- Blogroll: Increased information density with 2-column grid layout and compact cards
+- Navigation: Removed Search, Blogroll, and Newsletter from main nav dropdown (now only in footer)
+- Stats page: Added Lighthouse performance score card with A11y and SEO metrics
+
+### Fixed
+- Stats page: Fixed "Days Since Last Post" bug - now correctly shows days since most recent post instead of first post
+
+### Added
+- Footer: Added Newsletter (mail icon) and Blogroll (bookmark icon) to footer icons for quick access
+
 ## [1.1.0] - 2025-01-14
 
 ### Added
