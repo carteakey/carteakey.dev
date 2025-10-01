@@ -41,6 +41,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Collections**: Added new "feed" collection that merges posts and snippets
   - Each item tagged with `feedType` property for easy filtering
   - Maintains proper date sorting across content types
+- **Footer Navigation**: Simplified layout with visual separators instead of categories
+  - Removed category headings (Main, Work, Content, etc.)
+  - Added bullet point separators (•) between logical groups
+  - More compact, less whitespace
+  - All links in single flowing row with wrapping
+- **More Page**: Changed to alphabetically sorted list
+  - Removed category sections
+  - Single "All Pages" section with A-Z sorting
 
 ## [1.2.0] - 2025-09-30
 

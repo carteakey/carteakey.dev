@@ -12,36 +12,24 @@ eleventyNavigation:
 This is a sitemap of all pages on my site. It's inspired by [slashpages.net](https://slashpages.net).
 
 
-### Main Pages
+### All Pages
 
 - [/about](/about/): who am I?
-- [/now](/now/): what I'm up to, now
-- [/posts](/posts/): blog posts and articles
-- [/cv](/cv/): my curriculum vitae
-
-### Work & Projects
-
-- [/projects](/projects/): things I've built
-- [/snippets](/snippets/): code snippets and quick notes
-
-### Content & Media
-
-- [/gallery](/gallery/): photo gallery
-- [/vibes](/vibes/): random images/memes I like
-- [/quotes](/quotes/): quotes I like
-
-### Lifestyle
-
-- [/games](/games/): games I'm currently playing
-- [/workouts](/workouts/): my fitness journey
-
-### Resources & Tools
-
-- [/search](/search/): search posts and snippets
-- [/stats](/stats/): site statistics and metrics
 - [/blogroll](/blogroll/): blogs and sites I follow
 - [/bookmarks](/bookmarks/): curated reading list
+- [/cv](/cv/): my curriculum vitae
+- [/gallery](/gallery/): photo gallery
+- [/games](/games/): games I'm currently playing
 - [/newsletter](/newsletter/): subscribe to updates
+- [/now](/now/): what I'm up to, now
+- [/posts](/posts/): blog posts and articles
+- [/projects](/projects/): things I've built
+- [/quotes](/quotes/): quotes I like
+- [/search](/search/): search posts and snippets
+- [/snippets](/snippets/): code snippets and quick notes
+- [/stats](/stats/): site statistics and metrics
+- [/vibes](/vibes/): random images/memes I like
+- [/workouts](/workouts/): my fitness journey
 
 
 

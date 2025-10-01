@@ -405,121 +405,101 @@
           </div>
         </div>
 
-        {# Enhanced navigation section #}
-        <div class="text-center space-y-6">
-          {# Main Pages #}
-          <div class="space-y-3">
-            <h4 class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Main</h4>
-            <div class="flex flex-wrap justify-center gap-3 text-sm">
-              <a href="{{ '/about' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
-                {% feather "user", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
-                <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">About</span>
-              </a>
-              
-              <a href="{{ '/now' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
-                {% feather "clock", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
-                <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">Now</span>
-              </a>
-              
-              <a href="{{ '/posts' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
-                {% feather "edit-3", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
-                <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">Blog</span>
-              </a>
-              
-              <a href="{{ '/cv' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
-                {% feather "file-text", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
-                <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">CV</span>
-              </a>
-            </div>
-          </div>
-
-          {# Projects & Work #}
-          <div class="space-y-3">
-            <h4 class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Work</h4>
-            <div class="flex flex-wrap justify-center gap-3 text-sm">
-              <a href="{{ '/projects' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
-                {% feather "code", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
-                <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">Projects</span>
-              </a>
-              
-              <a href="{{ '/snippets' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
-                {% feather "terminal", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
-                <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">Snippets</span>
-              </a>
-            </div>
-          </div>
-
-          {# Content & Media #}
-          <div class="space-y-3">
-            <h4 class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Content</h4>
-            <div class="flex flex-wrap justify-center gap-3 text-sm">
-              <a href="{{ '/gallery' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
-                {% feather "camera", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
-                <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">Gallery</span>
-              </a>
-              
-              <a href="{{ '/vibes' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
-                {% feather "image", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
-                <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">Vibes</span>
-              </a>
-              
-              <a href="{{ '/quotes' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
-                {% feather "message-circle", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
-                <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">Quotes</span>
-              </a>
-            </div>
-          </div>
-
-          {# Lifestyle #}
-          <div class="space-y-3">
-            <h4 class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Lifestyle</h4>
-            <div class="flex flex-wrap justify-center gap-3 text-sm">
-              <a href="{{ '/games' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
-                {% feather "play", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
-                <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">Games</span>
-              </a>
-              
-              <a href="{{ '/workouts' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
-                {% feather "zap", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
-                <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">Workouts</span>
-              </a>
-            </div>
-          </div>
-
-          {# Resources & Tools #}
-          <div class="space-y-3">
-            <h4 class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Resources</h4>
-            <div class="flex flex-wrap justify-center gap-3 text-sm">
-              <a href="{{ '/search' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
-                {% feather "search", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
-                <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">Search</span>
-              </a>
-              
-              <a href="{{ '/stats' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
-                {% feather "bar-chart-2", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
-                <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">Stats</span>
-              </a>
-              
-              <a href="{{ '/blogroll' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
-                {% feather "bookmark", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
-                <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">Blogroll</span>
-              </a>
-              
-              <a href="{{ '/bookmarks' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
-                {% feather "book-open", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
-                <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">Bookmarks</span>
-              </a>
-              
-              <a href="{{ '/newsletter' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
-                {% feather "mail", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
-                <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">Newsletter</span>
-              </a>
-              
-              <a href="{{ '/more' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
-                {% feather "plus", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
-                <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">More</span>
-              </a>
-            </div>
+        {# Enhanced navigation section - compact with separators #}
+        <div class="text-center">
+          <div class="flex flex-wrap justify-center items-center gap-2 text-sm max-w-5xl mx-auto">
+            <a href="{{ '/about' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
+              {% feather "user", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
+              <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">About</span>
+            </a>
+            
+            <a href="{{ '/now' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
+              {% feather "clock", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
+              <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">Now</span>
+            </a>
+            
+            <a href="{{ '/posts' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
+              {% feather "edit-3", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
+              <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">Blog</span>
+            </a>
+            
+            <a href="{{ '/cv' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
+              {% feather "file-text", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
+              <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">CV</span>
+            </a>
+            
+            <span class="text-gray-400 dark:text-gray-600">|</span>
+            
+            <a href="{{ '/projects' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
+              {% feather "code", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
+              <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">Projects</span>
+            </a>
+            
+            <a href="{{ '/snippets' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
+              {% feather "terminal", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
+              <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">Snippets</span>
+            </a>
+            
+            <span class="text-gray-400 dark:text-gray-600">|</span>
+            
+            <a href="{{ '/gallery' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
+              {% feather "camera", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
+              <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">Gallery</span>
+            </a>
+            
+            <a href="{{ '/vibes' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
+              {% feather "image", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
+              <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">Vibes</span>
+            </a>
+            
+            <a href="{{ '/quotes' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
+              {% feather "message-circle", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
+              <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">Quotes</span>
+            </a>
+            
+            <span class="text-gray-400 dark:text-gray-600">|</span>
+            
+            <a href="{{ '/games' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
+              {% feather "play", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
+              <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">Games</span>
+            </a>
+            
+            <a href="{{ '/workouts' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
+              {% feather "zap", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
+              <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">Workouts</span>
+            </a>
+            
+            <span class="text-gray-400 dark:text-gray-600">|</span>
+            
+            <a href="{{ '/search' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
+              {% feather "search", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
+              <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">Search</span>
+            </a>
+            
+            <a href="{{ '/stats' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
+              {% feather "bar-chart-2", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
+              <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">Stats</span>
+            </a>
+            
+            <a href="{{ '/blogroll' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
+              {% feather "bookmark", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
+              <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">Blogroll</span>
+            </a>
+            
+            <a href="{{ '/bookmarks' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
+              {% feather "book-open", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
+              <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">Bookmarks</span>
+            </a>
+            
+            <a href="{{ '/newsletter' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
+              {% feather "mail", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
+              <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">Newsletter</span>
+            </a>
+            
+            <a href="{{ '/more' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
+              {% feather "plus", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
+              <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">More</span>
+            </a>
           </div>
           
           {# Made with love section #}
