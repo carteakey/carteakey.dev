@@ -1,4 +1,5 @@
-import { readFileSync } from "fs";
+import { readFileSync, promises as fsPromises } from "fs";
+import path from "path";
 import { load } from "js-yaml";
 
 import { DateTime } from "luxon";
@@ -30,6 +31,76 @@ function mapSrcToPublicUrl(src) {
   }
   // Default: return unchanged
   return src;
+}
+
+const POST_ASSET_EXTENSIONS = new Set([
+  ".png",
+  ".jpg",
+  ".jpeg",
+  ".gif",
+  ".webp",
+  ".avif",
+  ".svg",
+  ".bmp",
+  ".heic",
+  ".heif",
+  ".mp4",
+  ".mp3",
+  ".wav",
+  ".ogg",
+  ".webm",
+  ".mov",
+  ".pdf",
+  ".txt",
+  ".csv",
+  ".json",
+  ".yaml",
+  ".yml",
+  ".zip",
+  ".tar",
+  ".gz",
+  ".tgz",
+  ".bz2",
+  ".7z",
+  ".html",
+  ".htm",
+  ".xml",
+  ".py",
+  ".ipynb",
+  ".js",
+  ".ts",
+  ".css"
+]);
+
+async function copyPostAssets(srcDir, destDir) {
+  let entries;
+  try {
+    entries = await fsPromises.readdir(srcDir, { withFileTypes: true });
+  } catch (_) {
+    return;
+  }
+
+  for (const entry of entries) {
+    const srcPath = path.join(srcDir, entry.name);
+    const destPath = path.join(destDir, entry.name);
+
+    if (entry.isDirectory()) {
+      await copyPostAssets(srcPath, destPath);
+      continue;
+    }
+
+    if (!entry.isFile()) {
+      continue;
+    }
+
+    const extension = path.extname(entry.name).toLowerCase();
+    if (!POST_ASSET_EXTENSIONS.has(extension)) {
+      continue;
+    }
+
+    await fsPromises.mkdir(path.dirname(destPath), { recursive: true });
+    await fsPromises.copyFile(srcPath, destPath);
+  }
 }
 
 async function imageShortcode(src, alt, css) {
@@ -397,6 +468,69 @@ export default function(eleventyConfig) {
         .sort((a, b) => b.date - a.date); // newest first
     });
 
+  // Group posts by folder for /blog/{folder}/ listings
+  eleventyConfig.addCollection("postFolders", function (collectionApi) {
+    const now = new Date();
+    const humanize = (value = "") => {
+      return value
+        .replace(/[-_]+/g, " ")
+        .split(" ")
+        .filter(Boolean)
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" ");
+    };
+
+    const normalizeRelativePath = (inputPath) => {
+      return inputPath.replace(/^.*?src\/?posts\//, "");
+    };
+
+    const folderMap = new Map();
+
+    collectionApi
+      .getFilteredByGlob("./src/posts/**/*.md")
+      .filter((post) => {
+        if (post.data.hidden === true) return false;
+        if (post.date && post.date > now) return false;
+        return true;
+      })
+      .forEach((post) => {
+        const relativePath = normalizeRelativePath(post.inputPath);
+        const parts = relativePath.split("/");
+        parts.pop(); // remove filename
+
+        if (parts.length === 0) {
+          return; // root-level posts live at /blog/ directly
+        }
+
+        const key = parts.join("/");
+        const url = `/blog/${key}/`;
+
+        if (!folderMap.has(key)) {
+          const segments = parts.map((segment) => ({
+            raw: segment,
+            label: humanize(segment),
+          }));
+
+          folderMap.set(key, {
+            key,
+            url,
+            name: segments[segments.length - 1].label,
+            segments,
+            posts: [],
+          });
+        }
+
+        folderMap.get(key).posts.push(post);
+      });
+
+    folderMap.forEach((folder) => {
+      folder.posts.sort((a, b) => b.date - a.date);
+      folder.displayPath = folder.segments.map((segment) => segment.label).join(" / ");
+    });
+
+    return Array.from(folderMap.values()).sort((a, b) => a.url.localeCompare(b.url));
+  });
+
   // Custom allPages collection: like collections.all but hides hidden:true and future-dated posts
   eleventyConfig.addCollection("allPages", function(collectionApi) {
     const now = new Date();
@@ -421,35 +555,170 @@ export default function(eleventyConfig) {
       .filter(item => !item.inputPath.includes('_template.md'));
   });
 
-  // Add a unified feed collection: posts, snippets, and microposts combined
-  eleventyConfig.addCollection("feed", function(collectionApi) {
+  // Add a unified feed collection across key content types
+  eleventyConfig.addCollection("feed", async function (collectionApi) {
     const now = new Date();
-    
-    // Get posts
+
+    const stripHtml = (html = "") => html.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+    const truncate = (text = "", limit = 220) => {
+      if (text.length <= limit) return text;
+      return `${text.slice(0, limit).trimEnd()}…`;
+    };
+
+    const normalizeDate = (value) => {
+      if (value instanceof Date && !Number.isNaN(value.valueOf())) {
+        return value;
+      }
+      const parsed = new Date(value);
+      return Number.isNaN(parsed.valueOf()) ? null : parsed;
+    };
+
     const posts = collectionApi
       .getFilteredByGlob("./src/posts/**/*.md")
-      .filter(post => {
+      .filter((post) => {
         if (post.data.hidden === true) return false;
         if (post.date && post.date > now) return false;
         return true;
+      })
+      .map((post) => {
+        post.data.feedType = "post";
+        const postDate = normalizeDate(post.data.updated) || post.date;
+        const summarySource = post.data.description || post.data.excerpt || "";
+        const summary = summarySource ? truncate(stripHtml(summarySource)) : null;
+        return {
+          type: "post",
+          title: post.data.title,
+          date: postDate,
+          url: post.url,
+          summary,
+          readingTime: post.data.readingTime,
+          tags: (post.data.tags || []).filter((tag) => tag !== "posts" && tag !== "post"),
+        };
       });
-    
-    // Add feedType to posts
-    posts.forEach(post => {
-      post.data.feedType = 'post';
-    });
-    
-    // Get snippets
-    const snippets = collectionApi.getFilteredByTag("snippets");
-    
-    // Add feedType to snippets
-    snippets.forEach(snippet => {
-      snippet.data.feedType = 'snippet';
-    });
-    
-    // Combine and sort by date (newest first)
-    return [...posts, ...snippets]
-      .sort((a, b) => b.date - a.date);
+
+    const snippets = collectionApi
+      .getFilteredByTag("snippets")
+      .filter((snippet) => {
+        if (snippet.data.hidden === true) return false;
+        if (snippet.date && snippet.date > now) return false;
+        return true;
+      })
+      .map((snippet) => {
+        snippet.data.feedType = "snippet";
+        const summarySource = snippet.data.description || snippet.data.excerpt || "";
+        const summary = summarySource ? truncate(stripHtml(summarySource)) : null;
+        return {
+          type: "snippet",
+          title: snippet.data.title,
+          date: snippet.date,
+          url: snippet.url,
+          summary,
+          readingTime: snippet.data.readingTime,
+          original: snippet,
+        };
+      });
+
+    const microposts = collectionApi
+      .getFilteredByGlob("./src/microposts/**/*.md")
+      .filter((entry) => {
+        if (entry.data.hidden === true) return false;
+        if (entry.date && entry.date > now) return false;
+        return true;
+      })
+      .map((micropost) => {
+        micropost.data.feedType = "micropost";
+        const excerptSource = micropost.data.excerpt || "";
+        const summary = excerptSource ? truncate(stripHtml(excerptSource), 260) : null;
+        return {
+          type: "micropost",
+          title: micropost.data.title || "Micropost",
+          date: micropost.date,
+          url: micropost.url && micropost.url !== false ? micropost.url : null,
+          summary,
+          original: micropost,
+        };
+      });
+
+    const nowUpdates = collectionApi
+      .getFilteredByGlob("./src/now/archive/*.md")
+      .filter((entry) => !entry.inputPath.includes("_template"))
+      .map((entry) => {
+        const archiveDate = normalizeDate(entry.data.archiveDate) || entry.date;
+        const display = archiveDate ? DateTime.fromJSDate(archiveDate).toFormat("MMM d, yyyy") : "Now";
+        const summarySource = entry.data.summary || entry.data.description || "";
+        return {
+          type: "now",
+          title: `Now Update — ${display}`,
+          date: archiveDate,
+          url: entry.url,
+          summary: summarySource ? truncate(stripHtml(summarySource), 220) : null,
+          original: entry,
+        };
+      });
+
+    let photosData = [];
+    try {
+      photosData = load(readFileSync("src/_data/photos.yaml", "utf-8"));
+    } catch (_) {
+      photosData = [];
+    }
+
+    const photos = (Array.isArray(photosData) ? photosData : [])
+      .map((photo) => {
+        const photoDate = normalizeDate(photo.date);
+        if (!photoDate) return null;
+        return {
+          type: "photo",
+          title: photo.title,
+          date: photoDate,
+          url: photo.path,
+          summary: truncate(photo.description || "", 200),
+          media: {
+            src: photo.path,
+            alt: photo.title,
+            width: photo.width,
+            height: photo.height,
+          },
+        };
+      })
+      .filter(Boolean);
+
+    let vibeFeed = [];
+    try {
+      const vibesModule = await import(new URL("./src/_data/vibes.js", import.meta.url));
+      const vibesData = await vibesModule.default();
+      if (Array.isArray(vibesData?.feed)) {
+        vibeFeed = vibesData.feed;
+      }
+    } catch (_) {
+      vibeFeed = [];
+    }
+
+    const vibes = vibeFeed
+      .map((entry) => {
+        const vibeDate = normalizeDate(entry.date);
+        if (!vibeDate) return null;
+        return {
+          type: "vibe",
+          title: entry.title,
+          date: vibeDate,
+          url: entry.url,
+          summary: "New vibe board addition",
+          media: entry.media,
+        };
+      })
+      .filter(Boolean);
+
+    const combined = [
+      ...posts,
+      ...snippets,
+      ...microposts,
+      ...nowUpdates,
+      ...photos,
+      ...vibes,
+    ].filter((item) => item.date instanceof Date && !Number.isNaN(item.date.valueOf()));
+
+    return combined.sort((a, b) => b.date - a.date);
   });
 
   // Customize Markdown library and settings:
@@ -477,6 +746,18 @@ export default function(eleventyConfig) {
     const token = tokens[idx];
     return `<code class="${langPrefix}">${markdownLibrary.utils.escapeHtml(token.content)}</code>`;
   };
+
+  eleventyConfig.on("eleventy.after", async () => {
+    const srcDir = path.resolve("src/posts");
+    const destDir = path.resolve("_site/blog");
+
+    try {
+      await fsPromises.mkdir(destDir, { recursive: true });
+      await copyPostAssets(srcDir, destDir);
+    } catch (error) {
+      console.warn("Failed to copy post assets", error);
+    }
+  });
 
   // Override Browsersync defaults (used only with --serve)
   eleventyConfig.setBrowserSyncConfig({
