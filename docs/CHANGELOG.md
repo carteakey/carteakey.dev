@@ -5,6 +5,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.2] - 2025-10-01
+
+### Added
+- Feed: extended unified timeline to include photos, vibe board entries, microposts, snippets, blog posts, and /now archive updates with per-type metadata.
+- Blog folders: automatic `/blog/{folder}/` listing pages generated from the posts directory structure, with breadcrumb-aware pagination.
+- Post asset pipeline: copies allowed files stored alongside posts into the matching `/blog/` output path so relative links (e.g., `./diagram.png`) work out of the box.
+- Documentation: EthicalAds setup guide at `docs/ETHICAL_ADS_SETUP.md` detailing configuration steps.
+
+### Changed
+- Homepage and `/feed/` cards restyled to match site card design and retitled from "Recent Activity" to "Feed" everywhere.
+- Primary blog index now lives at `/blog/` (with legacy `/posts/` redirect) and sample posts moved under `/blog/tech/` and `/blog/personal/` to demonstrate folder routing.
+- Posts referencing the GPT OSS benchmarks bundle now use relative asset links (`../gpt-oss-benchmarks/...`) to align with the new asset pipeline.
+
+## [1.3.1] - 2025-10-01
+
+### Added
+- Micropost collection with inline-only entries feeding the unified activity stream.
+- EthicalAds placement for posts and snippets, backed by a reusable sidebar component and global script loader.
+- Gradient KC logo (`src/static/img/logo.svg`) now displayed in the site navigation.
+
+### Changed
+- Restyled the feed page and homepage activity cards for type-aware badges, improved spacing, and better responsiveness.
+- Homepage "Recent Activity" now lives beneath the Quote of the Day and surfaces six latest items across all content types.
+- Documentation housekeeping: developer guides (e.g., Copilot instructions) now live under `docs/` for a single source of truth.
+
 ## [1.3.0] - 2025-09-30
 
 ### Added

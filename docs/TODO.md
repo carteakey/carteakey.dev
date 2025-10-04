@@ -17,17 +17,27 @@
 - [x] stats page - Add total words written across all posts
 - [x] Stats - Add total visitors count *maybe capture the existing count from Google Analytics* or start capturing in Redis
 - [x] Stats - Meta information needs to be denser
-- [x] I want a feed view of all posts, snippets, and pages in one place - like a mini RSS feed on the homepage or a separate page. It should allow me to post mini-blogs as well, like tweets or micro-posts - maybe use a new collection called "microposts" or "feed"? It should contain posts, snippets, and microposts in reverse chronological order. Posts and snippets should link to their respective pages, while microposts can be displayed in full.
+- [x] I want a feed view of all posts, snippets, and pages in one place - like a mini RSS feed on the homepage or a separate page. 
+
+- [x] Feed view It should allow me to post mini-blogs as well, like tweets or micro-posts - maybe use a new collection called "microposts" or "feed"? It should contain posts, snippets, and microposts in reverse chronological order. Posts and snippets should link to their respective pages, while microposts can be displayed in full.
+- [x] Feed view looks ugly right now - needs better styling and layout. Maybe use a layout with a consistent design for all items. Each item should show the title, date, and description. Mini blogs should be present in full. move it below quote of the day to fit more items. Use TailwindCSS for styling and make it responsive.
+
 - [x] We can then replace the "Recent Posts" section on the homepage with this feed view, showing the latest 5-10 items from the feed collection. This will give visitors a quick overview of all recent activity on the site in one place.
 
-- [ ] Move all markdown docs to the docs folder - apart from README.md
-- [ ] I'd want a logo 
-- [ ] Ads by EthicalAds - on the left sidebar of blog posts and snippets pages
-- [ ] a blog folder view - that allows me to put posts in folders like /blog/tech/, /blog/personal/, /blog/work/, etc. and have a page that lists all posts in that folder. The folder structure should be reflected in the URL as well. For example, a post in the tech folder would have a URL like /blog/tech/post-title. The blog folder view page should show all posts in that folder with their titles, dates, and excerpts. In the breadcrumb too.
-- [ ] Allow me to link files from the posts folder to post itself - like images, PDFs, etc. For example, if I have a post about a project, I should be able to link to the project's GitHub repo or a PDF document related to the project from within the post content. The files should be stored in the posts folder and linked using relative paths. This will help keep all related content together and make it easier to manage.
-- [ ] Move completed TODO items to a separate section at the bottom of the TODO list with a date stamp of when they were completed. This will help keep the TODO list clean and focused on pending tasks while still maintaining a record of what has been accomplished.
-- [ ] A blog post outlining how i am working with copilot - the flow, the prompt.md and the instructions.md file. 
+- [x] Move all markdown docs to the docs folder - apart from README.md
+- [x] I'd want a logo 
+- [x] Ads by EthicalAds - on the left sidebar of blog posts and snippets pages
+- [x] Recent activity to be renamed to Feed
+- [x] Recent activity to show photos, vibe photos, now page updates, posts, snippets, microposts and any other content in one place.
+- [x] The feed cards should be similar to the blogroll, projects and stats cards, they're not white boxes.
 
+
+- [x] a blog folder view - that allows me to put posts in folders like /blog/tech/, /blog/personal/, /blog/work/, etc. and have a page that lists all posts in that folder. The folder structure should be reflected in the URL as well. For example, a post in the tech folder would have a URL like /blog/tech/post-title. The blog folder view page should show all posts in that folder with their titles, dates, and excerpts. In the breadcrumb too.
+- [x] Allow me to link files from the posts folder to post itself - like images, PDFs, etc. For example, if I have a post about a project, I should be able to link to the project's GitHub repo or a PDF document related to the project from within the post content. The files should be stored in the posts folder and linked using relative paths. This will help keep all related content together and make it easier to manage.
+- [ ] Move completed TODO items to a separate section at the bottom of the TODO list with a date stamp of when they were completed. This will help keep the TODO list clean and focused on pending tasks while still maintaining a record of what has been accomplished.
+- [ ] A blog post outlining how i am working with copilot and codex - the flow, the prompt.md and the instructions.md file. 
+- [x] Recent activity to be renamed to Feed
+- [x] Recent activity to show photos, vibe photos, now page updates, posts, snippets, microposts and any other content in one place.
 
 ### SEO & Navigation
 - [x] Add sitemap.xml - Already present at `/sitemap.xml`

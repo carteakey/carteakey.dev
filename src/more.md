@@ -22,7 +22,7 @@ This is a sitemap of all pages on my site. It's inspired by [slashpages.net](htt
 - [/games](/games/): games I'm currently playing
 - [/newsletter](/newsletter/): subscribe to updates
 - [/now](/now/): what I'm up to, now
-- [/posts](/posts/): blog posts and articles
+- [/blog](/blog/): blog posts and articles
 - [/projects](/projects/): things I've built
 - [/quotes](/quotes/): quotes I like
 - [/search](/search/): search posts and snippets

@@ -1,0 +1,22 @@
+---
+layout: layouts/base.njk
+pagination:
+  data: collections.postFolders
+  size: 1
+  alias: folder
+permalink: "{{ folder.url }}"
+eleventyComputed:
+  title: "{{ folder.displayPath }}"
+---
+
+{% include "components/breadcrumbs.njk" %}
+
+<h1>{{ folder.displayPath }}</h1>
+
+<p class="text-gray-600 dark:text-gray-400 mb-6">
+  Posts under the <strong>{{ folder.displayPath }}</strong> folder.
+</p>
+
+{% set postslist = folder.posts %}
+{% set url = page.url %}
+{% include "postslist.njk" %}
