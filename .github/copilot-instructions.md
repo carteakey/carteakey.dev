@@ -30,7 +30,7 @@ This project uses a manual versioning process. It is your responsibility to keep
 1. **Code**: Make your changes following all guidelines.
 2. **Test**: Thoroughly test your changes in-browser. Check for console errors and verify all functionality. 
 
-3. **Update `CHANGELOG.md`**:
+3. **Update `docs/CHANGELOG.md`**:
 
    * Add a new entry under the current date.
    * Use SemVer headings and clear sections `Added`, `Changed`, `Fixed`.
@@ -48,12 +48,12 @@ This project uses a manual versioning process. It is your responsibility to keep
 * Browser tested, no console errors.
 * Shortcuts intact.
 * `versions.json` bumped correctly.
-* `CHANGELOG.md` updated.
+* `docs/CHANGELOG.md` updated.
 
 
 5. **Push**: Push your changes to the `sonnet` branch.
 
-6. Update the TODO.md file if you added or fixed something that should be noted there.
+6. Update the docs/TODO.md file if you added or fixed something that should be noted there.
 ---
 
 
