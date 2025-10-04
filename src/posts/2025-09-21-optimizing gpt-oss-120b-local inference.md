@@ -1,5 +1,6 @@
 ---
-title: Optimizing gpt-oss-120b local inference speed on consumer hardware
+title: Optimizing gpt-oss-120b
+ speed on consumer hardware
 description: Squeezing every token per second 
 date: 2025-09-21
 updated: 2025-09-21

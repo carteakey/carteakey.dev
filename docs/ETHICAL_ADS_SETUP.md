@@ -42,6 +42,9 @@ metadata file.
 - The ad container width, border, and spacing are controlled in
   `src/_includes/components/ethical-ads.njk`. Tailor the styling there if the
   default 220 px sidebar does not suit your layout.
+- Ads render in a floating rail on extra-wide screens (`≥1280px`) to avoid
+  shrinking the main article column; adjust the breakpoint by editing the
+  `hidden xl:block` class in the page layouts if you want them visible earlier.
 - EthicalAds supports custom targeting via data attributes. Add additional
   attributes to the `<div data-ea-publisher=...>` element inside the component
   if you want to segment ads by page type, tag, or locale.

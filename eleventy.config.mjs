@@ -715,7 +715,7 @@ export default function(eleventyConfig) {
       ...microposts,
       ...nowUpdates,
       ...photos,
-      ...vibes,
+      // ...vibes,
     ].filter((item) => item.date instanceof Date && !Number.isNaN(item.date.valueOf()));
 
     return combined.sort((a, b) => b.date - a.date);

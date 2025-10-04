@@ -5,12 +5,14 @@ hasEthicalAds: true
 
 {% include "components/breadcrumbs.njk" %}
 
-<div class="lg:grid lg:grid-cols-[220px_minmax(0,1fr)] lg:gap-8 xl:gap-12">
-  <aside class="hidden lg:block">
-    {% include "components/ethical-ads.njk" %}
+<div class="relative mx-auto w-full xl:max-w-3xl">
+  <aside class="hidden xl:block absolute -left-[260px] top-0">
+    <div class="sticky top-24 w-[220px] space-y-3">
+      {% include "components/ethical-ads.njk" %}
+    </div>
   </aside>
 
-  <article class="snippet min-w-0 space-y-6">
+  <article class="snippet min-w-0 space-y-6 px-4 sm:px-6 xl:px-0">
     <header class="space-y-3">
       <h1>{{ title }}</h1>
 

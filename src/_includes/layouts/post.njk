@@ -34,12 +34,23 @@ hasEthicalAds: true
 
 {% include "components/breadcrumbs.njk" %}
 
-<div class="lg:grid lg:grid-cols-[220px_minmax(0,1fr)_220px] lg:gap-8 xl:gap-12">
-  <aside class="hidden lg:block">
-    {% include "components/ethical-ads.njk" %}
+<div class="relative mx-auto w-full xl:max-w-3xl">
+  <aside class="hidden xl:block absolute -left-[260px] top-0">
+    <div class="sticky top-24 w-[220px] space-y-3">
+      {% include "components/ethical-ads.njk" %}
+    </div>
   </aside>
 
-  <article class="min-w-0 space-y-8">
+  <aside class="hidden xl:block absolute -right-[260px] top-0 text-sm text-gray-600 dark:text-gray-300">
+    <div class="sticky top-24 space-y-3 w-[220px]">
+      <p class="text-lg font-semibold my-0">Outline</p>
+      <div class="max-h-[70vh] overflow-y-auto pr-2">
+        {{ content | toc | safe }}
+      </div>
+    </div>
+  </aside>
+
+  <article class="min-w-0 space-y-8 px-4 sm:px-6 xl:px-0">
     <header class="space-y-4">
       <h1>{{ title }}</h1>
 
@@ -307,12 +318,10 @@ hasEthicalAds: true
     </div>
   </article>
 
-  <aside class="hidden lg:block">
-    <div class="sticky top-24 text-sm text-gray-600 dark:text-gray-300 space-y-3">
-      <p class="text-lg font-semibold my-0">Outline</p>
-      <div class="max-h-[70vh] overflow-y-auto pr-2">
-        {{ content | toc | safe }}
-      </div>
+  <div class="xl:hidden mt-12 text-sm text-gray-600 dark:text-gray-300 space-y-3">
+    <p class="text-lg font-semibold my-0">Outline</p>
+    <div class="max-h-[50vh] overflow-y-auto pr-2">
+      {{ content | toc | safe }}
     </div>
-  </aside>
+  </div>
 </div>
