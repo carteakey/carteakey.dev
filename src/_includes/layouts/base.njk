@@ -31,6 +31,31 @@
   </script>
 
   <script>
+    const ACCENT_COLORS = {
+      gray: "#6b7280",
+      slate: "#64748b",
+      zinc: "#71717a",
+      neutral: "#737373",
+      stone: "#78716c",
+      red: "#ef4444",
+      orange: "#f97316",
+      amber: "#f59e0b",
+      yellow: "#eab308",
+      lime: "#84cc16",
+      green: "#22c55e",
+      emerald: "#10b981",
+      teal: "#14b8a6",
+      cyan: "#06b6d4",
+      sky: "#0ea5e9",
+      blue: "#3b82f6",
+      indigo: "#6366f1",
+      violet: "#8b5cf6",
+      purple: "#a855f7",
+      fuchsia: "#d946ef",
+      pink: "#ec4899",
+      rose: "#f43f5e"
+    };
+
     const isDarkMode = () =>
       localStorage.theme === "dark" ||
       (!("theme" in localStorage) &&
@@ -46,12 +71,18 @@
       return localStorage.accentTheme || "amber";
     };
 
+    const setAccentVariables = (theme) => {
+      const accentColor = ACCENT_COLORS[theme] || ACCENT_COLORS.amber;
+      document.documentElement.style.setProperty("--accent-color", accentColor);
+    };
+
     const setAccentTheme = (theme) => {
       localStorage.accentTheme = theme;
       updateAccentClasses(theme);
     };
 
     const updateAccentClasses = (theme) => {
+      setAccentVariables(theme);
       const proseElement = document.querySelector('.prose');
       if (proseElement) {
         // Remove all existing prose color classes
@@ -62,6 +93,8 @@
         proseElement.classList.add(`prose-${theme}`);
       }
     };
+
+    setAccentVariables(getAccentTheme());
 
     // Apply saved accent theme on page load
     document.addEventListener('DOMContentLoaded', () => {
@@ -175,8 +208,9 @@
   </script>
   {% endif %}
 </head>
-<body class="bg-gray-50 dark:bg-black font-sans">
-  <div class="md:max-w-2xl lg:max-w-3xl mx-auto">
+{% set showReadingFrame = not fullWidth %}
+<body class="bg-gray-50 dark:bg-black font-sans{% if showReadingFrame %} md:bg-[#f8f5eb] md:dark:bg-[#0f0f0f]{% endif %}">
+  <div class="md:max-w-2xl lg:max-w-3xl mx-auto{% if showReadingFrame %} md:rounded-[28px] md:bg-white md:dark:bg-zinc-950 md:shadow-xl md:ring-1 md:ring-amber-100/60 md:dark:ring-zinc-800/60 md:px-10 md:py-12{% endif %}">
     <div class="prose prose-amber prose-lg prose-h1:text-3xl prose-h2:my-4 dark:prose-invert px-4 md:px-0">
       <nav class="flex w-full py-8 justify-end">
 

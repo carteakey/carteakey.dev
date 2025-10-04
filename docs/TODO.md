@@ -10,8 +10,6 @@
 
 ## Medium Priority
 - [x] In the feed, the photo format is not closing and the rest of the items are getting put into that container.
-- [ ] In bookmarks, the Open an issue should have the same accent color as the rest of the site
-- [ ] Same for the 404 page. The button should follow the accent color
 - [ ] Bookmarks page shoudl followe the same card style as blogroll and projects
 
 Buy me a coffee
@@ -55,6 +53,11 @@ Buy me a coffee
 
 ## Completed TODOs
 ### 2025-10-04
+- [x] Notebook reading frame now adds a desktop-only off-white surround with a matching outline card on posts.
+- [x] Reserved a right-rail "Conversation space" block beside posts for future inline comments.
+- [x] Notebook frame defers on mobile screens and `fullWidth` pages to stay out of the way.
+- [x] Bookmarks CTA links now inherit the active accent theme instead of hard-coded amber tones.
+- [x] 404 hero actions and badge now follow the accent theme with the new accent utility classes.
 - [x] Added an off-white doodle backdrop outside the main reading column for a cozier feel.
 - [x] Feed cards now size themselves to their content height instead of stretching to match neighbors.
 - [x] "Back to Top" control now inherits the currently selected accent theme colors.

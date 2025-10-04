@@ -34,21 +34,40 @@ hasEthicalAds: true
 
 {% include "components/breadcrumbs.njk" %}
 
+{% set showSidebar = not fullWidth %}
+{% set tocHtml = content | toc %}
+
 <div class="relative mx-auto w-full xl:max-w-3xl">
-  <aside class="hidden  absolute -left-[260px] top-0">
+  {% if showSidebar %}
+  <aside class="hidden xl:block absolute -left-[260px] top-0">
     <div class="sticky top-24 w-[220px] space-y-3">
       {% include "components/ethical-ads.njk" %}
     </div>
   </aside>
+  {% endif %}
 
-  <aside class="hidden xl:block absolute -right-[260px] top-0 text-sm text-gray-600 dark:text-gray-300">
-    <div class="sticky top-24 space-y-3 w-[220px]">
-      <p class="text-lg font-semibold my-0">Outline</p>
-      <div class="max-h-[70vh] overflow-y-auto pr-2">
-        {{ content | toc | safe }}
-      </div>
+  {% if showSidebar %}
+  <aside class="hidden xl:block absolute -right-[280px] top-0 text-sm text-gray-600 dark:text-gray-300">
+    <div class="sticky top-24 space-y-4 w-[240px]">
+      {% if tocHtml | trim %}
+      <section class="rounded-3xl border border-amber-100/60 dark:border-zinc-800/60 bg-[#f8f5eb] dark:bg-zinc-900 px-6 py-5 shadow-sm">
+        <p class="text-lg font-semibold my-0 text-gray-800 dark:text-gray-100">Outline</p>
+        <div class="mt-3 max-h-[60vh] overflow-y-auto pr-1">
+          {{ tocHtml | safe }}
+        </div>
+      </section>
+      {% endif %}
+      <section id="sidebar-annotations" class="rounded-3xl border border-amber-100/40 dark:border-zinc-800/50 bg-[#f8f5eb] dark:bg-zinc-900 px-6 py-5 shadow-sm">
+        <p class="text-xs font-semibold uppercase tracking-[0.2em] text-amber-700/80 dark:text-amber-200/80">
+          Conversation space
+        </p>
+        <p class="mt-3 text-xs leading-relaxed text-gray-600 dark:text-gray-400">
+          Reserved for future side comments and annotations without crowding the main column.
+        </p>
+      </section>
     </div>
   </aside>
+  {% endif %}
 
   <article class="min-w-0 space-y-8 px-4 sm:px-6 xl:px-0">
     <header class="space-y-4">

@@ -67,6 +67,10 @@
   }
 }
 
+:root {
+  --accent-color: #f59e0b;
+}
+
 *:focus {
   outline: 0px !important;
   appearance: none;
@@ -166,6 +170,75 @@ figure {
   text-align: center;
   display: table;
   margin: 10px auto; /* not needed unless you want centered */
+}
+
+@layer components {
+  .accent-link {
+    color: var(--accent-color);
+    text-decoration-color: color-mix(in srgb, var(--accent-color) 60%, white);
+    transition: color 150ms ease, text-decoration-color 150ms ease;
+  }
+
+  .accent-link:hover {
+    color: color-mix(in srgb, var(--accent-color) 85%, black);
+    text-decoration-color: color-mix(in srgb, var(--accent-color) 85%, black);
+  }
+
+  .dark .accent-link {
+    color: color-mix(in srgb, var(--accent-color) 70%, white);
+    text-decoration-color: color-mix(in srgb, var(--accent-color) 65%, white);
+  }
+
+  .dark .accent-link:hover {
+    color: color-mix(in srgb, var(--accent-color) 88%, white);
+    text-decoration-color: color-mix(in srgb, var(--accent-color) 78%, white);
+  }
+
+  .accent-button,
+  .accent-button-outline {
+    transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease, box-shadow 150ms ease;
+  }
+
+  .accent-button {
+    background-color: var(--accent-color);
+    color: #ffffff;
+  }
+
+  .accent-button:hover {
+    background-color: color-mix(in srgb, var(--accent-color) 85%, black);
+  }
+
+  .dark .accent-button:hover {
+    background-color: color-mix(in srgb, var(--accent-color) 75%, white);
+  }
+
+  .accent-button-outline {
+    border: 1px solid var(--accent-color);
+    color: var(--accent-color);
+    background-color: transparent;
+  }
+
+  .accent-button-outline:hover {
+    background-color: color-mix(in srgb, var(--accent-color) 12%, white);
+  }
+
+  .dark .accent-button-outline {
+    color: color-mix(in srgb, var(--accent-color) 70%, white);
+    border-color: color-mix(in srgb, var(--accent-color) 65%, white);
+  }
+
+  .dark .accent-button-outline:hover {
+    background-color: color-mix(in srgb, var(--accent-color) 14%, rgb(24 24 27));
+  }
+
+  .accent-focus:focus-visible {
+    outline: 2px solid color-mix(in srgb, var(--accent-color) 65%, white);
+    outline-offset: 3px;
+  }
+
+  .dark .accent-focus:focus-visible {
+    outline-color: color-mix(in srgb, var(--accent-color) 55%, white);
+  }
 }
 
 /* Upvote button styles */

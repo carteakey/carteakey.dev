@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.7] - 2025-10-04
+
+### Added
+- Post sidebar now has a dedicated "Conversation space" card ready for future inline comments alongside the outline.
+- Accent-aware utility classes (`accent-link`, `accent-button`, `accent-button-outline`, `accent-focus`) driven by CSS variables for reusable theming.
+
+### Changed
+- Post layout adopts a notebook-style frame on desktop with an off-white surround that stays hidden on mobile and `fullWidth` pages.
+- Outline and sidebar styling reuse the accent palette and off-white backdrop to match the refreshed reading frame.
+
+### Fixed
+- Bookmarks "Open an issue" CTA and 404 hero buttons now inherit the active accent theme instead of being locked to amber.
+
 ## [1.3.6] - 2025-10-04
 
 ### Added
