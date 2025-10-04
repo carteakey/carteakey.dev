@@ -5,6 +5,45 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.6] - 2025-10-04
+
+### Added
+- Ambient off-white doodle backdrop using `src/static/img/patterns/hobbies-doodle.svg` and a softened site frame around the reading column.
+
+### Changed
+- Feed grids now align cards to their natural height so content length dictates the card size on /feed and the homepage.
+- Bookmarks layout refresh adds favicon badges, domain metadata, and breathing room for descriptions.
+
+### Fixed
+- "Back to Top" button now honors the active accent theme across light and dark modes.
+- Bookmark timestamps reuse the `readableDate` filter for parity with posts and snippets.
+
+## [1.3.5] - 2025-10-04
+
+### Added
+- Stats page now reads Lighthouse scores from `_data/lighthouse.json`, exposing the run metadata alongside the four category scores.
+
+### Changed
+- Feed page and homepage now share a reusable card component with styling that matches other site cards and uses denser typography.
+- Snippets index adopts the site card grid, refreshed search UI, and inline metadata chips for languages and tags.
+- Base layout typography tightened across the site to increase information density without sacrificing readability.
+
+### Fixed
+- Footer icon set now stays on a single row on mobile viewports.
+
+## [1.3.4] - 2025-10-04
+
+### Added
+- Projects page now renders a cached GitHub contributions heatmap backed by the new `githubContributions` data source.
+- Floating "Back to Top" control appears on scroll with reduced-motion friendly smooth scrolling.
+
+### Changed
+- 404 page adopts the main layout with curated fallback links and contact prompts.
+- Bookmarks view uses the same card grid styling as Blogroll/Projects, with per-category counts and anchors.
+
+### Fixed
+- Feed, homepage, and GPT-OSS benchmark comparison images now go through the Eleventy image pipeline for responsive, optimised output.
+
 ## [1.3.3] - 2025-10-04
 
 ### Added

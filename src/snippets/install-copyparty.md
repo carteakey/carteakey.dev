@@ -1,6 +1,8 @@
 ---
 title: Installing Copyparty on your server.
 slug: install-copyparty
+date: 2025-08-05T21:19:59.349Z
+updated: 2025-08-05T21:19:59.355Z
 ---
 
 https://github.com/9001/copyparty 

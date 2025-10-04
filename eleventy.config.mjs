@@ -411,6 +411,32 @@ export default function(eleventyConfig) {
     return array.map(item => item[property]);
   });
 
+  const parseHostname = (value) => {
+    if (!value) return '';
+    try {
+      const normalized = String(value).trim();
+      if (!normalized) return '';
+      const url = normalized.startsWith('http') ? new URL(normalized) : new URL(`https://${normalized}`);
+      return url.hostname.replace(/^www\./, '');
+    } catch (error) {
+      return '';
+    }
+  };
+
+  eleventyConfig.addFilter("domainFromUrl", function(value) {
+    return parseHostname(value);
+  });
+
+  eleventyConfig.addFilter("domainInitial", function(value) {
+    const domain = parseHostname(value);
+    return domain ? domain[0].toUpperCase() : '#';
+  });
+
+  eleventyConfig.addFilter("faviconUrl", function(value) {
+    const domain = parseHostname(value);
+    return domain ? `https://icons.duckduckgo.com/ip3/${domain}.ico` : null;
+  });
+
   eleventyConfig.addFilter("date", function(date, format) {
     if (!date) return '';
     const dateObj = typeof date === 'string' ? new Date(date) : date;

@@ -9,9 +9,14 @@
 ### Content Features
 
 ## Medium Priority
+- [x] In the feed, the photo format is not closing and the rest of the items are getting put into that container.
+- [ ] In bookmarks, the Open an issue should have the same accent color as the rest of the site
+- [ ] Same for the 404 page. The button should follow the accent color
+- [ ] Bookmarks page shoudl followe the same card style as blogroll and projects
+
+Buy me a coffee
 
 ### Performance & Technical
-- [ ] Port image optimization to all areas not currently using it
 - [ ] Critical CSS inlining for above-the-fold content
 - [ ] Add service worker for offline reading
 - [ ] Implement lazy loading for images (if not already present)
@@ -22,13 +27,12 @@
 - [ ] Code snippet favorites - Let visitors save useful snippets
 
 ### Analytics & Insights
-- [ ] GitHub contribution graph integration
+
 - [ ] Learning progress tracker
 - [ ] View count tracking (privacy-friendly)
 
 ### Content Organization
 - [ ] Archive page improvements
-- [ ] Better 404 page design
 - [ ] Add skip links for accessibility
 - [ ] Improve heading hierarchy
 - [ ] Add table of contents for long posts
@@ -51,6 +55,21 @@
 
 ## Completed TODOs
 ### 2025-10-04
+- [x] Added an off-white doodle backdrop outside the main reading column for a cozier feel.
+- [x] Feed cards now size themselves to their content height instead of stretching to match neighbors.
+- [x] "Back to Top" control now inherits the currently selected accent theme colors.
+- [x] Bookmarks display each site's favicon with graceful fallbacks.
+- [x] Bookmark timestamps use the same readable date format as blog posts.
+- [x] Feed layout refreshed to match card styling across the site and share a reusable component.
+- [x] Footer icon row now stays on a single line on small screens.
+- [x] Snippets index rebuilt with card grid styling, search polish, and inline metadata chips.
+- [x] Site typography tightened for higher information density.
+- [x] Lighthouse metrics now sourced from `_data/lighthouse.json` and displayed dynamically on the stats page.
+- [x] GitHub contribution graph integration with data-driven heatmap on projects page
+- [x] Better 404 page design with helpful navigation
+- [x] Bookmarks page aligned with blogroll/projects card layout
+- [x] Add a "Back to Top" button on long pages floating at bottom right
+- [x] Port image optimization to remaining templates using eleventy-img
 - [x] A blog post outlining how i am working with copilot and codex - the flow, the prompt.md and the instructions.md file. 
 - [x] Create bookmarks/reading list - Curated list of articles you recommend
 - [x] Add post reactions - Beyond upvotes, add emoji reactions
