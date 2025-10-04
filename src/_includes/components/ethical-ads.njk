@@ -1,0 +1,17 @@
+<div class="lg:sticky lg:top-24 lg:w-[220px] space-y-3">
+  {% if metadata.ethicalAds and metadata.ethicalAds.publisher %}
+    <div class="rounded-lg border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 shadow-sm p-4 space-y-3">
+      <p class="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
+        Ads by EthicalAds
+      </p>
+      <div class="min-h-[250px] flex items-center justify-center" data-ea-publisher="{{ metadata.ethicalAds.publisher }}" data-ea-type="{{ metadata.ethicalAds.type | default('image') }}"></div>
+      <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
+        Privacy-respecting ads that help keep carteakey.dev sustainable.
+      </p>
+    </div>
+  {% else %}
+    <div class="rounded-lg border border-dashed border-gray-300 dark:border-gray-700 p-4 text-xs text-gray-500 dark:text-gray-400">
+      Configure <code>metadata.ethicalAds.publisher</code> to display EthicalAds in this slot.
+    </div>
+  {% endif %}
+</div>

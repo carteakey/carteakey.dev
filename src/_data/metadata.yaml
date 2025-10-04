@@ -11,3 +11,6 @@ author:
 nav:
   - key: Now
     order: 3
+ethicalAds:
+  publisher: carteakey-dev
+  type: image

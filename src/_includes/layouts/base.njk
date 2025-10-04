@@ -800,5 +800,9 @@
     `;
     document.head.appendChild(style);
   </script>
+
+  {% if hasEthicalAds and metadata.ethicalAds and metadata.ethicalAds.publisher %}
+    <script async src="https://media.ethicalads.io/media/client/ethicalads.min.js"></script>
+  {% endif %}
 </body>
 </html>

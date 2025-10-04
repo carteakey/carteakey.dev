@@ -2,7 +2,13 @@
 {# This component generates breadcrumb navigation based on the current page URL #}
 
 {% set breadcrumbItems = [] %}
-{% set segments = page.url | replace("/", "") | split("/") %}
+{% set rawSegments = page.url | split("/") %}
+{% set segments = [] %}
+{% for part in rawSegments %}
+  {% if part %}
+    {% set segments = (segments.push(part), segments) %}
+  {% endif %}
+{% endfor %}
 {% set currentPath = "" %}
 
 {# Add home #}
@@ -16,10 +22,12 @@
 {% for segment in segments %}
   {% if segment %}
     {% set currentPath = currentPath + "/" + segment %}
-    {% set label = segment | replace("-", " ") | capitalize %}
-    
+    {% set label = segment | replace("-", " ") | replace("_", " ") | capitalize %}
+
     {# Special handling for known sections #}
     {% if segment == "posts" %}
+      {% set label = "Blog" %}
+    {% elif segment == "blog" %}
       {% set label = "Blog" %}
     {% elif segment == "now" %}
       {% set label = "Now" %}
@@ -52,9 +60,11 @@
       {% set label = title %}
     {% endif %}
     
+    {% set crumbUrl = currentPath + '/' %}
+
     {% set breadcrumbItems = (breadcrumbItems.push({
       label: label,
-      url: currentPath,
+      url: crumbUrl,
       isLast: loop.last
     }), breadcrumbItems) %}
   {% endif %}
