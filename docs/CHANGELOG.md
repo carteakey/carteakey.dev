@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.3] - 2025-10-04
+
+### Added
+- Post reactions: emoji-based feedback bar backed by a new Netlify function (`reactions.js`) and Upstash hashes, including localStorage safeguards.
+- Documentation refresh: `docs/instructions.md` now captures the full Copilot/Codex playbook alongside the active `docs/prompt.md` brief.
+- Meta: "Working with Copilot & Codex on carteakey.dev" post covering the agent workflow and release loop.
+
+### Changed
+- Bookmarks page now surfaces totals, per-category anchors, sorted entries, and three new resources across architecture, career, and systems operations.
+- Eleventy build adds an output transform that normalises relative asset links inside posts and rewrites legacy `/posts/` URLs to `/blog/`.
+- TODO tracking reorganised with an auto-archived "Completed TODOs" section to keep the active list focused.
+
+### Fixed
+- Relative links to assets stored beside posts now resolve correctly in the generated site while maintaining the same repo-friendly paths.
+
 ## [1.3.2] - 2025-10-01
 
 ### Added

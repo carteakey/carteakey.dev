@@ -72,6 +72,43 @@ const POST_ASSET_EXTENSIONS = new Set([
   ".css"
 ]);
 
+const OUTPUT_ROOT = path.resolve("_site");
+
+function resolveRelativeUrl(url, options = {}) {
+  if (typeof url !== "string") {
+    return url;
+  }
+
+  if (!/^\.\.?(\/|$)/.test(url)) {
+    return url;
+  }
+
+  const { sourceDir } = options;
+
+  const urlMatch = url.match(/^([^?#]+)([?#].*)?$/);
+  const relativePath = urlMatch?.[1] ?? url;
+  const suffix = urlMatch?.[2] ?? "";
+
+  if (!sourceDir) {
+    const fallback = path.posix.normalize(path.posix.join(options.baseDir ?? "/", relativePath));
+    const absolute = fallback.startsWith("/") ? fallback : `/${fallback}`;
+    return `${absolute}${suffix}`;
+  }
+
+  const resolved = path.posix.normalize(path.posix.join(sourceDir, relativePath));
+
+  let sitePath;
+  if (resolved.startsWith("src/posts/")) {
+    sitePath = resolved.replace(/^src\/posts/, "/blog");
+  } else if (resolved.startsWith("src/")) {
+    sitePath = resolved.replace(/^src\//, "/");
+  } else {
+    sitePath = `/${resolved}`;
+  }
+
+  return `${sitePath}${suffix}`;
+}
+
 async function copyPostAssets(srcDir, destDir) {
   let entries;
   try {
@@ -408,6 +445,37 @@ export default function(eleventyConfig) {
 
   eleventyConfig.addFilter("head", function(array, count) {
     return array.slice(0, count);
+  });
+
+  eleventyConfig.addTransform("normalizePostAssetLinks", function (content, outputPath) {
+    if (!outputPath || !outputPath.endsWith(".html")) {
+      return content;
+    }
+
+    const relativeOutput = path.relative(OUTPUT_ROOT, outputPath).split(path.sep).join("/");
+    const directoryName = path.posix.dirname(relativeOutput);
+    const baseDir = directoryName === "." ? "/" : `/${directoryName}`;
+
+    let sourceDir;
+    const inputPath = this?.page?.inputPath;
+    if (inputPath) {
+      const relativeInput = path.relative(process.cwd(), inputPath).split(path.sep).join("/");
+      const inputDirectory = path.posix.dirname(relativeInput);
+      if (inputDirectory && inputDirectory !== ".") {
+        sourceDir = inputDirectory;
+      }
+    }
+
+    let transformed = content.replace(/\b(href|src)=("|')([.]{1,2}\/(?:[^"']*))("|')/g, (match, attr, quoteStart, url, quoteEnd) => {
+      const normalized = resolveRelativeUrl(url, { sourceDir, baseDir });
+      return `${attr}=${quoteStart}${normalized}${quoteEnd}`;
+    });
+
+    transformed = transformed.replace(/\b(href|src)=("|')\/posts\/(?!\s)([^"']*)("|')/g, (match, attr, quoteStart, rest, quoteEnd) => {
+      return `${attr}=${quoteStart}/blog/${rest}${quoteEnd}`;
+    });
+
+    return transformed;
   });
 
   // Add reading time filter (estimates based on average reading speed of 200 words per minute)
@@ -749,11 +817,13 @@ export default function(eleventyConfig) {
 
   eleventyConfig.on("eleventy.after", async () => {
     const srcDir = path.resolve("src/posts");
-    const destDir = path.resolve("_site/blog");
+    const destDirs = [path.resolve("_site/blog"), path.resolve("_site/posts")];
 
     try {
-      await fsPromises.mkdir(destDir, { recursive: true });
-      await copyPostAssets(srcDir, destDir);
+      for (const destDir of destDirs) {
+        await fsPromises.mkdir(destDir, { recursive: true });
+        await copyPostAssets(srcDir, destDir);
+      }
     } catch (error) {
       console.warn("Failed to copy post assets", error);
     }

@@ -35,7 +35,7 @@ hasEthicalAds: true
 {% include "components/breadcrumbs.njk" %}
 
 <div class="relative mx-auto w-full xl:max-w-3xl">
-  <aside class="hidden xl:block absolute -left-[260px] top-0">
+  <aside class="hidden  absolute -left-[260px] top-0">
     <div class="sticky top-24 w-[220px] space-y-3">
       {% include "components/ethical-ads.njk" %}
     </div>
@@ -96,6 +96,14 @@ hasEthicalAds: true
       </p>
     {% endif %}
 
+    {% set reactionOptions = [
+      { id: 'thumbs_up', emoji: '👍', label: 'Helpful' },
+      { id: 'sparkles', emoji: '✨', label: 'Delightful' },
+      { id: 'rocket', emoji: '🚀', label: 'Shipped it' },
+      { id: 'lightbulb', emoji: '💡', label: 'Interesting idea' },
+      { id: 'eyes', emoji: '👀', label: 'Watching this' }
+    ] %}
+
     <!-- Upvote Section -->
     <div class="upvote-section mt-8 mb-4 flex items-center">
       <button id="upvoteButton" class="upvote-button p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors flex items-center" aria-label="Upvote this post">
@@ -108,6 +116,29 @@ hasEthicalAds: true
         </span>
       </button>
       <span id="upvoteMessage" class="ml-2 text-sm text-gray-500 dark:text-gray-400 hidden">Thanks for your upvote!</span>
+    </div>
+
+    <div id="postReactions" class="hidden mt-6" data-slug="{{ page.fileSlug }}">
+      <h3 class=" text-sm font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400 flex items-center gap-2">
+        {% feather "smile", class="w-4 h-4" %}
+        React to this post
+      </h3>
+      <div class="mt-3 flex flex-wrap gap-2">
+        {% for reaction in reactionOptions %}
+          <button
+            type="button"
+            class="reaction-button flex items-center gap-2 rounded-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-3 py-2 text-sm text-gray-600 dark:text-gray-300 hover:border-amber-400 dark:hover:border-amber-500 transition-colors"
+            data-reaction="{{ reaction.id }}"
+            aria-label="{{ reaction.label }}"
+            title="{{ reaction.label }}"
+          >
+            <span class="text-xl" aria-hidden="true">{{ reaction.emoji }}</span>
+            <span class="sr-only">{{ reaction.label }}</span>
+            <span class="text-sm font-semibold text-gray-700 dark:text-gray-200" data-reaction-count="{{ reaction.id }}">0</span>
+          </button>
+        {% endfor %}
+      </div>
+      <p id="reactionMessage" class="mt-2 text-sm text-gray-500 dark:text-gray-400 hidden"></p>
     </div>
 
     <script>
@@ -207,6 +238,126 @@ hasEthicalAds: true
             }, 3000);
           }
         });
+
+        const reactionOptions = {{ reactionOptions | dump | safe }};
+        const reactionsContainer = document.getElementById('postReactions');
+
+        if (reactionsContainer) {
+          const reactionButtons = Array.from(reactionsContainer.querySelectorAll('[data-reaction]'));
+          const reactionMessage = document.getElementById('reactionMessage');
+          const reactionStorageKey = `reactions_${postSlug}`;
+          const reactionMap = new Map(reactionOptions.map(option => [option.id, option]));
+
+          let storedReactions = [];
+          try {
+            const raw = localStorage.getItem(reactionStorageKey);
+            if (raw) {
+              const parsed = JSON.parse(raw);
+              if (Array.isArray(parsed)) {
+                storedReactions = parsed;
+              }
+            }
+          } catch (_) {
+            storedReactions = [];
+          }
+
+          const activeReactions = new Set(storedReactions);
+
+          function showReactionMessage(text, isError = false) {
+            if (!reactionMessage) return;
+            reactionMessage.textContent = text;
+            reactionMessage.classList.remove('hidden');
+            if (isError) {
+              reactionMessage.classList.add('text-red-500');
+            } else {
+              reactionMessage.classList.remove('text-red-500');
+            }
+            setTimeout(() => {
+              reactionMessage.classList.add('hidden');
+            }, 3000);
+          }
+
+          function setButtonState(button, isActive) {
+            if (isActive) {
+              button.classList.add('border-amber-500', 'bg-amber-100', 'dark:bg-amber-900/30', 'text-amber-900', 'dark:text-amber-200');
+              button.classList.remove('border-gray-200', 'dark:border-gray-700', 'text-gray-600', 'dark:text-gray-300');
+            } else {
+              button.classList.remove('border-amber-500', 'bg-amber-100', 'dark:bg-amber-900/30', 'text-amber-900', 'dark:text-amber-200');
+              button.classList.add('border-gray-200', 'dark:border-gray-700', 'text-gray-600', 'dark:text-gray-300');
+            }
+          }
+
+          function updateButtonStates() {
+            reactionButtons.forEach((button) => {
+              const id = button.dataset.reaction;
+              setButtonState(button, activeReactions.has(id));
+            });
+          }
+
+          function updateReactionCounts(counts) {
+            reactionOptions.forEach((option) => {
+              const countEl = reactionsContainer.querySelector(`[data-reaction-count="${option.id}"]`);
+              if (countEl) {
+                const count = counts && typeof counts[option.id] !== 'undefined' ? counts[option.id] : 0;
+                countEl.textContent = count;
+              }
+            });
+          }
+
+          async function fetchReactionCounts() {
+            try {
+              const response = await fetch(`/.netlify/functions/reactions?slug=${postSlug}`);
+              if (!response.ok) {
+                throw new Error('Failed to fetch reactions');
+              }
+              const data = await response.json();
+              updateReactionCounts(data.counts);
+            } catch (error) {
+              console.error('Error fetching reactions:', error);
+            }
+          }
+
+          reactionButtons.forEach((button) => {
+            button.addEventListener('click', async () => {
+              const reactionId = button.dataset.reaction;
+              const config = reactionMap.get(reactionId);
+              if (!config) return;
+
+              if (activeReactions.has(reactionId)) {
+                showReactionMessage(`You already reacted with ${config.emoji}.`);
+                return;
+              }
+
+              try {
+                const response = await fetch('/.netlify/functions/reactions', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify({ slug: postSlug, reaction: reactionId })
+                });
+
+                if (!response.ok) {
+                  throw new Error('Failed to save reaction');
+                }
+
+                const data = await response.json();
+                updateReactionCounts(data.counts);
+
+                activeReactions.add(reactionId);
+                localStorage.setItem(reactionStorageKey, JSON.stringify(Array.from(activeReactions)));
+                updateButtonStates();
+                showReactionMessage(`Thanks for reacting with ${config.emoji}!`);
+              } catch (error) {
+                console.error('Error saving reaction:', error);
+                showReactionMessage('Something went wrong. Please try again.', true);
+              }
+            });
+          });
+
+          await fetchReactionCounts();
+          updateButtonStates();
+        }
       });
     </script>
 
