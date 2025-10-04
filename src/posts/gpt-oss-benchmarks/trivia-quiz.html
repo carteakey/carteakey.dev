@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>U.S. Trivia Quiz</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background:#e3e7f1;
+    margin:0;
+    padding:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+  }
+  #quiz-container {
+    max-width: 600px;
+    width:100%;
+    margin:30px auto;
+    padding:10px;
+    background:#fff;
+    border-radius:8px;
+    box-shadow:0 4px 12px rgba(0,0,0,.15);
+    box-sizing:border-box;
+  }
+  #header h1 {
+    font-size:1.8rem;
+    margin:0 0 20px;
+    text-align:center;
+    color:#333;
+  }
+  #progress-container {
+    display:flex;
+    align-items:center;
+    margin-bottom:20px;
+  }
+  #progress-bar-container {
+    flex:1;
+    height:10px;
+    background:#e0e0e0;
+    border-radius:5px;
+    margin-right:10px;
+    overflow:hidden;
+  }
+  #progress-bar {
+    height:100%;
+    background:#4caf50;
+    width:0;
+  }
+  #progress-text {
+    font-size:0.9rem;
+    color:#555;
+  }
+  #question-card {
+    position:relative;
+    background:#fff;
+    padding:20px;
+    border-radius:8px;
+    box-shadow:0 2px 8px rgba(0,0,0,.1);
+    margin-bottom:20px;
+  }
+  #question-text {
+    font-size:1.4rem;
+    margin-bottom:20px;
+    color:#333;
+  }
+  .answer-option {
+    display:block;
+    width:100%;
+    padding:12px 20px;
+    margin-bottom:10px;
+    font-size:1.1rem;
+    border:1px solid #ddd;
+    border-radius:5px;
+    background:#fff;
+    cursor:pointer;
+    transition:background 0.2s, border-color 0.2s;
+    color:#333;
+  }
+  .answer-option:hover {
+    background:#f5f5f5;
+  }
+  .answer-option:disabled {
+    opacity:0.6;
+    cursor:not-allowed;
+  }
+  .correct {
+    border-color:#4caf50;
+    background:#e6ffe6;
+  }
+  .incorrect {
+    border-color:#f44336;
+    background:#ffe6e6;
+  }
+  #feedback-icon {
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%) scale(0);
+    font-size:8rem;
+    opacity:0;
+    transition:transform 0.3s ease, opacity 0.3s ease;
+    color:#4caf50;
+  }
+  #feedback-icon.show {
+    transform:translate(-50%,-50%) scale(1);
+    opacity:1;
+  }
+  #final-score {
+    font-size:2rem;
+    text-align:center;
+    margin-top:40px;
+    color:#333;
+  }
+  .hidden {
+    display:none;
+  }
+</style>
+</head>
+<body>
+<div id="quiz-container">
+  <div id="header"><h1>U.S. Trivia Quiz</h1></div>
+  <div id="progress-container">
+    <div id="progress-bar-container"><div id="progress-bar"></div></div>
+    <span id="progress-text">Question 1 of 10</span>
+  </div>
+  <div id="question-card">
+    <div id="question-text"></div>
+    <div id="answers"></div>
+    <div id="feedback-icon"></div>
+  </div>
+  <div id="final-score" class="hidden"></div>
+</div>
+<script>
+  const questions = [
+    {
+      question: "Which U.S. state is known as the 'Sunshine State'?",
+      answers: ["Florida", "California", "Texas", "Arizona"],
+      correct: "Florida"
+    },
+    {
+      question: "What is the capital of the United States?",
+      answers: ["Washington, D.C.", "New York City", "Los Angeles", "Chicago"],
+      correct: "Washington, D.C."
+    },
+    {
+      question: "Which U.S. holiday is celebrated on July 4th?",
+      answers: ["Independence Day", "Thanksgiving", "Labor Day", "Memorial Day"],
+      correct: "Independence Day"
+    },
+    {
+      question: "Who was the first President of the United States?",
+      answers: ["George Washington", "Abraham Lincoln", "Thomas Jefferson", "John F. Kennedy"],
+      correct: "George Washington"
+    },
+    {
+      question: "Which U.S. state has the largest population?",
+      answers: ["California", "Texas", "New York", "Florida"],
+      correct: "California"
+    },
+    {
+      question: "Which U.S. state is known as the 'Land of 10,000 Lakes'?",
+      answers: ["Minnesota", "Wisconsin", "Michigan", "Oregon"],
+      correct: "Minnesota"
+    },
+    {
+      question: "What is the longest river in the United States?",
+      answers: ["Mississippi River", "Missouri River", "Colorado River", "Rio Grande"],
+      correct: "Mississippi River"
+    },
+    {
+      question: "Which U.S. state contains the highest point in the contiguous United States?",
+      answers: ["Colorado", "Wyoming", "Montana", "Arizona"],
+      correct: "Colorado"
+    },
+    {
+      question: "What is the largest U.S. state by land area?",
+      answers: ["Alaska", "Texas", "California", "Montana"],
+      correct: "Alaska"
+    },
+    {
+      question: "Which U.S. city is known as the 'Windy City'?",
+      answers: ["Chicago", "Detroit", "St. Louis", "Philadelphia"],
+      correct: "Chicago"
+    }
+  ];
+
+  function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  }
+
+  const progressBar = document.getElementById('progress-bar');
+  const progressText = document.getElementById('progress-text');
+  const questionText = document.getElementById('question-text');
+  const answersContainer = document.getElementById('answers');
+  const feedbackIcon = document.getElementById('feedback-icon');
+  const finalScoreDiv = document.getElementById('final-score');
+
+  let currentQuestionIndex = 0;
+  let score = 0;
+  const totalQuestions = questions.length;
+
+  shuffle(questions);
+
+  function showQuestion(index) {
+    feedbackIcon.textContent = '';
+    feedbackIcon.classList.remove('show');
+    feedbackIcon.style.color = '';
+
+    progressBar.style.width = ((index + 1) / totalQuestions) * 100 + '%';
+    progressText.textContent = 'Question ' + (index + 1) + ' of ' + totalQuestions;
+
+    const q = questions[index];
+    questionText.textContent = q.question;
+
+    answersContainer.innerHTML = '';
+
+    const shuffledAnswers = shuffle([...q.answers]);
+
+    shuffledAnswers.forEach(answer => {
+      const btn = document.createElement('button');
+      btn.className = 'answer-option';
+      btn.textContent = answer;
+      btn.dataset.answer = answer;
+      btn.addEventListener('click', () => handleAnswerClick(btn, q));
+      answersContainer.appendChild(btn);
+    });
+  }
+
+  function handleAnswerClick(selectedBtn, question) {
+    const allBtns = answersContainer.querySelectorAll('.answer-option');
+    allBtns.forEach(btn => btn.disabled = true);
+
+    const selectedAnswer = selectedBtn.dataset.answer;
+    const isCorrect = selectedAnswer === question.correct;
+
+    if (isCorrect) {
+      score++;
+      selectedBtn.classList.add('correct');
+      feedbackIcon.textContent = '✓';
+      feedbackIcon.style.color = '#4caf50';
+    } else {
+      selectedBtn.classList.add('incorrect');
+      feedbackIcon.textContent = '✗';
+      feedbackIcon.style.color = '#f44336';
+      allBtns.forEach(btn => {
+        if (btn.dataset.answer === question.correct) {
+          btn.classList.add('correct');
+        }
+      });
+    }
+
+    feedbackIcon.classList.add('show');
+
+    setTimeout(() => {
+      currentQuestionIndex++;
+      if (currentQuestionIndex < totalQuestions) {
+        showQuestion(currentQuestionIndex);
+      } else {
+        showFinalScore();
+      }
+    }, 1500);
+  }
+
+  function showFinalScore() {
+    document.getElementById('question-card').classList.add('hidden');
+    document.getElementById('progress-container').classList.add('hidden');
+    finalScoreDiv.classList.remove('hidden');
+    finalScoreDiv.textContent = `You scored ${score} out of ${totalQuestions}!`;
+  }
+
+  showQuestion(currentQuestionIndex);
+</script>
+</body>
+</html>

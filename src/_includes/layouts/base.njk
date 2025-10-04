@@ -93,9 +93,87 @@
   <title>{{ title or metadata.title }}</title>
   <meta name="description" content="{{ description or metadata.description }}" />
   <meta name="generator" content="{{ eleventy.generator }}" />
+  
+  {# Open Graph / Facebook Meta Tags #}
+  <meta property="og:type" content="{% if templateClass == 'tmpl-post' %}article{% else %}website{% endif %}" />
+  <meta property="og:url" content="{{ metadata.url }}{{ page.url }}" />
+  <meta property="og:site_name" content="{{ metadata.title }}" />
+  <meta property="og:title" content="{{ title or metadata.title }}" />
+  <meta property="og:description" content="{{ description or metadata.description }}" />
+  {% if image %}
+  <meta property="og:image" content="{{ metadata.url }}{{ image }}" />
+  {% else %}
+  <meta property="og:image" content="{{ metadata.url }}/img/avatar.png" />
+  {% endif %}
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="en_US" />
+  
+  {# Article specific Open Graph tags #}
+  {% if templateClass == 'tmpl-post' %}
+  <meta property="article:published_time" content="{{ page.date | htmlDateString }}" />
+  {% if updated %}
+  <meta property="article:modified_time" content="{{ updated | htmlDateString }}" />
+  {% endif %}
+  <meta property="article:author" content="{{ metadata.author.name }}" />
+  {% for tag in tags | filterTagList %}
+  <meta property="article:tag" content="{{ tag }}" />
+  {% endfor %}
+  {% endif %}
+  
+  {# Twitter Card Meta Tags #}
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="{{ metadata.url }}{{ page.url }}" />
+  <meta name="twitter:title" content="{{ title or metadata.title }}" />
+  <meta name="twitter:description" content="{{ description or metadata.description }}" />
+  {% if image %}
+  <meta name="twitter:image" content="{{ metadata.url }}{{ image }}" />
+  {% else %}
+  <meta name="twitter:image" content="{{ metadata.url }}/img/avatar.png" />
+  {% endif %}
+  <meta name="twitter:creator" content="@carteakey" />
+  <meta name="twitter:site" content="@carteakey" />
+  
+  {# Additional SEO Meta Tags #}
+  <meta name="author" content="{{ metadata.author.name }}" />
+  <link rel="canonical" href="{{ metadata.url }}{{ page.url }}" />
+  
+  {# Theme Color for mobile browsers #}
+  <meta name="theme-color" content="#f59e0b" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
+  
   <link rel="stylesheet" href="{{ '/css/tailwind.css' | url }}" />
 
   <link rel="alternate" type="application/atom+xml" title="{{ metadata.title }} - Atom Feed" href="{{ '/feed.xml' | url }}">
+  
+  {# JSON-LD Structured Data for Website #}
+  {% if page.url == "/" %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "{{ metadata.title }}",
+    "url": "{{ metadata.url }}",
+    "description": "{{ metadata.description }}",
+    "author": {
+      "@type": "Person",
+      "name": "{{ metadata.author.name }}",
+      "email": "{{ metadata.author.email }}",
+      "url": "{{ metadata.author.url }}"
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "{{ metadata.author.name }}",
+      "url": "{{ metadata.url }}"
+    },
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "{{ metadata.url }}/search?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+  {% endif %}
 </head>
 <body class="bg-gray-50 dark:bg-black font-sans">
   <div class="md:max-w-2xl lg:max-w-3xl mx-auto">
@@ -210,11 +288,11 @@
           </script>
       </main>
 
-      <footer class="flex w-full pt-8 pb-4 flex-row justify-between">
+      <footer class="flex w-full pt-8 pb-4 flex-col md:flex-row justify-between gap-4">
         {% if spotify.nowPlaying %}
         <div class="flex items-center not-prose">
           <img id="track-image" class="w-10 h-10 rounded-full mr-2 animate-spin-slow"
-            src="{{ spotify.nowPlaying.albumImageUrl }}" alt="Album Art">
+            src="{{ spotify.nowPlaying.albumImageUrl }}" alt="Album artwork for {{ spotify.nowPlaying.title }} by {{ spotify.nowPlaying.artist }}">
           <div class=''>
             <a href={{ spotify.nowPlaying.songUrl }} target='_blank' class='hover:underline'>
               <p id="track-name" class="text-sm font-bold ">{{ spotify.nowPlaying.title }}</p>
@@ -223,12 +301,26 @@
           </div>
         </div>
         {% endif %}
-        <div class='flex flex-row links'>
-          <a class="self-center p-1 sm:px-3 sm:py-2  transition-all" href="https://www.linkedin.com/in/kartikeychauhan/"
-            title="LinkedIn" aria-label="LinkedIn">{% feather "linkedin" %}</a>
-          <a class="self-center p-1 sm:px-3 sm:py-2  transition-all" href="https://github.com/carteakey" title="GitHub"
-            aria-label="GitHub">{% feather "github" %}</a>
-          <a class="self-center p-1 sm:px-3 sm:py-2 transition-all" href="{{ '/feed.xml' | url }}" title="Atom Feed" aria-label="Atom Feed">{% feather "rss" %}</a>
+        <div class='flex flex-col md:flex-row gap-4 md:gap-2'>
+          {# Social Links Group #}
+          <div class='flex flex-row items-center gap-1 border-b md:border-b-0 md:border-r border-gray-200 dark:border-gray-700 pb-2 md:pb-0 md:pr-2'>
+            <a class="p-1 sm:px-2 transition-all" href="https://www.linkedin.com/in/kartikeychauhan/"
+              title="LinkedIn" aria-label="LinkedIn">{% feather "linkedin" %}</a>
+            <a class="p-1 sm:px-2 transition-all" href="https://github.com/carteakey" title="GitHub"
+              aria-label="GitHub">{% feather "github" %}</a>
+          </div>
+          
+          {# Content Discovery Group #}
+          <div class='flex flex-row items-center gap-1 border-b md:border-b-0 md:border-r border-gray-200 dark:border-gray-700 pb-2 md:pb-0 md:pr-2'>
+            <a class="p-1 sm:px-2 transition-all" href="{{ '/search/' | url }}" title="Search" aria-label="Search">{% feather "search" %}</a>
+            <a class="p-1 sm:px-2 transition-all" href="{{ '/blogroll/' | url }}" title="Blogroll" aria-label="Blogroll">{% feather "bookmark" %}</a>
+          </div>
+          
+          {# Subscribe Group #}
+          <div class='flex flex-row items-center gap-1'>
+            <a class="p-1 sm:px-2 transition-all" href="{{ '/feed.xml' | url }}" title="Atom Feed" aria-label="Atom Feed">{% feather "rss" %}</a>
+            <a class="p-1 sm:px-2 transition-all" href="{{ '/newsletter/' | url }}" title="Newsletter" aria-label="Newsletter">{% feather "mail" %}</a>
+          </div>
         </div>
       </footer>
 
@@ -313,10 +405,9 @@
           </div>
         </div>
 
-        {# Enhanced navigation section #}
-        <div class="text-center space-y-6">
-          {# Compact navigation in one row #}
-          <div class="flex flex-wrap justify-center gap-3 text-sm max-w-4xl mx-auto">
+        {# Enhanced navigation section - compact with separators #}
+        <div class="text-center">
+          <div class="flex flex-wrap justify-center items-center gap-2 text-sm max-w-5xl mx-auto">
             <a href="{{ '/about' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
               {% feather "user", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
               <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">About</span>
@@ -332,15 +423,24 @@
               <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">Blog</span>
             </a>
             
+            <a href="{{ '/cv' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
+              {% feather "file-text", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
+              <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">CV</span>
+            </a>
+            
+            <span class="text-gray-400 dark:text-gray-600">|</span>
+            
             <a href="{{ '/projects' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
               {% feather "code", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
               <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">Projects</span>
             </a>
             
-            <a href="{{ '/cv' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
-              {% feather "file-text", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
-              <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">CV</span>
+            <a href="{{ '/snippets' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
+              {% feather "terminal", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
+              <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">Snippets</span>
             </a>
+            
+            <span class="text-gray-400 dark:text-gray-600">|</span>
             
             <a href="{{ '/gallery' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
               {% feather "camera", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
@@ -352,15 +452,12 @@
               <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">Vibes</span>
             </a>
             
-            <a href="{{ '/snippets' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
-              {% feather "terminal", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
-              <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">Snippets</span>
-            </a>
-            
             <a href="{{ '/quotes' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
               {% feather "message-circle", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
               <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">Quotes</span>
             </a>
+            
+            <span class="text-gray-400 dark:text-gray-600">|</span>
             
             <a href="{{ '/games' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
               {% feather "play", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
@@ -372,6 +469,32 @@
               <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">Workouts</span>
             </a>
             
+            <span class="text-gray-400 dark:text-gray-600">|</span>
+            
+            <a href="{{ '/search' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
+              {% feather "search", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
+              <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">Search</span>
+            </a>
+            
+            <a href="{{ '/stats' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
+              {% feather "bar-chart-2", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
+              <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">Stats</span>
+            </a>
+            
+            <a href="{{ '/blogroll' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
+              {% feather "bookmark", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
+              <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">Blogroll</span>
+            </a>
+            
+            <a href="{{ '/bookmarks' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
+              {% feather "book-open", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
+              <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">Bookmarks</span>
+            </a>
+            
+            <a href="{{ '/newsletter' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
+              {% feather "mail", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
+              <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">Newsletter</span>
+            </a>
             
             <a href="{{ '/more' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
               {% feather "plus", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
@@ -380,17 +503,306 @@
           </div>
           
           {# Made with love section #}
-          <div class="text-sm text-gray-600 dark:text-gray-400">
+          <div class="text-sm text-gray-600 dark:text-gray-400 mt-6">
             Made with ❤️ using <a href="https://www.11ty.dev/" class="hover:underline" target="_blank" rel="noopener">Eleventy</a> 
             and <a href="https://tailwindcss.com/" class="hover:underline" target="_blank" rel="noopener">Tailwind CSS</a>
           </div>
           
-          <div class="text-xs text-gray-500 dark:text-gray-500">
+          <div class="text-xs text-gray-500 dark:text-gray-500 mt-2">
             © {{ metadata.author.name }} • 2025
           </div>
         </div>
       </div>
     </div>
   </div>
+
+  {# Easter Eggs Section - Fun Hidden Features #}
+  <script>
+    // Easter Egg 1: Konami Code (↑↑↓↓←→←→BA)
+    (() => {
+      const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+      let konamiIndex = 0;
+      
+      document.addEventListener('keydown', (e) => {
+        const expectedKey = konamiCode[konamiIndex];
+        const actualKey = e.key;
+        
+        // Check if the key matches (case-insensitive for letters)
+        if (actualKey === expectedKey || actualKey.toLowerCase() === expectedKey.toLowerCase()) {
+          konamiIndex++;
+          if (konamiIndex === konamiCode.length) {
+            triggerKonamiEasterEgg();
+            konamiIndex = 0;
+          }
+        } else {
+          konamiIndex = 0;
+        }
+      });
+      
+      function triggerKonamiEasterEgg() {
+        // Create floating icons
+        const icons = ['star', 'heart', 'zap', 'award', 'sparkles', 'gift', 'coffee', 'music'];
+        for (let i = 0; i < 20; i++) {
+          setTimeout(() => {
+            createFloatingIcon(icons[Math.floor(Math.random() * icons.length)]);
+          }, i * 100);
+        }
+        
+        // Show celebratory message
+        const msg = document.createElement('div');
+        msg.innerHTML = `
+          <div style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+                      background: rgba(251, 191, 36, 0.95); color: black; padding: 2rem 3rem; 
+                      border-radius: 1rem; font-size: 2rem; font-weight: bold; z-index: 9999;
+                      box-shadow: 0 10px 40px rgba(0,0,0,0.3); animation: bounce 0.5s;">
+            🎉 You found the Konami Code! 🎮
+          </div>
+        `;
+        document.body.appendChild(msg);
+        setTimeout(() => msg.remove(), 3000);
+      }
+      
+      function createFloatingIcon(iconName) {
+        const icon = document.createElement('div');
+        const svgIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-${iconName}">
+          ${getIconPath(iconName)}
+        </svg>`;
+        
+        icon.innerHTML = svgIcon;
+        icon.style.position = 'fixed';
+        icon.style.left = Math.random() * window.innerWidth + 'px';
+        icon.style.top = '-50px';
+        icon.style.fontSize = (Math.random() * 20 + 20) + 'px';
+        icon.style.color = getRandomColor();
+        icon.style.zIndex = '9999';
+        icon.style.pointerEvents = 'none';
+        icon.style.animation = `float ${Math.random() * 3 + 3}s ease-in`;
+        
+        document.body.appendChild(icon);
+        setTimeout(() => icon.remove(), 6000);
+      }
+      
+      function getIconPath(name) {
+        const paths = {
+          'star': '<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>',
+          'heart': '<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>',
+          'zap': '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>',
+          'award': '<circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>',
+          'gift': '<polyline points="20 12 20 22 4 22 4 12"></polyline><rect x="2" y="7" width="20" height="5"></rect><line x1="12" y1="22" x2="12" y2="7"></line><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path>',
+          'coffee': '<path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path><line x1="6" y1="1" x2="6" y2="4"></line><line x1="10" y1="1" x2="10" y2="4"></line><line x1="14" y1="1" x2="14" y2="4"></line>',
+          'music': '<path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle>',
+          'sparkles': '<path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path>'
+        };
+        return paths[name] || paths['star'];
+      }
+      
+      function getRandomColor() {
+        const colors = ['#f59e0b', '#ec4899', '#8b5cf6', '#3b82f6', '#10b981', '#ef4444', '#06b6d4'];
+        return colors[Math.floor(Math.random() * colors.length)];
+      }
+    })();
+
+    // Easter Egg 2: Secret Message on Double-Click Site Title
+    (() => {
+      document.addEventListener('DOMContentLoaded', () => {
+        const siteTitles = document.querySelectorAll('nav a[href="/"], nav a[href="{{ "/" | url }}"]');
+        
+        siteTitles.forEach(titleLink => {
+          let lastClickTime = 0;
+          
+          titleLink.addEventListener('click', (e) => {
+            const currentTime = new Date().getTime();
+            const timeDiff = currentTime - lastClickTime;
+            
+            if (timeDiff < 400 && timeDiff > 0) {
+              // Double click detected
+              e.preventDefault();
+              showSecretMessage();
+              lastClickTime = 0; // Reset to prevent triple click
+            } else {
+              lastClickTime = currentTime;
+            }
+          });
+        });
+      });
+      
+      function showSecretMessage() {
+        const messages = [
+          '🎭 You found a secret!',
+          '🚀 Keep exploring!',
+          '💎 Hidden gem unlocked!',
+          '🎨 The devil is in the details!',
+          '🔍 Curiosity rewarded!',
+          '✨ Easter egg discovered!'
+        ];
+        
+        const msg = document.createElement('div');
+        const randomMsg = messages[Math.floor(Math.random() * messages.length)];
+        msg.innerHTML = `
+          <div style="position: fixed; bottom: 2rem; right: 2rem; 
+                      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+                      color: white; padding: 1rem 1.5rem; border-radius: 0.5rem; 
+                      font-weight: 600; z-index: 9999; box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+                      animation: slideIn 0.3s ease-out;">
+            ${randomMsg}
+          </div>
+        `;
+        document.body.appendChild(msg);
+        setTimeout(() => {
+          msg.style.animation = 'slideOut 0.3s ease-in';
+          setTimeout(() => msg.remove(), 300);
+        }, 2500);
+      }
+    })();
+
+    // Easter Egg 3: Sparkle Trail on Mouse Move (activated by triple-clicking footer)
+    (() => {
+      let sparkleMode = false;
+      let footerClickCount = 0;
+      let footerClickTimer;
+      
+      document.addEventListener('DOMContentLoaded', () => {
+        const footer = document.querySelector('footer');
+        
+        if (footer) {
+          footer.addEventListener('click', (e) => {
+            footerClickCount++;
+            clearTimeout(footerClickTimer);
+            
+            if (footerClickCount === 3) {
+              sparkleMode = !sparkleMode;
+              footerClickCount = 0;
+              showSparkleNotification(sparkleMode);
+            } else {
+              footerClickTimer = setTimeout(() => {
+                footerClickCount = 0;
+              }, 500);
+            }
+          });
+        }
+        
+        document.addEventListener('mousemove', (e) => {
+          if (sparkleMode && Math.random() > 0.9) {
+            createSparkle(e.clientX, e.clientY);
+          }
+        });
+      });
+      
+      function createSparkle(x, y) {
+        const sparkle = document.createElement('div');
+        sparkle.innerHTML = '✨';
+        sparkle.style.position = 'fixed';
+        sparkle.style.left = x + 'px';
+        sparkle.style.top = y + 'px';
+        sparkle.style.pointerEvents = 'none';
+        sparkle.style.fontSize = (Math.random() * 10 + 10) + 'px';
+        sparkle.style.zIndex = '9999';
+        sparkle.style.animation = 'sparkle 1s ease-out forwards';
+        
+        document.body.appendChild(sparkle);
+        setTimeout(() => sparkle.remove(), 1000);
+      }
+      
+      function showSparkleNotification(isActive) {
+        const msg = document.createElement('div');
+        msg.innerHTML = `
+          <div style="position: fixed; top: 2rem; left: 50%; transform: translateX(-50%); 
+                      background: rgba(251, 191, 36, 0.95); color: black; padding: 0.75rem 1.5rem; 
+                      border-radius: 0.5rem; font-weight: 600; z-index: 9999;
+                      box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+            ✨ Sparkle mode ${isActive ? 'ON' : 'OFF'}!
+          </div>
+        `;
+        document.body.appendChild(msg);
+        setTimeout(() => msg.remove(), 2000);
+      }
+    })();
+
+    // Easter Egg 4: Secret Click Counter (Shift + Click on theme slider)
+    (() => {
+      document.addEventListener('DOMContentLoaded', () => {
+        let secretClicks = parseInt(localStorage.getItem('secretClicks') || '0');
+        const themeSlider = document.querySelector('input[type="range"]');
+        
+        if (themeSlider) {
+          themeSlider.addEventListener('click', (e) => {
+            if (e.shiftKey) {
+              secretClicks++;
+              localStorage.setItem('secretClicks', secretClicks);
+              
+              if (secretClicks % 10 === 0) {
+                showMilestone(secretClicks);
+              }
+            }
+          });
+        }
+        
+        function showMilestone(count) {
+          const msg = document.createElement('div');
+          const achievements = {
+            10: '🥉 Bronze Clicker!',
+            50: '🥈 Silver Clicker!',
+            100: '🥇 Gold Clicker!',
+            500: '💎 Diamond Clicker!',
+            1000: '👑 Legendary Clicker!'
+          };
+          
+          const achievement = achievements[count] || `🎯 ${count} Secret Clicks!`;
+          
+          msg.innerHTML = `
+            <div style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+                        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); 
+                        color: white; padding: 2rem 3rem; border-radius: 1rem; 
+                        font-size: 1.5rem; font-weight: bold; z-index: 9999;
+                        box-shadow: 0 10px 40px rgba(0,0,0,0.3); animation: bounce 0.5s;
+                        text-align: center;">
+              ${achievement}<br>
+              <span style="font-size: 1rem; opacity: 0.9;">Total: ${count} clicks</span>
+            </div>
+          `;
+          document.body.appendChild(msg);
+          setTimeout(() => msg.remove(), 3000);
+        }
+      });
+    })();
+
+    // Add CSS animations
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes float {
+        0% { transform: translateY(-50px) rotate(0deg); opacity: 1; }
+        100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+      }
+      @keyframes bounce {
+        0%, 100% { transform: translate(-50%, -50%) scale(1); }
+        50% { transform: translate(-50%, -50%) scale(1.1); }
+      }
+      @keyframes slideIn {
+        from { transform: translateX(100%); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+      }
+      @keyframes slideOut {
+        from { transform: translateX(0); opacity: 1; }
+        to { transform: translateX(100%); opacity: 0; }
+      }
+      @keyframes sparkle {
+        0% { transform: scale(0) rotate(0deg); opacity: 1; }
+        50% { transform: scale(1) rotate(180deg); opacity: 1; }
+        100% { transform: scale(0) rotate(360deg); opacity: 0; }
+      }
+      .animate-spin-slow {
+        animation: spin 8s linear infinite;
+      }
+      @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+    `;
+    document.head.appendChild(style);
+  </script>
+
+  {% if hasEthicalAds and metadata.ethicalAds and metadata.ethicalAds.publisher %}
+    <script async src="https://media.ethicalads.io/media/client/ethicalads.min.js"></script>
+  {% endif %}
 </body>
 </html>

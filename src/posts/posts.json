@@ -1,5 +1,5 @@
 {
   "layout": "layouts/post.njk",
-  "permalink": "{{ page.fileSlug }}/",
+  "permalink": "{{ (page.filePathStem | replace('/posts/', '/blog/')) }}/",
   "tags": ["posts"]
 }

@@ -1,33 +1,48 @@
 ---
 layout: layouts/base.njk
+hasEthicalAds: true
 ---
 
-<article class="snippet">
-  <h1>{{ title }}</h1>
-  
-  <div class="snippet-meta">
-    <time datetime="{{ page.date | htmlDateString }}">
-      {{ page.date | readableDate }}
-    </time>
-    {% if tags %}
-    <div class="tags">
-      {% for tag in tags | filterTagList %}
-        <a href="/snippets/tags/{{ tag | slugify }}/" class="tag">#{{ tag }}</a>
-      {% endfor %}
+{% include "components/breadcrumbs.njk" %}
+
+<div class="relative mx-auto w-full xl:max-w-3xl">
+  <aside class="hidden  absolute -left-[260px] top-0">
+    <div class="sticky top-24 w-[220px] space-y-3">
+      {% include "components/ethical-ads.njk" %}
     </div>
+  </aside>
+
+  <article class="snippet min-w-0 space-y-6 px-4 sm:px-6 xl:px-0">
+    <header class="space-y-3">
+      <h1>{{ title }}</h1>
+
+      <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between text-sm text-gray-600 dark:text-gray-400">
+        <time datetime="{{ page.date | htmlDateString }}" class="font-medium text-gray-700 dark:text-gray-200">
+          {{ page.date | readableDate }}
+        </time>
+        {% if tags %}
+          <div class="flex flex-wrap gap-2">
+            {% for tag in tags | filterTagList %}
+              <a href="/snippets/tags/{{ tag | slugify }}/" class="px-2 py-1 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                #{{ tag }}
+              </a>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+    </header>
+
+    <div class="snippet-content space-y-6">
+      {{ content | safe }}
+    </div>
+
+    {% if language %}
+      <div class="language-info text-sm text-gray-500 mt-4">
+        Language: {{ language }}
+      </div>
     {% endif %}
-  </div>
-
-  <div class="snippet-content">
-    {{ content | safe }}
-  </div>
-
-  {% if language %}
-  <div class="language-info text-sm text-gray-500 mt-4">
-    Language: {{ language }}
-  </div>
-  {% endif %}
-</article>
+  </article>
+</div>
 
 <script>
   // Add copy button to code blocks

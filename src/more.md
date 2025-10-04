@@ -12,26 +12,24 @@ eleventyNavigation:
 This is a sitemap of all pages on my site. It's inspired by [slashpages.net](https://slashpages.net).
 
 
-### Available Pages
+### All Pages
 
 - [/about](/about/): who am I?
+- [/blogroll](/blogroll/): blogs and sites I follow
+- [/bookmarks](/bookmarks/): curated reading list
 - [/cv](/cv/): my curriculum vitae
 - [/gallery](/gallery/): photo gallery
 - [/games](/games/): games I'm currently playing
+- [/newsletter](/newsletter/): subscribe to updates
 - [/now](/now/): what I'm up to, now
+- [/blog](/blog/): blog posts and articles
 - [/projects](/projects/): things I've built
 - [/quotes](/quotes/): quotes I like
+- [/search](/search/): search posts and snippets
 - [/snippets](/snippets/): code snippets and quick notes
 - [/stats](/stats/): site statistics and metrics
 - [/vibes](/vibes/): random images/memes I like
 - [/workouts](/workouts/): my fitness journey
-
-### Coming Soon
-- [/ai](/ai/): my AI usage, personally
-- **/blogroll**: blogs I like and follow
-{# - **/reading-time**: estimated reading times for posts #}
-{# - **/breadcrumbs**: better navigation paths #}
-{# - **/search**: full-text search across content #}
 
 
 

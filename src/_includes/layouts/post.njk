@@ -1,200 +1,478 @@
 ---
 layout: layouts/base.njk
 templateClass: tmpl-post
+hasEthicalAds: true
 ---
 
-<h1>{{ title }}</h1>
-
-<h2 class="font-light -mt-7  text-gray-600 dark:text-gray-300">{{ description }}</h2>
-
-<div class="flex flex-col float-right -mt7 text-right text-sm">
-  <time datetime="{{ page.date | readableDate }}">{{page.date | readableDate}}</time>
-  <div class="-mx-1">
-    {%- for tag in tags | filterTagList %} {%- set tagUrl %}/tags/{{tag | slugify}}/{% endset %}
-    <a href="{{ tagUrl | url }}" class="font-light float-right p-1">{{ tag }}</a>
-    {%- endfor %}
-  </div>
-</div>
-<hr class="w-9/12 md:w-9/12 ">
-
-{{ content | safe }}
-
-{% if updated %}
-<p class='flex flex-col float-right -mt7 text-right text-sm'>
-  Updated: <time datetime="{{ updated | readableDate }}">{{updated | readableDate}}</time>
-</p> 
-{%- endif %}
-
-<!-- Upvote Section -->
-<div class="upvote-section mt-8 mb-4 flex items-center">
-  <button id="upvoteButton" class="upvote-button p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors flex items-center" aria-label="Upvote this post">
-    {% feather "thumbs-up", class="w-6 h-6 text-gray-500 dark:text-gray-400" %}
-    <span id="upvoteCount" class="ml-2 text-sm font-medium text-gray-600 dark:text-gray-300">
-      {{ upvotes.posts[page.fileSlug] | default(0) }}
-    </span>
-  </button>
-  <span id="upvoteMessage" class="ml-2 text-sm text-gray-500 dark:text-gray-400 hidden">Thanks for your upvote!</span>
-</div>
-
-<script>
-  document.addEventListener('DOMContentLoaded', async function() {
-    const upvoteButton = document.getElementById('upvoteButton');
-    const upvoteCount = document.getElementById('upvoteCount');
-    const upvoteMessage = document.getElementById('upvoteMessage');
-    const postSlug = '{{ page.fileSlug }}';
-    const storageKey = `upvote_${postSlug}`;
-    
-    // Function to fetch current upvote count
-    async function fetchUpvoteCount() {
-      try {
-        const response = await fetch(`/.netlify/functions/upvote?slug=${postSlug}`, {
-          method: 'GET'
-        });
-        if (!response.ok) throw new Error('Failed to fetch count');
-        const data = await response.json();
-        upvoteCount.textContent = data.count;
-      } catch (error) {
-        console.error('Error fetching upvote count:', error);
-      }
-    }
-
-    // Fetch current count on page load
-    await fetchUpvoteCount();
-    
-    // Check if user has already upvoted this post
-    let hasUpvoted = localStorage.getItem(storageKey) === 'true';
-    
-    // If user has already upvoted, style the button accordingly
-    if (hasUpvoted) {
-      upvoteButton.classList.add('upvoted');
-      upvoteButton.querySelector('svg').classList.add('text-amber-500');
-      upvoteButton.querySelector('svg').classList.remove('text-gray-500', 'dark:text-gray-400');
-    }
-    
-    upvoteButton.addEventListener('click', async function() {
-      if (hasUpvoted) {
-        // Already upvoted - do nothing
-        upvoteMessage.textContent = 'You already upvoted this post!';
-        upvoteMessage.classList.remove('hidden');
-        setTimeout(() => {
-          upvoteMessage.classList.add('hidden');
-          upvoteMessage.textContent = 'Thanks for your upvote!';
-        }, 3000);
-        return;
-      }
-
-      try {
-        const response = await fetch('/.netlify/functions/upvote', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ slug: postSlug })
-        });
-        
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        
-        const data = await response.json();
-        
-        // Fetch fresh count after successful upvote
-        await fetchUpvoteCount();
-        
-        // Save upvote state to localStorage and update local state
-        localStorage.setItem(storageKey, 'true');
-        hasUpvoted = true;
-        
-        // Style the button as upvoted
-        upvoteButton.classList.add('upvoted');
-        upvoteButton.querySelector('svg').classList.add('text-amber-500');
-        upvoteButton.querySelector('svg').classList.remove('text-gray-500', 'dark:text-gray-400');
-        
-        // Show thank you message
-        upvoteMessage.classList.remove('hidden');
-        setTimeout(() => {
-          upvoteMessage.classList.add('hidden');
-        }, 3000);
-        
-      } catch (error) {
-        console.error('Error upvoting:', error);
-        upvoteMessage.textContent = 'Error upvoting. Please try again.';
-        upvoteMessage.classList.remove('hidden');
-        setTimeout(() => {
-          upvoteMessage.classList.add('hidden');
-          upvoteMessage.textContent = 'Thanks for your upvote!';
-        }, 3000);
-      }
-    });
-  });
+{# JSON-LD Structured Data for Blog Posts #}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "{{ title }}",
+  "description": "{{ description }}",
+  "image": {% if image %}"{{ metadata.url }}{{ image }}"{% else %}"{{ metadata.url }}/img/avatar.png"{% endif %},
+  "datePublished": "{{ page.date | htmlDateString }}",
+  {% if updated %}"dateModified": "{{ updated | htmlDateString }}",{% endif %}
+  "author": {
+    "@type": "Person",
+    "name": "{{ metadata.author.name }}",
+    "url": "{{ metadata.author.url }}"
+  },
+  "publisher": {
+    "@type": "Person",
+    "name": "{{ metadata.author.name }}",
+    "url": "{{ metadata.url }}"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "{{ metadata.url }}{{ page.url }}"
+  },
+  "keywords": "{{ tags | filterTagList | join(', ') }}"
+}
 </script>
 
-<aside class="fixed top-1/4 right-5 xl:right-20 w-40 xl:w-56 h-screen sm:translate-x-0 text-sm hidden lg:block overflow-hidden"
-  aria-label="Sidebar">
-  <p class="text-lg my-0">Outline</p>
-  <div class="overflow-y-auto pr-2" style="max-height: 70vh;">
-    {{ content | toc | safe }}
-  </div>
-</aside>
+{% include "components/breadcrumbs.njk" %}
 
-{%- if collections.posts %} {%- set nextPost = collections.posts |
-getNextCollectionItem(page) %} {%- set previousPost = collections.posts |
-getPreviousCollectionItem(page) %} {%- if nextPost or previousPost %}
-<hr />
-<ul>
-  {%- if nextPost %}
-  <li>
-    Next:
-    <a href="{{ nextPost.url | url }}">{{ nextPost.data.title }}</a>
-  </li>
-  {% endif %} {%- if previousPost %}
-  <li>
-    Previous:
-    <a href="{{ previousPost.url | url }}">{{ previousPost.data.title }}</a>
-  </li>
-  {% endif %}
-</ul>
-{%- endif %} {%- endif %}
+<div class="relative mx-auto w-full xl:max-w-3xl">
+  <aside class="hidden  absolute -left-[260px] top-0">
+    <div class="sticky top-24 w-[220px] space-y-3">
+      {% include "components/ethical-ads.njk" %}
+    </div>
+  </aside>
 
-<div class="comments">
-  <script>
-    // load giscus with proper theme
-    const getTheme = window.localStorage && window.localStorage.getItem("theme");
-    const theme = getTheme === "dark" ? "dark" : "light";
-    
-    const script = document.createElement('script');
-    script.src = "https://giscus.app/client.js";
-    script.setAttribute("data-repo", "carteakey/carteakey.dev");
-    script.setAttribute("data-repo-id", "R_kgDOIHTsrg"); // You'll need to get this from giscus.app
-    script.setAttribute("data-category", "Announcements");
-    script.setAttribute("data-category-id", "DIC_kwDOIHTsrs4CnZpB"); // You'll need to get this from giscus.app
-    script.setAttribute("data-mapping", "pathname");
-    script.setAttribute("data-strict", "0");
-    script.setAttribute("data-reactions-enabled", "0");
-    script.setAttribute("data-emit-metadata", "0");
-    script.setAttribute("data-input-position", "bottom");
-    script.setAttribute("data-theme", theme);
-    script.setAttribute("data-lang", "en");
-    script.crossOrigin = "anonymous";
-    script.async = true;
-    
-    document.querySelector("div.comments").appendChild(script);
+  <aside class="hidden xl:block absolute -right-[260px] top-0 text-sm text-gray-600 dark:text-gray-300">
+    <div class="sticky top-24 space-y-3 w-[220px]">
+      <p class="text-lg font-semibold my-0">Outline</p>
+      <div class="max-h-[70vh] overflow-y-auto pr-2">
+        {{ content | toc | safe }}
+      </div>
+    </div>
+  </aside>
 
-    // Handle theme changes
-    const mutationObserver = new MutationObserver((mutationsList) => {
-      mutationsList.forEach((mutation) => {
-        if (mutation.attributeName === "class") {
-          const iframe = document.querySelector('.giscus-frame');
-          if (iframe) {
-            const theme = document.documentElement.classList.contains("dark") ? "dark" : "light";
-            iframe.contentWindow.postMessage(
-              { giscus: { setConfig: { theme } } },
-              'https://giscus.app'
-            );
+  <article class="min-w-0 space-y-8 px-4 sm:px-6 xl:px-0">
+    <header class="space-y-4">
+      <h1>{{ title }}</h1>
+
+      {% if description %}
+        <p class="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+          {{ description }}
+        </p>
+      {% endif %}
+
+      <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between text-sm text-gray-600 dark:text-gray-400">
+        <div class="flex flex-wrap items-center gap-3">
+          <time datetime="{{ page.date | htmlDateString }}" class="font-medium text-gray-700 dark:text-gray-200">
+            {{ page.date | readableDate }}
+          </time>
+          <span class="flex items-center gap-1">
+            {% feather "clock", class="w-4 h-4" %}
+            {{ content | readingTime }}
+          </span>
+        </div>
+
+        {% set visibleTags = tags | filterTagList %}
+        {% if visibleTags.length %}
+          <div class="flex flex-wrap gap-2">
+            {% for tag in visibleTags %}
+              {% set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
+              <a href="{{ tagUrl | url }}" class="px-2 py-1 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                #{{ tag }}
+              </a>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+    </header>
+
+    <hr class="border-gray-200 dark:border-gray-800" />
+
+    {{ content | safe }}
+
+    {% if updated %}
+      <p class="text-sm text-gray-500 dark:text-gray-400">
+        Updated:
+        <time datetime="{{ updated | htmlDateString }}">{{ updated | readableDate }}</time>
+      </p>
+    {% endif %}
+
+    {% set reactionOptions = [
+      { id: 'thumbs_up', emoji: '👍', label: 'Helpful' },
+      { id: 'sparkles', emoji: '✨', label: 'Delightful' },
+      { id: 'rocket', emoji: '🚀', label: 'Shipped it' },
+      { id: 'lightbulb', emoji: '💡', label: 'Interesting idea' },
+      { id: 'eyes', emoji: '👀', label: 'Watching this' }
+    ] %}
+
+    <!-- Upvote Section -->
+    <div class="upvote-section mt-8 mb-4 flex items-center">
+      <button id="upvoteButton" class="upvote-button p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors flex items-center" aria-label="Upvote this post">
+        {% feather "thumbs-up", class="w-6 h-6 text-gray-500 dark:text-gray-400" %}
+        <span id="upvoteCount" class="ml-2 text-sm font-medium text-gray-600 dark:text-gray-300">
+          {{ upvotes.posts[page.fileSlug] | default(0) }}
+        </span>
+        <span id="upvoteLoading" class="ml-2 hidden">
+          <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-amber-500"></div>
+        </span>
+      </button>
+      <span id="upvoteMessage" class="ml-2 text-sm text-gray-500 dark:text-gray-400 hidden">Thanks for your upvote!</span>
+    </div>
+
+    <div id="postReactions" class="hidden mt-6" data-slug="{{ page.fileSlug }}">
+      <h3 class=" text-sm font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400 flex items-center gap-2">
+        {% feather "smile", class="w-4 h-4" %}
+        React to this post
+      </h3>
+      <div class="mt-3 flex flex-wrap gap-2">
+        {% for reaction in reactionOptions %}
+          <button
+            type="button"
+            class="reaction-button flex items-center gap-2 rounded-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-3 py-2 text-sm text-gray-600 dark:text-gray-300 hover:border-amber-400 dark:hover:border-amber-500 transition-colors"
+            data-reaction="{{ reaction.id }}"
+            aria-label="{{ reaction.label }}"
+            title="{{ reaction.label }}"
+          >
+            <span class="text-xl" aria-hidden="true">{{ reaction.emoji }}</span>
+            <span class="sr-only">{{ reaction.label }}</span>
+            <span class="text-sm font-semibold text-gray-700 dark:text-gray-200" data-reaction-count="{{ reaction.id }}">0</span>
+          </button>
+        {% endfor %}
+      </div>
+      <p id="reactionMessage" class="mt-2 text-sm text-gray-500 dark:text-gray-400 hidden"></p>
+    </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', async function() {
+        const upvoteButton = document.getElementById('upvoteButton');
+        const upvoteCount = document.getElementById('upvoteCount');
+        const upvoteMessage = document.getElementById('upvoteMessage');
+        const upvoteLoading = document.getElementById('upvoteLoading');
+        const postSlug = '{{ page.fileSlug }}';
+        const storageKey = `upvote_${postSlug}`;
+        
+        // Function to fetch current upvote count
+        async function fetchUpvoteCount() {
+          try {
+            upvoteLoading.classList.remove('hidden');
+            upvoteCount.classList.add('opacity-50');
+            
+            const response = await fetch(`/.netlify/functions/upvote?slug=${postSlug}`, {
+              method: 'GET'
+            });
+            if (!response.ok) throw new Error('Failed to fetch count');
+            const data = await response.json();
+            upvoteCount.textContent = data.count;
+          } catch (error) {
+            console.error('Error fetching upvote count:', error);
+          } finally {
+            upvoteLoading.classList.add('hidden');
+            upvoteCount.classList.remove('opacity-50');
           }
         }
+
+        // Fetch current count on page load
+        await fetchUpvoteCount();
+        
+        // Check if user has already upvoted this post
+        let hasUpvoted = localStorage.getItem(storageKey) === 'true';
+        
+        // If user has already upvoted, style the button accordingly
+        if (hasUpvoted) {
+          upvoteButton.classList.add('upvoted');
+          upvoteButton.querySelector('svg').classList.add('text-amber-500');
+          upvoteButton.querySelector('svg').classList.remove('text-gray-500', 'dark:text-gray-400');
+        }
+        
+        upvoteButton.addEventListener('click', async function() {
+          if (hasUpvoted) {
+            // Already upvoted - do nothing
+            upvoteMessage.textContent = 'You already upvoted this post!';
+            upvoteMessage.classList.remove('hidden');
+            setTimeout(() => {
+              upvoteMessage.classList.add('hidden');
+              upvoteMessage.textContent = 'Thanks for your upvote!';
+            }, 3000);
+            return;
+          }
+
+          try {
+            const response = await fetch('/.netlify/functions/upvote', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ slug: postSlug })
+            });
+            
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            
+            const data = await response.json();
+            
+            // Fetch fresh count after successful upvote
+            await fetchUpvoteCount();
+            
+            // Save upvote state to localStorage and update local state
+            localStorage.setItem(storageKey, 'true');
+            hasUpvoted = true;
+            
+            // Style the button as upvoted
+            upvoteButton.classList.add('upvoted');
+            upvoteButton.querySelector('svg').classList.add('text-amber-500');
+            upvoteButton.querySelector('svg').classList.remove('text-gray-500', 'dark:text-gray-400');
+            
+            // Show thank you message
+            upvoteMessage.classList.remove('hidden');
+            setTimeout(() => {
+              upvoteMessage.classList.add('hidden');
+            }, 3000);
+            
+          } catch (error) {
+            console.error('Error upvoting:', error);
+            upvoteMessage.textContent = 'Error upvoting. Please try again.';
+            upvoteMessage.classList.remove('hidden');
+            setTimeout(() => {
+              upvoteMessage.classList.add('hidden');
+              upvoteMessage.textContent = 'Thanks for your upvote!';
+            }, 3000);
+          }
+        });
+
+        const reactionOptions = {{ reactionOptions | dump | safe }};
+        const reactionsContainer = document.getElementById('postReactions');
+
+        if (reactionsContainer) {
+          const reactionButtons = Array.from(reactionsContainer.querySelectorAll('[data-reaction]'));
+          const reactionMessage = document.getElementById('reactionMessage');
+          const reactionStorageKey = `reactions_${postSlug}`;
+          const reactionMap = new Map(reactionOptions.map(option => [option.id, option]));
+
+          let storedReactions = [];
+          try {
+            const raw = localStorage.getItem(reactionStorageKey);
+            if (raw) {
+              const parsed = JSON.parse(raw);
+              if (Array.isArray(parsed)) {
+                storedReactions = parsed;
+              }
+            }
+          } catch (_) {
+            storedReactions = [];
+          }
+
+          const activeReactions = new Set(storedReactions);
+
+          function showReactionMessage(text, isError = false) {
+            if (!reactionMessage) return;
+            reactionMessage.textContent = text;
+            reactionMessage.classList.remove('hidden');
+            if (isError) {
+              reactionMessage.classList.add('text-red-500');
+            } else {
+              reactionMessage.classList.remove('text-red-500');
+            }
+            setTimeout(() => {
+              reactionMessage.classList.add('hidden');
+            }, 3000);
+          }
+
+          function setButtonState(button, isActive) {
+            if (isActive) {
+              button.classList.add('border-amber-500', 'bg-amber-100', 'dark:bg-amber-900/30', 'text-amber-900', 'dark:text-amber-200');
+              button.classList.remove('border-gray-200', 'dark:border-gray-700', 'text-gray-600', 'dark:text-gray-300');
+            } else {
+              button.classList.remove('border-amber-500', 'bg-amber-100', 'dark:bg-amber-900/30', 'text-amber-900', 'dark:text-amber-200');
+              button.classList.add('border-gray-200', 'dark:border-gray-700', 'text-gray-600', 'dark:text-gray-300');
+            }
+          }
+
+          function updateButtonStates() {
+            reactionButtons.forEach((button) => {
+              const id = button.dataset.reaction;
+              setButtonState(button, activeReactions.has(id));
+            });
+          }
+
+          function updateReactionCounts(counts) {
+            reactionOptions.forEach((option) => {
+              const countEl = reactionsContainer.querySelector(`[data-reaction-count="${option.id}"]`);
+              if (countEl) {
+                const count = counts && typeof counts[option.id] !== 'undefined' ? counts[option.id] : 0;
+                countEl.textContent = count;
+              }
+            });
+          }
+
+          async function fetchReactionCounts() {
+            try {
+              const response = await fetch(`/.netlify/functions/reactions?slug=${postSlug}`);
+              if (!response.ok) {
+                throw new Error('Failed to fetch reactions');
+              }
+              const data = await response.json();
+              updateReactionCounts(data.counts);
+            } catch (error) {
+              console.error('Error fetching reactions:', error);
+            }
+          }
+
+          reactionButtons.forEach((button) => {
+            button.addEventListener('click', async () => {
+              const reactionId = button.dataset.reaction;
+              const config = reactionMap.get(reactionId);
+              if (!config) return;
+
+              if (activeReactions.has(reactionId)) {
+                showReactionMessage(`You already reacted with ${config.emoji}.`);
+                return;
+              }
+
+              try {
+                const response = await fetch('/.netlify/functions/reactions', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify({ slug: postSlug, reaction: reactionId })
+                });
+
+                if (!response.ok) {
+                  throw new Error('Failed to save reaction');
+                }
+
+                const data = await response.json();
+                updateReactionCounts(data.counts);
+
+                activeReactions.add(reactionId);
+                localStorage.setItem(reactionStorageKey, JSON.stringify(Array.from(activeReactions)));
+                updateButtonStates();
+                showReactionMessage(`Thanks for reacting with ${config.emoji}!`);
+              } catch (error) {
+                console.error('Error saving reaction:', error);
+                showReactionMessage('Something went wrong. Please try again.', true);
+              }
+            });
+          });
+
+          await fetchReactionCounts();
+          updateButtonStates();
+        }
       });
-    });
-    mutationObserver.observe(document.documentElement, { attributes: true });
-  </script>
+    </script>
+
+    {%- if collections.posts %}
+      {%- set currentTags = tags | filterTagList %}
+      {%- set relatedPosts = [] %}
+
+      {# Find related posts based on shared tags #}
+      {%- for post in collections.posts %}
+        {%- if post.url != page.url %}
+          {%- set postTags = post.data.tags | filterTagList %}
+          {%- set sharedTags = [] %}
+          {%- for tag in currentTags %}
+            {%- if tag in postTags %}
+              {%- set sharedTags = (sharedTags.push(tag), sharedTags) %}
+            {%- endif %}
+          {%- endfor %}
+          {%- if sharedTags.length > 0 %}
+            {%- set relatedPosts = (relatedPosts.push({post: post, score: sharedTags.length}), relatedPosts) %}
+          {%- endif %}
+        {%- endif %}
+      {%- endfor %}
+
+      {# Sort by score and take top 3 #}
+      {%- set sortedRelated = relatedPosts | sort(attribute='score') | reverse %}
+
+      {%- if sortedRelated.length > 0 %}
+        <hr class="my-8" />
+        <section class="related-posts">
+          <h3 class="text-lg font-semibold mb-3 flex items-center gap-2">
+            {% feather "link", class="w-4 h-4" %}
+            Related Posts
+          </h3>
+          <div class="space-y-2">
+            {%- for item in sortedRelated | head(3) %}
+              <div class="border-l-2 border-gray-300 dark:border-gray-600 pl-3 py-1">
+                <a href="{{ item.post.url | url }}" class="font-medium hover:text-amber-600 dark:hover:text-amber-400">
+                  {{ item.post.data.title }}
+                </a>
+                <p class="text-gray-600 dark:text-gray-300 text-sm mt-0.5">{{ item.post.data.description }}</p>
+              </div>
+            {%- endfor %}
+          </div>
+        </section>
+        <hr class="my-8" />
+      {%- endif %}
+
+      {%- set nextPost = collections.posts | getNextCollectionItem(page) %}
+      {%- set previousPost = collections.posts | getPreviousCollectionItem(page) %}
+      {%- if nextPost or previousPost %}
+        <nav aria-label="Post navigation" class="flex flex-col gap-2 text-sm">
+          {%- if nextPost %}
+            <a class="block" href="{{ nextPost.url | url }}">
+              <span class="font-semibold">Next:</span>
+              {{ nextPost.data.title }}
+            </a>
+          {%- endif %}
+          {%- if previousPost %}
+            <a class="block" href="{{ previousPost.url | url }}">
+              <span class="font-semibold">Previous:</span>
+              {{ previousPost.data.title }}
+            </a>
+          {%- endif %}
+        </nav>
+      {%- endif %}
+    {%- endif %}
+
+    <div class="comments">
+      <script>
+        // load giscus with proper theme
+        const getTheme = window.localStorage && window.localStorage.getItem("theme");
+        const theme = getTheme === "dark" ? "dark" : "light";
+        
+        const script = document.createElement('script');
+        script.src = "https://giscus.app/client.js";
+        script.setAttribute("data-repo", "carteakey/carteakey.dev");
+        script.setAttribute("data-repo-id", "R_kgDOIHTsrg");
+        script.setAttribute("data-category", "Announcements");
+        script.setAttribute("data-category-id", "DIC_kwDOIHTsrs4CnZpB");
+        script.setAttribute("data-mapping", "pathname");
+        script.setAttribute("data-strict", "0");
+        script.setAttribute("data-reactions-enabled", "0");
+        script.setAttribute("data-emit-metadata", "0");
+        script.setAttribute("data-input-position", "bottom");
+        script.setAttribute("data-theme", theme);
+        script.setAttribute("data-lang", "en");
+        script.crossOrigin = "anonymous";
+        script.async = true;
+        
+        document.querySelector("div.comments").appendChild(script);
+
+        // Handle theme changes
+        const mutationObserver = new MutationObserver((mutationsList) => {
+          mutationsList.forEach((mutation) => {
+            if (mutation.attributeName === "class") {
+              const iframe = document.querySelector('.giscus-frame');
+              if (iframe) {
+                const theme = document.documentElement.classList.contains("dark") ? "dark" : "light";
+                iframe.contentWindow.postMessage(
+                  { giscus: { setConfig: { theme } } },
+                  'https://giscus.app'
+                );
+              }
+            }
+          });
+        });
+        mutationObserver.observe(document.documentElement, { attributes: true });
+      </script>
+    </div>
+  </article>
+
+  <div class="xl:hidden mt-12 text-sm text-gray-600 dark:text-gray-300 space-y-3">
+    <p class="text-lg font-semibold my-0">Outline</p>
+    <div class="max-h-[50vh] overflow-y-auto pr-2">
+      {{ content | toc | safe }}
+    </div>
+  </div>
 </div>

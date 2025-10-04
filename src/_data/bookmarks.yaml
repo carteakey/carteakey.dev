@@ -1,0 +1,10 @@
+bookmarks:
+  - title: "The Grug Brained Developer"
+    url: "https://grugbrain.dev/"
+    description: "A layman's guide to thinking like the self-aware smol brained developer"
+    category: "Development"
+    tags:
+      - programming
+      - philosophy
+      - humor
+    date: 2024-01-15

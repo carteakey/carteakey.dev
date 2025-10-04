@@ -1,0 +1,81 @@
+---
+layout: layouts/base.njk
+title: Bookmarks
+description: A curated list of articles, tools, and resources I recommend
+eleventyNavigation:
+  key: Bookmarks
+  order: 10
+permalink: /bookmarks/
+---
+
+{% include "components/breadcrumbs.njk" %}
+
+<h1>📚 Bookmarks</h1>
+
+{% set totalCount = bookmarks.bookmarks | length %}
+{% set categories = bookmarks.bookmarks | map('category') | uniq | sort %}
+{% set sortedDates = bookmarks.bookmarks | map('date') | sort %}
+{% set lastUpdated = (sortedDates | reverse)[0] %}
+
+<p class="text-gray-600 dark:text-gray-400">
+  A curated collection of articles, essays, and resources that I've found valuable over the years.
+  These are the pieces I keep coming back to and recommend to others.
+</p>
+
+<div class="mt-6 mb-10 rounded-lg border border-amber-200 dark:border-amber-700 bg-amber-50/70 dark:bg-amber-900/20 p-4 text-sm text-amber-900 dark:text-amber-200">
+  <p class="font-medium">{{ totalCount }} links across {{ categories | length }} categories.</p>
+  <p class="mt-1">Last updated {{ lastUpdated | date("MMMM d, yyyy \"at\" h:mm a") }}</p>
+  <div class="mt-3 flex flex-wrap gap-2">
+    {% for category in categories %}
+      <a href="#{{ category | slugify }}" class="px-3 py-1 rounded-full bg-white/80 dark:bg-gray-800/80 text-gray-700 dark:text-gray-200 hover:bg-white dark:hover:bg-gray-700 transition-colors text-xs font-medium uppercase tracking-wide">
+        {{ category }}
+      </a>
+    {% endfor %}
+  </div>
+</div>
+
+<div class="my-8">
+  {% for category in categories %}
+    {% set items = bookmarks.bookmarks | selectattr('category', 'equalto', category) | sort(attribute='date') | reverse %}
+    <h2 id="{{ category | slugify }}" class="mt-12 mb-4 text-xl font-semibold">{{ category }}</h2>
+    
+    <div class="space-y-4">
+      {% for bookmark in items %}
+        <article class="border-l-4 border-amber-500 dark:border-amber-600 pl-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+          <h3 class="text-lg font-semibold mb-1">
+            <a href="{{ bookmark.url }}" target="_blank" rel="noopener noreferrer" class="hover:underline">
+              {{ bookmark.title }}
+              <span class="inline-block ml-1">{% feather "external-link", class="w-4 h-4 inline" %}</span>
+            </a>
+          </h3>
+          
+          <p class="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400 mb-2">
+            Added {{ bookmark.date | date('MMMM d, yyyy') }}
+          </p>
+          
+          <p class="text-gray-600 dark:text-gray-400 text-sm mb-3">
+            {{ bookmark.description }}
+          </p>
+          
+          <div class="flex flex-wrap gap-2 text-xs">
+            {% for tag in bookmark.tags %}
+              <span class="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded">
+                #{{ tag }}
+              </span>
+            {% endfor %}
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+  {% endfor %}
+</div>
+
+<div class="mt-12 p-6 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+  <h3 class="text-lg font-semibold mb-2">📬 Have a suggestion?</h3>
+  <p class="text-gray-600 dark:text-gray-400 text-sm">
+    Know of an article or resource that should be here? 
+    <a href="https://github.com/carteakey/carteakey.dev/issues" target="_blank" rel="noopener" class="hover:underline">
+      Let me know on GitHub
+    </a>!
+  </p>
+</div>

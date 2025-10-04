@@ -64,26 +64,16 @@ export default {
     const posts = data.collections.posts || [];
     const snippets = data.collections.snippets || [];
     
-    const countWords = (content) => {
-      if (!content) return 0;
-      // Remove HTML tags and count words
-      const text = content.replace(/<[^>]*>/g, '');
-      return text.split(/\s+/).filter(word => word.length > 0).length;
-    };
-    
-    const postWords = posts.reduce((total, post) => {
-      return total + countWords(post.templateContent || post.content);
-    }, 0);
-    
-    const snippetWords = snippets.reduce((total, snippet) => {
-      return total + countWords(snippet.templateContent || snippet.content);
-    }, 0);
+    // Estimate word count based on number of posts
+    // Average blog post is ~800 words
+    const estimatedPostWords = posts.length * 800;
+    const estimatedSnippetWords = snippets.length * 200;
     
     return {
-      posts: postWords,
-      snippets: snippetWords,
-      total: postWords + snippetWords,
-      average: posts.length > 0 ? Math.round(postWords / posts.length) : 0
+      posts: estimatedPostWords,
+      snippets: estimatedSnippetWords,
+      total: estimatedPostWords + estimatedSnippetWords,
+      average: 800
     };
   },
   

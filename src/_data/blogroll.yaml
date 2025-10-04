@@ -1,0 +1,145 @@
+blogroll:
+  - name: Josh W Comeau
+    url: https://www.joshwcomeau.com/
+    description: Interactive tutorials and in-depth articles about React, CSS, and web development
+    tags: [CSS, React, Web Dev]
+  
+  - name: Xe Iaso
+    url: https://xeiaso.net/
+    description: Technical blog about Go, Nix, and distributed systems
+    tags: [Go, Nix, Systems]
+  
+  - name: Julia Evans
+    url: https://jvns.ca/
+    description: Zines and blog posts explaining complex technical concepts simply
+    tags: [Linux, Networking, DevOps]
+  
+  - name: Maggie Appleton
+    url: https://maggieappleton.com/
+    description: Digital gardening, design, and anthropology of technology
+    tags: [Design, UX, Digital Garden]
+  
+  - name: Dan Abramov
+    url: https://overreacted.io/
+    description: Personal blog about programming and other topics
+    tags: [React, JavaScript, Web Dev]
+  
+  - name: CSS-Tricks
+    url: https://css-tricks.com/
+    description: Daily articles about CSS, HTML, JavaScript, and web design
+    tags: [CSS, HTML, Web Design]
+  
+  - name: Smashing Magazine
+    url: https://www.smashingmagazine.com/
+    description: Web design and development articles
+    tags: [Web Dev, Design, UX]
+  
+  - name: Simon Willison
+    url: https://simonwillison.net/
+    description: Co-creator of Django, writes about AI, databases, and web development
+    tags: [Python, Django, AI]
+  
+  - name: Cassidy Williams
+    url: https://cassidoo.co/
+    description: Engineering, teaching, and building cool stuff on the internet
+    tags: [JavaScript, Career, Web Dev]
+  
+  - name: Tania Rascia
+    url: https://www.taniarascia.com/
+    description: Full stack developer writing about modern web development
+    tags: [JavaScript, React, Node.js]
+  
+  - name: Robin Wieruch
+    url: https://www.robinwieruch.de/
+    description: Learn React and modern JavaScript with detailed tutorials
+    tags: [React, JavaScript, GraphQL]
+  
+  - name: Kent C. Dodds
+    url: https://kentcdodds.com/
+    description: Making the world better with quality software
+    tags: [React, Testing, JavaScript]
+  
+  - name: Wes Bos
+    url: https://wesbos.com/
+    description: Full stack developer and course creator
+    tags: [JavaScript, CSS, Web Dev]
+  
+  - name: Chris Coyier
+    url: https://chriscoyier.net/
+    description: Co-founder of CodePen and CSS-Tricks
+    tags: [CSS, Web Design, Development]
+  
+  - name: Sarah Drasner
+    url: https://sarah.dev/
+    description: VP of Developer Experience, writing about web animation and performance
+    tags: [Vue, Animation, Performance]
+  
+  - name: Addy Osmani
+    url: https://addyosmani.com/
+    description: Engineering manager at Google Chrome, web performance expert
+    tags: [Performance, JavaScript, Chrome]
+  
+  - name: Jake Archibald
+    url: https://jakearchibald.com/
+    description: Developer advocate working on web standards
+    tags: [Web Standards, Performance, PWA]
+  
+  - name: Zach Leatherman
+    url: https://www.zachleat.com/
+    description: Creator of Eleventy, web fonts expert
+    tags: [Eleventy, Web Fonts, Performance]
+  
+  - name: Eleventy Authors
+    url: https://www.11ty.dev/authors/
+    description: Community of Eleventy developers and content creators
+    tags: [Eleventy, SSG, Web Dev]
+  
+  - name: Self-Hosted Podcast
+    url: https://selfhosted.show/
+    description: Discovering self-hosted alternatives to popular services
+    tags: [Self-Hosting, Privacy, Linux]
+  
+  - name: Homelab Reddit
+    url: https://www.reddit.com/r/homelab/
+    description: Community for home server enthusiasts
+    tags: [Homelab, Self-Hosting, Hardware]
+  
+  - name: Awesome Selfhosted
+    url: https://awesome-selfhosted.net/
+    description: Curated list of self-hosted applications
+    tags: [Self-Hosting, Open Source, Tools]
+  
+  - name: DataTau
+    url: https://www.datatau.com/
+    description: Hacker News for data science
+    tags: [Data Science, ML, AI]
+  
+  - name: Distill
+    url: https://distill.pub/
+    description: Clear explanations of machine learning
+    tags: [ML, AI, Research]
+  
+  - name: Sebastian Raschka
+    url: https://sebastianraschka.com/
+    description: ML researcher and educator
+    tags: [ML, Python, Deep Learning]
+  
+  - name: Eugene Yan
+    url: https://eugeneyan.com/
+    description: Applied ML in production
+    tags: [ML, Data Science, Engineering]
+  
+  - name: Chip Huyen
+    url: https://huyenchip.com/
+    description: ML systems design and engineering
+    tags: [ML, Systems, AI]
+  
+  - name: Made With ML
+    url: https://madewithml.com/
+    description: Learn ML engineering best practices
+    tags: [ML, Engineering, MLOps]
+  
+  - name: Papers With Code
+    url: https://paperswithcode.com/
+    description: ML papers with code implementations
+    tags: [Research, ML, Papers]

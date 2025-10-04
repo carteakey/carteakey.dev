@@ -12,9 +12,10 @@
         {% endif %}
       </a>
 
-      {# Desktop-only: Date in left column #}
-      <div class="hidden md:flex md:order-1 md:col-span-3 items-end text-sm">
+      {# Desktop-only: Date and Reading Time in left column #}
+      <div class="hidden md:flex md:order-1 md:col-span-3 flex-row text-sm gap-1.5">
         <time class="postlist-date text-gray-500 dark:text-gray-400" datetime="{{ post.date | postDate }}">{{ post.date | postDate }}</time>
+      
       </div>
 
       {# Description appears directly under title on desktop #}
@@ -23,16 +24,26 @@
       </div>
 
       {# Desktop-only: Tags after description #}
-      <div class="hidden md:flex md:order-3 md:col-span-3 flex-wrap items-center gap-2 ">
+      <div class="hidden md:flex md:order-3 md:col-span-3 flex-row justify-items-start items-start gap-2 pt-1">
         {% for tag in post.data.tags | filterTagList %}
         {% set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
-        <a href="{{ tagUrl | url }}" class="no-underline hover:underline">{{ tag }}</a>
+        <a href="{{ tagUrl | url }}" class="text-sm  no-underline hover:underline">{{ tag }}</a>
         {% endfor %}
+        <span class="text-xs text-gray-400 dark:text-gray-600 pt-1 justify-self-stretch">|</span>
+         <span class="text-xs text-gray-500 dark:text-gray-400  justify-self-end flex items-center gap-1 pt-1">
+          {% feather "clock", class="w-3 h-3" %}
+          {{ post.templateContent | readingTime }}
+        </span>
       </div>
 
-      {# Mobile meta row: date + tags (compact) #}
+      {# Mobile meta row: date + reading time + tags (compact) #}
       <div class="order-3 md:hidden flex flex-wrap items-center gap-x-2 gap-y-2 mt-1 text-sm">
         <time class="postlist-date text-xs text-gray-500 dark:text-gray-400" datetime="{{ post.date | postDate }}">{{ post.date | postDate }}</time>
+        <span class="text-gray-300 dark:text-gray-600">•</span>
+        <span class="text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1">
+          {% feather "clock", class="w-3 h-3" %}
+          {{ post.templateContent | readingTime }}
+        </span>
         <span class="text-gray-300 dark:text-gray-600">•</span>
         <div class="flex flex-wrap items-center gap-2">
           {% for tag in post.data.tags | filterTagList %}
