@@ -4,7 +4,7 @@
   {% set title = opts.title or 'Join the conversation' %}
   {% set description = opts.description or 'Have thoughts, questions, or counterpoints? Drop them in the thread below.' %}
   {% set cta = opts.cta or 'Jump to comments' %}
-  {% set baseClasses = 'comment-pointer rounded-xl border border-gray-200/70 dark:border-zinc-800/70 bg-white dark:bg-zinc-950 shadow-sm transition-all duration-200' %}
+  {% set baseClasses = 'comment-pointer  border border-gray-200/70 dark:border-zinc-800/70 md:bg-gray-100 md:dark:bg-gray-800 shadow-sm transition-all duration-200' %}
   {% if variant == 'sidebar' %}
     {% set baseClasses = baseClasses + ' p-6 space-y-4' %}
   {% else %}

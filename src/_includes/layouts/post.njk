@@ -53,7 +53,7 @@ hasEthicalAds: false
   <aside class="hidden xl:block absolute -right-[420px] top-0 text-sm text-gray-600 dark:text-gray-300">
     <div class="sticky top-24 space-y-6 w-[260px]">
       {% if tocHtml | trim %}
-      <section class="rounded-xl border border-gray-200/70 dark:border-zinc-800/70 bg-white dark:bg-zinc-950 px-6 py-6 shadow-sm">
+      <section class=" md:bg-gray-100 md:dark:bg-gray-800  border border-gray-200/70 dark:border-zinc-800/70 px-6 py-6 shadow-sm">
         <p class="text-lg font-semibold my-0 text-gray-800 dark:text-gray-100">Outline</p>
         <div class="mt-4 max-h-[60vh] overflow-y-auto pr-1 space-y-2">
           {{ tocHtml | safe }}
@@ -492,7 +492,7 @@ hasEthicalAds: false
 
   {% if tocHtml | trim %}
   <div class="xl:hidden mt-12">
-    <section class="rounded-xl border border-gray-200/70 dark:border-zinc-800/70 bg-white dark:bg-zinc-950 px-5 py-5 space-y-4 text-sm text-gray-600 dark:text-gray-300">
+    <section class=" border border-gray-200/70 dark:border-zinc-800/70  px-5 py-5 space-y-4 text-sm text-gray-600 dark:text-gray-300">
       <p class="text-lg font-semibold my-0 text-gray-900 dark:text-gray-100">Outline</p>
       <div class="max-h-[50vh] overflow-y-auto pr-1 space-y-2">
         {{ tocHtml | safe }}
