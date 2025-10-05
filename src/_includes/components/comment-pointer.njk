@@ -1,0 +1,21 @@
+{% macro commentPointer(options) %}
+  {% set opts = options or {} %}
+  {% set variant = opts.variant or 'inline' %}
+  {% set title = opts.title or 'Join the conversation' %}
+  {% set description = opts.description or 'Have thoughts, questions, or counterpoints? Drop them in the thread below.' %}
+  {% set cta = opts.cta or 'Jump to comments' %}
+  {% set baseClasses = 'comment-pointer rounded-xl border border-gray-200/70 dark:border-zinc-800/70 bg-white dark:bg-zinc-950 shadow-sm transition-all duration-200' %}
+  {% if variant == 'sidebar' %}
+    {% set baseClasses = baseClasses + ' p-6 space-y-4' %}
+  {% else %}
+    {% set baseClasses = baseClasses + ' p-5 sm:p-6 space-y-4 my-10' %}
+  {% endif %}
+  <section class="{{ baseClasses }}">
+    <p class="text-xs font-semibold uppercase tracking-[0.35em] text-gray-500 dark:text-gray-400">{{ title }}</p>
+    <p class="text-sm leading-relaxed text-gray-600 dark:text-gray-300">{{ description }}</p>
+    <a href="#post-comments" class="inline-flex items-center gap-2 text-sm font-semibold accent-button-outline accent-focus px-4 py-2 rounded-full">
+      {% feather "message-circle", class="w-4 h-4" %}
+      {{ cta }}
+    </a>
+  </section>
+{% endmacro %}

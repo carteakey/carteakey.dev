@@ -10,9 +10,14 @@
 
 ## Medium Priority
 
+- [x] Make the readable view slighty transparent with a subtle shadow and square corners. 
+- [x] Add Some padding on top and bottom of the main base view to give it some notebook feel.
+- [ ]
+
+
+Buy me a coffee
+
 ### Performance & Technical
-- [ ] Port image optimization to all areas not currently using it
-- [ ] Critical CSS inlining for above-the-fold content
 - [ ] Add service worker for offline reading
 - [ ] Implement lazy loading for images (if not already present)
 - [ ] Add RSS feed enhancements (full content)
@@ -22,13 +27,12 @@
 - [ ] Code snippet favorites - Let visitors save useful snippets
 
 ### Analytics & Insights
-- [ ] GitHub contribution graph integration
+
 - [ ] Learning progress tracker
 - [ ] View count tracking (privacy-friendly)
 
 ### Content Organization
 - [ ] Archive page improvements
-- [ ] Better 404 page design
 - [ ] Add skip links for accessibility
 - [ ] Improve heading hierarchy
 - [ ] Add table of contents for long posts
@@ -50,7 +54,41 @@
 - [ ] Multi-language support
 
 ## Completed TODOs
+### 2025-10-05
+- [x] Make the readable view slighty transparent with a subtle shadow and square corners.
+- [x] Add padding above and below the main base view so the notebook frame has breathing room.
+- [x] Background - implement a subtle, non-distracting background pattern or gradient. Right now its plain background.
+- [x] Footer row icons with links to social media, GitHub, email should be in a single line on small screens. STill wrapping to 2nd line on small screens.
+- [x] Bookmarks page should follow the same card style as blogroll and projects. Looks very different right now.
+- [x] Feed - implement masonry layout like the gallery. I discarded the previous implementation as it was buggy.
+- [x] Critical CSS inlining for above-the-fold content
 ### 2025-10-04
+- [x] In the feed, the photo format is not closing and the rest of the items are getting put into that container.
+- [x] Notebook reading frame widened with square edges, taller breathing room, and a softer desktop padding cadence.
+- [x] Site backdrop now leans into a gray gradient layered over the doodle pattern for a calmer desk vibe.
+- [x] Long-form prose now uses the et-book family for a notebook feel while UI text stays crisp.
+- [x] Sidebar cards restyled: matching backgrounds, cushioned padding, comment pointer component, and EthicalAds paused.
+- [x] Feed grid upgraded to a masonry layout with auto-resizing tiles like the gallery.
+- [x] Notebook reading frame now adds a desktop-only off-white surround with a matching outline card on posts.
+- [x] Reserved a right-rail "Conversation space" block beside posts for future inline comments.
+- [x] Notebook frame defers on mobile screens and `fullWidth` pages to stay out of the way.
+- [x] Bookmarks CTA links now inherit the active accent theme instead of hard-coded amber tones.
+- [x] 404 hero actions and badge now follow the accent theme with the new accent utility classes.
+- [x] Added an off-white doodle backdrop outside the main reading column for a cozier feel.
+- [x] Feed cards now size themselves to their content height instead of stretching to match neighbors.
+- [x] "Back to Top" control now inherits the currently selected accent theme colors.
+- [x] Bookmarks display each site's favicon with graceful fallbacks.
+- [x] Bookmark timestamps use the same readable date format as blog posts.
+- [x] Feed layout refreshed to match card styling across the site and share a reusable component.
+- [x] Footer icon row now stays on a single line on small screens.
+- [x] Snippets index rebuilt with card grid styling, search polish, and inline metadata chips.
+- [x] Site typography tightened for higher information density.
+- [x] Lighthouse metrics now sourced from `_data/lighthouse.json` and displayed dynamically on the stats page.
+- [x] GitHub contribution graph integration with data-driven heatmap on projects page
+- [x] Better 404 page design with helpful navigation
+- [x] Bookmarks page aligned with blogroll/projects card layout
+- [x] Add a "Back to Top" button on long pages floating at bottom right
+- [x] Port image optimization to remaining templates using eleventy-img
 - [x] A blog post outlining how i am working with copilot and codex - the flow, the prompt.md and the instructions.md file. 
 - [x] Create bookmarks/reading list - Curated list of articles you recommend
 - [x] Add post reactions - Beyond upvotes, add emoji reactions

@@ -5,6 +5,103 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.11] - 2025-10-05
+
+### Changed
+- Desktop reading frame padding tightened while keeping the notebook frame centered.
+
+### Fixed
+- Full-width pages now stretch the main content edge-to-edge while navigation and footer stay centered using the new wrapper utility.
+
+## [1.3.10] - 2025-10-05
+
+### Changed
+- Notebook reading frame now uses a translucent panel with squared edges and a softer drop shadow to keep the focus on the page.
+- Base layout picks up extra top and bottom padding so the notebook frame sits comfortably within the desktop backdrop.
+
+### Fixed
+- Guarded the post layout TOC helper so Eleventy no longer crashes when a post provides no headings.
+
+## [1.3.9] - 2025-10-05
+
+### Added
+- Inline critical CSS block in the base layout to style the shell before the main bundle loads.
+
+### Changed
+- Global background now uses a subtle gradient treatment tailored for light and dark modes.
+- Footer social and utility icons stay on a single line on compact screens while keeping the grouped layout on desktop.
+- Bookmarks entries adopt the shared card styling used by blogroll and projects for consistent presentation.
+- The feed timeline now uses a masonry grid with ResizeObserver-driven spanning to match the gallery flow.
+
+### Fixed
+- Feed cards no longer leave gaps after font or media loads thanks to the new span recalculation script.
+
+## [1.3.8] - 2025-10-04
+
+### Added
+- Conversation pointer component that links to `#post-comments`, usable inline or in the sidebar.
+- Feed page masonry script to auto-resize cards so the timeline flows like the gallery grid.
+
+### Changed
+- Notebook frame widened with square corners, deeper padding, and a gray gradient doodle backdrop.
+- Long-form prose now uses the `et-book` family with a slightly wider measure for calmer reading.
+- TOC and sidebar callouts share the primary background, pick up extra padding, and adopt the accent-aware controls.
+
+### Fixed
+- Feed cards now recalc their spans after fonts and images load, preventing gaps and overlaps in the new layout.
+
+## [1.3.7] - 2025-10-04
+
+### Added
+- Post sidebar now has a dedicated "Conversation space" card ready for future inline comments alongside the outline.
+- Accent-aware utility classes (`accent-link`, `accent-button`, `accent-button-outline`, `accent-focus`) driven by CSS variables for reusable theming.
+
+### Changed
+- Post layout adopts a notebook-style frame on desktop with an off-white surround that stays hidden on mobile and `fullWidth` pages.
+- Outline and sidebar styling reuse the accent palette and off-white backdrop to match the refreshed reading frame.
+
+### Fixed
+- Bookmarks "Open an issue" CTA and 404 hero buttons now inherit the active accent theme instead of being locked to amber.
+
+## [1.3.6] - 2025-10-04
+
+### Added
+- Ambient off-white doodle backdrop using `src/static/img/patterns/hobbies-doodle.svg` and a softened site frame around the reading column.
+
+### Changed
+- Feed grids now align cards to their natural height so content length dictates the card size on /feed and the homepage.
+- Bookmarks layout refresh adds favicon badges, domain metadata, and breathing room for descriptions.
+
+### Fixed
+- "Back to Top" button now honors the active accent theme across light and dark modes.
+- Bookmark timestamps reuse the `readableDate` filter for parity with posts and snippets.
+
+## [1.3.5] - 2025-10-04
+
+### Added
+- Stats page now reads Lighthouse scores from `_data/lighthouse.json`, exposing the run metadata alongside the four category scores.
+
+### Changed
+- Feed page and homepage now share a reusable card component with styling that matches other site cards and uses denser typography.
+- Snippets index adopts the site card grid, refreshed search UI, and inline metadata chips for languages and tags.
+- Base layout typography tightened across the site to increase information density without sacrificing readability.
+
+### Fixed
+- Footer icon set now stays on a single row on mobile viewports.
+
+## [1.3.4] - 2025-10-04
+
+### Added
+- Projects page now renders a cached GitHub contributions heatmap backed by the new `githubContributions` data source.
+- Floating "Back to Top" control appears on scroll with reduced-motion friendly smooth scrolling.
+
+### Changed
+- 404 page adopts the main layout with curated fallback links and contact prompts.
+- Bookmarks view uses the same card grid styling as Blogroll/Projects, with per-category counts and anchors.
+
+### Fixed
+- Feed, homepage, and GPT-OSS benchmark comparison images now go through the Eleventy image pipeline for responsive, optimised output.
+
 ## [1.3.3] - 2025-10-04
 
 ### Added

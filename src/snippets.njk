@@ -9,67 +9,113 @@ eleventyNavigation:
 
 {% include "components/breadcrumbs.njk" %}
 
-<h1>{{ title }}</h1>
+{% set totalSnippets = collections.snippets | length %}
 
-<div class="mb-8">
-  <input type="text" id="searchInput" placeholder="Search snippets..." 
-    class="w-full p-2 border rounded dark:bg-gray-800 dark:border-gray-700">
-</div>
+<div class="max-w-5xl mx-auto">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h1 class="text-3xl font-semibold tracking-tight text-gray-900 dark:text-white flex items-center gap-3">
+        {% feather "code" %}
+        {{ title }}
+      </h1>
+      <p class="mt-2 text-sm text-gray-600 dark:text-gray-400 md:text-base">
+        Bite-sized solutions, command references, and quick fixes I reach for regularly.
+      </p>
+    </div>
+    <div class="rounded-lg border border-amber-200 dark:border-amber-700 bg-amber-50/70 dark:bg-amber-900/25 px-4 py-3 text-xs uppercase tracking-wide text-amber-800 dark:text-amber-200">
+      {{ totalSnippets }} snippets and counting
+    </div>
+  </header>
 
-<div class="snippets-container">
-  {%- for snippet in collections.snippets | reverse -%}
-    <article class="snippet-card mb-8 p-4 border rounded hover:shadow-lg transition-shadow dark:border-gray-700">
-      <h2 class="mb-2">
-        <a href="{{ snippet.url }}" class="no-underline hover:underline">{{ snippet.data.title }}</a>
-      </h2>
-      
-      <div class="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400">
-        <time datetime="{{ snippet.date | htmlDateString }}">
-          {{ snippet.date | readableDate }}
-        </time>
-        
-        {% if snippet.data.language %}
-        <span class="language badge">{{ snippet.data.language }}</span>
+  <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+    <label for="snippetSearch" class="text-sm font-medium text-gray-700 dark:text-gray-300">Search the library</label>
+    <div class="relative w-full sm:w-80">
+      {% feather "search", class="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" %}
+      <input
+        type="text"
+        id="snippetSearch"
+        placeholder="Filter by title, language, or tag..."
+        class="snippet-search w-full rounded-full border border-gray-200 bg-white py-2.5 pl-10 pr-4 text-sm text-gray-800 shadow-sm focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
+      >
+    </div>
+  </div>
+
+  <div class="mt-8 grid gap-4 md:grid-cols-2" id="snippetGrid">
+    {%- for snippet in collections.snippets | reverse -%}
+      {% set rawTags = snippet.data.tags | default([]) %}
+      {% set filteredTags = rawTags | filterTagList %}
+      {% set excerpt = snippet.templateContent | striptags | replace('\n', ' ') | truncate(140, true, '…') %}
+      {% set searchExcerpt = snippet.templateContent | striptags | replace('\n', ' ') | truncate(160, true, '') | lower %}
+
+      <article
+        class="snippet-card h-full rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-5 sm:p-6 shadow-sm transition-shadow hover:shadow-lg"
+        data-snippet-card
+        data-title="{{ snippet.data.title | lower }}"
+        data-tags="{{ filteredTags | join(' ') | lower }}"
+        data-language="{{ snippet.data.language | default('') | lower }}"
+        data-body="{{ searchExcerpt }}"
+      >
+        <div class="flex items-start justify-between gap-4">
+          <div class="space-y-2">
+            <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
+              <a href="{{ snippet.url }}" class="inline-flex items-center gap-2 hover:text-amber-600 dark:hover:text-amber-400">
+                <span>{{ snippet.data.title }}</span>
+                {% feather "arrow-up-right", class="w-4 h-4 opacity-60" %}
+              </a>
+            </h2>
+            <div class="flex flex-wrap items-center gap-2 text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
+              <time datetime="{{ snippet.date | htmlDateString }}">{{ snippet.date | readableDate }}</time>
+              {% if snippet.data.language %}
+                <span class="inline-flex items-center gap-1 rounded-full bg-gray-100 px-2 py-1 text-gray-700 dark:bg-gray-800 dark:text-gray-200">
+                  {% feather "terminal", class="w-3 h-3" %}
+                  {{ snippet.data.language }}
+                </span>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+        {% if excerpt %}
+          <p class="mt-3 text-sm text-gray-600 dark:text-gray-300 leading-relaxed">{{ excerpt }}</p>
         {% endif %}
-      </div>
 
-      {% if snippet.data.tags %}
-      <div class="mt-2 flex flex-wrap gap-2">
-        {% for tag in snippet.data.tags | filterTagList %}
-          <a href="/snippets/tags/{{ tag | slugify }}/" 
-            class="text-sm text-blue-600 dark:text-blue-400 hover:underline">#{{ tag }}</a>
-        {% endfor %}
-      </div>
-      {% endif %}
-    </article>
-  {%- endfor -%}
+        {% if filteredTags | length %}
+          <div class="mt-4 flex flex-wrap items-center gap-2">
+            {% for tag in filteredTags %}
+              <a
+                href="/snippets/tags/{{ tag | slugify }}/"
+                class="snippet-tag text-[0.7rem] uppercase tracking-wide rounded-full bg-gray-100 px-2 py-1 text-gray-700 transition-colors hover:bg-amber-100 hover:text-amber-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-amber-900/40 dark:hover:text-amber-200"
+              >
+                #{{ tag }}
+              </a>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </article>
+    {%- endfor -%}
+  </div>
 </div>
 
 <script>
-  const searchInput = document.getElementById('searchInput');
-  const snippetCards = document.querySelectorAll('.snippet-card');
+  const searchInput = document.getElementById('snippetSearch');
+  const snippetCards = Array.from(document.querySelectorAll('[data-snippet-card]'));
 
-  searchInput.addEventListener('input', (e) => {
-    const searchTerm = e.target.value.toLowerCase();
+  searchInput.addEventListener('input', (event) => {
+    const term = event.target.value.trim().toLowerCase();
 
-    snippetCards.forEach(card => {
-      const title = card.querySelector('h2').textContent.toLowerCase();
-      const tags = Array.from(card.querySelectorAll('.text-blue-600')).map(tag => tag.textContent.toLowerCase());
-      const language = card.querySelector('.language')?.textContent.toLowerCase() || '';
+    snippetCards.forEach((card) => {
+      const title = card.dataset.title || '';
+      const tags = card.dataset.tags || '';
+      const language = card.dataset.language || '';
+      const body = card.dataset.body || '';
+      const matches =
+        term.length === 0 ||
+        title.includes(term) ||
+        tags.includes(term) ||
+        language.includes(term) ||
+        body.includes(term);
 
-      const isVisible = 
-        title.includes(searchTerm) || 
-        tags.some(tag => tag.includes(searchTerm)) ||
-        language.includes(searchTerm);
-
-      card.style.display = isVisible ? 'block' : 'none';
+      card.classList.toggle('hidden', !matches);
     });
   });
 </script>
-
-<style>
-.badge {
-  @apply px-2 py-1 rounded bg-gray-200 dark:bg-gray-700;
-}
-</style>
-

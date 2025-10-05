@@ -31,6 +31,31 @@
   </script>
 
   <script>
+    const ACCENT_COLORS = {
+      gray: "#6b7280",
+      slate: "#64748b",
+      zinc: "#71717a",
+      neutral: "#737373",
+      stone: "#78716c",
+      red: "#ef4444",
+      orange: "#f97316",
+      amber: "#f59e0b",
+      yellow: "#eab308",
+      lime: "#84cc16",
+      green: "#22c55e",
+      emerald: "#10b981",
+      teal: "#14b8a6",
+      cyan: "#06b6d4",
+      sky: "#0ea5e9",
+      blue: "#3b82f6",
+      indigo: "#6366f1",
+      violet: "#8b5cf6",
+      purple: "#a855f7",
+      fuchsia: "#d946ef",
+      pink: "#ec4899",
+      rose: "#f43f5e"
+    };
+
     const isDarkMode = () =>
       localStorage.theme === "dark" ||
       (!("theme" in localStorage) &&
@@ -46,12 +71,18 @@
       return localStorage.accentTheme || "amber";
     };
 
+    const setAccentVariables = (theme) => {
+      const accentColor = ACCENT_COLORS[theme] || ACCENT_COLORS.amber;
+      document.documentElement.style.setProperty("--accent-color", accentColor);
+    };
+
     const setAccentTheme = (theme) => {
       localStorage.accentTheme = theme;
       updateAccentClasses(theme);
     };
 
     const updateAccentClasses = (theme) => {
+      setAccentVariables(theme);
       const proseElement = document.querySelector('.prose');
       if (proseElement) {
         // Remove all existing prose color classes
@@ -62,6 +93,8 @@
         proseElement.classList.add(`prose-${theme}`);
       }
     };
+
+    setAccentVariables(getAccentTheme());
 
     // Apply saved accent theme on page load
     document.addEventListener('DOMContentLoaded', () => {
@@ -175,9 +208,11 @@
   </script>
   {% endif %}
 </head>
-<body class="bg-gray-50 dark:bg-black font-sans">
-  <div class="md:max-w-2xl lg:max-w-3xl mx-auto">
-    <div class="prose prose-amber prose-lg prose-h1:text-3xl prose-h2:my-4 dark:prose-invert px-4 md:px-0">
+{% set showReadingFrame = not fullWidth %}
+<body class="bg-gray-100 dark:bg-black font-sans {% if showReadingFrame %} md:py-16 md:bg-gray-100 md:dark:bg-gray-800{% endif %}">
+  <div
+    class="{% if fullWidth %}w-full max-w-none px-4{% else %}md:max-w-3xl lg:max-w-5xl{% endif %} mx-auto {% if showReadingFrame %} md:bg-gray-100/95  md:dark:bg-zinc-950/90 md:shadow-[0_20px_60px_-28px_rgba(15,23,42,0.45)] md:dark:shadow-[0_16px_50px_-26px_rgba(0,0,0,0.65)] md:ring-1 md:ring-amber-100/40 md:dark:ring-zinc-800/40 md:px-28 lg:px-32 md:py-10 md:rounded-none{% endif %}">
+    <div class="prose prose-amber prose-lg prose-h1:text-2xl prose-h2:my-4 dark:prose-invert px-4 md:px-0 mx-auto {% if fullWidth %}max-w-none{% endif %}">
       <nav class="flex w-full py-8 justify-end">
 
         {% set navPages = collections.all | eleventyNavigation %}
@@ -185,7 +220,7 @@
         <div class='justify-between flex flex-row w-full'>
 
           <span class="transition-all justify-self-start mt-5 px-0 py-2 hidden md:block">
-            <a class="no-underline hover:underline font-bold font-et-book text-xl " href="{{ '/' | url }}">Kartikey Chauhan</a>
+            <a class="no-underline hover:underline font-bold font-et-book text-2xl " href="{{ '/' | url }}">Kartikey Chauhan</a>
           </span>
 
           <span class="transition-all justify-self-start mt-5 px-0  py-2  md:hidden block">
@@ -249,7 +284,7 @@
 
       </nav>
 
-      <main class="{% if fullWidth %}-mx-[calc(50vw-50%)] w-screen px-4 md:px-8{% endif %} {% if templateClass %}{{ templateClass }}{% endif %}">
+      <main class="{% if fullWidth %}full-width-wrapper px-4 md:px-8{% endif %} {% if templateClass %}{{ templateClass }}{% endif %}">
 
         {{ content | safe }}
 
@@ -301,9 +336,9 @@
           </div>
         </div>
         {% endif %}
-        <div class='flex flex-col md:flex-row gap-4 md:gap-2'>
+        <div class='flex flex-nowrap items-center justify-center gap-2 whitespace-nowrap overflow-x-auto md:overflow-visible md:justify-end py-1 -mx-2 px-2 md:m-0 md:gap-3'>
           {# Social Links Group #}
-          <div class='flex flex-row items-center gap-1 border-b md:border-b-0 md:border-r border-gray-200 dark:border-gray-700 pb-2 md:pb-0 md:pr-2'>
+          <div class='flex flex-row items-center gap-1 md:border-r border-gray-200 dark:border-gray-700 md:pr-3'>
             <a class="p-1 sm:px-2 transition-all" href="https://www.linkedin.com/in/kartikeychauhan/"
               title="LinkedIn" aria-label="LinkedIn">{% feather "linkedin" %}</a>
             <a class="p-1 sm:px-2 transition-all" href="https://github.com/carteakey" title="GitHub"
@@ -311,7 +346,7 @@
           </div>
           
           {# Content Discovery Group #}
-          <div class='flex flex-row items-center gap-1 border-b md:border-b-0 md:border-r border-gray-200 dark:border-gray-700 pb-2 md:pb-0 md:pr-2'>
+          <div class='flex flex-row items-center gap-1 md:border-r border-gray-200 dark:border-gray-700 md:pr-3'>
             <a class="p-1 sm:px-2 transition-all" href="{{ '/search/' | url }}" title="Search" aria-label="Search">{% feather "search" %}</a>
             <a class="p-1 sm:px-2 transition-all" href="{{ '/blogroll/' | url }}" title="Blogroll" aria-label="Blogroll">{% feather "bookmark" %}</a>
           </div>

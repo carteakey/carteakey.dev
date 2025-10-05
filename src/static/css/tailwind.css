@@ -8,12 +8,22 @@
 @theme {
   --font-*: initial;
   /* Default body copy font: Plus Jakarta Sans (local) with system fallbacks */
-  --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Apple Color Emoji', 'Segoe UI Emoji', 'Inter';
+  --font-sans:  'Poppins', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Apple Color Emoji', 'Segoe UI Emoji', 'Inter';
   /* Monospace for code */
   --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
   --font-et-book: et-book, serif;
 
   --animate-spin-slow: spin 7s linear infinite;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src:
+    url("/static/fonts/poppins/Poppins-Regular.woff2") format("woff2"),
+    url("/static/fonts/poppins/Poppins-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
@@ -52,6 +62,40 @@
   ::file-selector-button {
     border-color: var(--color-gray-200, currentColor);
   }
+}
+
+@layer base {
+  body {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    background-color: #f8fafc;
+    background-image:
+      radial-gradient(at 15% 20%, rgba(245, 158, 11, 0.18), transparent 55%),
+      radial-gradient(at 85% 10%, rgba(59, 130, 246, 0.12), transparent 55%),
+      linear-gradient(180deg, #f9fafb 0%, #f5f5f5 45%, #f8fafc 100%);
+    background-attachment: fixed;
+    background-size: cover;
+  }
+
+  @media (min-width: 1024px) {
+    body {
+      font-size: 1rem;
+    }
+  }
+}
+
+@layer base {
+  .dark body {
+    background-color: #050505;
+    background-image:
+      radial-gradient(at 12% 18%, rgba(251, 191, 36, 0.14), transparent 55%),
+      radial-gradient(at 88% 12%, rgba(56, 189, 248, 0.14), transparent 55%),
+      linear-gradient(180deg, #050505 0%, #0b0b0f 45%, #09090b 100%);
+  }
+}
+
+:root {
+  --accent-color: #f59e0b;
 }
 
 *:focus {
@@ -113,6 +157,16 @@
   font-style: normal;
 } 
 
+@layer utilities {
+  .full-width-wrapper {
+    width: 100vw;
+    max-width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    box-sizing: border-box;
+  }
+}
+
 
 .direct-link {
   display: none;
@@ -153,6 +207,109 @@ figure {
   text-align: center;
   display: table;
   margin: 10px auto; /* not needed unless you want centered */
+}
+
+@layer components {
+  .accent-link {
+    color: var(--accent-color);
+    text-decoration-color: color-mix(in srgb, var(--accent-color) 60%, white);
+    transition: color 150ms ease, text-decoration-color 150ms ease;
+  }
+
+  .accent-link:hover {
+    color: color-mix(in srgb, var(--accent-color) 85%, black);
+    text-decoration-color: color-mix(in srgb, var(--accent-color) 85%, black);
+  }
+
+  .dark .accent-link {
+    color: color-mix(in srgb, var(--accent-color) 70%, white);
+    text-decoration-color: color-mix(in srgb, var(--accent-color) 65%, white);
+  }
+
+  .dark .accent-link:hover {
+    color: color-mix(in srgb, var(--accent-color) 88%, white);
+    text-decoration-color: color-mix(in srgb, var(--accent-color) 78%, white);
+  }
+
+  .accent-button,
+  .accent-button-outline {
+    transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease, box-shadow 150ms ease;
+  }
+
+  .accent-button {
+    background-color: var(--accent-color);
+    color: #ffffff;
+  }
+
+  .accent-button:hover {
+    background-color: color-mix(in srgb, var(--accent-color) 85%, black);
+  }
+
+  .dark .accent-button:hover {
+    background-color: color-mix(in srgb, var(--accent-color) 75%, white);
+  }
+
+  .accent-button-outline {
+    border: 1px solid var(--accent-color);
+    color: var(--accent-color);
+    background-color: transparent;
+  }
+
+  .accent-button-outline:hover {
+    background-color: color-mix(in srgb, var(--accent-color) 12%, white);
+  }
+
+  .dark .accent-button-outline {
+    color: color-mix(in srgb, var(--accent-color) 70%, white);
+    border-color: color-mix(in srgb, var(--accent-color) 65%, white);
+  }
+
+  .dark .accent-button-outline:hover {
+    background-color: color-mix(in srgb, var(--accent-color) 14%, rgb(24 24 27));
+  }
+
+  .accent-focus:focus-visible {
+    outline: 2px solid color-mix(in srgb, var(--accent-color) 65%, white);
+    outline-offset: 3px;
+  }
+
+  .dark .accent-focus:focus-visible {
+    outline-color: color-mix(in srgb, var(--accent-color) 55%, white);
+  }
+
+  .bookmark-card {
+    isolation: isolate;
+  }
+
+  .bookmark-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.16), transparent 65%);
+    opacity: 0;
+    transition: opacity 180ms ease;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .dark .bookmark-card::before {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.12), transparent 65%);
+  }
+
+  .bookmark-card:hover::before,
+  .bookmark-card:focus-within::before {
+    opacity: 1;
+  }
+
+  .feed-masonry {
+    grid-auto-rows: var(--feed-row-height, 16px);
+    grid-auto-flow: dense;
+  }
+
+  .feed-card {
+    break-inside: avoid;
+  }
 }
 
 /* Upvote button styles */

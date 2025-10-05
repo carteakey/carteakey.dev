@@ -1,0 +1,71 @@
+{% macro contributionIntensity(count) -%}
+  {%- if count == 0 -%}
+    bg-gray-200 dark:bg-gray-700
+  {%- elseif count <= 3 -%}
+    bg-emerald-200 dark:bg-emerald-900/60
+  {%- elseif count <= 7 -%}
+    bg-emerald-300 dark:bg-emerald-700/70
+  {%- elseif count <= 12 -%}
+    bg-emerald-400 dark:bg-emerald-600/80
+  {%- else -%}
+    bg-emerald-500 dark:bg-emerald-400/80
+  {%- endif -%}
+{%- endmacro %}
+
+{% set contributions = contributions or githubContributions %}
+
+<div class="space-y-4">
+  <div class="flex flex-wrap gap-4 text-sm text-gray-600 dark:text-gray-300">
+    {% if contributions.weeks | length %}
+      <p><span class="font-medium text-gray-900 dark:text-white">{{ contributions.totalCount }}</span> contributions in the past {{ contributions.weeks | length }} weeks.</p>
+    {% else %}
+      <p><span class="font-medium text-gray-900 dark:text-white">{{ contributions.totalCount }}</span> contributions tracked this year.</p>
+    {% endif %}
+    {% if contributions.currentStreak and contributions.currentStreak.length %}
+      <p>Current streak: {{ contributions.currentStreak.length }} days</p>
+    {% endif %}
+    {% if contributions.longestStreak and contributions.longestStreak.length %}
+      <p>Best streak: {{ contributions.longestStreak.length }} days</p>
+    {% endif %}
+    {% if contributions.dailyAverageRounded %}
+      <p>Daily average: {{ contributions.dailyAverageRounded }} contributions</p>
+    {% endif %}
+    {% if contributions.weeklyAverageRounded %}
+      <p>Weekly average: {{ contributions.weeklyAverageRounded }} contributions</p>
+    {% endif %}
+  </div>
+
+  {% if contributions.weeks | length %}
+  <div class="space-y-3">
+    <div class="overflow-x-auto">
+      <div class="inline-grid gap-1" style="grid-template-columns: repeat({{ contributions.weeks | length }}, minmax(0, 1fr));">
+        {% for week in contributions.weeks %}
+          <div class="grid gap-1" style="grid-template-rows: repeat(7, minmax(0, 1fr));">
+            {% for day in week.contributionDays %}
+              <span
+                class="inline-block w-3 h-3 rounded-sm transition-colors duration-150 {{ contributionIntensity(day.count) | trim }}"
+                title="{{ day.count }} contributions on {{ day.date }}"
+                aria-label="{{ day.count }} contributions on {{ day.date }}"
+              ></span>
+            {% endfor %}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
+      <span>Less</span>
+      <div class="flex items-center gap-1">
+        <span class="w-3 h-3 rounded-sm bg-gray-200 dark:bg-gray-700"></span>
+        <span class="w-3 h-3 rounded-sm bg-emerald-200 dark:bg-emerald-900/60"></span>
+        <span class="w-3 h-3 rounded-sm bg-emerald-300 dark:bg-emerald-700/70"></span>
+        <span class="w-3 h-3 rounded-sm bg-emerald-400 dark:bg-emerald-600/80"></span>
+        <span class="w-3 h-3 rounded-sm bg-emerald-500 dark:bg-emerald-400/80"></span>
+      </div>
+      <span>More</span>
+    </div>
+  </div>
+  {% else %}
+    <p class="text-sm text-gray-500 dark:text-gray-400">Contribution data is unavailable right now. Try checking back later.</p>
+  {% endif %}
+  <p class="text-xs text-gray-400 dark:text-gray-500">Data courtesy of the public GitHub contributions API.</p>
+</div>

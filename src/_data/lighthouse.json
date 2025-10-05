@@ -1,0 +1,10 @@
+{
+  "updatedAt": "2025-10-04",
+  "source": "Manual Lighthouse run on Chrome DevTools",
+  "metrics": {
+    "performance": 94,
+    "accessibility": 95,
+    "bestPractices": 100,
+    "seo": 91
+  }
+}
