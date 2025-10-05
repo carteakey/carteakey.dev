@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.11] - 2025-10-05
+
+### Changed
+- Desktop reading frame padding tightened while keeping the notebook frame centered.
+
+### Fixed
+- Full-width pages now stretch the main content edge-to-edge while navigation and footer stay centered using the new wrapper utility.
+
+## [1.3.10] - 2025-10-05
+
+### Changed
+- Notebook reading frame now uses a translucent panel with squared edges and a softer drop shadow to keep the focus on the page.
+- Base layout picks up extra top and bottom padding so the notebook frame sits comfortably within the desktop backdrop.
+
+### Fixed
+- Guarded the post layout TOC helper so Eleventy no longer crashes when a post provides no headings.
+
 ## [1.3.9] - 2025-10-05
 
 ### Added

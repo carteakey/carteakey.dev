@@ -10,8 +10,8 @@
 
 ## Medium Priority
 
-- [ ] Make the readable view slighty transparent with a subtle shadow and square corners. 
-- [ ] Add Some padding on top and bottom of the main base view to give it some notebook feel.
+- [x] Make the readable view slighty transparent with a subtle shadow and square corners. 
+- [x] Add Some padding on top and bottom of the main base view to give it some notebook feel.
 - [ ]
 
 
@@ -55,6 +55,8 @@ Buy me a coffee
 
 ## Completed TODOs
 ### 2025-10-05
+- [x] Make the readable view slighty transparent with a subtle shadow and square corners.
+- [x] Add padding above and below the main base view so the notebook frame has breathing room.
 - [x] Background - implement a subtle, non-distracting background pattern or gradient. Right now its plain background.
 - [x] Footer row icons with links to social media, GitHub, email should be in a single line on small screens. STill wrapping to 2nd line on small screens.
 - [x] Bookmarks page should follow the same card style as blogroll and projects. Looks very different right now.

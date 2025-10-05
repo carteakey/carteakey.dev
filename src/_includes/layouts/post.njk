@@ -36,7 +36,7 @@ hasEthicalAds: false
 {% from "components/comment-pointer.njk" import commentPointer %}
 
 {% set showSidebar = not fullWidth %}
-{% set tocHtml = content | toc %}
+{% set tocHtml = (content | toc) | default('') %}
 {% set conversationPlacement = conversationPlacement or 'sidebar' %}
 {% set showAds = false %}
 

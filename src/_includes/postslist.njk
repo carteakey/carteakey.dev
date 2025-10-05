@@ -19,7 +19,7 @@
       </div>
 
       {# Description appears directly under title on desktop #}
-      <div class='order-2 md:order-4 md:col-span-7 text-gray-600 dark:text-gray-300 font-light'>
+      <div class='order-2 md:order-4 md:col-span-7 text-gray-600 dark:text-gray-300 font-light text-sm'>
         {{ post.data.description }}
       </div>
 
@@ -29,11 +29,11 @@
         {% set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
         <a href="{{ tagUrl | url }}" class="text-sm  no-underline hover:underline">{{ tag }}</a>
         {% endfor %}
-        <span class="text-xs text-gray-400 dark:text-gray-600 pt-1 justify-self-stretch">|</span>
-         <span class="text-xs text-gray-500 dark:text-gray-400  justify-self-end flex items-center gap-1 pt-1">
+        {# <span class="text-xs text-gray-400 dark:text-gray-600 pt-1 justify-self-stretch">|</span> #}
+         {# <span class="text-xs text-gray-500 dark:text-gray-400  justify-self-end flex items-center gap-1 pt-1">
           {% feather "clock", class="w-3 h-3" %}
           {{ post.templateContent | readingTime }}
-        </span>
+        </span> #}
       </div>
 
       {# Mobile meta row: date + reading time + tags (compact) #}

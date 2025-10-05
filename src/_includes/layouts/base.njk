@@ -209,9 +209,10 @@
   {% endif %}
 </head>
 {% set showReadingFrame = not fullWidth %}
-<body class="bg-gray-100 dark:bg-black font-sans {% if showReadingFrame %} md:bg-gray-100 md:dark:bg-gray-800{% endif %}">
-  <div class="md:max-w-3xl lg:max-w-5xl mx-auto {% if showReadingFrame %} md:bg-white md:dark:bg-zinc-950 md:shadow-xl md:ring-1 md:ring-amber-100/60 md:dark:ring-zinc-800/60 md:px-36 md:py-12{% endif %}">
-    <div class="prose prose-amber prose-lg prose-h1:text-2xl prose-h2:my-4 dark:prose-invert px-4 md:px-0">
+<body class="bg-gray-100 dark:bg-black font-sans {% if showReadingFrame %} md:py-16 md:bg-gray-100 md:dark:bg-gray-800{% endif %}">
+  <div
+    class="{% if fullWidth %}w-full max-w-none px-4{% else %}md:max-w-3xl lg:max-w-5xl{% endif %} mx-auto {% if showReadingFrame %} md:bg-gray-100/95  md:dark:bg-zinc-950/90 md:shadow-[0_20px_60px_-28px_rgba(15,23,42,0.45)] md:dark:shadow-[0_16px_50px_-26px_rgba(0,0,0,0.65)] md:ring-1 md:ring-amber-100/40 md:dark:ring-zinc-800/40 md:px-28 lg:px-32 md:py-10 md:rounded-none{% endif %}">
+    <div class="prose prose-amber prose-lg prose-h1:text-2xl prose-h2:my-4 dark:prose-invert px-4 md:px-0 mx-auto {% if fullWidth %}max-w-none{% endif %}">
       <nav class="flex w-full py-8 justify-end">
 
         {% set navPages = collections.all | eleventyNavigation %}
@@ -283,7 +284,7 @@
 
       </nav>
 
-      <main class="{% if fullWidth %}-mx-[calc(50vw-50%)] w-screen px-4 md:px-8{% endif %} {% if templateClass %}{{ templateClass }}{% endif %}">
+      <main class="{% if fullWidth %}full-width-wrapper px-4 md:px-8{% endif %} {% if templateClass %}{{ templateClass }}{% endif %}">
 
         {{ content | safe }}
 
