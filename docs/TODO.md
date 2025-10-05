@@ -10,9 +10,17 @@
 
 ## Medium Priority
 
-- [x] Make the readable view slighty transparent with a subtle shadow and square corners. 
+- [ ] New blogpost - "How i let AI run wild on my blog - using copilot and codex" - the flow, the prompt.md and the instructions.md file.
+Before: https://68d0d4ffaa909e0008c341e0--starlit-brigadeiros-b87f35.netlify.app
+After: https://carteakey.dev
+- [ ] Fix Contribution data is unavailable right now. Try checking back later.
+- [ ] There's 5 types of cards - blogroll, projects, bookmarks, feed, snippets. Projects is 3 columns based which is per design.
+The feed and snippets are good and similar, but blogroll and projects, bookmarks are different. Bookmarks has flashy animations, different date format, bigger cards. Blogroll is denser but different style. We should have a single card style for all of them, with minor variations if needed. The one that needs most work is bookmarks. 
+
 - [x] Add Some padding on top and bottom of the main base view to give it some notebook feel.
-- [ ]
+- [x] Make the readable view slighty transparent with a subtle shadow and square corners. 
+
+- [ ] Add a link to open the Feed in the frontpage heading of Feed. Maybe a link beside the heading with an arrow icon or something.
 
 
 Buy me a coffee
@@ -55,8 +63,6 @@ Buy me a coffee
 
 ## Completed TODOs
 ### 2025-10-05
-- [x] Make the readable view slighty transparent with a subtle shadow and square corners.
-- [x] Add padding above and below the main base view so the notebook frame has breathing room.
 - [x] Background - implement a subtle, non-distracting background pattern or gradient. Right now its plain background.
 - [x] Footer row icons with links to social media, GitHub, email should be in a single line on small screens. STill wrapping to 2nd line on small screens.
 - [x] Bookmarks page should follow the same card style as blogroll and projects. Looks very different right now.
