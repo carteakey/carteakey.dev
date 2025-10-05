@@ -16,7 +16,7 @@ permalink: /feed/
   One timeline for everything happening on the site — articles, snippets, microposts, photography, vibes, and /now snapshots.
 </p>
 
-<div class="grid gap-5 md:grid-cols-2 items-start">
+<div class="grid gap-5 md:grid-cols-2 items-start feed-masonry" data-feed-masonry style="--feed-row-height: 18px;">
   {% for item in collections.feed %}
     {{ feedCard(item) }}
   {% endfor %}
@@ -25,3 +25,51 @@ permalink: /feed/
 <div class="mt-10 text-center text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
   Showing {{ collections.feed.length }} items • Updated {{ page.date | readableDate }}
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const grid = document.querySelector('[data-feed-masonry]');
+    if (!grid) return;
+
+    const getMetrics = () => {
+      const styles = window.getComputedStyle(grid);
+      const rowGap = parseFloat(styles.getPropertyValue('row-gap')) || 0;
+      const base = parseFloat(styles.getPropertyValue('--feed-row-height')) || 16;
+      return { rowGap, base };
+    };
+
+    const setRowSpan = (card) => {
+      const { rowGap, base } = getMetrics();
+      const total = card.getBoundingClientRect().height + rowGap;
+      const span = Math.max(1, Math.round(total / (base + rowGap)));
+      card.style.gridRowEnd = `span ${span}`;
+    };
+
+    const layout = () => {
+      window.requestAnimationFrame(() => {
+        grid.querySelectorAll('.feed-card').forEach(setRowSpan);
+      });
+    };
+
+    const resizeObserver = new ResizeObserver(() => layout());
+    grid.querySelectorAll('.feed-card').forEach((card) => resizeObserver.observe(card));
+
+    const media = grid.querySelectorAll('img, video');
+    media.forEach((node) => {
+      if (node.complete) {
+        layout();
+        return;
+      }
+      const handler = () => {
+        node.removeEventListener('load', handler);
+        node.removeEventListener('error', handler);
+        layout();
+      };
+      node.addEventListener('load', handler);
+      node.addEventListener('error', handler);
+    });
+
+    window.addEventListener('resize', layout, { passive: true });
+    layout();
+  });
+</script>

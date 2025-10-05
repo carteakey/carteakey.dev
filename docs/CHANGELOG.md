@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.9] - 2025-10-05
+
+### Added
+- Inline critical CSS block in the base layout to style the shell before the main bundle loads.
+
+### Changed
+- Global background now uses a subtle gradient treatment tailored for light and dark modes.
+- Footer social and utility icons stay on a single line on compact screens while keeping the grouped layout on desktop.
+- Bookmarks entries adopt the shared card styling used by blogroll and projects for consistent presentation.
+- The feed timeline now uses a masonry grid with ResizeObserver-driven spanning to match the gallery flow.
+
+### Fixed
+- Feed cards no longer leave gaps after font or media loads thanks to the new span recalculation script.
+
 ## [1.3.8] - 2025-10-04
 
 ### Added

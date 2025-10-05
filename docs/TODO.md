@@ -9,15 +9,15 @@
 ### Content Features
 
 ## Medium Priority
-- [ ] Background - implement a subtle, non-distracting background pattern or gradient
-- [ ] Footer row icons with links to social media, GitHub, email should be in a single line on small screens.
-- [ ] Bookmarks page should follow the same card style as blogroll and projects
-- [ ] Feed - implement masonry layout like the gallery
+
+- [ ] Make the readable view slighty transparent with a subtle shadow and square corners. 
+- [ ] Add Some padding on top and bottom of the main base view to give it some notebook feel.
+- [ ]
+
 
 Buy me a coffee
 
 ### Performance & Technical
-- [ ] Critical CSS inlining for above-the-fold content
 - [ ] Add service worker for offline reading
 - [ ] Implement lazy loading for images (if not already present)
 - [ ] Add RSS feed enhancements (full content)
@@ -54,6 +54,12 @@ Buy me a coffee
 - [ ] Multi-language support
 
 ## Completed TODOs
+### 2025-10-05
+- [x] Background - implement a subtle, non-distracting background pattern or gradient. Right now its plain background.
+- [x] Footer row icons with links to social media, GitHub, email should be in a single line on small screens. STill wrapping to 2nd line on small screens.
+- [x] Bookmarks page should follow the same card style as blogroll and projects. Looks very different right now.
+- [x] Feed - implement masonry layout like the gallery. I discarded the previous implementation as it was buggy.
+- [x] Critical CSS inlining for above-the-fold content
 ### 2025-10-04
 - [x] In the feed, the photo format is not closing and the rest of the items are getting put into that container.
 - [x] Notebook reading frame widened with square edges, taller breathing room, and a softer desktop padding cadence.
