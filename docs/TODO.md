@@ -9,8 +9,10 @@
 ### Content Features
 
 ## Medium Priority
-- [x] In the feed, the photo format is not closing and the rest of the items are getting put into that container.
-- [ ] Bookmarks page shoudl followe the same card style as blogroll and projects
+- [ ] Background - implement a subtle, non-distracting background pattern or gradient
+- [ ] Footer row icons with links to social media, GitHub, email should be in a single line on small screens.
+- [ ] Bookmarks page should follow the same card style as blogroll and projects
+- [ ] Feed - implement masonry layout like the gallery
 
 Buy me a coffee
 
@@ -53,6 +55,12 @@ Buy me a coffee
 
 ## Completed TODOs
 ### 2025-10-04
+- [x] In the feed, the photo format is not closing and the rest of the items are getting put into that container.
+- [x] Notebook reading frame widened with square edges, taller breathing room, and a softer desktop padding cadence.
+- [x] Site backdrop now leans into a gray gradient layered over the doodle pattern for a calmer desk vibe.
+- [x] Long-form prose now uses the et-book family for a notebook feel while UI text stays crisp.
+- [x] Sidebar cards restyled: matching backgrounds, cushioned padding, comment pointer component, and EthicalAds paused.
+- [x] Feed grid upgraded to a masonry layout with auto-resizing tiles like the gallery.
 - [x] Notebook reading frame now adds a desktop-only off-white surround with a matching outline card on posts.
 - [x] Reserved a right-rail "Conversation space" block beside posts for future inline comments.
 - [x] Notebook frame defers on mobile screens and `fullWidth` pages to stay out of the way.

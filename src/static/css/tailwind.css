@@ -8,12 +8,22 @@
 @theme {
   --font-*: initial;
   /* Default body copy font: Plus Jakarta Sans (local) with system fallbacks */
-  --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Apple Color Emoji', 'Segoe UI Emoji', 'Inter';
+  --font-sans:  'Poppins', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Apple Color Emoji', 'Segoe UI Emoji', 'Inter';
   /* Monospace for code */
   --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
   --font-et-book: et-book, serif;
 
   --animate-spin-slow: spin 7s linear infinite;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src:
+    url("/static/fonts/poppins/Poppins-Regular.woff2") format("woff2"),
+    url("/static/fonts/poppins/Poppins-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
@@ -238,6 +248,15 @@ figure {
 
   .dark .accent-focus:focus-visible {
     outline-color: color-mix(in srgb, var(--accent-color) 55%, white);
+  }
+
+  .feed-masonry {
+    grid-auto-rows: var(--feed-row-height, 16px);
+    grid-auto-flow: dense;
+  }
+
+  .feed-card {
+    break-inside: avoid;
   }
 }
 

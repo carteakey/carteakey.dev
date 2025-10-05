@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.8] - 2025-10-04
+
+### Added
+- Conversation pointer component that links to `#post-comments`, usable inline or in the sidebar.
+- Feed page masonry script to auto-resize cards so the timeline flows like the gallery grid.
+
+### Changed
+- Notebook frame widened with square corners, deeper padding, and a gray gradient doodle backdrop.
+- Long-form prose now uses the `et-book` family with a slightly wider measure for calmer reading.
+- TOC and sidebar callouts share the primary background, pick up extra padding, and adopt the accent-aware controls.
+
+### Fixed
+- Feed cards now recalc their spans after fonts and images load, preventing gaps and overlaps in the new layout.
+
 ## [1.3.7] - 2025-10-04
 
 ### Added
