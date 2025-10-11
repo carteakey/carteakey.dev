@@ -4,16 +4,16 @@ htmlTemplateEngine: "webc"
 ---
 {% from "components/feed-card.njk" import feedCard %}
 {# eleventyNavigation: key: carteakey.dev order: 1 #}
-<div class="intro flex flex-col md:flex-row">
+<div class="intro flex flex-col md:flex-row gap-2 justify-center">
   {% image "./src/static/img/headshot.png" , "me", "rounded-full md:m-10 ml-0 w-28 h-28 self-center md:self-auto object-cover" %}
 
-  <div class="md:max-w-lg lg:max-w-xl">
+  <div class="md:max-w-xl lg:max-w-2xl">
   <p>
     Hi 👋🏼, I'm <span class="font-bold ">Kartikey</span>, and welcome to my
     website!
     <br />
   </p>
-  <p class="-mt-2">
+  <p class="mt-2">
     I'm a data analyst from Toronto. Outside work, I spend my time tinkering with tech and building fun
     <a href="/portfolio" class="no-underline"><span class="font-bold">projects</span></a
       >.
@@ -43,14 +43,14 @@ htmlTemplateEngine: "webc"
     instance.go();
   </script>
 
-  <hr class="mt-8" />
+  <hr class="mt-8 " />
 
   <h2>Feed</h2>
   <p class="text-gray-600 dark:text-gray-400 -mt-2 mb-4">Latest posts, snippets, microposts, photos, vibe drops, and /now updates.</p>
 
   {% set feedItems = collections.feed | head(6) %}
 
-  <div class="grid gap-4 lg:gap-5 my-6 items-start">
+  <div class="grid gap-4 lg:gap-5 my-6 items-center">
     {% for item in feedItems %}
       {{ feedCard(item, { variant: 'compact', showTags: false }) }}
     {% endfor %}
