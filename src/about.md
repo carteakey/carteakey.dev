@@ -11,6 +11,10 @@ Hi 👋🏼, Thanks for dropping by!
 
 My name's Kartikey. Most people pronounce it as **_carteakey_** - hence the [site](https://carteakey.dev).
 
+{% set fact = randomFacts | random %}
+Here's a random fact about me: <span class="font-serif">"{{ fact }}"</span>
+
+
 ## Work
 I'm a Data Analyst currently living in Toronto. You can find more about my work history on [LinkedIn](https://www.linkedin.com/in/kartikeychauhan).
 
@@ -21,6 +25,8 @@ I'm a Data Analyst currently living in Toronto. You can find more about my work 
 I’ve discovered my passion in Data Science and Machine Learning, and often try to work on related [projects](https://github.com/carteakey). 
 
 Gaming is one of the many ways I like to spend my free time. I am a huge Soulsborne fan, and love reading about intricate lore and mythical stuff (looking at you, Bloodborne).
+
+
 
 ## So, Yeah… That’s Me!
 Feel free to contact me kartychauhan[at]gmail[dot]com if you want to connect.
