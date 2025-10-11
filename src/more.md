@@ -15,9 +15,11 @@ This is a sitemap of all pages on my site. It's inspired by [slashpages.net](htt
 ### All Pages
 
 - [/about](/about/): who am I?
+
 - [/blogroll](/blogroll/): blogs and sites I follow
 - [/bookmarks](/bookmarks/): curated reading list
 - [/cv](/cv/): my curriculum vitae
+- [/feed](/feed/): all posts, snippets, and mini blogs
 - [/gallery](/gallery/): photo gallery
 - [/games](/games/): games I'm currently playing
 - [/newsletter](/newsletter/): subscribe to updates
