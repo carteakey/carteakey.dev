@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.12] - 2025-10-05
+
+### Added
+- New meta post “How I Let AI Run Wild on My Blog (with Copilot & Codex)” outlining the current prompt and instructions workflow.
+
+### Changed
+- Homepage feed now reuses the masonry grid script from `/feed/` so cards auto-span to their content height.
+- Primary navigation drops the dropdown menu in favour of a three-dot icon link that jumps straight to `/more/`.
+- Breadcrumbs stay hidden on small screens to free up vertical space while remaining available on desktop.
+
+### Fixed
+- GitHub contributions widget ships with a local fallback dataset so the heatmap renders even when the API cannot be reached.
+
 ## [1.3.11] - 2025-10-05
 
 ### Changed

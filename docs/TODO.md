@@ -7,12 +7,29 @@
 ### User Experience
 
 ### Content Features
+- [ ] Smaller fonts across the board. I find the site to be better at 90% zoom.
+- [ ] Add a random facts about me in the about me section. It can be a random fact from a list of facts that I can update.
+- [ ] Add a pinned or featured post section on the homepage. This can be a post that I want to highlight or that is particularly important.
+- [ ] Feed icon - in the more page and footer, to link to the feed page.
+- [ ] Quotes blogroll missing breadcrumbs		
+- [ ] There's 5 types of cards - blogroll, projects, bookmarks, feed, snippets. Projects is 3 columns based which is per design.
+The feed and snippets are good and similar, but blogroll and projects, bookmarks are different. Bookmarks has flashy animations, different date format, bigger cards. Blogroll is denser but different style. We should have a single card style for all of them, with minor variations if needed. The one that needs most work is bookmarks. Bookmarks count should be similar to snippets count. Same for blogroll. 
+- [ ] Add a link to open the Feed in the frontpage heading of Feed. Maybe a link beside the heading with an arrow icon or something.
+- [ ] Centre picture on mobile view in the homepage. It is left aligned right now.
+
 
 ## Medium Priority
 
-- [x] Make the readable view slighty transparent with a subtle shadow and square corners. 
+- [x] New blogpost - "How i let AI run wild on my blog - using copilot and codex" - the flow, the prompt.md and the instructions.md file.
+Before: https://68d0d4ffaa909e0008c341e0--starlit-brigadeiros-b87f35.netlify.app
+After: https://carteakey.dev
+- [x] Add the same masonry layout to the feed on homapage as it shows up in the feed page.
+- [x] Remove the dropdown navbar, keep a three ... feather icon that opens the more page.
+- [x] Fix Contribution data is unavailable right now. Try checking back later.
+- [x] Hide breadcrumbs on mobile view - they take up too much space and are not very useful on small screens.
 - [x] Add Some padding on top and bottom of the main base view to give it some notebook feel.
-- [ ]
+- [x] Make the readable view slighty transparent with a subtle shadow and square corners. 
+
 
 
 Buy me a coffee
@@ -55,8 +72,6 @@ Buy me a coffee
 
 ## Completed TODOs
 ### 2025-10-05
-- [x] Make the readable view slighty transparent with a subtle shadow and square corners.
-- [x] Add padding above and below the main base view so the notebook frame has breathing room.
 - [x] Background - implement a subtle, non-distracting background pattern or gradient. Right now its plain background.
 - [x] Footer row icons with links to social media, GitHub, email should be in a single line on small screens. STill wrapping to 2nd line on small screens.
 - [x] Bookmarks page should follow the same card style as blogroll and projects. Looks very different right now.

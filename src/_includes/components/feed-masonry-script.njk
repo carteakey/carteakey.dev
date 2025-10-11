@@ -1,0 +1,49 @@
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const grids = document.querySelectorAll('[data-feed-masonry]');
+    if (!grids.length) return;
+
+    grids.forEach((grid) => {
+      const getMetrics = () => {
+        const styles = window.getComputedStyle(grid);
+        const rowGap = parseFloat(styles.getPropertyValue('row-gap')) || 0;
+        const base = parseFloat(styles.getPropertyValue('--feed-row-height')) || 16;
+        return { rowGap, base };
+      };
+
+      const setRowSpan = (card) => {
+        const { rowGap, base } = getMetrics();
+        const total = card.getBoundingClientRect().height + rowGap;
+        const span = Math.max(1, Math.round(total / (base + rowGap)));
+        card.style.gridRowEnd = `span ${span}`;
+      };
+
+      const layout = () => {
+        window.requestAnimationFrame(() => {
+          grid.querySelectorAll('.feed-card').forEach(setRowSpan);
+        });
+      };
+
+      const resizeObserver = new ResizeObserver(() => layout());
+      grid.querySelectorAll('.feed-card').forEach((card) => resizeObserver.observe(card));
+
+      const media = grid.querySelectorAll('img, video');
+      media.forEach((node) => {
+        if (node.complete) {
+          layout();
+          return;
+        }
+        const handler = () => {
+          node.removeEventListener('load', handler);
+          node.removeEventListener('error', handler);
+          layout();
+        };
+        node.addEventListener('load', handler);
+        node.addEventListener('error', handler);
+      });
+
+      window.addEventListener('resize', layout, { passive: true });
+      layout();
+    });
+  });
+</script>

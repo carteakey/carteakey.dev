@@ -72,7 +72,7 @@
 
 {# Render breadcrumbs #}
 {% if breadcrumbItems.length > 1 %}
-<nav aria-label="Breadcrumb" class="not-prose mb-6 text-sm">
+<nav aria-label="Breadcrumb" class="not-prose mb-6 text-sm hidden md:block">
   <ol class="flex items-center flex-wrap gap-2">
     {% for item in breadcrumbItems %}
       <li class="flex items-center">
