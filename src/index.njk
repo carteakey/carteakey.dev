@@ -50,11 +50,13 @@ htmlTemplateEngine: "webc"
 
   {% set feedItems = collections.feed | head(6) %}
 
-  <div class="grid gap-4 lg:gap-5 my-6 items-center">
+  <div class="grid gap-4 lg:gap-5 md:grid-cols-2 my-6 items-start feed-masonry" data-feed-masonry style="--feed-row-height: 18px;">
     {% for item in feedItems %}
       {{ feedCard(item, { variant: 'compact', showTags: false }) }}
     {% endfor %}
   </div>
+
+  {% include "components/feed-masonry-script.njk" %}
 
   <p class="text-sm text-gray-600 dark:text-gray-400">
     Browse the full <a href="{{ '/feed/' | url }}" class="underline decoration-dotted underline-offset-4">feed</a> or jump straight to <a href="{{ '/blog/' | url }}" class="underline decoration-dotted underline-offset-4">posts</a> and <a href="{{ '/snippets/' | url }}" class="underline decoration-dotted underline-offset-4">snippets</a>.

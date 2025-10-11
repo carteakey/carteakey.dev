@@ -211,9 +211,7 @@
 {% set showReadingFrame = false %}
 <body class="bg-gray-100 dark:bg-black font-sans {% if showReadingFrame %} md:py-16 md:bg-gray-100 md:dark:bg-gray-800{% endif %}">
   <div
-    class="{% if fullWidth %}w-full max-w-none px-4{% else %}md:max-w-3xl lg:max-w-4xl xl:max-w-5xl {% endif %} mx-auto 
-    
-    {% if showReadingFrame %} md:bg-gray-100/95  md:dark:bg-zinc-950/90 md:shadow-[0_20px_60px_-28px_rgba(15,23,42,0.45)] md:dark:shadow-[0_16px_50px_-26px_rgba(0,0,0,0.65)] md:ring-1 md:ring-amber-100/40 md:dark:ring-zinc-800/40 md:px-28 lg:px-32 md:py-10 md:rounded-none{% endif %}">
+    class="md:max-w-3xl lg:max-w-4xl xl:max-w-5xl mx-auto {% if showReadingFrame %} md:bg-gray-100/95  md:dark:bg-zinc-950/90 md:shadow-[0_20px_60px_-28px_rgba(15,23,42,0.45)] md:dark:shadow-[0_16px_50px_-26px_rgba(0,0,0,0.65)] md:ring-1 md:ring-amber-100/40 md:dark:ring-zinc-800/40 md:px-28 lg:px-32 md:py-10 md:rounded-none{% endif %}">
     <div class="prose prose-amber max-w-fit justify-center prose-lg prose-h1:text-2xl prose-h2:my-4 dark:prose-invert px-4 md:px-0 mx-auto {% if fullWidth %}max-w-none{% endif %}">
       <nav class="flex w-full py-8 justify-end">
 
@@ -239,31 +237,11 @@
               {% endif %}
             {%- endfor %}
 
-            {# Dropdown for Gallery and Snippets #}
-            <div class="relative" x-data="{ open: false, hover: false }" 
-                 @mouseenter="hover = $screen('md')" 
-                 @mouseleave="hover = false">
-              <span class="px-1 py-2 transition-all self-end cursor-pointer">
-                <button @click="open = !open" class="font-bold hover:underline inline-flex items-center gap-1">
-                  ...
-                  <span class="transform transition-transform duration-200" :class="{ 'rotate-180': open }">
-                    {% feather "chevron-down", class="w-4 h-4 mt-1" %}
-                  </span>
-                </button>
-              </span>
-              <div
-                class="absolute right-0 bg-gray-50 dark:bg-black border border-amber-200/20 dark:border-amber-700/20 rounded py-1 mt-1 min-w-[120px] shadow-lg z-50"
-                x-show="open || hover"
-                x-transition
-                @click.away="open = false"
-              >
-                {%- for entry in navPages %}
-                  {% if entry.title == "Gallery" or entry.title == "Vibes" or entry.title == "Snippets" or entry.title == "Projects" or entry.title == "CV" or entry.title == "...More" %}
-                    <a class="block px-4 py-2 no-underline hover:underline font-bold" href="{{ entry.url }}">{{ entry.title }}</a>
-                  {% endif %}
-                {%- endfor %}
-              </div>
-            </div>
+            <span class="px-1 py-2 transition-all self-end">
+              <a class="font-bold no-underline hover:underline inline-flex items-center justify-center" href="{{ '/more/' | url }}" title="More pages" aria-label="More pages">
+                {% feather "more-horizontal", class="w-6 h-6" %}
+              </a>
+            </span>
 
             {# Mobile: Show all navigation items
             <div class="md:hidden">
@@ -286,7 +264,7 @@
 
       </nav>
 
-      <main class="{% if fullWidth %}full-width-wrapper px-4 md:px-8{% endif %} {% if templateClass %}{{ templateClass }}{% endif %}">
+      <main class="{% if fullWidth %}-mx-[calc(50vw-50%)] w-screen px-4 md:px-8{% endif %} {% if templateClass %}{{ templateClass }}{% endif %}">
 
         {{ content | safe }}
 
