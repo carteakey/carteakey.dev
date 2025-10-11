@@ -40,7 +40,7 @@ hasEthicalAds: false
 {% set conversationPlacement = conversationPlacement or 'sidebar' %}
 {% set showAds = false %}
 
-<div class="relative mx-auto w-full xl:max-w-3xl">
+<div class="relative mx-auto w-full ">
   {% if showSidebar and showAds %}
   <aside class="hidden xl:block absolute -left-[260px] top-0">
     <div class="sticky top-24 w-[220px] space-y-3">
@@ -50,7 +50,7 @@ hasEthicalAds: false
   {% endif %}
 
   {% if showSidebar %}
-  <aside class="hidden xl:block absolute -right-[420px] top-0 text-sm text-gray-600 dark:text-gray-300">
+  <aside class="hidden xl:block absolute -right-[300px] top-0 text-sm text-gray-600 dark:text-gray-300">
     <div class="sticky top-24 space-y-6 w-[260px]">
       {% if tocHtml | trim %}
       <section class=" md:bg-gray-100 md:dark:bg-gray-800  border border-gray-200/70 dark:border-zinc-800/70 px-6 py-6 shadow-sm">
