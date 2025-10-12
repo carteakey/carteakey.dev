@@ -5,7 +5,7 @@ permalink: /now/archive/
 ---
 
 <h1>Now Page Archive</h1>
-<p>This is an archive of previous versions of my <a href="/now/">/now</a> page. Each entry below links to a snapshot of what my /now page looked like at that time. Should probably call this back then</p>
+<p>This is an archive of previous versions of my <a href="/now/">/now</a> page. Each entry below links to a snapshot of what my /now page looked like at that time. Should probably call this back then.</p>
 
 <ul>
   {%- for snap in collections.nowArchive | reverse %}

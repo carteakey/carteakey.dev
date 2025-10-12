@@ -5,40 +5,49 @@ permalink: /now/
 eleventyNavigation:
   key: Now
   order: 3
-lastUpdated: 2025-10-11
+lastUpdated: 2025-10-12
 ---
 
-<div class=" mx-auto">
-    {% include "components/breadcrumbs.njk" %}
-    
-    <h1>Now</h1>
+{% set cardShell = "rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-100/80 dark:bg-gray-900/70 shadow-sm" %}
 
-    <p>This is my now page, inspired by <a href="https://nownownow.com/about">nownownow.com</a>.</p>
+<div class="max-w-5xl mx-auto space-y-10">
+  {% include "components/breadcrumbs.njk" %}
 
-    <ul>
-        <li>Trying to get a few hikes in before we've all got to burrow indoors for the winters, eh.</li>
-    </ul>
-
-    {% image "./src/static/img/rouge.jpeg", "Rouge Conservation Area" %}
-
-    <ul>
-        <li>I've been having a lot of fun recently exploring the libraries in Toronto. TPL is awesome!</li>
-        <li>Gave this site a bit of a facelift, letting codex run YOLO</li>
-        <li>Listening to the live version of "Hail to the Thief" by Radiohead"</li>
-    </ul>
-
-    {% include "components/workouts-snippet.njk" %}
-
-    {% include "components/games-snippet.njk" %}
-
+  <header class="space-y-3">
+    <h1 class="text-3xl font-semibold tracking-tight text-gray-900 dark:text-white">Now</h1>
+    <p class="text-sm text-gray-600 dark:text-gray-400 md:text-base">
+      This is my now page, inspired by <a href="https://nownownow.com/about" class="accent-link">nownownow.com</a>.
+    </p>
     {% if lastUpdated %}
-    <p class='flex flex-col float-right -mt7 text-right text-sm'>
-      Updated: <time datetime="{{ lastUpdated | readableDate }}">{{lastUpdated | readableDate}}</time>
-    </p> 
-    {%- endif %}
+      <p class="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
+        Updated <time datetime="{{ lastUpdated | htmlDateString }}">{{ lastUpdated | readableDate }}</time>
+      </p>
+    {% endif %}
+  </header>
 
-    <hr>
+  <ul class="list-disc space-y-2 pl-4">
+  <li>Trying to get a few hikes in before we've all got to burrow indoors for the winters, eh.</li>
+      </ul>
+<div class="overflow-hidden">
+      {% image "./src/static/img/rouge.jpeg", "Rouge Conservation Area", "w-1/2 object-cover" %}
+    </div>
 
-    <p>Want to see how this page has changed over time? Check out the <a href="/now/archive/">archives</a>.</p>
+    <ul class="list-disc space-y-2 pl-4">
+      <li>I've been having a lot of fun recently exploring the libraries in Toronto. TPL is awesome!</li>
+      <li>Gave this site a bit of a facelift, letting codex run YOLO.</li>
+      <li>Listening to the live version of "Hail to the Thief" by Radiohead.</li>
+    </ul>
 
+  <section class="space-y-8">
+    {% include "components/workouts-snippet.njk" %}
+    {% include "components/games-snippet.njk" %}
+  </section>
+
+  <p class="text-sm text-gray-600 dark:text-gray-400">
+    Want to see how this page has changed over time? Check out the
+    <a href="/now/archive/" class="accent-link inline-flex items-center gap-1">
+      archives
+      {% feather "arrow-right", class="w-4 h-4" %}
+    </a>.
+  </p>
 </div>

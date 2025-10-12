@@ -37,9 +37,13 @@
 - [x] Beautfiy quotes page but be consistent with the rest of the site.
 - [x] Bloglist - add some sort of separation between the blogs. Maybe a line or you know, single row card style consistent with the rest of the site.
 - [x] Move workout snippet and game snippet to the components folder.
-- [ ] Workouts page - workouts-snippet.njk - make it 3 latest workouts in a row on desktop view.
-- [ ] Now page - make games and workouts 3 columns on desktop view. Make the styling same as the main pages.
-- [ ] Quotes - same masonry layout as feed and gallery.
+- [x] Workouts page - workouts-snippet.njk - make it 3 latest workouts in a row on desktop view. (2025-10-12)
+- [x] Now page - make games and workouts 3 columns on desktop view. Make the styling same as the main pages. (2025-10-12)
+- [x] Quotes - same masonry layout as feed and gallery. (2025-10-12)
+- [x] I've moved the blog to blog folder but all the old links to the posts are broken. I need to set up redirects from /post-title to /blog/post-title. (2025-10-12)
+- [x] Now page - images look too big , handle them the same way as the posts. (2025-10-12)
+- [ ] Uses Page
+
 
 
 
@@ -54,7 +58,6 @@
 - [x] Webrings Page 
 - [x] Guestbook Page
 - [x] Colophon 
-- [ ] Uses Page
 
 
 ## Medium Priority
