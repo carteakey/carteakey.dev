@@ -213,11 +213,11 @@
     position: fixed;
     inset: 0;
     pointer-events: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3CfeComposite operator='arithmetic' k1='0' k2='1.2' k3='0.2' k4='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.18'/%3E%3C/svg%3E");
-    background-size: 240px 240px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.45' numOctaves='2' seed='4' stitchTiles='stitch'/%3E%3CfeComposite operator='arithmetic' k1='0' k2='0.95' k3='0.15' k4='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.12'/%3E%3C/svg%3E");
+    background-size: 320px 320px;
     background-repeat: repeat;
     mix-blend-mode: soft-light;
-    opacity: 0.35;
+    opacity: 0.24;
     z-index: -1;
   }
 }
@@ -232,10 +232,10 @@
   }
 
   .dark body::before {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cfilter id='noiseDark'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseDark)' opacity='0.22'/%3E%3C/svg%3E");
-    background-size: 260px 260px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cfilter id='noiseDark'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.55' numOctaves='2' seed='6' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseDark)' opacity='0.18'/%3E%3C/svg%3E");
+    background-size: 320px 320px;
     mix-blend-mode: screen;
-    opacity: 0.28;
+    opacity: 0.22;
   }
 }
 
@@ -396,6 +396,27 @@ figure {
 
   .dark .accent-button:hover {
     background-color: color-mix(in srgb, var(--accent-color) 75%, white);
+  }
+
+  .accent-field {
+    border-color: color-mix(in srgb, var(--accent-color) 55%, white);
+    background-color: color-mix(in srgb, var(--accent-color) 8%, #f8fafc 92%);
+    transition: border-color 150ms ease, box-shadow 150ms ease, background-color 150ms ease;
+  }
+
+  .accent-field:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-color) 25%, transparent);
+  }
+
+  .dark .accent-field {
+    border-color: color-mix(in srgb, var(--accent-color) 60%, #0f172a);
+    background-color: color-mix(in srgb, var(--accent-color) 12%, #0f172a 88%);
+  }
+
+  .dark .accent-field:focus {
+    border-color: color-mix(in srgb, var(--accent-color) 80%, white);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-color) 30%, rgba(0, 0, 0, 0.6));
   }
 
   .accent-button-outline {

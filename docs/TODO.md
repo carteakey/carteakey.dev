@@ -22,22 +22,22 @@
 - [x] Pinned post still doenst WORK.
 - [x] Workout page - make it card style like blogroll and bookmarks.
 - [x] Vibes page - spacing between images is too much, make it denser.
-- [ ] Grain looks ugly, needs to be more subtle and less dotty. Maybe a noise texture instead of dots.
-- [ ] Feed link in homepage should be accent color themed.
-- [ ] remove all bg-white and use bg-gray-100 or bg-gray-50 instead. White is too harsh on the eyes.
-- [ ] Workout should be card style in Now as well, and be similar to the games section. 
-- [ ] Workout page - images getting cut off on the top and bottom. Make them fit properly.
-- [ ] Projects page - images look weird and witthin a white box. Make them fit properly
-- [ ] Newsletter - the cards have alignment issues against the icons. Fix that.
-- [ ] Newsletter - the links should be accent color themed.
-- [ ] Search - the border should be accent color themed.
-- [ ] Stats - the technical details should be denser.
+- [x] Grain looks ugly, needs to be more subtle and less dotty. Maybe a noise texture instead of dots.
+- [x] Feed link in homepage should be accent color themed.
+- [x] remove all bg-white and use bg-gray-100 or bg-gray-50 instead. White is too harsh on the eyes.
+- [x] Workout should be card style in Now as well, and be similar to the games section. 
+- [x] Workout page - images getting cut off on the top and bottom. Make them fit properly.
+- [x] Projects page - images look weird and witthin a white box. Make them fit properly
+- [x] Newsletter - the cards have alignment issues against the icons. Fix that.
+- [x] Newsletter - the links should be accent color themed.
+- [x] Search - the border should be accent color themed.
+- [x] Stats - the technical details should be denser.
 - [ ] Stats - add a joke about the data-driven part.
 - [ ] Games - playtime not showing up properly. Fix that.
 - [ ] Beautfiy quotes page but be consistent with the rest of the site.
-- [ ] Bloglist - add some sort of separation between the blogs. Maybe a line or you know, single row card style consistent with the rest of the site.
-
-
+- [ ] Bloglist - add some sort of separation between the blogs. Maybe a line or you know, single row card style consistent with the rest of the site.\
+- [ ] Move workout snippet and game snippet to the components folder.
+- [ ] Now page - make games and workouts 3 columns on desktop view. Make the styling same as the main pages.
 
 
 

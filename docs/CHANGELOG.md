@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.18] - 2025-10-11
+
+### Changed
+- Global grain overlay now leans on a gentler turbulence blend with lower opacity so the paper backdrop reads as texture rather than static.
+- Homepage feed CTA inherits the active accent palette, and the stats technical details compress into accent-lined columns for quicker scanning.
+- Newsletter feature cards adopt badge-style icon caps so headings and glyphs stay aligned.
+
+### Fixed
+- Workout widgets on `/now` and `/workouts` now use the shared card shell while respecting Strava map aspect ratios.
+- Project gallery and newsletter inputs drop harsh white panels in favour of the gray card tokens, and sitewide `bg-white` utilities were swapped for softer grays.
+- Search field border and help links now follow the accent theme, keeping the interface consistent after the amber palette removal.
+
 ## [1.3.17] - 2025-10-11
 
 ### Changed

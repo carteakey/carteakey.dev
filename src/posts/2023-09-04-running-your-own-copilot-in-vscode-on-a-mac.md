@@ -6,6 +6,7 @@ updated: 2024-03-26T03:11:06.365Z
 tags:
   - LLM
   - Mac
+featured: true
 ---
 Meta recently released their [CodeLlama](https://about.fb.com/news/2023/08/code-llama-ai-for-coding/) models, which are fine tuned for code completion and analysis. The best thing about them is their crazy large context (upto 100,000 tokens), which would mean that one could input way larger codebases into the prompts and the models should be able to handle it.
 

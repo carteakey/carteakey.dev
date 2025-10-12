@@ -2,6 +2,8 @@
 layout: layouts/base.njk
 title: Workouts
 ---
+{% include "components/breadcrumbs.njk" %}
+
 
 <div class="max-w-5xl mx-auto">
     {% set cardShell = "rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-100/80 dark:bg-gray-900/70 shadow-sm transition-shadow duration-200 hover:shadow-lg" %}
@@ -39,7 +41,7 @@ title: Workouts
 
                 {% if activity.mapImageUrl %}
                     <div class="mt-4 overflow-hidden rounded-lg border border-gray-200 dark:border-gray-800">
-                        <img src="{{ activity.mapImageUrl }}" alt="Map of {{ activity.name }}" loading="lazy" decoding="async" class="h-40 w-full object-cover">
+                        <img src="{{ activity.mapImageUrl }}" alt="Map of {{ activity.name }}" loading="lazy" decoding="async" class="w-full object-cover" style="height: auto;">
                     </div>
                 {% endif %}
             </article>

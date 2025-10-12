@@ -6,6 +6,7 @@ eleventyNavigation:
   key: ...More
   order: 8
 ---
+{% include "components/breadcrumbs.njk" %}
 
 # More
 

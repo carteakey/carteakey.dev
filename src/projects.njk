@@ -67,8 +67,8 @@ eleventyNavigation:
     {% for project in projects.projects %}
       <article class="{{ cardShell }} flex h-full flex-col p-5 sm:p-6">
         {% if project.image_path %}
-          <div class="mb-4 overflow-hidden rounded-lg border border-gray-200 dark:border-gray-800 bg-white/60 dark:bg-gray-800/60">
-            {% image project.image_path, project.title ,"h-32 w-full object-cover"%}
+          <div class="mb-4 overflow-hidden rounded-lg ">
+            {% image project.image_path, project.title ,"w-full object-cover", { style: "aspect-ratio: 16 / 9;" } %}
           </div>
         {% endif %}
 
@@ -107,7 +107,7 @@ eleventyNavigation:
     My contribution activity on GitHub over the past year.
   </p>
   
-  <div class="bg-white dark:bg-gray-800 p-4 rounded-lg border border-gray-200 dark:border-gray-700">
+  <div class="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg border border-gray-200 dark:border-gray-700">
     {% include "components/github-contributions.njk" %}
     <p class="text-xs text-gray-500 dark:text-gray-400 mt-2 text-center">
       Data sourced live from <a href="https://github.com/carteakey" class="hover:underline">GitHub activity</a>.
