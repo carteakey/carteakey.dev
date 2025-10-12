@@ -19,12 +19,12 @@
 
 
 
-- [ ] There's 5 types of cards - blogroll, projects, bookmarks, feed, snippets. Projects is 3 columns based which is per design.
-The feed and snippets are good and similar, but blogroll and projects, bookmarks are different. Bookmarks has flashy animations, different date format, bigger cards. Blogroll is denser but different style. We should have a single card style for all of them, with minor variations if needed. The one that needs most work is bookmarks. Bookmarks count should be similar to snippets count. Same for blogroll. 
+- [ ] There's 5 types of cards - blogroll, projects, bookmarks, feed, snippets. Projects is 3 columns based which is per design. The feed and snippets are good and similar, but blogroll and projects, bookmarks are different. Bookmarks has flashy animations, different date format, bigger cards. Blogroll is denser but different style. We should have a single card style for all of them, with minor variations if needed. The one that needs most work is bookmarks. Bookmarks count should be similar to snippets count. Same for blogroll. 
 
 
 
-- [ ] Centre picture on mobile view in the homepage. It is left aligned right now.
+
+
 - [ ] Webrings Page 
 - [ ] Guestbook Page
 - [ ] Colophon 
@@ -84,6 +84,12 @@ Buy me a coffee
 - [ ] Multi-language support
 
 ## Completed TODOs
+### 2025-10-11
+- [x] The pinned post still doesnt work and doesnt show up on the homepage.
+- [x] The grainy texture is too dotty, it needs to be more grainy and subtle. 
+- [x] Change the home icon in mobile view to something better, it looks out of place.
+- [x] In the blogposts, the images look too big, make them more approraite for reading. 
+- [x] Centre picture on mobile view in the homepage. It is left aligned right now.
 ### 2025-10-05
 - [x] Background - implement a subtle, non-distracting background pattern or gradient. Right now its plain background.
 - [x] Footer row icons with links to social media, GitHub, email should be in a single line on small screens. STill wrapping to 2nd line on small screens.

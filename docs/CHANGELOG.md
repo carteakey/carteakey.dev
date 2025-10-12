@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.15] - 2025-10-11
+
+### Changed
+- Grain overlay now uses a softer fractal noise texture with gentle blending in light and dark themes.
+- Post imagery gains tighter max-widths, rounded framing, and tuned shadows for better long-form readability.
+- Mobile navigation swaps the lone home icon for a `carteakey.dev` wordmark and centers the hero portrait on small screens.
+
+### Fixed
+- Featured posts flagged with `featured: true` finally surface in the homepage callout again.
+
 ## [1.3.14] - 2025-10-11
 
 ### Added

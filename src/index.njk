@@ -4,27 +4,27 @@ htmlTemplateEngine: "webc"
 ---
 {% from "components/feed-card.njk" import feedCard %}
 {# eleventyNavigation: key: carteakey.dev order: 1 #}
-<div class="intro flex flex-col md:flex-row gap-2 justify-center">
-  {% image "./src/static/img/headshot.png" , "me", "rounded-full md:m-10 ml-0 w-28 h-28 self-center md:self-auto object-cover" %}
+<div class="intro flex flex-col md:flex-row gap-2 justify-center items-center md:items-start">
+  {% image "./src/static/img/headshot.png" , "me", "rounded-full md:m-10 ml-0 w-28 h-28 self-center md:self-start object-cover mx-auto md:mx-10" %}
 
   <div class="md:max-w-xl lg:max-w-2xl">
-  <p>
-    Hi 👋🏼, I'm <span class="font-bold ">Kartikey</span>, and welcome to my
-    website!
-    <br />
-  </p>
-  <p class="mt-2">
-    I'm a data analyst from Toronto. Outside work, I spend my time tinkering with tech and building fun
-    <a href="/portfolio" class="no-underline"><span class="font-bold">projects</span></a
-      >.
+    <p>
+      Hi 👋🏼, I'm <span class="font-bold ">Kartikey</span>, and welcome to my
+      website!
+      <br />
+    </p>
+    <p class="mt-2">
+      I'm a data analyst from Toronto. Outside work, I spend my time tinkering with tech and building fun
+      <a href="/portfolio" class="no-underline"><span class="font-bold">projects</span></a>.
       <br />
     </p>
     <p class="-mt-2">
       Here, I like to write about linux, AI, data science, and other things I
       find interesting — so grab a cup of coffee and feel free to look around!
     </p>
-    </div>
   </div>
+  </div>
+  {% set featuredPost = (featured and featured.featuredPost) or null %}
   {% if featuredPost %}
     {% set highlightedPost = featuredPost %}
     <section class="mt-6 mb-8">
