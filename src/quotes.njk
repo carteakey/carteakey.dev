@@ -38,9 +38,13 @@ eleventyNavigation:
     <!-- Static Quotes Section -->
     <section class="space-y-4">
         <h2 class="text-xl font-semibold text-gray-900 dark:text-white">Saved Lines</h2>
-        <div class="grid gap-4 sm:grid-cols-2">
+        <div
+          class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 items-start feed-masonry"
+          data-feed-masonry
+          style="--feed-row-height: 18px;"
+        >
             {% for quote in quotes %}
-            <article class="{{ cardShell }} p-5 sm:p-6">
+            <article class="{{ cardShell }} feed-card p-5 sm:p-6">
                 <blockquote class="space-y-3 text-gray-800 dark:text-gray-100">
                     <p class="text-base leading-relaxed italic">“{{ quote.quote }}”</p>
                     <cite class="block text-sm font-medium not-italic text-gray-600 dark:text-gray-400">— {{ quote.author }}</cite>
@@ -51,6 +55,7 @@ eleventyNavigation:
     </section>
 </div>
 
+{% include "components/feed-masonry-script.njk" %}
 <!-- The script itself, loaded AFTER your root element. -->
 <script src="https://unpkg.com/typeit@8.7.1/dist/index.umd.js"></script>
 <script>

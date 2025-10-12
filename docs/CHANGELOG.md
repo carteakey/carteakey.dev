@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.20] - 2025-10-12
+
+### Added
+- Netlify `_redirects` now covers every legacy `/post-slug` path, bouncing visitors to the new `/blog/` URLs without 404s.
+
+### Changed
+- `workouts-snippet.njk` surfaces the three latest Strava activities in responsive cards so desktop layouts form a single row.
+- `/now/` adopts the shared card shell, compresses the hero photo, and aligns workouts/games into three-column grids like their dedicated pages.
+- `/quotes/` reuses the masonry grid script from the feed/gallery so saved quotes auto-span by height.
+
+### Fixed
+- The hero photo on `/now/` now uses the same constrained styling as blog imagery, avoiding the oversized frame on large displays.
+
 ## [1.3.19] - 2025-10-11
 
 ### Added
