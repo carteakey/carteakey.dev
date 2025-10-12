@@ -9,13 +9,18 @@
 ### Content Features
 - [x] Smaller fonts across the board. I find the site to be better at 90% zoom.
 - [x] Add a random facts about me in the about me section. It can be a random fact from a list of facts that I can update.
-- [x] Add a pinned or featured post section on the homepage. This can be a post that I want to highlight or that is particularly important.
 - [x] Feed icon - in the more page and footer, to link to the feed page.
 - [x] Quotes blogroll missing breadcrumbs		
+- [x] Add a grainy texture overlay to the background to give it a more tactile, paper-like feel. 
+- [x] Add all fonts available to tailwind css and remove all additional versions of the font that are not being used.
+- [x] Add a link to open the Feed in the frontpage heading of Feed. Maybe a link beside the heading with an arrow icon or something.
+- [x] Paginate the feed page or add a "Load more" button at the bottom. Right now it shows all posts, snippets, and mini blogs in one page which can be overwhelming.
+- [x] Add a pinned or featured post section on the homepage. This can be a post that I want to highlight or that is particularly important. Current implementation doesn't work.
+
+
+
 - [ ] There's 5 types of cards - blogroll, projects, bookmarks, feed, snippets. Projects is 3 columns based which is per design.
 The feed and snippets are good and similar, but blogroll and projects, bookmarks are different. Bookmarks has flashy animations, different date format, bigger cards. Blogroll is denser but different style. We should have a single card style for all of them, with minor variations if needed. The one that needs most work is bookmarks. Bookmarks count should be similar to snippets count. Same for blogroll. 
-- [ ] Add a link to open the Feed in the frontpage heading of Feed. Maybe a link beside the heading with an arrow icon or something.
-- [ ] Paginate the feed page or add a "Load more" button at the bottom. Right now it shows all posts, snippets, and mini blogs in one page which can be overwhelming.
 
 
 
