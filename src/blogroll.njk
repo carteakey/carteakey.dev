@@ -8,6 +8,7 @@ eleventyNavigation:
 ---
 
 {% set totalBlogroll = blogroll.blogroll | length %}
+{% set cardShell = "rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-100/80 dark:bg-gray-900/70 shadow-sm transition-shadow duration-200 hover:shadow-lg" %}
 
 <div class="max-w-5xl mx-auto">
   {% include "components/breadcrumbs.njk" %}
@@ -24,7 +25,7 @@ eleventyNavigation:
 
   <div class="mt-8 grid gap-4 md:grid-cols-3">
     {%- for blog in blogroll.blogroll %}
-      <article class="h-full rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-100 dark:bg-gray-900 p-5 sm:p-6 shadow-sm transition-shadow duration-200 hover:shadow-lg">
+      <article class="{{ cardShell }} h-full p-5 sm:p-6">
         <div class="space-y-3">
           <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
             <a href="{{ blog.url }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 hover:text-amber-600 dark:hover:text-amber-400">
@@ -45,7 +46,7 @@ eleventyNavigation:
     {%- endfor %}
   </div>
 
-    <div class="mt-16 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 p-6">
+    <div class="mt-16 {{ cardShell }} p-6">
        <h3 class="flex items-center gap-2 text-lg font-semibold text-gray-900 dark:text-white">
       {% feather "rss", class="w-5 h-5" %}
       Want to add your blog?

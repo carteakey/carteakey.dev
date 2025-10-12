@@ -32,25 +32,28 @@
 - [x] Newsletter - the links should be accent color themed.
 - [x] Search - the border should be accent color themed.
 - [x] Stats - the technical details should be denser.
-- [ ] Stats - add a joke about the data-driven part.
-- [ ] Games - playtime not showing up properly. Fix that.
-- [ ] Beautfiy quotes page but be consistent with the rest of the site.
-- [ ] Bloglist - add some sort of separation between the blogs. Maybe a line or you know, single row card style consistent with the rest of the site.\
-- [ ] Move workout snippet and game snippet to the components folder.
+- [x] Stats - add a joke about the data-driven part.
+- [x] Games - playtime not showing up properly. Fix that.
+- [x] Beautfiy quotes page but be consistent with the rest of the site.
+- [x] Bloglist - add some sort of separation between the blogs. Maybe a line or you know, single row card style consistent with the rest of the site.
+- [x] Move workout snippet and game snippet to the components folder.
+- [ ] Workouts page - workouts-snippet.njk - make it 3 latest workouts in a row on desktop view.
 - [ ] Now page - make games and workouts 3 columns on desktop view. Make the styling same as the main pages.
-
-
-
-- [ ] There's 5 types of cards - blogroll, projects, bookmarks, feed, snippets. Projects is 3 columns based which is per design. The feed and snippets are good and similar, but blogroll and projects, bookmarks are different. Bookmarks has flashy animations, different date format, bigger cards. Blogroll is denser but different style. We should have a single card style for all of them, with minor variations if needed. The one that needs most work is bookmarks. Bookmarks count should be similar to snippets count. Same for blogroll. 
-
+- [ ] Quotes - same masonry layout as feed and gallery.
 
 
 
 
+- [x] There's 5 types of cards - blogroll, projects, bookmarks, feed, snippets. Projects is 3 columns based which is per design. The feed and snippets are good and similar, but blogroll and projects, bookmarks are different. Bookmarks has flashy animations, different date format, bigger cards. Blogroll is denser but different style. We should have a single card style for all of them, with minor variations if needed. The one that needs most work is bookmarks. Bookmarks count should be similar to snippets count. Same for blogroll. 
 
-- [ ] Webrings Page 
-- [ ] Guestbook Page
-- [ ] Colophon 
+
+
+
+
+
+- [x] Webrings Page 
+- [x] Guestbook Page
+- [x] Colophon 
 - [ ] Uses Page
 
 

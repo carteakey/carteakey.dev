@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.19] - 2025-10-11
+
+### Added
+- Dedicated `/guestbook` page, each using the shared card shell and navigation breadcrumbs.
+- Netlify-backed guestbook form with email and GitHub issue fallbacks for alternative submissions.
+
+### Changed
+- Stats intro now owns a self-deprecating data joke, the quotes page moved to the unified card layout, and the blog archive lists every post inside matching cards.
+- Bookmarks, blogroll, snippets, and feed cards all reuse the single card shell so surface treatments stay consistent site-wide.
+
+### Fixed
+- Steam playtime conversion now emits decimal hours, ensuring recent games display accurate hour counts instead of rounding to zero.
+
 ## [1.3.18] - 2025-10-11
 
 ### Changed

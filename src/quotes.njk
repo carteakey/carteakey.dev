@@ -7,28 +7,48 @@ eleventyNavigation:
   order: 7
 ---
 
-<div class=" mx-auto">
+{% set cardShell = "rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-100/80 dark:bg-gray-900/70 shadow-sm" %}
+
+<div class="max-w-5xl mx-auto space-y-8">
     {% include "components/breadcrumbs.njk" %}
-    <h1>Quotes</h1>
-    
+
+    <header class="space-y-3">
+        <h1 class="text-3xl font-semibold tracking-tight text-gray-900 dark:text-white">Quotes</h1>
+        <p class="text-sm text-gray-600 dark:text-gray-400 md:text-base">
+            Words that stick with me—updated whenever I stumble upon lines worth rereading.
+        </p>
+    </header>
+
     <!-- Quote of the Day Section -->
-    <h2>Quote of the Day</h2>
-    <blockquote id="qotd" class="font-normal">
-        {{qotd.quote}}
-    </blockquote>
-    <p class='p-0 -mt-2 float-right italic text-xs' id='who'>Powered by {{qotd.provider}}</p>
-    
-    <hr class="mt-4" />
+    <section class="{{ cardShell }} p-5 sm:p-6 not-prose">
+        <div class="flex flex-col gap-3">
+            <div class="flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-amber-700 dark:text-amber-300">
+                {% feather "zap", class="w-4 h-4" %}
+                Quote of the Day
+            </div>
+            <blockquote id="qotd" class="text-lg font-medium leading-relaxed text-gray-900 dark:text-gray-100">
+                {{ qotd.quote }}
+            </blockquote>
+            <p class="text-right text-xs italic text-gray-500 dark:text-gray-400" id="who">
+                Powered by {{ qotd.provider }}
+            </p>
+        </div>
+    </section>
 
     <!-- Static Quotes Section -->
-    <div class="space-y-4">
-        {% for quote in quotes %}
-        <blockquote class="font-normal border-l-4 border-amber-400 pl-4 italic">
-            "{{ quote.quote }}"
-            <cite class="block text-sm text-gray-600 dark:text-gray-400 mt-2 not-italic">— {{ quote.author }}</cite>
-        </blockquote>
-        {% endfor %}
-    </div>
+    <section class="space-y-4">
+        <h2 class="text-xl font-semibold text-gray-900 dark:text-white">Saved Lines</h2>
+        <div class="grid gap-4 sm:grid-cols-2">
+            {% for quote in quotes %}
+            <article class="{{ cardShell }} p-5 sm:p-6">
+                <blockquote class="space-y-3 text-gray-800 dark:text-gray-100">
+                    <p class="text-base leading-relaxed italic">“{{ quote.quote }}”</p>
+                    <cite class="block text-sm font-medium not-italic text-gray-600 dark:text-gray-400">— {{ quote.author }}</cite>
+                </blockquote>
+            </article>
+            {% endfor %}
+        </div>
+    </section>
 </div>
 
 <!-- The script itself, loaded AFTER your root element. -->

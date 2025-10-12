@@ -3,7 +3,7 @@
   {% set cardShell = "rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-50/90 dark:bg-gray-900/70 shadow-sm overflow-hidden transition-shadow duration-200 hover:shadow-lg" %}
   <div class="strava-snippet">
     <h3>Latest Workout</h3>
-    <article class="{{ cardShell }}">
+    <article class="{{ cardShell }} flex h-full flex-col">
       {% if latest_activity.mapImageUrl %}
         <a href="{{ latest_activity.url }}" target="_blank" rel="noopener noreferrer" class="block">
           <img
@@ -49,7 +49,7 @@
           {% endif %}
         </dl>
 
-        <p class="text-sm text-gray-600 dark:text-gray-300">
+        <p class="text-sm text-gray-600 dark:text-gray-300 mt-auto">
           <a href="/workouts" class="accent-link inline-flex items-center gap-1">
             View all recent workouts
             {% feather "arrow-right", class="w-4 h-4" %}

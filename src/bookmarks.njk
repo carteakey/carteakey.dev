@@ -14,6 +14,7 @@ permalink: /bookmarks/
 {% set categories = bookmarks.bookmarks | map('category') | uniq | sort %}
 {% set sortedDates = bookmarks.bookmarks | map('date') | sort %}
 {% set lastUpdated = (sortedDates | reverse)[0] %}
+{% set cardShell = "rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-100/80 dark:bg-gray-900/70 shadow-sm transition-shadow duration-200 hover:shadow-lg" %}
 
 <div class="max-w-5xl mx-auto">
   <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
@@ -57,7 +58,7 @@ permalink: /bookmarks/
           {% set domain = bookmark.url | domainFromUrl %}
           {% set favicon = bookmark.url | faviconUrl %}
           {% set domainInitial = bookmark.url | domainInitial %}
-          <article class="h-full rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-100 dark:bg-gray-900 p-5 sm:p-6 shadow-sm transition-shadow duration-200 hover:shadow-lg">
+          <article class="{{ cardShell }} h-full p-5 sm:p-6">
             <div class="flex gap-4">
               <div class="relative flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-800">
                 <span class="pointer-events-none text-xs font-semibold uppercase tracking-wide text-gray-600 transition-opacity duration-200 dark:text-gray-200">{{ domainInitial }}</span>
@@ -104,7 +105,7 @@ permalink: /bookmarks/
     </section>
   {% endfor %}
 
-  <div class="mt-16 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 p-6">
+  <div class="mt-16 {{ cardShell }} p-6">
     <h3 class="flex items-center gap-2 text-lg font-semibold text-gray-900 dark:text-white">
       {% feather "mail" %}
       Have a suggestion?

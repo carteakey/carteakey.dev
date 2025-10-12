@@ -3,6 +3,10 @@ layout: layouts/home.njk
 htmlTemplateEngine: "webc"
 ---
 {% from "components/feed-card.njk" import feedCard %}
+
+{% set cardShell = "rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-100/80 dark:bg-gray-900/70 shadow-sm transition-shadow duration-200 hover:shadow-lg" %}
+
+
 {# eleventyNavigation: key: carteakey.dev order: 1 #}
 <div class="intro flex flex-col md:flex-row gap-2 justify-center items-center md:items-start">
   {% image "./src/static/img/headshot.png" , "me", "rounded-full md:m-10 ml-0 w-28 h-28 self-center md:self-start object-cover mx-auto md:mx-10" %}
@@ -64,13 +68,23 @@ htmlTemplateEngine: "webc"
   {% endif %}
 
   <hr class="mt-4" />
-
-  <h2>Quote of the Day</h2>
   
-  <blockquote id="qotd" class="font-normal">
-    {{qotd.quote}}
-  </blockquote>
-  <p class='p-0 -mt-2 float-right italic text-xs' id='who'>Powered by {{qotd.provider}}</p>
+   <!-- Quote of the Day Section -->
+    <section class="{{ cardShell }} p-5 sm:p-6 not-prose">
+        <div class="flex flex-col gap-3">
+            <div class="flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-amber-700 dark:text-amber-300">
+                {% feather "zap", class="w-4 h-4" %}
+                Quote of the Day
+            </div>
+            <blockquote id="qotd" class="text-lg font-medium leading-relaxed text-gray-900 dark:text-gray-100">
+                {{ qotd.quote }}
+            </blockquote>
+            <p class="text-right text-xs italic text-gray-500 dark:text-gray-400" id="who">
+                Powered by {{ qotd.provider }}
+            </p>
+        </div>
+    </section>
+
   <!-- The script itself, loaded AFTER your root element. -->
   <script src="https://unpkg.com/typeit@8.7.1/dist/index.umd.js"></script>
   <script>
