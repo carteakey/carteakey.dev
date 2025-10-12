@@ -7,6 +7,7 @@ eleventyNavigation:
   key: Vibes
   order: 6
 ---
+{% include "components/breadcrumbs.njk" %}
 
 <style>
   /* Container fills the viewport width; images absolutely positioned */
@@ -79,14 +80,14 @@ eleventyNavigation:
     const pairs = key_values
       .map(([_, dims]) => {
         const [w, h] = dims;
-        const goal_pixels = 650 * 360; // larger baseline than before
+        const goal_pixels = 520 * 320; // tighter baseline for denser packing
         const actual_pixels = w * h;
         if (actual_pixels / goal_pixels > 16) return [parseInt(w / 7), parseInt(h / 7)];
         if (actual_pixels / goal_pixels > 4) return [parseInt(w / 3.5), parseInt(h / 3.5)];
         return [parseInt(w / 1.8), parseInt(h / 1.8)];
       })
       .map(([w, h]) => {
-        let ww = Math.min(Math.round(w * 1.15), Math.max(50, screenWidth - 10));
+        let ww = Math.min(Math.round(w * 1.05), Math.max(120, screenWidth - 10));
         let hh = Math.round(h * (ww / w));
         return [ww, hh];
       });
@@ -129,7 +130,7 @@ eleventyNavigation:
 
     const positions = [];
     let i = 0;
-    let heightCap = Math.max(600, Math.round(window.innerHeight * 0.8));
+    let heightCap = Math.max(420, Math.round(window.innerHeight * 0.6));
     container.style.minHeight = heightCap + 'px';
 
     placementIntervalId = setInterval(() => {
@@ -141,7 +142,7 @@ eleventyNavigation:
         let found_place = false;
         const w_max = Math.max(0, screen_width - w);
         const h_max = Math.max(0, height - h);
-        for (let _ = 0; _ < 50; _++) {
+        for (let _ = 0; _ < 80; _++) {
           const a_left = Math.random() * (w_max || 1);
           const a_top = Math.random() * (h_max || 1);
           const a_right = a_left + w;
@@ -174,7 +175,7 @@ eleventyNavigation:
             break;
           }
         }
-        if (found_place) break; else height += 50;
+        if (found_place) break; else height += 25;
       }
 
       // Create a clickable figure for PhotoSwipe

@@ -11,18 +11,90 @@ permalink: /feed/
 {% from "components/feed-card.njk" import feedCard %}
 {% include "components/breadcrumbs.njk" %}
 
+{% set initialVisible = 24 %}
+{% set batchSize = 12 %}
+
 <h1 class="text-3xl font-semibold tracking-tight">Feed</h1>
 <p class="text-gray-600 dark:text-gray-400 mb-8 mt-2">
   One timeline for everything happening on the site — articles, snippets, microposts, photography, vibes, and /now snapshots.
 </p>
 
-<div class="grid gap-5 md:grid-cols-2 items-start feed-masonry" data-feed-masonry style="--feed-row-height: 18px;">
+<div
+  class="grid gap-5 md:grid-cols-2 items-start feed-masonry"
+  data-feed-masonry
+  data-feed-initial="{{ initialVisible }}"
+  data-feed-batch="{{ batchSize }}"
+  style="--feed-row-height: 18px;"
+>
   {% for item in collections.feed %}
-    {{ feedCard(item) }}
+    {% set isHidden = loop.index0 >= initialVisible %}
+    {% set extraClasses = 'hidden' if isHidden else '' %}
+    {% set attrs = 'data-feed-index="' ~ loop.index0 ~ '" data-feed-item' %}
+    {{ feedCard(item, {
+      extraClasses: extraClasses,
+      outerAttrs: attrs
+    }) }}
   {% endfor %}
 </div>
 
 <div class="mt-10 text-center text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
   Showing {{ collections.feed.length }} items • Updated {{ page.date | readableDate }}
 </div>
+
+{% if collections.feed.length > initialVisible %}
+  <div class="mt-8 flex justify-center">
+    <button
+      type="button"
+      class="accent-button-outline accent-focus inline-flex items-center gap-2 rounded-full px-5 py-2 text-sm font-medium"
+      data-feed-load-more
+    >
+      Load more items
+      {% feather "refresh-cw", class="h-4 w-4" %}
+    </button>
+  </div>
+{% endif %}
 {% include "components/feed-masonry-script.njk" %}
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const grid = document.querySelector('[data-feed-masonry]');
+    const trigger = document.querySelector('[data-feed-load-more]');
+    if (!grid || !trigger) {
+      return;
+    }
+
+    const initial = parseInt(grid.dataset.feedInitial || '24', 10);
+    const batch = parseInt(grid.dataset.feedBatch || '12', 10);
+    const cards = Array.from(grid.querySelectorAll('.feed-card'));
+    let visible = initial;
+
+    const apply = () => {
+      cards.forEach((card, index) => {
+        if (index < visible) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+
+      if (visible >= cards.length) {
+        trigger.classList.add('hidden');
+        trigger.setAttribute('aria-hidden', 'true');
+        trigger.setAttribute('tabindex', '-1');
+      } else {
+        trigger.classList.remove('hidden');
+        trigger.removeAttribute('aria-hidden');
+        trigger.removeAttribute('tabindex');
+      }
+
+      grid.dispatchEvent(new CustomEvent('feed:layout'));
+    };
+
+    trigger.addEventListener('click', () => {
+      visible = Math.min(visible + batch, cards.length);
+      apply();
+    });
+
+    apply();
+  });
+</script>

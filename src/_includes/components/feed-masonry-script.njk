@@ -43,6 +43,7 @@
       });
 
       window.addEventListener('resize', layout, { passive: true });
+      grid.addEventListener('feed:layout', () => layout());
       layout();
     });
   });

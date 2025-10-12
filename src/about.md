@@ -12,7 +12,7 @@ Hi 👋🏼, Thanks for dropping by!
 My name's Kartikey. Most people pronounce it as **_carteakey_** - hence the [site](https://carteakey.dev).
 
 {% set fact = randomFacts | random %}
-Here's a random fact about me: <span class="font-serif">"{{ fact }}"</span>
+Here's a random fact about me: <span class="">"{{ fact }}"</span>
 
 
 ## Work

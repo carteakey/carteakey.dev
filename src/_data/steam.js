@@ -32,11 +32,20 @@ export default async function() {
         const data = await response.json();
         const games = data.response?.games || [];
 
+        const toHours = minutes => {
+            if (!minutes || minutes <= 0) {
+                return 0;
+            }
+
+            const hours = minutes / 60;
+            return hours >= 10 ? Math.round(hours) : Number(hours.toFixed(1));
+        };
+
         const filteredGames = games.map(game => ({
             name: game.name,
             appid: game.appid,
-            playtime_2weeks: Math.round(game.playtime_2weeks / 60), // minutes to hours
-            playtime_forever: Math.round(game.playtime_forever / 60), // minutes to hours
+            playtime_2weeks: toHours(game.playtime_2weeks),
+            playtime_forever: toHours(game.playtime_forever),
             url: `https://store.steampowered.com/app/${game.appid}`,
             library_hero: `https://steamcdn-a.akamaihd.net/steam/apps/${game.appid}/library_hero.jpg`,
         }));

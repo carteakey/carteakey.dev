@@ -32,15 +32,17 @@ permalink: /stats/
   {% endif %}
 {% endfor %}
 
+{% set cardShell = "rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-100/80 dark:bg-gray-900/70 shadow-sm transition-shadow duration-200 hover:shadow-lg" %}
+
 <h1>Site Statistics</h1>
 
 <p class="text-gray-600 dark:text-gray-400">
-  A data-driven look at this website. Numbers updated every time the site builds.
+  A data-driven (duh, <em>numbers</em>) look at this website. Numbers updated every time the site builds.
 </p>
 
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 my-8 not-prose">
   <!-- Posts Stats -->
-  <div class="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
+  <div class="{{ cardShell }} p-5 sm:p-6">
     <div class="flex items-center justify-between">
       <div>
         <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ totalPosts }}</p>
@@ -60,7 +62,7 @@ permalink: /stats/
   </div>
 
   <!-- Snippets Stats -->
-  <div class="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
+  <div class="{{ cardShell }} p-5 sm:p-6">
     <div class="flex items-center justify-between">
       <div>
         <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ totalSnippets }}</p>
@@ -77,7 +79,7 @@ permalink: /stats/
   </div>
 
   <!-- Tags Stats -->
-  <div class="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
+  <div class="{{ cardShell }} p-5 sm:p-6">
     <div class="flex items-center justify-between">
       <div>
         <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ totalTags }}</p>
@@ -97,7 +99,7 @@ permalink: /stats/
   </div>
 
   <!-- Site Pages -->
-  <div class="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
+  <div class="{{ cardShell }} p-5 sm:p-6">
     <div class="flex items-center justify-between">
       <div>
         <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ totalPages }}</p>
@@ -114,7 +116,7 @@ permalink: /stats/
   </div>
 
   <!-- Blog Activity -->
-  <div class="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
+  <div class="{{ cardShell }} p-5 sm:p-6">
     <div class="flex items-center justify-between">
       <div>
         {% set latestPost = collections.posts | last %}
@@ -135,7 +137,7 @@ permalink: /stats/
   </div>
 
   <!-- Total Words -->
-  <div class="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
+  <div class="{{ cardShell }} p-5 sm:p-6">
     <div class="flex items-center justify-between">
       <div>
         {# Estimate ~800 words per post on average #}
@@ -154,7 +156,7 @@ permalink: /stats/
   </div>
 
   <!-- Total Visitors -->
-  <div class="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
+  <div class="{{ cardShell }} p-5 sm:p-6">
     <div class="flex items-center justify-between">
       <div>
         <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ visitors.total | default(0) }}</p>
@@ -171,7 +173,7 @@ permalink: /stats/
   </div>
 
   <!-- Total Upvotes -->
-  <div class="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
+  <div class="{{ cardShell }} p-5 sm:p-6">
     <div class="flex items-center justify-between">
       <div>
         {% set totalUpvotes = 0 %}
@@ -192,7 +194,7 @@ permalink: /stats/
   </div>
 
   <!-- Build Info -->
-  <div class="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
+  <div class="{{ cardShell }} p-5 sm:p-6">
     <div class="flex items-center justify-between">
       <div>
         <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ page.date | date('MMM d') }}</p>
@@ -310,56 +312,56 @@ permalink: /stats/
 <!-- Meta Information -->
 <div class="my-12 p-6 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
   <h3 class="text-lg font-semibold mb-4">Technical Details</h3>
-  <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-4 text-sm">
-    <div>
-      <p class="text-gray-500 dark:text-gray-500 text-xs uppercase tracking-wide mb-1">Generator</p>
-      <p class="font-medium text-gray-900 dark:text-white">{{ eleventy.generator }}</p>
+  <dl class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-3 text-sm">
+    <div class="flex flex-col gap-1 border-l-2 border-gray-200 pl-3 dark:border-gray-700">
+      <dt class="text-[0.65rem] uppercase tracking-wide text-gray-500 dark:text-gray-500">Generator</dt>
+      <dd class="font-medium text-gray-900 dark:text-white">{{ eleventy.generator }}</dd>
     </div>
-    <div>
-      <p class="text-gray-500 dark:text-gray-500 text-xs uppercase tracking-wide mb-1">Build Source</p>
-      <p class="font-medium text-gray-900 dark:text-white">{{ eleventy.env.source }}</p>
+    <div class="flex flex-col gap-1 border-l-2 border-gray-200 pl-3 dark:border-gray-700">
+      <dt class="text-[0.65rem] uppercase tracking-wide text-gray-500 dark:text-gray-500">Build Source</dt>
+      <dd class="font-medium text-gray-900 dark:text-white">{{ eleventy.env.source }}</dd>
     </div>
-    <div>
-      <p class="text-gray-500 dark:text-gray-500 text-xs uppercase tracking-wide mb-1">Last Build</p>
-      <p class="font-medium text-gray-900 dark:text-white">{{ page.date | readableDate }}</p>
+    <div class="flex flex-col gap-1 border-l-2 border-gray-200 pl-3 dark:border-gray-700">
+      <dt class="text-[0.65rem] uppercase tracking-wide text-gray-500 dark:text-gray-500">Last Build</dt>
+      <dd class="font-medium text-gray-900 dark:text-white">{{ page.date | readableDate }}</dd>
     </div>
-    <div>
-      <p class="text-gray-500 dark:text-gray-500 text-xs uppercase tracking-wide mb-1">Build Time</p>
-      <p class="font-medium text-gray-900 dark:text-white">{{ page.date | date('h:mm a') }}</p>
+    <div class="flex flex-col gap-1 border-l-2 border-gray-200 pl-3 dark:border-gray-700">
+      <dt class="text-[0.65rem] uppercase tracking-wide text-gray-500 dark:text-gray-500">Build Time</dt>
+      <dd class="font-medium text-gray-900 dark:text-white">{{ page.date | date('h:mm a') }}</dd>
     </div>
-    <div>
-      <p class="text-gray-500 dark:text-gray-500 text-xs uppercase tracking-wide mb-1">Total Collections</p>
-      <p class="font-medium text-gray-900 dark:text-white">{{ collections | keys | length }}</p>
+    <div class="flex flex-col gap-1 border-l-2 border-gray-200 pl-3 dark:border-gray-700">
+      <dt class="text-[0.65rem] uppercase tracking-wide text-gray-500 dark:text-gray-500">Total Collections</dt>
+      <dd class="font-medium text-gray-900 dark:text-white">{{ collections | keys | length }}</dd>
     </div>
-    <div>
-      <p class="text-gray-500 dark:text-gray-500 text-xs uppercase tracking-wide mb-1">CSS Framework</p>
-      <p class="font-medium text-gray-900 dark:text-white">Tailwind CSS v4</p>
+    <div class="flex flex-col gap-1 border-l-2 border-gray-200 pl-3 dark:border-gray-700">
+      <dt class="text-[0.65rem] uppercase tracking-wide text-gray-500 dark:text-gray-500">CSS Framework</dt>
+      <dd class="font-medium text-gray-900 dark:text-white">Tailwind CSS v4</dd>
     </div>
-    <div>
-      <p class="text-gray-500 dark:text-gray-500 text-xs uppercase tracking-wide mb-1">JS Framework</p>
-      <p class="font-medium text-gray-900 dark:text-white">Alpine.js</p>
+    <div class="flex flex-col gap-1 border-l-2 border-gray-200 pl-3 dark:border-gray-700">
+      <dt class="text-[0.65rem] uppercase tracking-wide text-gray-500 dark:text-gray-500">JS Framework</dt>
+      <dd class="font-medium text-gray-900 dark:text-white">Alpine.js</dd>
     </div>
-    <div>
-      <p class="text-gray-500 dark:text-gray-500 text-xs uppercase tracking-wide mb-1">Hosting</p>
-      <p class="font-medium text-gray-900 dark:text-white">Netlify</p>
+    <div class="flex flex-col gap-1 border-l-2 border-gray-200 pl-3 dark:border-gray-700">
+      <dt class="text-[0.65rem] uppercase tracking-wide text-gray-500 dark:text-gray-500">Hosting</dt>
+      <dd class="font-medium text-gray-900 dark:text-white">Netlify</dd>
     </div>
-    <div>
-      <p class="text-gray-500 dark:text-gray-500 text-xs uppercase tracking-wide mb-1">Template Engine</p>
-      <p class="font-medium text-gray-900 dark:text-white">Nunjucks</p>
+    <div class="flex flex-col gap-1 border-l-2 border-gray-200 pl-3 dark:border-gray-700">
+      <dt class="text-[0.65rem] uppercase tracking-wide text-gray-500 dark:text-gray-500">Template Engine</dt>
+      <dd class="font-medium text-gray-900 dark:text-white">Nunjucks</dd>
     </div>
-    <div>
-      <p class="text-gray-500 dark:text-gray-500 text-xs uppercase tracking-wide mb-1">Syntax Highlighting</p>
-      <p class="font-medium text-gray-900 dark:text-white">PrismJS</p>
+    <div class="flex flex-col gap-1 border-l-2 border-gray-200 pl-3 dark:border-gray-700">
+      <dt class="text-[0.65rem] uppercase tracking-wide text-gray-500 dark:text-gray-500">Syntax Highlighting</dt>
+      <dd class="font-medium text-gray-900 dark:text-white">PrismJS</dd>
     </div>
-    <div>
-      <p class="text-gray-500 dark:text-gray-500 text-xs uppercase tracking-wide mb-1">Comments</p>
-      <p class="font-medium text-gray-900 dark:text-white">Giscus (GitHub)</p>
+    <div class="flex flex-col gap-1 border-l-2 border-gray-200 pl-3 dark:border-gray-700">
+      <dt class="text-[0.65rem] uppercase tracking-wide text-gray-500 dark:text-gray-500">Comments</dt>
+      <dd class="font-medium text-gray-900 dark:text-white">Giscus (GitHub)</dd>
     </div>
-    <div>
-      <p class="text-gray-500 dark:text-gray-500 text-xs uppercase tracking-wide mb-1">Analytics</p>
-      <p class="font-medium text-gray-900 dark:text-white">Upstash Redis</p>
+    <div class="flex flex-col gap-1 border-l-2 border-gray-200 pl-3 dark:border-gray-700">
+      <dt class="text-[0.65rem] uppercase tracking-wide text-gray-500 dark:text-gray-500">Analytics</dt>
+      <dd class="font-medium text-gray-900 dark:text-white">Upstash Redis</dd>
     </div>
-  </div>
+  </dl>
 </div>
 
 <div class="text-center text-sm text-gray-600 dark:text-gray-400">

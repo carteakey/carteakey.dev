@@ -1,0 +1,89 @@
+---
+layout: layouts/base.njk
+title: Guestbook
+permalink: /guestbook/
+eleventyNavigation:
+  key: Guestbook
+  order: 13
+---
+
+{% include "components/breadcrumbs.njk" %}
+{% set cardShell = "rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-100/80 dark:bg-gray-900/70 shadow-sm transition-shadow duration-200 hover:shadow-lg" %}
+
+<div class=" mx-auto space-y-8">
+  <header class="space-y-3">
+    <h1 class="text-3xl font-semibold tracking-tight text-gray-900 dark:text-white">Guestbook</h1>
+    <p class="text-sm text-gray-600 dark:text-gray-400 md:text-base">
+      Leave a note, share what brought you here, or drop a recommendation.
+    </p>
+  </header>
+
+  <section class="{{ cardShell }} p-5 sm:p-6">
+    <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Say hello</h2>
+    <form
+      name="guestbook"
+      method="POST"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+      class="mt-4 space-y-4"
+    >
+      <input type="hidden" name="form-name" value="guestbook">
+      <p class="hidden">
+        <label>
+          Don’t fill this out: <input name="bot-field" />
+        </label>
+      </p>
+
+      <div class="grid gap-4 sm:grid-cols-2">
+        <label class="flex flex-col gap-1 text-sm font-medium text-gray-700 dark:text-gray-300">
+          Name
+          <input
+            type="text"
+            name="name"
+            required
+            class="rounded-lg border border-gray-300 bg-white/80 px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
+            placeholder="How should I credit you?"
+          >
+        </label>
+        <label class="flex flex-col gap-1 text-sm font-medium text-gray-700 dark:text-gray-300">
+          Website (optional)
+          <input
+            type="url"
+            name="website"
+            class="rounded-lg border border-gray-300 bg-white/80 px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
+            placeholder="https://example.com"
+          >
+        </label>
+      </div>
+
+      <label class="flex flex-col gap-1 text-sm font-medium text-gray-700 dark:text-gray-300">
+        Message
+        <textarea
+          name="message"
+          rows="5"
+          required
+          class="rounded-lg border border-gray-300 bg-white/80 px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
+          placeholder="Tell me something good."
+        ></textarea>
+      </label>
+
+      <button
+        type="submit"
+        class="accent-button accent-focus inline-flex items-center justify-center gap-2 rounded-full px-5 py-2 text-sm font-medium"
+      >
+        {% feather "send", class="w-4 h-4" %}
+        Sign the guestbook
+      </button>
+    </form>
+  </section>
+
+  <section class="{{ cardShell }} p-5 sm:p-6 space-y-3 text-sm text-gray-600 dark:text-gray-300">
+    <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Prefer another channel?</h2>
+    <p>
+      You can also <a href="mailto:{{ metadata.author.email }}" class="accent-link">email me</a> or <a href="https://github.com/carteakey/carteakey.dev/issues/new?title=Guestbook%20entry" target="_blank" rel="noopener" class="accent-link">open a GitHub issue</a> if you’d like your message to appear here.
+    </p>
+    {# <p class="text-xs text-gray-500 dark:text-gray-400">
+      Guestbook submissions are manually curated before they appear on the site. This keeps spam away and the vibes friendly.
+    </p> #}
+  </section>
+</div>

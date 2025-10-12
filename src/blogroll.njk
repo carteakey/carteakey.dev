@@ -7,41 +7,57 @@ eleventyNavigation:
   order: 11
 ---
 
-<div class="mx-auto">
-  {% include "components/breadcrumbs.njk" %}
-  <h1>Blogroll</h1>
-  <p class="text-gray-600 dark:text-gray-300 mb-6">A curated list of blogs and websites I read regularly and highly recommend.</p>
+{% set totalBlogroll = blogroll.blogroll | length %}
+{% set cardShell = "rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-100/80 dark:bg-gray-900/70 shadow-sm transition-shadow duration-200 hover:shadow-lg" %}
 
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="max-w-5xl mx-auto">
+  {% include "components/breadcrumbs.njk" %}
+
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <div>
+      <h1 class="text-3xl font-semibold tracking-tight text-gray-900 dark:text-white">Blogroll</h1>
+      <p class="mt-2 text-sm text-gray-600 dark:text-gray-400 md:text-base">A curated list of blogs and websites I read regularly and highly recommend.</p>
+    </div>
+    <div class="rounded-lg border border-amber-200 dark:border-amber-700 bg-amber-50/70 dark:bg-amber-900/25 px-4 py-3 text-xs uppercase tracking-wide text-amber-800 dark:text-amber-200">
+      {{ totalBlogroll }} sites and counting
+    </div>
+  </header>
+
+  <div class="mt-8 grid gap-4 md:grid-cols-3">
     {%- for blog in blogroll.blogroll %}
-    <article class="border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:border-amber-500 dark:hover:border-amber-500 transition-colors">
-      <a href="{{ blog.url }}" target="_blank" rel="noopener noreferrer" class="text-lg font-semibold hover:text-amber-600 dark:hover:text-amber-400 flex items-center gap-1 mb-1">
-        {{ blog.name }}
-        {% feather "external-link", class="w-4 h-4" %}
-      </a>
-      <p class="text-sm text-gray-600 dark:text-gray-300 mb-2">{{ blog.description }}</p>
-      {%- if blog.tags %}
-      <div class="flex flex-wrap gap-1">
-        {%- for tag in blog.tags %}
-        <span class="text-xs px-2 py-0.5 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded">
-          {{ tag }}
-        </span>
-        {%- endfor %}
-      </div>
-      {%- endif %}
-    </article>
+      <article class="{{ cardShell }} h-full p-5 sm:p-6">
+        <div class="space-y-3">
+          <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
+            <a href="{{ blog.url }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 hover:text-amber-600 dark:hover:text-amber-400">
+              <span>{{ blog.name }}</span>
+              {% feather "external-link", class="w-4 h-4 opacity-70" %}
+            </a>
+          </h2>
+          <p class="text-sm leading-relaxed text-gray-600 dark:text-gray-300">{{ blog.description }}</p>
+        </div>
+        {%- if blog.tags %}
+          <div class="mt-4 flex flex-wrap gap-2 text-[0.7rem] uppercase tracking-wide text-gray-500 dark:text-gray-400">
+            {%- for tag in blog.tags %}
+              <span class="rounded-full bg-gray-100 px-2 py-1 text-gray-700 dark:bg-gray-800 dark:text-gray-200">#{{ tag }}</span>
+            {%- endfor %}
+          </div>
+        {%- endif %}
+      </article>
     {%- endfor %}
   </div>
 
-  <div class="mt-12 p-6 bg-gray-50 dark:bg-gray-800 rounded-lg">
-    <h2 class="text-xl font-semibold mb-2 flex items-center gap-2">
+    <div class="mt-16 {{ cardShell }} p-6">
+       <h3 class="flex items-center gap-2 text-lg font-semibold text-gray-900 dark:text-white">
       {% feather "rss", class="w-5 h-5" %}
       Want to add your blog?
-    </h2>
-    <p class="text-gray-600 dark:text-gray-300">
+    </h3>
+     <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">
       If you have a blog about web development, programming, or technology, feel free to 
-      <a href="mailto:{{ metadata.author.email }}" class="text-amber-600 dark:text-amber-400 hover:underline">reach out</a> 
+      <a href="mailto:{{ metadata.author.email }}"  class="font-semibold hover:underline accent-link accent-focus">reach out</a> 
       and I'd be happy to check it out!
     </p>
   </div>
+
+
+
 </div>

@@ -5,6 +5,64 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.19] - 2025-10-11
+
+### Added
+- Dedicated `/guestbook` page, each using the shared card shell and navigation breadcrumbs.
+- Netlify-backed guestbook form with email and GitHub issue fallbacks for alternative submissions.
+
+### Changed
+- Stats intro now owns a self-deprecating data joke, the quotes page moved to the unified card layout, and the blog archive lists every post inside matching cards.
+- Bookmarks, blogroll, snippets, and feed cards all reuse the single card shell so surface treatments stay consistent site-wide.
+
+### Fixed
+- Steam playtime conversion now emits decimal hours, ensuring recent games display accurate hour counts instead of rounding to zero.
+
+## [1.3.18] - 2025-10-11
+
+### Changed
+- Global grain overlay now leans on a gentler turbulence blend with lower opacity so the paper backdrop reads as texture rather than static.
+- Homepage feed CTA inherits the active accent palette, and the stats technical details compress into accent-lined columns for quicker scanning.
+- Newsletter feature cards adopt badge-style icon caps so headings and glyphs stay aligned.
+
+### Fixed
+- Workout widgets on `/now` and `/workouts` now use the shared card shell while respecting Strava map aspect ratios.
+- Project gallery and newsletter inputs drop harsh white panels in favour of the gray card tokens, and sitewide `bg-white` utilities were swapped for softer grays.
+- Search field border and help links now follow the accent theme, keeping the interface consistent after the amber palette removal.
+
+## [1.3.17] - 2025-10-11
+
+### Changed
+- Projects, games, stats, newsletter, and workouts now share the same card treatment as the blogroll/bookmarks layouts for a cohesive surface.
+- Newsletter subscribe CTA picks up the active accent palette, and supporting cards reuse the new shell styling.
+- Vibes board sizing rules tighten to pack images closer together for a denser collage.
+
+### Fixed
+- Featured post selection now honours optional weights and falls back to the most recent flagged entry so the homepage pin reliably appears.
+
+## [1.3.15] - 2025-10-11
+
+### Changed
+- Grain overlay now uses a softer fractal noise texture with gentle blending in light and dark themes.
+- Post imagery gains tighter max-widths, rounded framing, and tuned shadows for better long-form readability.
+- Mobile navigation swaps the lone home icon for a `carteakey.dev` wordmark and centers the hero portrait on small screens.
+
+### Fixed
+- Featured posts flagged with `featured: true` finally surface in the homepage callout again.
+
+## [1.3.14] - 2025-10-11
+
+### Added
+- Feed page gains a load-more control that reveals timeline items in batches while keeping the masonry layout tidy.
+
+### Changed
+- Global backdrop now layers a subtle grain overlay over the existing gradients for a paper-like finish.
+- Tailwind theme exposes every bundled font family and drops unused variants so utilities like `font-urbanist` or `font-geist` just work.
+- Homepage feed heading includes a direct link to `/feed/` with an arrow affordance for quick access.
+
+### Fixed
+- Featured post callout now reliably surfaces the first post marked with `featured: true`.
+
 ## [1.3.13] - 2025-10-05
 
 ### Added

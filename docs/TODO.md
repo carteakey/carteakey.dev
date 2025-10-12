@@ -9,20 +9,51 @@
 ### Content Features
 - [x] Smaller fonts across the board. I find the site to be better at 90% zoom.
 - [x] Add a random facts about me in the about me section. It can be a random fact from a list of facts that I can update.
-- [x] Add a pinned or featured post section on the homepage. This can be a post that I want to highlight or that is particularly important.
 - [x] Feed icon - in the more page and footer, to link to the feed page.
 - [x] Quotes blogroll missing breadcrumbs		
-- [ ] There's 5 types of cards - blogroll, projects, bookmarks, feed, snippets. Projects is 3 columns based which is per design.
-The feed and snippets are good and similar, but blogroll and projects, bookmarks are different. Bookmarks has flashy animations, different date format, bigger cards. Blogroll is denser but different style. We should have a single card style for all of them, with minor variations if needed. The one that needs most work is bookmarks. Bookmarks count should be similar to snippets count. Same for blogroll. 
-- [ ] Add a link to open the Feed in the frontpage heading of Feed. Maybe a link beside the heading with an arrow icon or something.
-- [ ] Paginate the feed page or add a "Load more" button at the bottom. Right now it shows all posts, snippets, and mini blogs in one page which can be overwhelming.
+- [x] Add a grainy texture overlay to the background to give it a more tactile, paper-like feel. 
+- [x] Add all fonts available to tailwind css and remove all additional versions of the font that are not being used.
+- [x] Add a link to open the Feed in the frontpage heading of Feed. Maybe a link beside the heading with an arrow icon or something.
+- [x] Paginate the feed page or add a "Load more" button at the bottom. Right now it shows all posts, snippets, and mini blogs in one page which can be overwhelming.
+- [x] Add a pinned or featured post section on the homepage. This can be a post that I want to highlight or that is particularly important. Current implementation doesn't work.
+- [x] Apply the same card style as blogroll and bookmarks to the projects page cards and the games, and stats pages. Doesnt have to be exactly the same but similar design language. 
+- [x] Remove orange accent from the subscribe button in the footer. It looks out of place. it should follow the accent color theme.
+- [x] The newsletter cards in the newsletter page should follow the same card style as blogroll and bookmarks. Looks very different right now.
+- [x] Pinned post still doenst WORK.
+- [x] Workout page - make it card style like blogroll and bookmarks.
+- [x] Vibes page - spacing between images is too much, make it denser.
+- [x] Grain looks ugly, needs to be more subtle and less dotty. Maybe a noise texture instead of dots.
+- [x] Feed link in homepage should be accent color themed.
+- [x] remove all bg-white and use bg-gray-100 or bg-gray-50 instead. White is too harsh on the eyes.
+- [x] Workout should be card style in Now as well, and be similar to the games section. 
+- [x] Workout page - images getting cut off on the top and bottom. Make them fit properly.
+- [x] Projects page - images look weird and witthin a white box. Make them fit properly
+- [x] Newsletter - the cards have alignment issues against the icons. Fix that.
+- [x] Newsletter - the links should be accent color themed.
+- [x] Search - the border should be accent color themed.
+- [x] Stats - the technical details should be denser.
+- [x] Stats - add a joke about the data-driven part.
+- [x] Games - playtime not showing up properly. Fix that.
+- [x] Beautfiy quotes page but be consistent with the rest of the site.
+- [x] Bloglist - add some sort of separation between the blogs. Maybe a line or you know, single row card style consistent with the rest of the site.
+- [x] Move workout snippet and game snippet to the components folder.
+- [ ] Workouts page - workouts-snippet.njk - make it 3 latest workouts in a row on desktop view.
+- [ ] Now page - make games and workouts 3 columns on desktop view. Make the styling same as the main pages.
+- [ ] Quotes - same masonry layout as feed and gallery.
 
 
 
-- [ ] Centre picture on mobile view in the homepage. It is left aligned right now.
-- [ ] Webrings Page 
-- [ ] Guestbook Page
-- [ ] Colophon 
+
+- [x] There's 5 types of cards - blogroll, projects, bookmarks, feed, snippets. Projects is 3 columns based which is per design. The feed and snippets are good and similar, but blogroll and projects, bookmarks are different. Bookmarks has flashy animations, different date format, bigger cards. Blogroll is denser but different style. We should have a single card style for all of them, with minor variations if needed. The one that needs most work is bookmarks. Bookmarks count should be similar to snippets count. Same for blogroll. 
+
+
+
+
+
+
+- [x] Webrings Page 
+- [x] Guestbook Page
+- [x] Colophon 
 - [ ] Uses Page
 
 
@@ -79,6 +110,12 @@ Buy me a coffee
 - [ ] Multi-language support
 
 ## Completed TODOs
+### 2025-10-11
+- [x] The pinned post still doesnt work and doesnt show up on the homepage.
+- [x] The grainy texture is too dotty, it needs to be more grainy and subtle. 
+- [x] Change the home icon in mobile view to something better, it looks out of place.
+- [x] In the blogposts, the images look too big, make them more approraite for reading. 
+- [x] Centre picture on mobile view in the homepage. It is left aligned right now.
 ### 2025-10-05
 - [x] Background - implement a subtle, non-distracting background pattern or gradient. Right now its plain background.
 - [x] Footer row icons with links to social media, GitHub, email should be in a single line on small screens. STill wrapping to 2nd line on small screens.

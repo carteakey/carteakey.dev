@@ -1,0 +1,61 @@
+{% if strava and strava.length > 0 %}
+  {% set latest_activity = strava[0] %}
+  {% set cardShell = "rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-50/90 dark:bg-gray-900/70 shadow-sm overflow-hidden transition-shadow duration-200 hover:shadow-lg" %}
+  <div class="strava-snippet">
+    <h3>Latest Workout</h3>
+    <article class="{{ cardShell }} flex h-full flex-col">
+      {% if latest_activity.mapImageUrl %}
+        <a href="{{ latest_activity.url }}" target="_blank" rel="noopener noreferrer" class="block">
+          <img
+            src="{{ latest_activity.mapImageUrl }}"
+            alt="Map of {{ latest_activity.name }}"
+            loading="lazy"
+            decoding="async"
+            class="w-full object-cover"
+            style="aspect-ratio: 4 / 3;"
+          >
+        </a>
+      {% endif %}
+
+      <div class="flex flex-col gap-3 p-4">
+        <a
+          href="{{ latest_activity.url }}"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 text-sm font-semibold tracking-tight text-gray-900 transition-colors hover:text-amber-600 dark:text-gray-100 dark:hover:text-amber-400"
+        >
+          {{ latest_activity.name }}
+          {% feather "external-link", class="w-4 h-4" %}
+        </a>
+
+        <dl class="grid grid-cols-2 gap-3 text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
+          <div class="flex flex-col">
+            <span class="text-[0.7rem]">Type</span>
+            <span class="text-sm font-medium text-gray-900 dark:text-gray-100">{{ latest_activity.type }}</span>
+          </div>
+          <div class="flex flex-col">
+            <span class="text-[0.7rem]">Distance</span>
+            <span class="text-sm font-medium text-gray-900 dark:text-gray-100">{{ latest_activity.distance }} miles</span>
+          </div>
+          <div class="flex flex-col">
+            <span class="text-[0.7rem]">Moving Time</span>
+            <span class="text-sm font-medium text-gray-900 dark:text-gray-100">{{ latest_activity.moving_time }} minutes</span>
+          </div>
+          {% if latest_activity.elapsed_time %}
+            <div class="flex flex-col">
+              <span class="text-[0.7rem]">Elapsed</span>
+              <span class="text-sm font-medium text-gray-900 dark:text-gray-100">{{ latest_activity.elapsed_time }} minutes</span>
+            </div>
+          {% endif %}
+        </dl>
+
+        <p class="text-sm text-gray-600 dark:text-gray-300 mt-auto">
+          <a href="/workouts" class="accent-link inline-flex items-center gap-1">
+            View all recent workouts
+            {% feather "arrow-right", class="w-4 h-4" %}
+          </a>
+        </p>
+      </div>
+    </article>
+  </div>
+{% endif %}

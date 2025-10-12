@@ -1,26 +1,147 @@
 @import 'tailwindcss';
 
 @plugin '@tailwindcss/typography';
-@plugin "@tailwindcss/typography";
 
 @custom-variant dark (&:is(.dark *));
 
 @theme {
   --font-*: initial;
-  /* Default body copy font: Plus Jakarta Sans (local) with system fallbacks */
-  --font-sans:  'Poppins', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Apple Color Emoji', 'Segoe UI Emoji', 'Inter';
-  /* Monospace for code */
-  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
-  --font-et-book: et-book, serif;
+  /* Default body copy font stack */
+  --font-sans: var(--font-saira);
+  --font-plus-jakarta-sans: 'Plus Jakarta Sans', 'Saira', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Apple Color Emoji', 'Segoe UI Emoji', 'Inter';
+  --font-saira: 'Saira', 'Plus Jakarta Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Apple Color Emoji', 'Segoe UI Emoji', 'Inter';
+  --font-urbanist: 'Urbanist', var(--font-plus-jakarta-sans);
+  --font-exo-2: 'Exo 2', var(--font-plus-jakarta-sans);
+  --font-arimo: 'Arimo', var(--font-plus-jakarta-sans);
+  --font-rubik: 'Rubik', var(--font-plus-jakarta-sans);
+  --font-poppins: 'Poppins', var(--font-plus-jakarta-sans);
+  --font-geist: 'Geist', var(--font-plus-jakarta-sans);
+  --font-crimson-pro: 'Crimson Pro', 'et-book', Georgia, serif;
+  --font-et-book: 'et-book', 'Crimson Pro', Georgia, serif;
+  --font-serif: var(--font-et-book);
+  --font-mono: var(--font-jetbrains-mono);
+  --font-jetbrains-mono: 'JetBrains Mono', 'IBM Plex Mono', 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+  --font-ibm-plex-mono: 'IBM Plex Mono', var(--font-jetbrains-mono);
+  --font-geist-mono: 'Geist Mono', var(--font-jetbrains-mono);
 
   --animate-spin-slow: spin 7s linear infinite;
 }
 
+/* saira-regular - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Saira';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/static/fonts/saira-v22-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+/* saira-700 - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Saira';
+  font-style: normal;
+  font-weight: 700;
+  src: url('/static/fonts/saira-v22-latin-700.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+/* ibm-plex-mono-regular - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/static/fonts/ibm-plex-mono-v20-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+/* ibm-plex-mono-700 - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 700;
+  src: url('/static/fonts/ibm-plex-mono-v20-latin-700.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+/* urbanist-regular - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Urbanist';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/static/fonts/urbanist-v18-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+/* urbanist-700 - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Urbanist';
+  font-style: normal;
+  font-weight: 700;
+  src: url('/static/fonts/urbanist-v18-latin-700.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+/* exo-2-regular - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Exo 2';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/static/fonts/exo-2-v26-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+/* exo-2-700 - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Exo 2';
+  font-style: normal;
+  font-weight: 700;
+  src: url('/static/fonts/exo-2-v26-latin-700.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+/* arimo-regular - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Arimo';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/static/fonts/arimo-v35-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+/* rubik-regular - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Rubik';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/static/fonts/rubik-v31-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+/* crimson-pro-regular - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Crimson Pro';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/static/fonts/crimson-pro-v28-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+@font-face {
+  font-family: 'Geist';
+  src: url('/static/fonts/geist/Geist[wght].woff2') format('woff2-variations');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('/static/fonts/geist/GeistMono[wght].woff2') format('woff2-variations');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+
 @font-face {
   font-family: "Poppins";
-  src:
-    url("/static/fonts/poppins/Poppins-Regular.woff2") format("woff2"),
-    url("/static/fonts/poppins/Poppins-Regular.woff") format("woff");
+  src: url("/static/fonts/poppins/Poppins-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -28,9 +149,7 @@
 
 @font-face {
   font-family: "JetBrains Mono";
-  src:
-    url("/static/fonts/jetbrains-mono/JetBrainsMono-Regular.woff2") format("woff2"),
-    url("/static/fonts/jetbrains-mono/JetBrainsMono-Regular.woff") format("woff");
+  src: url("/static/fonts/jetbrains-mono/JetBrainsMono-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -38,9 +157,7 @@
 
 @font-face {
   font-family: "JetBrains Mono";
-  src:
-    url("/static/fonts/jetbrains-mono/JetBrainsMono-Bold.woff2") format("woff2"),
-    url("/static/fonts/jetbrains-mono/JetBrainsMono-Bold.woff") format("woff");
+  src: url("/static/fonts/jetbrains-mono/JetBrainsMono-Bold.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -80,6 +197,8 @@
   body {
     font-size: 1rem;
     line-height: 1.6;
+    position: relative;
+    z-index: 0;
     background-color: #f8fafc;
     background-image:
       radial-gradient(at 15% 20%, rgba(245, 158, 11, 0.18), transparent 55%),
@@ -87,6 +206,19 @@
       linear-gradient(180deg, #f9fafb 0%, #f5f5f5 45%, #f8fafc 100%);
     background-attachment: fixed;
     background-size: cover;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.45' numOctaves='2' seed='4' stitchTiles='stitch'/%3E%3CfeComposite operator='arithmetic' k1='0' k2='0.95' k3='0.15' k4='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.12'/%3E%3C/svg%3E");
+    background-size: 320px 320px;
+    background-repeat: repeat;
+    mix-blend-mode: soft-light;
+    opacity: 0.24;
+    z-index: -1;
   }
 }
 
@@ -97,6 +229,13 @@
       radial-gradient(at 12% 18%, rgba(251, 191, 36, 0.14), transparent 55%),
       radial-gradient(at 88% 12%, rgba(56, 189, 248, 0.14), transparent 55%),
       linear-gradient(180deg, #050505 0%, #0b0b0f 45%, #09090b 100%);
+  }
+
+  .dark body::before {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cfilter id='noiseDark'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.55' numOctaves='2' seed='6' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseDark)' opacity='0.18'/%3E%3C/svg%3E");
+    background-size: 320px 320px;
+    mix-blend-mode: screen;
+    opacity: 0.22;
   }
 }
 
@@ -118,21 +257,17 @@
 
 @font-face {
   font-family: "Plus Jakarta Sans";
-  src:
-    url("/static/fonts/plus-jakarta-sans/PlusJakartaSans-Regular.woff2") format("woff2"),
-    url("/static/fonts/plus-jakarta-sans/PlusJakartaSans-Regular.woff") format("woff");
-  font-weight: 400;
+  src: url("/static/fonts/plus-jakarta-sans/PlusJakartaSans[wght].woff2") format("woff2-variations");
+  font-weight: 200 800;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
   font-family: "Plus Jakarta Sans";
-  src:
-    url("/static/fonts/plus-jakarta-sans/PlusJakartaSans-Bold.woff2") format("woff2"),
-    url("/static/fonts/plus-jakarta-sans/PlusJakartaSans-Bold.woff") format("woff");
-  font-weight: 700;
-  font-style: normal;
+  src: url("/static/fonts/plus-jakarta-sans/PlusJakartaSans-Italic[wght].woff2") format("woff2-variations");
+  font-weight: 200 800;
+  font-style: italic;
   font-display: swap;
 }
 
@@ -187,19 +322,6 @@ code[class*="language-"] {
   font-family: var(--font-mono);
 } 
 
-.project-card:hover {
-  transform: scale(1.05);
-  box-shadow:
-    0 10px 15px -3px rgba(0, 0, 0, 0.1),
-    0 4px 6px -2px rgba(0, 0, 0, 0.05);
-}
-
-.project-card {
-  transition:
-    transform 0.2s ease-in-out,
-    box-shadow 0.2s ease-in-out;
-}
-
 /* hide quotes for quote blocks */
 blockquote p::before {
   display: none;
@@ -212,7 +334,28 @@ blockquote p:after {
 figure {
   text-align: center;
   display: table;
-  margin: 10px auto; /* not needed unless you want centered */
+  margin: 2.5rem auto;
+  max-width: min(100%, 46rem);
+}
+
+@layer components {
+  .prose figure > img,
+  .prose > img,
+  .prose picture > img {
+    display: block;
+    width: 100%;
+    max-width: min(100%, 44rem);
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 1.25rem;
+    box-shadow: 0 18px 45px -32px rgba(15, 23, 42, 0.45);
+  }
+
+  .dark .prose figure > img,
+  .dark .prose > img,
+  .dark .prose picture > img {
+    box-shadow: 0 18px 45px -32px rgba(0, 0, 0, 0.65);
+  }
 }
 
 @layer components {
@@ -255,6 +398,27 @@ figure {
     background-color: color-mix(in srgb, var(--accent-color) 75%, white);
   }
 
+  .accent-field {
+    border-color: color-mix(in srgb, var(--accent-color) 55%, white);
+    background-color: color-mix(in srgb, var(--accent-color) 8%, #f8fafc 92%);
+    transition: border-color 150ms ease, box-shadow 150ms ease, background-color 150ms ease;
+  }
+
+  .accent-field:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-color) 25%, transparent);
+  }
+
+  .dark .accent-field {
+    border-color: color-mix(in srgb, var(--accent-color) 60%, #0f172a);
+    background-color: color-mix(in srgb, var(--accent-color) 12%, #0f172a 88%);
+  }
+
+  .dark .accent-field:focus {
+    border-color: color-mix(in srgb, var(--accent-color) 80%, white);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-color) 30%, rgba(0, 0, 0, 0.6));
+  }
+
   .accent-button-outline {
     border: 1px solid var(--accent-color);
     color: var(--accent-color);
@@ -281,31 +445,6 @@ figure {
 
   .dark .accent-focus:focus-visible {
     outline-color: color-mix(in srgb, var(--accent-color) 55%, white);
-  }
-
-  .bookmark-card {
-    isolation: isolate;
-  }
-
-  .bookmark-card::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    background: linear-gradient(135deg, rgba(245, 158, 11, 0.16), transparent 65%);
-    opacity: 0;
-    transition: opacity 180ms ease;
-    pointer-events: none;
-    z-index: -1;
-  }
-
-  .dark .bookmark-card::before {
-    background: linear-gradient(135deg, rgba(245, 158, 11, 0.12), transparent 65%);
-  }
-
-  .bookmark-card:hover::before,
-  .bookmark-card:focus-within::before {
-    opacity: 1;
   }
 
   .feed-masonry {

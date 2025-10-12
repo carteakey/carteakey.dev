@@ -14,29 +14,34 @@ permalink: /bookmarks/
 {% set categories = bookmarks.bookmarks | map('category') | uniq | sort %}
 {% set sortedDates = bookmarks.bookmarks | map('date') | sort %}
 {% set lastUpdated = (sortedDates | reverse)[0] %}
+{% set cardShell = "rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-100/80 dark:bg-gray-900/70 shadow-sm transition-shadow duration-200 hover:shadow-lg" %}
 
 <div class="max-w-5xl mx-auto">
-  <h1 class="text-4xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
-    {# {% feather "bookmark" %} #}
-    Bookmarks
-  </h1>
-  <p class="mt-4 text-gray-600 dark:text-gray-300 text-lg">
-    Essays, tools, talks, and rabbit holes I keep coming back to. Saved for future me — shared for you.
-  </p>
-
-  <div class="mt-8 rounded-xl border border-amber-200 dark:border-amber-700 bg-amber-50/70 dark:bg-amber-900/20 p-6 text-sm text-amber-900 dark:text-amber-200 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
     <div>
-      <p class="font-semibold text-base">{{ totalCount }} bookmarks across {{ categories | length }} categories</p>
-      <p class="mt-1 text-amber-900/80 dark:text-amber-200/80">Last updated {{ lastUpdated | readableDate }}</p>
+      <h1 class="text-3xl font-semibold tracking-tight text-gray-900 dark:text-white flex items-center gap-3">
+        Bookmarks
+      </h1>
+      <p class="mt-2 text-sm text-gray-600 dark:text-gray-400 md:text-base">
+        Essays, tools, talks, and rabbit holes I keep coming back to. Saved for future me — shared for you.
+      </p>
     </div>
-    <div class="flex flex-wrap gap-2">
-      {% for category in categories %}
-        <a href="#{{ category | slugify }}" class="inline-flex items-center gap-2 rounded-full bg-white/80 dark:bg-gray-900/40 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-amber-900 dark:text-amber-100 hover:bg-white dark:hover:bg-gray-800 transition">
-          {% feather "hash", class="w-3 h-3" %}
-          {{ category }}
-        </a>
-      {% endfor %}
+    <div class="rounded-lg border border-amber-200 dark:border-amber-700 bg-amber-50/70 dark:bg-amber-900/25 px-4 py-3 text-xs uppercase tracking-wide text-amber-800 dark:text-amber-200">
+      {{ totalCount }} bookmarks and counting
     </div>
+  </header>
+
+  <div class="mt-4 text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
+    Last updated {{ lastUpdated | readableDate }} · {{ categories | length }} categories
+  </div>
+
+  <div class="mt-4 flex flex-wrap gap-2">
+    {% for category in categories %}
+      <a href="#{{ category | slugify }}" class="inline-flex items-center gap-2 rounded-full bg-gray-100 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-gray-700 transition hover:bg-amber-100 hover:text-amber-700 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-amber-900/40 dark:hover:text-amber-200">
+        {% feather "hash", class="w-3 h-3" %}
+        {{ category }}
+      </a>
+    {% endfor %}
   </div>
 
   {% for category in categories %}
@@ -48,53 +53,51 @@ permalink: /bookmarks/
         <span class="text-sm text-gray-500 dark:text-gray-400">{{ itemCount }} saved{% if itemCount != 1 %}s{% endif %}</span>
       </div>
 
-      <div class="mt-5 grid grid-cols-1 md:grid-cols-2 gap-5 items-start">
+      <div class="mt-5 grid gap-4 md:grid-cols-3">
         {% for bookmark in items %}
           {% set domain = bookmark.url | domainFromUrl %}
           {% set favicon = bookmark.url | faviconUrl %}
           {% set domainInitial = bookmark.url | domainInitial %}
-          <article class="bookmark-card relative overflow-hidden rounded-xl border border-gray-200/80 bg-white/95 p-5 sm:p-6 shadow-sm transition duration-200 hover:-translate-y-1 hover:border-amber-500/80 hover:shadow-lg focus-within:-translate-y-1 focus-within:border-amber-500/80 focus-within:shadow-lg dark:border-gray-700/80 dark:bg-zinc-900/80 dark:hover:border-amber-500/80">
+          <article class="{{ cardShell }} h-full p-5 sm:p-6">
             <div class="flex gap-4">
-              <div class="relative flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-amber-900/15 bg-amber-100/40 text-[0.75rem] font-semibold uppercase tracking-wide text-amber-900/80 transition-opacity duration-200 dark:border-amber-500/25 dark:bg-amber-900/30 dark:text-amber-100">
-                <span class="pointer-events-none transition-opacity duration-200 ease-out">{{ domainInitial }}</span>
+              <div class="relative flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-800">
+                <span class="pointer-events-none text-xs font-semibold uppercase tracking-wide text-gray-600 transition-opacity duration-200 dark:text-gray-200">{{ domainInitial }}</span>
                 {% if favicon %}
                   <img
                     src="{{ favicon }}"
-                    alt="{{ domain or bookmark.title }} favicon"
+                    alt="{{ domain or bookmark.title }} logo"
                     loading="lazy"
                     decoding="async"
-                    class="absolute inset-[0.3rem] h-auto w-auto object-contain"
+                    class="absolute inset-1 h-auto w-auto object-contain"
                     onload="this.previousElementSibling.style.opacity = '0';"
-                    onerror="this.remove()"
+                    onerror="this.previousElementSibling.style.opacity = '1'; this.remove();"
                   />
                 {% endif %}
               </div>
-
-              <div class="flex flex-1 flex-col gap-3">
-                <div class="flex flex-col gap-2">
-                  <a href="{{ bookmark.url }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-start gap-2 text-lg font-semibold text-gray-900 transition-colors hover:text-amber-600 dark:text-white dark:hover:text-amber-400">
+              <div class="flex-1 space-y-3">
+                <div class="space-y-2">
+                  <a href="{{ bookmark.url }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-start gap-2 text-base font-semibold text-gray-900 transition-colors hover:text-amber-600 dark:text-white dark:hover:text-amber-400">
                     <span>{{ bookmark.title }}</span>
-                    {% feather "external-link", class="w-4 h-4 mt-1" %}
+                    {% feather "external-link", class="w-4 h-4 mt-0.5 opacity-70" %}
                   </a>
                   {% if domain %}
                     <p class="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">{{ domain }}</p>
                   {% endif %}
-                  {% if bookmark.description %}
-                    <p class="text-sm leading-relaxed text-gray-600 dark:text-gray-300">{{ bookmark.description }}</p>
-                  {% endif %}
                 </div>
-
-                <div class="flex flex-wrap items-center justify-between gap-3 text-xs text-gray-500 dark:text-gray-400">
-                  <span class="uppercase tracking-wide">Added {{ bookmark.date | readableDate }}</span>
-                  {% if bookmark.tags %}
-                    <div class="flex flex-wrap gap-1">
-                      {% for tag in bookmark.tags %}
-                        <span class="rounded-full bg-gray-100/80 px-2 py-0.5 text-gray-700 dark:bg-gray-700/80 dark:text-gray-200">#{{ tag }}</span>
-                      {% endfor %}
-                    </div>
-                  {% endif %}
-                </div>
+                {% if bookmark.description %}
+                  <p class="text-sm leading-relaxed text-gray-600 dark:text-gray-300">{{ bookmark.description }}</p>
+                {% endif %}
               </div>
+            </div>
+            <div class="mt-4 flex flex-wrap items-center justify-between gap-3 text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
+              <span>Added {{ bookmark.date | readableDate }}</span>
+              {% if bookmark.tags %}
+                <div class="flex flex-wrap gap-1 text-[0.7rem] uppercase tracking-wide">
+                  {% for tag in bookmark.tags %}
+                    <span class="rounded-full bg-gray-100 px-2 py-1 text-gray-700 dark:bg-gray-800 dark:text-gray-200">#{{ tag }}</span>
+                  {% endfor %}
+                </div>
+              {% endif %}
             </div>
           </article>
         {% endfor %}
@@ -102,7 +105,7 @@ permalink: /bookmarks/
     </section>
   {% endfor %}
 
-  <div class="mt-16 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 p-6">
+  <div class="mt-16 {{ cardShell }} p-6">
     <h3 class="flex items-center gap-2 text-lg font-semibold text-gray-900 dark:text-white">
       {% feather "mail" %}
       Have a suggestion?
