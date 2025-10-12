@@ -322,19 +322,6 @@ code[class*="language-"] {
   font-family: var(--font-mono);
 } 
 
-.project-card:hover {
-  transform: scale(1.05);
-  box-shadow:
-    0 10px 15px -3px rgba(0, 0, 0, 0.1),
-    0 4px 6px -2px rgba(0, 0, 0, 0.05);
-}
-
-.project-card {
-  transition:
-    transform 0.2s ease-in-out,
-    box-shadow 0.2s ease-in-out;
-}
-
 /* hide quotes for quote blocks */
 blockquote p::before {
   display: none;
@@ -437,31 +424,6 @@ figure {
 
   .dark .accent-focus:focus-visible {
     outline-color: color-mix(in srgb, var(--accent-color) 55%, white);
-  }
-
-  .bookmark-card {
-    isolation: isolate;
-  }
-
-  .bookmark-card::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    background: linear-gradient(135deg, rgba(245, 158, 11, 0.16), transparent 65%);
-    opacity: 0;
-    transition: opacity 180ms ease;
-    pointer-events: none;
-    z-index: -1;
-  }
-
-  .dark .bookmark-card::before {
-    background: linear-gradient(135deg, rgba(245, 158, 11, 0.12), transparent 65%);
-  }
-
-  .bookmark-card:hover::before,
-  .bookmark-card:focus-within::before {
-    opacity: 1;
   }
 
   .feed-masonry {

@@ -4,23 +4,25 @@ title: Games
 ---
 
 <div class="mx-auto">
+    {% set cardShell = "rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-100/80 dark:bg-gray-900/70 shadow-sm transition-shadow duration-200 hover:shadow-lg" %}
     <h1>Recent Games</h1>
-    <div class="mb-8 p-4 bg-gray-100 dark:bg-gray-800 rounded">
-        <p class="text-sm">
+    <div class="mb-8 {{ cardShell }} p-5 sm:p-6">
+        <p class="text-sm text-gray-600 dark:text-gray-300">
             Here are my recently played games from Steam
         </p>
     </div>
 
-    <div class="grid md:grid-cols-2 gap-3">
+    <div class="grid gap-4 md:grid-cols-3">
         {% for game in steam | head(8) %}
-        <div class="py-0 px-1 border-2 border-gray-200 shadow-xs dark:border-gray-600 flex flex-col">
-            <img src="{{ game.library_hero }}" alt="{{ game.name }} hero" loading="lazy" decoding="async" class="-mt-2 h-28 object-cover rounded-t">
+        <article class="{{ cardShell }} overflow-hidden">
+            <img src="{{ game.library_hero }}" alt="{{ game.name }} hero" loading="lazy" decoding="async" class="h-40 w-full object-cover">
             
-            <div class="flex flex-col items-center p-2">
-                <a href="{{ game.url }}" target="_blank" rel="noopener noreferrer" title="View on Steam">
-                    <h4 class="items-center font-bold -mt-2">{{ game.name }}</h4>
+            <div class="flex flex-col items-center gap-2 p-5 sm:p-6 text-center">
+                <a href="{{ game.url }}" target="_blank" rel="noopener noreferrer" title="View on Steam" class="inline-flex items-center gap-2 text-lg font-semibold tracking-tight text-gray-900 transition-colors hover:text-amber-600 dark:text-gray-100 dark:hover:text-amber-400">
+                    {{ game.name }}
+                    {% feather "external-link", class="w-4 h-4" %}
                 </a>
-                <p class="text-center text-xs -mt-2 text-gray-600 dark:text-gray-300">
+                <p class="text-sm text-gray-600 dark:text-gray-300">
                     {% if game.playtime_2weeks > 0 %}
                         {{ game.playtime_2weeks }}h last 2 weeks
                     {% endif %}
@@ -29,7 +31,7 @@ title: Games
                     {% endif %}
                 </p>
             </div>
-        </div>
+        </article>
         {% endfor %}
     </div>
 </div>

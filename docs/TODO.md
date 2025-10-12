@@ -16,10 +16,33 @@
 - [x] Add a link to open the Feed in the frontpage heading of Feed. Maybe a link beside the heading with an arrow icon or something.
 - [x] Paginate the feed page or add a "Load more" button at the bottom. Right now it shows all posts, snippets, and mini blogs in one page which can be overwhelming.
 - [x] Add a pinned or featured post section on the homepage. This can be a post that I want to highlight or that is particularly important. Current implementation doesn't work.
+- [x] Apply the same card style as blogroll and bookmarks to the projects page cards and the games, and stats pages. Doesnt have to be exactly the same but similar design language. 
+- [x] Remove orange accent from the subscribe button in the footer. It looks out of place. it should follow the accent color theme.
+- [x] The newsletter cards in the newsletter page should follow the same card style as blogroll and bookmarks. Looks very different right now.
+- [x] Pinned post still doenst WORK.
+- [x] Workout page - make it card style like blogroll and bookmarks.
+- [x] Vibes page - spacing between images is too much, make it denser.
+- [ ] Grain looks ugly, needs to be more subtle and less dotty. Maybe a noise texture instead of dots.
+- [ ] Feed link in homepage should be accent color themed.
+- [ ] remove all bg-white and use bg-gray-100 or bg-gray-50 instead. White is too harsh on the eyes.
+- [ ] Workout should be card style in Now as well, and be similar to the games section. 
+- [ ] Workout page - images getting cut off on the top and bottom. Make them fit properly.
+- [ ] Projects page - images look weird and witthin a white box. Make them fit properly
+- [ ] Newsletter - the cards have alignment issues against the icons. Fix that.
+- [ ] Newsletter - the links should be accent color themed.
+- [ ] Search - the border should be accent color themed.
+- [ ] Stats - the technical details should be denser.
+- [ ] Stats - add a joke about the data-driven part.
+- [ ] Games - playtime not showing up properly. Fix that.
+- [ ] Beautfiy quotes page but be consistent with the rest of the site.
+- [ ] Bloglist - add some sort of separation between the blogs. Maybe a line or you know, single row card style consistent with the rest of the site.
+
+
 
 
 
 - [ ] There's 5 types of cards - blogroll, projects, bookmarks, feed, snippets. Projects is 3 columns based which is per design. The feed and snippets are good and similar, but blogroll and projects, bookmarks are different. Bookmarks has flashy animations, different date format, bigger cards. Blogroll is denser but different style. We should have a single card style for all of them, with minor variations if needed. The one that needs most work is bookmarks. Bookmarks count should be similar to snippets count. Same for blogroll. 
+
 
 
 

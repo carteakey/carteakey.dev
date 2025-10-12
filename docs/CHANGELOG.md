@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.17] - 2025-10-11
+
+### Changed
+- Projects, games, stats, newsletter, and workouts now share the same card treatment as the blogroll/bookmarks layouts for a cohesive surface.
+- Newsletter subscribe CTA picks up the active accent palette, and supporting cards reuse the new shell styling.
+- Vibes board sizing rules tighten to pack images closer together for a denser collage.
+
+### Fixed
+- Featured post selection now honours optional weights and falls back to the most recent flagged entry so the homepage pin reliably appears.
+
 ## [1.3.15] - 2025-10-11
 
 ### Changed

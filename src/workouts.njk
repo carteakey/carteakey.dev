@@ -3,27 +3,46 @@ layout: layouts/base.njk
 title: Workouts
 ---
 
-<div class="container">
+<div class="max-w-5xl mx-auto">
+    {% set cardShell = "rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-100/80 dark:bg-gray-900/70 shadow-sm transition-shadow duration-200 hover:shadow-lg" %}
     <h1>Recent Workouts</h1>
-      <div class="mb-8 p-4 bg-gray-100 dark:bg-gray-800 rounded">
-        <p class="text-sm">
+    <div class="mt-4 {{ cardShell }} p-5 sm:p-6">
+        <p class="text-sm text-gray-600 dark:text-gray-300">
             Here are my latest activities from Strava.
         </p>
     </div>
-    <div class="posts">
-        <ul class="list-disc list-inside">
-            {% for activity in strava %}
-                <li>
-                    <a href="{{ activity.url }}" target="_blank" rel="noopener noreferrer">
-                        <strong>{{ activity.name }}</strong>
+
+    <div class="mt-8 grid gap-4 md:grid-cols-2">
+        {% for activity in strava %}
+            <article class="{{ cardShell }} p-5 sm:p-6">
+                <header class="flex flex-col gap-2">
+                    <a href="{{ activity.url }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-lg font-semibold tracking-tight text-gray-900 transition-colors hover:text-amber-600 dark:text-gray-100 dark:hover:text-amber-400">
+                        {{ activity.name }}
+                        {% feather "external-link", class="w-4 h-4" %}
                     </a>
-                    - {{ activity.type }} on {{ activity.start_date | readableDate }}
-                    <p>{{ activity.distance }} miles in {{ activity.moving_time }} minutes.</p>
-                    {% if activity.mapImageUrl %}
-                        <img src="{{ activity.mapImageUrl }}" alt="Map of {{ activity.name }}" loading="lazy" decoding="async" style="max-width: 100%; height: auto;">
-                    {% endif %}
-                </li>
-            {% endfor %}
-        </ul>
+                    <div class="flex flex-wrap items-center gap-2 text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
+                        <span class="rounded-full bg-gray-100 px-2 py-1 text-gray-700 dark:bg-gray-800 dark:text-gray-200">{{ activity.type }}</span>
+                        <time datetime="{{ activity.start_date | htmlDateString }}">{{ activity.start_date | readableDate }}</time>
+                    </div>
+                </header>
+
+                <dl class="mt-4 grid grid-cols-2 gap-3 text-sm text-gray-600 dark:text-gray-300">
+                    <div>
+                        <dt class="uppercase tracking-wide text-xs text-gray-500 dark:text-gray-400">Distance</dt>
+                        <dd class="font-medium text-gray-900 dark:text-gray-100">{{ activity.distance }} miles</dd>
+                    </div>
+                    <div>
+                        <dt class="uppercase tracking-wide text-xs text-gray-500 dark:text-gray-400">Moving Time</dt>
+                        <dd class="font-medium text-gray-900 dark:text-gray-100">{{ activity.moving_time }} minutes</dd>
+                    </div>
+                </dl>
+
+                {% if activity.mapImageUrl %}
+                    <div class="mt-4 overflow-hidden rounded-lg border border-gray-200 dark:border-gray-800">
+                        <img src="{{ activity.mapImageUrl }}" alt="Map of {{ activity.name }}" loading="lazy" decoding="async" class="h-40 w-full object-cover">
+                    </div>
+                {% endif %}
+            </article>
+        {% endfor %}
     </div>
 </div>

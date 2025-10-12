@@ -54,50 +54,52 @@ eleventyNavigation:
 </p> #}
 
 <div class="mx-auto">
-  <div class="mb-8 p-4 bg-gray-100 dark:bg-gray-800 rounded">
-  <p class="text-sm">
-    Here are some of my personal projects
-  </p>
-</div>
-
-
-<div class="grid md:grid-cols-3 gap-3">
-  {% for project in projects.projects %}
-  <div class=" py-0 px-1 border-2 border-gray-200 shadow-xs dark:border-gray-600  flex flex-col">
-
-    {% image project.image_path, project.title ,"-mt-2 h-28 object-contain"%}
-
-    <div class="flex flex-col items-center">
-      <a href="{% if project.url %}{{ project.url }}{% endif %}" title="View Project">
-        <h4 class="items-center font-bold -mt-2">{{ project.title }}</h4>
-      </a>
-      <p class="text-center text-xs -mt-2 text-gray-600 dark:text-gray-300 ">
-        {{ project.description }}
+  {% set cardShell = "rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-100/80 dark:bg-gray-900/70 shadow-sm transition-shadow duration-200 hover:shadow-lg" %}
+  <div class="mb-8">
+    <div class="{{ cardShell }} p-5 sm:p-6">
+      <p class="text-sm text-gray-600 dark:text-gray-300">
+        Here are some of my personal projects
       </p>
     </div>
-    <div class="flex flex-row justify-between -mt-2">
-  
-    <ul class="flex flex-row list-none text-xs mx-0 px-0 my-0">
-      {% for tag in project.tags %}<li class="border p-1 mx-1 my-0">#{{ tag }}</li>{% endfor %}
-    </ul>
-    {% if project.github %}
-    <a class="self-center float-right" title="View Code" href="{{ project.github }}">
-      {% feather "code" %}
-    </a>
-    {% endif %}
   </div>
-    {# <ul class="flex flex-col">
-      {% for point in project.points %}<li class="text-sm mx-2">{{ point | safe }}</li>{% endfor %}
-    </ul> #}
+
+  <div class="grid gap-4 md:grid-cols-3">
+    {% for project in projects.projects %}
+      <article class="{{ cardShell }} flex h-full flex-col p-5 sm:p-6">
+        {% if project.image_path %}
+          <div class="mb-4 overflow-hidden rounded-lg border border-gray-200 dark:border-gray-800 bg-white/60 dark:bg-gray-800/60">
+            {% image project.image_path, project.title ,"h-32 w-full object-cover"%}
+          </div>
+        {% endif %}
+
+        <div class="flex flex-1 flex-col gap-3 text-center">
+          <a href="{% if project.url %}{{ project.url }}{% endif %}" title="View Project" class="inline-flex items-center justify-center gap-2 text-lg font-semibold tracking-tight text-gray-900 transition-colors hover:text-amber-600 dark:text-gray-100 dark:hover:text-amber-400">
+            {{ project.title }}
+            {% if project.url %}
+              {% feather "arrow-up-right", class="w-4 h-4" %}
+            {% endif %}
+          </a>
+          <p class="text-sm leading-relaxed text-gray-600 dark:text-gray-300">
+            {{ project.description }}
+          </p>
+        </div>
+
+        <div class="mt-4 flex flex-wrap items-center justify-between gap-3 text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
+          <div class="flex flex-wrap gap-2">
+            {% for tag in project.tags %}
+              <span class="rounded-full bg-gray-100 px-2 py-1 text-gray-700 dark:bg-gray-800 dark:text-gray-200">#{{ tag }}</span>
+            {% endfor %}
+          </div>
+          {% if project.github %}
+            <a class="inline-flex items-center gap-1 text-gray-600 transition-colors hover:text-amber-600 dark:text-gray-300 dark:hover:text-amber-400" title="View Code" href="{{ project.github }}">
+              {% feather "code", class="w-4 h-4" %}
+              Code
+            </a>
+          {% endif %}
+        </div>
+      </article>
+    {% endfor %}
   </div>
-  {% endfor %}
-  {# <div class="p-4 overflow-hidden items-center align-middle justify-center">
-    <p>
-      .. explore the rest on my
-      <a href="https://github.com/carteakey?tab=repositories">github</a>
-    </p>
-  </div> #}
-</div>
 <hr />
 <h2>GitHub Activity</h2>
 <div class="not-prose">
@@ -147,3 +149,4 @@ eleventyNavigation:
     {% endfor %}
   </tbody>
 </table>
+</div>
