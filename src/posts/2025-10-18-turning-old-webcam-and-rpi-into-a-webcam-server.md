@@ -1,5 +1,5 @@
 ---
-title: Turning an old webcam + RPi into a camera server (draft)
+title: Turning an old webcam + RPi into a camera server
 description:  Fun little weekend project
 date: 2025-10-18T00:00:00.000Z
 updated: 2025-10-18T00:00:00.000Z
