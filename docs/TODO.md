@@ -6,6 +6,10 @@
 
 ### User Experience
 
+- [x] change all email references to carteakey.dev@gmail.com (2026-01-03)
+
+
+
 ### Content Features
 - [x] Smaller fonts across the board. I find the site to be better at 90% zoom.
 - [x] Add a random facts about me in the about me section. It can be a random fact from a list of facts that I can update.
@@ -42,7 +46,7 @@
 - [x] Quotes - same masonry layout as feed and gallery. (2025-10-12)
 - [x] I've moved the blog to blog folder but all the old links to the posts are broken. I need to set up redirects from /post-title to /blog/post-title. (2025-10-12)
 - [x] Now page - images look too big , handle them the same way as the posts. (2025-10-12)
-- [ ] Uses Page
+- [x] Uses Page (2026-01-03)
 
 
 
@@ -77,23 +81,23 @@ After: https://carteakey.dev
 Buy me a coffee
 
 ### Performance & Technical
-- [ ] Add service worker for offline reading
+- [x] Add service worker for offline reading (2026-01-03)
 - [ ] Implement lazy loading for images (if not already present)
-- [ ] Add RSS feed enhancements (full content)
+- [x] Add RSS feed enhancements (full content) (2026-01-03)
 
 ### Interactive Features
-- [ ] Tag filtering - Interactive tag-based post filtering
+- [x] Tag filtering - Interactive tag-based post filtering (2026-01-03)
 - [ ] Code snippet favorites - Let visitors save useful snippets
 
 ### Analytics & Insights
 
 - [ ] Learning progress tracker
-- [ ] View count tracking (privacy-friendly)
+- [x] View count tracking (privacy-friendly) (2026-01-03)
 
 ### Content Organization
 - [ ] Archive page improvements
-- [ ] Add skip links for accessibility
-- [ ] Improve heading hierarchy
+- [x] Add skip links for accessibility (2026-01-03)
+- [x] Improve heading hierarchy (2026-01-03)
 - [ ] Add table of contents for long posts
 
 ### Future Enhancements
@@ -108,7 +112,7 @@ Buy me a coffee
 - [ ] Popular posts widget - Most upvoted content
 - [ ] Blog series navigation - Group related posts with prev/next
 - [ ] Custom fonts optimization
-- [ ] Progressive web app features
+- [x] Progressive web app features (service worker added 2026-01-03)
 - [ ] Advanced search with filters
 - [ ] Multi-language support
 

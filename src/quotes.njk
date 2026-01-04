@@ -39,7 +39,7 @@ eleventyNavigation:
     <section class="space-y-4">
         <h2 class="text-xl font-semibold text-gray-900 dark:text-white">Saved Lines</h2>
         <div
-          class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 items-start feed-masonry"
+          class="grid gap-4 sm:grid-cols-2 lg:grid-cols-2 items-start feed-masonry"
           data-feed-masonry
           style="--feed-row-height: 18px;"
         >
@@ -57,7 +57,7 @@ eleventyNavigation:
 
 {% include "components/feed-masonry-script.njk" %}
 <!-- The script itself, loaded AFTER your root element. -->
-<script src="https://unpkg.com/typeit@8.7.1/dist/index.umd.js"></script>
+<script src="/static/js/typeit.min.js"></script>
 <script>
     const instance = new TypeIt("#qotd", {
     speed: 30,

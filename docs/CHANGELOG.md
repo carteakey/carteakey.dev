@@ -5,6 +5,35 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.1] - 2026-01-03
+
+### Fixed
+- Dark mode toggle now works correctly (fixed syntax error in Prism theme switching).
+- Blog page tag filtering uses proper array-based includes check for reliable post visibility.
+- Dark mode background color changed from bluish (#0c0c0e) to warm charcoal (#111110) with no blue tint.
+
+## [1.4.0] - 2026-01-03
+
+### Added
+- Skip-to-content accessibility link for keyboard and screen reader navigation.
+- Service worker for offline reading with cache-first strategy for static assets.
+- `/uses` page listing hardware, software, and tools used for development.
+- Privacy-friendly view count tracking via Upstash Redis, displayed on blog posts.
+- Interactive tag filtering on `/blog/` page using Alpine.js (no page reload).
+- Search URL state persistence (`?q=`) with keyboard navigation (arrow keys + Enter).
+- Self-hosted Alpine.js, TypeIt, and Prism CSS themes (removed CDN dependencies).
+
+### Changed
+- Site background redesigned with softer slate/marble-white gradient and subtle paper grain texture.
+- Dark mode background updated to match the cleaner aesthetic.
+- RSS feed now includes all posts (removed 10-post limit).
+- All email references updated to carteakey.dev@gmail.com.
+
+### Fixed
+- Heading hierarchy issues in CV, Newsletter, and Post templates (h1→h3 skips).
+- Duplicate filter definitions removed from eleventy.config.mjs (head, uniq).
+- Prism theme switching now uses element ID selector for reliability.
+
 ## [1.3.20] - 2025-10-12
 
 ### Added

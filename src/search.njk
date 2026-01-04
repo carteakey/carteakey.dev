@@ -45,6 +45,7 @@ eleventyNavigation:
 <script>
   let searchIndex = [];
   let isIndexLoaded = false;
+  let selectedIndex = -1; // For keyboard navigation
 
   // Build search index from posts and snippets
   async function buildSearchIndex() {
@@ -95,6 +96,23 @@ eleventyNavigation:
     }
   }
 
+  // Sync search query with URL
+  function updateURL(query) {
+    const url = new URL(window.location);
+    if (query.trim()) {
+      url.searchParams.set('q', query);
+    } else {
+      url.searchParams.delete('q');
+    }
+    window.history.replaceState({}, '', url);
+  }
+
+  // Get query from URL
+  function getQueryFromURL() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('q') || '';
+  }
+
   // Perform search
   function search(query) {
     if (!query.trim()) {
@@ -124,11 +142,25 @@ eleventyNavigation:
     });
   }
 
+  // Update keyboard selection highlighting
+  function updateSelection(results) {
+    const articles = document.querySelectorAll('#searchResults article');
+    articles.forEach((article, index) => {
+      if (index === selectedIndex) {
+        article.classList.add('ring-2', 'ring-amber-500', 'bg-amber-50', 'dark:bg-amber-900/20');
+        article.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      } else {
+        article.classList.remove('ring-2', 'ring-amber-500', 'bg-amber-50', 'dark:bg-amber-900/20');
+      }
+    });
+  }
+
   // Display search results
   function displayResults(results, query) {
     const resultsContainer = document.getElementById('searchResults');
     const statsContainer = document.getElementById('searchStats');
     const resultCount = document.getElementById('resultCount');
+    selectedIndex = -1; // Reset selection on new search
 
     if (!query.trim()) {
       resultsContainer.innerHTML = '<p class="text-gray-500 dark:text-gray-400">Start typing to search...</p>';
@@ -145,7 +177,7 @@ eleventyNavigation:
     resultCount.textContent = results.length;
     statsContainer.classList.remove('hidden');
 
-    const html = results.map(item => {
+    const html = results.map((item, index) => {
       const typeIcon = item.type === 'post' ? 'file-text' : 'code';
       const typeBadge = item.type === 'post' ? 'Post' : 'Snippet';
       
@@ -182,13 +214,54 @@ eleventyNavigation:
 
     const searchInput = document.getElementById('searchInput');
     let debounceTimer;
+    let currentResults = [];
+
+    // Load query from URL if present
+    const urlQuery = getQueryFromURL();
+    if (urlQuery) {
+      searchInput.value = urlQuery;
+      currentResults = search(urlQuery);
+      displayResults(currentResults, urlQuery);
+    }
 
     searchInput.addEventListener('input', (e) => {
       clearTimeout(debounceTimer);
       debounceTimer = setTimeout(() => {
-        const results = search(e.target.value);
-        displayResults(results, e.target.value);
+        const query = e.target.value;
+        updateURL(query);
+        currentResults = search(query);
+        displayResults(currentResults, query);
       }, 300);
+    });
+
+    // Keyboard navigation
+    searchInput.addEventListener('keydown', (e) => {
+      const resultsCount = currentResults.length;
+      
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        if (resultsCount > 0) {
+          selectedIndex = Math.min(selectedIndex + 1, resultsCount - 1);
+          updateSelection(currentResults);
+        }
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        if (resultsCount > 0) {
+          selectedIndex = Math.max(selectedIndex - 1, 0);
+          updateSelection(currentResults);
+        }
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        if (selectedIndex >= 0 && selectedIndex < resultsCount) {
+          window.location.href = currentResults[selectedIndex].url;
+        } else if (resultsCount > 0) {
+          window.location.href = currentResults[0].url;
+        }
+      } else if (e.key === 'Escape') {
+        selectedIndex = -1;
+        updateSelection(currentResults);
+        searchInput.blur();
+      }
     });
 
     // Auto-focus search input

@@ -229,6 +229,8 @@ export default function(eleventyConfig) {
   // Copy all static images (includes subfolders like /static/img/vibes)
   eleventyConfig.addPassthroughCopy({"./src/static/img":"/img/"});
   eleventyConfig.addPassthroughCopy("./src/static/css/prism-a11y-dark.css");
+  eleventyConfig.addPassthroughCopy({ "./src/static/css/prism": "/static/css/prism" });
+  eleventyConfig.addPassthroughCopy({ "./src/static/js": "/static/js" });
   eleventyConfig.addPassthroughCopy("./src/_redirects");
   eleventyConfig.addPassthroughCopy("./src/static/Kartikey_Chauhan_Resume_2023.pdf");
   eleventyConfig.addPassthroughCopy({ "./src/static/img/favicon": "/" });
@@ -247,7 +249,7 @@ export default function(eleventyConfig) {
     outputPath: "/feed.xml", // Desired output path
     collection: {
       name: "posts", // Use the 'posts' collection
-      limit: 10,     // Number of posts to include (0 for all)
+      limit: 0,      // Include all posts (0 = no limit)
     },
     metadata: {
       language: "en", // From site metadata
@@ -256,7 +258,7 @@ export default function(eleventyConfig) {
       base: "https://carteakey.dev/", // From site metadata (metadata.url)
       author: {
         name: "Kartikey Chauhan", // From site metadata
-        email: "kartychauhan@gmail.com" // From site metadata
+        email: "carteakey.dev@gmail.com" // Updated email
       }
     }
   });
@@ -411,6 +413,10 @@ export default function(eleventyConfig) {
     return array.map(item => item[property]);
   });
 
+  eleventyConfig.addFilter("flat", function(array) {
+    return array.flat();
+  });
+
   const parseHostname = (value) => {
     if (!value) return '';
     try {
@@ -461,16 +467,10 @@ export default function(eleventyConfig) {
     return str.substring(0, length) + '...';
   });
 
-  eleventyConfig.addFilter("uniq", function(array) {
-    return [...new Set(array)];
-  });
+  // Note: 'uniq' and 'head' filters are already defined above
 
   eleventyConfig.addFilter("keys", function(obj) {
     return Object.keys(obj);
-  });
-
-  eleventyConfig.addFilter("head", function(array, count) {
-    return array.slice(0, count);
   });
 
   eleventyConfig.addTransform("normalizePostAssetLinks", function (content, outputPath) {

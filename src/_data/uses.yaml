@@ -1,0 +1,132 @@
+categories:
+  - name: Hardware
+    icon: monitor
+    items:
+      - name: MacBook Pro 14" (M3 Pro)
+        description: My primary development machine. The M3 chip handles everything from code editing to running local LLMs.
+        link: https://www.apple.com/macbook-pro/
+
+      - name: Dell U2722D Monitor
+        description: 27" 4K USB-C monitor for extended screen real estate when working from home.
+
+      - name: Keychron K2 Keyboard
+        description: Mechanical keyboard with brown switches. Great for typing long sessions.
+        link: https://www.keychron.com/products/keychron-k2-wireless-mechanical-keyboard
+
+      - name: Logitech MX Master 3
+        description: The best mouse I've ever used. Ergonomic and packed with features.
+        link: https://www.logitech.com/products/mice/mx-master-3s.html
+
+      - name: Sony WH-1000XM4
+        description: Noise-cancelling headphones for focused work sessions.
+        link: https://www.sony.com/electronics/headphones/wh-1000xm4
+
+  - name: Development Tools
+    icon: code
+    items:
+      - name: VS Code
+        description: My primary code editor. Fast, extensible, and great with Copilot.
+        link: https://code.visualstudio.com/
+
+      - name: iTerm2
+        description: Terminal emulator with great split pane support and customization.
+        link: https://iterm2.com/
+
+      - name: Oh My Zsh
+        description: Framework for managing Zsh configuration with useful plugins.
+        link: https://ohmyz.sh/
+
+      - name: GitHub Copilot
+        description: AI pair programmer that helps write code faster.
+        link: https://github.com/features/copilot
+
+      - name: Docker Desktop
+        description: Container platform for running isolated development environments.
+        link: https://www.docker.com/products/docker-desktop/
+
+  - name: Languages & Frameworks
+    icon: layers
+    items:
+      - name: Python
+        description: Primary language for data analysis, scripting, and automation.
+        link: https://www.python.org/
+
+      - name: JavaScript/TypeScript
+        description: For web development and Node.js applications.
+        link: https://www.typescriptlang.org/
+
+      - name: SQL
+        description: Core skill for data querying and database management.
+
+      - name: Eleventy
+        description: Static site generator powering this very website.
+        link: https://www.11ty.dev/
+
+      - name: Tailwind CSS
+        description: Utility-first CSS framework for rapid UI development.
+        link: https://tailwindcss.com/
+
+  - name: Data & Analytics
+    icon: bar-chart-2
+    items:
+      - name: Pandas / Polars
+        description: Data manipulation libraries for Python.
+        link: https://pola.rs/
+
+      - name: DuckDB
+        description: Fast analytical database that runs anywhere.
+        link: https://duckdb.org/
+
+      - name: Jupyter
+        description: Interactive notebooks for data exploration.
+        link: https://jupyter.org/
+
+      - name: DBT
+        description: Data transformation tool for analytics engineering.
+        link: https://www.getdbt.com/
+
+  - name: Productivity
+    icon: check-square
+    items:
+      - name: Obsidian
+        description: Markdown-based knowledge management and note-taking.
+        link: https://obsidian.md/
+
+      - name: Notion
+        description: Workspace for docs, projects, and collaboration.
+        link: https://www.notion.so/
+
+      - name: Arc Browser
+        description: A browser reimagined. Great tab management and workspaces.
+        link: https://arc.net/
+
+      - name: Raycast
+        description: Launcher and productivity tool for macOS.
+        link: https://www.raycast.com/
+
+      - name: 1Password
+        description: Password manager for secure credential storage.
+        link: https://1password.com/
+
+  - name: Services
+    icon: cloud
+    items:
+      - name: Netlify
+        description: Hosting and deployment for this site with serverless functions.
+        link: https://www.netlify.com/
+
+      - name: GitHub
+        description: Code hosting and version control.
+        link: https://github.com/
+
+      - name: Upstash
+        description: Serverless Redis for upvotes and view counts.
+        link: https://upstash.com/
+
+      - name: Cloudflare
+        description: DNS, CDN, and security services.
+        link: https://www.cloudflare.com/
+
+      - name: Giscus
+        description: GitHub-powered comments system.
+        link: https://giscus.app/

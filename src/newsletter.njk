@@ -82,7 +82,7 @@ eleventyNavigation:
     <div class="flex items-start gap-3">
       {% feather "check-circle", class="w-6 h-6 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" %}
       <div>
-        <h3 class="text-lg font-semibold text-green-900 dark:text-green-100 mb-1">Thanks for subscribing!</h3>
+        <h2 class="text-lg font-semibold text-green-900 dark:text-green-100 mb-1">Thanks for subscribing!</h2>
         <p class="text-green-800 dark:text-green-200">
           You'll receive an email when I publish new content. Check your spam folder if you don't see it.
         </p>
@@ -94,7 +94,7 @@ eleventyNavigation:
     <div class="flex items-start gap-3">
       {% feather "alert-circle", class="w-6 h-6 text-red-600 dark:text-red-400 flex-shrink-0 mt-0.5" %}
       <div>
-        <h3 class="text-lg font-semibold text-red-900 dark:text-red-100 mb-1">Something went wrong</h3>
+        <h2 class="text-lg font-semibold text-red-900 dark:text-red-100 mb-1">Something went wrong</h2>
         <p class="text-red-800 dark:text-red-200">
           Please try again later or <a href="mailto:{{ metadata.author.email }}" class="accent-link">contact me directly</a>.
         </p>
@@ -102,7 +102,8 @@ eleventyNavigation:
     </div>
   </div>
 
-  <div class="mt-12 grid gap-6 md:grid-cols-2">
+  <h2 class="text-xl font-bold mt-12 mb-6">Other Ways to Subscribe</h2>
+  <div class="grid gap-6 md:grid-cols-2">
     <div class="{{ cardShell }} p-6 hover:shadow-lg">
       <div class="flex items-center gap-3 mb-3">
         <span class="flex h-10 w-10 items-center justify-center rounded-full bg-gray-200/70 text-amber-600 dark:bg-gray-800/70 dark:text-amber-400">

@@ -18,7 +18,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;200;300;400&display=swap" rel="stylesheet">
   {# <script>hljs.highlightAll();</script> #}
   <meta name="generator" content="Eleventy">
-  <link href="https://unpkg.com/prismjs@1.20.0/themes/prism-coy.css" rel="stylesheet"/>
+  <link id="prism-theme" href="/static/css/prism/prism-coy.css" rel="stylesheet"/>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-DKK1XXJY42"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -103,24 +103,21 @@
   </script>
   <script>
   function switchPrismTheme() {
+    const themeLink = document.getElementById('prism-theme');
+    if (!themeLink) return;
+    
     if (isDarkMode()) {
-      var themeLink = document.querySelector('link[href="https://unpkg.com/prismjs@1.20.0/themes/prism-coy.css"]');
-      if (themeLink){
-        themeLink.setAttribute('href', 'https://unpkg.com/prismjs@1.20.0/themes/prism-twilight.css');
-      }
+      themeLink.setAttribute('href', '/static/css/prism/prism-twilight.css');
     } else {
-      var themeLink = document.querySelector('link[href="https://unpkg.com/prismjs@1.20.0/themes/prism-twilight.css"]');
-      if (themeLink){
-        themeLink.setAttribute('href', 'https://unpkg.com/prismjs@1.20.0/themes/prism-coy.css');
-      }
+      themeLink.setAttribute('href', '/static/css/prism/prism-coy.css');
     }
-    Prism.highlightAll();
+    if (typeof Prism !== 'undefined') Prism.highlightAll();
   }
   switchPrismTheme(); 
   </script>
   
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <script defer src="/static/js/alpine.min.js"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{{ title or metadata.title }}</title>
@@ -210,6 +207,11 @@
 </head>
 {% set showReadingFrame = false %}
 <body class="bg-gray-100 dark:bg-black font-sans {% if showReadingFrame %} md:py-16 md:bg-gray-100 md:dark:bg-gray-800{% endif %}">
+  {# Skip to main content link for accessibility #}
+  <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-amber-500 focus:text-black focus:rounded-md focus:font-semibold focus:shadow-lg">
+    Skip to main content
+  </a>
+  
   <div
    class="md:max-w-2xl lg:max-w-3xl xl:max-w-4xl mx-auto {% if showReadingFrame %} md:bg-gray-100/95  md:dark:bg-zinc-950/90 md:shadow-[0_20px_60px_-28px_rgba(15,23,42,0.45)] md:dark:shadow-[0_16px_50px_-26px_rgba(0,0,0,0.65)] md:ring-1 md:ring-amber-100/40 md:dark:ring-zinc-800/40 md:px-28 lg:px-32 md:py-10 md:rounded-none{% endif %}">
     <div class="prose prose-amber max-w-fit justify-center prose-lg prose-h1:text-2xl prose-h2:my-4 dark:prose-invert px-4 md:px-0 mx-auto {% if fullWidth %}max-w-none{% endif %}">
@@ -264,7 +266,7 @@
 
       </nav>
 
-      <main class="{% if fullWidth %}-mx-[calc(50vw-50%)] w-screen px-4 md:px-8{% endif %} {% if templateClass %}{{ templateClass }}{% endif %}">
+      <main id="main-content" class="{% if fullWidth %}-mx-[calc(50vw-50%)] w-screen px-4 md:px-8{% endif %} {% if templateClass %}{{ templateClass }}{% endif %}">
 
         {{ content | safe }}
 
@@ -272,7 +274,6 @@
             document
               .getElementById("toggleDarkMode")
               .addEventListener("click", function () {
-                // console.log("Button Click!");
                 if (isDarkMode()) {
                   localStorage.theme = "light";
                   document.documentElement.classList.remove("dark");
@@ -280,24 +281,7 @@
                   localStorage.theme = "dark";
                   document.documentElement.classList.add("dark");
                 }
-
-                function switchPrismTheme() {
-                  if (isDarkMode()) {
-                    var themeLink = document.querySelector('link[href="https://unpkg.com/prismjs@1.20.0/themes/prism-coy.css"]');
-                    if (themeLink){
-                      themeLink.setAttribute('href', 'https://unpkg.com/prismjs@1.20.0/themes/prism-twilight.css');
-                    }
-                  } else {
-                    var themeLink = document.querySelector('link[href="https://unpkg.com/prismjs@1.20.0/themes/prism-twilight.css"]');
-                    if (themeLink){
-                      themeLink.setAttribute('href', 'https://unpkg.com/prismjs@1.20.0/themes/prism-coy.css');
-                    }
-                    
-                  }
-                  Prism.highlightAll();
-                }
                 switchPrismTheme();
-
               });
 
           </script>
@@ -820,6 +804,21 @@
       }
     `;
     document.head.appendChild(style);
+  </script>
+
+  {# Service Worker Registration for Offline Support #}
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/static/js/sw.js')
+          .then(registration => {
+            // Service worker registered successfully
+          })
+          .catch(error => {
+            console.warn('Service worker registration failed:', error);
+          });
+      });
+    }
   </script>
 
   {% if hasEthicalAds and metadata.ethicalAds and metadata.ethicalAds.publisher %}
