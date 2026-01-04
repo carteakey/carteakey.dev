@@ -5,6 +5,55 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.4] - 2026-01-04
+
+### Added
+- Post layout: Author profile card in the left sidebar (XL screens) with photo, name, tagline, and social links.
+- Swirly arrow annotation CSS component (`.annotate`) for adding handwritten-style margin notes to text.
+- Annotation variants: `.annotate-left`, `.annotate-right`, `.annotate-up` for different arrow directions.
+- Handwritten note utilities: `.handnote` for inline styled text, `.margin-note` for sidebar notes.
+
+### Fixed
+- Navbar: vertical alignment of nav links, "more" dots icon, and dark mode toggle button now properly centered.
+- Navbar: replaced `<span>` elements with semantic `<li>` elements for better accessibility.
+
+### Changed
+- Comment pointer component: now uses `.card-elevated` styling with accent-colored CTA button.
+- Comment pointer component: updated icon from "message-circle" to "arrow-down" for better clarity.
+
+## [1.4.3] - 2026-01-03
+
+### Added
+- Visual polish: new `.card-elevated` component with layered shadows and smooth hover lift effect.
+- Visual polish: `.card-glass` glassmorphism variant with backdrop blur.
+- Visual polish: `.link-glow` animated underline effect for links.
+- Visual polish: `.gradient-border` animated gradient border on hover.
+- Visual polish: `.text-gradient` utility for accent-colored gradient text.
+- Visual polish: `.divider-gradient` refined horizontal rule with gradient fade.
+- Visual polish: staggered entrance animations (`.animate-enter`, `.stagger-1` through `.stagger-5`).
+- Visual polish: `.btn-shine` shimmer effect for buttons.
+- Visual polish: `.focus-ring` refined focus states with accent glow.
+- Visual polish: `.accent-glow` and `.accent-glow-hover` shadow effects.
+- Visual polish: custom scrollbar styling (light/dark mode aware).
+- Visual polish: `.animate-float` floating animation for decorative elements.
+- Visual polish: improved `::selection` highlighting using accent color.
+
+### Changed
+- Homepage intro: profile photo now has gradient glow halo on hover.
+- Homepage intro: name styled with gradient text effect.
+- Homepage: Quote of the Day uses glassmorphism card with left border accent.
+- Homepage: Feed section header uses gradient text.
+- Feed cards: upgraded to `.card-elevated` with refined shadows and hover states.
+- Navigation: site title has gradient text effect on hover.
+- Navigation: nav links use animated underline (`.link-glow`).
+- Navigation: dark mode toggle and "more" button have rounded hover backgrounds.
+- Footer: social icons have rounded hover backgrounds with scale effect.
+- Footer: Spotify widget uses glassmorphism card style.
+- Post layout: title uses gradient text effect.
+- Post layout: TOC sidebar uses `.card-elevated` styling.
+- Post layout: tags have hover scale animation.
+- Post layout: divider uses gradient fade.
+
 ## [1.4.2] - 2026-01-03
 
 ### Added

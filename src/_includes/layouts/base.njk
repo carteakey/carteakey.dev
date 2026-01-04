@@ -215,54 +215,47 @@
   <div
    class="md:max-w-2xl lg:max-w-3xl xl:max-w-4xl mx-auto {% if showReadingFrame %} md:bg-gray-100/95  md:dark:bg-zinc-950/90 md:shadow-[0_20px_60px_-28px_rgba(15,23,42,0.45)] md:dark:shadow-[0_16px_50px_-26px_rgba(0,0,0,0.65)] md:ring-1 md:ring-amber-100/40 md:dark:ring-zinc-800/40 md:px-28 lg:px-32 md:py-10 md:rounded-none{% endif %}">
     <div class="prose prose-amber max-w-fit justify-center prose-lg prose-h1:text-2xl prose-h2:my-4 dark:prose-invert px-4 md:px-0 mx-auto {% if fullWidth %}max-w-none{% endif %}">
-      <nav class="flex w-full py-8 justify-end">
+      <nav class="flex w-full py-8">
 
         {% set navPages = collections.all | eleventyNavigation %}
 
-        <div class='justify-between flex flex-row w-full'>
+        <div class="flex flex-row w-full justify-between items-center">
 
-          <span class="transition-all justify-self-start mt-5 px-0 py-2 hidden md:block">
-            <a class="no-underline hover:underline font-bold font-et-book text-2xl " href="{{ '/' | url }}">Kartikey Chauhan</a>
-          </span>
+          {# Site title - desktop #}
+          <a class="no-underline hover:no-underline font-bold font-et-book text-2xl group hidden md:flex items-center" href="{{ '/' | url }}">
+            <span class="transition-colors group-hover:text-gradient">Kartikey Chauhan</span>
+          </a>
 
-          <span class="transition-all justify-self-start mt-5 px-0  py-2  md:hidden block">
-            <a class="no-underline hover:underline font-bold text-xl tracking-tight" href="{{ '/' | url }}">carteakey.dev</a>
-          </span>
+          {# Site title - mobile #}
+          <a class="no-underline hover:no-underline font-bold text-xl tracking-tight group flex md:hidden items-center" href="{{ '/' | url }}">
+            <span class="transition-colors group-hover:text-gradient">carteakey.dev</span>
+          </a>
 
-          <ul class="list-none mt-5 px-0 text-xl flex items-center">
+          <ul class="list-none m-0 p-0 text-xl flex items-center gap-1">
             {# Main navigation items #}
             {%- for entry in navPages %}
               {% if entry.title == "About" or entry.title == "Blog" or entry.title == "Now" %}
-                <span class="px-1 py-2 transition-all self-end">
-                  <a class="font-bold no-underline hover:underline" href="{{ entry.url }}">{{ entry.title }}</a>
-                </span>
+                <li class="px-2 py-2 transition-all flex items-center">
+                  <a class="font-bold no-underline link-glow" href="{{ entry.url }}">{{ entry.title }}</a>
+                </li>
               {% endif %}
             {%- endfor %}
 
-            <span class="px-1 py-1 transition-all self-end">
-              <a class="font-bold no-underline hover:underline inline-flex items-center justify-center" href="{{ '/more/' | url }}" title="More pages" aria-label="More pages">
-                {% feather "more-horizontal", class="w-6 h-6" %}
+            <li class="flex items-center">
+              <a class="font-bold no-underline inline-flex items-center justify-center p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" href="{{ '/more/' | url }}" title="More pages" aria-label="More pages">
+                {% feather "more-horizontal", class="w-5 h-5" %}
               </a>
-            </span>
+            </li>
 
-            {# Mobile: Show all navigation items
-            <div class="md:hidden">
-              {%- for entry in navPages %}
-                {% if entry.title == "Gallery" or entry.title == "Snippets" or entry.title == "Projects" or entry.title == "CV" %}
-                  <span class="px-1 py-2 transition-all self-end">
-                    <a class="font-bold no-underline hover:underline" href="{{ entry.url }}">{{ entry.title }}</a>
-                  </span>
-                {% endif %}
-              {%- endfor %}
-            </div> #}
+            <li class="flex items-center">
+              <button id="toggleDarkMode" class="font-bold text-xs p-2 transition-all rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 focus-ring inline-flex items-center justify-center" aria-label="Toggle dark mode">
+                {% feather "moon" , class="block dark:hidden w-5 h-5" %}
+                {% feather "sun" , class="hidden dark:block w-5 h-5"%}
+              </button>
+            </li>
           </ul>
-          
 
         </div>
-        <button id="toggleDarkMode" class="self-center font-bold text-xs px-1 sm:px-3 sm:py-0 -mt-2 transition-all">
-          {% feather "moon" , class="block dark:hidden" %}
-          {% feather "sun" , class="hidden dark:block"%}
-        </button>
 
       </nav>
 
@@ -287,38 +280,38 @@
           </script>
       </main>
 
-      <footer class="flex w-full pt-8 pb-4 flex-col md:flex-row justify-between gap-4">
+      <footer class="flex w-full pt-10 pb-4 flex-col md:flex-row justify-between gap-4">
         {% if spotify.nowPlaying %}
-        <div class="flex items-center not-prose">
-          <img id="track-image" class="w-10 h-10 rounded-full mr-2 animate-spin-slow"
+        <div class="flex items-center not-prose p-3 rounded-xl card-glass">
+          <img id="track-image" class="w-12 h-12 rounded-full mr-3 animate-spin-slow shadow-lg"
             src="{{ spotify.nowPlaying.albumImageUrl }}" alt="Album artwork for {{ spotify.nowPlaying.title }} by {{ spotify.nowPlaying.artist }}">
           <div class=''>
             <a href={{ spotify.nowPlaying.songUrl }} target='_blank' class='hover:underline'>
-              <p id="track-name" class="text-sm font-bold ">{{ spotify.nowPlaying.title }}</p>
+              <p id="track-name" class="text-sm font-bold">{{ spotify.nowPlaying.title }}</p>
             </a>
-            <p id="artist-name" class="text-xs text-gray-400">{{ spotify.nowPlaying.artist }}</p>
+            <p id="artist-name" class="text-xs text-gray-500 dark:text-gray-400">{{ spotify.nowPlaying.artist }}</p>
           </div>
         </div>
         {% endif %}
         <div class='flex flex-nowrap items-center justify-center gap-2 whitespace-nowrap overflow-x-auto md:overflow-visible md:justify-end py-1 -mx-2 px-2 md:m-0 md:gap-3'>
           {# Social Links Group #}
           <div class='flex flex-row items-center gap-1 md:border-r border-gray-200 dark:border-gray-700 md:pr-3'>
-            <a class="p-1 sm:px-2 transition-all" href="https://www.linkedin.com/in/kartikeychauhan/"
+            <a class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all hover:scale-110" href="https://www.linkedin.com/in/kartikeychauhan/"
               title="LinkedIn" aria-label="LinkedIn">{% feather "linkedin" %}</a>
-            <a class="p-1 sm:px-2 transition-all" href="https://github.com/carteakey" title="GitHub"
+            <a class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all hover:scale-110" href="https://github.com/carteakey" title="GitHub"
               aria-label="GitHub">{% feather "github" %}</a>
           </div>
           
           {# Content Discovery Group #}
           <div class='flex flex-row items-center gap-1 md:border-r border-gray-200 dark:border-gray-700 md:pr-3'>
-            <a class="p-1 sm:px-2 transition-all" href="{{ '/search/' | url }}" title="Search" aria-label="Search">{% feather "search" %}</a>
-            <a class="p-1 sm:px-2 transition-all" href="{{ '/blogroll/' | url }}" title="Blogroll" aria-label="Blogroll">{% feather "bookmark" %}</a>
+            <a class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all hover:scale-110" href="{{ '/search/' | url }}" title="Search" aria-label="Search">{% feather "search" %}</a>
+            <a class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all hover:scale-110" href="{{ '/blogroll/' | url }}" title="Blogroll" aria-label="Blogroll">{% feather "bookmark" %}</a>
           </div>
           
           {# Subscribe Group #}
           <div class='flex flex-row items-center gap-1'>
-            <a class="p-1 sm:px-2 transition-all" href="{{ '/feed.xml' | url }}" title="Atom Feed" aria-label="Atom Feed">{% feather "rss" %}</a>
-            <a class="p-1 sm:px-2 transition-all" href="{{ '/newsletter/' | url }}" title="Newsletter" aria-label="Newsletter">{% feather "mail" %}</a>
+            <a class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all hover:scale-110" href="{{ '/feed.xml' | url }}" title="Atom Feed" aria-label="Atom Feed">{% feather "rss" %}</a>
+            <a class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all hover:scale-110" href="{{ '/newsletter/' | url }}" title="Newsletter" aria-label="Newsletter">{% feather "mail" %}</a>
           </div>
         </div>
       </footer>

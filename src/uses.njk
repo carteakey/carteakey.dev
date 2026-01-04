@@ -1,0 +1,61 @@
+---
+layout: layouts/home.njk
+title: Uses
+description: A list of hardware, software, and tools I use for work and personal projects.
+eleventyNavigation:
+  key: Uses
+  order: 11
+---
+
+{% include "components/breadcrumbs.njk" %}
+
+<h1>Uses</h1>
+<p class="text-gray-600 dark:text-gray-300 mb-8">
+  A comprehensive list of the tools, software, and hardware I use daily. Inspired by 
+  <a href="https://uses.tech/" class="accent-link" target="_blank" rel="noopener">uses.tech</a>.
+</p>
+
+<div class="space-y-12">
+  {% for category in uses.categories %}
+    <section>
+      <h2 class="flex items-center gap-3 text-xl font-bold mb-6">
+        {% feather category.icon, class="w-6 h-6" %}
+        {{ category.name }}
+      </h2>
+      
+      <div class="grid gap-4 md:grid-cols-2">
+        {% for item in category.items %}
+          <div class="group p-4 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-800/50 hover:border-amber-400 dark:hover:border-amber-500 transition-colors">
+            <div class="flex items-start justify-between">
+              <h3 class="font-semibold text-gray-900 dark:text-gray-100 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
+                {% if item.link %}
+                  <a href="{{ item.link }}" target="_blank" rel="noopener" class="hover:underline">
+                    {{ item.name }}
+                    {% feather "external-link", class="w-3.5 h-3.5 inline-block ml-1 opacity-50" %}
+                  </a>
+                {% else %}
+                  {{ item.name }}
+                {% endif %}
+              </h3>
+            </div>
+            {% if item.description %}
+              <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
+                {{ item.description }}
+              </p>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+    </section>
+  {% endfor %}
+</div>
+
+<div class="mt-12 p-6 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-800/50">
+  <h3 class="font-semibold text-gray-900 dark:text-gray-100 mb-2">
+    {% feather "help-circle", class="w-5 h-5 inline-block mr-2" %}
+    Want to know more?
+  </h3>
+  <p class="text-sm text-gray-600 dark:text-gray-400">
+    Feel free to <a href="mailto:{{ metadata.author.email }}" class="accent-link">reach out</a> if you have questions about any of these tools or want recommendations for your own setup.
+  </p>
+</div>

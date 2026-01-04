@@ -41,20 +41,49 @@ hasEthicalAds: false
 {% set showAds = false %}
 
 <div class="relative mx-auto w-full ">
-  {% if showSidebar and showAds %}
-  <aside class="hidden xl:block absolute -left-[260px] top-0">
-    <div class="sticky top-24 w-[220px] space-y-3">
-      {# {% include "components/ethical-ads.njk" %} #}
+  {# Left Sidebar - Author Card #}
+  {% if showSidebar %}
+  <aside class="hidden xl:block absolute -left-[280px] top-0">
+    <div class="sticky top-24 w-[240px] space-y-4">
+      {# Author Card #}
+      <section class="card-elevated rounded-xl p-5 text-center not-prose">
+        <a href="/about" class="block group">
+          <div class="relative w-20 h-20 mx-auto mb-3">
+            <div class="absolute -inset-1 bg-gradient-to-r from-amber-400 via-orange-400 to-rose-400 rounded-full blur-sm opacity-0 group-hover:opacity-50 transition-opacity duration-300"></div>
+            {% image "./src/static/img/headshot.png", "{{ metadata.author.name }}", "relative w-20 h-20 rounded-full object-cover ring-2 ring-gray-200 dark:ring-gray-700 group-hover:ring-amber-400 transition-all shadow-md" %}
+          </div>
+        </a>
+        <a href="/about" class="font-semibold text-gray-900 dark:text-gray-100 hover:text-gradient transition-colors no-underline">
+          {{ metadata.author.name }}
+        </a>
+        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 mb-3">Data Analyst & Tech Tinkerer</p>
+        <div class="flex justify-center gap-1 mt-3">
+          <a href="https://github.com/carteakey" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100" title="GitHub" aria-label="GitHub">
+            {% feather "github", class="w-4 h-4" %}
+          </a>
+          <a href="https://www.linkedin.com/in/kartikeychauhan/" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100" title="LinkedIn" aria-label="LinkedIn">
+            {% feather "linkedin", class="w-4 h-4" %}
+          </a>
+          <a href="mailto:{{ metadata.author.email }}" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100" title="Email" aria-label="Email">
+            {% feather "mail", class="w-4 h-4" %}
+          </a>
+        </div>
+      </section>
     </div>
   </aside>
   {% endif %}
+
+  {# Right Sidebar - TOC & Comments #}
 
   {% if showSidebar %}
   <aside class="hidden xl:block absolute -right-[300px] top-0 text-sm text-gray-600 dark:text-gray-300">
     <div class="sticky top-24 space-y-6 w-[260px]">
       {% if tocHtml | trim %}
-      <section class=" md:bg-gray-100 md:dark:bg-gray-800  border border-gray-200/70 dark:border-zinc-800/70 px-6 py-6 shadow-sm">
-        <p class="text-lg font-semibold my-0 text-gray-800 dark:text-gray-100">Outline</p>
+      <section class="card-elevated rounded-xl px-6 py-6">
+        <p class="text-lg font-semibold my-0 text-gray-800 dark:text-gray-100 flex items-center gap-2">
+          {% feather "list", class="w-5 h-5 opacity-70" %}
+          Outline
+        </p>
         <div class="mt-4 max-h-[60vh] overflow-y-auto pr-1 space-y-2">
           {{ tocHtml | safe }}
         </div>
@@ -67,9 +96,9 @@ hasEthicalAds: false
   </aside>
   {% endif %}
 
-  <article class="min-w-0 space-y-8 px-4 sm:px-6 xl:px-0">
-    <header class="space-y-4">
-      <h1>{{ title }}</h1>
+  <article class="min-w-0 space-y-8 px-4 sm:px-6 xl:px-0 animate-enter">
+    <header class="space-y-5">
+      <h1 class="text-gradient">{{ title }}</h1>
 
       {% if description %}
         <p class="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
@@ -79,15 +108,16 @@ hasEthicalAds: false
 
       <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between text-sm text-gray-600 dark:text-gray-400">
         <div class="flex flex-wrap items-center gap-3">
-          <time datetime="{{ page.date | htmlDateString }}" class="font-medium text-gray-700 dark:text-gray-200">
+          <time datetime="{{ page.date | htmlDateString }}" class="font-medium text-gray-700 dark:text-gray-200 flex items-center gap-1.5">
+            {% feather "calendar", class="w-4 h-4 opacity-60" %}
             {{ page.date | readableDate }}
           </time>
-          <span class="flex items-center gap-1">
-            {% feather "clock", class="w-4 h-4" %}
+          <span class="flex items-center gap-1.5">
+            {% feather "clock", class="w-4 h-4 opacity-60" %}
             {{ content | readingTime }}
           </span>
-          <span id="viewCount" class="flex items-center gap-1 text-gray-500 dark:text-gray-400">
-            {% feather "eye", class="w-4 h-4" %}
+          <span id="viewCount" class="flex items-center gap-1.5 text-gray-500 dark:text-gray-400">
+            {% feather "eye", class="w-4 h-4 opacity-60" %}
             <span id="viewCountNumber">—</span> views
           </span>
         </div>
@@ -97,7 +127,7 @@ hasEthicalAds: false
           <div class="flex flex-wrap gap-2">
             {% for tag in visibleTags %}
               {% set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
-              <a href="{{ tagUrl | url }}" class="px-2 py-1 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+              <a href="{{ tagUrl | url }}" class="px-2.5 py-1 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all hover:scale-105 text-sm">
                 #{{ tag }}
               </a>
             {% endfor %}
@@ -106,7 +136,7 @@ hasEthicalAds: false
       </div>
     </header>
 
-    <hr class="border-gray-200 dark:border-gray-800" />
+    <hr class="divider-gradient" />
 
     {{ content | safe }}
 
