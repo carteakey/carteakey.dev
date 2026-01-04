@@ -80,7 +80,7 @@ export default async function () {
         messages: [
           {
             role: "user",
-            content: "Tell me a rare inspirational quote and its author. Just the quote and the author in plain text, please.",
+            content: "Tell me a rare inspirational quote and its author. Just the quote and the author in plain English text, please.",
           },
         ],
       });
