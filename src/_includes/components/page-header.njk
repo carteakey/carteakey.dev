@@ -1,28 +1,28 @@
 {# 
   Page Header Component
   =====================
-  A consistent header for collection/listing pages.
+  A compact, consistent header for collection/listing pages.
   
   Usage:
   {% set pageTitle = "Snippets" %}
   {% set pageDescription = "A collection of useful code snippets" %}
   {% set pageIcon = "code" %}
   {% set itemCount = 42 %}
-  {% set itemLabel = "snippets and counting" %}
+  {% set itemLabel = "snippets" %}
   {% include "components/page-header.njk" %}
 #}
 
-<header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-  <div>
-    <h1 class="text-3xl font-semibold tracking-tight text-gray-900 dark:text-white flex items-center gap-3">
-      {% if pageIcon %}{% feather pageIcon %}{% endif %}
+<header class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+  <div class="flex-1">
+    <h1 class="text-2xl font-semibold tracking-tight text-gray-900 dark:text-white flex items-center gap-2">
+      {% if pageIcon %}{% feather pageIcon, class="w-5 h-5" %}{% endif %}
       {{ pageTitle }}
+      {% if itemCount %}
+      <span class="badge-count ml-2">{{ itemCount }}</span>
+      {% endif %}
     </h1>
     {% if pageDescription %}
-    <p class="mt-2 text-sm text-gray-600 dark:text-gray-400 md:text-base">{{ pageDescription }}</p>
+    <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">{{ pageDescription }}</p>
     {% endif %}
   </div>
-  {% if itemCount %}
-  <div class="badge-count">{{ itemCount }} {{ itemLabel }}</div>
-  {% endif %}
 </header>

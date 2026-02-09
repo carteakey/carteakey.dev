@@ -29,97 +29,123 @@
 
 /* saira-regular - latin */
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-display: swap;
+  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
   font-family: 'Saira';
   font-style: normal;
   font-weight: 400;
-  src: url('/static/fonts/saira-v22-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url('/static/fonts/saira-v22-latin-regular.woff2') format('woff2');
+  /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
+
 /* saira-700 - latin */
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-display: swap;
+  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
   font-family: 'Saira';
   font-style: normal;
   font-weight: 700;
-  src: url('/static/fonts/saira-v22-latin-700.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url('/static/fonts/saira-v22-latin-700.woff2') format('woff2');
+  /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
 
 /* ibm-plex-mono-regular - latin */
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-display: swap;
+  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
   font-family: 'IBM Plex Mono';
   font-style: normal;
   font-weight: 400;
-  src: url('/static/fonts/ibm-plex-mono-v20-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url('/static/fonts/ibm-plex-mono-v20-latin-regular.woff2') format('woff2');
+  /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
+
 /* ibm-plex-mono-700 - latin */
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-display: swap;
+  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
   font-family: 'IBM Plex Mono';
   font-style: normal;
   font-weight: 700;
-  src: url('/static/fonts/ibm-plex-mono-v20-latin-700.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url('/static/fonts/ibm-plex-mono-v20-latin-700.woff2') format('woff2');
+  /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
 
 /* urbanist-regular - latin */
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-display: swap;
+  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
   font-family: 'Urbanist';
   font-style: normal;
   font-weight: 400;
-  src: url('/static/fonts/urbanist-v18-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url('/static/fonts/urbanist-v18-latin-regular.woff2') format('woff2');
+  /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
+
 /* urbanist-700 - latin */
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-display: swap;
+  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
   font-family: 'Urbanist';
   font-style: normal;
   font-weight: 700;
-  src: url('/static/fonts/urbanist-v18-latin-700.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url('/static/fonts/urbanist-v18-latin-700.woff2') format('woff2');
+  /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
 
 /* exo-2-regular - latin */
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-display: swap;
+  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
   font-family: 'Exo 2';
   font-style: normal;
   font-weight: 400;
-  src: url('/static/fonts/exo-2-v26-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url('/static/fonts/exo-2-v26-latin-regular.woff2') format('woff2');
+  /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
+
 /* exo-2-700 - latin */
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-display: swap;
+  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
   font-family: 'Exo 2';
   font-style: normal;
   font-weight: 700;
-  src: url('/static/fonts/exo-2-v26-latin-700.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url('/static/fonts/exo-2-v26-latin-700.woff2') format('woff2');
+  /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
 
 /* arimo-regular - latin */
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-display: swap;
+  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
   font-family: 'Arimo';
   font-style: normal;
   font-weight: 400;
-  src: url('/static/fonts/arimo-v35-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url('/static/fonts/arimo-v35-latin-regular.woff2') format('woff2');
+  /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
 
 /* rubik-regular - latin */
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-display: swap;
+  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
   font-family: 'Rubik';
   font-style: normal;
   font-weight: 400;
-  src: url('/static/fonts/rubik-v31-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url('/static/fonts/rubik-v31-latin-regular.woff2') format('woff2');
+  /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
 
 /* crimson-pro-regular - latin */
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-display: swap;
+  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
   font-family: 'Crimson Pro';
   font-style: normal;
   font-weight: 400;
-  src: url('/static/fonts/crimson-pro-v28-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url('/static/fonts/crimson-pro-v28-latin-regular.woff2') format('woff2');
+  /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
 
 @font-face {
@@ -172,6 +198,7 @@
   color utility to any element that depends on these defaults.
 */
 @layer base {
+
   *,
   ::after,
   ::before,
@@ -251,8 +278,12 @@
 
 /* Typography defaults: use Inter/system sans for all content */
 @layer components {
+
   /* Make all prose content default to sans-serif for readability and slightly wider measure */
-  .prose { font-family: var(--font-sans); max-width: 72ch; }
+  .prose {
+    font-family: var(--font-sans);
+    max-width: 72ch;
+  }
 }
 
 @font-face {
@@ -296,7 +327,7 @@
     url("/static/fonts/etbookot-bold-webfont.woff") format("woff");
   font-weight: bold;
   font-style: normal;
-} 
+}
 
 @layer utilities {
   .full-width-wrapper {
@@ -320,7 +351,7 @@ code[class*="language-"] {
   /* word-break: break-word; */
   font-size: 0.85rem !important;
   font-family: var(--font-mono);
-} 
+}
 
 /* hide quotes for quote blocks */
 blockquote p::before {
@@ -339,9 +370,10 @@ figure {
 }
 
 @layer components {
-  .prose figure > img,
-  .prose > img,
-  .prose picture > img {
+
+  .prose figure>img,
+  .prose>img,
+  .prose picture>img {
     display: block;
     width: 100%;
     max-width: min(100%, 44rem);
@@ -351,9 +383,9 @@ figure {
     box-shadow: 0 18px 45px -32px rgba(15, 23, 42, 0.45);
   }
 
-  .dark .prose figure > img,
-  .dark .prose > img,
-  .dark .prose picture > img {
+  .dark .prose figure>img,
+  .dark .prose>img,
+  .dark .prose picture>img {
     box-shadow: 0 18px 45px -32px rgba(0, 0, 0, 0.65);
   }
 }
@@ -561,6 +593,49 @@ figure {
     }
   }
 
+  /* Compact card padding */
+  .card-compact {
+    padding: 0.75rem 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .card-compact {
+      padding: 0.875rem 1.25rem;
+    }
+  }
+
+  /* List item variant - horizontal layout */
+  .card-list {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+  }
+
+  .card-list .card-list-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .card-list .card-list-title {
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .card-list .card-list-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    color: rgb(107 114 128 / 1);
+  }
+
+  .dark .card-list .card-list-meta {
+    color: rgb(156 163 175 / 1);
+  }
+
   /* Link with accent hover */
   .link-accent {
     transition: color 0.15s ease;
@@ -572,6 +647,51 @@ figure {
 
   .dark .link-accent:hover {
     color: color-mix(in srgb, var(--accent-color) 80%, white);
+  }
+
+  /* View toggle button styles */
+  .view-toggle {
+    display: inline-flex;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    border: 1px solid rgb(229 231 235 / 1);
+  }
+
+  .dark .view-toggle {
+    border-color: rgb(55 65 81 / 1);
+  }
+
+  .view-toggle button {
+    padding: 0.5rem 0.75rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: rgb(107 114 128 / 1);
+    transition: all 0.15s ease;
+  }
+
+  .view-toggle button:hover {
+    background: rgb(243 244 246 / 1);
+  }
+
+  .dark .view-toggle button:hover {
+    background: rgb(55 65 81 / 1);
+  }
+
+  .view-toggle button.active {
+    background: var(--accent-color);
+    color: white;
+  }
+
+  /* Tighter section spacing */
+  .section-tight {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Smaller gap grids */
+  .gap-tight {
+    gap: 0.75rem;
   }
 }
 
@@ -590,12 +710,19 @@ figure {
   transition: color 0.2s ease, transform 0.15s ease;
   color: var(--color-gray-600);
 }
-.dark .links a { color: var(--color-gray-400); }
+
+.dark .links a {
+  color: var(--color-gray-400);
+}
+
 .links a:hover {
   color: var(--color-amber-600);
   transform: translateY(-1px) scale(1.02);
 }
-.dark .links a:hover { color: var(--color-amber-400); }
+
+.dark .links a:hover {
+  color: var(--color-amber-400);
+}
 
 /* ═══════════════════════════════════════════════════════════════════════════
    ✨ Enhanced Visual Polish - Micro-interactions & Refined Aesthetics
@@ -606,7 +733,7 @@ figure {
   * {
     scroll-behavior: smooth;
   }
-  
+
   ::selection {
     background-color: color-mix(in srgb, var(--accent-color) 35%, transparent);
     color: inherit;
@@ -616,38 +743,38 @@ figure {
 /* Enhanced card system with layered shadows */
 @layer components {
   .card-elevated {
-    background: linear-gradient(145deg, 
-      rgba(255, 255, 255, 0.9) 0%,
-      rgba(248, 250, 252, 0.95) 100%);
+    background: linear-gradient(145deg,
+        rgba(255, 255, 255, 0.9) 0%,
+        rgba(248, 250, 252, 0.95) 100%);
     border: 1px solid rgba(226, 232, 240, 0.8);
-    box-shadow: 
+    box-shadow:
       0 1px 2px rgba(0, 0, 0, 0.04),
       0 4px 12px rgba(0, 0, 0, 0.04),
       0 16px 32px rgba(0, 0, 0, 0.04);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
-  
+
   .card-elevated:hover {
     transform: translateY(-2px);
-    box-shadow: 
+    box-shadow:
       0 2px 4px rgba(0, 0, 0, 0.04),
       0 8px 20px rgba(0, 0, 0, 0.08),
       0 24px 48px rgba(0, 0, 0, 0.06);
   }
-  
+
   .dark .card-elevated {
     background: linear-gradient(145deg,
-      rgba(24, 24, 27, 0.95) 0%,
-      rgba(17, 17, 17, 0.98) 100%);
+        rgba(24, 24, 27, 0.95) 0%,
+        rgba(17, 17, 17, 0.98) 100%);
     border-color: rgba(63, 63, 70, 0.5);
-    box-shadow: 
+    box-shadow:
       0 1px 2px rgba(0, 0, 0, 0.2),
       0 4px 12px rgba(0, 0, 0, 0.3),
       inset 0 1px 0 rgba(255, 255, 255, 0.03);
   }
-  
+
   .dark .card-elevated:hover {
-    box-shadow: 
+    box-shadow:
       0 2px 4px rgba(0, 0, 0, 0.2),
       0 12px 28px rgba(0, 0, 0, 0.4),
       inset 0 1px 0 rgba(255, 255, 255, 0.05),
@@ -664,7 +791,7 @@ figure {
     border: 1px solid rgba(255, 255, 255, 0.3);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
   }
-  
+
   .dark .card-glass {
     background: rgba(24, 24, 27, 0.7);
     border-color: rgba(63, 63, 70, 0.3);
@@ -677,7 +804,7 @@ figure {
     position: relative;
     transition: all 0.2s ease;
   }
-  
+
   .link-glow::after {
     content: '';
     position: absolute;
@@ -691,7 +818,7 @@ figure {
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     border-radius: 2px;
   }
-  
+
   .link-glow:hover::after {
     transform: scaleX(1);
     transform-origin: left;
@@ -704,9 +831,11 @@ figure {
     opacity: 0;
     animation: fadeIn 0.5s ease forwards;
   }
-  
+
   @keyframes fadeIn {
-    to { opacity: 1; }
+    to {
+      opacity: 1;
+    }
   }
 }
 
@@ -717,18 +846,16 @@ figure {
     background: transparent;
     border-radius: 1rem;
   }
-  
+
   .gradient-border::before {
     content: '';
     position: absolute;
     inset: -2px;
-    background: linear-gradient(
-      135deg,
-      var(--accent-color),
-      color-mix(in srgb, var(--accent-color) 60%, #ec4899),
-      color-mix(in srgb, var(--accent-color) 60%, #8b5cf6),
-      var(--accent-color)
-    );
+    background: linear-gradient(135deg,
+        var(--accent-color),
+        color-mix(in srgb, var(--accent-color) 60%, #ec4899),
+        color-mix(in srgb, var(--accent-color) 60%, #8b5cf6),
+        var(--accent-color));
     border-radius: inherit;
     z-index: -1;
     opacity: 0;
@@ -736,11 +863,11 @@ figure {
     background-size: 300% 300%;
     animation: gradientShift 8s ease infinite;
   }
-  
+
   .gradient-border:hover::before {
     opacity: 1;
   }
-  
+
   .gradient-border::after {
     content: '';
     position: absolute;
@@ -749,10 +876,17 @@ figure {
     border-radius: calc(1rem - 2px);
     z-index: -1;
   }
-  
+
   @keyframes gradientShift {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
+
+    0%,
+    100% {
+      background-position: 0% 50%;
+    }
+
+    50% {
+      background-position: 100% 50%;
+    }
   }
 }
 
@@ -761,10 +895,17 @@ figure {
   .pulse-subtle {
     animation: pulseSoft 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
-  
+
   @keyframes pulseSoft {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.8; }
+
+    0%,
+    100% {
+      opacity: 1;
+    }
+
+    50% {
+      opacity: 0.8;
+    }
   }
 }
 
@@ -774,7 +915,7 @@ figure {
     position: relative;
     overflow: hidden;
   }
-  
+
   .btn-shine::before {
     content: '';
     position: absolute;
@@ -782,15 +923,13 @@ figure {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(
-      90deg,
-      transparent,
-      rgba(255, 255, 255, 0.2),
-      transparent
-    );
+    background: linear-gradient(90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent);
     transition: left 0.5s ease;
   }
-  
+
   .btn-shine:hover::before {
     left: 100%;
   }
@@ -801,10 +940,17 @@ figure {
   .animate-float {
     animation: float 6s ease-in-out infinite;
   }
-  
+
   @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
+
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-10px);
+    }
   }
 }
 
@@ -814,23 +960,38 @@ figure {
     animation: enterUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     opacity: 0;
   }
-  
+
   @keyframes enterUp {
     from {
       opacity: 0;
       transform: translateY(20px);
     }
+
     to {
       opacity: 1;
       transform: translateY(0);
     }
   }
-  
-  .stagger-1 { animation-delay: 0.1s; }
-  .stagger-2 { animation-delay: 0.2s; }
-  .stagger-3 { animation-delay: 0.3s; }
-  .stagger-4 { animation-delay: 0.4s; }
-  .stagger-5 { animation-delay: 0.5s; }
+
+  .stagger-1 {
+    animation-delay: 0.1s;
+  }
+
+  .stagger-2 {
+    animation-delay: 0.2s;
+  }
+
+  .stagger-3 {
+    animation-delay: 0.3s;
+  }
+
+  .stagger-4 {
+    animation-delay: 0.4s;
+  }
+
+  .stagger-5 {
+    animation-delay: 0.5s;
+  }
 }
 
 /* Better focus states */
@@ -839,9 +1000,9 @@ figure {
     outline: none;
     transition: box-shadow 0.2s ease;
   }
-  
+
   .focus-ring:focus-visible {
-    box-shadow: 
+    box-shadow:
       0 0 0 2px var(--accent-color),
       0 0 0 4px color-mix(in srgb, var(--accent-color) 30%, transparent);
   }
@@ -852,7 +1013,7 @@ figure {
   .accent-glow {
     box-shadow: 0 0 20px color-mix(in srgb, var(--accent-color) 30%, transparent);
   }
-  
+
   .accent-glow-hover:hover {
     box-shadow: 0 0 30px color-mix(in srgb, var(--accent-color) 40%, transparent);
   }
@@ -864,28 +1025,28 @@ figure {
     width: 10px;
     height: 10px;
   }
-  
+
   ::-webkit-scrollbar-track {
     background: transparent;
   }
-  
+
   ::-webkit-scrollbar-thumb {
     background: rgba(156, 163, 175, 0.4);
     border-radius: 10px;
     border: 2px solid transparent;
     background-clip: padding-box;
   }
-  
+
   ::-webkit-scrollbar-thumb:hover {
     background: rgba(156, 163, 175, 0.6);
     background-clip: padding-box;
   }
-  
+
   .dark ::-webkit-scrollbar-thumb {
     background: rgba(75, 85, 99, 0.5);
     background-clip: padding-box;
   }
-  
+
   .dark ::-webkit-scrollbar-thumb:hover {
     background: rgba(75, 85, 99, 0.7);
     background-clip: padding-box;
@@ -895,12 +1056,10 @@ figure {
 /* Text gradient utility */
 @layer utilities {
   .text-gradient {
-    background: linear-gradient(
-      135deg,
-      var(--accent-color) 0%,
-      color-mix(in srgb, var(--accent-color) 70%, #ec4899) 50%,
-      color-mix(in srgb, var(--accent-color) 70%, #8b5cf6) 100%
-    );
+    background: linear-gradient(135deg,
+        var(--accent-color) 0%,
+        color-mix(in srgb, var(--accent-color) 70%, #ec4899) 50%,
+        color-mix(in srgb, var(--accent-color) 70%, #8b5cf6) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -911,24 +1070,20 @@ figure {
 @layer components {
   .divider-gradient {
     height: 1px;
-    background: linear-gradient(
-      90deg,
-      transparent 0%,
-      rgba(156, 163, 175, 0.3) 20%,
-      rgba(156, 163, 175, 0.3) 80%,
-      transparent 100%
-    );
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(156, 163, 175, 0.3) 20%,
+        rgba(156, 163, 175, 0.3) 80%,
+        transparent 100%);
     border: none;
   }
-  
+
   .dark .divider-gradient {
-    background: linear-gradient(
-      90deg,
-      transparent 0%,
-      rgba(75, 85, 99, 0.4) 20%,
-      rgba(75, 85, 99, 0.4) 80%,
-      transparent 100%
-    );
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(75, 85, 99, 0.4) 20%,
+        rgba(75, 85, 99, 0.4) 80%,
+        transparent 100%);
   }
 }
 
@@ -946,11 +1101,11 @@ figure {
     border-bottom: 2px dashed color-mix(in srgb, var(--accent-color) 50%, transparent);
     transition: border-color 0.2s ease;
   }
-  
+
   .annotate:hover {
     border-bottom-color: var(--accent-color);
   }
-  
+
   /* The annotation container */
   .annotate::after {
     content: attr(data-note);
@@ -969,7 +1124,7 @@ figure {
     white-space: normal;
     text-align: center;
   }
-  
+
   /* Swirly arrow SVG */
   .annotate::before {
     content: '';
@@ -985,29 +1140,29 @@ figure {
     pointer-events: none;
     z-index: 10;
   }
-  
+
   /* Default: arrow points down-right, note below */
   .annotate::before {
     bottom: -25px;
     left: 50%;
     transform: translateX(-50%) rotate(180deg);
   }
-  
+
   .annotate::after {
     top: calc(100% + 35px);
     left: 50%;
     transform: translateX(-50%) translateY(5px) rotate(-1deg);
   }
-  
+
   .annotate:hover::before,
   .annotate:hover::after {
     opacity: 1;
   }
-  
+
   .annotate:hover::after {
     transform: translateX(-50%) translateY(0) rotate(-1deg);
   }
-  
+
   /* Variant: Left pointing annotation */
   .annotate-left::before {
     bottom: auto;
@@ -1016,18 +1171,18 @@ figure {
     right: calc(100% + 5px);
     transform: translateY(-50%) rotate(90deg) scaleY(-1);
   }
-  
+
   .annotate-left::after {
     top: 50%;
     left: auto;
     right: calc(100% + 50px);
     transform: translateY(-50%) translateX(5px) rotate(2deg);
   }
-  
+
   .annotate-left:hover::after {
     transform: translateY(-50%) translateX(0) rotate(2deg);
   }
-  
+
   /* Variant: Right pointing annotation */
   .annotate-right::before {
     bottom: auto;
@@ -1036,18 +1191,18 @@ figure {
     right: auto;
     transform: translateY(-50%) rotate(-90deg);
   }
-  
+
   .annotate-right::after {
     top: 50%;
     left: calc(100% + 50px);
     right: auto;
     transform: translateY(-50%) translateX(-5px) rotate(-2deg);
   }
-  
+
   .annotate-right:hover::after {
     transform: translateY(-50%) translateX(0) rotate(-2deg);
   }
-  
+
   /* Variant: Up pointing annotation (note above) */
   .annotate-up::before {
     bottom: auto;
@@ -1055,14 +1210,14 @@ figure {
     left: 50%;
     transform: translateX(-50%) rotate(0deg);
   }
-  
+
   .annotate-up::after {
     top: auto;
     bottom: calc(100% + 35px);
     left: 50%;
     transform: translateX(-50%) translateY(-5px) rotate(1deg);
   }
-  
+
   .annotate-up:hover::after {
     transform: translateX(-50%) translateY(0) rotate(1deg);
   }

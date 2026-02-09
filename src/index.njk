@@ -112,9 +112,9 @@ htmlTemplateEngine: "webc"
   {# <hr class="divider-gradient my-4" /> #}
   {# <p class="text-gray-600 dark:text-gray-400 mb-4">Latest posts, snippets, microposts, photos, vibe drops, and /now updates.</p> #}
 
-  {% set feedItems = collections.feed | head(6) %}
+  {% set feedItems = collections.feed | head(10) %}
 
-  <div class="grid gap-4 lg:gap-5 md:grid-cols-2 my-6 items-start feed-masonry animate-enter stagger-4" data-feed-masonry style="--feed-row-height: 18px;">
+  <div class="grid gap-3 md:grid-cols-2 lg:grid-cols-3 my-6 items-start feed-masonry animate-enter stagger-4" data-feed-masonry style="--feed-row-height: 16px;">
     {% for item in feedItems %}
       {{ feedCard(item, { variant: 'compact', showTags: false }) }}
     {% endfor %}
