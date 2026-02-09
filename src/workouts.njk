@@ -6,24 +6,21 @@ title: Workouts
 
 
 <div class="max-w-5xl mx-auto">
-    {% set cardShell = "rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-100/80 dark:bg-gray-900/70 shadow-sm transition-shadow duration-200 hover:shadow-lg" %}
     <h1>Recent Workouts</h1>
-    <div class="mt-4 {{ cardShell }} p-5 sm:p-6">
-        <p class="text-sm text-gray-600 dark:text-gray-300">
-            Here are my latest activities from Strava.
-        </p>
+    <div class="mt-4 intro-block">
+        <p>Here are my latest activities from Strava.</p>
     </div>
 
     <div class="mt-8 grid gap-4 md:grid-cols-2">
         {% for activity in strava %}
-            <article class="{{ cardShell }} p-5 sm:p-6">
+            <article class="card card-hover card-padding">
                 <header class="flex flex-col gap-2">
-                    <a href="{{ activity.url }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-lg font-semibold tracking-tight text-gray-900 transition-colors hover:text-amber-600 dark:text-gray-100 dark:hover:text-amber-400">
+                    <a href="{{ activity.url }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-lg font-semibold tracking-tight text-gray-900 link-accent dark:text-gray-100">
                         {{ activity.name }}
                         {% feather "external-link", class="w-4 h-4" %}
                     </a>
                     <div class="flex flex-wrap items-center gap-2 text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
-                        <span class="rounded-full bg-gray-100 px-2 py-1 text-gray-700 dark:bg-gray-800 dark:text-gray-200">{{ activity.type }}</span>
+                        <span class="tag">{{ activity.type }}</span>
                         <time datetime="{{ activity.start_date | htmlDateString }}">{{ activity.start_date | readableDate }}</time>
                     </div>
                 </header>

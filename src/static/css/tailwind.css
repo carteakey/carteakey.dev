@@ -455,6 +455,124 @@ figure {
   .feed-card {
     break-inside: avoid;
   }
+
+  /* ═══════════════════════════════════════════════════════════════════════════
+     🎨 Unified Design System Components
+     ═══════════════════════════════════════════════════════════════════════════ */
+
+  /* Standard card - the workhorse for content blocks */
+  .card {
+    border-radius: 0.75rem;
+    border: 1px solid rgb(229 231 235 / 1);
+    background-color: rgb(243 244 246 / 0.8);
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  }
+
+  .dark .card {
+    border-color: rgb(31 41 55 / 1);
+    background-color: rgb(17 24 39 / 0.7);
+  }
+
+  /* Card with hover effect */
+  .card-hover {
+    transition: box-shadow 0.2s ease;
+  }
+
+  .card-hover:hover {
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  }
+
+  /* Page header count badge */
+  .badge-count {
+    border-radius: 0.5rem;
+    border: 1px solid rgb(253 230 138 / 1);
+    background-color: rgb(255 251 235 / 0.7);
+    padding: 0.75rem 1rem;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: rgb(146 64 14 / 1);
+  }
+
+  .dark .badge-count {
+    border-color: rgb(180 83 9 / 1);
+    background-color: rgb(120 53 15 / 0.25);
+    color: rgb(253 230 138 / 1);
+  }
+
+  /* Tag pill for filtering/categorization */
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 9999px;
+    background-color: rgb(243 244 246 / 1);
+    padding: 0.25rem 0.5rem;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: rgb(55 65 81 / 1);
+  }
+
+  .dark .tag {
+    background-color: rgb(31 41 55 / 1);
+    color: rgb(229 231 235 / 1);
+  }
+
+  /* Interactive tag with hover */
+  .tag-interactive {
+    transition: background-color 0.15s ease, color 0.15s ease;
+  }
+
+  .tag-interactive:hover {
+    background-color: rgb(254 243 199 / 1);
+    color: rgb(180 83 9 / 1);
+  }
+
+  .dark .tag-interactive:hover {
+    background-color: rgb(120 53 15 / 0.4);
+    color: rgb(253 230 138 / 1);
+  }
+
+  /* Intro/description block */
+  .intro-block {
+    border-radius: 0.75rem;
+    border: 1px solid rgb(229 231 235 / 1);
+    background-color: rgb(243 244 246 / 0.8);
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    padding: 1.25rem 1.5rem;
+    font-size: 0.875rem;
+    color: rgb(75 85 99 / 1);
+  }
+
+  .dark .intro-block {
+    border-color: rgb(31 41 55 / 1);
+    background-color: rgb(17 24 39 / 0.7);
+    color: rgb(209 213 219 / 1);
+  }
+
+  /* Card padding utilities */
+  .card-padding {
+    padding: 1.25rem;
+  }
+
+  @media (min-width: 640px) {
+    .card-padding {
+      padding: 1.5rem;
+    }
+  }
+
+  /* Link with accent hover */
+  .link-accent {
+    transition: color 0.15s ease;
+  }
+
+  .link-accent:hover {
+    color: var(--accent-color);
+  }
+
+  .dark .link-accent:hover {
+    color: color-mix(in srgb, var(--accent-color) 80%, white);
+  }
 }
 
 /* Upvote button styles */

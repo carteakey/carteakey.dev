@@ -25,11 +25,11 @@ eleventyNavigation:
       
       <div class="grid gap-4 md:grid-cols-2">
         {% for item in category.items %}
-          <div class="group p-4 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-800/50 hover:border-amber-400 dark:hover:border-amber-500 transition-colors">
+          <div class="card card-hover card-padding">
             <div class="flex items-start justify-between">
-              <h3 class="font-semibold text-gray-900 dark:text-gray-100 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
+              <h3 class="font-semibold text-gray-900 dark:text-gray-100">
                 {% if item.link %}
-                  <a href="{{ item.link }}" target="_blank" rel="noopener" class="hover:underline">
+                  <a href="{{ item.link }}" target="_blank" rel="noopener" class="link-accent hover:underline">
                     {{ item.name }}
                     {% feather "external-link", class="w-3.5 h-3.5 inline-block ml-1 opacity-50" %}
                   </a>
@@ -50,7 +50,7 @@ eleventyNavigation:
   {% endfor %}
 </div>
 
-<div class="mt-12 p-6 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-800/50">
+<div class="mt-12 card card-padding">
   <h3 class="font-semibold text-gray-900 dark:text-gray-100 mb-2">
     {% feather "help-circle", class="w-5 h-5 inline-block mr-2" %}
     Want to know more?

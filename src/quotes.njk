@@ -7,8 +7,6 @@ eleventyNavigation:
   order: 7
 ---
 
-{% set cardShell = "rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-100/80 dark:bg-gray-900/70 shadow-sm" %}
-
 <div class="max-w-5xl mx-auto space-y-8">
     {% include "components/breadcrumbs.njk" %}
 
@@ -20,9 +18,9 @@ eleventyNavigation:
     </header>
 
     <!-- Quote of the Day Section -->
-    <section class="{{ cardShell }} p-5 sm:p-6 not-prose">
+    <section class="card card-padding not-prose">
         <div class="flex flex-col gap-3">
-            <div class="flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-amber-700 dark:text-amber-300">
+            <div class="flex items-center gap-2 text-sm font-semibold uppercase tracking-wide" style="color: var(--accent-color);">
                 {% feather "zap", class="w-4 h-4" %}
                 Quote of the Day
             </div>
@@ -44,9 +42,9 @@ eleventyNavigation:
           style="--feed-row-height: 18px;"
         >
             {% for quote in quotes %}
-            <article class="{{ cardShell }} feed-card p-5 sm:p-6">
+            <article class="card feed-card card-padding">
                 <blockquote class="space-y-3 text-gray-800 dark:text-gray-100">
-                    <p class="text-base leading-relaxed italic">“{{ quote.quote }}”</p>
+                    <p class="text-base leading-relaxed italic">"{{ quote.quote }}"</p>
                     <cite class="block text-sm font-medium not-italic text-gray-600 dark:text-gray-400">— {{ quote.author }}</cite>
                 </blockquote>
             </article>

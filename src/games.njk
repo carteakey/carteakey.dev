@@ -3,22 +3,22 @@ layout: layouts/base.njk
 title: Games
 ---
 
+{% set pageTitle = title %}
+{% set pageDescription = "Here are my recently played games from Steam" %}
+
 <div class="mx-auto">
-    {% set cardShell = "rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-100/80 dark:bg-gray-900/70 shadow-sm transition-shadow duration-200 hover:shadow-lg" %}
     <h1>Recent Games</h1>
-    <div class="mb-8 {{ cardShell }} p-5 sm:p-6">
-        <p class="text-sm text-gray-600 dark:text-gray-300">
-            Here are my recently played games from Steam
-        </p>
+    <div class="mb-8 intro-block">
+        <p>{{ pageDescription }}</p>
     </div>
 
     <div class="grid gap-4 md:grid-cols-3">
         {% for game in steam | head(8) %}
-        <article class="{{ cardShell }} overflow-hidden">
+        <article class="card card-hover overflow-hidden">
             <img src="{{ game.library_hero }}" alt="{{ game.name }} hero" loading="lazy" decoding="async" class="h-40 w-full object-cover">
             
-            <div class="flex flex-col items-center gap-2 p-5 sm:p-6 text-center">
-                <a href="{{ game.url }}" target="_blank" rel="noopener noreferrer" title="View on Steam" class="inline-flex items-center gap-2 text-lg font-semibold tracking-tight text-gray-900 transition-colors hover:text-amber-600 dark:text-gray-100 dark:hover:text-amber-400">
+            <div class="flex flex-col items-center gap-2 card-padding text-center">
+                <a href="{{ game.url }}" target="_blank" rel="noopener noreferrer" title="View on Steam" class="inline-flex items-center gap-2 text-lg font-semibold tracking-tight text-gray-900 link-accent dark:text-gray-100">
                     {{ game.name }}
                     {% feather "external-link", class="w-4 h-4" %}
                 </a>

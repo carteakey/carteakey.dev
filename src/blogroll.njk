@@ -8,27 +8,22 @@ eleventyNavigation:
 ---
 
 {% set totalBlogroll = blogroll.blogroll | length %}
-{% set cardShell = "rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-100/80 dark:bg-gray-900/70 shadow-sm transition-shadow duration-200 hover:shadow-lg" %}
+
+{% set pageTitle = title %}
+{% set pageDescription = "A curated list of blogs and websites I read regularly and highly recommend." %}
+{% set itemCount = totalBlogroll %}
+{% set itemLabel = "sites and counting" %}
 
 <div class="max-w-5xl mx-auto">
   {% include "components/breadcrumbs.njk" %}
-
-  <header class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-    <div>
-      <h1 class="text-3xl font-semibold tracking-tight text-gray-900 dark:text-white">Blogroll</h1>
-      <p class="mt-2 text-sm text-gray-600 dark:text-gray-400 md:text-base">A curated list of blogs and websites I read regularly and highly recommend.</p>
-    </div>
-    <div class="rounded-lg border border-amber-200 dark:border-amber-700 bg-amber-50/70 dark:bg-amber-900/25 px-4 py-3 text-xs uppercase tracking-wide text-amber-800 dark:text-amber-200">
-      {{ totalBlogroll }} sites and counting
-    </div>
-  </header>
+  {% include "components/page-header.njk" %}
 
   <div class="mt-8 grid gap-4 md:grid-cols-3">
     {%- for blog in blogroll.blogroll %}
-      <article class="{{ cardShell }} h-full p-5 sm:p-6">
+      <article class="card card-hover h-full card-padding">
         <div class="space-y-3">
           <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
-            <a href="{{ blog.url }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 hover:text-amber-600 dark:hover:text-amber-400">
+            <a href="{{ blog.url }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 link-accent">
               <span>{{ blog.name }}</span>
               {% feather "external-link", class="w-4 h-4 opacity-70" %}
             </a>
@@ -36,9 +31,9 @@ eleventyNavigation:
           <p class="text-sm leading-relaxed text-gray-600 dark:text-gray-300">{{ blog.description }}</p>
         </div>
         {%- if blog.tags %}
-          <div class="mt-4 flex flex-wrap gap-2 text-[0.7rem] uppercase tracking-wide text-gray-500 dark:text-gray-400">
+          <div class="mt-4 flex flex-wrap gap-2">
             {%- for tag in blog.tags %}
-              <span class="rounded-full bg-gray-100 px-2 py-1 text-gray-700 dark:bg-gray-800 dark:text-gray-200">#{{ tag }}</span>
+              <span class="tag">#{{ tag }}</span>
             {%- endfor %}
           </div>
         {%- endif %}
@@ -46,7 +41,7 @@ eleventyNavigation:
     {%- endfor %}
   </div>
 
-    <div class="mt-16 {{ cardShell }} p-6">
+    <div class="mt-16 card card-padding">
        <h3 class="flex items-center gap-2 text-lg font-semibold text-gray-900 dark:text-white">
       {% feather "rss", class="w-5 h-5" %}
       Want to add your blog?
