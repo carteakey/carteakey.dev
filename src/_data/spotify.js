@@ -92,27 +92,48 @@ export default async function () {
     } else {
       const song = await response.json();
       console.log(song);
-      const isPlaying = song.is_playing;
-      const title = song.item.name;
-      const artist = song.item.artists
-        .map((_artist) => _artist.name)
-        .join(", ");
-      const album = song.item.album.name;
-      const albumImageUrl = song.item.album.images[0].url;
-      const songUrl = song.item.external_urls.spotify;
+      
+      // Handle case when item is null (e.g., podcast episodes)
+      if (!song.item) {
+        console.log("Currently playing item has no track data (possibly a podcast)");
+        try {
+          nowPlaying = await nowPlayingCache.getCachedValue();
+        } catch (e) {
+          return {
+            nowPlaying: {
+              album: "Meteora (Bonus Edition)",
+              albumImageUrl:
+                "https://i.scdn.co/image/ab67616d0000b27389a8fab8bf8cd2b77da1fd17",
+              artist: "Linkin Park",
+              isPlaying: true,
+              songUrl: "https://open.spotify.com/track/3fjmSxt0PskST13CSdBUFx",
+              title: "Somewhere I Belong",
+            },
+          };
+        }
+      } else {
+        const isPlaying = song.is_playing;
+        const title = song.item.name;
+        const artist = song.item.artists
+          .map((_artist) => _artist.name)
+          .join(", ");
+        const album = song.item.album.name;
+        const albumImageUrl = song.item.album.images[0].url;
+        const songUrl = song.item.external_urls.spotify;
 
-      nowPlaying = {
-        nowPlaying: {
-          album,
-          albumImageUrl,
-          artist,
-          isPlaying,
-          songUrl,
-          title,
-        },
-      };
-      console.log(nowPlaying);
-      nowPlayingCache.save(nowPlaying, "json");
+        nowPlaying = {
+          nowPlaying: {
+            album,
+            albumImageUrl,
+            artist,
+            isPlaying,
+            songUrl,
+            title,
+          },
+        };
+        console.log(nowPlaying);
+        nowPlayingCache.save(nowPlaying, "json");
+      }
     }
   }
   return nowPlaying;
