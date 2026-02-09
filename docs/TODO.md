@@ -7,6 +7,10 @@
 ### User Experience
 
 - [x] change all email references to carteakey.dev@gmail.com (2026-01-03)
+- [x] Standardize UPDATED labels to uppercase across all pages (2026-02-09)
+- [x] Add search filter to blog page like snippets (2026-02-09)
+- [x] Update card backgrounds to white for consistency (2026-02-09)
+- [x] Add social media icon links to footer (2026-02-09)
 
 
 

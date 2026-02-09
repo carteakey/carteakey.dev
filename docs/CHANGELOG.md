@@ -5,6 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.5] - 2026-02-09
+
+### Added
+- Blog page: Search filter (like snippets) with live filtering by title, tags, and description.
+- Footer: Social media icon links (LinkedIn, GitHub, Search, RSS, Newsletter) in centered row.
+
+### Changed
+- Card component: Updated background to white (`#fff`) in light mode and solid dark gray in dark mode for consistency with feed masonry cards.
+- Blog cards: Added data attributes for filtering (`data-title`, `data-tags`, `data-body`).
+- Footer navigation: Enhanced with all site links, separators, and "Made with ❤️" section.
+- UPDATED labels: Standardized to uppercase format (`text-xs uppercase tracking-wide`) across `/now`, `/bookmarks`, `/feed`, and blog posts.
+- Post tags: Now display in uppercase with improved tracking for consistency.
+- More page: Updated to 2x2 grid layout with increased spacing.
+- npm packages: Updated all dependencies (added 66, removed 73, changed 185 packages).
+
+### Fixed
+- Template error: Removed orphaned `{% endif %}` tag in base.njk footer.
+- Duplicate footer navigation: Removed duplicate nav section from extended footer, keeping only accent theme slider.
+
 ## [1.4.4] - 2026-01-04
 
 ### Added
