@@ -13,86 +13,78 @@ eleventyNavigation:
 {% set pageDescription = "All pages on this site, organized by category." %}
 {% set pageIcon = "map" %}
 
-<div class="max-w-5xl mx-auto">
+<div class="max-w-4xl mx-auto">
   {% include "components/page-header.njk" %}
 
-  <div class="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+  <div class="mt-8 space-y-6">
     
     {# Content & Writing #}
-    <div class="card card-compact space-y-2">
-      <h3 class="font-semibold text-gray-900 dark:text-white flex items-center gap-2">
-        {% feather "edit-3", class="w-4 h-4" %}Content
+    <section class="card card-padding bg-white dark:bg-gray-900">
+      <h3 class="font-semibold text-gray-900 dark:text-white flex items-center gap-2 mb-4">
+        {% feather "edit-3", class="w-4 h-4" %} Content
       </h3>
-      <nav class="space-y-1 text-sm">
-        <a href="/blog/" class="block link-accent">/blog</a>
-        <a href="/snippets/" class="block link-accent">/snippets</a>
-        <a href="/feed/" class="block link-accent">/feed</a>
-        <a href="/quotes/" class="block link-accent">/quotes</a>
-      </nav>
-    </div>
+      <div class="space-y-3 text-sm">
+        <div><a href="/blog/" class="font-medium link-accent">/blog</a> — blog posts and articles</div>
+        <div><a href="/snippets/" class="font-medium link-accent">/snippets</a> — code snippets and quick notes</div>
+        <div><a href="/feed/" class="font-medium link-accent">/feed</a> — all posts, snippets, and mini blogs</div>
+        <div><a href="/quotes/" class="font-medium link-accent">/quotes</a> — quotes I like</div>
+      </div>
+    </section>
 
     {# About Me #}
-    <div class="card card-compact space-y-2">
-      <h3 class="font-semibold text-gray-900 dark:text-white flex items-center gap-2">
-        {% feather "user", class="w-4 h-4" %}About Me
+    <section class="card card-padding bg-white dark:bg-gray-900">
+      <h3 class="font-semibold text-gray-900 dark:text-white flex items-center gap-2 mb-4">
+        {% feather "user", class="w-4 h-4" %} About Me
       </h3>
-      <nav class="space-y-1 text-sm">
-        <a href="/about/" class="block link-accent">/about</a>
-        <a href="/cv/" class="block link-accent">/cv</a>
-        <a href="/now/" class="block link-accent">/now</a>
-        <a href="/uses/" class="block link-accent">/uses</a>
-      </nav>
-    </div>
+      <div class="space-y-3 text-sm">
+        <div><a href="/about/" class="font-medium link-accent">/about</a> — who am I?</div>
+        <div><a href="/cv/" class="font-medium link-accent">/cv</a> — my curriculum vitae</div>
+        <div><a href="/now/" class="font-medium link-accent">/now</a> — what I'm up to, now</div>
+        <div><a href="/uses/" class="font-medium link-accent">/uses</a> — what I use</div>
+      </div>
+    </section>
 
     {# Interests #}
-    <div class="card card-compact space-y-2">
-      <h3 class="font-semibold text-gray-900 dark:text-white flex items-center gap-2">
-        {% feather "heart", class="w-4 h-4" %}Interests
+    <section class="card card-padding bg-white dark:bg-gray-900">
+      <h3 class="font-semibold text-gray-900 dark:text-white flex items-center gap-2 mb-4">
+        {% feather "heart", class="w-4 h-4" %} Interests
       </h3>
-      <nav class="space-y-1 text-sm">
-        <a href="/games/" class="block link-accent">/games</a>
-        <a href="/vibes/" class="block link-accent">/vibes</a>
-        <a href="/gallery/" class="block link-accent">/gallery</a>
-        <a href="/workouts/" class="block link-accent">/workouts</a>
-      </nav>
-    </div>
+      <div class="space-y-3 text-sm">
+        <div><a href="/games/" class="font-medium link-accent">/games</a> — games I'm currently playing</div>
+        <div><a href="/vibes/" class="font-medium link-accent">/vibes</a> — random images/memes I like</div>
+        <div><a href="/gallery/" class="font-medium link-accent">/gallery</a> — photo gallery</div>
+        <div><a href="/workouts/" class="font-medium link-accent">/workouts</a> — my fitness journey</div>
+      </div>
+    </section>
 
     {# Resources #}
-    <div class="card card-compact space-y-2">
-      <h3 class="font-semibold text-gray-900 dark:text-white flex items-center gap-2">
-        {% feather "bookmark", class="w-4 h-4" %}Resources
+    <section class="card card-padding bg-white dark:bg-gray-900">
+      <h3 class="font-semibold text-gray-900 dark:text-white flex items-center gap-2 mb-4">
+        {% feather "bookmark", class="w-4 h-4" %} Resources
       </h3>
-      <nav class="space-y-1 text-sm">
-        <a href="/bookmarks/" class="block link-accent">/bookmarks</a>
-        <a href="/blogroll/" class="block link-accent">/blogroll</a>
-        <a href="/projects/" class="block link-accent">/projects</a>
-      </nav>
-    </div>
+      <div class="space-y-3 text-sm">
+        <div><a href="/bookmarks/" class="font-medium link-accent">/bookmarks</a> — curated reading list</div>
+        <div><a href="/blogroll/" class="font-medium link-accent">/blogroll</a> — blogs and sites I follow</div>
+        <div><a href="/projects/" class="font-medium link-accent">/projects</a> — things I've built</div>
+      </div>
+    </section>
 
     {# Utilities #}
-    <div class="card card-compact space-y-2">
-      <h3 class="font-semibold text-gray-900 dark:text-white flex items-center gap-2">
-        {% feather "tool", class="w-4 h-4" %}Utilities
+    <section class="card card-padding bg-white dark:bg-gray-900">
+      <h3 class="font-semibold text-gray-900 dark:text-white flex items-center gap-2 mb-4">
+        {% feather "tool", class="w-4 h-4" %} Utilities
       </h3>
-      <nav class="space-y-1 text-sm">
-        <a href="/search/" class="block link-accent">/search</a>
-        <a href="/stats/" class="block link-accent">/stats</a>
-        <a href="/newsletter/" class="block link-accent">/newsletter</a>
-      </nav>
-    </div>
-
-    {# Meta #}
-    <div class="card card-compact space-y-2">
-      <h3 class="font-semibold text-gray-900 dark:text-white flex items-center gap-2">
-        {% feather "info", class="w-4 h-4" %}Meta
-      </h3>
-      <nav class="space-y-1 text-sm">
-        <a href="/feed.xml" class="block link-accent">/feed.xml</a>
-        <a href="https://slashpages.net" target="_blank" rel="noopener" class="block link-accent flex items-center gap-1">
-          slashpages.net {% feather "external-link", class="w-3 h-3" %}
-        </a>
-      </nav>
-    </div>
+      <div class="space-y-3 text-sm">
+        <div><a href="/search/" class="font-medium link-accent">/search</a> — search posts and snippets</div>
+        <div><a href="/stats/" class="font-medium link-accent">/stats</a> — site statistics and metrics</div>
+        <div><a href="/newsletter/" class="font-medium link-accent">/newsletter</a> — subscribe to updates</div>
+        <div><a href="/feed.xml" class="font-medium link-accent">/feed.xml</a> — RSS feed</div>
+      </div>
+    </section>
 
   </div>
+
+  <p class="mt-8 text-xs text-gray-500 dark:text-gray-400">
+    Inspired by <a href="https://slashpages.net" target="_blank" rel="noopener" class="link-accent">slashpages.net</a>
+  </p>
 </div>

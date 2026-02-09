@@ -250,12 +250,20 @@
   }
 }
 
+:root {
+  --zen-paper: #f2f0e3;
+  --zen-dark: #2e2e2e;
+  --zen-muted: rgba(0, 0, 0, .05);
+  --zen-subtle: rgba(0, 0, 0, .05);
+}
+
 @layer base {
+  body {
+    background-color: var(--zen-paper);
+  }
+
   .dark body {
-    /* Warm charcoal - no blue tint, slightly warm undertones */
-    background-color: #111110;
-    background-image:
-      linear-gradient(180deg, #0f0f0e 0%, #121211 40%, #141413 70%, #111110 100%);
+    background-color: var(--zen-dark);
   }
 
   .dark body::before {
