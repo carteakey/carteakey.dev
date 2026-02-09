@@ -127,7 +127,7 @@ hasEthicalAds: false
           <div class="flex flex-wrap gap-2">
             {% for tag in visibleTags %}
               {% set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
-              <a href="{{ tagUrl | url }}" class="px-2.5 py-1 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all hover:scale-105 text-sm">
+              <a href="{{ tagUrl | url }}" class="px-2.5 py-1 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all hover:scale-105 text-xs font-semibold uppercase tracking-wide">
                 #{{ tag }}
               </a>
             {% endfor %}
