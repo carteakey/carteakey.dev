@@ -141,9 +141,8 @@ hasEthicalAds: false
     {{ content | safe }}
 
     {% if updated %}
-      <p class="text-sm text-gray-500 dark:text-gray-400">
-        Updated:
-        <time datetime="{{ updated | htmlDateString }}">{{ updated | readableDate }}</time>
+      <p class="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
+        Updated <time datetime="{{ updated | htmlDateString }}">{{ updated | readableDate }}</time>
       </p>
     {% endif %}
 
