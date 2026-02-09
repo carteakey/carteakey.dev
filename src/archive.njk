@@ -41,7 +41,7 @@ eleventyNavigation:
 
   <!-- Grid View -->
   <div x-show="viewMode === 'grid'" class="mt-6 grid gap-3 md:grid-cols-2 lg:grid-cols-3 items-start" id="blogGrid">
-    {% for post in collections.posts | reverse %}
+    {% for post in collections.posts %}
       {% set rawTags = post.data.tags | default([]) %}
       {% set filteredTags = rawTags | filterTagList %}
       {% set searchDesc = post.data.description | default('') | lower %}
