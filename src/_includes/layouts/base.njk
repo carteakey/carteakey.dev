@@ -199,7 +199,20 @@
           </script>
       </main>
 
+    
+
+
       <footer class="border-t border-gray-200 dark:border-gray-700 pt-8 pb-4">
+
+          <div class='flex items-center gap-2 justify-center mt-4'>
+          <a class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all" href="https://www.linkedin.com/in/kartikeychauhan/" title="LinkedIn" aria-label="LinkedIn">{% feather "linkedin" %}</a>
+          <a class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all" href="https://github.com/carteakey" title="GitHub" aria-label="GitHub">{% feather "github" %}</a>
+          <span class="text-gray-300 dark:text-gray-600">|</span>
+          <a class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all" href="{{ '/search/' | url }}" title="Search" aria-label="Search">{% feather "search" %}</a>
+          <a class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all" href="{{ '/feed.xml' | url }}" title="RSS" aria-label="RSS">{% feather "rss" %}</a>
+          <a class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all" href="{{ '/newsletter/' | url }}" title="Newsletter" aria-label="Newsletter">{% feather "mail" %}</a>
+        </div>
+        
         {# Enhanced navigation section - compact with separators #}
         <div class="text-center">
           <div class="flex flex-wrap justify-center items-center gap-2 text-sm max-w-5xl mx-auto">
@@ -291,17 +304,8 @@
             © {{ metadata.author.name }} • 2025
           </div>
         </div>
-        {% endif %}
-        <div class='flex items-center gap-2'>
-          <a class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all" href="https://www.linkedin.com/in/kartikeychauhan/" title="LinkedIn" aria-label="LinkedIn">{% feather "linkedin" %}</a>
-          <a class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all" href="https://github.com/carteakey" title="GitHub" aria-label="GitHub">{% feather "github" %}</a>
-          <span class="text-gray-300 dark:text-gray-600">|</span>
-          <a class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all" href="{{ '/search/' | url }}" title="Search" aria-label="Search">{% feather "search" %}</a>
-          <a class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all" href="{{ '/feed.xml' | url }}" title="RSS" aria-label="RSS">{% feather "rss" %}</a>
-          <a class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all" href="{{ '/newsletter/' | url }}" title="Newsletter" aria-label="Newsletter">{% feather "mail" %}</a>
-        </div>
-      </footer>
 
+      </footer>
 
 
       {# Extended footer section #}

@@ -19,9 +19,15 @@ eleventyNavigation:
 <div class="max-w-5xl mx-auto" x-data="{ viewMode: 'grid' }">
   {% include "components/page-header.njk" %}
 
-  <div class="mt-4 flex items-center justify-between gap-3">
-    <div class="text-xs text-gray-500 dark:text-gray-400">
-      Latest: {{ (collections.posts | last).date | readableDate }}
+  <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+    <div class="relative flex-1 max-w-sm">
+      {% feather "search", class="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" %}
+      <input
+        type="text"
+        id="blogSearch"
+        placeholder="Filter posts..."
+        class="w-full rounded-full border border-gray-200 bg-gray-50 py-2 pl-9 pr-4 text-sm focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
+      >
     </div>
     <div class="view-toggle">
       <button type="button" title="Grid view" :class="{ 'active': viewMode === 'grid' }" @click="viewMode = 'grid'">
@@ -34,9 +40,18 @@ eleventyNavigation:
   </div>
 
   <!-- Grid View -->
-  <div x-show="viewMode === 'grid'" class="mt-6 grid gap-3 md:grid-cols-2 lg:grid-cols-3 items-start">
+  <div x-show="viewMode === 'grid'" class="mt-6 grid gap-3 md:grid-cols-2 lg:grid-cols-3 items-start" id="blogGrid">
     {% for post in collections.posts | reverse %}
-      <article class="card card-hover card-padding bg-white dark:bg-gray-900">
+      {% set rawTags = post.data.tags | default([]) %}
+      {% set filteredTags = rawTags | filterTagList %}
+      {% set searchDesc = post.data.description | default('') | lower %}
+      <article 
+        class="card card-hover card-padding"
+        data-blog-card
+        data-title="{{ post.data.title | lower }}"
+        data-tags="{{ filteredTags | join(' ') | lower }}"
+        data-body="{{ searchDesc }}"
+      >
         <div class="flex items-center gap-2 mb-3">
           <span class="inline-flex items-center gap-1 px-2 py-0.5 text-[0.65rem] font-semibold uppercase tracking-wider rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900/70 dark:text-blue-200">
             {% feather "edit-3", class="w-3 h-3" %}Post
@@ -63,9 +78,18 @@ eleventyNavigation:
   </div>
 
   <!-- List View -->
-  <div x-show="viewMode === 'list'" x-cloak class="mt-6 space-y-2">
+  <div x-show="viewMode === 'list'" x-cloak class="mt-6 space-y-2" id="blogList">
     {% for post in collections.posts | reverse %}
-      <article class="card card-hover card-list">
+      {% set rawTags = post.data.tags | default([]) %}
+      {% set filteredTags = rawTags | filterTagList %}
+      {% set searchDesc = post.data.description | default('') | lower %}
+      <article 
+        class="card card-hover card-list"
+        data-blog-card
+        data-title="{{ post.data.title | lower }}"
+        data-tags="{{ filteredTags | join(' ') | lower }}"
+        data-body="{{ searchDesc }}"
+      >
         <div class="card-list-content">
           <a href="{{ post.url }}" class="card-list-title link-accent text-sm">{{ post.data.title }}</a>
         </div>
@@ -80,8 +104,28 @@ eleventyNavigation:
   </div>
 </div>
 
-{% include "components/feed-masonry-script.njk" %}
-
 <style>
   [x-cloak] { display: none !important; }
 </style>
+
+<script>
+  const searchInput = document.getElementById('blogSearch');
+  const blogCards = Array.from(document.querySelectorAll('[data-blog-card]'));
+
+  searchInput.addEventListener('input', (event) => {
+    const term = event.target.value.trim().toLowerCase();
+
+    blogCards.forEach((card) => {
+      const title = card.dataset.title || '';
+      const tags = card.dataset.tags || '';
+      const body = card.dataset.body || '';
+      const matches =
+        term.length === 0 ||
+        title.includes(term) ||
+        tags.includes(term) ||
+        body.includes(term);
+
+      card.classList.toggle('hidden', !matches);
+    });
+  });
+</script>
