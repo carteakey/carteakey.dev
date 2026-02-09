@@ -20,11 +20,11 @@ permalink: /feed/
 </p>
 
 <div
-  class="grid gap-5 md:grid-cols-2 items-start feed-masonry"
+  class="grid gap-3 md:grid-cols-2 lg:grid-cols-3 items-start feed-masonry"
   data-feed-masonry
   data-feed-initial="{{ initialVisible }}"
   data-feed-batch="{{ batchSize }}"
-  style="--feed-row-height: 18px;"
+  style="--feed-row-height: 16px;"
 >
   {% for item in collections.feed %}
     {% set isHidden = loop.index0 >= initialVisible %}

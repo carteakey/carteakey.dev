@@ -16,7 +16,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Caveat&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;200;300;400&display=swap" rel="stylesheet">
-  {# <script>hljs.highlightAll();</script> #}
+  {# \u003cscript\u003ehljs.highlightAll();\u003c/script\u003e #}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap" rel="stylesheet">
   <meta name="generator" content="Eleventy">
   <link id="prism-theme" href="/static/css/prism/prism-coy.css" rel="stylesheet"/>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-DKK1XXJY42"></script>
@@ -196,41 +199,42 @@
           </script>
       </main>
 
-      <footer class="flex w-full pt-10 pb-4 flex-col md:flex-row justify-between gap-4">
-        {% if spotify.nowPlaying %}
-        <div class="flex items-center not-prose p-3 rounded-xl card-glass">
-          <img id="track-image" class="w-12 h-12 rounded-full mr-3 animate-spin-slow shadow-lg"
-            src="{{ spotify.nowPlaying.albumImageUrl }}" alt="Album artwork for {{ spotify.nowPlaying.title }} by {{ spotify.nowPlaying.artist }}">
-          <div class=''>
-            <a href={{ spotify.nowPlaying.songUrl }} target='_blank' class='hover:underline'>
-              <p id="track-name" class="text-sm font-bold">{{ spotify.nowPlaying.title }}</p>
-            </a>
-            <p id="artist-name" class="text-xs text-gray-500 dark:text-gray-400">{{ spotify.nowPlaying.artist }}</p>
+      <footer class="flex w-full pt-8 pb-4 flex-col gap-6">
+        <div class="flex flex-wrap items-center justify-between gap-4">
+          {# Spotify Now Playing - Personal #}
+          {% if spotify.nowPlaying %}
+          <div class="flex items-center not-prose p-2 rounded-lg card-glass text-xs">
+            <img id="track-image" class="w-8 h-8 rounded-full mr-2 animate-spin-slow shadow-lg"
+              src="{{ spotify.nowPlaying.albumImageUrl }}" alt="{{ spotify.nowPlaying.title }}">
+            <div>
+              <a href={{ spotify.nowPlaying.songUrl }} target='_blank' class='hover:underline font-medium'>{{ spotify.nowPlaying.title }}</a>
+              <p class="text-gray-500 dark:text-gray-400">{{ spotify.nowPlaying.artist }}</p>
+            </div>
           </div>
-        </div>
-        {% endif %}
-        <div class='flex flex-nowrap items-center justify-center gap-2 whitespace-nowrap overflow-x-auto md:overflow-visible md:justify-end py-1 -mx-2 px-2 md:m-0 md:gap-3'>
-          {# Social Links Group #}
-          <div class='flex flex-row items-center gap-1 md:border-r border-gray-200 dark:border-gray-700 md:pr-3'>
-            <a class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all hover:scale-110" href="https://www.linkedin.com/in/kartikeychauhan/"
-              title="LinkedIn" aria-label="LinkedIn">{% feather "linkedin" %}</a>
-            <a class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all hover:scale-110" href="https://github.com/carteakey" title="GitHub"
-              aria-label="GitHub">{% feather "github" %}</a>
-          </div>
+          {% endif %}
           
-          {# Content Discovery Group #}
-          <div class='flex flex-row items-center gap-1 md:border-r border-gray-200 dark:border-gray-700 md:pr-3'>
-            <a class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all hover:scale-110" href="{{ '/search/' | url }}" title="Search" aria-label="Search">{% feather "search" %}</a>
-            <a class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all hover:scale-110" href="{{ '/blogroll/' | url }}" title="Blogroll" aria-label="Blogroll">{% feather "bookmark" %}</a>
-          </div>
-          
-          {# Subscribe Group #}
-          <div class='flex flex-row items-center gap-1'>
-            <a class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all hover:scale-110" href="{{ '/feed.xml' | url }}" title="Atom Feed" aria-label="Atom Feed">{% feather "rss" %}</a>
-            <a class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all hover:scale-110" href="{{ '/newsletter/' | url }}" title="Newsletter" aria-label="Newsletter">{% feather "mail" %}</a>
+          <div class='flex flex-wrap items-center gap-4 text-xs text-gray-500 dark:text-gray-400'>
+            {# Explore - Useful for visitors #}
+            <div class="flex items-center gap-3">
+              <span class="font-medium text-gray-700 dark:text-gray-300">Explore</span>
+              <a class="hover:text-gray-900 dark:hover:text-gray-100 transition-colors" href="{{ '/search/' | url }}">Search</a>
+              <a class="hover:text-gray-900 dark:hover:text-gray-100 transition-colors" href="{{ '/bookmarks/' | url }}">Bookmarks</a>
+              <a class="hover:text-gray-900 dark:hover:text-gray-100 transition-colors" href="{{ '/blogroll/' | url }}">Blogroll</a>
+            </div>
+            
+            <span class="text-gray-300 dark:text-gray-600">|</span>
+            
+            {# Connect - Subscribe/Social #}
+            <div class="flex items-center gap-2">
+              <a class="p-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-all" href="https://www.linkedin.com/in/kartikeychauhan/" title="LinkedIn" aria-label="LinkedIn">{% feather "linkedin", class="w-4 h-4" %}</a>
+              <a class="p-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-all" href="https://github.com/carteakey" title="GitHub" aria-label="GitHub">{% feather "github", class="w-4 h-4" %}</a>
+              <a class="p-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-all" href="{{ '/feed.xml' | url }}" title="RSS" aria-label="RSS">{% feather "rss", class="w-4 h-4" %}</a>
+              <a class="p-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-all" href="{{ '/newsletter/' | url }}" title="Newsletter" aria-label="Newsletter">{% feather "mail", class="w-4 h-4" %}</a>
+            </div>
           </div>
         </div>
       </footer>
+
 
       {# Extended footer section #}
       <div class="border-t border-gray-200 dark:border-gray-700 pt-6 pb-8 not-prose">

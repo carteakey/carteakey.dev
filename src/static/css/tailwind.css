@@ -7,7 +7,8 @@
 @theme {
   --font-*: initial;
   /* Default body copy font stack */
-  --font-sans: var(--font-saira);
+  --font-sans: var(--font-bricolage);
+  --font-bricolage: 'Bricolage Grotesque', 'Saira', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   --font-plus-jakarta-sans: 'Plus Jakarta Sans', 'Saira', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Apple Color Emoji', 'Segoe UI Emoji', 'Inter';
   --font-saira: 'Saira', 'Plus Jakarta Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Apple Color Emoji', 'Segoe UI Emoji', 'Inter';
   --font-urbanist: 'Urbanist', var(--font-plus-jakarta-sans);

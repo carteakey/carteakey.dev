@@ -1,11 +1,65 @@
 ---
-layout: layouts/home.njk
+layout: layouts/base.njk
+title: Blog
+description: Articles, tutorials, and thoughts on tech, life, and everything in between
 permalink: /blog/
 eleventyNavigation:
   key: Blog
   order: 2
 ---
 
-<h1>Blog</h1>
-{% set postslist = collections.posts | reverse %}
-{% include "postslist.njk" %}
+{% from "components/feed-card.njk" import feedCard %}
+{% include "components/breadcrumbs.njk" %}
+
+{% set pageTitle = "Blog" %}
+{% set pageDescription = "Articles, tutorials, and thoughts." %}
+{% set pageIcon = "edit-3" %}
+{% set itemCount = collections.posts | length %}
+
+<div class="max-w-5xl mx-auto" x-data="{ viewMode: 'grid' }">
+  {% include "components/page-header.njk" %}
+
+  <div class="mt-4 flex items-center justify-between gap-3">
+    <div class="text-xs text-gray-500 dark:text-gray-400">
+      Latest: {{ (collections.posts | last).date | readableDate }}
+    </div>
+    <div class="view-toggle">
+      <button type="button" title="Grid view" :class="{ 'active': viewMode === 'grid' }" @click="viewMode = 'grid'">
+        {% feather "grid", class="w-4 h-4" %}
+      </button>
+      <button type="button" title="List view" :class="{ 'active': viewMode === 'list' }" @click="viewMode = 'list'">
+        {% feather "list", class="w-4 h-4" %}
+      </button>
+    </div>
+  </div>
+
+  <!-- Grid View (Masonry) -->
+  <div x-show="viewMode === 'grid'" class="mt-6 grid gap-3 md:grid-cols-2 lg:grid-cols-3 items-start feed-masonry" data-feed-masonry style="--feed-row-height: 16px;">
+    {% for post in collections.posts | reverse %}
+      {{ feedCard(post, { variant: 'compact', showTags: true }) }}
+    {% endfor %}
+  </div>
+
+  <!-- List View -->
+  <div x-show="viewMode === 'list'" x-cloak class="mt-6 space-y-2">
+    {% for post in collections.posts | reverse %}
+      <article class="card card-hover card-list">
+        <div class="card-list-content">
+          <a href="{{ post.url }}" class="card-list-title link-accent text-sm">{{ post.data.title }}</a>
+        </div>
+        <time class="card-list-meta whitespace-nowrap" datetime="{{ post.date | htmlDateString }}">
+          {{ post.date | readableDate }}
+        </time>
+        <a href="{{ post.url }}" class="text-gray-400 hover:text-amber-500">
+          {% feather "arrow-right", class="w-4 h-4" %}
+        </a>
+      </article>
+    {% endfor %}
+  </div>
+</div>
+
+{% include "components/feed-masonry-script.njk" %}
+
+<style>
+  [x-cloak] { display: none !important; }
+</style>

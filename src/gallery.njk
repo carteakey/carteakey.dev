@@ -14,12 +14,12 @@ eleventyNavigation:
 <div>
   <div class="flex flex-col min-h-screen">
     <div class="md:max-w-xl mx-auto">
-      <div class="mb-8 intro-block">
-        <p>A personal collection of photos from both real life and virtual worlds. I enjoy capturing interesting scenes, light, and moments—just for fun.</p>
+      <div class="mb-4 intro-block">
+        <p>A personal collection of photos from both real life and virtual worlds.</p>
       </div>
     </div>
 
-    <div class="grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] auto-rows-[100px] gap-3 w-full px-4 md:px-6 mb-8" id="gallery">
+    <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] auto-rows-[90px] gap-1 w-full mb-6" id="gallery">
       {% for photo in photos %}
       {% if photo.height > photo.width %}
       <div class="relative w-full h-full row-span-3">
