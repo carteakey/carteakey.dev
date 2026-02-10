@@ -66,6 +66,12 @@
 - [x] Webrings Page 
 - [x] Guestbook Page
 - [x] Colophon 
+- [x] Footer: Reorganize into categorized grid with icons (2026-02-09)
+- [x] Guestbook: Sticky-notes redesign with pastel colors and handwriting font (2026-02-09)
+- [x] Projects page: Redesign cards with consistent image heights and better layout (2026-02-09)
+- [x] Uses page: Text-based multi-column layout with emojis, neofetch block, retired & changelog sections (2026-02-09)
+- [x] More page: Fix width shrinkage, switch to compass icon (2026-02-09)
+- [x] Footer: Move theme picker below nav, compact layout (2026-02-09)
 
 
 ## Medium Priority
@@ -218,4 +224,4 @@ Buy me a coffee
 
 ---
 
-**Next Up: Stats Page Implementation** 📊
+**Next Up: Content Polish & New Pages** 🎨

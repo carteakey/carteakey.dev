@@ -60,38 +60,37 @@ eleventyNavigation:
     </div>
   </div>
 
-  <div class="grid gap-3 md:grid-cols-3">
+  <div class="grid gap-4 md:grid-cols-3">
     {% for project in projects.projects %}
-      <article class="card card-hover card-compact flex h-full flex-col">
+      <article class="card card-hover overflow-hidden flex flex-col group">
         {% if project.image_path %}
-          <div class="mb-2 overflow-hidden rounded-lg">
-            {% image project.image_path, project.title ,"w-full object-cover", { style: "aspect-ratio: 16 / 9;" } %}
+          <div class="overflow-hidden">
+            {% image project.image_path, project.title, "h-40 w-full object-cover transition-transform duration-300 group-hover:scale-105" %}
           </div>
         {% endif %}
 
-        <div class="flex flex-1 flex-col gap-1 text-center">
-          <a href="{% if project.url %}{{ project.url }}{% endif %}" title="View Project" class="inline-flex items-center justify-center gap-1 text-sm font-semibold tracking-tight text-gray-900 link-accent dark:text-gray-100">
-            {{ project.title }}
-            {% if project.url %}
-              {% feather "arrow-up-right", class="w-3 h-3" %}
+        <div class="flex flex-1 flex-col card-padding gap-2">
+          <div class="flex items-start justify-between gap-2">
+            <a href="{% if project.url %}{{ project.url }}{% endif %}" title="View Project" class="inline-flex items-center gap-1 text-sm font-bold tracking-tight text-gray-900 link-accent dark:text-gray-100">
+              {{ project.title }}
+              {% if project.url %}
+                {% feather "arrow-up-right", class="w-3.5 h-3.5 opacity-50 group-hover:opacity-100 transition-opacity" %}
+              {% endif %}
+            </a>
+            {% if project.github %}
+              <a class="inline-flex items-center text-gray-400 hover:text-gray-700 dark:text-gray-500 dark:hover:text-gray-300 transition-colors shrink-0" title="View Code" href="{{ project.github }}">
+                {% feather "github", class="w-4 h-4" %}
+              </a>
             {% endif %}
-          </a>
-          <p class="text-xs leading-relaxed text-gray-600 dark:text-gray-300 line-clamp-2">
+          </div>
+          <p class="text-sm leading-relaxed text-gray-600 dark:text-gray-400 line-clamp-2">
             {{ project.description }}
           </p>
-        </div>
-
-        <div class="mt-2 flex flex-wrap items-center justify-between gap-2 text-[0.65rem] uppercase tracking-wide text-gray-500 dark:text-gray-400">
-          <div class="flex flex-wrap gap-1">
-            {% for tag in project.tags | head(3) %}
+          <div class="mt-auto pt-1 flex flex-wrap gap-1.5">
+            {% for tag in project.tags %}
               <span class="tag text-[0.6rem]">#{{ tag }}</span>
             {% endfor %}
           </div>
-          {% if project.github %}
-            <a class="inline-flex items-center gap-1 link-accent" title="View Code" href="{{ project.github }}">
-              {% feather "code", class="w-3 h-3" %}
-            </a>
-          {% endif %}
         </div>
       </article>
     {% endfor %}

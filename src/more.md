@@ -1,12 +1,12 @@
 ---
-layout: layouts/base.njk
+layout: layouts/home.njk
 title: ...More
 permalink: /more/
 eleventyNavigation:
   key: ...More
   order: 8
 ---
-{% include "components/breadcrumbs.njk" %}
+
 
 # More
 
@@ -23,16 +23,20 @@ This is a sitemap of all pages on my site. It's inspired by [slashpages.net](htt
 - [/feed](/feed/): all posts, snippets, and mini blogs
 - [/gallery](/gallery/): photo gallery
 - [/games](/games/): games I'm currently playing
+- [/guestbook](/guestbook/): sign my guestbook
 - [/newsletter](/newsletter/): subscribe to updates
 - [/now](/now/): what I'm up to, now
 - [/blog](/blog/): blog posts and articles
 - [/projects](/projects/): things I've built
 - [/quotes](/quotes/): quotes I like
 - [/search](/search/): search posts and snippets
+- [/skills](/skills/): skills radar chart
 - [/snippets](/snippets/): code snippets and quick notes
 - [/stats](/stats/): site statistics and metrics
+- [/uses](/uses/): tools, software, and hardware I use
 - [/vibes](/vibes/): random images/memes I like
 - [/workouts](/workouts/): my fitness journey
+
 
 
 

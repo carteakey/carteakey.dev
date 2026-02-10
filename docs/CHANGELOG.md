@@ -5,6 +5,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.6] - 2026-02-09
+
+### Added
+- Guestbook: New sticky-notes design with pastel colors, random rotations, CSS tape decorations, and Caveat handwriting font.
+- Guestbook: Data-driven entries from `guestbook.yaml` with Netlify Forms submission and manual curation note.
+- Uses page: Neofetch-style ASCII art hardware info block with monospace specs display.
+- Uses page: "Retired" section with strikethrough styling and retirement dates for old tools.
+- Uses page: "Changelog" section with timestamped tool change history.
+- Skills page: New `/skills` page added to footer navigation.
+
+### Changed
+- Footer: Reorganized into 4-column categorized grid (Read, Explore, About Me, Meta) with Feather icons on every link.
+- Footer: Theme picker moved below navigation, made compact alongside copyright line.
+- Projects page: Redesigned cards — switched to `card card-hover` with fixed `h-40` image height, left-aligned text, GitHub icon next to title, `text-sm` descriptions, all tags shown, and image zoom on hover.
+- Uses page: Complete overhaul from grid cards to text-based multi-column layout with emoji icons per item.
+- More page: Fixed width shrinkage by switching from `layouts/base.njk` to `layouts/home.njk`.
+- More page: Removed manual breadcrumbs include (handled by `home.njk` layout).
+- Navigation: Replaced `more-horizontal` (•••) icon with `compass` for the More page link.
+
+### Fixed
+- More page: Content no longer narrower than other pages due to incorrect layout template.
+
+
 ## [1.4.5] - 2026-02-09
 
 ### Added

@@ -1,132 +1,215 @@
 categories:
   - name: Hardware
-    icon: monitor
+    emoji: "🖥️"
     items:
       - name: MacBook Pro 14" (M3 Pro)
+        emoji: "💻"
         description: My primary development machine. The M3 chip handles everything from code editing to running local LLMs.
         link: https://www.apple.com/macbook-pro/
 
       - name: Dell U2722D Monitor
+        emoji: "🖥️"
         description: 27" 4K USB-C monitor for extended screen real estate when working from home.
 
       - name: Keychron K2 Keyboard
+        emoji: "⌨️"
         description: Mechanical keyboard with brown switches. Great for typing long sessions.
         link: https://www.keychron.com/products/keychron-k2-wireless-mechanical-keyboard
 
       - name: Logitech MX Master 3
+        emoji: "🖱️"
         description: The best mouse I've ever used. Ergonomic and packed with features.
         link: https://www.logitech.com/products/mice/mx-master-3s.html
 
       - name: Sony WH-1000XM4
+        emoji: "🎧"
         description: Noise-cancelling headphones for focused work sessions.
         link: https://www.sony.com/electronics/headphones/wh-1000xm4
 
   - name: Development Tools
-    icon: code
+    emoji: "⚡"
     items:
       - name: VS Code
+        emoji: "📝"
         description: My primary code editor. Fast, extensible, and great with Copilot.
         link: https://code.visualstudio.com/
 
       - name: iTerm2
+        emoji: "🖥️"
         description: Terminal emulator with great split pane support and customization.
         link: https://iterm2.com/
 
       - name: Oh My Zsh
+        emoji: "🐚"
         description: Framework for managing Zsh configuration with useful plugins.
         link: https://ohmyz.sh/
 
       - name: GitHub Copilot
+        emoji: "🤖"
         description: AI pair programmer that helps write code faster.
         link: https://github.com/features/copilot
 
       - name: Docker Desktop
+        emoji: "🐳"
         description: Container platform for running isolated development environments.
         link: https://www.docker.com/products/docker-desktop/
 
   - name: Languages & Frameworks
-    icon: layers
+    emoji: "🧩"
     items:
       - name: Python
+        emoji: "🐍"
         description: Primary language for data analysis, scripting, and automation.
         link: https://www.python.org/
 
       - name: JavaScript/TypeScript
+        emoji: "🟨"
         description: For web development and Node.js applications.
         link: https://www.typescriptlang.org/
 
       - name: SQL
+        emoji: "🗄️"
         description: Core skill for data querying and database management.
 
       - name: Eleventy
+        emoji: "🏗️"
         description: Static site generator powering this very website.
         link: https://www.11ty.dev/
 
       - name: Tailwind CSS
+        emoji: "🎨"
         description: Utility-first CSS framework for rapid UI development.
         link: https://tailwindcss.com/
 
   - name: Data & Analytics
-    icon: bar-chart-2
+    emoji: "📊"
     items:
       - name: Pandas / Polars
+        emoji: "🐼"
         description: Data manipulation libraries for Python.
         link: https://pola.rs/
 
       - name: DuckDB
+        emoji: "🦆"
         description: Fast analytical database that runs anywhere.
         link: https://duckdb.org/
 
       - name: Jupyter
+        emoji: "📓"
         description: Interactive notebooks for data exploration.
         link: https://jupyter.org/
 
       - name: DBT
+        emoji: "🔧"
         description: Data transformation tool for analytics engineering.
         link: https://www.getdbt.com/
 
   - name: Productivity
-    icon: check-square
+    emoji: "✅"
     items:
       - name: Obsidian
+        emoji: "🗒️"
         description: Markdown-based knowledge management and note-taking.
         link: https://obsidian.md/
 
       - name: Notion
+        emoji: "📋"
         description: Workspace for docs, projects, and collaboration.
         link: https://www.notion.so/
 
       - name: Arc Browser
+        emoji: "🌐"
         description: A browser reimagined. Great tab management and workspaces.
         link: https://arc.net/
 
       - name: Raycast
+        emoji: "🚀"
         description: Launcher and productivity tool for macOS.
         link: https://www.raycast.com/
 
       - name: 1Password
+        emoji: "🔐"
         description: Password manager for secure credential storage.
         link: https://1password.com/
 
   - name: Services
-    icon: cloud
+    emoji: "☁️"
     items:
       - name: Netlify
+        emoji: "🌐"
         description: Hosting and deployment for this site with serverless functions.
         link: https://www.netlify.com/
 
       - name: GitHub
+        emoji: "🐙"
         description: Code hosting and version control.
         link: https://github.com/
 
       - name: Upstash
+        emoji: "🗃️"
         description: Serverless Redis for upvotes and view counts.
         link: https://upstash.com/
 
       - name: Cloudflare
+        emoji: "🛡️"
         description: DNS, CDN, and security services.
         link: https://www.cloudflare.com/
 
       - name: Giscus
+        emoji: "💬"
         description: GitHub-powered comments system.
         link: https://giscus.app/
+
+retired:
+  - name: Sublime Text
+    emoji: "📝"
+    description: Switched to VS Code for better extension support.
+    retired_date: "2021"
+
+  - name: Chrome
+    emoji: "🌐"
+    description: Moved to Arc Browser for better tab management.
+    retired_date: "2023"
+
+  - name: Alfred
+    emoji: "🎩"
+    description: Replaced by Raycast — faster and more extensible.
+    retired_date: "2023"
+
+  - name: Postman
+    emoji: "📮"
+    description: Switched to Thunder Client in VS Code.
+    retired_date: "2024"
+
+changelog:
+  - date: "2025-02"
+    change: "Added GitHub Copilot to development tools"
+
+  - date: "2024-11"
+    change: "Upgraded to MacBook Pro M3 Pro from M2"
+
+  - date: "2024-08"
+    change: "Switched from Alfred to Raycast"
+
+  - date: "2024-03"
+    change: "Started using Polars alongside Pandas"
+
+  - date: "2023-12"
+    change: "Moved from Chrome to Arc Browser"
+
+  - date: "2023-06"
+    change: "Added DuckDB to data stack"
+
+neofetch:
+  os: "macOS Sequoia 15.3"
+  host: "MacBook Pro 14\" (M3 Pro, 2024)"
+  kernel: "Darwin 24.3.0"
+  shell: "zsh 5.9 (oh-my-zsh)"
+  terminal: "iTerm2 3.5"
+  editor: "VS Code 1.96"
+  resolution: "3024x1964 (built-in) + 3840x2160"
+  cpu: "Apple M3 Pro (11-core)"
+  gpu: "Apple M3 Pro (14-core GPU)"
+  memory: "18 GB unified"
+  disk: "512 GB SSD"
+  uptime: "always on ☕"

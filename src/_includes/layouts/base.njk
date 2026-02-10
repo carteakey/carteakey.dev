@@ -162,7 +162,7 @@
 
             <li class="flex items-center ml-1">
               <a class="font-bold no-underline inline-flex items-center justify-center p-1.5 sm:p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" href="{{ '/more/' | url }}" title="More pages" aria-label="More pages">
-                {% feather "more-horizontal", class="w-4 h-4 sm:w-5 sm:h-5" %}
+                {% feather "compass", class="w-4 h-4 sm:w-5 sm:h-5" %}
               </a>
             </li>
 
@@ -223,71 +223,121 @@
 
       {# Extended footer section #}
       <div class="border-t border-gray-200 dark:border-gray-700 pt-6 pb-8 not-prose">
-        {# Accent theme slider #}
-        <div class="flex items-center justify-center mb-6">
-          <div x-data="{ 
-            currentTheme: localStorage.accentTheme || 'amber',
-            currentIndex: 7,
-            themes: [
-              { name: 'gray', label: 'Gray', color: 'bg-gray-500' },
-              { name: 'slate', label: 'Slate', color: 'bg-slate-500' },
-              { name: 'zinc', label: 'Zinc', color: 'bg-zinc-500' },
-              { name: 'neutral', label: 'Neutral', color: 'bg-neutral-500' },
-              { name: 'stone', label: 'Stone', color: 'bg-stone-500' },
-              { name: 'red', label: 'Red', color: 'bg-red-500' },
-              { name: 'orange', label: 'Orange', color: 'bg-orange-500' },
-              { name: 'amber', label: 'Amber', color: 'bg-amber-500' },
-              { name: 'yellow', label: 'Yellow', color: 'bg-yellow-500' },
-              { name: 'lime', label: 'Lime', color: 'bg-lime-500' },
-              { name: 'green', label: 'Green', color: 'bg-green-500' },
-              { name: 'emerald', label: 'Emerald', color: 'bg-emerald-500' },
-              { name: 'teal', label: 'Teal', color: 'bg-teal-500' },
-              { name: 'cyan', label: 'Cyan', color: 'bg-cyan-500' },
-              { name: 'sky', label: 'Sky', color: 'bg-sky-500' },
-              { name: 'blue', label: 'Blue', color: 'bg-blue-500' },
-              { name: 'indigo', label: 'Indigo', color: 'bg-indigo-500' },
-              { name: 'violet', label: 'Violet', color: 'bg-violet-500' },
-              { name: 'purple', label: 'Purple', color: 'bg-purple-500' },
-              { name: 'fuchsia', label: 'Fuchsia', color: 'bg-fuchsia-500' },
-              { name: 'pink', label: 'Pink', color: 'bg-pink-500' },
-              { name: 'rose', label: 'Rose', color: 'bg-rose-500' }
-            ],
-            init() {
-              this.currentIndex = this.themes.findIndex(t => t.name === this.currentTheme);
-              if (this.currentIndex === -1) this.currentIndex = 7; // default to amber
-            },
-            updateTheme(index) {
-              this.currentIndex = index;
-              this.currentTheme = this.themes[index].name;
-              setAccentTheme(this.currentTheme);
-            }
-          }" 
-          x-init="init()"
-          class="flex flex-col items-center gap-3 w-full max-w-md">
-            
-            <div class="flex items-center gap-3 w-full">
-              <span class="text-sm text-gray-600 dark:text-gray-400 font-medium whitespace-nowrap">Theme</span>
-              
-              {# Custom slider track #}
-              <div class="relative flex-1 h-8 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-                {# Better gradient background with proper color spacing #}
-                <div class="absolute inset-0 rounded-full opacity-70" style="background: linear-gradient(to right, 
+
+        {# Categorized footer navigation #}
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-3 text-sm max-w-2xl mx-auto">
+          
+          {# Read — content for others #}
+          <div>
+            <h4 class="font-semibold text-gray-900 dark:text-gray-100 mb-1.5 text-xs uppercase tracking-wider">Read</h4>
+            <ul class="space-y-1 list-none m-0 p-0">
+              <li><a href="{{ '/now' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "clock", class="w-3.5 h-3.5" %}Now</a></li>
+              <li><a href="{{ '/feed' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "activity", class="w-3.5 h-3.5" %}Feed</a></li>
+              <li><a href="{{ '/blog' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "edit-3", class="w-3.5 h-3.5" %}Blog</a></li>
+              <li><a href="{{ '/snippets' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "terminal", class="w-3.5 h-3.5" %}Snippets</a></li>
+            </ul>
+          </div>
+
+          {# Explore — creative & fun #}
+          <div>
+            <h4 class="font-semibold text-gray-900 dark:text-gray-100 mb-1.5 text-xs uppercase tracking-wider">Explore</h4>
+            <ul class="space-y-1 list-none m-0 p-0">
+              <li><a href="{{ '/projects' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "code", class="w-3.5 h-3.5" %}Projects</a></li>
+              <li><a href="{{ '/gallery' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "camera", class="w-3.5 h-3.5" %}Gallery</a></li>
+              <li><a href="{{ '/vibes' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "image", class="w-3.5 h-3.5" %}Vibes</a></li>
+              <li><a href="{{ '/quotes' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "message-circle", class="w-3.5 h-3.5" %}Quotes</a></li>
+              <li><a href="{{ '/games' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "play", class="w-3.5 h-3.5" %}Games</a></li>
+              <li><a href="{{ '/workouts' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "zap", class="w-3.5 h-3.5" %}Workouts</a></li>
+            </ul>
+          </div>
+
+          {# About Me — personal & professional #}
+          <div>
+            <h4 class="font-semibold text-gray-900 dark:text-gray-100 mb-1.5 text-xs uppercase tracking-wider">About Me</h4>
+            <ul class="space-y-1 list-none m-0 p-0">
+              <li><a href="{{ '/about' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "user", class="w-3.5 h-3.5" %}About</a></li>
+              <li><a href="{{ '/cv' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "file-text", class="w-3.5 h-3.5" %}CV</a></li>
+              <li><a href="{{ '/skills' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "target", class="w-3.5 h-3.5" %}Skills</a></li>
+              <li><a href="{{ '/uses' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "tool", class="w-3.5 h-3.5" %}Uses</a></li>
+            </ul>
+          </div>
+
+          {# Meta — site utilities & links #}
+          <div>
+            <h4 class="font-semibold text-gray-900 dark:text-gray-100 mb-1.5 text-xs uppercase tracking-wider">Meta</h4>
+            <ul class="space-y-1 list-none m-0 p-0">
+              <li><a href="{{ '/search' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "search", class="w-3.5 h-3.5" %}Search</a></li>
+              <li><a href="{{ '/stats' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "bar-chart-2", class="w-3.5 h-3.5" %}Stats</a></li>
+              <li><a href="{{ '/blogroll' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "bookmark", class="w-3.5 h-3.5" %}Blogroll</a></li>
+              <li><a href="{{ '/bookmarks' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "book-open", class="w-3.5 h-3.5" %}Bookmarks</a></li>
+              <li><a href="{{ '/newsletter' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "mail", class="w-3.5 h-3.5" %}Newsletter</a></li>
+              <li><a href="{{ '/guestbook' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "edit", class="w-3.5 h-3.5" %}Guestbook</a></li>
+            </ul>
+          </div>
+
+        </div>
+        
+        {# Made with love + theme picker section #}
+        <div class="text-center mt-5">
+          <div class="text-sm text-gray-600 dark:text-gray-400">
+            Made with ❤️ using <a href="https://www.11ty.dev/" class="hover:underline" target="_blank" rel="noopener">Eleventy</a> 
+            and <a href="https://tailwindcss.com/" class="hover:underline" target="_blank" rel="noopener">Tailwind CSS</a>
+          </div>
+          
+          {# Compact accent theme slider #}
+          <div class="flex items-center justify-center mt-3">
+            <div x-data="{ 
+              currentTheme: localStorage.accentTheme || 'amber',
+              currentIndex: 7,
+              themes: [
+                { name: 'gray', label: 'Gray', color: 'bg-gray-500' },
+                { name: 'slate', label: 'Slate', color: 'bg-slate-500' },
+                { name: 'zinc', label: 'Zinc', color: 'bg-zinc-500' },
+                { name: 'neutral', label: 'Neutral', color: 'bg-neutral-500' },
+                { name: 'stone', label: 'Stone', color: 'bg-stone-500' },
+                { name: 'red', label: 'Red', color: 'bg-red-500' },
+                { name: 'orange', label: 'Orange', color: 'bg-orange-500' },
+                { name: 'amber', label: 'Amber', color: 'bg-amber-500' },
+                { name: 'yellow', label: 'Yellow', color: 'bg-yellow-500' },
+                { name: 'lime', label: 'Lime', color: 'bg-lime-500' },
+                { name: 'green', label: 'Green', color: 'bg-green-500' },
+                { name: 'emerald', label: 'Emerald', color: 'bg-emerald-500' },
+                { name: 'teal', label: 'Teal', color: 'bg-teal-500' },
+                { name: 'cyan', label: 'Cyan', color: 'bg-cyan-500' },
+                { name: 'sky', label: 'Sky', color: 'bg-sky-500' },
+                { name: 'blue', label: 'Blue', color: 'bg-blue-500' },
+                { name: 'indigo', label: 'Indigo', color: 'bg-indigo-500' },
+                { name: 'violet', label: 'Violet', color: 'bg-violet-500' },
+                { name: 'purple', label: 'Purple', color: 'bg-purple-500' },
+                { name: 'fuchsia', label: 'Fuchsia', color: 'bg-fuchsia-500' },
+                { name: 'pink', label: 'Pink', color: 'bg-pink-500' },
+                { name: 'rose', label: 'Rose', color: 'bg-rose-500' }
+              ],
+              init() {
+                this.currentIndex = this.themes.findIndex(t => t.name === this.currentTheme);
+                if (this.currentIndex === -1) this.currentIndex = 7;
+              },
+              updateTheme(index) {
+                this.currentIndex = index;
+                this.currentTheme = this.themes[index].name;
+                setAccentTheme(this.currentTheme);
+              }
+            }" 
+            x-init="init()"
+            class="flex items-center gap-2 w-full max-w-xs">
+              <span class="text-xs text-gray-500 dark:text-gray-500 whitespace-nowrap">🎨</span>
+              <div class="relative flex-1 h-5 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                <div class="absolute inset-0 rounded-full opacity-60" style="background: linear-gradient(to right, 
                   #6b7280 0%, #64748b 4.5%, #71717a 9%, #737373 13.5%, #78716c 18%, 
                   #dc2626 22.5%, #ea580c 27%, #f59e0b 31.5%, #eab308 36%, #84cc16 40.5%, 
                   #22c55e 45%, #10b981 49.5%, #14b8a6 54%, #06b6d4 58.5%, #0ea5e9 63%, 
                   #3b82f6 67.5%, #6366f1 72%, #8b5cf6 76.5%, #a855f7 81%, #d946ef 85.5%, 
                   #ec4899 90%, #f43f5e 94.5%, #f43f5e 100%)"></div>
-                
-                {# Slider handle #}
                 <div 
-                  class="absolute top-1 w-6 h-6 rounded-full shadow-lg cursor-pointer transform -translate-x-1/2 transition-all duration-200 border-2 border-white dark:border-gray-800"
+                  class="absolute top-0.5 w-4 h-4 rounded-full shadow-md cursor-pointer transform -translate-x-1/2 transition-all duration-200 border-2 border-white dark:border-gray-800"
                   :class="themes[currentIndex].color"
-                  :style="`left: ${(currentIndex / (themes.length - 1)) * 100}%`"
-                  @mousedown="isDragging = true"
-                  @touchstart="isDragging = true">
+                  :style="`left: ${(currentIndex / (themes.length - 1)) * 100}%`">
                 </div>
-                
-                {# Invisible input for interaction #}
                 <input 
                   type="range" 
                   min="0" 
@@ -296,97 +346,8 @@
                   @input="updateTheme(parseInt($event.target.value))"
                   class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
               </div>
-              
-              <span class="text-sm text-gray-600 dark:text-gray-400 font-medium whitespace-nowrap capitalize" x-text="themes[currentIndex].label"></span>
+              <span class="text-xs text-gray-500 dark:text-gray-500 whitespace-nowrap capitalize w-14 text-left" x-text="themes[currentIndex].label"></span>
             </div>
-          </div>
-        </div>
-
-        {# Enhanced navigation section - compact with separators #}
-        <div class="text-center">
-          <div class="flex flex-wrap justify-center items-center gap-2 text-sm max-w-5xl mx-auto">
-            <a href="{{ '/about' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
-              {% feather "user", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
-              <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">About</span>
-            </a>
-            <a href="{{ '/now' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
-              {% feather "clock", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
-              <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">Now</span>
-            </a>
-            <a href="{{ '/feed' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
-              {% feather "activity", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
-              <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">Feed</span>
-            </a>
-            <a href="{{ '/blog' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
-              {% feather "edit-3", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
-              <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">Blog</span>
-            </a>
-            <a href="{{ '/cv' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
-              {% feather "file-text", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
-              <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">CV</span>
-            </a>
-            <span class="text-gray-400 dark:text-gray-600">|</span>
-            <a href="{{ '/projects' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
-              {% feather "code", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
-              <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">Projects</span>
-            </a>
-            <a href="{{ '/snippets' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
-              {% feather "terminal", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
-              <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">Snippets</span>
-            </a>
-            <span class="text-gray-400 dark:text-gray-600">|</span>
-            <a href="{{ '/gallery' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
-              {% feather "camera", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
-              <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">Gallery</span>
-            </a>
-            <a href="{{ '/vibes' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
-              {% feather "image", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
-              <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">Vibes</span>
-            </a>
-            <a href="{{ '/quotes' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
-              {% feather "message-circle", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
-              <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">Quotes</span>
-            </a>
-            <span class="text-gray-400 dark:text-gray-600">|</span>
-            <a href="{{ '/games' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
-              {% feather "play", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
-              <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">Games</span>
-            </a>
-            <a href="{{ '/workouts' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
-              {% feather "zap", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
-              <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">Workouts</span>
-            </a>
-            <span class="text-gray-400 dark:text-gray-600">|</span>
-            <a href="{{ '/search' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
-              {% feather "search", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
-              <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">Search</span>
-            </a>
-            <a href="{{ '/stats' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
-              {% feather "bar-chart-2", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
-              <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">Stats</span>
-            </a>
-            <a href="{{ '/blogroll' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
-              {% feather "bookmark", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
-              <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">Blogroll</span>
-            </a>
-            <a href="{{ '/bookmarks' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
-              {% feather "book-open", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
-              <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">Bookmarks</span>
-            </a>
-            <a href="{{ '/newsletter' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
-              {% feather "mail", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
-              <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">Newsletter</span>
-            </a>
-            <a href="{{ '/more' | url }}" class="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
-              {% feather "plus", class="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-current" %}
-              <span class="text-gray-600 dark:text-gray-400 group-hover:text-current">More</span>
-            </a>
-          </div>
-          
-          {# Made with love section #}
-          <div class="text-sm text-gray-600 dark:text-gray-400 mt-6">
-            Made with ❤️ using <a href="https://www.11ty.dev/" class="hover:underline" target="_blank" rel="noopener">Eleventy</a> 
-            and <a href="https://tailwindcss.com/" class="hover:underline" target="_blank" rel="noopener">Tailwind CSS</a>
           </div>
           
           <div class="text-xs text-gray-500 dark:text-gray-500 mt-2">

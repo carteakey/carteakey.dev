@@ -7,53 +7,112 @@ eleventyNavigation:
   order: 11
 ---
 
-{% include "components/breadcrumbs.njk" %}
-
 <h1>Uses</h1>
 <p class="text-gray-600 dark:text-gray-300 mb-8">
   A comprehensive list of the tools, software, and hardware I use daily. Inspired by 
   <a href="https://uses.tech/" class="accent-link" target="_blank" rel="noopener">uses.tech</a>.
 </p>
 
-<div class="space-y-12">
-  {% for category in uses.categories %}
-    <section>
-      <h2 class="flex items-center gap-3 text-xl font-bold mb-6">
-        {% feather category.icon, class="w-6 h-6" %}
-        {{ category.name }}
-      </h2>
-      
-      <div class="grid gap-4 md:grid-cols-2">
-        {% for item in category.items %}
-          <div class="card card-hover card-padding">
-            <div class="flex items-start justify-between">
-              <h3 class="font-semibold text-gray-900 dark:text-gray-100">
-                {% if item.link %}
-                  <a href="{{ item.link }}" target="_blank" rel="noopener" class="link-accent hover:underline">
-                    {{ item.name }}
-                    {% feather "external-link", class="w-3.5 h-3.5 inline-block ml-1 opacity-50" %}
-                  </a>
-                {% else %}
-                  {{ item.name }}
-                {% endif %}
-              </h3>
-            </div>
-            {% if item.description %}
-              <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
-                {{ item.description }}
-              </p>
-            {% endif %}
+{# ── Neofetch-style hardware block ── #}
+<div class="not-prose mb-10">
+  <div class="card card-padding font-mono text-sm overflow-x-auto">
+    <div class="flex flex-col sm:flex-row gap-6">
+      <pre class="text-accent shrink-0 leading-tight hidden sm:block" style="color: var(--accent-color);">
+        .:'
+    __ :'__
+ .'`  `-'  `'.
+:          .-'
+:         ;
+ :   _.--'
+  `-..__.-'
+      </pre>
+      <div class="flex-1 min-w-0">
+        <div class="font-bold mb-2" style="color: var(--accent-color);">kartikey@macbook</div>
+        <div class="border-b border-gray-300 dark:border-gray-600 mb-2" style="border-color: var(--accent-color);"></div>
+        {% for key, value in uses.neofetch %}
+          <div class="flex gap-2 leading-relaxed">
+            <span class="font-bold shrink-0" style="color: var(--accent-color);">{{ key }}:</span>
+            <span class="text-gray-600 dark:text-gray-400">{{ value }}</span>
           </div>
         {% endfor %}
+        <div class="flex gap-1 mt-3">
+          {% set colors = ["#e11d48", "#ea580c", "#eab308", "#22c55e", "#06b6d4", "#6366f1", "#a855f7", "#ec4899"] %}
+          {% for color in colors %}
+            <div class="w-4 h-4 rounded-sm" style="background-color: {{ color }};"></div>
+          {% endfor %}
+        </div>
       </div>
-    </section>
-  {% endfor %}
+    </div>
+  </div>
 </div>
 
-<div class="mt-12 card card-padding">
+{# ── Main categories in multi-column text layout ── #}
+<div class="not-prose">
+  <div class="grid md:grid-cols-2 gap-x-12 gap-y-10">
+    {% for category in uses.categories %}
+      <section>
+        <h2 class="text-lg font-bold text-gray-900 dark:text-gray-100 mb-4 pb-2 border-b border-gray-200 dark:border-gray-700">
+          {{ category.emoji }} {{ category.name }}
+        </h2>
+        <div class="space-y-3">
+          {% for item in category.items %}
+            <div>
+              <div class="flex items-baseline gap-2">
+                <span>{{ item.emoji }}</span>
+                {% if item.link %}
+                  <a href="{{ item.link }}" target="_blank" rel="noopener" class="font-semibold text-gray-900 dark:text-gray-100 link-accent hover:underline">{{ item.name }}</a>
+                {% else %}
+                  <span class="font-semibold text-gray-900 dark:text-gray-100">{{ item.name }}</span>
+                {% endif %}
+              </div>
+              {% if item.description %}
+                <p class="text-sm text-gray-500 dark:text-gray-400 ml-7 mt-0.5">{{ item.description }}</p>
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+      </section>
+    {% endfor %}
+  </div>
+</div>
+
+{# ── Retired section ── #}
+<div class="not-prose mt-12">
+  <h2 class="text-lg font-bold text-gray-900 dark:text-gray-100 mb-4 pb-2 border-b border-gray-200 dark:border-gray-700">
+    🪦 Retired
+  </h2>
+  <div class="space-y-3">
+    {% for item in uses.retired %}
+      <div class="flex items-baseline gap-2 opacity-70">
+        <span>{{ item.emoji }}</span>
+        <span class="font-semibold text-gray-900 dark:text-gray-100 line-through decoration-1">{{ item.name }}</span>
+        <span class="text-xs text-gray-400 dark:text-gray-500">({{ item.retired_date }})</span>
+      </div>
+      {% if item.description %}
+        <p class="text-sm text-gray-500 dark:text-gray-400 ml-7 -mt-2">{{ item.description }}</p>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
+{# ── Changelog section ── #}
+<div class="not-prose mt-12">
+  <h2 class="text-lg font-bold text-gray-900 dark:text-gray-100 mb-4 pb-2 border-b border-gray-200 dark:border-gray-700">
+    📋 Changelog
+  </h2>
+  <div class="space-y-2">
+    {% for entry in uses.changelog %}
+      <div class="flex gap-3 text-sm">
+        <span class="font-mono text-xs text-gray-400 dark:text-gray-500 shrink-0 pt-0.5">{{ entry.date }}</span>
+        <span class="text-gray-600 dark:text-gray-400">{{ entry.change }}</span>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<div class="mt-12 card card-padding not-prose">
   <h3 class="font-semibold text-gray-900 dark:text-gray-100 mb-2">
-    {% feather "help-circle", class="w-5 h-5 inline-block mr-2" %}
-    Want to know more?
+    ❓ Want to know more?
   </h3>
   <p class="text-sm text-gray-600 dark:text-gray-400">
     Feel free to <a href="mailto:{{ metadata.author.email }}" class="accent-link">reach out</a> if you have questions about any of these tools or want recommendations for your own setup.
