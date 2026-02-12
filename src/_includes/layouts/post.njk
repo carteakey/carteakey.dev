@@ -35,6 +35,8 @@ hasEthicalAds: false
 {% include "components/breadcrumbs.njk" %}
 {% from "components/comment-pointer.njk" import commentPointer %}
 
+{% set isDraft = hidden or (title and (title | lower).includes('draft')) %}
+
 {% set showSidebar = not fullWidth %}
 {% set tocHtml = (content | toc) | default('') %}
 {% set conversationPlacement = conversationPlacement or 'sidebar' %}
@@ -99,6 +101,20 @@ hasEthicalAds: false
   <article class="min-w-0 space-y-8 px-4 sm:px-6 xl:px-0 animate-enter">
     <header class="space-y-5">
       <h1 class="text-gradient">{{ title }}</h1>
+
+      {% if isDraft %}
+      <div class="rounded-md border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50 px-4 py-3">
+        <div class="flex items-start gap-2.5">
+          <div class="flex-1 text-sm text-gray-700 dark:text-gray-300">
+            {% if hidden %}
+            <span class="font-medium text-gray-900 dark:text-gray-100">Draft:</span> You've wandered into a work-in-progress post. Content may be incomplete or contain errors. Come back later for the finished version!
+            {% else %}
+            <span class="font-medium text-gray-900 dark:text-gray-100">Note:</span> Inspired by <a href="https://architchandra.com/articles/the-perfectionists-guide-to-deploying-a-statamic-website-to-vercel" class="underline hover:text-gray-900 dark:hover:text-gray-100">arch</a>, I've decided to publish drafts even if they're not complete—making writing less stressful.
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% endif %}
 
       {% if description %}
         <p class="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
@@ -276,8 +292,13 @@ hasEthicalAds: false
             
             const data = await response.json();
             
-            // Fetch fresh count after successful upvote
-            await fetchUpvoteCount();
+            // Update count immediately from response
+            upvoteCount.textContent = data.count;
+            
+            // Update view count display if present
+            if (viewCountNumber && data.views !== undefined) {
+              viewCountNumber.textContent = data.views.toLocaleString();
+            }
             
             // Save upvote state to localStorage and update local state
             localStorage.setItem(storageKey, 'true');

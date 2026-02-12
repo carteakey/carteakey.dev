@@ -4,9 +4,14 @@ layout: layouts/home.njk
 ---
 
 <h1>Tags</h1>
-{% for tag in collections.tagList %}
-  {% set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
-  <li class="">
-    <a href="{{ tagUrl | url }}" class="post-tag">{{ tag }}</a> <br>
+
+<ul class="space-y-2">
+{% set sortedTags = collections.tagList | sortTagsByCount(collections) %}
+{% for tagItem in sortedTags %}
+  {% set tagUrl %}/tags/{{ tagItem.name | slugify }}/{% endset %}
+  <li class="flex items-center justify-between">
+    <a href="{{ tagUrl | url }}" class="post-tag text-amber-600 dark:text-amber-400 hover:underline">{{ tagItem.name }}</a>
+    <span class="text-sm text-gray-500 dark:text-gray-400 ml-2">({{ tagItem.count }})</span>
   </li>
 {% endfor %}
+</ul>

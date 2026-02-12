@@ -8,7 +8,6 @@ tags:
   - Linux
 hidden: true
 ---
-**Note:** Inspired by [arch](https://architchandra.com/articles/the-perfectionists-guide-to-deploying-a-statamic-website-to-vercel), I have decided to publish drafts even if they are not  complete, makes writing less stressful.
 
 2024 comes to a close, and AI hasn't taken over humanity (yet). The LLM's however, seem to be taking over the internet - [The Internet is Becoming an Ocean of LLM-Generated Junk.](https://www.trevorlasn.com/blog/the-internet-is-becoming-an-ocean-of-llm-generated-junk)
 

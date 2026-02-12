@@ -1,9 +1,10 @@
 ---
-title: "The TEA Framework: How I Built This Site"
+title: "The TEA Framework: How I Built This Site (draft)"
 description: "The tech stack powering this site and all the services that make it tick"
 date: 2025-05-25
 tags:
-  - xx
+  - Eleventy
+  - Self-Host
 hidden: true
 ---
 

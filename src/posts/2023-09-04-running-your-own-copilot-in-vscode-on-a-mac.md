@@ -4,7 +4,7 @@ description: With Codellama, Ollama and Continue.
 date: 2023-09-04T16:39:26.330Z
 updated: 2024-03-26T03:11:06.365Z
 tags:
-  - LLM
+  - AI
   - Mac
 featured: true
 ---

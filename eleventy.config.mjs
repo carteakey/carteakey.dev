@@ -386,6 +386,16 @@ export default function(eleventyConfig) {
 
   eleventyConfig.addFilter("filterTagList", filterTagList);
 
+  // Sort tags by post count (descending)
+  eleventyConfig.addFilter("sortTagsByCount", function(tagList, collections) {
+    return tagList.map(tag => ({
+      name: tag,
+      count: (collections[tag] || []).filter(post => !post.data.hidden).length
+    }))
+    .filter(item => item.count > 0)
+    .sort((a, b) => b.count - a.count);
+  });
+
   // Add split filter for breadcrumbs
   eleventyConfig.addFilter("split", function(str, separator) {
     if (typeof str !== 'string') return [];

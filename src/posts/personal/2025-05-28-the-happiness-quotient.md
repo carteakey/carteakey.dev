@@ -1,11 +1,11 @@
 ---
-title: The happiness quotient 
+title: The happiness quotient (draft)
 description: which side are you on?
 date: 2025-05-28
 updated: 2025-05-28
 tags:
   - Life
-  - philosophy
+  - Philosophy
 hidden: true
 ---
 

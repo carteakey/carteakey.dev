@@ -4,7 +4,6 @@ description: Squeezing every token per second
 date: 2025-09-21
 updated: 2025-09-21
 tags:
-  - LLMs
   - AI
 
 ---
