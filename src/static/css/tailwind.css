@@ -264,6 +264,7 @@
 
   .dark body {
     background-color: var(--zen-dark);
+    background-image: none;
   }
 
   .dark body::before {
