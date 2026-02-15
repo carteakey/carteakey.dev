@@ -84,7 +84,7 @@ eleventyNavigation:
 
   <!-- List View -->
   <div x-show="viewMode === 'list'" x-cloak class="mt-6 space-y-2" id="blogList">
-    {% for post in collections.posts | reverse %}
+    {% for post in collections.posts %}
       {% set rawTags = post.data.tags | default([]) %}
       {% set filteredTags = rawTags | filterTagList %}
       {% set searchDesc = post.data.description | default('') | lower %}
