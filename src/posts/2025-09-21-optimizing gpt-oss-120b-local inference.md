@@ -5,7 +5,6 @@ date: 2025-09-21
 updated: 2025-09-21
 tags:
   - AI
-
 ---
 > **Note:** Parts of this post were drafted/refined with the help of gpt‑oss‑120b itself. How meta!
 
@@ -30,18 +29,16 @@ export LLAMA_SET_ROWS=1
 export GGML_CUDA_GRAPH_OPT=1
 MODEL="/home/carteakey/lllms/models/ggml-org/gpt-oss-120b-GGUF/gpt-oss-120b-mxfp4-00001-of-00003.gguf"
 
-taskset -c 0-11 ./vendor/llama.cpp/build/bin/llama-server \
+taskset -c 0-11 $LLAMA_CPP_CUDA_PATH \
 -m "$MODEL" \
+--alias "ggml-org/gpt-oss-120b" \
 --fit on \
 --fit-ctx 32678 \
---fit-target 128 \
+--fit-target 512 \
 --no-mmap \
---mlock \
 --threads 10 \
 --threads-batch 12 \
 --flash-attn on \
---cache-type-k q8_0 \
---cache-type-v q4_0 \
 --batch-size 2048 \
 --ubatch-size 512 \
 --prio 2 \
@@ -51,9 +48,6 @@ taskset -c 0-11 ./vendor/llama.cpp/build/bin/llama-server \
 --min-p 0.0 \
 --top-p 1.0 \
 --jinja \
---no-mmap \
---mlock \
---threads 10 \
 --reasoning-format none \
 --chat-template-kwargs '{"reasoning_effort":"high"}' \
 --chat-template-file /home/kchauhan/repos/lllms/chat-template.jinja \
