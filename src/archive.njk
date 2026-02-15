@@ -56,7 +56,12 @@ eleventyNavigation:
           <span class="inline-flex items-center gap-1 px-2 py-0.5 text-[0.65rem] font-semibold uppercase tracking-wider rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900/70 dark:text-blue-200">
             {% feather "edit-3", class="w-3 h-3" %}Post
           </span>
-          <time class="text-xs text-gray-500 dark:text-gray-400" datetime="{{ post.date | htmlDateString }}">
+          {% if post.data.pinned %}
+            <span class="inline-flex items-center gap-1 px-2 py-0.5 text-[0.65rem] font-semibold uppercase tracking-wider rounded-full bg-amber-100 text-amber-800 dark:bg-amber-900/70 dark:text-amber-200">
+              {% feather "map-pin", class="w-3 h-3" %}Pinned
+            </span>
+          {% endif %}
+          <time class="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400" datetime="{{ post.date | htmlDateString }}">
             {{ post.date | readableDate }}
           </time>
         </div>
@@ -91,9 +96,12 @@ eleventyNavigation:
         data-body="{{ searchDesc }}"
       >
         <div class="card-list-content">
+          {% if post.data.pinned %}
+            <span class="inline-flex items-center gap-1 px-1.5 py-0.5 mr-1.5 text-[0.6rem] font-semibold uppercase tracking-wider rounded-full bg-amber-100 text-amber-800 dark:bg-amber-900/70 dark:text-amber-200">{% feather "map-pin", class="w-3 h-3" %}Pinned</span>
+          {% endif %}
           <a href="{{ post.url }}" class="card-list-title link-accent text-sm">{{ post.data.title }}</a>
         </div>
-        <time class="card-list-meta whitespace-nowrap" datetime="{{ post.date | htmlDateString }}">
+        <time class="card-list-meta whitespace-nowrap uppercase tracking-wide" datetime="{{ post.date | htmlDateString }}">
           {{ post.date | readableDate }}
         </time>
         <a href="{{ post.url }}" class="text-gray-400 hover:text-amber-500">

@@ -29,42 +29,39 @@ htmlTemplateEngine: "webc"
     </p>
   </div>
 </div>
-  {% set featuredPost = (featured and featured.featuredPost) or null %}
-  {% if featuredPost %}
-    {% set highlightedPost = featuredPost %}
-    <section class="mt-8 mb-8 animate-enter stagger-1">
-      <div class="flex items-center gap-2 text-sm uppercase tracking-wide text-gray-500 dark:text-gray-400">
-        {% feather "star", class="w-4 h-4 text-amber-500 animate-float" %}
-        Featured Post
-      </div>
-      <article class="mt-3 rounded-2xl card-elevated gradient-border p-5 md:p-6">
-        <a href="{{ highlightedPost.url }}" class="inline-flex items-center gap-2 text-xl md:text-2xl font-semibold text-gray-900 dark:text-gray-100 hover:text-amber-600 dark:hover:text-amber-400 transition-colors">
+  {% set highlightedPost = collections.featuredPost %}
+  {% if highlightedPost %}
+    <section class="rounded-xl card-glass p-5 sm:p-6 not-prose mt-8 mb-8 animate-enter stagger-1">
+      <div class="flex flex-col gap-4">
+        <div class="flex items-center gap-2 text-sm font-semibold uppercase tracking-wide" style="color: var(--accent-color);">
+          {% feather "star", class="w-4 h-4" %}
+          Featured Post
+        </div>
+        <a href="{{ highlightedPost.url }}" class="inline-flex items-center gap-2 text-lg md:text-xl font-semibold text-gray-900 dark:text-gray-100 transition-colors hover:text-amber-600 dark:hover:text-amber-400">
           {{ highlightedPost.data.title }}
-          {% feather "arrow-up-right", class="w-4 h-4" %}
+          {% feather "arrow-up-right", class="w-4 h-4 opacity-40" %}
         </a>
         {% if highlightedPost.data.description %}
-        <p class="mt-3 text-sm md:text-base text-gray-600 dark:text-gray-300">
+        <p class="text-sm text-gray-600 dark:text-gray-300">
           {{ highlightedPost.data.description }}
         </p>
         {% endif %}
-        <div class="mt-4 flex flex-wrap items-center gap-3 text-xs text-gray-500 dark:text-gray-400">
-          <time datetime="{{ highlightedPost.date | htmlDateString }}">{{ highlightedPost.date | readableDate }}</time>
+        <div class="flex flex-wrap items-center gap-3 text-xs text-gray-500 dark:text-gray-400">
+          <time class="uppercase tracking-wide" datetime="{{ highlightedPost.date | htmlDateString }}">{{ highlightedPost.date | readableDate }}</time>
           {% if highlightedPost.data.tags %}
             <span class="h-1 w-1 rounded-full bg-gray-300 dark:bg-gray-600"></span>
-            <ul class="flex flex-wrap gap-2">
-              {% for tag in highlightedPost.data.tags %}
-                <li class="inline-flex items-center rounded-full bg-gray-100 dark:bg-gray-800 px-2 py-0.5 text-[0.7rem] uppercase tracking-wide text-gray-600 dark:text-gray-300">{{ tag }}</li>
-              {% endfor %}
-            </ul>
+            {% for tag in highlightedPost.data.tags | filterTagList %}
+              <span class="inline-flex items-center rounded-full bg-gray-100 dark:bg-gray-800 px-2 py-0.5 text-[0.7rem] uppercase tracking-wide text-gray-600 dark:text-gray-300">#{{ tag }}</span>
+            {% endfor %}
           {% endif %}
           <span class="ml-auto">
-            <a href="{{ highlightedPost.url }}" class="inline-flex items-center gap-1 text-amber-600 dark:text-amber-400 hover:underline">
+            <a href="{{ highlightedPost.url }}" class="inline-flex items-center gap-1 hover:underline" style="color: var(--accent-color);">
               Read the post
               {% feather "chevron-right", class="w-4 h-4" %}
             </a>
           </span>
         </div>
-      </article>
+      </div>
     </section>
   {% endif %}
 

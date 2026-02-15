@@ -569,8 +569,39 @@ export default function(eleventyConfig) {
         if (post.date && post.date > now) return false;
         return true;
         })
-        .sort((a, b) => b.date - a.date); // newest first
+        .sort((a, b) => {
+          // Pinned posts first, then by date (newest first)
+          const aPinned = a.data.pinned ? 1 : 0;
+          const bPinned = b.data.pinned ? 1 : 0;
+          if (aPinned !== bPinned) return bPinned - aPinned;
+          return b.date - a.date;
+        });
     });
+
+  // Featured post: pick the best post with featured: true from the posts collection
+  eleventyConfig.addCollection("featuredPost", function(collectionApi) {
+    const now = new Date();
+    const posts = collectionApi
+      .getFilteredByGlob("./src/posts/**/*.md")
+      .filter(post => {
+        if (post.data.hidden === true) return false;
+        if (post.date && post.date > now) return false;
+        if (!post.data.featured) return false;
+        return true;
+      });
+
+    // Sort by weight (lower first), then by updated/date (newest first)
+    posts.sort((a, b) => {
+      const wA = (typeof a.data.featured === 'object' ? a.data.featured.weight : undefined) ?? Infinity;
+      const wB = (typeof b.data.featured === 'object' ? b.data.featured.weight : undefined) ?? Infinity;
+      if (wA !== wB) return wA - wB;
+      const dateA = new Date(a.data.updated || a.date).getTime() || 0;
+      const dateB = new Date(b.data.updated || b.date).getTime() || 0;
+      return dateB - dateA;
+    });
+
+    return posts[0] || null;
+  });
 
   // Group posts by folder for /blog/{folder}/ listings
   eleventyConfig.addCollection("postFolders", function (collectionApi) {
@@ -697,6 +728,7 @@ export default function(eleventyConfig) {
           summary,
           readingTime: post.data.readingTime,
           tags: (post.data.tags || []).filter((tag) => tag !== "posts" && tag !== "post"),
+          pinned: !!post.data.pinned,
         };
       });
 
@@ -822,7 +854,13 @@ export default function(eleventyConfig) {
       // ...vibes,
     ].filter((item) => item.date instanceof Date && !Number.isNaN(item.date.valueOf()));
 
-    return combined.sort((a, b) => b.date - a.date);
+    return combined.sort((a, b) => {
+      // Pinned posts first, then by date (newest first)
+      const aPinned = (a.type === 'post' && a.pinned) ? 1 : 0;
+      const bPinned = (b.type === 'post' && b.pinned) ? 1 : 0;
+      if (aPinned !== bPinned) return bPinned - aPinned;
+      return b.date - a.date;
+    });
   });
 
   // Customize Markdown library and settings:

@@ -5,6 +5,7 @@ date: 2025-09-21
 updated: 2025-09-21
 tags:
   - AI
+pinned: true
 ---
 > **Note:** Parts of this post were drafted/refined with the help of gpt‑oss‑120b itself. How meta!
 
