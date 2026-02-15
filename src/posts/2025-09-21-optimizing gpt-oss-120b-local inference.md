@@ -9,16 +9,17 @@ tags:
 ---
 > **Note:** Parts of this post were drafted/refined with the help of gpt‑oss‑120b itself. How meta!
 
-## **TL;DR** 
+## TL;DR
 
-- **Hardware**: i5‑12600K (6P + 4E), RTX 4070 (12 GB), 64 GB DDR5 RAM, Linux (Ubuntu 24.04, CUDA 13.0).
-- **Result**: 190 tokens/s prompt processing, 11 tokens/s generation for 32k context → usable for interactive coding tasks.
+- **Hardware**: i5-12600K (6P + 4E), RTX 4070 (12 GB), 64 GB DDR5 RAM, Linux (CachyOS, CUDA 13.0).
+- **Result**: ~~11 tokens/s~~ -> **30 tokens/s** generation, 190+ tokens/s prompt processing for 32k context.
+- **Biggest win**: Enabling DDR5 XMP in BIOS. My RAM was running at 2000 MT/s instead of 6000 MT/s for **months**. 3x memory bandwidth = 3x token generation speed. See [the cautionary tale below](#check-your-ram-speed-seriously).
 - **Key flags** that made it possible:
-  - `--n-cpu-moe 31` (keep most MoE layers on CPU)
-  - `--n-gpu-layers 99` (only 5 layers on GPU)
-  - `taskset -c 0-11` (P‑core threads only)
-  - `-fa` (flash‑attention)
-
+	- `--n-cpu-moe 31` (keep most MoE layers on CPU)
+	- `--n-gpu-layers 99` (only 5 layers on GPU)
+	- `taskset -c 0-11` (P-core threads only)
+	- `-fa` (flash-attention)
+	- Latest llama.cpp build (significant MoE performance improvements since initial post)
 
 Final run script (save as `run-gpt-oss-120b.sh`, and tweak paths as needed):
 
@@ -26,55 +27,60 @@ Final run script (save as `run-gpt-oss-120b.sh`, and tweak paths as needed):
 #!/usr/bin/env bash
 
 export LLAMA_SET_ROWS=1
+export GGML_CUDA_GRAPH_OPT=1
 MODEL="/home/carteakey/lllms/models/ggml-org/gpt-oss-120b-GGUF/gpt-oss-120b-mxfp4-00001-of-00003.gguf"
 
 taskset -c 0-11 ./vendor/llama.cpp/build/bin/llama-server \
 -m "$MODEL" \
---n-cpu-moe 31 \
---n-gpu-layers 99 \
---ctx-size 24576 \
---no-warmup \
--b 2048 \
--ub 2048 \
+--fit on \
+--fit-ctx 32678 \
+--fit-target 128 \
+--no-mmap \
+--mlock \
 --threads 10 \
---threads-batch 10 \
+--threads-batch 12 \
+--flash-attn on \
+--cache-type-k q8_0 \
+--cache-type-v q4_0 \
+--batch-size 2048 \
+--ubatch-size 512 \
+--prio 2 \
+--no-warmup \
 --temp 1.0 \
 --top-k 100 \
 --min-p 0.0 \
 --top-p 1.0 \
---mlock \
---no-mmap \
--fa on \
 --jinja \
+--no-mmap \
+--mlock \
+--threads 10 \
 --reasoning-format none \
 --chat-template-kwargs '{"reasoning_effort":"high"}' \
---chat-template-file /home/kchauhan/Desktop/repos/lllms/chat-template.jinja \
---host 0.0.0.0 --port 8502 \
---api-key "dummy"
+--chat-template-file /home/kchauhan/repos/lllms/chat-template.jinja \
+--host 0.0.0.0 --port 8001
 
+# --n-cpu-moe 31 \ Replaced with better fit options newly added in llama cpp
+# --n-gpu-layers 99 \
 
 # Notes:
 # LLAMA_SET_ROWS=1: 1 row per thread for better CPU cache locality.
-# --n-cpu-moe 31: keep first 31 MoE layers on CPU (model has 36 → ~5 left for GPU).
+# GGML_CUDA_GRAPH_OPT=1: experimental CUDA graph optimization for reduced kernel launch overhead.
+# --n-cpu-moe 31: keep first 31 MoE layers on CPU (model has 36 -> ~5 left for GPU).
 # --n-gpu-layers 99: offload as many non-CPU-forced layers as possible to GPU.
 # --ctx-size 24576: 24K context sized for 12 GB VRAM.
 # --no-mmap: faster prompt processing when the model sits in RAM.
 # --mlock: lock model in RAM to avoid paging.
 # --no-warmup: skip initial warm-up pass.
 # -b 2048 / -ub 2048: batch sizes for eval/compute; tune per VRAM.
-# --threads 14: higher thread count helped on this setup; YMMV.
-# --cpu-range 0-5 and --cpu-strict 1: pin to P-cores only on i5-12600K.
+# --threads 10: P-core count minus 1 (leave headroom for system).
+# taskset -c 0-11: pin to P-cores only on i5-12600K (better than --cpu-range).
 # --temp, --top-k, --top-p, --min-p: sampling controls; top-k=100 gives a small speed boost.
 # -fa: enable flash-attention CUDA kernels.
 # --jinja and --chat-template-file: enable/use Jinja chat template and tools.
 # --reasoning-format none + --chat-template-kwargs: select reasoning via template (reasoning_effort=high).
 # --host/--port and --api-key: bind server and require a trivial API key.
-
 ```
 
-
-
-<br/>
 
 ## Introduction
 
@@ -103,10 +109,15 @@ With the magic of llama.cpp and some tinkering, I've managed to get it running o
 - **GPU**: RTX 4070 (12GB VRAM)
 - **RAM**: 64 GB DDR5 (4 sticks of 16GB running with XMP at 6000 Mhz, praise the silicon lottery)
 
-I can squeeze 10-11 tok/s on large outputs at 32k context length (considering decay + me being GPU poor). [According to reddit](https://www.reddit.com/r/LocalLLaMA/comments/162pgx9/what_do_yall_consider_acceptable_tokens_per/), 10 tok/s is the bare minimum for general use.
+~~I can squeeze 10-11 tok/s on large outputs at 32k context length (considering decay + me being GPU poor).~~
+
+**Update (2026-02-15):** After enabling XMP (see [the story below](#check-your-ram-speed-seriously)), I'm now getting **30 tok/s** on gpt-oss-120b. This also applies to Qwen3-Coder-Next where I'm seeing **40 tok/s** with MXFP4. llama.cpp improvements since the original post also contribute to the speed increase.
+
+[According to reddit](https://www.reddit.com/r/LocalLLaMA/comments/162pgx9/what_do_yall_consider_acceptable_tokens_per/), 10 tok/s is the bare minimum for general use.
 
 {% image_cc "./src/static/img/acceptable-tps.png", "Acceptable TPS","", "7-10 tps is around the human reading speed as well" %}
 
+7-10 tps is around the human reading speed as well
 
 ## Benchmarks
 
@@ -138,14 +149,56 @@ Here's some notes after wandering in [r/LocalLLaMA](https://www.reddit.com/r/Loc
 
 ### Optimization checklist (in order of impact)
 
-1. **Run on Linux** – +≈ 20 % TPS (CUDA driver + scheduler).  
-2. **Build llama.cpp with CUDA & CUBLAS** (`-DLLAMA_CUBLAS=ON`).  
-3. **Offload MoE layers to CPU** (`--n-cpu-moe 31`).  
-4. **Use DDR5 RAM** (vs DDR4) – +≈ 15 % TPS.
-5. **Pin threads to P‑cores** (`--cpu-range 0-5 --cpu-strict 1`).  
-6. **Use iGPU for display** (offload desktop rendering) – +≈ 5 % TPS.
-7. **Others**: `-fa` (flash‑attention), `--top‑k 100`, `--ctx-size 24576`.
+1. **CHECK YOUR RAM SPEED** - Seriously. See [below](#check-your-ram-speed-seriously). This was a 3x improvement for me.
+2. **Run on Linux** - +~20% TPS (CUDA driver + scheduler).
+3. **Build llama.cpp from source with CUDA** (`-DLLAMA_CUBLAS=ON`). Keep it updated - MoE performance has improved significantly in recent builds.
+4. **Offload MoE layers to CPU** (`--n-cpu-moe 31`).
+5. **Pin threads to P-cores** (`taskset -c 0-11` on i5-12600K).
+6. **Use iGPU for display** (offload desktop rendering) - +~5% TPS.
+7. **Env vars**: `LLAMA_SET_ROWS=1` (CPU cache locality), `GGML_CUDA_GRAPH_OPT=1` (CUDA graph optimization).
+8. **Others**: `-fa` (flash-attention), `--top-k 100`, `--mlock`, `--no-mmap`.
 
+### Check your RAM speed. Seriously.
+
+This is the single biggest lesson from this entire optimization journey.
+
+For **months**, I was getting 10-11 tok/s and couldn't figure out why users with nearly identical hardware (i5-13400F, similar GPU) were getting 24-26 tok/s. I tried every llama.cpp flag, every thread count, every batch size. Nothing moved the needle significantly.
+
+Then I ran:
+
+```bash
+sudo dmidecode -t memory | grep -E "Speed|Configured"
+```
+
+And saw:
+
+```
+Speed: 4800 MT/s
+Configured Memory Speed: 2000 MT/s
+```
+
+My DDR5-6000 sticks were running at **2000 MT/s**. Not 6000. Not even the JEDEC base of 4800. **Two thousand.** The DRAM frequency in my BIOS was set to "Auto" instead of the XMP profile. On my B760M Steel Legend WiFi, "Auto" apparently means "the absolute bare minimum."
+
+For MoE models where the expert weights live in system RAM, token generation speed is directly proportional to memory bandwidth:
+
+| RAM Speed | Theoretical BW (dual-channel) | My TG (tok/s) |
+| --- | --- | --- |
+| DDR5-2000 (what I had) | ~32 GB/s | ~10-11 |
+| DDR5-6000 (XMP enabled) | ~96 GB/s | **~30** |
+
+That's a **3x improvement** from a single BIOS setting. All those weeks of tuning llama.cpp flags were optimizing within a 3x handicap.
+
+**How to check yours:**
+
+```bash
+# Linux
+sudo dmidecode -t memory | grep -E "Speed|Configured"
+
+# Look for "Configured Memory Speed" - this is what you're ACTUALLY running at.
+# If it doesn't match your XMP/EXPO profile speed, go enable it in BIOS.
+```
+
+If you're running DDR5 and haven't explicitly enabled XMP/EXPO in your BIOS, **go check right now**. Especially on Intel B760/B660 boards where "Auto" doesn't mean "use the XMP profile."
 
 ### Memory Requirements
 
@@ -173,6 +226,7 @@ Here's some notes after wandering in [r/LocalLLaMA](https://www.reddit.com/r/Loc
 - llama.cpp comes with a host of settings that you'd need to get your hands dirty on to make it go brr for your system (instead of fixed defaults in ollama)
 - [build from source](https://github.com/ggml-org/llama.cpp/blob/master/docs/build.md) so its tuned per your hardware. Here's a [sample script](https://github.com/carteakey/lllms/blob/86e316ce4a15f4fc60ab9bb422d0fd000ba228b8/build-llama-cpp.sh) for Nvidia folks 
 - See the [Readme](https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md) for the overwhelming list of params you've unlocked.
+- **Keep it updated** - MoE inference performance has improved significantly across builds. Rebuilding from latest source contributed to the speed increase alongside XMP.
 
 ### n-cpu-moe
 
@@ -186,7 +240,7 @@ That means
 
 You can still fine-tune by  customize the regex in the `--override-tensor`, some examples from the unsloth 
 - `-ot ".ffn_.*_exps.=CPU"` offloads all MoE layers to the CPU!
--  `-ot ".ffn_(up|down)_exps.=CPU"` This offloads up and down projection MoE layers.
+- `-ot ".ffn_(up|down)_exps.=CPU"` This offloads up and down projection MoE layers.
 - `-ot ".ffn_(up)_exps.=CPU"` offloads only up projection MoE layers.
 - `-ot "\.(6|7|8|9|[0-9][0-9]|[0-9][0-9][0-9])\.ffn_(gate|up|down)_exps.=CPU"` means to offload gate, up and down MoE layers but only from the 6th layer onwards.
 
@@ -238,7 +292,7 @@ Intel CPU (12th gen onwards) come with a 6 performance cores and 4 efficiency (E
 
 Efficiency cores effect on performance has been known for a while and the standard way to avoid to avoid efficiency cores has been to leave the number of threads low.
 
-This can be controlled using the `-t` parameter. More threads isn't really beneficial and in general, the devs recommend setting it equal to the amount of performance cores - 1  you have.
+This can be controlled using the `-t` parameter. More threads isn't really beneficial and in general, the devs recommend setting it equal to the amount of performance cores - 1 you have.
 
 e.g. on my `Intel Core i5-12600K Desktop Processor 10 (6P+4E)` - i would be using this to strictly bind the threads to CPU cores 0-5, one thread per core.
 
@@ -263,19 +317,21 @@ Some of the options I haven’t experimented with yet but seem promising:
 - Using alternative llama.cpp forks like ik_llama.cpp
 - Using other ways to pin CPU cores like `taskset` or `numactl`
 - Fine tuned override tensor regex (`--override-tensor`) instead of `--n-cpu-moe`
+- DDR5 timing tightening (tRFC, tRCD, tRP) for additional bandwidth gains
+- Speculative decoding with a small draft model
 
 ## Post-mortem / Changelog
 - 2025-09-21 - Initial draft
 - 2025-09-22 - Updated threads to 10 as per Reddit suggestion. This means using 10/12 threads (only P-cores) to not choke the CPU.
-- 2025-09-22 - Updated CPU pinning to use taskset instead of llama.cpp's cpu-range, thanks to [this Reddit suggestion](https://www.reddit.com/r/LocalLLaMA/comments/1nn72ji/comment/nfihoid). This better isolates the process to P-cores only. I think
-
-
-
-## Appendix
+- 2025-09-22 - Updated CPU pinning to use taskset instead of llama.cpp's cpu-range, thanks to [this Reddit suggestion](https://www.reddit.com/r/LocalLLaMA/comments/1nn72ji/comment/nfihoid). This better isolates the process to P-cores only.
+- 2026-02-15 - **The XMP incident.** Discovered my DDR5-6000 RAM was running at 2000 MT/s because BIOS DRAM frequency was set to "Auto." Enabling XMP tripled token generation from ~10 t/s to ~30 t/s. This explains why my performance was so far behind users with similar hardware.
+- Added "Check your RAM speed" section. Shoutout to the community members who kept telling me something was off with my numbers.
+- 2026-02-15 - Updated to latest llama.cpp build. MoE inference improvements in recent builds also contributed to the speed increase. Added `GGML_CUDA_GRAPH_OPT=1` env var.
+- 2026-02-15 - Suggest using `fit` instead of `n-cpu-moe` going forward
 
 ### Bouncing Balls Prompt
 
-```text
+```
 Write a Python program that shows 20 balls bouncing inside a spinning heptagon:
 - All balls have the same radius.
 - All balls have a number on it from 1 to 20.
@@ -333,6 +389,8 @@ ggml_cuda_init: found 1 CUDA devices:
 build: da30ab5f (6531)
 ./bench-llama-cpp.sh: line 10: --n-gpu-layers: command not found
 ```
+
+> Note: The above benchmarks were run **before** enabling XMP. With XMP at DDR5-6000, expect ~3x the tg128 numbers.
 
 ##### threads (cpu-range doesn't behave nicely with llama-bench for some reason)
 ```bash
