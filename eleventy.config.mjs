@@ -145,7 +145,7 @@ async function imageShortcode(src, alt, css) {
   if (/\.gif$/i.test(src)) {
     const publicSrc = mapSrcToPublicUrl(src);
     const sizes = "(min-width: 30em) 50vw, 100vw";
-    return `<img src="${publicSrc}" alt="${alt ?? ''}" class="${css ?? ''}" loading="lazy" decoding="async" sizes="${sizes}" style="max-width: 100%; height: auto;" />`;
+    return `<img src="${publicSrc}" alt="${alt ?? ''}" class="${css ?? ''}" loading="lazy" decoding="async" sizes="${sizes}" style="max-width: 100%; height: auto;" data-zoomable />`;
   }
   let metadata = await Image(src, {
     widths: ["auto"],
@@ -154,7 +154,7 @@ async function imageShortcode(src, alt, css) {
   });
 
   const sizes = "(min-width: 30em) 50vw, 100vw";
-  
+
   let imageAttributes = {
     class: css,
     alt,
@@ -162,6 +162,7 @@ async function imageShortcode(src, alt, css) {
     loading: "lazy",
     decoding: "async",
     style: "max-width: 100%; height: auto;",
+    "data-zoomable": "",
   };
 
   // You bet we throw an error on missing alt in `imageAttributes` (alt="" works okay)
@@ -175,7 +176,7 @@ async function imageShortcodeWithCaptions(src, alt, css, caption) {
   if (/\.gif$/i.test(src)) {
     const publicSrc = mapSrcToPublicUrl(src);
     const sizes = "(min-width: 30em) 50vw, 100vw";
-    const imageMarkup = `<img src="${publicSrc}" alt="${alt ?? ''}" class="${css ?? ''}" loading="lazy" decoding="async" sizes="${sizes}" style="max-width: 100%; height: auto;" />`;
+    const imageMarkup = `<img src="${publicSrc}" alt="${alt ?? ''}" class="${css ?? ''}" loading="lazy" decoding="async" sizes="${sizes}" style="max-width: 100%; height: auto;" data-zoomable />`;
     return `<figure>${imageMarkup}${caption ? `<figcaption class="font-thin italic">${caption}</figcaption>` : ""}</figure>`;
   }
   let metadata = await Image(src, {
@@ -185,7 +186,7 @@ async function imageShortcodeWithCaptions(src, alt, css, caption) {
   });
 
   const sizes = "(min-width: 30em) 50vw, 100vw";
-  
+
   let imageAttributes = {
     class: css,
     alt,
@@ -193,6 +194,7 @@ async function imageShortcodeWithCaptions(src, alt, css, caption) {
     loading: "lazy",
     decoding: "async",
     style: "max-width: 100%; height: auto;",
+    "data-zoomable": "",
   };
 
   const imageMarkup = generateHTML(metadata, imageAttributes, {
