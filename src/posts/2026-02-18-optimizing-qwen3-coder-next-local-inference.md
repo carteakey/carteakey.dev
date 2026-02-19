@@ -98,7 +98,7 @@ Based on community feedback and my own testing:
 
 Everything from my [gpt-oss-120b optimization guide](https://carteakey.dev/blog/optimizing-gpt-oss-120b-local-inference/) applies here. The key points:
 
-### Check your RAM speed. Seriously. {#check-your-ram-speed-the-sequel}
+### Check your RAM speed. Seriously.
 
 I ran my DDR5-6000 RAM at 2000 MT/s for months because BIOS DRAM frequency was set to "Auto." This is worth repeating because it was a **3x performance handicap**.
 
@@ -125,3 +125,11 @@ sudo dmidecode -t memory | grep -E "Speed|Configured"
 - [Qwen3 Coder Next as first "usable" coding model < 60 GB](https://www.reddit.com/r/LocalLLaMA/comments/1qz5uww/qwen3_coder_next_as_first_usable_coding_model_60/)
 - [Qwen Coder Next is an odd model](https://www.reddit.com/r/LocalLLaMA/comments/1r2c34d/qwen_coder_next_is_an_odd_model/)
 - My gpt-oss-120b optimization guide: [carteakey.dev](https://carteakey.dev/blog/optimizing-gpt-oss-120b-local-inference/)
+
+<!-- TODO: Future post - GPT-OSS-120B vs Qwen3-Coder-Next head-to-head comparison:
+  - Benchmark suite: coding (HumanEval, SWE-bench), reasoning, long-context retrieval
+  - Side-by-side inference speeds across different context lengths
+  - Quality comparison on real agentic tasks (OpenCode / Roo Code sessions)
+  - VRAM+RAM tradeoffs: 45 GB vs 59 GB MXFP4, practical fitting strategies
+  - When to pick each model
+-->
