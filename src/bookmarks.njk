@@ -49,10 +49,10 @@ permalink: /bookmarks/
           {% set domainInitial = bookmark.url | domainInitial %}
           <article class="card card-hover card-compact">
             <a href="{{ bookmark.url }}" target="_blank" rel="noopener noreferrer" class="text-sm font-semibold text-gray-900 link-accent dark:text-white line-clamp-1">
-              {{ bookmark.title }}
-            </a>
+                {{ bookmark.title }}
+              </a>
             {% if domain %}
-              <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{{ domain }}</p>
+              <p class="text-[0.7rem] uppercase tracking-wide text-gray-400 dark:text-gray-500 mt-1">{{ domain }}</p>
             {% endif %}
             {% if bookmark.description %}
               <p class="mt-1 text-xs text-gray-600 dark:text-gray-400 line-clamp-2">{{ bookmark.description }}</p>

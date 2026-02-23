@@ -35,7 +35,7 @@
 
   <script src="/static/js/theme.js"></script>
   
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <script defer src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <script defer src="/static/js/alpine.min.js"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -90,6 +90,7 @@
   {# Theme Color for mobile browsers #}
   <meta name="theme-color" content="#f59e0b" media="(prefers-color-scheme: light)" />
   <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
+  <meta name="theme-color" content="#f59e0b" />
   
   <link rel="stylesheet" href="{{ '/css/tailwind.css' | url }}" />
 
@@ -203,7 +204,7 @@
         {% if spotify.nowPlaying %}
         <div class="flex items-center not-prose p-2 rounded-lg card-glass text-xs">
           <img id="track-image" class="w-8 h-8 rounded-full mr-2 animate-spin-slow shadow-lg"
-            src="{{ spotify.nowPlaying.albumImageUrl }}" alt="{{ spotify.nowPlaying.title }}">
+            src="{{ spotify.nowPlaying.albumImageUrl }}" alt="{{ spotify.nowPlaying.title }}" width="32" height="32" loading="lazy">
           <div>
             <a href={{ spotify.nowPlaying.songUrl }} target='_blank' class='hover:underline font-medium'>{{ spotify.nowPlaying.title }}</a>
             <p class="text-gray-500 dark:text-gray-400">{{ spotify.nowPlaying.artist }}</p>
