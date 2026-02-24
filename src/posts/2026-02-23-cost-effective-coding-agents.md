@@ -91,7 +91,8 @@ Get a base sub (~$20/mo) as primary, then layer on free trials and cheap options
 
 ### Amp (by Sourcegraph)
 
-- $10 free daily grant that replenishes hourly (~$300/month of free credits). That's a lot of Opus 4.6 for free.
+- **Update (Feb 10, 2026):** Amp Free is currently full for new users while they work on their next version.
+- *Normally* provides a $10 free daily grant that replenishes hourly (~$300/month of free credits). That's a lot of Opus 4.6 for free.
 - Available in terminal, VS Code, Cursor, Windsurf, JetBrains, and Neovim.
 - Funded by ads from dev/infra companies (Axiom, Baseten, PlanetScale, Prisma, Tailwind Labs, etc). Basically, you see a banner and get frontier models for free.
 - Can delegate complex coding tasks, refactors, reviews, and explorations to agents that work across entire codebases.
@@ -122,7 +123,7 @@ Get a base sub (~$20/mo) as primary, then layer on free trials and cheap options
 - Zed Editor — 14-day trial with $20 of introductory tokens
 - ChatGPT Codex — temporarily free
 - Cursor — 14-day Pro trial (normally $20/mo)
-- Amp — $10 free daily grant, replenishes hourly (~$300/month free, ad-supported)
+- Amp — $10 free daily grant (currently full for new users)
 
 ## A Note on TOS
 
