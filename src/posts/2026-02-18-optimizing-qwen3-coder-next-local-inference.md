@@ -91,7 +91,7 @@ Qwen3-Coder-Next is faster because it activates fewer parameters per token (3B v
 Based on community feedback and my own testing:
 - **Coding**: Both are very capable. Q3CN is particularly good at Python, Go, and agentic tool use. GPT-OSS-120B has an edge on complex reasoning.
 - **Context handling**: Q3CN is significantly better at long context thanks to the hybrid attention. GPT-OSS-120B's KV cache for full attention gets expensive fast.
-- **Agentic use**: Q3CN is described as "aggressively completing tasks" - great for coding agents. It works well with OpenCode, Roo Code, and even Claude Code via llama-server.
+- **Agentic use**: Q3CN is described as "aggressively completing tasks" - great for coding agents. It works well with OpenCode, Roo Code, and even Claude Code via llama-server. Because Q3CN is a non-thinking model, it doesn't waste tokens generating internal `<think>` blocks like GPT-OSS and other reasoning models. This keeps your context window clear and agent loops fast.
 - **Quirks**: Q3CN can be verbose and occasionally enters loops with certain agent frameworks. Setting `--temp 0` can help for pure coding tasks.
 
 ## Optimization notes
