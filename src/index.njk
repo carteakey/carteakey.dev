@@ -100,9 +100,13 @@ htmlTemplateEngine: "webc"
   </ul>
 
   {# Grid view #}
-  <div x-show="hView === 'grid'" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 items-start">
+  <div x-show="hView === 'grid'"
+    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 items-start"
+    data-feed-masonry style="--feed-row-height: 16px;">
     {% for item in feedItems %}
       {{ feedCard(item, { variant: 'full' }) }}
     {% endfor %}
   </div>
 </div>
+
+{% include "components/feed-masonry-script.njk" %}

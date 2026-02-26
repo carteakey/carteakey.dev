@@ -199,7 +199,13 @@
                 window.setAccentTheme(this.themes[i].name);
               }
             }" x-init="init()">
-              <div class="relative w-20 sm:w-28 h-4 rounded-full overflow-hidden cursor-pointer" style="background: linear-gradient(to right, #6b7280,#64748b,#71717a,#737373,#78716c,#ef4444,#f97316,#f59e0b,#eab308,#84cc16,#22c55e,#10b981,#14b8a6,#06b6d4,#0ea5e9,#3b82f6,#6366f1,#8b5cf6,#a855f7,#d946ef,#ec4899,#f43f5e);">
+              {# Mobile: tap colored dot to cycle accent color #}
+              <button class="sm:hidden w-4 h-4 rounded-full border-2 border-white/60 shadow flex-shrink-0"
+                :style="`background-color: ${themes[currentIndex].hex}; border-color: ${themes[currentIndex].hex}`"
+                @click="pick((currentIndex + 1) % themes.length)"
+                :title="`Accent: ${themes[currentIndex].name} (tap to cycle)`"></button>
+              {# Desktop: gradient slider #}
+              <div class="hidden sm:block relative w-28 h-4 rounded-full overflow-hidden cursor-pointer" style="background: linear-gradient(to right, #6b7280,#64748b,#71717a,#737373,#78716c,#ef4444,#f97316,#f59e0b,#eab308,#84cc16,#22c55e,#10b981,#14b8a6,#06b6d4,#0ea5e9,#3b82f6,#6366f1,#8b5cf6,#a855f7,#d946ef,#ec4899,#f43f5e);">
                 <div class="absolute top-0 h-full w-0.5 -translate-x-1/2 bg-white/80 rounded pointer-events-none transition-all duration-150"
                      :style="`left: ${(currentIndex / (themes.length - 1)) * 100}%`"></div>
                 <input type="range" min="0" :max="themes.length - 1" :value="currentIndex"
@@ -267,8 +273,24 @@
       {# Extended footer section #}
       <div class="border-t border-gray-200 dark:border-gray-700 pt-4 pb-6 not-prose">
 
-        {# Categorized footer navigation - 4-col compact #}
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-2 text-xs">
+        {# Categorized footer navigation — 4-col on md+; flat link list on mobile #}
+
+        {# Mobile: flat horizontal list, no categories #}
+        <div class="flex flex-wrap gap-x-3 gap-y-1 text-xs md:hidden">
+          {% set allFooterLinks = [
+            { url: '/now', label: 'Now' }, { url: '/feed', label: 'Feed' }, { url: '/blog', label: 'Blog' },
+            { url: '/snippets', label: 'Snippets' }, { url: '/projects', label: 'Projects' }, { url: '/gallery', label: 'Gallery' },
+            { url: '/vibes', label: 'Vibes' }, { url: '/about', label: 'About' }, { url: '/cv', label: 'CV' },
+            { url: '/search', label: 'Search' }, { url: '/stats', label: 'Stats' }, { url: '/newsletter', label: 'Newsletter' },
+            { url: '/guestbook', label: 'Guestbook' }
+          ] %}
+          {% for link in allFooterLinks %}
+            <a href="{{ link.url | url }}" class="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{{ link.label }}</a>
+          {% endfor %}
+        </div>
+
+        {# Desktop: 4-column categorized grid #}
+        <div class="hidden md:grid grid-cols-4 gap-x-4 gap-y-2 text-xs">
           
           {# Read — content for others #}
           <div>
