@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.8.1] - 2026-02-28
+
+### Changed
+- Stats page (`/stats/`) full redesign: Dense Editorial layout, row-item stats, posts-per-year CSS bar chart, real word count (summed from rendered post content), avg words/post — removed card grid and fake estimated word count
+
+### Added
+- `sumWordCounts` filter: sums word counts across a posts collection using actual rendered content
+- `countByYear` filter: groups collection items by year, returns `{ year: count }` map
+- `wordCount` filter: strips HTML and counts words in a content string
+- `numberString` filter: formats numbers with thousands commas (e.g. 12,345)
+- `merge` filter: merges two objects (used in template data building)
+
 ## [1.8.0] - 2026-02-28
 
 ### Added

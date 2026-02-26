@@ -1,7 +1,7 @@
 ---
 layout: layouts/base.njk
-title: Site Statistics
-description: Numbers and insights about this website
+title: Stats
+description: Numbers and insights about this site.
 eleventyNavigation:
   key: Stats
   order: 9
@@ -10,380 +10,200 @@ permalink: /stats/
 
 {% include "components/breadcrumbs.njk" %}
 
-{% set totalPosts = collections.posts.length %}
-{% set totalSnippets = collections.snippets.length %}
-{% set totalTags = collections.tagList.length %}
-{% set totalSnippetTags = collections.snippetTags.length %}
-{% set totalPages = collections.all.length %}
+<div class="not-prose mb-6">
+  <h1 class="text-2xl font-semibold tracking-tight m-0">Stats</h1>
+  <p class="text-sm text-gray-400 dark:text-gray-500 mt-1">Numbers. Updated every build.</p>
+</div>
+
+{# ── Compute stats using filters ── #}
+{% set totalWords = collections.posts | sumWordCounts %}
+{% set avgWords = 0 %}
+{% if collections.posts.length > 0 %}
+  {% set avgWords = (totalWords / collections.posts.length) | round %}
+{% endif %}
+{% set byYear = collections.posts | countByYear %}
+{% set years = byYear | keys | sort | reverse %}
+{% set maxPerYear = 1 %}
+{% for yr in years %}
+  {% if byYear[yr] > maxPerYear %}{% set maxPerYear = byYear[yr] %}{% endif %}
+{% endfor %}
 
 {% set currentYear = "now" | date("Y") %}
 {% set currentMonth = "now" | date("n") %}
-
-{% set postsThisYear = 0 %}
+{% set postsThisYear = byYear[currentYear] | default(0) %}
 {% set postsThisMonth = 0 %}
 {% for post in collections.posts %}
-  {% set postYear = post.date | date("Y") %}
-  {% set postMonth = post.date | date("n") %}
-  {% if postYear == currentYear %}
-    {% set postsThisYear = postsThisYear + 1 %}
-    {% if postMonth == currentMonth %}
-      {% set postsThisMonth = postsThisMonth + 1 %}
-    {% endif %}
+  {% if post.date | date("n") == currentMonth and post.date | date("Y") == currentYear %}
+    {% set postsThisMonth = postsThisMonth + 1 %}
   {% endif %}
 {% endfor %}
 
-{% set cardShell = "border border-gray-200 dark:border-gray-800 rounded-lg" %}
+{% set totalUpvotes = 0 %}
+{% for slug, count in upvotes.posts %}
+  {% set totalUpvotes = totalUpvotes + count %}
+{% endfor %}
 
-<h1>Site Statistics</h1>
-
-<p class="text-gray-600 dark:text-gray-400">
-  A data-driven (duh, <em>numbers</em>) look at this website. Numbers updated every time the site builds.
-</p>
-
-{# ── Hero callout strip ── #}
-<div class="not-prose grid grid-cols-2 sm:grid-cols-4 gap-0 border border-gray-200 dark:border-gray-800 rounded-lg overflow-hidden my-8">
-  <div class="p-4 sm:p-6 text-center border-r border-gray-200 dark:border-gray-800">
-    <div class="text-4xl sm:text-5xl font-black tracking-tight" style="color: var(--accent-color)">{{ totalPosts }}</div>
+{# ── Hero numbers ── #}
+<div class="not-prose grid grid-cols-2 sm:grid-cols-4 divide-x divide-y sm:divide-y-0 divide-gray-200 dark:divide-gray-800 border border-gray-200 dark:border-gray-800 rounded-lg overflow-hidden mb-8">
+  <div class="p-4 text-center">
+    <div class="text-3xl sm:text-4xl font-black tracking-tight" style="color: var(--accent-color)">{{ collections.posts.length }}</div>
     <div class="text-xs text-gray-500 dark:text-gray-400 mt-1 uppercase tracking-wide">Posts</div>
   </div>
-  <div class="p-4 sm:p-6 text-center border-r border-gray-200 dark:border-gray-800">
-    <div class="text-4xl sm:text-5xl font-black tracking-tight" style="color: var(--accent-color)">{{ totalSnippets }}</div>
+  <div class="p-4 text-center">
+    <div class="text-3xl sm:text-4xl font-black tracking-tight" style="color: var(--accent-color)">{{ collections.snippets.length }}</div>
     <div class="text-xs text-gray-500 dark:text-gray-400 mt-1 uppercase tracking-wide">Snippets</div>
   </div>
-  <div class="p-4 sm:p-6 text-center border-r border-gray-200 dark:border-gray-800">
-    <div class="text-4xl sm:text-5xl font-black tracking-tight" style="color: var(--accent-color)">{{ postsThisYear }}</div>
-    <div class="text-xs text-gray-500 dark:text-gray-400 mt-1 uppercase tracking-wide">This Year</div>
+  <div class="p-4 text-center">
+    <div class="text-3xl sm:text-4xl font-black tracking-tight" style="color: var(--accent-color)">
+      {% if totalWords > 1000 %}{{ (totalWords / 1000) | round(1) }}k{% else %}{{ totalWords }}{% endif %}
+    </div>
+    <div class="text-xs text-gray-500 dark:text-gray-400 mt-1 uppercase tracking-wide">Words</div>
   </div>
-  <div class="p-4 sm:p-6 text-center">
-    <div class="text-4xl sm:text-5xl font-black tracking-tight" style="color: var(--accent-color)">{{ totalTags }}</div>
-    <div class="text-xs text-gray-500 dark:text-gray-400 mt-1 uppercase tracking-wide">Tags</div>
-  </div>
-</div>
-
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 my-8 not-prose">
-  <!-- Posts Stats -->
-  <div class="{{ cardShell }} p-3 sm:p-4">
-    <div class="flex items-center justify-between">
-      <div>
-        <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ totalPosts }}</p>
-        <p class="text-sm text-gray-600 dark:text-gray-400">Total Posts</p>
-      </div>
-      <div class="p-3 bg-blue-100 dark:bg-blue-900 rounded-full">
-        {% feather "edit-3", class="w-6 h-6 text-blue-600 dark:text-blue-400" %}
-      </div>
-    </div>
-    <div class="mt-4 flex items-center text-sm text-gray-600 dark:text-gray-400">
-      <span class="text-green-600 dark:text-green-400 font-medium">{{ postsThisYear }}</span>
-      <span class="ml-1">this year</span>
-      <span class="mx-2">•</span>
-      <span class="font-medium" style="color: var(--accent-color);">{{ postsThisMonth }}</span>
-      <span class="ml-1">this month</span>
-    </div>
-  </div>
-
-  <!-- Snippets Stats -->
-  <div class="{{ cardShell }} p-3 sm:p-4">
-    <div class="flex items-center justify-between">
-      <div>
-        <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ totalSnippets }}</p>
-        <p class="text-sm text-gray-600 dark:text-gray-400">Code Snippets</p>
-      </div>
-      <div class="p-3 bg-purple-100 dark:bg-purple-900 rounded-full">
-        {% feather "code", class="w-6 h-6 text-purple-600 dark:text-purple-400" %}
-      </div>
-    </div>
-    <div class="mt-4 flex items-center text-sm text-gray-600 dark:text-gray-400">
-      <span class="text-indigo-600 dark:text-indigo-400 font-medium">{{ collections.snippets | map('data.language') | uniq | length }}</span>
-      <span class="ml-1">languages</span>
-    </div>
-  </div>
-
-  <!-- Tags Stats -->
-  <div class="{{ cardShell }} p-3 sm:p-4">
-    <div class="flex items-center justify-between">
-      <div>
-        <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ totalTags }}</p>
-        <p class="text-sm text-gray-600 dark:text-gray-400">Post Tags</p>
-      </div>
-      <div class="p-2 rounded-full" style="background: color-mix(in srgb, var(--accent-color) 15%, transparent);">
-        {% feather "tag", class="w-6 h-6" %}
-      </div>
-    </div>
-    <div class="mt-4 flex items-center text-sm text-gray-600 dark:text-gray-400">
-      <span class="text-rose-600 dark:text-rose-400 font-medium">{{ totalSnippetTags }}</span>
-      <span class="ml-1">snippet tags</span>
-      <span class="mx-2">•</span>
-      <span class="text-teal-600 dark:text-teal-400 font-medium">{{ totalTags + totalSnippetTags }}</span>
-      <span class="ml-1">total unique</span>
-    </div>
-  </div>
-
-  <!-- Site Pages -->
-  <div class="{{ cardShell }} p-3 sm:p-4">
-    <div class="flex items-center justify-between">
-      <div>
-        <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ totalPages }}</p>
-        <p class="text-sm text-gray-600 dark:text-gray-400">Total Pages</p>
-      </div>
-      <div class="p-3 bg-emerald-100 dark:bg-emerald-900 rounded-full">
-        {% feather "file-text", class="w-6 h-6 text-emerald-600 dark:text-emerald-400" %}
-      </div>
-    </div>
-    <div class="mt-4 flex items-center text-sm text-gray-600 dark:text-gray-400">
-      <span class="text-emerald-600 dark:text-emerald-400 font-medium">{{ page.date | date('YYYY') }}</span>
-      <span class="ml-1">current year</span>
-    </div>
-  </div>
-
-  <!-- Blog Activity -->
-  <div class="{{ cardShell }} p-3 sm:p-4">
-    <div class="flex items-center justify-between">
-      <div>
-        {% set latestPost = collections.posts | last %}
-        {% set nowDate = "now" | date("X") %}
-        {% set latestPostDate = latestPost.date | date("X") %}
-        {% set daysSincePost = ((nowDate - latestPostDate) / (60 * 60 * 24)) | round %}
-        <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ daysSincePost }}</p>
-        <p class="text-sm text-gray-600 dark:text-gray-400">Days Since Last Post</p>
-      </div>
-      <div class="p-3 bg-cyan-100 dark:bg-cyan-900 rounded-full">
-        {% feather "clock", class="w-6 h-6 text-cyan-600 dark:text-cyan-400" %}
-      </div>
-    </div>
-    <div class="mt-4 flex items-center text-sm text-gray-600 dark:text-gray-400">
-      <span class="text-cyan-600 dark:text-cyan-400 font-medium">{{ latestPost.data.title | truncate(20) }}</span>
-      <span class="ml-1">latest</span>
-    </div>
-  </div>
-
-  <!-- Total Words -->
-  <div class="{{ cardShell }} p-3 sm:p-4">
-    <div class="flex items-center justify-between">
-      <div>
-        {# Estimate ~800 words per post on average #}
-        {% set estimatedWords = collections.posts.length * 800 %}
-        <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ (estimatedWords / 1000) | round }}k+</p>
-        <p class="text-sm text-gray-600 dark:text-gray-400">Words Written</p>
-      </div>
-      <div class="p-3 bg-violet-100 dark:bg-violet-900 rounded-full">
-        {% feather "book-open", class="w-6 h-6 text-violet-600 dark:text-violet-400" %}
-      </div>
-    </div>
-    <div class="mt-4 flex items-center text-sm text-gray-600 dark:text-gray-400">
-      <span class="text-violet-600 dark:text-violet-400 font-medium">~800</span>
-      <span class="ml-1">avg per post</span>
-    </div>
-  </div>
-
-  <!-- Total Visitors -->
-  <div class="{{ cardShell }} p-3 sm:p-4">
-    <div class="flex items-center justify-between">
-      <div>
-        <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ visitors.total | default(0) }}</p>
-        <p class="text-sm text-gray-600 dark:text-gray-400">Total Visitors</p>
-      </div>
-      <div class="p-3 bg-sky-100 dark:bg-sky-900 rounded-full">
-        {% feather "eye", class="w-6 h-6 text-sky-600 dark:text-sky-400" %}
-      </div>
-    </div>
-    <div class="mt-4 flex items-center text-sm text-gray-600 dark:text-gray-400">
-      <span class="text-sky-600 dark:text-sky-400 font-medium">tracked</span>
-      <span class="ml-1">via Redis</span>
-    </div>
-  </div>
-
-  <!-- Total Upvotes -->
-  <div class="{{ cardShell }} p-3 sm:p-4">
-    <div class="flex items-center justify-between">
-      <div>
-        {% set totalUpvotes = 0 %}
-        {% for slug, count in upvotes.posts %}
-          {% set totalUpvotes = totalUpvotes + count %}
-        {% endfor %}
-        <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ totalUpvotes }}</p>
-        <p class="text-sm text-gray-600 dark:text-gray-400">Total Upvotes</p>
-      </div>
-      <div class="p-3 bg-pink-100 dark:bg-pink-900 rounded-full">
-        {% feather "heart", class="w-6 h-6 text-pink-600 dark:text-pink-400" %}
-      </div>
-    </div>
-    <div class="mt-4 flex items-center text-sm text-gray-600 dark:text-gray-400">
-      <span class="text-pink-600 dark:text-pink-400 font-medium">{{ upvotes.posts | keys | length }}</span>
-      <span class="ml-1">posts with upvotes</span>
-    </div>
-  </div>
-
-  <!-- Build Info -->
-  <div class="{{ cardShell }} p-3 sm:p-4">
-    <div class="flex items-center justify-between">
-      <div>
-        <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ page.date | date('MMM d') }}</p>
-        <p class="text-sm text-gray-600 dark:text-gray-400">Last Build</p>
-      </div>
-      <div class="p-3 bg-red-100 dark:bg-red-900 rounded-full">
-        {% feather "calendar", class="w-6 h-6 text-red-600 dark:text-red-400" %}
-      </div>
-    </div>
-    <div class="mt-4 flex items-center text-sm text-gray-600 dark:text-gray-400">
-      <span class="text-red-600 dark:text-red-400 font-medium">{{ page.date | date('h:mm a') }}</span>
-      <span class="ml-1">today</span>
-    </div>
+  <div class="p-4 text-center">
+    <div class="text-3xl sm:text-4xl font-black tracking-tight" style="color: var(--accent-color)">{{ totalUpvotes }}</div>
+    <div class="text-xs text-gray-500 dark:text-gray-400 mt-1 uppercase tracking-wide">Upvotes</div>
   </div>
 </div>
 
-<!-- Lighthouse Performance -->
-<div class="my-12">
-  <div class="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
-    <div>
-      <h2>Lighthouse Performance</h2>
-      <p class="text-gray-600 dark:text-gray-400">Core Web Vitals and performance metrics pulled from the latest run.</p>
-    </div>
-    <div class="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
-      Latest run {{ lighthouse.updatedAt }} • {{ lighthouse.source }}
-    </div>
-  </div>
+{# ── Two-column: writing rows | posts-per-year bars ── #}
+<div class="not-prose grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
 
-  {% set lighthouseCards = [
-    {
-      key: 'performance',
-      label: 'Performance',
-      icon: 'zap',
-      gradient: 'from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20',
-      border: 'border-green-200 dark:border-green-800',
-      iconColor: 'text-green-600 dark:text-green-400',
-      textColor: 'text-green-600 dark:text-green-400',
-      barColor: 'bg-green-500 dark:bg-green-400',
-      trackColor: 'bg-green-200 dark:bg-green-800'
-    },
-    {
-      key: 'accessibility',
-      label: 'Accessibility',
-      icon: 'users',
-      gradient: 'from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20',
-      border: 'border-blue-200 dark:border-blue-800',
-      iconColor: 'text-blue-600 dark:text-blue-400',
-      textColor: 'text-blue-600 dark:text-blue-400',
-      barColor: 'bg-blue-500 dark:bg-blue-400',
-      trackColor: 'bg-blue-200 dark:bg-blue-800'
-    },
-    {
-      key: 'bestPractices',
-      label: 'Best Practices',
-      icon: 'shield',
-      gradient: 'from-purple-50 to-violet-50 dark:from-purple-900/20 dark:to-violet-900/20',
-      border: 'border-purple-200 dark:border-purple-800',
-      iconColor: 'text-purple-600 dark:text-purple-400',
-      textColor: 'text-purple-600 dark:text-purple-400',
-      barColor: 'bg-purple-500 dark:bg-purple-400',
-      trackColor: 'bg-purple-200 dark:bg-purple-800'
-    },
-    {
-      key: 'seo',
-      label: 'SEO',
-      icon: 'search',
-      gradient: 'from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20',
-      border: 'border-amber-200 dark:border-amber-800',
-      iconColor: 'text-amber-600 dark:text-amber-400',
-      textColor: 'text-amber-600 dark:text-amber-400',
-      barColor: 'bg-amber-500 dark:bg-amber-400',
-      trackColor: 'bg-amber-200 dark:bg-amber-800'
-    }
-  ] %}
+  <div>
+    <h2 class="text-xs font-semibold uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-3">Writing</h2>
+    <div class="divide-y divide-gray-100 dark:divide-gray-800/80">
 
-  <div class="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 not-prose">
-    {% for card in lighthouseCards %}
-      {% set score = lighthouse.metrics[card.key] or 0 %}
-      <div class="bg-gradient-to-br {{ card.gradient }} p-6 rounded-lg border-2 {{ card.border }}">
-        <div class="flex items-center justify-between mb-3">
-          <span class="text-sm font-medium {{ card.textColor }}">{{ card.label }}</span>
-          {% feather card.icon, class='w-5 h-5 ' ~ card.iconColor %}
-        </div>
-        <div class="flex items-baseline gap-2">
-          <span class="text-4xl font-bold {{ card.textColor }}">{{ score }}</span>
-          <span class="text-xs text-gray-500 dark:text-gray-400">/100</span>
-        </div>
-        <div class="mt-3 h-2 {{ card.trackColor }} rounded-full overflow-hidden" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ score }}">
-          <div class="h-full {{ card.barColor }}" style="width: {{ score }}%"></div>
-        </div>
+      <div class="py-2.5 flex items-baseline justify-between">
+        <span class="text-sm text-gray-600 dark:text-gray-400">Total words</span>
+        <span class="meta-text text-sm font-semibold text-gray-900 dark:text-gray-100">{{ totalWords | numberString }}</span>
       </div>
-    {% endfor %}
+
+      <div class="py-2.5 flex items-baseline justify-between">
+        <span class="text-sm text-gray-600 dark:text-gray-400">Avg words / post</span>
+        <span class="meta-text text-sm font-semibold text-gray-900 dark:text-gray-100">{{ avgWords | numberString }}</span>
+      </div>
+
+      <div class="py-2.5 flex items-baseline justify-between">
+        <span class="text-sm text-gray-600 dark:text-gray-400">Posts this year</span>
+        <span class="meta-text text-sm font-semibold text-gray-900 dark:text-gray-100">{{ postsThisYear }}</span>
+      </div>
+
+      <div class="py-2.5 flex items-baseline justify-between">
+        <span class="text-sm text-gray-600 dark:text-gray-400">Posts this month</span>
+        <span class="meta-text text-sm font-semibold text-gray-900 dark:text-gray-100">{{ postsThisMonth }}</span>
+      </div>
+
+      {% set latestPost = collections.posts | first %}
+      {% if latestPost %}
+      <div class="py-2.5 flex items-baseline justify-between gap-2">
+        <span class="text-sm text-gray-600 dark:text-gray-400 shrink-0">Latest</span>
+        <a href="{{ latestPost.url }}" class="meta-text text-sm font-semibold title-hover text-right truncate min-w-0" style="text-decoration:none;">{{ latestPost.data.title }}</a>
+      </div>
+      {% endif %}
+
+      <div class="py-2.5 flex items-baseline justify-between">
+        <span class="text-sm text-gray-600 dark:text-gray-400">Post tags</span>
+        <span class="meta-text text-sm font-semibold text-gray-900 dark:text-gray-100">{{ collections.tagList.length }}</span>
+      </div>
+
+      <div class="py-2.5 flex items-baseline justify-between">
+        <span class="text-sm text-gray-600 dark:text-gray-400">Snippet languages</span>
+        <span class="meta-text text-sm font-semibold text-gray-900 dark:text-gray-100">{{ collections.snippets | map('data.language') | uniq | length }}</span>
+      </div>
+
+      <div class="py-2.5 flex items-baseline justify-between">
+        <span class="text-sm text-gray-600 dark:text-gray-400">Total pages</span>
+        <span class="meta-text text-sm font-semibold text-gray-900 dark:text-gray-100">{{ collections.all.length }}</span>
+      </div>
+
+      <div class="py-2.5 flex items-baseline justify-between">
+        <span class="text-sm text-gray-600 dark:text-gray-400">Last build</span>
+        <span class="meta-text text-xs text-gray-500">{{ page.date | readableDate }} · {{ page.date | date('h:mm a') }}</span>
+      </div>
+
+    </div>
   </div>
+
+  {# Posts per year bar chart #}
+  <div>
+    <h2 class="text-xs font-semibold uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-3">Posts per year</h2>
+    <div class="space-y-2">
+      {% for yr in years %}
+      {% set count = byYear[yr] %}
+      {% set pct = ((count / maxPerYear) * 100) | round %}
+      <div class="flex items-center gap-3">
+        <span class="meta-text text-xs text-gray-400 dark:text-gray-500 w-10 shrink-0 text-right">{{ yr }}</span>
+        <div class="flex-1 h-5 bg-gray-100 dark:bg-gray-800 rounded overflow-hidden">
+          <div class="h-full rounded" style="width: {{ pct }}%; background: color-mix(in srgb, var(--accent-color) 75%, transparent);"></div>
+        </div>
+        <span class="meta-text text-xs text-gray-500 dark:text-gray-400 w-5 shrink-0 text-right">{{ count }}</span>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
 </div>
-<!-- Popular Tags -->
-<div class="my-12">
-  <h2>Popular Tags</h2>
-  <p class="text-gray-600 dark:text-gray-400 mb-6">Most frequently used tags across posts</p>
-  
-  <div class="flex flex-wrap gap-2">
+
+{# ── Lighthouse ── #}
+<div class="not-prose mb-8">
+  <h2 class="text-xs font-semibold uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-3">Lighthouse</h2>
+  <div class="divide-y divide-gray-100 dark:divide-gray-800/80">
+    <div class="py-2.5 flex items-center gap-4">
+      <span class="text-sm text-gray-600 dark:text-gray-400 w-28 shrink-0">Performance</span>
+      <div class="flex-1 h-2 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+        <div class="h-full rounded-full bg-emerald-500" style="width: {{ lighthouse.metrics.performance | default(0) }}%"></div>
+      </div>
+      <span class="meta-text text-sm font-semibold text-gray-900 dark:text-gray-100 w-8 text-right">{{ lighthouse.metrics.performance | default(0) }}</span>
+    </div>
+    <div class="py-2.5 flex items-center gap-4">
+      <span class="text-sm text-gray-600 dark:text-gray-400 w-28 shrink-0">Accessibility</span>
+      <div class="flex-1 h-2 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+        <div class="h-full rounded-full bg-blue-500" style="width: {{ lighthouse.metrics.accessibility | default(0) }}%"></div>
+      </div>
+      <span class="meta-text text-sm font-semibold text-gray-900 dark:text-gray-100 w-8 text-right">{{ lighthouse.metrics.accessibility | default(0) }}</span>
+    </div>
+    <div class="py-2.5 flex items-center gap-4">
+      <span class="text-sm text-gray-600 dark:text-gray-400 w-28 shrink-0">Best Practices</span>
+      <div class="flex-1 h-2 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+        <div class="h-full rounded-full bg-purple-500" style="width: {{ lighthouse.metrics.bestPractices | default(0) }}%"></div>
+      </div>
+      <span class="meta-text text-sm font-semibold text-gray-900 dark:text-gray-100 w-8 text-right">{{ lighthouse.metrics.bestPractices | default(0) }}</span>
+    </div>
+    <div class="py-2.5 flex items-center gap-4">
+      <span class="text-sm text-gray-600 dark:text-gray-400 w-28 shrink-0">SEO</span>
+      <div class="flex-1 h-2 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+        <div class="h-full rounded-full bg-amber-500" style="width: {{ lighthouse.metrics.seo | default(0) }}%"></div>
+      </div>
+      <span class="meta-text text-sm font-semibold text-gray-900 dark:text-gray-100 w-8 text-right">{{ lighthouse.metrics.seo | default(0) }}</span>
+    </div>
+  </div>
+  {% if lighthouse.updatedAt %}
+  <p class="text-xs text-gray-400 dark:text-gray-600 mt-2">{{ lighthouse.updatedAt }} · {{ lighthouse.source }}</p>
+  {% endif %}
+</div>
+
+{# ── Top tags ── #}
+<div class="not-prose mb-8">
+  <h2 class="text-xs font-semibold uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-3">Top Tags</h2>
+  <div class="flex flex-wrap gap-1.5">
     {% for tag in collections.tagList | head(20) %}
       {% set tagCount = collections[tag].length %}
       {% set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
-      <a 
-        href="{{ tagUrl | url }}" 
-        class="inline-flex items-center px-3 py-1 rounded-full text-sm bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
-      >
-        {{ tag }}
-        <span class="ml-1 text-xs opacity-60">{{ tagCount }}</span>
+      <a href="{{ tagUrl | url }}" class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-xs bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" style="text-decoration:none;">
+        {{ tag }}<span class="opacity-50">{{ tagCount }}</span>
       </a>
     {% endfor %}
   </div>
 </div>
 
-<!-- Meta Information -->
-<div class="my-12 p-6 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
-  <h3 class="text-sm font-semibold mb-3">Technical Details</h3>
-  <dl class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-3 text-sm">
-    <div class="flex flex-col gap-1 border-l-2 border-gray-200 pl-3 dark:border-gray-700">
-      <dt class="text-[0.65rem] uppercase tracking-wide text-gray-500 dark:text-gray-500">Generator</dt>
-      <dd class="font-medium text-gray-900 dark:text-white">{{ eleventy.generator }}</dd>
-    </div>
-    <div class="flex flex-col gap-1 border-l-2 border-gray-200 pl-3 dark:border-gray-700">
-      <dt class="text-[0.65rem] uppercase tracking-wide text-gray-500 dark:text-gray-500">Build Source</dt>
-      <dd class="font-medium text-gray-900 dark:text-white">{{ eleventy.env.source }}</dd>
-    </div>
-    <div class="flex flex-col gap-1 border-l-2 border-gray-200 pl-3 dark:border-gray-700">
-      <dt class="text-[0.65rem] uppercase tracking-wide text-gray-500 dark:text-gray-500">Last Build</dt>
-      <dd class="font-medium text-gray-900 dark:text-white">{{ page.date | readableDate }}</dd>
-    </div>
-    <div class="flex flex-col gap-1 border-l-2 border-gray-200 pl-3 dark:border-gray-700">
-      <dt class="text-[0.65rem] uppercase tracking-wide text-gray-500 dark:text-gray-500">Build Time</dt>
-      <dd class="font-medium text-gray-900 dark:text-white">{{ page.date | date('h:mm a') }}</dd>
-    </div>
-    <div class="flex flex-col gap-1 border-l-2 border-gray-200 pl-3 dark:border-gray-700">
-      <dt class="text-[0.65rem] uppercase tracking-wide text-gray-500 dark:text-gray-500">Total Collections</dt>
-      <dd class="font-medium text-gray-900 dark:text-white">{{ collections | keys | length }}</dd>
-    </div>
-    <div class="flex flex-col gap-1 border-l-2 border-gray-200 pl-3 dark:border-gray-700">
-      <dt class="text-[0.65rem] uppercase tracking-wide text-gray-500 dark:text-gray-500">CSS Framework</dt>
-      <dd class="font-medium text-gray-900 dark:text-white">Tailwind CSS v4</dd>
-    </div>
-    <div class="flex flex-col gap-1 border-l-2 border-gray-200 pl-3 dark:border-gray-700">
-      <dt class="text-[0.65rem] uppercase tracking-wide text-gray-500 dark:text-gray-500">JS Framework</dt>
-      <dd class="font-medium text-gray-900 dark:text-white">Alpine.js</dd>
-    </div>
-    <div class="flex flex-col gap-1 border-l-2 border-gray-200 pl-3 dark:border-gray-700">
-      <dt class="text-[0.65rem] uppercase tracking-wide text-gray-500 dark:text-gray-500">Hosting</dt>
-      <dd class="font-medium text-gray-900 dark:text-white">Netlify</dd>
-    </div>
-    <div class="flex flex-col gap-1 border-l-2 border-gray-200 pl-3 dark:border-gray-700">
-      <dt class="text-[0.65rem] uppercase tracking-wide text-gray-500 dark:text-gray-500">Template Engine</dt>
-      <dd class="font-medium text-gray-900 dark:text-white">Nunjucks</dd>
-    </div>
-    <div class="flex flex-col gap-1 border-l-2 border-gray-200 pl-3 dark:border-gray-700">
-      <dt class="text-[0.65rem] uppercase tracking-wide text-gray-500 dark:text-gray-500">Syntax Highlighting</dt>
-      <dd class="font-medium text-gray-900 dark:text-white">PrismJS</dd>
-    </div>
-    <div class="flex flex-col gap-1 border-l-2 border-gray-200 pl-3 dark:border-gray-700">
-      <dt class="text-[0.65rem] uppercase tracking-wide text-gray-500 dark:text-gray-500">Comments</dt>
-      <dd class="font-medium text-gray-900 dark:text-white">Giscus (GitHub)</dd>
-    </div>
-    <div class="flex flex-col gap-1 border-l-2 border-gray-200 pl-3 dark:border-gray-700">
-      <dt class="text-[0.65rem] uppercase tracking-wide text-gray-500 dark:text-gray-500">Analytics</dt>
-      <dd class="font-medium text-gray-900 dark:text-white">Upstash Redis</dd>
-    </div>
-  </dl>
-</div>
-
-<div class="text-center text-sm text-gray-600 dark:text-gray-400">
-  <p>Statistics automatically calculated on each build. Data includes all published content.</p>
+{# ── Stack ── #}
+<div class="not-prose">
+  <h2 class="text-xs font-semibold uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-3">Stack</h2>
+  <div class="divide-y divide-gray-100 dark:divide-gray-800/80">
+    <div class="py-2 flex justify-between"><span class="text-sm text-gray-500 dark:text-gray-400">Generator</span><span class="meta-text text-sm text-gray-700 dark:text-gray-300">{{ eleventy.generator }}</span></div>
+    <div class="py-2 flex justify-between"><span class="text-sm text-gray-500 dark:text-gray-400">CSS</span><span class="meta-text text-sm text-gray-700 dark:text-gray-300">Tailwind CSS v4</span></div>
+    <div class="py-2 flex justify-between"><span class="text-sm text-gray-500 dark:text-gray-400">JS</span><span class="meta-text text-sm text-gray-700 dark:text-gray-300">Alpine.js</span></div>
+    <div class="py-2 flex justify-between"><span class="text-sm text-gray-500 dark:text-gray-400">Hosting</span><span class="meta-text text-sm text-gray-700 dark:text-gray-300">Netlify</span></div>
+    <div class="py-2 flex justify-between"><span class="text-sm text-gray-500 dark:text-gray-400">Comments</span><span class="meta-text text-sm text-gray-700 dark:text-gray-300">Giscus</span></div>
+    <div class="py-2 flex justify-between"><span class="text-sm text-gray-500 dark:text-gray-400">Analytics</span><span class="meta-text text-sm text-gray-700 dark:text-gray-300">None (privacy-first)</span></div>
+  </div>
 </div>

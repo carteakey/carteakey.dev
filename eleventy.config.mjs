@@ -479,6 +479,16 @@ export default function(eleventyConfig) {
     return Object.keys(obj);
   });
 
+  // Format number with commas (e.g. 12345 → "12,345")
+  eleventyConfig.addFilter("numberString", function(n) {
+    return Number(n).toLocaleString('en-US');
+  });
+
+  // Merge two objects (for building maps in templates)
+  eleventyConfig.addFilter("merge", function(obj, extra) {
+    return Object.assign({}, obj, extra);
+  });
+
   eleventyConfig.addTransform("normalizePostAssetLinks", function (content, outputPath) {
     if (!outputPath || !outputPath.endsWith(".html")) {
       return content;
@@ -526,6 +536,33 @@ export default function(eleventyConfig) {
     } else {
       return `${readingTimeMinutes} min read`;
     }
+  });
+
+  // Word count filter (returns raw number)
+  eleventyConfig.addFilter("wordCount", function(content) {
+    if (!content) return 0;
+    const text = content.replace(/<[^>]+>/g, '');
+    return text.split(/\s+/).filter(word => word.length > 0).length;
+  });
+
+  // Sum word counts across a collection of posts (using templateContent)
+  eleventyConfig.addFilter("sumWordCounts", function(posts) {
+    if (!Array.isArray(posts)) return 0;
+    return posts.reduce((total, post) => {
+      const text = (post.templateContent || '').replace(/<[^>]+>/g, '');
+      return total + text.split(/\s+/).filter(w => w.length > 0).length;
+    }, 0);
+  });
+
+  // Group collection items by year, return { year: count } map
+  eleventyConfig.addFilter("countByYear", function(posts) {
+    if (!Array.isArray(posts)) return {};
+    const map = {};
+    for (const post of posts) {
+      const yr = new Date(post.date).getFullYear().toString();
+      map[yr] = (map[yr] || 0) + 1;
+    }
+    return map;
   });
 
   // Add snippet tags collection
