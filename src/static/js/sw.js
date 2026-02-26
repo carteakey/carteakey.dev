@@ -12,7 +12,7 @@ const PRECACHE_ASSETS = [
   '/css/tailwind.css',
   '/static/js/alpine.min.js',
   '/static/js/typeit.min.js',
-  '/static/css/prism/prism-coy.css',
+  '/static/css/prism/prism-light.css',
   '/static/css/prism/prism-twilight.css',
   '/img/avatar.png'
 ];

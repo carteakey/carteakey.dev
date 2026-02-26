@@ -6,9 +6,9 @@
   {% set cta = opts.cta or 'Jump to comments' %}
   
   {% if variant == 'sidebar' %}
-    {% set baseClasses = 'comment-pointer card-elevated rounded-xl p-5 space-y-3' %}
+    {% set baseClasses = 'comment-pointer border border-gray-200 dark:border-gray-800 rounded-xl p-4 space-y-3' %}
   {% else %}
-    {% set baseClasses = 'comment-pointer card-elevated rounded-xl p-5 sm:p-6 space-y-4 my-10' %}
+    {% set baseClasses = 'comment-pointer border border-gray-200 dark:border-gray-800 rounded-xl p-5 sm:p-6 space-y-4 my-10' %}
   {% endif %}
   
   <section class="{{ baseClasses }}">

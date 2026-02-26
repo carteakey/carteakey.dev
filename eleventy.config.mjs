@@ -144,28 +144,23 @@ async function imageShortcode(src, alt, css) {
   // Preserve animation for GIFs by bypassing transformation
   if (/\.gif$/i.test(src)) {
     const publicSrc = mapSrcToPublicUrl(src);
-    const sizes = "(min-width: 30em) 50vw, 100vw";
-    return `<img src="${publicSrc}" alt="${alt ?? ''}" class="${css ?? ''}" loading="lazy" decoding="async" sizes="${sizes}" style="max-width: 100%; height: auto;" data-zoomable />`;
+    return `<img src="${publicSrc}" alt="${alt ?? ''}" class="${css ?? ''}" loading="lazy" decoding="async" />`;
   }
   let metadata = await Image(src, {
-    widths: ["auto"],
+    widths: [400, 800, 1200, "auto"],
     formats: ['avif', 'webp', 'jpeg'],
     outputDir: "./_site/img/",
   });
 
-  const sizes = "(min-width: 30em) 50vw, 100vw";
-
   let imageAttributes = {
     class: css,
     alt,
-    sizes,
+    sizes: "(min-width: 768px) 720px, 100vw",
     loading: "lazy",
     decoding: "async",
-    style: "max-width: 100%; height: auto;",
     "data-zoomable": "",
   };
 
-  // You bet we throw an error on missing alt in `imageAttributes` (alt="" works okay)
   return generateHTML(metadata, imageAttributes, {
     whitespaceMode: "inline",
   });
@@ -175,25 +170,21 @@ async function imageShortcodeWithCaptions(src, alt, css, caption) {
   // Preserve animation for GIFs by bypassing transformation
   if (/\.gif$/i.test(src)) {
     const publicSrc = mapSrcToPublicUrl(src);
-    const sizes = "(min-width: 30em) 50vw, 100vw";
-    const imageMarkup = `<img src="${publicSrc}" alt="${alt ?? ''}" class="${css ?? ''}" loading="lazy" decoding="async" sizes="${sizes}" style="max-width: 100%; height: auto;" data-zoomable />`;
+    const imageMarkup = `<img src="${publicSrc}" alt="${alt ?? ''}" class="${css ?? ''}" loading="lazy" decoding="async" />`;
     return `<figure>${imageMarkup}${caption ? `<figcaption class="font-thin italic">${caption}</figcaption>` : ""}</figure>`;
   }
   let metadata = await Image(src, {
-    widths: ["auto"],
+    widths: [400, 800, 1200, "auto"],
     formats: ['avif', 'webp', 'jpeg'],
     outputDir: "./_site/img/",
   });
 
-  const sizes = "(min-width: 30em) 50vw, 100vw";
-
   let imageAttributes = {
     class: css,
     alt,
-    sizes,
+    sizes: "(min-width: 768px) 720px, 100vw",
     loading: "lazy",
     decoding: "async",
-    style: "max-width: 100%; height: auto;",
     "data-zoomable": "",
   };
 
@@ -288,7 +279,7 @@ export default function(eleventyConfig) {
   });
 
   eleventyConfig.addFilter("readableDate", (dateObj) => {
-    return DateTime.fromJSDate(dateObj).toLocaleString(DateTime.DATE_FULL);
+    return DateTime.fromJSDate(dateObj).toFormat("MMM d, yyyy");
   });
 
   // Archive-specific date filters

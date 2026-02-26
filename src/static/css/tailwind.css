@@ -277,7 +277,7 @@
 }
 
 :root {
-  --accent-color: #f59e0b;
+  --accent-color: #14b8a6;
 }
 
 *:focus {
@@ -379,6 +379,16 @@ figure {
   max-width: min(100%, 46rem);
 }
 
+picture {
+  display: block;
+  text-align: center;
+}
+picture img {
+  max-width: 100%;
+  height: auto;
+  display: inline-block;
+}
+
 @layer components {
 
   .prose figure>img,
@@ -398,6 +408,16 @@ figure {
   .dark .prose picture>img {
     box-shadow: 0 18px 45px -32px rgba(0, 0, 0, 0.65);
   }
+}
+
+/* Title hover — MUST be unlayered to beat @layer utilities (Tailwind text-* classes).
+   Unlayered CSS always wins over any @layer regardless of specificity. */
+.title-hover {
+  transition: color 150ms ease;
+}
+.title-hover:hover,
+.site-content .title-hover:hover {
+  color: var(--accent-color) !important;
 }
 
 @layer components {
@@ -517,29 +537,31 @@ figure {
 
   /* Card with hover effect */
   .card-hover {
-    transition: box-shadow 0.2s ease;
+    transition: border-color 0.15s ease;
   }
 
   .card-hover:hover {
-    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    border-color: rgb(209 213 219);
+  }
+  .dark .card-hover:hover {
+    border-color: rgb(63 63 70 / 0.8);
   }
 
   /* Page header count badge */
   .badge-count {
-    border-radius: 0.5rem;
-    border: 1px solid rgb(253 230 138 / 1);
-    background-color: rgb(255 251 235 / 0.7);
-    padding: 0.75rem 1rem;
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: rgb(146 64 14 / 1);
+    border-radius: 0.375rem;
+    border: 1px solid color-mix(in srgb, var(--accent-color) 35%, transparent);
+    background-color: color-mix(in srgb, var(--accent-color) 10%, transparent);
+    padding: 0.1rem 0.4rem;
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: color-mix(in srgb, var(--accent-color) 85%, black);
   }
 
   .dark .badge-count {
-    border-color: rgb(180 83 9 / 1);
-    background-color: rgb(120 53 15 / 0.25);
-    color: rgb(253 230 138 / 1);
+    border-color: color-mix(in srgb, var(--accent-color) 30%, transparent);
+    background-color: color-mix(in srgb, var(--accent-color) 15%, transparent);
+    color: color-mix(in srgb, var(--accent-color) 85%, white);
   }
 
   /* Tag pill for filtering/categorization */
@@ -566,31 +588,16 @@ figure {
   }
 
   .tag-interactive:hover {
-    background-color: rgb(254 243 199 / 1);
-    color: rgb(180 83 9 / 1);
+    background-color: color-mix(in srgb, var(--accent-color) 12%, transparent);
+    color: color-mix(in srgb, var(--accent-color) 85%, black);
   }
 
   .dark .tag-interactive:hover {
-    background-color: rgb(120 53 15 / 0.4);
-    color: rgb(253 230 138 / 1);
+    background-color: color-mix(in srgb, var(--accent-color) 18%, transparent);
+    color: color-mix(in srgb, var(--accent-color) 85%, white);
   }
 
-  /* Intro/description block */
-  .intro-block {
-    border-radius: 0.75rem;
-    border: 1px solid rgb(229 231 235 / 1);
-    background-color: rgb(243 244 246 / 0.8);
-    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-    padding: 1.25rem 1.5rem;
-    font-size: 0.875rem;
-    color: rgb(75 85 99 / 1);
-  }
-
-  .dark .intro-block {
-    border-color: rgb(31 41 55 / 1);
-    background-color: rgb(17 24 39 / 0.7);
-    color: rgb(209 213 219 / 1);
-  }
+  /* Intro/description block — kept for compatibility */
 
   /* Card padding utilities */
   .card-padding {
@@ -726,12 +733,12 @@ figure {
 }
 
 .links a:hover {
-  color: var(--color-amber-600);
+  color: var(--accent-color);
   transform: translateY(-1px) scale(1.02);
 }
 
 .dark .links a:hover {
-  color: var(--color-amber-400);
+  color: var(--accent-color);
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -750,61 +757,112 @@ figure {
   }
 }
 
-/* Enhanced card system with layered shadows */
+/* Monospace metadata text for dates, tags, counters */
 @layer components {
-  .card-elevated {
-    background: linear-gradient(145deg,
-        rgba(255, 255, 255, 0.9) 0%,
-        rgba(248, 250, 252, 0.95) 100%);
-    border: 1px solid rgba(226, 232, 240, 0.8);
-    box-shadow:
-      0 1px 2px rgba(0, 0, 0, 0.04),
-      0 4px 12px rgba(0, 0, 0, 0.04),
-      0 16px 32px rgba(0, 0, 0, 0.04);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .card-elevated:hover {
-    transform: translateY(-2px);
-    box-shadow:
-      0 2px 4px rgba(0, 0, 0, 0.04),
-      0 8px 20px rgba(0, 0, 0, 0.08),
-      0 24px 48px rgba(0, 0, 0, 0.06);
-  }
-
-  .dark .card-elevated {
-    background: linear-gradient(145deg,
-        rgba(24, 24, 27, 0.95) 0%,
-        rgba(17, 17, 17, 0.98) 100%);
-    border-color: rgba(63, 63, 70, 0.5);
-    box-shadow:
-      0 1px 2px rgba(0, 0, 0, 0.2),
-      0 4px 12px rgba(0, 0, 0, 0.3),
-      inset 0 1px 0 rgba(255, 255, 255, 0.03);
-  }
-
-  .dark .card-elevated:hover {
-    box-shadow:
-      0 2px 4px rgba(0, 0, 0, 0.2),
-      0 12px 28px rgba(0, 0, 0, 0.4),
-      inset 0 1px 0 rgba(255, 255, 255, 0.05),
-      0 0 0 1px rgba(251, 191, 36, 0.1);
+  .meta-text {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.02em;
   }
 }
 
-/* Glassmorphism card variant */
+/* Compact flat row item for list-style layouts */
 @layer components {
-  .card-glass {
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  .row-item {
+    border-bottom: 1px solid;
+    border-color: rgb(229 231 235);
+    padding-top: 0.625rem;
+    padding-bottom: 0.625rem;
   }
 
-  .dark .card-glass {
-    background: rgba(24, 24, 27, 0.7);
-    border-color: rgba(63, 63, 70, 0.3);
+  .dark .row-item {
+    border-color: rgb(31 41 55);
+  }
+}
+
+/* ── Feed list rows (homepage compact activity list) ── */
+@layer components {
+  .feed-list {
+    border-top: 1px solid rgb(229 231 235);
+  }
+  .dark .feed-list {
+    border-top-color: rgb(31 41 55 / 0.8);
+  }
+
+  .feed-list-row {
+    display: grid;
+    grid-template-columns: 6.5rem 0.5rem 3.5rem 1fr;
+    align-items: baseline;
+    gap: 0 0.5rem;
+    padding: 0.4rem 0;
+    border-bottom: 1px solid rgb(243 244 246);
+  }
+  .dark .feed-list-row {
+    border-bottom-color: rgb(24 24 27 / 0.8);
+  }
+  .feed-list-row:hover .feed-list-title {
+    color: var(--accent-color);
+  }
+
+  .feed-list-date {
+    font-size: 0.68rem;
+    color: rgb(156 163 175);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .dark .feed-list-date {
+    color: rgb(107 114 128);
+  }
+
+  .feed-list-dot {
+    width: 0.4rem;
+    height: 0.4rem;
+    border-radius: 9999px;
+    margin-bottom: 1px;
+    flex-shrink: 0;
+  }
+
+  .feed-list-type {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+
+  .feed-list-title {
+    font-size: 0.8125rem;
+    color: rgb(17 24 39);
+    line-height: 1.4;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+  .dark .feed-list-title {
+    color: rgb(229 231 235);
+  }
+}
+
+/* ── Feed card (full variant, used in /feed grid) ── */
+@layer components {
+  .feed-card-full {
+    background: rgb(255 255 255);
+    border: 1px solid rgb(229 231 235);
+    border-radius: 0.5rem;
+    padding: 0.875rem 1rem;
+    transition: border-color 0.15s ease;
+  }
+  .feed-card-full:hover {
+    border-color: rgb(209 213 219);
+  }
+  .dark .feed-card-full {
+    background: rgb(17 17 17);
+    border-color: rgb(39 39 42 / 0.8);
+  }
+  .dark .feed-card-full:hover {
+    border-color: rgb(63 63 70 / 0.8);
   }
 }
 
@@ -1264,5 +1322,267 @@ figure {
       text-align: left;
       transform: rotate(-1deg);
     }
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   📝 Site Content Typography  (replaces Tailwind prose)
+   ═══════════════════════════════════════════════════════════════════════════ */
+@layer components {
+  /* Base */
+  .site-content {
+    font-size: 0.9375rem; /* 15px — readable but not prose-lg bloated */
+    line-height: 1.65;
+    color: rgb(17 24 39);
+    word-break: break-word;
+  }
+  .dark .site-content {
+    color: rgb(209 213 219);
+  }
+
+  /* Headings */
+  .site-content h1,
+  .site-content h2,
+  .site-content h3,
+  .site-content h4,
+  .site-content h5,
+  .site-content h6 {
+    font-weight: 700;
+    line-height: 1.3;
+    color: rgb(3 7 18);
+  }
+  .dark .site-content h1,
+  .dark .site-content h2,
+  .dark .site-content h3,
+  .dark .site-content h4,
+  .dark .site-content h5,
+  .dark .site-content h6 {
+    color: rgb(249 250 251);
+  }
+  .site-content h1 { font-size: 1.5rem; margin: 0 0 0.6em; }
+  .site-content h2 { font-size: 1.2rem; margin: 1.75em 0 0.5em; border-bottom: 1px solid rgb(229 231 235); padding-bottom: 0.3em; }
+  .dark .site-content h2 { border-color: rgb(31 41 55); }
+  .site-content h3 { font-size: 1.05rem; margin: 1.5em 0 0.4em; }
+  .site-content h4 { font-size: 0.95rem; margin: 1.25em 0 0.35em; }
+  .site-content h5 { font-size: 0.9rem; margin: 1em 0 0.3em; }
+  .site-content h6 { font-size: 0.85rem; margin: 1em 0 0.3em; color: rgb(75 85 99); }
+  .dark .site-content h6 { color: rgb(156 163 175); }
+
+  /* Paragraphs */
+  .site-content p { margin: 0 0 0.9em; }
+  .site-content p:last-child { margin-bottom: 0; }
+
+  /* Links — gray with underline by default, accent on hover. Applies everywhere in content. */
+  .site-content :is(p, li, blockquote, td, th) a,
+  .site-content :is(p, li, blockquote, td, th) a:visited {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    text-decoration-thickness: 1px;
+    text-decoration-color: rgb(156 163 175);
+    transition: color 0.15s, text-decoration-color 0.15s;
+  }
+  .site-content :is(p, li, blockquote, td, th) a:hover {
+    color: var(--accent-color);
+    text-decoration-color: var(--accent-color);
+  }
+
+  /* Strong / em / del */
+  .site-content strong { font-weight: 700; }
+  .site-content em { font-style: italic; }
+  .site-content del { text-decoration: line-through; opacity: 0.65; }
+
+  /* Inline code */
+  .site-content :not(pre) > code {
+    font-family: ui-monospace, 'Cascadia Code', Menlo, Consolas, monospace;
+    font-size: 0.82em;
+    background: rgb(243 244 246);
+    color: rgb(31 41 55);
+    border: 1px solid rgb(229 231 235);
+    border-radius: 3px;
+    padding: 0.1em 0.35em;
+    white-space: nowrap;
+  }
+  .dark .site-content :not(pre) > code {
+    background: rgb(31 41 55);
+    color: rgb(209 213 219);
+    border-color: rgb(55 65 81);
+  }
+
+  /* Code blocks */
+  .site-content pre {
+    font-size: 0.82rem;
+    line-height: 1.55;
+    overflow-x: auto;
+    border-radius: 6px;
+    margin: 1em 0;
+    padding: 0.9em 1.1em;
+    background: #f6f8fa;
+    border: 1px solid rgb(226 232 240);
+  }
+  .dark .site-content pre {
+    background: rgb(17 24 39);
+    border-color: rgb(31 41 55);
+  }
+  .site-content pre code {
+    font-size: inherit;
+    background: none;
+    border: none;
+    padding: 0;
+    color: inherit;
+    white-space: pre;
+  }
+
+  /* Blockquote */
+  .site-content blockquote {
+    border-left: 3px solid var(--accent-color);
+    margin: 1em 0;
+    padding: 0.2em 1em;
+    font-style: italic;
+    color: rgb(75 85 99);
+  }
+  .dark .site-content blockquote { color: rgb(156 163 175); }
+
+  /* Lists */
+  .site-content ul {
+    list-style-type: disc;
+    padding-left: 1.4em;
+    margin: 0 0 0.9em;
+  }
+  .site-content ol {
+    list-style-type: decimal;
+    padding-left: 1.4em;
+    margin: 0 0 0.9em;
+  }
+  .site-content li { margin: 0.3em 0; }
+  .site-content li > ul,
+  .site-content li > ol { margin-top: 0.2em; margin-bottom: 0.2em; }
+  .site-content li > p { margin: 0; }
+
+  /* Images */
+  .site-content img { max-width: 100%; height: auto; border-radius: 4px; }
+  .site-content figure { margin: 1.25em 0; }
+  /* Center pictures/images in post content — scoped to NOT inside not-prose (e.g. avatar) */
+  .site-content picture { display: block; max-width: 100%; }
+  .site-content picture img { border-radius: 6px; max-width: 100%; height: auto; display: block; }
+  /* Center images in post article body */
+  .site-content article picture { margin: 1.5em auto; text-align: center; }
+  .site-content article picture img { margin: 0 auto; }
+  .site-content figcaption {
+    font-size: 0.78rem;
+    color: rgb(107 114 128);
+    margin-top: 0.4em;
+    text-align: center;
+    font-style: italic;
+  }
+
+  /* Tables */
+  .site-content table {
+    width: 100%;
+    font-size: 0.85rem;
+    border-collapse: collapse;
+    margin: 1em 0;
+  }
+  .site-content thead th {
+    font-weight: 600;
+    text-align: left;
+    padding: 0.4em 0.75em;
+    border-bottom: 2px solid rgb(229 231 235);
+    color: rgb(75 85 99);
+  }
+  .dark .site-content thead th {
+    border-color: rgb(55 65 81);
+    color: rgb(156 163 175);
+  }
+  .site-content td {
+    padding: 0.4em 0.75em;
+    border-bottom: 1px solid rgb(229 231 235);
+  }
+  .dark .site-content td { border-color: rgb(55 65 81); }
+  .site-content tbody tr:last-child td { border-bottom: none; }
+  .site-content tbody tr:nth-child(even) { background: rgb(249 250 251); }
+  .dark .site-content tbody tr:nth-child(even) { background: rgb(17 24 39 / 0.3); }
+
+  /* HR */
+  .site-content hr {
+    border: none;
+    border-top: 1px solid rgb(229 231 235);
+    margin: 1.5em 0;
+  }
+  .dark .site-content hr { border-color: rgb(55 65 81); }
+
+  /* ── .not-prose escape hatch ── */
+  /* Reset all typography on .not-prose children so components render unaffected */
+  .site-content .not-prose { font-size: 0.875rem; line-height: 1.5; }
+  .site-content .not-prose h1,
+  .site-content .not-prose h2,
+  .site-content .not-prose h3,
+  .site-content .not-prose h4,
+  .site-content .not-prose h5,
+  .site-content .not-prose h6 {
+    font-size: inherit;
+    font-weight: 600;
+    margin: 0;
+    border-bottom: none;
+    padding-bottom: 0;
+    color: inherit;
+  }
+  .site-content .not-prose p { margin: 0; }
+  .site-content .not-prose a { text-decoration: none; }
+  /* Reset not-prose picture centering (e.g. avatars) */
+  .site-content .not-prose picture { margin: 0; text-align: inherit; }
+  .site-content .not-prose picture img { border-radius: inherit; display: block; width: 100%; height: 100%; }
+  .site-content .not-prose ul,
+  .site-content .not-prose ol { list-style: none; padding: 0; margin: 0; }
+  .site-content .not-prose pre { font-size: inherit; background: initial; border: initial; padding: initial; margin: initial; }
+  .site-content .not-prose code { font-size: inherit; background: initial; border: initial; padding: initial; }
+  .site-content .not-prose blockquote { border-left: none; padding: 0; margin: 0; font-style: inherit; color: inherit; }
+  .site-content .not-prose table { font-size: inherit; }
+}
+/* TOC (Table of Contents) styles — generated by eleventy-plugin-toc */
+@layer components {
+  .toc { font-size: 0.8rem; }
+  .toc ul { list-style: none; padding-left: 0; margin: 0; }
+  .toc ul ul { padding-left: 0.875rem; border-left: 1px solid rgb(229 231 235); margin-top: 0.25rem; }
+  .dark .toc ul ul { border-color: rgb(55 65 81); }
+  .toc li { margin: 0; padding: 0.15rem 0; }
+  .toc a {
+    color: rgb(107 114 128);
+    text-decoration: none;
+    line-height: 1.35;
+    display: block;
+    transition: color 0.15s;
+  }
+  .toc a:hover { color: var(--accent-color); }
+  .dark .toc a { color: rgb(156 163 175); }
+  .dark .toc a:hover { color: var(--accent-color); }
+}
+
+/* ── Code block copy button ── */
+@layer components {
+  .copy-code-btn {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    padding: 0.25rem 0.4rem;
+    border-radius: 4px;
+    border: 1px solid rgb(75 85 99 / 0.5);
+    background: rgb(31 41 55 / 0.8);
+    color: rgb(209 213 219);
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.15s, color 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
+  pre:hover .copy-code-btn,
+  .copy-code-btn:focus {
+    opacity: 1;
+  }
+  .copy-code-btn:hover {
+    color: var(--accent-color);
+    border-color: var(--accent-color);
   }
 }

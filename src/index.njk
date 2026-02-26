@@ -4,121 +4,109 @@ htmlTemplateEngine: "webc"
 ---
 {% from "components/feed-card.njk" import feedCard %}
 
-{% set cardShell = "rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-100/80 dark:bg-gray-900/70 shadow-sm transition-shadow duration-200 hover:shadow-lg" %}
-
-
-{# eleventyNavigation: key: carteakey.dev order: 1 #}
-<div class="intro flex flex-col md:flex-row gap-6 justify-center items-center md:items-start animate-enter">
-  <div class="relative group">
-    <div class="absolute -inset-1 bg-gradient-to-r from-amber-400 via-orange-400 to-rose-400 rounded-full blur-md opacity-40 group-hover:opacity-60 transition-opacity duration-500"></div>
-    {% image "./src/static/img/headshot.png" , "me", "relative rounded-full md:m-6 ml-0 w-32 h-32 self-center md:self-start object-cover mx-auto md:mx-6 ring-4 ring-white dark:ring-gray-900 shadow-xl" %}
+{# ── HERO ─────────────────────────────────────────────── #}
+<div class="flex flex-col sm:flex-row gap-5 items-start not-prose animate-enter py-2">
+  <div class="relative shrink-0 mt-0.5">
+    <div class="absolute -inset-1 rounded-full opacity-70" style="background: conic-gradient(from 180deg, var(--accent-color), #7c3aed, #0ea5e9, var(--accent-color));"></div>
+    <div class="relative z-10 w-20 h-20 rounded-full overflow-hidden">
+      {% image "./src/static/img/headshot.png" , "me", "w-full h-full object-cover" %}
+    </div>
   </div>
-
-  <div class="md:max-w-xl lg:max-w-2xl space-y-3">
-    <p class="text-lg">
-      Hi 👋🏼, I'm <span class="font-bold text-gradient">Kartikey</span>, and welcome to my
-      website!
+  <div class="space-y-2">
+    <p class="text-base font-semibold text-gray-900 dark:text-gray-100 m-0">
+      Hi 👋🏼, I'm <span style="color: var(--accent-color); font-weight: 700;">Kartikey</span> — welcome to my corner of the internet!
     </p>
-    <p>
-      I'm a data analyst from Toronto. Outside work, I spend my time tinkering with tech and building fun
-      <a href="/portfolio" class="no-underline font-bold link-glow">projects</a>.
+    <p class="text-sm text-gray-600 dark:text-gray-400 m-0 leading-relaxed">
+      I'm a data analyst from Toronto. Outside work I tinker with tech and build <a href="/portfolio" class="accent-link font-semibold" style="text-decoration: none;">side projects</a>.
+      Here I write about linux, AI, data science, and whatever else catches my eye — grab a coffee and look around.
     </p>
-    <p>
-      Here, I like to write about linux, AI, data science, and other things I
-      find interesting — so grab a cup of coffee and feel free to look around!
-    </p>
+    <div class="flex flex-wrap gap-x-3 gap-y-1 pt-0.5 text-xs text-gray-400 dark:text-gray-500">
+      <a href="/about" class="hover:text-gray-700 dark:hover:text-gray-300 transition-colors" style="text-decoration: none;">About</a>
+      <span>·</span>
+      <a href="/now" class="hover:text-gray-700 dark:hover:text-gray-300 transition-colors" style="text-decoration: none;">Now</a>
+      <span>·</span>
+      <a href="/cv" class="hover:text-gray-700 dark:hover:text-gray-300 transition-colors" style="text-decoration: none;">CV</a>
+      <span>·</span>
+      <a href="https://github.com/carteakey" class="hover:text-gray-700 dark:hover:text-gray-300 transition-colors" style="text-decoration: none;" target="_blank" rel="noopener">GitHub ↗</a>
+    </div>
   </div>
 </div>
-  {% set highlightedPost = collections.featuredPost %}
-  {% if highlightedPost %}
-    <section class="rounded-xl card-glass p-5 sm:p-6 not-prose mt-8 mb-8 animate-enter stagger-1">
-      <div class="flex flex-col gap-4">
-        <div class="flex items-center gap-2 text-sm font-semibold uppercase tracking-wide" style="color: var(--accent-color);">
-          {% feather "star", class="w-4 h-4" %}
-          Featured Post
-        </div>
-        <a href="{{ highlightedPost.url }}" class="inline-flex items-center gap-2 text-lg md:text-xl font-semibold text-gray-900 dark:text-gray-100 transition-colors accent-link no-underline">
-          {{ highlightedPost.data.title }}
-          {% feather "arrow-up-right", class="w-4 h-4 opacity-40" %}
-        </a>
-        {% if highlightedPost.data.description %}
-        <p class="text-sm text-gray-600 dark:text-gray-300">
-          {{ highlightedPost.data.description }}
-        </p>
+
+<hr class="my-5 border-gray-200 dark:border-gray-800" />
+
+{# ── FEATURED POST ─────────────────────────────────────── #}
+{% set highlightedPost = collections.featuredPost %}
+{% if highlightedPost %}
+  <div class="not-prose animate-enter stagger-1 mb-5">
+    <div class="mb-2">
+      <span class="meta-text text-[0.65rem] uppercase tracking-wider font-semibold" style="color: var(--accent-color);">★ Featured</span>
+    </div>
+    <a href="{{ highlightedPost.url }}" class="block group" style="text-decoration: none;">
+      <h2 class="text-base font-semibold text-gray-900 dark:text-gray-100 leading-snug m-0 transition-colors" style="transition: color 0.15s;">
+        <span class="group-hover:underline" style="text-decoration-color: var(--accent-color);">{{ highlightedPost.data.title }}</span>
+      </h2>
+      {% if highlightedPost.data.description %}
+        <p class="text-sm text-gray-500 dark:text-gray-400 mt-1 m-0 leading-relaxed">{{ highlightedPost.data.description }}</p>
+      {% endif %}
+      <div class="flex items-center gap-2 mt-1.5">
+        <time class="meta-text text-[0.68rem] text-gray-400 dark:text-gray-500">{{ highlightedPost.date | readableDate }}</time>
+        {% if highlightedPost.data.tags %}
+          {% for tag in highlightedPost.data.tags | filterTagList | head(2) %}
+            <span class="meta-text text-[0.65rem] px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400">#{{ tag }}</span>
+          {% endfor %}
         {% endif %}
-        <div class="flex flex-wrap items-center gap-3 text-xs text-gray-500 dark:text-gray-400">
-          <time class="uppercase tracking-wide" datetime="{{ highlightedPost.date | htmlDateString }}">{{ highlightedPost.date | readableDate }}</time>
-          {% if highlightedPost.data.tags %}
-            <span class="h-1 w-1 rounded-full bg-gray-300 dark:bg-gray-600"></span>
-            {% for tag in highlightedPost.data.tags | filterTagList %}
-              <span class="inline-flex items-center rounded-full bg-gray-100 dark:bg-gray-800 px-2 py-0.5 text-[0.7rem] uppercase tracking-wide text-gray-600 dark:text-gray-300">#{{ tag }}</span>
-            {% endfor %}
-          {% endif %}
-          <span class="ml-auto">
-            <a href="{{ highlightedPost.url }}" class="inline-flex items-center gap-1 hover:underline" style="color: var(--accent-color);">
-              Read the post
-              {% feather "chevron-right", class="w-4 h-4" %}
-            </a>
-          </span>
-        </div>
+        <span class="text-xs font-medium ml-auto transition-transform group-hover:translate-x-0.5" style="color: var(--accent-color);">Read →</span>
       </div>
-    </section>
-  {% endif %}
-
-  <hr class="mt-4" />
-  
-   <!-- Quote of the Day Section -->
-    <section class="rounded-xl card-glass p-5 sm:p-6 not-prose animate-enter stagger-2">
-        <div class="flex flex-col gap-4">
-            <div class="flex items-center gap-2 text-sm font-semibold uppercase tracking-wide" style="color: var(--accent-color);">
-                {% feather "zap", class="w-4 h-4 pulse-subtle" %}
-                Quote of the Day
-            </div>
-            <blockquote id="qotd" class="text-lg font-medium leading-relaxed text-gray-900 dark:text-gray-100 border-l-2 pl-4" style="border-color: var(--accent-color);">
-                {{ qotd.quote }}
-            </blockquote>
-            <p class="text-right text-xs italic text-gray-500 dark:text-gray-400" id="who">
-                Powered by {{ qotd.provider }}
-            </p>
-        </div>
-    </section>
-
-  <!-- The script itself, loaded AFTER your root element. -->
-  <script src="/static/js/typeit.min.js"></script>
-  <script>
-    const instance = new TypeIt("#qotd", {
-    speed: 30,
-    waitUntilVisible: true
-    })
-    instance.go();
-  </script>
-
-  <hr class="mt-8 " />
-
-  <div class="mt-12 flex items-baseline justify-between gap-3 animate-enter stagger-3">
-    <h2 class="m-0 font-semibold tracking-tight text-gradient">Feed</h2>
-    <a
-      href="{{ '/feed/' | url }}"
-      class="group inline-flex items-center gap-1 text-sm font-medium accent-link no-underline decoration-dotted underline-offset-4 transition-all hover:gap-2"
-      aria-label="Open the full feed"
-    >
-      Open feed
-      {% feather "arrow-up-right", class="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" %}
     </a>
   </div>
-  {# <hr class="divider-gradient my-4" /> #}
-  {# <p class="text-gray-600 dark:text-gray-400 mb-4">Latest posts, snippets, microposts, photos, vibe drops, and /now updates.</p> #}
+  <hr class="mb-5 border-gray-200 dark:border-gray-800" />
+{% endif %}
 
-  {% set feedItems = collections.feed | head(10) %}
+{# ── QUOTE OF THE DAY ──────────────────────────────────── #}
+<div class="not-prose animate-enter stagger-2 mb-5">
+  <blockquote id="qotd" class="border-l-2 pl-3 text-sm italic text-gray-700 dark:text-gray-300 leading-relaxed m-0" style="border-color: var(--accent-color);">{{ qotd.quote }}</blockquote>
+  <p class="text-xs text-gray-400 dark:text-gray-500 mt-1.5 text-right m-0 italic" id="who">— {{ qotd.provider }}</p>
+</div>
 
-  <div class="grid gap-3 md:grid-cols-2 lg:grid-cols-3 my-6 items-start feed-masonry animate-enter stagger-4" data-feed-masonry style="--feed-row-height: 16px;">
-    {% for item in feedItems %}
-      {{ feedCard(item, { variant: 'compact', showTags: false }) }}
-    {% endfor %}
+<script src="/static/js/typeit.min.js"></script>
+<script>new TypeIt("#qotd", { speed: 25, waitUntilVisible: true }).go();</script>
+
+<hr class="mb-5 border-gray-200 dark:border-gray-800" />
+
+{# ── RECENT ACTIVITY ───────────────────────────────────── #}
+<div class="not-prose animate-enter stagger-3" x-data="{ hView: localStorage.getItem('h-feed-view') || 'grid' }" x-init="$watch('hView', v => localStorage.setItem('h-feed-view', v))">
+  <div class="flex items-center justify-between mb-3">
+    <span class="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">Recent</span>
+    <div class="flex items-center gap-2">
+      <div class="view-toggle">
+        <button type="button" @click="hView = 'list'" :class="{ 'active': hView === 'list' }" title="List view">
+          {% feather "list", class="w-3.5 h-3.5" %}
+        </button>
+        <button type="button" @click="hView = 'grid'" :class="{ 'active': hView === 'grid' }" title="Grid view">
+          {% feather "grid", class="w-3.5 h-3.5" %}
+        </button>
+      </div>
+      <a href="{{ '/feed/' | url }}" class="text-xs font-medium" style="text-decoration: none; color: var(--accent-color);">All →</a>
+    </div>
   </div>
 
-  {% include "components/feed-masonry-script.njk" %}
+  {% set feedItems = collections.feed | head(9) %}
 
-  <p class="text-sm text-gray-600 dark:text-gray-400">
-    Browse the full <a href="{{ '/feed/' | url }}" class="underline decoration-dotted underline-offset-4">feed</a> or jump straight to <a href="{{ '/blog/' | url }}" class="underline decoration-dotted underline-offset-4">posts</a> and <a href="{{ '/snippets/' | url }}" class="underline decoration-dotted underline-offset-4">snippets</a>.
-  </p>
+  {# List view #}
+  <ul x-show="hView === 'list'" x-cloak class="feed-list m-0 p-0 list-none">
+    {% for item in feedItems %}
+      {{ feedCard(item, { variant: 'list' }) }}
+    {% endfor %}
+  </ul>
+
+  {# Grid view #}
+  <div x-show="hView === 'grid'"
+    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 items-start"
+    data-feed-masonry style="--feed-row-height: 16px;">
+    {% for item in feedItems %}
+      {{ feedCard(item, { variant: 'full' }) }}
+    {% endfor %}
+  </div>
+</div>
+
+{% include "components/feed-masonry-script.njk" %}

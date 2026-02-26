@@ -5,6 +5,220 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.7.1] - 2026-02-27
+
+### Fixed
+- Homepage feed grid: add `data-feed-masonry` + masonry script include so grid cards have true dynamic heights (matching feed page)
+- Mobile slider: replaced w-20 touch-hostile range input with a tap-to-cycle colored dot on xs screens; full gradient slider remains on sm+
+- Footer mobile: replaced 2×2 grid (ugly) with flat wrapped inline link list on mobile; 4-column categorized grid retained for md+
+
+
+
+### Changed
+- Navbar: About/Blog/Now text links hidden on mobile (sm: breakpoint) — compass + slider + dark mode remain; no more squished nav
+- Homepage feed view toggle: replaced custom active state with `view-toggle` CSS + feather icons (consistent with blog/snippets)
+- Feed page: search moved into header row alongside view toggle (like blog); view toggle uses `view-toggle` CSS + icon-only feather icons; h1 now matches blog sizing; item count shown inline
+
+
+
+### Changed
+- Default accent color changed from amber to teal (`#14b8a6`)
+- Feed grid on homepage now uses `items-start` for dynamic card heights (matches other grids)
+
+### Removed
+- Dead CSS: `.card-elevated`, `.card-glass`, `.intro-block` blocks removed from tailwind.css
+- Service worker: replaced stale `prism-coy.css` cache entry with `prism-light.css`
+
+## [1.6.8] - 2026-02-27
+
+### Changed
+- base.njk: Accent slider moved from extended footer (required scrolling ~1300 lines into page) into the nav bar, between the compass icon and dark mode toggle — now always visible on every page
+- base.njk: Slider redesigned as a compact inline gradient bar (w-20/w-28) with a white hairline indicator; no thumb ball needed (gradient itself shows position)
+- base.njk: Site title unified to "carteakey.dev" on both desktop and mobile — removes "Kartikey Chauhan" desktop variant and the `font-et-book` (Latin serif) font
+- base.njk: Nav `py-3` → `py-3.5` (slightly taller for consistency with body text size)
+- base.njk: Old footer slider block removed
+
+
+
+### Fixed
+- tailwind.css: Moved `.title-hover:hover` completely OUT of `@layer components` — in Tailwind v4, `@layer utilities` always beats `@layer components` regardless of specificity, so hover color was always overridden by `text-gray-900 dark:text-gray-100`. Unlayered CSS beats all layers. Added `!important` as belt-and-suspenders.
+- base.njk: Accent slider thumb was invisible — Tailwind v4 only scans static HTML class names; dynamic Alpine `:class="themes[currentIndex].color"` bindings like `bg-amber-500` are never included in generated CSS. Fixed by switching to `:style="background-color: ${themes[currentIndex].hex}"` with hex values embedded directly in the data object (matching the `ACCENT_COLORS` map in theme.js).
+- base.njk: Slider label now uses `x-text="themes[currentIndex].name"` (was `.label` — removed unused label field from theme data).
+
+
+
+### Fixed
+- tailwind.css: Added `.site-content .title-hover:hover` (specificity 0,3,0) alongside `.title-hover:hover` (0,2,0) — Tailwind's `dark:text-gray-100:is(.dark *)` also has 0,2,0 and wins by cascade order when equal; the higher-specificity rule now correctly applies accent color on hover in blog/snippets list rows
+- base.njk: Accent slider `updateTheme()` now calls `window.setAccentTheme()` explicitly instead of bare `setAccentTheme()` — Alpine.js component scope doesn't reliably fall through to window globals, causing the slider to move visually but not update the CSS variable
+
+
+
+### Fixed
+- snippets.njk: Added `| reverse` to both list and grid loops — snippets collection is oldest-first by default (unlike posts which has an explicit sort); now shows newest snippets first, matching blog behavior
+
+
+
+### Changed
+- snippets.njk: Full rewrite to match blog (archive.njk) exactly — same inline h1+count header, same search field style, list view as default, list button first then grid, same list row design (date col + title + language tag), same grid card design (feed-card-full style with purple dot). Removed page-header component and wrapping max-w div.
+- index.njk: Homepage feed now shows list toggle FIRST, then grid toggle (consistent with blog/snippets). Removed redundant "→ Feed" footer link (was duplicate of "All →" in header). Grid bumped to 3-col (lg:grid-cols-3). Shows 9 items.
+- index.njk: Feed default is now list view (localStorage key h-feed-view), matching editorial density preference.
+
+### Fixed
+- index.njk: "All →" and "→ Feed" both linking to /feed/ (duplicate). Kept only "All →" in the section header.
+
+
+
+### Fixed
+- tailwind.css: Links are now gray (color: inherit) with underline by default, accent color on hover — removes all accent-as-default link color. Works consistently in both prose and not-prose contexts
+- tailwind.css: Removed `!important` from `.not-prose a` reset — no longer needed since content links don't set accent by default
+- tailwind.css: `.site-content picture` centering now scoped to `article picture` only — fixes profile avatar being pushed/clipped by `margin: 1.5em auto`
+- tailwind.css: `.not-prose picture` reset added — avatars/icon images in UI components no longer affected by post-image centering rules
+- feed.njk: Description changed from "/now snapshots" to "and updates"
+
+### Changed
+- index.njk: Homepage feed section now defaults to grid view (2-col compact cards); list toggle added; view persisted to localStorage key `h-feed-view`
+
+## [1.6.2] - 2026-02-27
+
+### Added
+- base.njk: Global code block copy button — clipboard SVG icon appears on pre:hover, turns accent on hover, switches to checkmark on success
+- tailwind.css: `.copy-code-btn` styles — positioned absolute, dark semi-transparent background, accent on hover
+
+### Fixed
+- base.njk: "More" (compass) nav icon now uses accent color
+- tailwind.css: `.site-content .not-prose a` reset uses `!important` to definitively prevent accent color from leaking into feed cards and UI components
+- archive.njk: Removed `| reverse` from both list/grid loops — `collections.posts` is already sorted newest-first in eleventy.config.mjs; `| reverse` was making it oldest-first
+- snippets.njk: Grid cards switched from `card card-hover card-compact` to flat `border border-gray-200` style; list view rewritten as `divide-y` rows with date col + title + language tag (matches blog list design)
+- tailwind.css: `.site-content picture` and `.site-content picture img` rules added — images in post content are now centered with `margin: auto`
+- picture CSS: Added `text-align: center` and `display: inline-block` on img for proper centering
+
+
+
+### Added
+- src/static/css/prism/prism-light.css: New clean GitHub-inspired light syntax theme (replaces broken prism-coy)
+
+### Fixed
+- index.njk: Homepage footer → "→ Feed" (single clean link)
+- index.njk: Profile avatar wrapped in constrained `w-20 h-20 rounded-full overflow-hidden` div — fixes blurriness and gradient ring
+- eleventy.config.mjs: Image shortcodes now use `widths: [400, 800, 1200, "auto"]` with proper `sizes` (was `["auto"]` = single size only); removed `style="max-width: 100%; height: auto;"` inline style override
+- tailwind.css: Added `picture { display: block }` + `picture img { max-width: 100%; height: auto }` global rules
+- projects.njk: Removed `intro-block` card wrapper → plain text description; GitHub table redesigned as clean bordered table with `title-hover` links and `meta-text` dates; description column hidden on mobile
+- gallery.njk: Removed `intro-block` card wrapper → plain text description
+- theme.js / base.njk: Switched default Prism theme from `prism-coy` to `prism-light`
+
+
+
+### Added
+- stats.njk: Hero callout strip with 4 large accent-colored numbers (Posts, Snippets, This Year, Tags)
+- feed.njk: List/grid toggle, type filter chips, inline search — list view defaults to homepage activity style
+- base.njk: Footer nav links now have feather icons (clock, activity, edit-3, code, box, image, music, etc.)
+- base.njk: Site title now shows accent color always (not just on hover)
+- base.njk: Dark mode toggle icon uses accent color
+- index.njk: Profile avatar larger (w-20 h-20) + conic gradient ring restored
+- index.njk: Homepage footer link text cleaned up ("Blog · Snippets · Feed · Search")
+- feed-card.njk: Pinned star icon (★) shown in list variant when item is pinned
+
+### Changed
+- theme.js: Exposed `setAccentTheme`, `isDarkMode`, `switchPrismTheme` as `window.*` globals — fixes accent slider in Alpine.js context
+- tailwind.css: Code block background mode-aware — light gray in light mode, dark navy in dark mode; removed `!important` overrides
+- package.json: Bumped all dependencies to latest (eleventy 3.1.2, tailwind 4.2.1, 11ty-img 6.0.4, sharp 0.34.5, etc.)
+
+## [1.5.8] - 2026-02-26
+
+### Changed
+- post.njk: Post navigation redesigned — "Next →" / "← Previous" labels with title-hover links
+
+
+
+### Fixed
+- tailwind.css: `.site-content a` link styling scoped to `:is(p, li, blockquote, td, th) a` — prevents accent-color from applying to UI/nav/card links inside site-content
+- base.njk: Added `not-prose` to `<nav>` and `<footer>` elements to isolate them from content typography styles
+- tailwind.css: Added TOC (`<nav class="toc">`) styles — no disc bullets, clean link style with accent hover
+- post.njk: Avatar hover glow → accent CSS variable gradient (removes hardcoded amber-400)
+
+
+
+### Changed
+- page-header.njk: h1 `text-2xl` → `text-xl` for density consistency
+- 404.md: h1 `text-4xl/5xl` → `text-3xl/4xl`, cards flattened (removed bg+shadow), text-lg → text-sm, amber hover links → `title-hover`, py-20 → py-16
+- quotes.njk: h1 `text-3xl` → `text-xl`, quote cards `card-padding` → `card-compact`, `text-base` → `text-sm`
+- skills.njk: `text-lg` → `text-sm` on breakdown heading
+- stats.njk: card padding `p-5 sm:p-6` → `p-3 sm:p-4`, tag icon bg → accent color via CSS variable
+- guestbook.njk: headings `text-lg` → `text-sm`
+- newsletter.njk: headings `text-lg` → `text-sm`
+- blogroll.njk, bookmarks.njk: headings `text-lg` → `text-sm`
+- postslist.njk, archive.njk: Pinned badge → accent CSS variable (removes hardcoded amber)
+- post.njk: avatar hover glow → accent CSS variable gradient (removes hardcoded amber)
+- base.njk: skip-link `focus:bg-amber-500` → `style="background: var(--accent-color)"`
+- tailwind.css: `.badge-count` → accent CSS variable (removes hardcoded amber); `.tag-interactive:hover` → accent CSS variable; `color-mix` for consistent theming
+
+
+
+### Changed
+- base.njk: Drop Tailwind prose entirely — replaced with custom `.site-content` typography class; body set to `text-sm` (14px); nav links tightened to `text-sm` (no md:text-base); site title reduced to `text-base`
+- tailwind.css: Added comprehensive `.site-content` typography block (~200 lines) — 0.9375rem base, 1.65 line-height, all HTML elements styled. `.not-prose` escape hatch fully defined. Removes dependency on `@tailwindcss/typography`
+- eleventy.config.mjs: `readableDate` filter changed from `DATE_FULL` to `MMM d, yyyy` (e.g., "Feb 26, 2026")
+- theme.js: Fixed accent slider — removed `.prose` class manipulation from `updateAccentClasses` (only `setAccentVariables` needed)
+- post.njk: Post article spacing tightened (`space-y-8` → `space-y-6`, header `space-y-5` → `space-y-3`); description `text-lg` → `text-sm`; sidebar headings `text-lg` → `text-sm`
+- feed-card.njk: Removed `prose-sm dark:prose-invert` — replaced with `not-prose` to use site-content typography
+- search.njk, uses.njk, newsletter.njk, guestbook.njk, stats.njk, quotes.njk, bookmarks.njk, blogroll.njk: Replaced `text-lg`/`text-xl` headings with `text-sm`/`text-base` for density consistency
+
+## [1.5.3] - 2026-02-26
+
+### Changed
+- stats.njk, guestbook.njk, newsletter.njk: Replaced heavy glassmorphism `cardShell` (shadow-lg + bg-gray-100/80) with clean flat `border` cards — consistent with new dense editorial design language.
+- post.njk: Sidebar author/TOC cards replaced `card-elevated` with flat border. Upvote/reaction active states now use `var(--accent-color)` via inline style instead of hardcoded amber classes.
+- comment-pointer.njk: Replaced `card-elevated` with flat border card.
+- snippet-tags.njk: Full rewrite — flat `divide-y` row list matching snippets.njk list view. Added breadcrumbs.
+- newsletter.njk: Input focus rings use `accent-field` class. Icon circles simplified (no amber background). Removed `hover:shadow-lg`.
+- guestbook.njk: Form inputs use `accent-field`. Header aligned with other pages.
+- stats.njk: postsThisMonth counter uses `var(--accent-color)`. Tag icon no longer hardcoded amber.
+- page width: Stepped down one Tailwind size at each breakpoint (md:2xl, lg:3xl, xl:4xl).
+
+
+### Fixed
+- index.njk: Featured section `★ Featured` label and `Read →` link now use `var(--accent-color)` instead of hardcoded amber, respecting the accent theme switcher.
+- now.njk: Removed `cardShell` variable, tightened layout, date in `meta-text` style. `not-prose` wrapper around snippets avoids prose override.
+- workouts-snippet.njk, games-snippet.njk: Replaced `cardShell`+shadow cards with `feed-card-full` style. Hover colors use `var(--accent-color)`. Reduced padding.
+- tags-list.njk: Tag links now use `accent-link` class (respects theme switcher) instead of hardcoded `text-amber-600`.
+- search.njk: Result title hover and loading spinner use `var(--accent-color)` instead of hardcoded amber.
+- snippets.njk: Arrow link on list-view items uses `var(--accent-color)` on hover.
+- base.njk: Restored `prose-lg` for comfortable reading line height.
+
+
+### Changed
+- UI: Second-pass redesign — coherent design language built from the ground up.
+- feed-card.njk: New `list` variant for homepage (single-row grid layout: date · dot · type · title). `full` variant now uses `feed-card-full` (flat border card, no shadow) for the /feed page grid.
+- index.njk: Full homepage rewrite. Clean hero (avatar + name + bio + quick links inline). Featured post as minimal text block. QOTD as bare blockquote. Feed section replaced masonry grid with a scannable `feed-list` single-column chronological activity log.
+- archive.njk (blog): Full rewrite. Default list view (matches postslist.njk style: date left col, title+desc right). Grid view uses `feed-card-full` cards consistent with /feed. Search bar compact and inline with view toggle.
+- feed.njk: Cleaned up, removed duplicate inline JS (handled by masonry-script include).
+- postslist.njk: Refined layout — `md:w-36` fixed date column, tags below date on desktop, description `text-sm`, consistent with blog page.
+- tailwind.css: Added `.feed-list`, `.feed-list-row`, `.feed-list-dot`, `.feed-list-date`, `.feed-list-type`, `.feed-list-title` for homepage activity list. Added `.feed-card-full` for grid cards. Removed heavy `.card-hover` box-shadow — now border-color transition only.
+
+
+
+### Changed
+- UI: Full "Dense Editorial" redesign — higher text density, flat list rows, less visual noise.
+- base.njk: Reduced nav padding (`py-8` → `py-3`), smaller site title, border-bottom separator on nav.
+- base.njk: Switched `prose-lg` → `prose-base` for tighter body typography.
+- base.njk: Spotify now-playing rendered as compact inline text row instead of glassmorphism card.
+- base.njk: Footer nav stripped of Feather icons for cleaner density; compressed spacing.
+- base.njk: Footer bottom bar collapsed into single row (tagline + theme picker + copyright).
+- index.njk: Avatar shrunk (`w-32 h-32` → `w-16 h-16`), removed glowing border animation.
+- index.njk: Intro block condensed to two tight lines.
+- index.njk: QOTD rendered as left-border blockquote, no card shell.
+- index.njk: Featured post uses flat bordered box instead of glassmorphism card.
+- index.njk: Feed section header and grid tightened.
+- postslist.njk: Switched from `card-elevated` cards to flat `divide-y` list rows.
+- postslist.njk: Monospace date in left column, smaller title/description text, compact tags.
+- feed-card.njk: Removed card shell; now uses bottom-border flat row style.
+- feed-card.njk: Badge shrunk to small label (no pill), date inline monospace.
+- feed-card.njk: Padding reduced from `1.25rem` to `0.75rem 0`.
+- tailwind.css: Added `.meta-text` utility (monospace, small, tracked).
+- tailwind.css: Added `.row-item` utility for flat border-b list rows.
+- tailwind.css: Reduced `card-elevated` shadow depth significantly.
+- tailwind.css: Reduced `card-glass` blur/shadow intensity.
+
 ## [1.4.7] - 2026-02-18
 
 ### Fixed

@@ -37,7 +37,7 @@ permalink: /bookmarks/
     {% set items = bookmarks.bookmarks | selectattr('category', 'equalto', category) | sort(attribute='date') | reverse %}
     {% set catCount = items | length %}
     <section id="{{ category | slugify }}" class="mt-8">
-      <h2 class="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+      <h2 class="text-sm font-semibold text-gray-900 dark:text-white flex items-center gap-2">
         {{ category }}
         <span class="text-xs font-normal text-gray-500">{{ catCount }}</span>
       </h2>

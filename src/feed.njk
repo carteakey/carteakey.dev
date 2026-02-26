@@ -11,90 +11,130 @@ permalink: /feed/
 {% from "components/feed-card.njk" import feedCard %}
 {% include "components/breadcrumbs.njk" %}
 
-{% set initialVisible = 24 %}
-{% set batchSize = 12 %}
+<div class="not-prose" x-data="feedPage()">
 
-<h1 class="text-3xl font-semibold tracking-tight">Feed</h1>
-<p class="text-gray-600 dark:text-gray-400 mb-8 mt-2">
-  One timeline for everything happening on the site — articles, snippets, microposts, photography, vibes, and /now snapshots.
-</p>
+  <div class="flex items-baseline justify-between mb-3 gap-3 flex-wrap">
+    <div class="flex items-baseline gap-3">
+      <h1 class="text-2xl font-semibold tracking-tight m-0">Feed</h1>
+      <span class="meta-text text-xs text-gray-400 dark:text-gray-500">{{ collections.feed.length }} items</span>
+    </div>
+    <div class="flex items-center gap-2 shrink-0">
+      <div class="relative">
+        {% feather "search", class="w-3.5 h-3.5 text-gray-400 absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" %}
+        <input
+          type="text"
+          x-model="query"
+          placeholder="Search..."
+          class="rounded-md border border-gray-200 dark:border-gray-700 bg-transparent py-1.5 pl-8 pr-3 text-sm accent-field focus:outline-none dark:text-gray-100 w-40 placeholder:text-gray-400"
+        >
+      </div>
+      <div class="view-toggle">
+        <button type="button" @click="view = 'list'" :class="{ 'active': view === 'list' }" title="List view">
+          {% feather "list", class="w-4 h-4" %}
+        </button>
+        <button type="button" @click="view = 'grid'" :class="{ 'active': view === 'grid' }" title="Grid view">
+          {% feather "grid", class="w-4 h-4" %}
+        </button>
+      </div>
+    </div>
+  </div>
 
-<div
-  class="grid gap-3 md:grid-cols-2 lg:grid-cols-3 items-start feed-masonry"
-  data-feed-masonry
-  data-feed-initial="{{ initialVisible }}"
-  data-feed-batch="{{ batchSize }}"
-  style="--feed-row-height: 16px;"
->
-  {% for item in collections.feed %}
-    {% set isHidden = loop.index0 >= initialVisible %}
-    {% set extraClasses = 'hidden' if isHidden else '' %}
-    {% set attrs = 'data-feed-index="' ~ loop.index0 ~ '" data-feed-item' %}
-    {{ feedCard(item, {
-      extraClasses: extraClasses,
-      outerAttrs: attrs
-    }) }}
-  {% endfor %}
-</div>
-
-<div class="mt-10 text-center text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
-  Showing {{ collections.feed.length }} items • Updated {{ page.date | readableDate }}
-</div>
-
-{% if collections.feed.length > initialVisible %}
-  <div class="mt-8 flex justify-center">
-    <button
-      type="button"
-      class="accent-button-outline accent-focus inline-flex items-center gap-2 rounded-full px-5 py-2 text-sm font-medium"
-      data-feed-load-more
-    >
-      Load more items
-      {% feather "refresh-cw", class="h-4 w-4" %}
+  {# Type filter chips #}
+  <div class="flex flex-wrap gap-1.5 mb-5 text-xs">
+    <button @click="typeFilter = ''"
+      :class="typeFilter === '' ? 'font-semibold' : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'"
+      class="px-2 py-0.5 rounded-full border border-gray-200 dark:border-gray-700 transition-colors"
+      :style="typeFilter === '' ? 'border-color: var(--accent-color); color: var(--accent-color)' : ''">
+      All ({{ collections.feed.length }})
+    </button>
+    <button @click="typeFilter = 'post'"
+      :class="typeFilter === 'post' ? 'font-semibold' : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'"
+      class="px-2 py-0.5 rounded-full border border-gray-200 dark:border-gray-700 transition-colors"
+      :style="typeFilter === 'post' ? 'border-color: var(--accent-color); color: var(--accent-color)' : ''">
+      Posts
+    </button>
+    <button @click="typeFilter = 'snippet'"
+      :class="typeFilter === 'snippet' ? 'font-semibold' : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'"
+      class="px-2 py-0.5 rounded-full border border-gray-200 dark:border-gray-700 transition-colors"
+      :style="typeFilter === 'snippet' ? 'border-color: var(--accent-color); color: var(--accent-color)' : ''">
+      Snippets
+    </button>
+    <button @click="typeFilter = 'micropost'"
+      :class="typeFilter === 'micropost' ? 'font-semibold' : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'"
+      class="px-2 py-0.5 rounded-full border border-gray-200 dark:border-gray-700 transition-colors"
+      :style="typeFilter === 'micropost' ? 'border-color: var(--accent-color); color: var(--accent-color)' : ''">
+      Notes
+    </button>
+    <button @click="typeFilter = 'photo'"
+      :class="typeFilter === 'photo' ? 'font-semibold' : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'"
+      class="px-2 py-0.5 rounded-full border border-gray-200 dark:border-gray-700 transition-colors"
+      :style="typeFilter === 'photo' ? 'border-color: var(--accent-color); color: var(--accent-color)' : ''">
+      Photos
     </button>
   </div>
-{% endif %}
-{% include "components/feed-masonry-script.njk" %}
+
+  {# ── LIST VIEW ── #}
+  <ul class="feed-list" x-show="view === 'list'" x-cloak>
+    {% for item in collections.feed %}
+      {{ feedCard(item, {
+        variant: 'list',
+        outerAttrs: 'data-type="' ~ item.type ~ '" data-title="' ~ (item.title | lower | replace('"', '')) ~ '"'
+      }) }}
+    {% endfor %}
+  </ul>
+  <p x-show="view === 'list' && filteredCount === 0" x-cloak class="text-sm text-gray-400 py-8 text-center">No results.</p>
+
+  {# ── GRID VIEW ── #}
+  <div x-show="view === 'grid'" x-cloak
+    class="grid gap-3 md:grid-cols-2 lg:grid-cols-3 items-start"
+    data-feed-masonry
+    data-feed-initial="24"
+    data-feed-batch="12"
+    style="--feed-row-height: 16px;"
+  >
+    {% for item in collections.feed %}
+      {{ feedCard(item, {
+        outerAttrs: 'data-type="' ~ item.type ~ '" data-title="' ~ (item.title | lower | replace('"', '')) ~ '"'
+      }) }}
+    {% endfor %}
+  </div>
+  <p x-show="view === 'grid' && filteredCount === 0" x-cloak class="text-sm text-gray-400 py-8 text-center">No results.</p>
+
+  <p class="mt-8 text-center text-xs text-gray-400 dark:text-gray-500">
+    Updated {{ page.date | readableDate }}
+  </p>
+
+</div>
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const grid = document.querySelector('[data-feed-masonry]');
-    const trigger = document.querySelector('[data-feed-load-more]');
-    if (!grid || !trigger) {
-      return;
-    }
-
-    const initial = parseInt(grid.dataset.feedInitial || '24', 10);
-    const batch = parseInt(grid.dataset.feedBatch || '12', 10);
-    const cards = Array.from(grid.querySelectorAll('.feed-card'));
-    let visible = initial;
-
-    const apply = () => {
-      cards.forEach((card, index) => {
-        if (index < visible) {
-          card.classList.remove('hidden');
-        } else {
-          card.classList.add('hidden');
-        }
+function feedPage() {
+  return {
+    view: localStorage.getItem('feed-view') || 'list',
+    query: '',
+    typeFilter: '',
+    filteredCount: 0,
+    init() {
+      this.$watch('view', v => localStorage.setItem('feed-view', v));
+      this.$watch('query', () => this.filterItems());
+      this.$watch('typeFilter', () => this.filterItems());
+    },
+    filterItems() {
+      const q = this.query.toLowerCase().trim();
+      const t = this.typeFilter;
+      const items = document.querySelectorAll('[data-type][data-title]');
+      let count = 0;
+      items.forEach(el => {
+        const title = el.dataset.title || '';
+        const type = el.dataset.type || '';
+        const matchQ = !q || title.includes(q);
+        const matchT = !t || type === t;
+        const show = matchQ && matchT;
+        el.style.display = show ? '' : 'none';
+        if (show) count++;
       });
-
-      if (visible >= cards.length) {
-        trigger.classList.add('hidden');
-        trigger.setAttribute('aria-hidden', 'true');
-        trigger.setAttribute('tabindex', '-1');
-      } else {
-        trigger.classList.remove('hidden');
-        trigger.removeAttribute('aria-hidden');
-        trigger.removeAttribute('tabindex');
-      }
-
-      grid.dispatchEvent(new CustomEvent('feed:layout'));
-    };
-
-    trigger.addEventListener('click', () => {
-      visible = Math.min(visible + batch, cards.length);
-      apply();
-    });
-
-    apply();
-  });
+      this.filteredCount = count;
+    }
+  }
+}
 </script>
+{% include "components/feed-masonry-script.njk" %}
