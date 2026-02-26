@@ -37,7 +37,7 @@ eleventyNavigation:
 
 {# ── LIST VIEW (default) ─────────────────────────────── #}
 <div id="snippetList" class="mt-4 divide-y divide-gray-100 dark:divide-gray-800/80">
-  {%- for snippet in collections.snippets -%}
+  {%- for snippet in collections.snippets | reverse -%}
     {% set rawTags = snippet.data.tags | default([]) %}
     {% set filteredTags = rawTags | filterTagList %}
     {% set searchExcerpt = snippet.templateContent | striptags | replace('\n', ' ') | truncate(160, true, '') | lower %}
@@ -77,7 +77,7 @@ eleventyNavigation:
 
 {# ── GRID VIEW ───────────────────────────────────────── #}
 <div id="snippetGrid" class="hidden mt-4 grid gap-3 md:grid-cols-2 lg:grid-cols-3 items-start">
-  {%- for snippet in collections.snippets -%}
+  {%- for snippet in collections.snippets | reverse -%}
     {% set rawTags = snippet.data.tags | default([]) %}
     {% set filteredTags = rawTags | filterTagList %}
     {% set excerpt = snippet.templateContent | striptags | replace('\n', ' ') | truncate(100, true, '…') %}
