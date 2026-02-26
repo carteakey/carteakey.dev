@@ -5,7 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.6.1] - 2026-02-27
+## [1.6.2] - 2026-02-27
+
+### Added
+- base.njk: Global code block copy button — clipboard SVG icon appears on pre:hover, turns accent on hover, switches to checkmark on success
+- tailwind.css: `.copy-code-btn` styles — positioned absolute, dark semi-transparent background, accent on hover
+
+### Fixed
+- base.njk: "More" (compass) nav icon now uses accent color
+- tailwind.css: `.site-content .not-prose a` reset uses `!important` to definitively prevent accent color from leaking into feed cards and UI components
+- archive.njk: Removed `| reverse` from both list/grid loops — `collections.posts` is already sorted newest-first in eleventy.config.mjs; `| reverse` was making it oldest-first
+- snippets.njk: Grid cards switched from `card card-hover card-compact` to flat `border border-gray-200` style; list view rewritten as `divide-y` rows with date col + title + language tag (matches blog list design)
+- tailwind.css: `.site-content picture` and `.site-content picture img` rules added — images in post content are now centered with `margin: auto`
+- picture CSS: Added `text-align: center` and `display: inline-block` on img for proper centering
+
+
 
 ### Added
 - src/static/css/prism/prism-light.css: New clean GitHub-inspired light syntax theme (replaces broken prism-coy)

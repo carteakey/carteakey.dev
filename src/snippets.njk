@@ -48,7 +48,7 @@ eleventyNavigation:
       {% set searchExcerpt = snippet.templateContent | striptags | replace('\n', ' ') | truncate(160, true, '') | lower %}
 
       <article
-        class="snippet-card card card-hover card-compact"
+        class="snippet-card border border-gray-200 dark:border-gray-800 rounded-lg p-3 hover:border-gray-300 dark:hover:border-gray-700 transition-colors"
         data-snippet-card
         data-title="{{ snippet.data.title | lower }}"
         data-tags="{{ filteredTags | join(' ') | lower }}"
@@ -82,30 +82,29 @@ eleventyNavigation:
   </div>
 
   <!-- List View -->
-  <div x-show="viewMode === 'list'" x-cloak class="mt-6 space-y-2">
+  <div x-show="viewMode === 'list'" x-cloak class="mt-4 divide-y divide-gray-100 dark:divide-gray-800/80">
     {%- for snippet in collections.snippets | reverse -%}
       {% set rawTags = snippet.data.tags | default([]) %}
       {% set filteredTags = rawTags | filterTagList %}
       {% set searchExcerpt = snippet.templateContent | striptags | replace('\n', ' ') | truncate(160, true, '') | lower %}
 
       <article
-        class="snippet-card card card-hover card-list"
+        class="py-2.5 group flex flex-col md:flex-row md:gap-6 not-prose"
         data-snippet-card
         data-title="{{ snippet.data.title | lower }}"
         data-tags="{{ filteredTags | join(' ') | lower }}"
         data-language="{{ snippet.data.language | default('') | lower }}"
         data-body="{{ searchExcerpt }}"
       >
-        <div class="card-list-content">
-          <a href="{{ snippet.url }}" class="card-list-title link-accent text-sm">{{ snippet.data.title }}</a>
+        <div class="shrink-0 md:w-36 flex items-center gap-2 pt-0.5">
+          <time class="meta-text text-xs text-gray-400 dark:text-gray-500" datetime="{{ snippet.date | htmlDateString }}">{{ snippet.date | readableDate }}</time>
         </div>
-        {% if snippet.data.language %}
-          <span class="tag hidden sm:inline-flex">{{ snippet.data.language }}</span>
-        {% endif %}
-        <time class="card-list-meta whitespace-nowrap" datetime="{{ snippet.date | htmlDateString }}">{{ snippet.date | readableDate }}</time>
-        <a href="{{ snippet.url }}" class="text-gray-400 hover:accent-link transition-colors" style="text-decoration:none;" onmouseover="this.style.color='var(--accent-color)'" onmouseout="this.style.color=''"  >
-          {% feather "arrow-right", class="w-4 h-4" %}
-        </a>
+        <div class="flex-1 min-w-0 flex items-center gap-3">
+          <a href="{{ snippet.url }}" class="text-sm font-medium title-hover flex-1 min-w-0 truncate" style="text-decoration: none;">{{ snippet.data.title }}</a>
+          {% if snippet.data.language %}
+            <span class="tag text-[0.65rem] shrink-0">{{ snippet.data.language }}</span>
+          {% endif %}
+        </div>
       </article>
     {%- endfor -%}
   </div>

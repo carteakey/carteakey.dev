@@ -162,7 +162,7 @@
             {%- endfor %}
 
             <li class="flex items-center ml-1">
-              <a class="font-medium no-underline inline-flex items-center justify-center p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" href="{{ '/more/' | url }}" title="More pages" aria-label="More pages">
+              <a class="font-medium no-underline inline-flex items-center justify-center p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" href="{{ '/more/' | url }}" title="More pages" aria-label="More pages" style="color: var(--accent-color)">
                 {% feather "compass", class="w-4 h-4" %}
               </a>
             </li>
@@ -358,6 +358,31 @@
   {# Medium Zoom for click-to-zoom images #}
   <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js"></script>
   <script>mediumZoom('[data-zoomable]', { background: 'rgba(0,0,0,0.85)' })</script>
+
+  {# Code block copy buttons #}
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('pre[class*="language-"]').forEach((pre) => {
+        const code = pre.querySelector('code');
+        if (!code) return;
+        const btn = document.createElement('button');
+        btn.className = 'copy-code-btn';
+        btn.title = 'Copy code';
+        btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
+        btn.addEventListener('click', async () => {
+          try {
+            await navigator.clipboard.writeText(code.textContent);
+            btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+            setTimeout(() => {
+              btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
+            }, 2000);
+          } catch { btn.textContent = '!'; }
+        });
+        pre.style.position = 'relative';
+        pre.appendChild(btn);
+      });
+    });
+  </script>
 
   {# Easter Eggs - loaded from external file #}
   <script defer src="/static/js/easter-eggs.js"></script>
