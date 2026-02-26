@@ -55,7 +55,7 @@ eleventyNavigation:
   {% else %}
   <section class="text-center py-12 text-gray-500 dark:text-gray-400">
     <p class="text-4xl mb-3">📝</p>
-    <p class="text-lg font-medium">No notes yet!</p>
+    <p class="text-sm font-medium">No notes yet!</p>
     <p class="text-sm">Be the first to sign the guestbook.</p>
   </section>
   {% endif %}
@@ -64,7 +64,7 @@ eleventyNavigation:
   {% set cardShell = "border border-gray-200 dark:border-gray-800 rounded-lg" %}
   
   <section class="{{ cardShell }} p-5 sm:p-6">
-    <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Leave a note ✍️</h2>
+    <h2 class="text-sm font-semibold text-gray-900 dark:text-white">Leave a note ✍️</h2>
     <form
       name="guestbook"
       method="POST"
@@ -123,7 +123,7 @@ eleventyNavigation:
   </section>
 
   <section class="{{ cardShell }} p-5 sm:p-6 space-y-3 text-sm text-gray-600 dark:text-gray-300">
-    <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Prefer another channel?</h2>
+    <h2 class="text-sm font-semibold text-gray-900 dark:text-white">Prefer another channel?</h2>
     <p>
       You can also <a href="mailto:{{ metadata.author.email }}" class="accent-link">email me</a> or <a href="https://github.com/carteakey/carteakey.dev/issues/new?title=Guestbook%20entry" target="_blank" rel="noopener" class="accent-link">open a GitHub issue</a> if you'd like your message to appear here.
     </p>

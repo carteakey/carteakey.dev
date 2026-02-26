@@ -1382,3 +1382,200 @@ figure {
     }
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   📝 Site Content Typography  (replaces Tailwind prose)
+   ═══════════════════════════════════════════════════════════════════════════ */
+@layer components {
+  /* Base */
+  .site-content {
+    font-size: 0.9375rem; /* 15px — readable but not prose-lg bloated */
+    line-height: 1.65;
+    color: rgb(17 24 39);
+    word-break: break-word;
+  }
+  .dark .site-content {
+    color: rgb(209 213 219);
+  }
+
+  /* Headings */
+  .site-content h1,
+  .site-content h2,
+  .site-content h3,
+  .site-content h4,
+  .site-content h5,
+  .site-content h6 {
+    font-weight: 700;
+    line-height: 1.3;
+    color: rgb(3 7 18);
+  }
+  .dark .site-content h1,
+  .dark .site-content h2,
+  .dark .site-content h3,
+  .dark .site-content h4,
+  .dark .site-content h5,
+  .dark .site-content h6 {
+    color: rgb(249 250 251);
+  }
+  .site-content h1 { font-size: 1.5rem; margin: 0 0 0.6em; }
+  .site-content h2 { font-size: 1.2rem; margin: 1.75em 0 0.5em; border-bottom: 1px solid rgb(229 231 235); padding-bottom: 0.3em; }
+  .dark .site-content h2 { border-color: rgb(31 41 55); }
+  .site-content h3 { font-size: 1.05rem; margin: 1.5em 0 0.4em; }
+  .site-content h4 { font-size: 0.95rem; margin: 1.25em 0 0.35em; }
+  .site-content h5 { font-size: 0.9rem; margin: 1em 0 0.3em; }
+  .site-content h6 { font-size: 0.85rem; margin: 1em 0 0.3em; color: rgb(75 85 99); }
+  .dark .site-content h6 { color: rgb(156 163 175); }
+
+  /* Paragraphs */
+  .site-content p { margin: 0 0 0.9em; }
+  .site-content p:last-child { margin-bottom: 0; }
+
+  /* Links */
+  .site-content a {
+    color: var(--accent-color);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    text-decoration-thickness: 1px;
+    transition: text-decoration-thickness 0.1s;
+  }
+  .site-content a:hover { text-decoration-thickness: 2px; }
+
+  /* Strong / em / del */
+  .site-content strong { font-weight: 700; }
+  .site-content em { font-style: italic; }
+  .site-content del { text-decoration: line-through; opacity: 0.65; }
+
+  /* Inline code */
+  .site-content :not(pre) > code {
+    font-family: ui-monospace, 'Cascadia Code', Menlo, Consolas, monospace;
+    font-size: 0.82em;
+    background: rgb(243 244 246);
+    color: rgb(31 41 55);
+    border: 1px solid rgb(229 231 235);
+    border-radius: 3px;
+    padding: 0.1em 0.35em;
+    white-space: nowrap;
+  }
+  .dark .site-content :not(pre) > code {
+    background: rgb(31 41 55);
+    color: rgb(209 213 219);
+    border-color: rgb(55 65 81);
+  }
+
+  /* Code blocks */
+  .site-content pre {
+    font-size: 0.82rem;
+    line-height: 1.55;
+    overflow-x: auto;
+    border-radius: 6px;
+    margin: 1em 0;
+    padding: 0.9em 1.1em;
+    background: rgb(17 24 39) !important;
+    border: 1px solid rgb(31 41 55);
+  }
+  .site-content pre code {
+    font-size: inherit;
+    background: none !important;
+    border: none !important;
+    padding: 0;
+    color: inherit;
+    white-space: pre;
+  }
+
+  /* Blockquote */
+  .site-content blockquote {
+    border-left: 3px solid var(--accent-color);
+    margin: 1em 0;
+    padding: 0.2em 1em;
+    font-style: italic;
+    color: rgb(75 85 99);
+  }
+  .dark .site-content blockquote { color: rgb(156 163 175); }
+
+  /* Lists */
+  .site-content ul {
+    list-style-type: disc;
+    padding-left: 1.4em;
+    margin: 0 0 0.9em;
+  }
+  .site-content ol {
+    list-style-type: decimal;
+    padding-left: 1.4em;
+    margin: 0 0 0.9em;
+  }
+  .site-content li { margin: 0.3em 0; }
+  .site-content li > ul,
+  .site-content li > ol { margin-top: 0.2em; margin-bottom: 0.2em; }
+  .site-content li > p { margin: 0; }
+
+  /* Images */
+  .site-content img { max-width: 100%; height: auto; border-radius: 4px; }
+  .site-content figure { margin: 1.25em 0; }
+  .site-content figcaption {
+    font-size: 0.78rem;
+    color: rgb(107 114 128);
+    margin-top: 0.4em;
+    text-align: center;
+    font-style: italic;
+  }
+
+  /* Tables */
+  .site-content table {
+    width: 100%;
+    font-size: 0.85rem;
+    border-collapse: collapse;
+    margin: 1em 0;
+  }
+  .site-content thead th {
+    font-weight: 600;
+    text-align: left;
+    padding: 0.4em 0.75em;
+    border-bottom: 2px solid rgb(229 231 235);
+    color: rgb(75 85 99);
+  }
+  .dark .site-content thead th {
+    border-color: rgb(55 65 81);
+    color: rgb(156 163 175);
+  }
+  .site-content td {
+    padding: 0.4em 0.75em;
+    border-bottom: 1px solid rgb(229 231 235);
+  }
+  .dark .site-content td { border-color: rgb(55 65 81); }
+  .site-content tbody tr:last-child td { border-bottom: none; }
+  .site-content tbody tr:nth-child(even) { background: rgb(249 250 251); }
+  .dark .site-content tbody tr:nth-child(even) { background: rgb(17 24 39 / 0.3); }
+
+  /* HR */
+  .site-content hr {
+    border: none;
+    border-top: 1px solid rgb(229 231 235);
+    margin: 1.5em 0;
+  }
+  .dark .site-content hr { border-color: rgb(55 65 81); }
+
+  /* ── .not-prose escape hatch ── */
+  /* Reset all typography on .not-prose children so components render unaffected */
+  .site-content .not-prose { font-size: 0.875rem; line-height: 1.5; }
+  .site-content .not-prose h1,
+  .site-content .not-prose h2,
+  .site-content .not-prose h3,
+  .site-content .not-prose h4,
+  .site-content .not-prose h5,
+  .site-content .not-prose h6 {
+    font-size: inherit;
+    font-weight: 600;
+    margin: 0;
+    border-bottom: none;
+    padding-bottom: 0;
+    color: inherit;
+  }
+  .site-content .not-prose p { margin: 0; }
+  .site-content .not-prose a { color: inherit; text-decoration: none; }
+  .site-content .not-prose ul,
+  .site-content .not-prose ol { list-style: none; padding: 0; margin: 0; }
+  .site-content .not-prose pre { font-size: inherit; background: initial; border: initial; padding: initial; margin: initial; }
+  .site-content .not-prose code { font-size: inherit; background: initial; border: initial; padding: initial; }
+  .site-content .not-prose blockquote { border-left: none; padding: 0; margin: 0; font-style: inherit; color: inherit; }
+  .site-content .not-prose table { font-size: inherit; }
+}

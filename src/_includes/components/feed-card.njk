@@ -79,7 +79,7 @@
 
     {# Body content #}
     {% if isMicropost or isNow %}
-      <div class="mt-2 text-xs leading-relaxed text-gray-600 dark:text-gray-300 prose-sm dark:prose-invert max-w-none">{{ item.original.templateContent | safe }}</div>
+      <div class="mt-2 text-xs leading-relaxed text-gray-600 dark:text-gray-300 max-w-none not-prose">{{ item.original.templateContent | safe }}</div>
     {% elif item.media %}
       <figure class="mt-2 overflow-hidden rounded border border-gray-200 dark:border-gray-700 m-0">
         <img src="{{ item.media.src }}" alt="{{ item.media.alt }}" loading="lazy" decoding="async" class="w-full h-auto block">

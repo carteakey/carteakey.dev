@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.5] - 2026-02-26
+
+### Changed
+- base.njk: Drop Tailwind prose entirely — replaced with custom `.site-content` typography class; body set to `text-sm` (14px); nav links tightened to `text-sm` (no md:text-base); site title reduced to `text-base`
+- tailwind.css: Added comprehensive `.site-content` typography block (~200 lines) — 0.9375rem base, 1.65 line-height, all HTML elements styled. `.not-prose` escape hatch fully defined. Removes dependency on `@tailwindcss/typography`
+- eleventy.config.mjs: `readableDate` filter changed from `DATE_FULL` to `MMM d, yyyy` (e.g., "Feb 26, 2026")
+- theme.js: Fixed accent slider — removed `.prose` class manipulation from `updateAccentClasses` (only `setAccentVariables` needed)
+- post.njk: Post article spacing tightened (`space-y-8` → `space-y-6`, header `space-y-5` → `space-y-3`); description `text-lg` → `text-sm`; sidebar headings `text-lg` → `text-sm`
+- feed-card.njk: Removed `prose-sm dark:prose-invert` — replaced with `not-prose` to use site-content typography
+- search.njk, uses.njk, newsletter.njk, guestbook.njk, stats.njk, quotes.njk, bookmarks.njk, blogroll.njk: Replaced `text-lg`/`text-xl` headings with `text-sm`/`text-base` for density consistency
+
 ## [1.5.3] - 2026-02-26
 
 ### Changed

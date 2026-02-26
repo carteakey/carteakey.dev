@@ -126,7 +126,7 @@
   {% endif %}
 </head>
 {% set showReadingFrame = false %}
-<body class="bg-gray-100 dark:bg-black font-sans {% if showReadingFrame %} md:py-16 md:bg-gray-100 md:dark:bg-gray-800{% endif %}">
+<body class="bg-gray-100 dark:bg-black font-sans text-sm">
   {# Skip to main content link for accessibility #}
   <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-amber-500 focus:text-black focus:rounded-md focus:font-semibold focus:shadow-lg">
     Skip to main content
@@ -134,7 +134,7 @@
   
   <div
    class="md:max-w-2xl lg:max-w-3xl xl:max-w-4xl mx-auto {% if showReadingFrame %} md:bg-gray-100/95  md:dark:bg-zinc-950/90 md:shadow-[0_20px_60px_-28px_rgba(15,23,42,0.45)] md:dark:shadow-[0_16px_50px_-26px_rgba(0,0,0,0.65)] md:ring-1 md:ring-amber-100/40 md:dark:ring-zinc-800/40 md:px-28 lg:px-32 md:py-10 md:rounded-none{% endif %}">
-    <div class="prose prose-amber max-w-full justify-center prose-lg prose-h1:text-2xl prose-h2:my-4 dark:prose-invert px-4 md:px-0 mx-auto {% if fullWidth %}max-w-none{% endif %}">
+    <div class="site-content px-4 md:px-0">
       <nav class="flex w-full py-3 border-b border-gray-200 dark:border-gray-800 mb-4">
 
         {% set navPages = collections.all | eleventyNavigation %}
@@ -142,7 +142,7 @@
         <div class="flex flex-row w-full justify-between items-center gap-4">
 
           {# Site title - desktop #}
-          <a class="no-underline hover:no-underline font-bold font-et-book text-lg group hidden md:flex items-center shrink-0" href="{{ '/' | url }}">
+          <a class="no-underline hover:no-underline font-bold font-et-book text-base group hidden md:flex items-center shrink-0" href="{{ '/' | url }}">
             <span class="transition-colors group-hover:text-gradient">Kartikey Chauhan</span>
           </a>
 
@@ -156,7 +156,7 @@
             {%- for entry in navPages %}
               {% if entry.title == "About" or entry.title == "Blog" or entry.title == "Now" %}
                 <li class="px-1.5 sm:px-2 py-1 transition-all flex items-center">
-                  <a class="font-medium no-underline link-glow text-sm md:text-base" href="{{ entry.url }}">{{ entry.title }}</a>
+                  <a class="font-medium no-underline link-glow text-sm" href="{{ entry.url }}">{{ entry.title }}</a>
                 </li>
               {% endif %}
             {%- endfor %}

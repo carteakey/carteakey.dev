@@ -288,7 +288,7 @@ export default function(eleventyConfig) {
   });
 
   eleventyConfig.addFilter("readableDate", (dateObj) => {
-    return DateTime.fromJSDate(dateObj).toLocaleString(DateTime.DATE_FULL);
+    return DateTime.fromJSDate(dateObj).toFormat("MMM d, yyyy");
   });
 
   // Archive-specific date filters

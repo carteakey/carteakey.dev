@@ -22,7 +22,7 @@ eleventyNavigation:
     {%- for blog in blogroll.blogroll %}
       <article class="card card-hover h-full card-padding">
         <div class="space-y-3">
-          <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
+          <h2 class="text-sm font-semibold text-gray-900 dark:text-white">
             <a href="{{ blog.url }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 link-accent">
               <span>{{ blog.name }}</span>
               {% feather "external-link", class="w-4 h-4 opacity-70" %}
@@ -42,7 +42,7 @@ eleventyNavigation:
   </div>
 
     <div class="mt-16 card card-padding">
-       <h3 class="flex items-center gap-2 text-lg font-semibold text-gray-900 dark:text-white">
+       <h3 class="flex items-center gap-2 text-sm font-semibold text-gray-900 dark:text-white">
       {% feather "rss", class="w-5 h-5" %}
       Want to add your blog?
     </h3>

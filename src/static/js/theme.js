@@ -55,15 +55,6 @@ const setAccentTheme = (theme) => {
 
 const updateAccentClasses = (theme) => {
   setAccentVariables(theme);
-  const proseElement = document.querySelector('.prose');
-  if (proseElement) {
-    // Remove all existing prose color classes
-    const colorClasses = ['prose-gray', 'prose-slate', 'prose-zinc', 'prose-neutral', 'prose-stone', 'prose-red', 'prose-orange', 'prose-amber', 'prose-yellow', 'prose-lime', 'prose-green', 'prose-emerald', 'prose-teal', 'prose-cyan', 'prose-sky', 'prose-blue', 'prose-indigo', 'prose-violet', 'prose-purple', 'prose-fuchsia', 'prose-pink', 'prose-rose'];
-    colorClasses.forEach(cls => proseElement.classList.remove(cls));
-    
-    // Add the new theme class
-    proseElement.classList.add(`prose-${theme}`);
-  }
 };
 
 // Initialize accent variables immediately
