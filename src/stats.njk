@@ -42,7 +42,7 @@ permalink: /stats/
 
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 my-8 not-prose">
   <!-- Posts Stats -->
-  <div class="{{ cardShell }} p-5 sm:p-6">
+  <div class="{{ cardShell }} p-3 sm:p-4">
     <div class="flex items-center justify-between">
       <div>
         <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ totalPosts }}</p>
@@ -62,7 +62,7 @@ permalink: /stats/
   </div>
 
   <!-- Snippets Stats -->
-  <div class="{{ cardShell }} p-5 sm:p-6">
+  <div class="{{ cardShell }} p-3 sm:p-4">
     <div class="flex items-center justify-between">
       <div>
         <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ totalSnippets }}</p>
@@ -79,13 +79,13 @@ permalink: /stats/
   </div>
 
   <!-- Tags Stats -->
-  <div class="{{ cardShell }} p-5 sm:p-6">
+  <div class="{{ cardShell }} p-3 sm:p-4">
     <div class="flex items-center justify-between">
       <div>
         <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ totalTags }}</p>
         <p class="text-sm text-gray-600 dark:text-gray-400">Post Tags</p>
       </div>
-      <div class="p-3 bg-amber-100 dark:bg-amber-900 rounded-full">
+      <div class="p-2 rounded-full" style="background: color-mix(in srgb, var(--accent-color) 15%, transparent);">
         {% feather "tag", class="w-6 h-6" %}
       </div>
     </div>
@@ -99,7 +99,7 @@ permalink: /stats/
   </div>
 
   <!-- Site Pages -->
-  <div class="{{ cardShell }} p-5 sm:p-6">
+  <div class="{{ cardShell }} p-3 sm:p-4">
     <div class="flex items-center justify-between">
       <div>
         <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ totalPages }}</p>
@@ -116,7 +116,7 @@ permalink: /stats/
   </div>
 
   <!-- Blog Activity -->
-  <div class="{{ cardShell }} p-5 sm:p-6">
+  <div class="{{ cardShell }} p-3 sm:p-4">
     <div class="flex items-center justify-between">
       <div>
         {% set latestPost = collections.posts | last %}
@@ -137,7 +137,7 @@ permalink: /stats/
   </div>
 
   <!-- Total Words -->
-  <div class="{{ cardShell }} p-5 sm:p-6">
+  <div class="{{ cardShell }} p-3 sm:p-4">
     <div class="flex items-center justify-between">
       <div>
         {# Estimate ~800 words per post on average #}
@@ -156,7 +156,7 @@ permalink: /stats/
   </div>
 
   <!-- Total Visitors -->
-  <div class="{{ cardShell }} p-5 sm:p-6">
+  <div class="{{ cardShell }} p-3 sm:p-4">
     <div class="flex items-center justify-between">
       <div>
         <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ visitors.total | default(0) }}</p>
@@ -173,7 +173,7 @@ permalink: /stats/
   </div>
 
   <!-- Total Upvotes -->
-  <div class="{{ cardShell }} p-5 sm:p-6">
+  <div class="{{ cardShell }} p-3 sm:p-4">
     <div class="flex items-center justify-between">
       <div>
         {% set totalUpvotes = 0 %}
@@ -194,7 +194,7 @@ permalink: /stats/
   </div>
 
   <!-- Build Info -->
-  <div class="{{ cardShell }} p-5 sm:p-6">
+  <div class="{{ cardShell }} p-3 sm:p-4">
     <div class="flex items-center justify-between">
       <div>
         <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ page.date | date('MMM d') }}</p>

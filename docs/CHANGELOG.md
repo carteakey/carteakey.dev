@@ -5,7 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.5.5] - 2026-02-26
+## [1.5.6] - 2026-02-26
+
+### Changed
+- page-header.njk: h1 `text-2xl` → `text-xl` for density consistency
+- 404.md: h1 `text-4xl/5xl` → `text-3xl/4xl`, cards flattened (removed bg+shadow), text-lg → text-sm, amber hover links → `title-hover`, py-20 → py-16
+- quotes.njk: h1 `text-3xl` → `text-xl`, quote cards `card-padding` → `card-compact`, `text-base` → `text-sm`
+- skills.njk: `text-lg` → `text-sm` on breakdown heading
+- stats.njk: card padding `p-5 sm:p-6` → `p-3 sm:p-4`, tag icon bg → accent color via CSS variable
+- guestbook.njk: headings `text-lg` → `text-sm`
+- newsletter.njk: headings `text-lg` → `text-sm`
+- blogroll.njk, bookmarks.njk: headings `text-lg` → `text-sm`
+- postslist.njk, archive.njk: Pinned badge → accent CSS variable (removes hardcoded amber)
+- post.njk: avatar hover glow → accent CSS variable gradient (removes hardcoded amber)
+- base.njk: skip-link `focus:bg-amber-500` → `style="background: var(--accent-color)"`
+- tailwind.css: `.badge-count` → accent CSS variable (removes hardcoded amber); `.tag-interactive:hover` → accent CSS variable; `color-mix` for consistent theming
+
+
 
 ### Changed
 - base.njk: Drop Tailwind prose entirely — replaced with custom `.site-content` typography class; body set to `text-sm` (14px); nav links tightened to `text-sm` (no md:text-base); site title reduced to `text-base`

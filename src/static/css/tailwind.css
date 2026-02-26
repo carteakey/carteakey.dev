@@ -537,20 +537,19 @@ figure {
 
   /* Page header count badge */
   .badge-count {
-    border-radius: 0.5rem;
-    border: 1px solid rgb(253 230 138 / 1);
-    background-color: rgb(255 251 235 / 0.7);
-    padding: 0.75rem 1rem;
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: rgb(146 64 14 / 1);
+    border-radius: 0.375rem;
+    border: 1px solid color-mix(in srgb, var(--accent-color) 35%, transparent);
+    background-color: color-mix(in srgb, var(--accent-color) 10%, transparent);
+    padding: 0.1rem 0.4rem;
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: color-mix(in srgb, var(--accent-color) 85%, black);
   }
 
   .dark .badge-count {
-    border-color: rgb(180 83 9 / 1);
-    background-color: rgb(120 53 15 / 0.25);
-    color: rgb(253 230 138 / 1);
+    border-color: color-mix(in srgb, var(--accent-color) 30%, transparent);
+    background-color: color-mix(in srgb, var(--accent-color) 15%, transparent);
+    color: color-mix(in srgb, var(--accent-color) 85%, white);
   }
 
   /* Tag pill for filtering/categorization */
@@ -577,13 +576,13 @@ figure {
   }
 
   .tag-interactive:hover {
-    background-color: rgb(254 243 199 / 1);
-    color: rgb(180 83 9 / 1);
+    background-color: color-mix(in srgb, var(--accent-color) 12%, transparent);
+    color: color-mix(in srgb, var(--accent-color) 85%, black);
   }
 
   .dark .tag-interactive:hover {
-    background-color: rgb(120 53 15 / 0.4);
-    color: rgb(253 230 138 / 1);
+    background-color: color-mix(in srgb, var(--accent-color) 18%, transparent);
+    color: color-mix(in srgb, var(--accent-color) 85%, white);
   }
 
   /* Intro/description block */
