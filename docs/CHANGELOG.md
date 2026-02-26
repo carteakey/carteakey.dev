@@ -5,7 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.6.3] - 2026-02-27
+## [1.6.4] - 2026-02-27
+
+### Changed
+- snippets.njk: Full rewrite to match blog (archive.njk) exactly — same inline h1+count header, same search field style, list view as default, list button first then grid, same list row design (date col + title + language tag), same grid card design (feed-card-full style with purple dot). Removed page-header component and wrapping max-w div.
+- index.njk: Homepage feed now shows list toggle FIRST, then grid toggle (consistent with blog/snippets). Removed redundant "→ Feed" footer link (was duplicate of "All →" in header). Grid bumped to 3-col (lg:grid-cols-3). Shows 9 items.
+- index.njk: Feed default is now list view (localStorage key h-feed-view), matching editorial density preference.
+
+### Fixed
+- index.njk: "All →" and "→ Feed" both linking to /feed/ (duplicate). Kept only "All →" in the section header.
+
+
 
 ### Fixed
 - tailwind.css: Links are now gray (color: inherit) with underline by default, accent color on hover — removes all accent-as-default link color. Works consistently in both prose and not-prose contexts

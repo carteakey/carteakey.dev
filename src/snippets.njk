@@ -9,109 +9,112 @@ eleventyNavigation:
 
 {% include "components/breadcrumbs.njk" %}
 
-{% set totalSnippets = collections.snippets | length %}
-{% set pageTitle = title %}
-{% set pageDescription = "Bite-sized solutions, command references, and quick fixes I reach for regularly." %}
-{% set pageIcon = "code" %}
-{% set itemCount = totalSnippets %}
-{% set itemLabel = "snippets" %}
-
-<div class="max-w-5xl mx-auto" x-data="{ viewMode: 'grid' }">
-  {% include "components/page-header.njk" %}
-
-  <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-    <div class="relative flex-1 max-w-sm">
-      {% feather "search", class="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" %}
+<div class="flex items-baseline justify-between mb-2">
+  <div class="flex items-baseline gap-3">
+    <h1 class="text-2xl font-semibold tracking-tight m-0">Snippets</h1>
+    <span class="meta-text text-xs text-gray-400 dark:text-gray-500">{{ collections.snippets | length }} snippets</span>
+  </div>
+  <div class="flex items-center gap-2">
+    <div class="relative">
+      {% feather "search", class="w-3.5 h-3.5 text-gray-400 absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" %}
       <input
         type="text"
         id="snippetSearch"
-        placeholder="Filter snippets..."
-        class="w-full rounded-full border border-gray-200 bg-gray-50 py-2 pl-9 pr-4 text-sm accent-field focus:outline-none dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
+        placeholder="Search..."
+        class="rounded-md border border-gray-200 dark:border-gray-700 bg-transparent py-1.5 pl-8 pr-3 text-sm accent-field focus:outline-none dark:text-gray-100 w-40 placeholder:text-gray-400"
       >
     </div>
-    <div class="view-toggle">
-      <button type="button" title="Grid view" :class="{ 'active': viewMode === 'grid' }" @click="viewMode = 'grid'">
-        {% feather "grid", class="w-4 h-4" %}
-      </button>
-      <button type="button" title="List view" :class="{ 'active': viewMode === 'list' }" @click="viewMode = 'list'">
+    <div class="view-toggle" x-data="{ viewMode: 'list' }">
+      <button type="button" title="List view" :class="{ 'active': viewMode === 'list' }" @click="viewMode = 'list'; document.getElementById('snippetGrid').classList.add('hidden'); document.getElementById('snippetList').classList.remove('hidden');">
         {% feather "list", class="w-4 h-4" %}
       </button>
+      <button type="button" title="Grid view" :class="{ 'active': viewMode === 'grid' }" @click="viewMode = 'grid'; document.getElementById('snippetList').classList.add('hidden'); document.getElementById('snippetGrid').classList.remove('hidden');">
+        {% feather "grid", class="w-4 h-4" %}
+      </button>
     </div>
-  </div>
-
-  <!-- Grid View -->
-  <div x-show="viewMode === 'grid'" class="mt-6 grid gap-3 md:grid-cols-2 lg:grid-cols-3" id="snippetGrid">
-    {%- for snippet in collections.snippets | reverse -%}
-      {% set rawTags = snippet.data.tags | default([]) %}
-      {% set filteredTags = rawTags | filterTagList %}
-      {% set excerpt = snippet.templateContent | striptags | replace('\n', ' ') | truncate(80, true, '…') %}
-      {% set searchExcerpt = snippet.templateContent | striptags | replace('\n', ' ') | truncate(160, true, '') | lower %}
-
-      <article
-        class="snippet-card border border-gray-200 dark:border-gray-800 rounded-lg p-3 hover:border-gray-300 dark:hover:border-gray-700 transition-colors"
-        data-snippet-card
-        data-title="{{ snippet.data.title | lower }}"
-        data-tags="{{ filteredTags | join(' ') | lower }}"
-        data-language="{{ snippet.data.language | default('') | lower }}"
-        data-body="{{ searchExcerpt }}"
-      >
-        <h2 class="text-base font-semibold text-gray-900 dark:text-white leading-snug">
-          <a href="{{ snippet.url }}" class="link-accent">{{ snippet.data.title }}</a>
-        </h2>
-        <div class="mt-1 flex flex-wrap items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
-          <time datetime="{{ snippet.date | htmlDateString }}">{{ snippet.date | readableDate }}</time>
-          {% if snippet.data.language %}
-            <span class="tag">{{ snippet.data.language }}</span>
-          {% endif %}
-        </div>
-        {% if excerpt %}
-          <p class="mt-2 text-sm text-gray-600 dark:text-gray-300 line-clamp-2">{{ excerpt }}</p>
-        {% endif %}
-        {% if filteredTags | length %}
-          <div class="mt-2 flex flex-wrap gap-1">
-            {% for tag in filteredTags | head(3) %}
-              <a href="/snippets/tags/{{ tag | slugify }}/" class="tag tag-interactive text-[0.65rem]">#{{ tag }}</a>
-            {% endfor %}
-            {% if filteredTags | length > 3 %}
-              <span class="tag text-[0.65rem]">+{{ filteredTags | length - 3 }}</span>
-            {% endif %}
-          </div>
-        {% endif %}
-      </article>
-    {%- endfor -%}
-  </div>
-
-  <!-- List View -->
-  <div x-show="viewMode === 'list'" x-cloak class="mt-4 divide-y divide-gray-100 dark:divide-gray-800/80">
-    {%- for snippet in collections.snippets | reverse -%}
-      {% set rawTags = snippet.data.tags | default([]) %}
-      {% set filteredTags = rawTags | filterTagList %}
-      {% set searchExcerpt = snippet.templateContent | striptags | replace('\n', ' ') | truncate(160, true, '') | lower %}
-
-      <article
-        class="py-2.5 group flex flex-col md:flex-row md:gap-6 not-prose"
-        data-snippet-card
-        data-title="{{ snippet.data.title | lower }}"
-        data-tags="{{ filteredTags | join(' ') | lower }}"
-        data-language="{{ snippet.data.language | default('') | lower }}"
-        data-body="{{ searchExcerpt }}"
-      >
-        <div class="shrink-0 md:w-36 flex items-center gap-2 pt-0.5">
-          <time class="meta-text text-xs text-gray-400 dark:text-gray-500" datetime="{{ snippet.date | htmlDateString }}">{{ snippet.date | readableDate }}</time>
-        </div>
-        <div class="flex-1 min-w-0 flex items-center gap-3">
-          <a href="{{ snippet.url }}" class="text-sm font-medium title-hover flex-1 min-w-0 truncate" style="text-decoration: none;">{{ snippet.data.title }}</a>
-          {% if snippet.data.language %}
-            <span class="tag text-[0.65rem] shrink-0">{{ snippet.data.language }}</span>
-          {% endif %}
-        </div>
-      </article>
-    {%- endfor -%}
   </div>
 </div>
 
+{# ── LIST VIEW (default) ─────────────────────────────── #}
+<div id="snippetList" class="mt-4 divide-y divide-gray-100 dark:divide-gray-800/80">
+  {%- for snippet in collections.snippets -%}
+    {% set rawTags = snippet.data.tags | default([]) %}
+    {% set filteredTags = rawTags | filterTagList %}
+    {% set searchExcerpt = snippet.templateContent | striptags | replace('\n', ' ') | truncate(160, true, '') | lower %}
+    <article
+      class="py-3.5 group"
+      data-snippet-card
+      data-title="{{ snippet.data.title | lower }}"
+      data-tags="{{ filteredTags | join(' ') | lower }}"
+      data-language="{{ snippet.data.language | default('') | lower }}"
+      data-body="{{ searchExcerpt }}"
+    >
+      <div class="flex flex-col md:flex-row md:gap-6">
+        <div class="shrink-0 md:w-36 flex flex-col gap-1 pt-0.5">
+          <time class="meta-text text-xs text-gray-400 dark:text-gray-500" datetime="{{ snippet.date | htmlDateString }}">{{ snippet.date | readableDate }}</time>
+          {% if snippet.data.language %}
+            <span class="hidden md:inline-flex meta-text text-[0.62rem] px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 w-fit">{{ snippet.data.language }}</span>
+          {% endif %}
+        </div>
+        <div class="flex-1 min-w-0">
+          <div class="leading-snug">
+            <a href="{{ snippet.url }}" class="font-semibold text-gray-900 dark:text-gray-100 title-hover" style="text-decoration: none;">{{ snippet.data.title }}</a>
+          </div>
+          {% if snippet.data.description %}
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5 m-0 leading-relaxed">{{ snippet.data.description }}</p>
+          {% endif %}
+          <div class="md:hidden flex flex-wrap items-center gap-x-2 gap-y-1 mt-1.5">
+            <span class="meta-text text-[0.65rem] text-gray-400 dark:text-gray-500">{{ snippet.date | readableDate }}</span>
+            {% if snippet.data.language %}
+              <span class="meta-text text-[0.62rem] px-1 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400">{{ snippet.data.language }}</span>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </article>
+  {%- endfor -%}
+</div>
+
+{# ── GRID VIEW ───────────────────────────────────────── #}
+<div id="snippetGrid" class="hidden mt-4 grid gap-3 md:grid-cols-2 lg:grid-cols-3 items-start">
+  {%- for snippet in collections.snippets -%}
+    {% set rawTags = snippet.data.tags | default([]) %}
+    {% set filteredTags = rawTags | filterTagList %}
+    {% set excerpt = snippet.templateContent | striptags | replace('\n', ' ') | truncate(100, true, '…') %}
+    {% set searchExcerpt = snippet.templateContent | striptags | replace('\n', ' ') | truncate(160, true, '') | lower %}
+    <article
+      class="feed-card-full"
+      data-snippet-card
+      data-title="{{ snippet.data.title | lower }}"
+      data-tags="{{ filteredTags | join(' ') | lower }}"
+      data-language="{{ snippet.data.language | default('') | lower }}"
+      data-body="{{ searchExcerpt }}"
+    >
+      <div class="flex items-center gap-2 mb-2">
+        <span class="feed-list-dot bg-purple-400 shrink-0"></span>
+        <time class="meta-text text-[0.68rem] text-gray-400 dark:text-gray-500">{{ snippet.date | readableDate }}</time>
+        {% if snippet.data.language %}
+          <span class="meta-text text-[0.62rem] px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 ml-auto">{{ snippet.data.language }}</span>
+        {% endif %}
+      </div>
+      <h3 class="text-sm font-semibold leading-snug text-gray-900 dark:text-gray-100 m-0">
+        <a href="{{ snippet.url }}" class="title-hover" style="color: inherit; text-decoration: none;">{{ snippet.data.title }}</a>
+      </h3>
+      {% if excerpt %}
+        <p class="text-xs leading-relaxed text-gray-500 dark:text-gray-400 mt-1.5 m-0 line-clamp-2">{{ excerpt }}</p>
+      {% endif %}
+      {% if filteredTags | length %}
+        <div class="flex flex-wrap gap-1 mt-2.5">
+          {% for tag in filteredTags | head(3) %}
+            <a href="/snippets/tags/{{ tag | slugify }}/" class="text-[0.6rem] px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 title-hover" style="text-decoration: none;">#{{ tag }}</a>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </article>
+  {%- endfor -%}
+</div>
+
 <style>
-  [x-cloak] { display: none !important; }
   .line-clamp-2 {
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -124,22 +127,12 @@ eleventyNavigation:
   const searchInput = document.getElementById('snippetSearch');
   const snippetCards = Array.from(document.querySelectorAll('[data-snippet-card]'));
 
-  searchInput.addEventListener('input', (event) => {
-    const term = event.target.value.trim().toLowerCase();
-
+  searchInput.addEventListener('input', (e) => {
+    const term = e.target.value.trim().toLowerCase();
     snippetCards.forEach((card) => {
-      const title = card.dataset.title || '';
-      const tags = card.dataset.tags || '';
-      const language = card.dataset.language || '';
-      const body = card.dataset.body || '';
-      const matches =
-        term.length === 0 ||
-        title.includes(term) ||
-        tags.includes(term) ||
-        language.includes(term) ||
-        body.includes(term);
-
-      card.classList.toggle('hidden', !matches);
+      const matches = !term || ['title','tags','language','body'].some(k => (card.dataset[k] || '').includes(term));
+      card.closest('article').classList.toggle('hidden', !matches);
     });
   });
 </script>
+
