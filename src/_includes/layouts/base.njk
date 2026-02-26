@@ -150,7 +150,7 @@
             {# Main navigation items #}
             {%- for entry in navPages %}
               {% if entry.title == "About" or entry.title == "Blog" or entry.title == "Now" %}
-                <li class="px-2 sm:px-2.5 py-1 transition-all flex items-center">
+                <li class="px-2 sm:px-2.5 py-1 transition-all hidden sm:flex items-center">
                   <a class="font-medium no-underline link-glow text-sm" href="{{ entry.url }}">{{ entry.title }}</a>
                 </li>
               {% endif %}
