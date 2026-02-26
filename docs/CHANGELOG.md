@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.3] - 2026-02-27
+
+### Fixed
+- tailwind.css: Links are now gray (color: inherit) with underline by default, accent color on hover — removes all accent-as-default link color. Works consistently in both prose and not-prose contexts
+- tailwind.css: Removed `!important` from `.not-prose a` reset — no longer needed since content links don't set accent by default
+- tailwind.css: `.site-content picture` centering now scoped to `article picture` only — fixes profile avatar being pushed/clipped by `margin: 1.5em auto`
+- tailwind.css: `.not-prose picture` reset added — avatars/icon images in UI components no longer affected by post-image centering rules
+- feed.njk: Description changed from "/now snapshots" to "and updates"
+
+### Changed
+- index.njk: Homepage feed section now defaults to grid view (2-col compact cards); list toggle added; view persisted to localStorage key `h-feed-view`
+
 ## [1.6.2] - 2026-02-27
 
 ### Added
