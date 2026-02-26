@@ -497,17 +497,17 @@ hasEthicalAds: false
       {%- set nextPost = collections.posts | getNextCollectionItem(page) %}
       {%- set previousPost = collections.posts | getPreviousCollectionItem(page) %}
       {%- if nextPost or previousPost %}
-        <nav aria-label="Post navigation" class="flex flex-col gap-2 text-sm">
+        <nav aria-label="Post navigation" class="flex flex-col gap-2 text-sm not-prose">
           {%- if nextPost %}
-            <a class="block" href="{{ nextPost.url | url }}">
-              <span class="font-semibold">Next:</span>
-              {{ nextPost.data.title }}
+            <a class="block title-hover" href="{{ nextPost.url | url }}" style="text-decoration: none;">
+              <span class="text-xs uppercase tracking-wide font-semibold text-gray-400">Next →</span>
+              <span class="block">{{ nextPost.data.title }}</span>
             </a>
           {%- endif %}
           {%- if previousPost %}
-            <a class="block" href="{{ previousPost.url | url }}">
-              <span class="font-semibold">Previous:</span>
-              {{ previousPost.data.title }}
+            <a class="block title-hover" href="{{ previousPost.url | url }}" style="text-decoration: none;">
+              <span class="text-xs uppercase tracking-wide font-semibold text-gray-400">← Previous</span>
+              <span class="block">{{ previousPost.data.title }}</span>
             </a>
           {%- endif %}
         </nav>
