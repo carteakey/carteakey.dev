@@ -464,6 +464,14 @@ export default function(eleventyConfig) {
         hour12: true
       });
     }
+    // PHP-style format chars
+    if (format === 'Y') return dateObj.getFullYear().toString();
+    if (format === 'n') return (dateObj.getMonth() + 1).toString();
+    if (format === 'X') return Math.floor(dateObj.getTime() / 1000).toString();
+    if (format === 'MMM d') return dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    if (format === 'h:mm a') return dateObj.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+    if (format === 'YYYY') return dateObj.getFullYear().toString();
+    if (format === 'MMM d, yyyy') return dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
     
     return dateObj.toLocaleDateString();
   });
@@ -563,6 +571,21 @@ export default function(eleventyConfig) {
       map[yr] = (map[yr] || 0) + 1;
     }
     return map;
+  });
+
+  // Count posts in a given year+month (both strings like "2026", "2")
+  eleventyConfig.addFilter("countInYearMonth", function(posts, year, month) {
+    if (!Array.isArray(posts)) return 0;
+    return posts.filter(p => {
+      const d = new Date(p.date);
+      return d.getFullYear().toString() === year && (d.getMonth() + 1).toString() === month;
+    }).length;
+  });
+
+  // Sort posts by date descending regardless of pinned status
+  eleventyConfig.addFilter("sortByDate", function(posts) {
+    if (!Array.isArray(posts)) return posts;
+    return [...posts].sort((a, b) => new Date(b.date) - new Date(a.date));
   });
 
   // Add snippet tags collection

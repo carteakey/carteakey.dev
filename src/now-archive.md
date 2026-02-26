@@ -20,14 +20,17 @@ permalink: /now/archive/
   {# vertical timeline line #}
   <div class="absolute left-[0.4rem] top-2 bottom-2 w-px bg-gray-200 dark:bg-gray-800"></div>
 
-  <ul class="list-none m-0 p-0 space-y-6 pl-7">
+  <ul class="list-none m-0 p-0 space-y-8 pl-7">
     {% for entry in archiveEntries %}
     <li class="relative">
       {# dot #}
       <div class="absolute -left-7 top-1.5 w-3 h-3 rounded-full border-2 border-white dark:border-zinc-950" style="background: var(--accent-color);"></div>
-      <div class="flex items-baseline gap-3 mb-1">
-        <time class="meta-text text-xs text-gray-400 dark:text-gray-500">{{ entry.data.archiveDate | readableDate }}</time>
-        <a href="{{ entry.url }}" class="text-sm font-medium title-hover" style="text-decoration:none;">View snapshot →</a>
+      <div class="flex items-baseline gap-3 mb-2">
+        <time class="meta-text text-xs text-gray-400 dark:text-gray-500 font-semibold">{{ entry.data.archiveDate | readableDate }}</time>
+        <a href="{{ entry.url }}" class="text-xs text-gray-400 dark:text-gray-500 hover:underline" style="text-decoration:none;">permalink →</a>
+      </div>
+      <div class="text-sm text-gray-700 dark:text-gray-300 site-content prose-sm">
+        {{ entry.templateContent | safe }}
       </div>
     </li>
     {% endfor %}

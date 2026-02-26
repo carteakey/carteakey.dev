@@ -25,13 +25,18 @@ eleventyNavigation:
   <ul class="list-none m-0 p-0 space-y-8 pl-7">
     {% for entry in changelog %}
     <li class="relative">
-      {# timeline dot #}
-      <div class="absolute -left-7 top-1.5 w-3 h-3 rounded-full border-2 border-white dark:border-zinc-950" style="background: var(--accent-color);"></div>
+      {# timeline dot — smaller/gray for git history entries #}
+      <div class="absolute -left-7 top-1.5 w-3 h-3 rounded-full border-2 border-white dark:border-zinc-950" style="background: {% if entry.fromGit %}#9ca3af{% else %}var(--accent-color){% endif %};"></div>
 
       <div class="flex flex-wrap items-baseline gap-3 mb-2">
-        <span class="font-mono font-semibold text-sm text-gray-900 dark:text-gray-100" style="color: var(--accent-color);">v{{ entry.version }}</span>
-        {% if entry.date %}
-          <time class="meta-text text-xs text-gray-400 dark:text-gray-500">{{ entry.date }}</time>
+        {% if entry.fromGit %}
+          <span class="font-mono font-semibold text-sm text-gray-500 dark:text-gray-400">{{ entry.version }}</span>
+          <span class="meta-text text-xs text-gray-400 dark:text-gray-600">git history</span>
+        {% else %}
+          <span class="font-mono font-semibold text-sm text-gray-900 dark:text-gray-100" style="color: var(--accent-color);">v{{ entry.version }}</span>
+          {% if entry.date %}
+            <time class="meta-text text-xs text-gray-400 dark:text-gray-500">{{ entry.date }}</time>
+          {% endif %}
         {% endif %}
       </div>
 
@@ -52,11 +57,11 @@ eleventyNavigation:
 
         {% if entry.sections.Changed %}
         <div>
-          <span class="meta-text text-[0.65rem] font-semibold uppercase tracking-wider text-blue-500 dark:text-blue-400 mr-2">Changed</span>
+          <span class="meta-text text-[0.65rem] font-semibold uppercase tracking-wider mr-2" style="color: {% if entry.fromGit %}#9ca3af{% else %}#3b82f6{% endif %};">{% if entry.fromGit %}Commits{% else %}Changed{% endif %}</span>
           <ul class="mt-1 space-y-0.5 list-none m-0 p-0">
             {% for item in entry.sections.Changed %}
             <li class="text-sm text-gray-700 dark:text-gray-300 flex gap-2">
-              <span class="text-blue-400 shrink-0 mt-0.5">~</span>
+              <span class="{% if entry.fromGit %}text-gray-400{% else %}text-blue-400{% endif %} shrink-0 mt-0.5">{% if entry.fromGit %}·{% else %}~{% endif %}</span>
               <span>{{ item }}</span>
             </li>
             {% endfor %}

@@ -810,3 +810,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Sparkle trail mouse effect activated by triple-clicking footer
   - Secret click counter with achievements (activated by Shift+Click on theme slider)
   - Custom CSS animations for all easter egg effects (float, bounce, sparkle, slideIn/Out)
+
+## [1.8.2] - 2026-02-28
+
+### Added
+- `/notes/` list page: all notes sorted by date with inline content + permalink, listed in footer + more page
+- Keyboard shortcuts: changed from `g+key` to `Ctrl/Cmd+key` (Mac-aware); visible `? shortcuts` button in footer
+- Now archive: shows full entry content inline like changelog (not just link)
+- Changelog: extended with git history before first CHANGELOG.md entry, grouped by month, styled as "Commits" with gray dots
+- Reading shelf section added to `/now` page (currently-reading books with progress bars)
+- Footer Read category: Notes, TIL, Reading links added; Meta category: Changelog, Colophon added
+- More page: updated with all new pages (notes, til, reading, changelog, colophon)
+
+### Fixed
+- More page: removed duplicate breadcrumbs (home.njk already renders them for non-root pages)
+- Stats: posts this year / posts this month counts now correctly use `countInYearMonth` filter (previous `date("Y")`/`date("n")` calls failed silently)
+- Stats: Latest post now sorted by date (not pinned order) via `sortByDate` filter; font sized down to `text-xs`
+- Stats: Lighthouse section is now 2-column grid on sm+ screens
+- `date()` filter: extended to support `"Y"`, `"n"`, `"X"`, `"MMM d"`, `"h:mm a"`, `"YYYY"` format strings
+- New filters: `countInYearMonth`, `sortByDate`

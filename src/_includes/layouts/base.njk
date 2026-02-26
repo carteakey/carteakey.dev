@@ -311,6 +311,9 @@
               <li><a href="{{ '/feed' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "activity", class="w-3 h-3 shrink-0" %} Feed</a></li>
               <li><a href="{{ '/blog' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "edit-3", class="w-3 h-3 shrink-0" %} Blog</a></li>
               <li><a href="{{ '/snippets' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "code", class="w-3 h-3 shrink-0" %} Snippets</a></li>
+              <li><a href="{{ '/notes' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "file-text", class="w-3 h-3 shrink-0" %} Notes</a></li>
+              <li><a href="{{ '/til' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "zap", class="w-3 h-3 shrink-0" %} TIL</a></li>
+              <li><a href="{{ '/reading' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "book-open", class="w-3 h-3 shrink-0" %} Reading</a></li>
             </ul>
           </div>
 
@@ -344,6 +347,8 @@
             <ul class="space-y-0.5 list-none m-0 p-0">
               <li><a href="{{ '/search' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "search", class="w-3 h-3 shrink-0" %} Search</a></li>
               <li><a href="{{ '/stats' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "bar-chart", class="w-3 h-3 shrink-0" %} Stats</a></li>
+              <li><a href="{{ '/changelog' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "list", class="w-3 h-3 shrink-0" %} Changelog</a></li>
+              <li><a href="{{ '/colophon' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "info", class="w-3 h-3 shrink-0" %} Colophon</a></li>
               <li><a href="{{ '/blogroll' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "link", class="w-3 h-3 shrink-0" %} Blogroll</a></li>
               <li><a href="{{ '/bookmarks' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "bookmark", class="w-3 h-3 shrink-0" %} Bookmarks</a></li>
               <li><a href="{{ '/newsletter' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "mail", class="w-3 h-3 shrink-0" %} Newsletter</a></li>
@@ -354,8 +359,9 @@
         </div>
         
         {# Made with love section #}
-        <div class="mt-4 text-xs text-gray-500 dark:text-gray-500">
-            Made with ❤️ · <a href="https://www.11ty.dev/" class="hover:underline" target="_blank" rel="noopener">Eleventy</a> + <a href="https://tailwindcss.com/" class="hover:underline" target="_blank" rel="noopener">Tailwind</a> · <a href="/colophon/" class="hover:underline">Colophon</a> · © {{ metadata.author.name }} 2025
+        <div class="mt-4 text-xs text-gray-500 dark:text-gray-500 flex items-center justify-between flex-wrap gap-2">
+          <span>Made with ❤️ · <a href="https://www.11ty.dev/" class="hover:underline" target="_blank" rel="noopener">Eleventy</a> + <a href="https://tailwindcss.com/" class="hover:underline" target="_blank" rel="noopener">Tailwind</a> · <a href="/colophon/" class="hover:underline">Colophon</a> · © {{ metadata.author.name }} 2025</span>
+          <button onclick="document.getElementById('shortcuts-overlay').style.display='flex'" title="Keyboard shortcuts" style="background:none;border:1px solid #e5e7eb;border-radius:4px;padding:1px 6px;cursor:pointer;font-family:monospace;font-size:0.65rem;color:#9ca3af;line-height:1.4;" class="dark:border-zinc-700 hover:border-gray-400 dark:hover:border-zinc-500 transition-colors">? shortcuts</button>
         </div>
       </div>
     </div>
@@ -410,41 +416,49 @@
 
   {# ── Keyboard shortcuts ── #}
   <div id="shortcuts-overlay" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.5);backdrop-filter:blur(2px);" onclick="document.getElementById('shortcuts-overlay').style.display='none'">
-    <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--bg,#fff);border:1px solid #e5e7eb;border-radius:0.75rem;padding:1.5rem 2rem;min-width:280px;max-width:360px;" onclick="event.stopPropagation()" class="dark:bg-zinc-900 dark:border-zinc-700">
+    <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--bg,#fff);border:1px solid #e5e7eb;border-radius:0.75rem;padding:1.5rem 2rem;min-width:300px;max-width:380px;" onclick="event.stopPropagation()" class="dark:bg-zinc-900 dark:border-zinc-700">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
         <span style="font-weight:600;font-size:0.875rem;">Keyboard Shortcuts</span>
         <button onclick="document.getElementById('shortcuts-overlay').style.display='none'" style="color:#9ca3af;font-size:1rem;background:none;border:none;cursor:pointer;">✕</button>
       </div>
       <table style="width:100%;border-collapse:collapse;font-size:0.8rem;">
-        <tr><td style="padding:0.25rem 0;color:#6b7280;">Navigation</td><td></td></tr>
-        <tr><td style="padding:0.2rem 0;"><kbd style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:3px;padding:1px 5px;font-size:0.7rem;font-family:monospace;">g h</kbd></td><td style="padding:0.2rem 0 0.2rem 1rem;color:#374151;" class="dark:text-gray-300">Home</td></tr>
-        <tr><td style="padding:0.2rem 0;"><kbd style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:3px;padding:1px 5px;font-size:0.7rem;font-family:monospace;">g b</kbd></td><td style="padding:0.2rem 0 0.2rem 1rem;color:#374151;" class="dark:text-gray-300">Blog</td></tr>
-        <tr><td style="padding:0.2rem 0;"><kbd style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:3px;padding:1px 5px;font-size:0.7rem;font-family:monospace;">g f</kbd></td><td style="padding:0.2rem 0 0.2rem 1rem;color:#374151;" class="dark:text-gray-300">Feed</td></tr>
-        <tr><td style="padding:0.2rem 0;"><kbd style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:3px;padding:1px 5px;font-size:0.7rem;font-family:monospace;">g s</kbd></td><td style="padding:0.2rem 0 0.2rem 1rem;color:#374151;" class="dark:text-gray-300">Snippets</td></tr>
-        <tr><td style="padding:0.2rem 0;"><kbd style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:3px;padding:1px 5px;font-size:0.7rem;font-family:monospace;">g n</kbd></td><td style="padding:0.2rem 0 0.2rem 1rem;color:#374151;" class="dark:text-gray-300">Now</td></tr>
-        <tr><td style="padding:0.2rem 0;"><kbd style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:3px;padding:1px 5px;font-size:0.7rem;font-family:monospace;">g t</kbd></td><td style="padding:0.2rem 0 0.2rem 1rem;color:#374151;" class="dark:text-gray-300">TIL</td></tr>
-        <tr><td style="padding:0.2rem 0;"><kbd style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:3px;padding:1px 5px;font-size:0.7rem;font-family:monospace;">g r</kbd></td><td style="padding:0.2rem 0 0.2rem 1rem;color:#374151;" class="dark:text-gray-300">Reading</td></tr>
-        <tr><td style="padding:0.25rem 0;color:#6b7280;padding-top:0.75rem;">Site</td><td></td></tr>
-        <tr><td style="padding:0.2rem 0;"><kbd style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:3px;padding:1px 5px;font-size:0.7rem;font-family:monospace;">d</kbd></td><td style="padding:0.2rem 0 0.2rem 1rem;color:#374151;" class="dark:text-gray-300">Toggle dark mode</td></tr>
+        <tr><td style="padding:0.25rem 0;color:#6b7280;" colspan="2">Navigation</td></tr>
+        <tr><td style="padding:0.2rem 0;white-space:nowrap;"><kbd style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:3px;padding:1px 5px;font-size:0.7rem;font-family:monospace;" id="k-mod">Ctrl</kbd><kbd style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:3px;padding:1px 5px;font-size:0.7rem;font-family:monospace;margin-left:2px;">H</kbd></td><td style="padding:0.2rem 0 0.2rem 1rem;color:#374151;" class="dark:text-gray-300">Home</td></tr>
+        <tr><td style="padding:0.2rem 0;white-space:nowrap;"><kbd style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:3px;padding:1px 5px;font-size:0.7rem;font-family:monospace;" class="k-mod">Ctrl</kbd><kbd style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:3px;padding:1px 5px;font-size:0.7rem;font-family:monospace;margin-left:2px;">B</kbd></td><td style="padding:0.2rem 0 0.2rem 1rem;color:#374151;" class="dark:text-gray-300">Blog</td></tr>
+        <tr><td style="padding:0.2rem 0;white-space:nowrap;"><kbd style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:3px;padding:1px 5px;font-size:0.7rem;font-family:monospace;" class="k-mod">Ctrl</kbd><kbd style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:3px;padding:1px 5px;font-size:0.7rem;font-family:monospace;margin-left:2px;">F</kbd></td><td style="padding:0.2rem 0 0.2rem 1rem;color:#374151;" class="dark:text-gray-300">Feed</td></tr>
+        <tr><td style="padding:0.2rem 0;white-space:nowrap;"><kbd style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:3px;padding:1px 5px;font-size:0.7rem;font-family:monospace;" class="k-mod">Ctrl</kbd><kbd style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:3px;padding:1px 5px;font-size:0.7rem;font-family:monospace;margin-left:2px;">S</kbd></td><td style="padding:0.2rem 0 0.2rem 1rem;color:#374151;" class="dark:text-gray-300">Snippets</td></tr>
+        <tr><td style="padding:0.2rem 0;white-space:nowrap;"><kbd style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:3px;padding:1px 5px;font-size:0.7rem;font-family:monospace;" class="k-mod">Ctrl</kbd><kbd style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:3px;padding:1px 5px;font-size:0.7rem;font-family:monospace;margin-left:2px;">N</kbd></td><td style="padding:0.2rem 0 0.2rem 1rem;color:#374151;" class="dark:text-gray-300">Now</td></tr>
+        <tr><td style="padding:0.2rem 0;white-space:nowrap;"><kbd style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:3px;padding:1px 5px;font-size:0.7rem;font-family:monospace;" class="k-mod">Ctrl</kbd><kbd style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:3px;padding:1px 5px;font-size:0.7rem;font-family:monospace;margin-left:2px;">T</kbd></td><td style="padding:0.2rem 0 0.2rem 1rem;color:#374151;" class="dark:text-gray-300">TIL</td></tr>
+        <tr><td style="padding:0.2rem 0;white-space:nowrap;"><kbd style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:3px;padding:1px 5px;font-size:0.7rem;font-family:monospace;" class="k-mod">Ctrl</kbd><kbd style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:3px;padding:1px 5px;font-size:0.7rem;font-family:monospace;margin-left:2px;">R</kbd></td><td style="padding:0.2rem 0 0.2rem 1rem;color:#374151;" class="dark:text-gray-300">Reading</td></tr>
+        <tr><td style="padding:0.25rem 0;color:#6b7280;padding-top:0.75rem;" colspan="2">Site</td></tr>
+        <tr><td style="padding:0.2rem 0;white-space:nowrap;"><kbd style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:3px;padding:1px 5px;font-size:0.7rem;font-family:monospace;" class="k-mod">Ctrl</kbd><kbd style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:3px;padding:1px 5px;font-size:0.7rem;font-family:monospace;margin-left:2px;">D</kbd></td><td style="padding:0.2rem 0 0.2rem 1rem;color:#374151;" class="dark:text-gray-300">Toggle dark mode</td></tr>
         <tr><td style="padding:0.2rem 0;"><kbd style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:3px;padding:1px 5px;font-size:0.7rem;font-family:monospace;">?</kbd></td><td style="padding:0.2rem 0 0.2rem 1rem;color:#374151;" class="dark:text-gray-300">This overlay</td></tr>
       </table>
     </div>
   </div>
   <script>
   (function() {
-    let g = false;
+    // Detect Mac and update modifier key labels
+    const isMac = /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent);
+    const modLabel = isMac ? '⌘' : 'Ctrl';
+    document.querySelectorAll('.k-mod, #k-mod').forEach(el => el.textContent = modLabel);
+
     const nav = { h:'/', b:'/blog/', f:'/feed/', s:'/snippets/', n:'/now/', t:'/til/', r:'/reading/' };
     document.addEventListener('keydown', function(e) {
       if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.isContentEditable) return;
-      const k = e.key;
-      if (g) {
-        g = false;
-        if (nav[k]) { window.location.href = nav[k]; return; }
+      // Ctrl/Cmd + key navigation
+      if ((e.ctrlKey || e.metaKey) && !e.shiftKey && !e.altKey) {
+        const k = e.key.toLowerCase();
+        if (nav[k]) { e.preventDefault(); window.location.href = nav[k]; return; }
+        if (k === 'd') { e.preventDefault(); document.getElementById('toggleDarkMode')?.click(); return; }
       }
-      if (k === 'g') { g = true; setTimeout(() => g = false, 1000); return; }
-      if (k === '?') { const o = document.getElementById('shortcuts-overlay'); o.style.display = o.style.display === 'none' ? 'flex' : 'none'; return; }
-      if (k === 'd') { document.getElementById('toggleDarkMode')?.click(); return; }
-      if (k === 'Escape') { document.getElementById('shortcuts-overlay').style.display = 'none'; }
+      // ? for overlay (no modifier)
+      if (e.key === '?' && !e.ctrlKey && !e.metaKey) {
+        const o = document.getElementById('shortcuts-overlay');
+        o.style.display = o.style.display === 'none' ? 'flex' : 'none';
+        return;
+      }
+      if (e.key === 'Escape') { document.getElementById('shortcuts-overlay').style.display = 'none'; }
     });
   })();
   </script>

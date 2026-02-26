@@ -31,12 +31,7 @@ permalink: /stats/
 {% set currentYear = "now" | date("Y") %}
 {% set currentMonth = "now" | date("n") %}
 {% set postsThisYear = byYear[currentYear] | default(0) %}
-{% set postsThisMonth = 0 %}
-{% for post in collections.posts %}
-  {% if post.date | date("n") == currentMonth and post.date | date("Y") == currentYear %}
-    {% set postsThisMonth = postsThisMonth + 1 %}
-  {% endif %}
-{% endfor %}
+{% set postsThisMonth = collections.posts | countInYearMonth(currentYear, currentMonth) %}
 
 {% set totalUpvotes = 0 %}
 {% for slug, count in upvotes.posts %}
@@ -92,11 +87,11 @@ permalink: /stats/
         <span class="meta-text text-sm font-semibold text-gray-900 dark:text-gray-100">{{ postsThisMonth }}</span>
       </div>
 
-      {% set latestPost = collections.posts | first %}
+      {% set latestPost = collections.posts | sortByDate | first %}
       {% if latestPost %}
       <div class="py-2.5 flex items-baseline justify-between gap-2">
         <span class="text-sm text-gray-600 dark:text-gray-400 shrink-0">Latest</span>
-        <a href="{{ latestPost.url }}" class="meta-text text-sm font-semibold title-hover text-right truncate min-w-0" style="text-decoration:none;">{{ latestPost.data.title }}</a>
+        <a href="{{ latestPost.url }}" class="text-xs text-gray-500 dark:text-gray-400 title-hover text-right truncate min-w-0" style="text-decoration:none;">{{ latestPost.data.title }}</a>
       </div>
       {% endif %}
 
@@ -146,29 +141,29 @@ permalink: /stats/
 {# ── Lighthouse ── #}
 <div class="not-prose mb-8">
   <h2 class="text-xs font-semibold uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-3">Lighthouse</h2>
-  <div class="divide-y divide-gray-100 dark:divide-gray-800/80">
-    <div class="py-2.5 flex items-center gap-4">
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8">
+    <div class="flex items-center gap-3 py-2.5 border-b border-gray-100 dark:border-gray-800/80">
       <span class="text-sm text-gray-600 dark:text-gray-400 w-28 shrink-0">Performance</span>
       <div class="flex-1 h-2 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
         <div class="h-full rounded-full bg-emerald-500" style="width: {{ lighthouse.metrics.performance | default(0) }}%"></div>
       </div>
       <span class="meta-text text-sm font-semibold text-gray-900 dark:text-gray-100 w-8 text-right">{{ lighthouse.metrics.performance | default(0) }}</span>
     </div>
-    <div class="py-2.5 flex items-center gap-4">
+    <div class="flex items-center gap-3 py-2.5 border-b border-gray-100 dark:border-gray-800/80">
       <span class="text-sm text-gray-600 dark:text-gray-400 w-28 shrink-0">Accessibility</span>
       <div class="flex-1 h-2 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
         <div class="h-full rounded-full bg-blue-500" style="width: {{ lighthouse.metrics.accessibility | default(0) }}%"></div>
       </div>
       <span class="meta-text text-sm font-semibold text-gray-900 dark:text-gray-100 w-8 text-right">{{ lighthouse.metrics.accessibility | default(0) }}</span>
     </div>
-    <div class="py-2.5 flex items-center gap-4">
+    <div class="flex items-center gap-3 py-2.5 border-b border-gray-100 dark:border-gray-800/80 sm:border-b-0">
       <span class="text-sm text-gray-600 dark:text-gray-400 w-28 shrink-0">Best Practices</span>
       <div class="flex-1 h-2 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
         <div class="h-full rounded-full bg-purple-500" style="width: {{ lighthouse.metrics.bestPractices | default(0) }}%"></div>
       </div>
       <span class="meta-text text-sm font-semibold text-gray-900 dark:text-gray-100 w-8 text-right">{{ lighthouse.metrics.bestPractices | default(0) }}</span>
     </div>
-    <div class="py-2.5 flex items-center gap-4">
+    <div class="flex items-center gap-3 py-2.5">
       <span class="text-sm text-gray-600 dark:text-gray-400 w-28 shrink-0">SEO</span>
       <div class="flex-1 h-2 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
         <div class="h-full rounded-full bg-amber-500" style="width: {{ lighthouse.metrics.seo | default(0) }}%"></div>
