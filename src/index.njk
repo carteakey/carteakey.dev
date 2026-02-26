@@ -5,23 +5,24 @@ htmlTemplateEngine: "webc"
 {% from "components/feed-card.njk" import feedCard %}
 
 {# ── HERO ─────────────────────────────────────────────── #}
-<div class="flex flex-col sm:flex-row gap-4 items-start not-prose animate-enter py-2">
-  {% image "./src/static/img/headshot.png" , "me", "rounded-full w-14 h-14 shrink-0 object-cover ring-2 ring-gray-200 dark:ring-gray-700 mt-0.5" %}
-  <div class="space-y-1">
+<div class="flex flex-col sm:flex-row gap-5 items-start not-prose animate-enter py-2">
+  {% image "./src/static/img/headshot.png" , "me", "rounded-full w-16 h-16 shrink-0 object-cover ring-2 ring-gray-200 dark:ring-gray-700 mt-0.5" %}
+  <div class="space-y-2">
     <p class="text-base font-semibold text-gray-900 dark:text-gray-100 m-0">
-      Kartikey Chauhan <span class="font-normal text-gray-500 dark:text-gray-400">— data analyst, Toronto</span>
+      Hi 👋🏼, I'm <span style="color: var(--accent-color); font-weight: 700;">Kartikey</span> — welcome to my corner of the internet!
     </p>
     <p class="text-sm text-gray-600 dark:text-gray-400 m-0 leading-relaxed">
-      I tinker with tech, build <a href="/portfolio" class="accent-link font-medium" style="text-decoration: none;">side projects</a>, and write about AI, linux, and data. This is where I put it all.
+      I'm a data analyst from Toronto. Outside work I tinker with tech and build <a href="/portfolio" class="accent-link font-semibold" style="text-decoration: none;">side projects</a>.
+      Here I write about linux, AI, data science, and whatever else catches my eye — grab a coffee and look around.
     </p>
-    <div class="flex flex-wrap gap-3 pt-1 text-xs text-gray-500 dark:text-gray-400">
-      <a href="/about" class="hover:text-gray-900 dark:hover:text-white transition-colors" style="text-decoration: none;">About</a>
+    <div class="flex flex-wrap gap-x-3 gap-y-1 pt-0.5 text-xs text-gray-400 dark:text-gray-500">
+      <a href="/about" class="hover:text-gray-700 dark:hover:text-gray-300 transition-colors" style="text-decoration: none;">About</a>
       <span>·</span>
-      <a href="/now" class="hover:text-gray-900 dark:hover:text-white transition-colors" style="text-decoration: none;">Now</a>
+      <a href="/now" class="hover:text-gray-700 dark:hover:text-gray-300 transition-colors" style="text-decoration: none;">Now</a>
       <span>·</span>
-      <a href="/cv" class="hover:text-gray-900 dark:hover:text-white transition-colors" style="text-decoration: none;">CV</a>
+      <a href="/cv" class="hover:text-gray-700 dark:hover:text-gray-300 transition-colors" style="text-decoration: none;">CV</a>
       <span>·</span>
-      <a href="https://github.com/carteakey" class="hover:text-gray-900 dark:hover:text-white transition-colors" style="text-decoration: none;" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://github.com/carteakey" class="hover:text-gray-700 dark:hover:text-gray-300 transition-colors" style="text-decoration: none;" target="_blank" rel="noopener">GitHub ↗</a>
     </div>
   </div>
 </div>
@@ -32,11 +33,13 @@ htmlTemplateEngine: "webc"
 {% set highlightedPost = collections.featuredPost %}
 {% if highlightedPost %}
   <div class="not-prose animate-enter stagger-1 mb-5">
-    <div class="flex items-baseline gap-2 mb-2">
-      <span class="meta-text text-[0.65rem] text-amber-600 dark:text-amber-500 uppercase tracking-wider font-semibold">★ Featured</span>
+    <div class="mb-2">
+      <span class="meta-text text-[0.65rem] uppercase tracking-wider font-semibold" style="color: var(--accent-color);">★ Featured</span>
     </div>
     <a href="{{ highlightedPost.url }}" class="block group" style="text-decoration: none;">
-      <h2 class="text-base font-semibold text-gray-900 dark:text-gray-100 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors leading-snug m-0">{{ highlightedPost.data.title }}</h2>
+      <h2 class="text-base font-semibold text-gray-900 dark:text-gray-100 leading-snug m-0 transition-colors" style="transition: color 0.15s;">
+        <span class="group-hover:underline" style="text-decoration-color: var(--accent-color);">{{ highlightedPost.data.title }}</span>
+      </h2>
       {% if highlightedPost.data.description %}
         <p class="text-sm text-gray-500 dark:text-gray-400 mt-1 m-0 leading-relaxed">{{ highlightedPost.data.description }}</p>
       {% endif %}
@@ -47,7 +50,7 @@ htmlTemplateEngine: "webc"
             <span class="meta-text text-[0.65rem] px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400">#{{ tag }}</span>
           {% endfor %}
         {% endif %}
-        <span class="text-xs text-amber-600 dark:text-amber-500 ml-auto group-hover:translate-x-0.5 transition-transform">Read →</span>
+        <span class="text-xs font-medium ml-auto transition-transform group-hover:translate-x-0.5" style="color: var(--accent-color);">Read →</span>
       </div>
     </a>
   </div>
@@ -69,7 +72,7 @@ htmlTemplateEngine: "webc"
 <div class="not-prose animate-enter stagger-3">
   <div class="flex items-center justify-between mb-3">
     <span class="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">Recent</span>
-    <a href="{{ '/feed/' | url }}" class="text-xs accent-link font-medium" style="text-decoration: none;">All activity →</a>
+    <a href="{{ '/feed/' | url }}" class="text-xs font-medium accent-link" style="text-decoration: none; color: var(--accent-color);">All activity →</a>
   </div>
 
   {% set feedItems = collections.feed | head(12) %}

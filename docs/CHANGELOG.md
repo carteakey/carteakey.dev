@@ -5,7 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.5.1] - 2026-02-26
+## [1.5.2] - 2026-02-27
+
+### Fixed
+- index.njk: Featured section `★ Featured` label and `Read →` link now use `var(--accent-color)` instead of hardcoded amber, respecting the accent theme switcher.
+- now.njk: Removed `cardShell` variable, tightened layout, date in `meta-text` style. `not-prose` wrapper around snippets avoids prose override.
+- workouts-snippet.njk, games-snippet.njk: Replaced `cardShell`+shadow cards with `feed-card-full` style. Hover colors use `var(--accent-color)`. Reduced padding.
+- tags-list.njk: Tag links now use `accent-link` class (respects theme switcher) instead of hardcoded `text-amber-600`.
+- search.njk: Result title hover and loading spinner use `var(--accent-color)` instead of hardcoded amber.
+- snippets.njk: Arrow link on list-view items uses `var(--accent-color)` on hover.
+- base.njk: Restored `prose-lg` for comfortable reading line height.
+
 
 ### Changed
 - UI: Second-pass redesign — coherent design language built from the ground up.
