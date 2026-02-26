@@ -410,19 +410,17 @@ picture img {
   }
 }
 
-@layer components {
-  /* Title hover: stays gray, turns accent on hover */
-  .title-hover {
-    transition: color 150ms ease;
-  }
-  .title-hover:hover {
-    color: var(--accent-color);
-  }
-  /* Higher specificity to beat Tailwind dark: utility classes (both have 0,2,0 — this 0,3,0 wins) */
-  .site-content .title-hover:hover {
-    color: var(--accent-color);
-  }
+/* Title hover — MUST be unlayered to beat @layer utilities (Tailwind text-* classes).
+   Unlayered CSS always wins over any @layer regardless of specificity. */
+.title-hover {
+  transition: color 150ms ease;
+}
+.title-hover:hover,
+.site-content .title-hover:hover {
+  color: var(--accent-color) !important;
+}
 
+@layer components {
   .accent-link {
     color: var(--accent-color);
     text-decoration-color: color-mix(in srgb, var(--accent-color) 60%, white);

@@ -5,7 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.6.6] - 2026-02-27
+## [1.6.7] - 2026-02-27
+
+### Fixed
+- tailwind.css: Moved `.title-hover:hover` completely OUT of `@layer components` — in Tailwind v4, `@layer utilities` always beats `@layer components` regardless of specificity, so hover color was always overridden by `text-gray-900 dark:text-gray-100`. Unlayered CSS beats all layers. Added `!important` as belt-and-suspenders.
+- base.njk: Accent slider thumb was invisible — Tailwind v4 only scans static HTML class names; dynamic Alpine `:class="themes[currentIndex].color"` bindings like `bg-amber-500` are never included in generated CSS. Fixed by switching to `:style="background-color: ${themes[currentIndex].hex}"` with hex values embedded directly in the data object (matching the `ACCENT_COLORS` map in theme.js).
+- base.njk: Slider label now uses `x-text="themes[currentIndex].name"` (was `.label` — removed unused label field from theme data).
+
+
 
 ### Fixed
 - tailwind.css: Added `.site-content .title-hover:hover` (specificity 0,3,0) alongside `.title-hover:hover` (0,2,0) — Tailwind's `dark:text-gray-100:is(.dark *)` also has 0,2,0 and wins by cascade order when equal; the higher-specificity rule now correctly applies accent color on hover in blog/snippets list rows
