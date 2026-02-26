@@ -4,105 +4,84 @@ htmlTemplateEngine: "webc"
 ---
 {% from "components/feed-card.njk" import feedCard %}
 
-{% set cardShell = "rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-100/80 dark:bg-gray-900/70 shadow-sm transition-shadow duration-200 hover:shadow-lg" %}
-
-
-{# eleventyNavigation: key: carteakey.dev order: 1 #}
-<div class="intro flex flex-col md:flex-row gap-4 items-center md:items-start animate-enter">
-  <div class="relative shrink-0">
-    {% image "./src/static/img/headshot.png" , "me", "rounded-full w-16 h-16 object-cover ring-2 ring-amber-400/40 dark:ring-amber-500/30" %}
-  </div>
-
-  <div class="md:max-w-xl lg:max-w-2xl space-y-1.5 text-sm">
-    <p>
-      Hi 👋🏼, I'm <span class="font-bold text-gradient">Kartikey</span> — data analyst from Toronto, weekend tinkerer, and builder of fun
-      <a href="/portfolio" class="no-underline font-bold link-glow">projects</a>.
+{# ── HERO ─────────────────────────────────────────────── #}
+<div class="flex flex-col sm:flex-row gap-4 items-start not-prose animate-enter py-2">
+  {% image "./src/static/img/headshot.png" , "me", "rounded-full w-14 h-14 shrink-0 object-cover ring-2 ring-gray-200 dark:ring-gray-700 mt-0.5" %}
+  <div class="space-y-1">
+    <p class="text-base font-semibold text-gray-900 dark:text-gray-100 m-0">
+      Kartikey Chauhan <span class="font-normal text-gray-500 dark:text-gray-400">— data analyst, Toronto</span>
     </p>
-    <p class="text-gray-600 dark:text-gray-400">
-      Writing about linux, AI, data science, and whatever's interesting lately. Grab a coffee and look around.
+    <p class="text-sm text-gray-600 dark:text-gray-400 m-0 leading-relaxed">
+      I tinker with tech, build <a href="/portfolio" class="accent-link font-medium" style="text-decoration: none;">side projects</a>, and write about AI, linux, and data. This is where I put it all.
     </p>
+    <div class="flex flex-wrap gap-3 pt-1 text-xs text-gray-500 dark:text-gray-400">
+      <a href="/about" class="hover:text-gray-900 dark:hover:text-white transition-colors" style="text-decoration: none;">About</a>
+      <span>·</span>
+      <a href="/now" class="hover:text-gray-900 dark:hover:text-white transition-colors" style="text-decoration: none;">Now</a>
+      <span>·</span>
+      <a href="/cv" class="hover:text-gray-900 dark:hover:text-white transition-colors" style="text-decoration: none;">CV</a>
+      <span>·</span>
+      <a href="https://github.com/carteakey" class="hover:text-gray-900 dark:hover:text-white transition-colors" style="text-decoration: none;" target="_blank" rel="noopener">GitHub</a>
+    </div>
   </div>
 </div>
-  {% set highlightedPost = collections.featuredPost %}
-  {% if highlightedPost %}
-    <section class="border border-gray-200 dark:border-gray-800 rounded-lg p-4 not-prose mt-6 mb-4 animate-enter stagger-1 bg-gray-50/60 dark:bg-gray-900/40">
-      <div class="flex flex-col gap-2">
-        <div class="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide" style="color: var(--accent-color);">
-          {% feather "star", class="w-3.5 h-3.5" %}
-          Featured
-        </div>
-        <a href="{{ highlightedPost.url }}" class="inline-flex items-center gap-2 text-base font-semibold text-gray-900 dark:text-gray-100 transition-colors accent-link no-underline leading-snug">
-          {{ highlightedPost.data.title }}
-          {% feather "arrow-up-right", class="w-3.5 h-3.5 opacity-40" %}
-        </a>
-        {% if highlightedPost.data.description %}
-        <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
-          {{ highlightedPost.data.description }}
-        </p>
+
+<hr class="my-5 border-gray-200 dark:border-gray-800" />
+
+{# ── FEATURED POST ─────────────────────────────────────── #}
+{% set highlightedPost = collections.featuredPost %}
+{% if highlightedPost %}
+  <div class="not-prose animate-enter stagger-1 mb-5">
+    <div class="flex items-baseline gap-2 mb-2">
+      <span class="meta-text text-[0.65rem] text-amber-600 dark:text-amber-500 uppercase tracking-wider font-semibold">★ Featured</span>
+    </div>
+    <a href="{{ highlightedPost.url }}" class="block group" style="text-decoration: none;">
+      <h2 class="text-base font-semibold text-gray-900 dark:text-gray-100 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors leading-snug m-0">{{ highlightedPost.data.title }}</h2>
+      {% if highlightedPost.data.description %}
+        <p class="text-sm text-gray-500 dark:text-gray-400 mt-1 m-0 leading-relaxed">{{ highlightedPost.data.description }}</p>
+      {% endif %}
+      <div class="flex items-center gap-2 mt-1.5">
+        <time class="meta-text text-[0.68rem] text-gray-400 dark:text-gray-500">{{ highlightedPost.date | readableDate }}</time>
+        {% if highlightedPost.data.tags %}
+          {% for tag in highlightedPost.data.tags | filterTagList | head(2) %}
+            <span class="meta-text text-[0.65rem] px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400">#{{ tag }}</span>
+          {% endfor %}
         {% endif %}
-        <div class="flex flex-wrap items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
-          <time class="meta-text uppercase" datetime="{{ highlightedPost.date | htmlDateString }}">{{ highlightedPost.date | readableDate }}</time>
-          {% if highlightedPost.data.tags %}
-            <span class="h-1 w-1 rounded-full bg-gray-300 dark:bg-gray-600"></span>
-            {% for tag in highlightedPost.data.tags | filterTagList %}
-              <span class="meta-text rounded bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 text-gray-500 dark:text-gray-400">#{{ tag }}</span>
-            {% endfor %}
-          {% endif %}
-        </div>
+        <span class="text-xs text-amber-600 dark:text-amber-500 ml-auto group-hover:translate-x-0.5 transition-transform">Read →</span>
       </div>
-    </section>
-  {% endif %}
-
-  <hr class="mt-4 mb-4" />
-  
-   <!-- Quote of the Day Section -->
-    <section class="border-l-2 pl-4 not-prose animate-enter stagger-2 py-1" style="border-color: var(--accent-color);">
-        <div class="flex flex-col gap-2">
-            <blockquote id="qotd" class="text-sm font-medium leading-relaxed text-gray-800 dark:text-gray-200">
-                {{ qotd.quote }}
-            </blockquote>
-            <p class="text-right text-xs italic text-gray-400 dark:text-gray-500" id="who">
-                — {{ qotd.provider }}
-            </p>
-        </div>
-    </section>
-
-  <!-- The script itself, loaded AFTER your root element. -->
-  <script src="/static/js/typeit.min.js"></script>
-  <script>
-    const instance = new TypeIt("#qotd", {
-    speed: 30,
-    waitUntilVisible: true
-    })
-    instance.go();
-  </script>
-
-  <hr class="mt-4 mb-4" />
-
-  <div class="flex items-baseline justify-between gap-3 animate-enter stagger-3">
-    <h2 class="m-0 text-base font-semibold tracking-tight text-gradient">Feed</h2>
-    <a
-      href="{{ '/feed/' | url }}"
-      class="group inline-flex items-center gap-1 text-xs font-medium accent-link no-underline decoration-dotted underline-offset-4 transition-all hover:gap-1.5"
-      aria-label="Open the full feed"
-    >
-      All posts
-      {% feather "arrow-up-right", class="h-3 w-3 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" %}
     </a>
   </div>
-  {# <hr class="divider-gradient my-4" /> #}
-  {# <p class="text-gray-600 dark:text-gray-400 mb-4">Latest posts, snippets, microposts, photos, vibe drops, and /now updates.</p> #}
+  <hr class="mb-5 border-gray-200 dark:border-gray-800" />
+{% endif %}
 
-  {% set feedItems = collections.feed | head(10) %}
+{# ── QUOTE OF THE DAY ──────────────────────────────────── #}
+<div class="not-prose animate-enter stagger-2 mb-5">
+  <blockquote id="qotd" class="border-l-2 pl-3 text-sm italic text-gray-700 dark:text-gray-300 leading-relaxed m-0" style="border-color: var(--accent-color);">{{ qotd.quote }}</blockquote>
+  <p class="text-xs text-gray-400 dark:text-gray-500 mt-1.5 text-right m-0 italic" id="who">— {{ qotd.provider }}</p>
+</div>
 
-  <div class="grid gap-2 md:grid-cols-2 lg:grid-cols-3 my-4 items-start feed-masonry animate-enter stagger-4" data-feed-masonry style="--feed-row-height: 16px;">
-    {% for item in feedItems %}
-      {{ feedCard(item, { variant: 'compact', showTags: false }) }}
-    {% endfor %}
+<script src="/static/js/typeit.min.js"></script>
+<script>new TypeIt("#qotd", { speed: 25, waitUntilVisible: true }).go();</script>
+
+<hr class="mb-5 border-gray-200 dark:border-gray-800" />
+
+{# ── RECENT ACTIVITY ───────────────────────────────────── #}
+<div class="not-prose animate-enter stagger-3">
+  <div class="flex items-center justify-between mb-3">
+    <span class="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">Recent</span>
+    <a href="{{ '/feed/' | url }}" class="text-xs accent-link font-medium" style="text-decoration: none;">All activity →</a>
   </div>
 
-  {% include "components/feed-masonry-script.njk" %}
+  {% set feedItems = collections.feed | head(12) %}
+  <ul class="feed-list m-0 p-0 list-none">
+    {% for item in feedItems %}
+      {{ feedCard(item, { variant: 'list' }) }}
+    {% endfor %}
+  </ul>
 
-  <p class="text-sm text-gray-600 dark:text-gray-400">
-    Browse the full <a href="{{ '/feed/' | url }}" class="underline decoration-dotted underline-offset-4">feed</a> or jump straight to <a href="{{ '/blog/' | url }}" class="underline decoration-dotted underline-offset-4">posts</a> and <a href="{{ '/snippets/' | url }}" class="underline decoration-dotted underline-offset-4">snippets</a>.
+  <p class="text-xs text-gray-400 dark:text-gray-500 mt-4 m-0">
+    Posts · <a href="{{ '/blog/' | url }}" class="hover:text-gray-700 dark:hover:text-gray-300 transition-colors" style="text-decoration: none;">Blog</a>
+    &nbsp;·&nbsp; Code · <a href="{{ '/snippets/' | url }}" class="hover:text-gray-700 dark:hover:text-gray-300 transition-colors" style="text-decoration: none;">Snippets</a>
+    &nbsp;·&nbsp; Everything else · <a href="{{ '/feed/' | url }}" class="hover:text-gray-700 dark:hover:text-gray-300 transition-colors" style="text-decoration: none;">Feed</a>
   </p>
+</div>

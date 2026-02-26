@@ -5,7 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.5.0] - 2026-02-26
+## [1.5.1] - 2026-02-26
+
+### Changed
+- UI: Second-pass redesign — coherent design language built from the ground up.
+- feed-card.njk: New `list` variant for homepage (single-row grid layout: date · dot · type · title). `full` variant now uses `feed-card-full` (flat border card, no shadow) for the /feed page grid.
+- index.njk: Full homepage rewrite. Clean hero (avatar + name + bio + quick links inline). Featured post as minimal text block. QOTD as bare blockquote. Feed section replaced masonry grid with a scannable `feed-list` single-column chronological activity log.
+- archive.njk (blog): Full rewrite. Default list view (matches postslist.njk style: date left col, title+desc right). Grid view uses `feed-card-full` cards consistent with /feed. Search bar compact and inline with view toggle.
+- feed.njk: Cleaned up, removed duplicate inline JS (handled by masonry-script include).
+- postslist.njk: Refined layout — `md:w-36` fixed date column, tags below date on desktop, description `text-sm`, consistent with blog page.
+- tailwind.css: Added `.feed-list`, `.feed-list-row`, `.feed-list-dot`, `.feed-list-date`, `.feed-list-type`, `.feed-list-title` for homepage activity list. Added `.feed-card-full` for grid cards. Removed heavy `.card-hover` box-shadow — now border-color transition only.
+
+
 
 ### Changed
 - UI: Full "Dense Editorial" redesign — higher text density, flat list rows, less visual noise.

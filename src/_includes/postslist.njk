@@ -1,50 +1,46 @@
-<ul reversed class="postlist w-full list-none divide-y divide-gray-200 dark:divide-gray-800 pl-0 m-0"
+<ul reversed class="postlist w-full list-none m-0 p-0 divide-y divide-gray-100 dark:divide-gray-800/80"
   style="counter-reset: start-from {{ (postslistCounter or postslist.length) + 1 }}">
   {% for post in postslist | reverse %}
   <li class="postlist-item{% if post.url == url %} postlist-item-active{% endif %}">
-    <article class="py-3 sm:py-3.5">
-      <div class="md:grid md:grid-cols-10 md:gap-x-4 gap-y-0.5">
-      {# Title #}
-      <div class="block order-1 md:order-2 md:col-span-7 leading-snug">
-        {% if post.data.pinned %}
-          <span class="inline-flex items-center gap-0.5 px-1 py-0.5 mr-1 text-[0.6rem] font-semibold uppercase tracking-wider rounded bg-amber-100 text-amber-800 dark:bg-amber-900/70 dark:text-amber-200 align-middle">{% feather "map-pin", class="w-2.5 h-2.5" %}Pinned</span>
-        {% endif %}
-        <a href="{{ post.url | url }}" class="font-medium text-gray-900 dark:text-gray-100 transition-colors hover:text-amber-600 dark:hover:text-amber-400 text-sm md:text-base">
-          {% if post.data.title %}
-          {{ post.data.title }}
-          {% else %}
-          <code>{{ post.url }}</code>
+    <article class="py-3.5 group">
+      <div class="flex flex-col md:flex-row md:gap-6">
+
+        {# Left: date + tags (desktop) #}
+        <div class="shrink-0 md:w-36 flex flex-col gap-1 pt-0.5">
+          <time class="meta-text text-xs text-gray-400 dark:text-gray-500" datetime="{{ post.date | postDate }}">{{ post.date | postDate }}</time>
+          <div class="hidden md:flex flex-wrap gap-1 mt-0.5">
+            {% for tag in post.data.tags | filterTagList %}
+            {% set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
+            <a href="{{ tagUrl | url }}" class="meta-text text-[0.62rem] px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:bg-amber-50 dark:hover:bg-amber-900/20 hover:text-amber-700 dark:hover:text-amber-400 transition-colors" style="text-decoration: none;">#{{ tag }}</a>
+            {% endfor %}
+          </div>
+        </div>
+
+        {# Right: title + description #}
+        <div class="flex-1 min-w-0">
+          <div class="leading-snug">
+            {% if post.data.pinned %}
+              <span class="inline-flex items-center gap-0.5 mr-1.5 text-[0.62rem] font-semibold uppercase tracking-wider rounded px-1 py-0.5 bg-amber-100 text-amber-700 dark:bg-amber-900/50 dark:text-amber-400 align-middle">★ Pinned</span>
+            {% endif %}
+            <a href="{{ post.url | url }}" class="font-semibold text-gray-900 dark:text-gray-100 hover:text-amber-600 dark:hover:text-amber-400 transition-colors" style="text-decoration: none;">
+              {% if post.data.title %}{{ post.data.title }}{% else %}<code>{{ post.url }}</code>{% endif %}
+            </a>
+          </div>
+
+          {% if post.data.description %}
+          <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5 m-0 leading-relaxed">{{ post.data.description }}</p>
           {% endif %}
-        </a>
-      </div>
 
-      {# Desktop: Date in left column — monospace meta style #}
-      <div class="hidden md:flex md:order-1 md:col-span-3 flex-row">
-        <time class="meta-text text-gray-400 dark:text-gray-500 text-xs pt-0.5" datetime="{{ post.date | postDate }}">{{ post.date | postDate }}</time>
-      </div>
+          {# Mobile: date + tags #}
+          <div class="md:hidden flex flex-wrap items-center gap-x-2 gap-y-1 mt-1.5">
+            <span class="meta-text text-[0.65rem] text-gray-400 dark:text-gray-500">{{ post.date | postDate }}</span>
+            {% for tag in post.data.tags | filterTagList %}
+            {% set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
+            <a href="{{ tagUrl | url }}" class="meta-text text-[0.62rem] px-1 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400" style="text-decoration: none;">#{{ tag }}</a>
+            {% endfor %}
+          </div>
+        </div>
 
-      {# Description #}
-      <div class='order-2 md:order-4 md:col-span-7 text-gray-500 dark:text-gray-400 text-xs mt-0.5 leading-relaxed'>
-        {{ post.data.description }}
-      </div>
-
-      {# Desktop: Tags #}
-      <div class="hidden md:flex md:order-3 md:col-span-3 flex-row flex-wrap gap-1 pt-1">
-        {% for tag in post.data.tags | filterTagList %}
-        {% set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
-        <a href="{{ tagUrl | url }}" class="text-[0.65rem] px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800/80 text-gray-500 dark:text-gray-400 no-underline hover:bg-amber-100 dark:hover:bg-amber-900/30 transition-colors">#{{ tag }}</a>
-        {% endfor %}
-      </div>
-
-      {# Mobile meta row #}
-      <div class="order-3 md:hidden flex flex-wrap items-center gap-x-2 gap-y-1 mt-1">
-        <time class="meta-text text-gray-400 dark:text-gray-500 text-[0.65rem]" datetime="{{ post.date | postDate }}">{{ post.date | postDate }}</time>
-        <span class="text-gray-300 dark:text-gray-700">·</span>
-        {% for tag in post.data.tags | filterTagList %}
-        {% set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
-        <a href="{{ tagUrl | url }}" class="text-[0.65rem] px-1 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 no-underline">#{{ tag }}</a>
-        {% endfor %}
-      </div>
       </div>
     </article>
   </li>

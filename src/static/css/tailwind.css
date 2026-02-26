@@ -517,11 +517,14 @@ figure {
 
   /* Card with hover effect */
   .card-hover {
-    transition: box-shadow 0.2s ease;
+    transition: border-color 0.15s ease;
   }
 
   .card-hover:hover {
-    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    border-color: rgb(209 213 219);
+  }
+  .dark .card-hover:hover {
+    border-color: rgb(63 63 70 / 0.8);
   }
 
   /* Page header count badge */
@@ -770,6 +773,92 @@ figure {
 
   .dark .row-item {
     border-color: rgb(31 41 55);
+  }
+}
+
+/* ── Feed list rows (homepage compact activity list) ── */
+@layer components {
+  .feed-list {
+    border-top: 1px solid rgb(229 231 235);
+  }
+  .dark .feed-list {
+    border-top-color: rgb(31 41 55 / 0.8);
+  }
+
+  .feed-list-row {
+    display: grid;
+    grid-template-columns: 6.5rem 0.5rem 3.5rem 1fr;
+    align-items: baseline;
+    gap: 0 0.5rem;
+    padding: 0.4rem 0;
+    border-bottom: 1px solid rgb(243 244 246);
+  }
+  .dark .feed-list-row {
+    border-bottom-color: rgb(24 24 27 / 0.8);
+  }
+  .feed-list-row:hover .feed-list-title {
+    color: var(--accent-color);
+  }
+
+  .feed-list-date {
+    font-size: 0.68rem;
+    color: rgb(156 163 175);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .dark .feed-list-date {
+    color: rgb(107 114 128);
+  }
+
+  .feed-list-dot {
+    width: 0.4rem;
+    height: 0.4rem;
+    border-radius: 9999px;
+    margin-bottom: 1px;
+    flex-shrink: 0;
+  }
+
+  .feed-list-type {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+
+  .feed-list-title {
+    font-size: 0.8125rem;
+    color: rgb(17 24 39);
+    line-height: 1.4;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+  .dark .feed-list-title {
+    color: rgb(229 231 235);
+  }
+}
+
+/* ── Feed card (full variant, used in /feed grid) ── */
+@layer components {
+  .feed-card-full {
+    background: rgb(255 255 255);
+    border: 1px solid rgb(229 231 235);
+    border-radius: 0.5rem;
+    padding: 0.875rem 1rem;
+    transition: border-color 0.15s ease;
+  }
+  .feed-card-full:hover {
+    border-color: rgb(209 213 219);
+  }
+  .dark .feed-card-full {
+    background: rgb(17 17 17);
+    border-color: rgb(39 39 42 / 0.8);
+  }
+  .dark .feed-card-full:hover {
+    border-color: rgb(63 63 70 / 0.8);
   }
 }
 
