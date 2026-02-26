@@ -1,6 +1,6 @@
 ---
 title: Ramblings on Running an Army of Very Smart Five-Year-Olds
-description: A day burning through AI coding agents across five split-screen tabs — what got done, what works, and what still needs a human in the loop.
+description: truly the year of the agents
 date: 2026-02-25
 tags:
   - AI
