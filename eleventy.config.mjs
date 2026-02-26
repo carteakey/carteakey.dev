@@ -281,6 +281,9 @@ export default function(eleventyConfig) {
   eleventyConfig.addFilter("readableDate", (dateObj) => {
     return DateTime.fromJSDate(dateObj).toFormat("MMM d, yyyy");
   });
+  eleventyConfig.addFilter("shortDate", (dateObj) => {
+    return DateTime.fromJSDate(dateObj).toFormat("MMM yy");
+  });
 
   // Archive-specific date filters
   eleventyConfig.addFilter("archiveTitle", (dateInput) => {

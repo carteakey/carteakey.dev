@@ -45,7 +45,10 @@
   {# ── LIST VARIANT (homepage preview — single compact row) ── #}
   {% if variant == 'list' %}
   <li class="feed-list-row{% if extraClasses %} {{ extraClasses }}{% endif %}" {% if outerAttrs %}{{ outerAttrs | safe }}{% endif %}>
-    <span class="feed-list-date meta-text">{{ item.date | readableDate }}</span>
+    <span class="feed-list-date meta-text">
+      <span class="hidden-xs">{{ item.date | readableDate }}</span>
+      <span class="visible-xs">{{ item.date | shortDate }}</span>
+    </span>
     <span class="feed-list-dot {{ dotColor }}" title="{{ badgeLabel }}"></span>
     <span class="feed-list-type meta-text text-gray-400 dark:text-gray-500">{{ badgeLabel }}</span>
     {% if item.url %}

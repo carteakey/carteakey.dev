@@ -791,7 +791,7 @@ picture img {
 
   .feed-list-row {
     display: grid;
-    grid-template-columns: 0.5rem 3.5rem 1fr;
+    grid-template-columns: 4rem 0.5rem 3.5rem 1fr;
     align-items: baseline;
     gap: 0 0.5rem;
     padding: 0.4rem 0;
@@ -810,17 +810,17 @@ picture img {
   }
 
   .feed-list-date {
-    display: none;
     font-size: 0.68rem;
     color: rgb(156 163 175);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
+  .hidden-xs { display: none; }
+  .visible-xs { display: inline; }
   @media (min-width: 480px) {
-    .feed-list-date {
-      display: block;
-    }
+    .hidden-xs { display: inline; }
+    .visible-xs { display: none; }
   }
   .dark .feed-list-date {
     color: rgb(107 114 128);
@@ -1035,6 +1035,22 @@ picture img {
 
 /* Staggered entrance animations */
 @layer utilities {
+  /* Hero text — centered on mobile, left on sm+ */
+  .hero-text {
+    text-align: center;
+  }
+  .hero-links {
+    justify-content: center;
+  }
+  @media (min-width: 640px) {
+    .hero-text {
+      text-align: left;
+    }
+    .hero-links {
+      justify-content: flex-start;
+    }
+  }
+
   .animate-enter {
     animation: enterUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     opacity: 0;
