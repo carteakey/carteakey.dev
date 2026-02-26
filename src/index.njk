@@ -8,77 +8,61 @@ htmlTemplateEngine: "webc"
 
 
 {# eleventyNavigation: key: carteakey.dev order: 1 #}
-<div class="intro flex flex-col md:flex-row gap-6 justify-center items-center md:items-start animate-enter">
-  <div class="relative group">
-    <div class="absolute -inset-1 bg-gradient-to-r from-amber-400 via-orange-400 to-rose-400 rounded-full blur-md opacity-40 group-hover:opacity-60 transition-opacity duration-500"></div>
-    {% image "./src/static/img/headshot.png" , "me", "relative rounded-full md:m-6 ml-0 w-32 h-32 self-center md:self-start object-cover mx-auto md:mx-6 ring-4 ring-white dark:ring-gray-900 shadow-xl" %}
+<div class="intro flex flex-col md:flex-row gap-4 items-center md:items-start animate-enter">
+  <div class="relative shrink-0">
+    {% image "./src/static/img/headshot.png" , "me", "rounded-full w-16 h-16 object-cover ring-2 ring-amber-400/40 dark:ring-amber-500/30" %}
   </div>
 
-  <div class="md:max-w-xl lg:max-w-2xl space-y-3">
-    <p class="text-lg">
-      Hi 👋🏼, I'm <span class="font-bold text-gradient">Kartikey</span>, and welcome to my
-      website!
-    </p>
+  <div class="md:max-w-xl lg:max-w-2xl space-y-1.5 text-sm">
     <p>
-      I'm a data analyst from Toronto. Outside work, I spend my time tinkering with tech and building fun
+      Hi 👋🏼, I'm <span class="font-bold text-gradient">Kartikey</span> — data analyst from Toronto, weekend tinkerer, and builder of fun
       <a href="/portfolio" class="no-underline font-bold link-glow">projects</a>.
     </p>
-    <p>
-      Here, I like to write about linux, AI, data science, and other things I
-      find interesting — so grab a cup of coffee and feel free to look around!
+    <p class="text-gray-600 dark:text-gray-400">
+      Writing about linux, AI, data science, and whatever's interesting lately. Grab a coffee and look around.
     </p>
   </div>
 </div>
   {% set highlightedPost = collections.featuredPost %}
   {% if highlightedPost %}
-    <section class="rounded-xl card-glass p-5 sm:p-6 not-prose mt-8 mb-8 animate-enter stagger-1">
-      <div class="flex flex-col gap-4">
-        <div class="flex items-center gap-2 text-sm font-semibold uppercase tracking-wide" style="color: var(--accent-color);">
-          {% feather "star", class="w-4 h-4" %}
-          Featured Post
+    <section class="border border-gray-200 dark:border-gray-800 rounded-lg p-4 not-prose mt-6 mb-4 animate-enter stagger-1 bg-gray-50/60 dark:bg-gray-900/40">
+      <div class="flex flex-col gap-2">
+        <div class="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide" style="color: var(--accent-color);">
+          {% feather "star", class="w-3.5 h-3.5" %}
+          Featured
         </div>
-        <a href="{{ highlightedPost.url }}" class="inline-flex items-center gap-2 text-lg md:text-xl font-semibold text-gray-900 dark:text-gray-100 transition-colors accent-link no-underline">
+        <a href="{{ highlightedPost.url }}" class="inline-flex items-center gap-2 text-base font-semibold text-gray-900 dark:text-gray-100 transition-colors accent-link no-underline leading-snug">
           {{ highlightedPost.data.title }}
-          {% feather "arrow-up-right", class="w-4 h-4 opacity-40" %}
+          {% feather "arrow-up-right", class="w-3.5 h-3.5 opacity-40" %}
         </a>
         {% if highlightedPost.data.description %}
-        <p class="text-sm text-gray-600 dark:text-gray-300">
+        <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
           {{ highlightedPost.data.description }}
         </p>
         {% endif %}
-        <div class="flex flex-wrap items-center gap-3 text-xs text-gray-500 dark:text-gray-400">
-          <time class="uppercase tracking-wide" datetime="{{ highlightedPost.date | htmlDateString }}">{{ highlightedPost.date | readableDate }}</time>
+        <div class="flex flex-wrap items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
+          <time class="meta-text uppercase" datetime="{{ highlightedPost.date | htmlDateString }}">{{ highlightedPost.date | readableDate }}</time>
           {% if highlightedPost.data.tags %}
             <span class="h-1 w-1 rounded-full bg-gray-300 dark:bg-gray-600"></span>
             {% for tag in highlightedPost.data.tags | filterTagList %}
-              <span class="inline-flex items-center rounded-full bg-gray-100 dark:bg-gray-800 px-2 py-0.5 text-[0.7rem] uppercase tracking-wide text-gray-600 dark:text-gray-300">#{{ tag }}</span>
+              <span class="meta-text rounded bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 text-gray-500 dark:text-gray-400">#{{ tag }}</span>
             {% endfor %}
           {% endif %}
-          <span class="ml-auto">
-            <a href="{{ highlightedPost.url }}" class="inline-flex items-center gap-1 hover:underline" style="color: var(--accent-color);">
-              Read the post
-              {% feather "chevron-right", class="w-4 h-4" %}
-            </a>
-          </span>
         </div>
       </div>
     </section>
   {% endif %}
 
-  <hr class="mt-4" />
+  <hr class="mt-4 mb-4" />
   
    <!-- Quote of the Day Section -->
-    <section class="rounded-xl card-glass p-5 sm:p-6 not-prose animate-enter stagger-2">
-        <div class="flex flex-col gap-4">
-            <div class="flex items-center gap-2 text-sm font-semibold uppercase tracking-wide" style="color: var(--accent-color);">
-                {% feather "zap", class="w-4 h-4 pulse-subtle" %}
-                Quote of the Day
-            </div>
-            <blockquote id="qotd" class="text-lg font-medium leading-relaxed text-gray-900 dark:text-gray-100 border-l-2 pl-4" style="border-color: var(--accent-color);">
+    <section class="border-l-2 pl-4 not-prose animate-enter stagger-2 py-1" style="border-color: var(--accent-color);">
+        <div class="flex flex-col gap-2">
+            <blockquote id="qotd" class="text-sm font-medium leading-relaxed text-gray-800 dark:text-gray-200">
                 {{ qotd.quote }}
             </blockquote>
-            <p class="text-right text-xs italic text-gray-500 dark:text-gray-400" id="who">
-                Powered by {{ qotd.provider }}
+            <p class="text-right text-xs italic text-gray-400 dark:text-gray-500" id="who">
+                — {{ qotd.provider }}
             </p>
         </div>
     </section>
@@ -93,17 +77,17 @@ htmlTemplateEngine: "webc"
     instance.go();
   </script>
 
-  <hr class="mt-8 " />
+  <hr class="mt-4 mb-4" />
 
-  <div class="mt-12 flex items-baseline justify-between gap-3 animate-enter stagger-3">
-    <h2 class="m-0 font-semibold tracking-tight text-gradient">Feed</h2>
+  <div class="flex items-baseline justify-between gap-3 animate-enter stagger-3">
+    <h2 class="m-0 text-base font-semibold tracking-tight text-gradient">Feed</h2>
     <a
       href="{{ '/feed/' | url }}"
-      class="group inline-flex items-center gap-1 text-sm font-medium accent-link no-underline decoration-dotted underline-offset-4 transition-all hover:gap-2"
+      class="group inline-flex items-center gap-1 text-xs font-medium accent-link no-underline decoration-dotted underline-offset-4 transition-all hover:gap-1.5"
       aria-label="Open the full feed"
     >
-      Open feed
-      {% feather "arrow-up-right", class="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" %}
+      All posts
+      {% feather "arrow-up-right", class="h-3 w-3 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" %}
     </a>
   </div>
   {# <hr class="divider-gradient my-4" /> #}
@@ -111,7 +95,7 @@ htmlTemplateEngine: "webc"
 
   {% set feedItems = collections.feed | head(10) %}
 
-  <div class="grid gap-3 md:grid-cols-2 lg:grid-cols-3 my-6 items-start feed-masonry animate-enter stagger-4" data-feed-masonry style="--feed-row-height: 16px;">
+  <div class="grid gap-2 md:grid-cols-2 lg:grid-cols-3 my-4 items-start feed-masonry animate-enter stagger-4" data-feed-masonry style="--feed-row-height: 16px;">
     {% for item in feedItems %}
       {{ feedCard(item, { variant: 'compact', showTags: false }) }}
     {% endfor %}

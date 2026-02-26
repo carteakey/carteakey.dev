@@ -1,15 +1,15 @@
-<ul reversed class="postlist w-full list-none space-y-4 pl-0"
+<ul reversed class="postlist w-full list-none divide-y divide-gray-200 dark:divide-gray-800 pl-0 m-0"
   style="counter-reset: start-from {{ (postslistCounter or postslist.length) + 1 }}">
   {% for post in postslist | reverse %}
   <li class="postlist-item{% if post.url == url %} postlist-item-active{% endif %}">
-    <article class="card-elevated rounded-xl p-5 sm:p-6">
-      <div class="md:grid md:grid-cols-10 md:gap-x-4 gap-y-1 sm:gap-y-2">
-      {# Title first on mobile; sits to the right on desktop #}
+    <article class="py-3 sm:py-3.5">
+      <div class="md:grid md:grid-cols-10 md:gap-x-4 gap-y-0.5">
+      {# Title #}
       <div class="block order-1 md:order-2 md:col-span-7 leading-snug">
         {% if post.data.pinned %}
-          <span class="inline-flex items-center gap-1 px-1.5 py-0.5 mr-1.5 text-[0.6rem] font-semibold uppercase tracking-wider rounded-full bg-amber-100 text-amber-800 dark:bg-amber-900/70 dark:text-amber-200 align-middle">{% feather "map-pin", class="w-3 h-3" %}Pinned</span>
+          <span class="inline-flex items-center gap-0.5 px-1 py-0.5 mr-1 text-[0.6rem] font-semibold uppercase tracking-wider rounded bg-amber-100 text-amber-800 dark:bg-amber-900/70 dark:text-amber-200 align-middle">{% feather "map-pin", class="w-2.5 h-2.5" %}Pinned</span>
         {% endif %}
-        <a href="{{ post.url | url }}" class="text-gray-900 dark:text-gray-100 transition-colors hover:text-amber-600 dark:hover:text-amber-400">
+        <a href="{{ post.url | url }}" class="font-medium text-gray-900 dark:text-gray-100 transition-colors hover:text-amber-600 dark:hover:text-amber-400 text-sm md:text-base">
           {% if post.data.title %}
           {{ post.data.title }}
           {% else %}
@@ -18,40 +18,32 @@
         </a>
       </div>
 
-      {# Desktop-only: Date and Reading Time in left column #}
-      <div class="hidden md:flex md:order-1 md:col-span-3 flex-row text-sm gap-1.5">
-        <time class="postlist-date text-gray-500 dark:text-gray-400" datetime="{{ post.date | postDate }}">{{ post.date | postDate }}</time>
-      
+      {# Desktop: Date in left column — monospace meta style #}
+      <div class="hidden md:flex md:order-1 md:col-span-3 flex-row">
+        <time class="meta-text text-gray-400 dark:text-gray-500 text-xs pt-0.5" datetime="{{ post.date | postDate }}">{{ post.date | postDate }}</time>
       </div>
 
-      {# Description appears directly under title on desktop #}
-      <div class='order-2 md:order-4 md:col-span-7 text-gray-600 dark:text-gray-300 font-light text-sm mt-1'>
+      {# Description #}
+      <div class='order-2 md:order-4 md:col-span-7 text-gray-500 dark:text-gray-400 text-xs mt-0.5 leading-relaxed'>
         {{ post.data.description }}
       </div>
 
-      {# Desktop-only: Tags after description #}
-      <div class="hidden md:flex md:order-3 md:col-span-3 flex-row justify-items-start items-start gap-2 pt-1">
+      {# Desktop: Tags #}
+      <div class="hidden md:flex md:order-3 md:col-span-3 flex-row flex-wrap gap-1 pt-1">
         {% for tag in post.data.tags | filterTagList %}
         {% set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
-        <a href="{{ tagUrl | url }}" class="text-xs px-2 py-0.5 rounded-full bg-gray-200/60 dark:bg-gray-800 text-gray-600 dark:text-gray-400 no-underline hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors">#{{ tag }}</a>
+        <a href="{{ tagUrl | url }}" class="text-[0.65rem] px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800/80 text-gray-500 dark:text-gray-400 no-underline hover:bg-amber-100 dark:hover:bg-amber-900/30 transition-colors">#{{ tag }}</a>
         {% endfor %}
       </div>
 
-      {# Mobile meta row: date + reading time + tags (compact) #}
-      <div class="order-3 md:hidden flex flex-wrap items-center gap-x-2 gap-y-2 mt-2 text-sm">
-        <time class="postlist-date text-xs text-gray-500 dark:text-gray-400" datetime="{{ post.date | postDate }}">{{ post.date | postDate }}</time>
-        <span class="text-gray-300 dark:text-gray-600">•</span>
-        <span class="text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1">
-          {% feather "clock", class="w-3 h-3" %}
-          {{ post.templateContent | readingTime }}
-        </span>
-        <span class="text-gray-300 dark:text-gray-600">•</span>
-        <div class="flex flex-wrap items-center gap-1.5">
-          {% for tag in post.data.tags | filterTagList %}
-          {% set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
-          <a href="{{ tagUrl | url }}" class="text-xs px-1.5 py-0.5 rounded-full bg-gray-200/60 dark:bg-gray-800 text-gray-600 dark:text-gray-400 no-underline hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors">#{{ tag }}</a>
-          {% endfor %}
-        </div>
+      {# Mobile meta row #}
+      <div class="order-3 md:hidden flex flex-wrap items-center gap-x-2 gap-y-1 mt-1">
+        <time class="meta-text text-gray-400 dark:text-gray-500 text-[0.65rem]" datetime="{{ post.date | postDate }}">{{ post.date | postDate }}</time>
+        <span class="text-gray-300 dark:text-gray-700">·</span>
+        {% for tag in post.data.tags | filterTagList %}
+        {% set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
+        <a href="{{ tagUrl | url }}" class="text-[0.65rem] px-1 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 no-underline">#{{ tag }}</a>
+        {% endfor %}
       </div>
       </div>
     </article>

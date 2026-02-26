@@ -42,52 +42,42 @@
     {% set badgeLabel = "Now Update" %}
   {% endif %}
 
-  {% set cardShell = "rounded-xl card-elevated" %}
+  {% set cardShell = "border-b border-gray-200 dark:border-gray-800" %}
 
-  <article class="justify-center feed-card {{ cardShell }}{% if extraClasses %} {{ extraClasses }}{% endif %}" style="padding: 1.25rem;" {% if outerAttrs %} {{ outerAttrs | safe }}{% endif %}>
-    <div class="flex flex-wrap items-center justify-between" style="gap: 0.75rem;">
-      <div class="flex flex-wrap items-center" style="gap: 0.5rem;">
-        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 text-[0.68rem] font-semibold uppercase tracking-wider rounded-full shadow-sm {{ badgeClasses }}">
-          {% if item.type == 'post' %}
-            {% feather "edit-3", class="w-3 h-3" %}
-          {% elif isSnippet %}
-            {% feather "code", class="w-3 h-3" %}
-          {% elif isPhoto %}
-            {% feather "camera", class="w-3 h-3" %}
-          {% elif isVibe %}
-            {% feather "image", class="w-3 h-3" %}
-          {% elif isNow %}
-            {% feather "clock", class="w-3 h-3" %}
-          {% else %}
-            {% feather "message-circle", class="w-3 h-3" %}
-          {% endif %}
-          {{ badgeLabel }}
-        </span>
-        {% if item.pinned %}
-          <span class="inline-flex items-center gap-1 px-2 py-0.5 text-[0.65rem] font-semibold uppercase tracking-wider rounded-full bg-amber-100 text-amber-800 dark:bg-amber-900/70 dark:text-amber-200">
-            {% feather "map-pin", class="w-3 h-3" %}Pinned
-          </span>
+  <article class="justify-center feed-card {{ cardShell }}{% if extraClasses %} {{ extraClasses }}{% endif %}" style="padding: 0.75rem 0;" {% if outerAttrs %} {{ outerAttrs | safe }}{% endif %}>
+    <div class="flex flex-wrap items-center gap-2">
+      {# Type dot + label #}
+      <span class="inline-flex items-center gap-1 text-[0.65rem] font-semibold uppercase tracking-wider {{ badgeClasses }} px-1.5 py-0.5 rounded">
+        {% if item.type == 'post' %}
+          {% feather "edit-3", class="w-2.5 h-2.5" %}
+        {% elif isSnippet %}
+          {% feather "code", class="w-2.5 h-2.5" %}
+        {% elif isPhoto %}
+          {% feather "camera", class="w-2.5 h-2.5" %}
+        {% elif isVibe %}
+          {% feather "image", class="w-2.5 h-2.5" %}
+        {% elif isNow %}
+          {% feather "clock", class="w-2.5 h-2.5" %}
+        {% else %}
+          {% feather "message-circle", class="w-2.5 h-2.5" %}
         {% endif %}
-        <time datetime="{{ item.date | htmlDateString }}" class="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
-          {{ item.date | readableDate }}
-        </time>
-      </div>
-
-      {% if item.readingTime %}
-        <span class="text-xs font-medium text-gray-500 dark:text-gray-400">
-          {{ item.readingTime }}
+        {{ badgeLabel }}
+      </span>
+      {% if item.pinned %}
+        <span class="inline-flex items-center gap-0.5 meta-text text-[0.65rem] text-amber-700 dark:text-amber-400">
+          {% feather "map-pin", class="w-2.5 h-2.5" %}Pinned
         </span>
       {% endif %}
+      <time datetime="{{ item.date | htmlDateString }}" class="meta-text text-[0.65rem] text-gray-400 dark:text-gray-500 ml-auto">
+        {{ item.date | readableDate }}
+      </time>
     </div>
 
-    <div style="margin-top: 0.875rem;">
-      <h3 class="text-base md:text-lg font-semibold leading-snug text-gray-900 dark:text-white" style="margin: 0;">
+    <div style="margin-top: 0.375rem;">
+      <h3 class="text-sm font-semibold leading-snug text-gray-900 dark:text-white" style="margin: 0;">
         {% if item.url %}
-          <a href="{{ item.url | url }}" class="inline-flex items-center gap-2 transition-all duration-200 hover:gap-3" style="color: inherit;">
-            <span class="hover:text-gradient">{{ item.title }}</span>
-            {% if item.url %}
-              {% feather "arrow-up-right", class="w-4 h-4 opacity-40 transition-opacity group-hover:opacity-100" %}
-            {% endif %}
+          <a href="{{ item.url | url }}" class="inline-flex items-center gap-1.5 transition-colors hover:text-amber-600 dark:hover:text-amber-400" style="color: inherit;">
+            <span>{{ item.title }}</span>
           </a>
         {% else %}
           {{ item.title }}
@@ -95,9 +85,9 @@
       </h3>
 
       {% if isMicropost or isNow %}
-        <div class="prose-sm md:prose dark:prose-invert max-w-none" style="margin-top: 0.75rem;">{{ item.original.templateContent | safe }}</div>
+        <div class="prose-sm dark:prose-invert max-w-none text-xs text-gray-600 dark:text-gray-300" style="margin-top: 0.375rem;">{{ item.original.templateContent | safe }}</div>
       {% elseif item.media %}
-        <figure class="overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700" style="margin-top: 0.75rem;">
+        <figure class="overflow-hidden rounded border border-gray-200 dark:border-gray-700" style="margin-top: 0.5rem;">
           <img
             src="{{ item.media.src }}"
             alt="{{ item.media.alt }}"
@@ -106,19 +96,19 @@
             class="w-full h-auto"
           >
           {% if item.summary %}
-            <figcaption class="px-3 py-2 text-xs text-gray-500 dark:text-gray-400">{{ item.summary }}</figcaption>
+            <figcaption class="px-2 py-1 text-xs text-gray-500 dark:text-gray-400">{{ item.summary }}</figcaption>
           {% endif %}
         </figure>
       {% elseif item.summary and showSummary %}
-        <p class="text-sm leading-relaxed text-gray-600 dark:text-gray-300" style="margin-top: 0.75rem;">{{ item.summary }}</p>
+        <p class="text-xs leading-relaxed text-gray-500 dark:text-gray-400" style="margin-top: 0.375rem;">{{ item.summary }}</p>
       {% endif %}
     </div>
 
     {% if showTags and item.tags %}
-      <div class="flex flex-wrap items-center" style="gap: 0.5rem; margin-top: 1rem;">
+      <div class="flex flex-wrap items-center" style="gap: 0.25rem; margin-top: 0.5rem;">
         {% for tag in item.tags %}
           {% set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
-          <a href="{{ tagUrl | url }}" class="text-[0.7rem] px-2 py-1 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-amber-100 dark:hover:bg-amber-900/40 transition-colors">
+          <a href="{{ tagUrl | url }}" class="text-[0.6rem] px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:bg-amber-100 dark:hover:bg-amber-900/40 transition-colors">
             #{{ tag }}
           </a>
         {% endfor %}

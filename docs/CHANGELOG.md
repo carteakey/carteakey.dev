@@ -5,6 +5,30 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.0] - 2026-02-26
+
+### Changed
+- UI: Full "Dense Editorial" redesign — higher text density, flat list rows, less visual noise.
+- base.njk: Reduced nav padding (`py-8` → `py-3`), smaller site title, border-bottom separator on nav.
+- base.njk: Switched `prose-lg` → `prose-base` for tighter body typography.
+- base.njk: Spotify now-playing rendered as compact inline text row instead of glassmorphism card.
+- base.njk: Footer nav stripped of Feather icons for cleaner density; compressed spacing.
+- base.njk: Footer bottom bar collapsed into single row (tagline + theme picker + copyright).
+- index.njk: Avatar shrunk (`w-32 h-32` → `w-16 h-16`), removed glowing border animation.
+- index.njk: Intro block condensed to two tight lines.
+- index.njk: QOTD rendered as left-border blockquote, no card shell.
+- index.njk: Featured post uses flat bordered box instead of glassmorphism card.
+- index.njk: Feed section header and grid tightened.
+- postslist.njk: Switched from `card-elevated` cards to flat `divide-y` list rows.
+- postslist.njk: Monospace date in left column, smaller title/description text, compact tags.
+- feed-card.njk: Removed card shell; now uses bottom-border flat row style.
+- feed-card.njk: Badge shrunk to small label (no pill), date inline monospace.
+- feed-card.njk: Padding reduced from `1.25rem` to `0.75rem 0`.
+- tailwind.css: Added `.meta-text` utility (monospace, small, tracked).
+- tailwind.css: Added `.row-item` utility for flat border-b list rows.
+- tailwind.css: Reduced `card-elevated` shadow depth significantly.
+- tailwind.css: Reduced `card-glass` blur/shadow intensity.
+
 ## [1.4.7] - 2026-02-18
 
 ### Fixed
