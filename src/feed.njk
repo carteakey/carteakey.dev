@@ -1,7 +1,7 @@
 ---
 layout: layouts/base.njk
 title: Feed
-description: A unified timeline of posts, snippets, microposts, photos, vibes, and /now updates
+description: A unified timeline of posts, snippets, notes, photos, vibes, and /now updates
 eleventyNavigation:
   key: Feed
   order: 10
@@ -59,10 +59,10 @@ permalink: /feed/
       :style="typeFilter === 'snippet' ? 'border-color: var(--accent-color); color: var(--accent-color)' : ''">
       Snippets
     </button>
-    <button @click="typeFilter = 'micropost'"
-      :class="typeFilter === 'micropost' ? 'font-semibold' : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'"
+    <button @click="typeFilter = 'note'"
+      :class="typeFilter === 'note' ? 'font-semibold' : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'"
       class="px-2 py-0.5 rounded-full border border-gray-200 dark:border-gray-700 transition-colors"
-      :style="typeFilter === 'micropost' ? 'border-color: var(--accent-color); color: var(--accent-color)' : ''">
+      :style="typeFilter === 'note' ? 'border-color: var(--accent-color); color: var(--accent-color)' : ''">
       Notes
     </button>
     <button @click="typeFilter = 'photo'"

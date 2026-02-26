@@ -1,17 +1,19 @@
 ---
 layout: layouts/home.njk
 title: ...More
+description: A sitemap of everything on this site — inspired by <a href="https://slashpages.net" target="_blank" rel="noopener">slashpages.net</a>.
 permalink: /more/
 eleventyNavigation:
   key: ...More
   order: 8
 ---
 
+{% include "components/breadcrumbs.njk" %}
 
-# More
-
-This is a sitemap of all pages on my site. It's inspired by [slashpages.net](https://slashpages.net).
-
+<div class="not-prose mb-4">
+  <h1 class="text-2xl font-semibold tracking-tight m-0">More</h1>
+  <p class="text-sm text-gray-400 dark:text-gray-500 mt-1 m-0">A sitemap of everything on this site — inspired by <a href="https://slashpages.net" target="_blank" rel="noopener" class="title-hover">slashpages.net</a>.</p>
+</div>
 
 ### All Pages
 

@@ -5,7 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.7.1] - 2026-02-27
+## [1.7.2] - 2026-02-27
+
+### Added
+- Notes: `src/microposts/` renamed to `src/notes/`; "micropost" → "note" everywhere (type, badge, filter)
+- Notes: each note now has a permalink at `/notes/{slug}/` and renders via `layouts/note.njk`
+- More page: proper h1 + description line below title (matches other listing pages)
+
+### Fixed
+- Nav: font bumped to `text-base` on title + links; `gap-1` added to icon list for mobile breathing room
+- Mobile footer: 2-col categorized grid with icons (Read + Explore) instead of unstructured flat list
+- Profile image: `items-center` on mobile flex column; text block `text-center sm:text-left`
+- Feed list on mobile: date column hidden below 480px (3-col grid: dot + type + title); visible on wider screens
+
+
 
 ### Fixed
 - Homepage feed grid: add `data-feed-masonry` + masonry script include so grid cards have true dynamic heights (matching feed page)

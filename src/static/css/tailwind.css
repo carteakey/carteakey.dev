@@ -791,11 +791,16 @@ picture img {
 
   .feed-list-row {
     display: grid;
-    grid-template-columns: 6.5rem 0.5rem 3.5rem 1fr;
+    grid-template-columns: 0.5rem 3.5rem 1fr;
     align-items: baseline;
     gap: 0 0.5rem;
     padding: 0.4rem 0;
     border-bottom: 1px solid rgb(243 244 246);
+  }
+  @media (min-width: 480px) {
+    .feed-list-row {
+      grid-template-columns: 6.5rem 0.5rem 3.5rem 1fr;
+    }
   }
   .dark .feed-list-row {
     border-bottom-color: rgb(24 24 27 / 0.8);
@@ -805,11 +810,17 @@ picture img {
   }
 
   .feed-list-date {
+    display: none;
     font-size: 0.68rem;
     color: rgb(156 163 175);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+  @media (min-width: 480px) {
+    .feed-list-date {
+      display: block;
+    }
   }
   .dark .feed-list-date {
     color: rgb(107 114 128);

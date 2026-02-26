@@ -747,24 +747,24 @@ export default function(eleventyConfig) {
         };
       });
 
-    const microposts = collectionApi
-      .getFilteredByGlob("./src/microposts/**/*.md")
+    const notes = collectionApi
+      .getFilteredByGlob("./src/notes/**/*.md")
       .filter((entry) => {
         if (entry.data.hidden === true) return false;
         if (entry.date && entry.date > now) return false;
         return true;
       })
-      .map((micropost) => {
-        micropost.data.feedType = "micropost";
-        const excerptSource = micropost.data.excerpt || "";
+      .map((note) => {
+        note.data.feedType = "note";
+        const excerptSource = note.data.excerpt || "";
         const summary = excerptSource ? truncate(stripHtml(excerptSource), 260) : null;
         return {
-          type: "micropost",
-          title: micropost.data.title || "Micropost",
-          date: micropost.date,
-          url: micropost.url && micropost.url !== false ? micropost.url : null,
+          type: "note",
+          title: note.data.title || "Note",
+          date: note.date,
+          url: note.url && note.url !== false ? note.url : null,
           summary,
-          original: micropost,
+          original: note,
         };
       });
 
@@ -841,7 +841,7 @@ export default function(eleventyConfig) {
     const combined = [
       ...posts,
       ...snippets,
-      ...microposts,
+      ...notes,
       ...nowUpdates,
       ...photos,
       // ...vibes,

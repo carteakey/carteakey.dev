@@ -13,7 +13,7 @@
     {% set showTags = opts.showTags %}
   {% endif %}
 
-  {% set isMicropost = item.type == 'micropost' %}
+  {% set isNote = item.type == 'note' %}
   {% set isSnippet = item.type == 'snippet' %}
   {% set isPhoto = item.type == 'photo' %}
   {% set isVibe = item.type == 'vibe' %}
@@ -28,7 +28,7 @@
   {% elif isSnippet %}
     {% set dotColor = "bg-purple-400" %}
     {% set badgeLabel = "Snippet" %}
-  {% elif isMicropost %}
+  {% elif isNote %}
     {% set dotColor = "bg-amber-400" %}
     {% set badgeLabel = "Note" %}
   {% elif isPhoto %}
@@ -78,7 +78,7 @@
     </h3>
 
     {# Body content #}
-    {% if isMicropost or isNow %}
+    {% if isNote or isNow %}
       <div class="mt-2 text-xs leading-relaxed text-gray-600 dark:text-gray-300 max-w-none not-prose">{{ item.original.templateContent | safe }}</div>
     {% elif item.media %}
       <figure class="mt-2 overflow-hidden rounded border border-gray-200 dark:border-gray-700 m-0">

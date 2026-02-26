@@ -1,7 +1,8 @@
 ---
 title: Hindu Culture Animations
 date: 2025-10-03
-permalink: false
+layout: layouts/note.njk
+permalink: /notes/{{ page.fileSlug }}/
 hidden: true
 ---
 
