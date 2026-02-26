@@ -5,7 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.5.2] - 2026-02-27
+## [1.5.3] - 2026-02-26
+
+### Changed
+- stats.njk, guestbook.njk, newsletter.njk: Replaced heavy glassmorphism `cardShell` (shadow-lg + bg-gray-100/80) with clean flat `border` cards — consistent with new dense editorial design language.
+- post.njk: Sidebar author/TOC cards replaced `card-elevated` with flat border. Upvote/reaction active states now use `var(--accent-color)` via inline style instead of hardcoded amber classes.
+- comment-pointer.njk: Replaced `card-elevated` with flat border card.
+- snippet-tags.njk: Full rewrite — flat `divide-y` row list matching snippets.njk list view. Added breadcrumbs.
+- newsletter.njk: Input focus rings use `accent-field` class. Icon circles simplified (no amber background). Removed `hover:shadow-lg`.
+- guestbook.njk: Form inputs use `accent-field`. Header aligned with other pages.
+- stats.njk: postsThisMonth counter uses `var(--accent-color)`. Tag icon no longer hardcoded amber.
+- page width: Stepped down one Tailwind size at each breakpoint (md:2xl, lg:3xl, xl:4xl).
+
 
 ### Fixed
 - index.njk: Featured section `★ Featured` label and `Read →` link now use `var(--accent-color)` instead of hardcoded amber, respecting the accent theme switcher.

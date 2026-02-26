@@ -48,11 +48,11 @@ hasEthicalAds: false
   <aside class="hidden xl:block absolute -left-[280px] top-0">
     <div class="sticky top-24 w-[240px] space-y-4">
       {# Author Card #}
-      <section class="card-elevated rounded-xl p-5 text-center not-prose">
+      <section class="border border-gray-200 dark:border-gray-800 rounded-xl p-5 text-center not-prose">
         <a href="/about" class="block group">
           <div class="relative w-20 h-20 mx-auto mb-3">
             <div class="absolute -inset-1 bg-gradient-to-r from-amber-400 via-orange-400 to-rose-400 rounded-full blur-sm opacity-0 group-hover:opacity-50 transition-opacity duration-300"></div>
-            {% image "./src/static/img/headshot.png", "{{ metadata.author.name }}", "relative w-20 h-20 rounded-full object-cover ring-2 ring-gray-200 dark:ring-gray-700 group-hover:ring-amber-400 transition-all shadow-md" %}
+            {% image "./src/static/img/headshot.png", "{{ metadata.author.name }}", "relative w-20 h-20 rounded-full object-cover ring-2 ring-gray-200 dark:ring-gray-700 transition-all shadow-sm" %}
           </div>
         </a>
         <a href="/about" class="font-semibold text-gray-900 dark:text-gray-100 hover:text-gradient transition-colors no-underline">
@@ -81,7 +81,7 @@ hasEthicalAds: false
   <aside class="hidden xl:block absolute -right-[300px] top-0 text-sm text-gray-600 dark:text-gray-300">
     <div class="sticky top-24 space-y-6 w-[260px]">
       {% if tocHtml | trim %}
-      <section class="card-elevated rounded-xl px-6 py-6">
+      <section class="border border-gray-200 dark:border-gray-800 rounded-xl px-6 py-6">
         <p class="text-lg font-semibold my-0 text-gray-800 dark:text-gray-100 flex items-center gap-2">
           {% feather "list", class="w-5 h-5 opacity-70" %}
           Outline
@@ -178,7 +178,7 @@ hasEthicalAds: false
           {{ upvotes.posts[page.fileSlug] | default(0) }}
         </span>
         <span id="upvoteLoading" class="ml-2 hidden">
-          <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-amber-500"></div>
+          <div class="animate-spin rounded-full h-4 w-4 border-b-2" style="border-color: var(--accent-color);"></div>
         </span>
       </button>
       <span id="upvoteMessage" class="ml-2 text-sm text-gray-500 dark:text-gray-400 hidden">Thanks for your upvote!</span>
@@ -193,7 +193,7 @@ hasEthicalAds: false
         {% for reaction in reactionOptions %}
           <button
             type="button"
-            class="reaction-button flex items-center gap-2 rounded-full border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 px-3 py-2 text-sm text-gray-600 dark:text-gray-300 hover:border-amber-400 dark:hover:border-amber-500 transition-colors"
+            class="reaction-button flex items-center gap-2 rounded-full border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 px-3 py-2 text-sm text-gray-600 dark:text-gray-300 hover:border-gray-400 dark:hover:border-gray-500 transition-colors"
             data-reaction="{{ reaction.id }}"
             aria-label="{{ reaction.label }}"
             title="{{ reaction.label }}"
@@ -261,8 +261,8 @@ hasEthicalAds: false
         // If user has already upvoted, style the button accordingly
         if (hasUpvoted) {
           upvoteButton.classList.add('upvoted');
-          upvoteButton.querySelector('svg').classList.add('text-amber-500');
-          upvoteButton.querySelector('svg').classList.remove('text-gray-500', 'dark:text-gray-400');
+          upvoteButton.querySelector('svg').style.color = 'var(--accent-color)';
+          upvoteButton.querySelector('svg').style.removeProperty('color');
         }
         
         upvoteButton.addEventListener('click', async function() {
@@ -306,8 +306,8 @@ hasEthicalAds: false
             
             // Style the button as upvoted
             upvoteButton.classList.add('upvoted');
-            upvoteButton.querySelector('svg').classList.add('text-amber-500');
-            upvoteButton.querySelector('svg').classList.remove('text-gray-500', 'dark:text-gray-400');
+            upvoteButton.querySelector('svg').style.color = 'var(--accent-color)';
+            upvoteButton.querySelector('svg').style.removeProperty('color');
             
             // Show thank you message
             upvoteMessage.classList.remove('hidden');
@@ -366,10 +366,12 @@ hasEthicalAds: false
 
           function setButtonState(button, isActive) {
             if (isActive) {
-              button.classList.add('border-amber-500', 'bg-amber-100', 'dark:bg-amber-900/30', 'text-amber-900', 'dark:text-amber-200');
+              button.style.borderColor = 'var(--accent-color)';
+              button.style.backgroundColor = 'color-mix(in srgb, var(--accent-color) 15%, transparent)';
               button.classList.remove('border-gray-200', 'dark:border-gray-700', 'text-gray-600', 'dark:text-gray-300');
             } else {
-              button.classList.remove('border-amber-500', 'bg-amber-100', 'dark:bg-amber-900/30', 'text-amber-900', 'dark:text-amber-200');
+              button.style.borderColor = '';
+              button.style.backgroundColor = '';
               button.classList.add('border-gray-200', 'dark:border-gray-700', 'text-gray-600', 'dark:text-gray-300');
             }
           }
@@ -481,7 +483,7 @@ hasEthicalAds: false
           <div class="space-y-2">
             {%- for item in sortedRelated | head(3) %}
               <div class="border-l-2 border-gray-300 dark:border-gray-600 pl-3 py-1">
-                <a href="{{ item.post.url | url }}" class="font-medium hover:text-amber-600 dark:hover:text-amber-400">
+                <a href="{{ item.post.url | url }}" class="font-medium accent-link" style="text-decoration:none;">
                   {{ item.post.data.title }}
                 </a>
                 <p class="text-gray-600 dark:text-gray-300 text-sm mt-0.5">{{ item.post.data.description }}</p>

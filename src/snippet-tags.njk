@@ -10,47 +10,27 @@ eleventyComputed:
 permalink: /snippets/tags/{{ tag | slugify }}/
 ---
 
+{% include "components/breadcrumbs.njk" %}
+
 <h1>Snippets tagged "{{ tag }}"</h1>
 
-<div class="snippets-container">
+<div class="not-prose divide-y divide-gray-200 dark:divide-gray-800">
   {%- for snippet in collections.snippets | reverse -%}
     {% if tag in snippet.data.tags %}
-      <article class="snippet-card mb-8 p-4 border rounded hover:shadow-lg transition-shadow dark:border-gray-700">
-        <h2 class="mb-2">
-          <a href="{{ snippet.url }}" class="no-underline hover:underline">{{ snippet.data.title }}</a>
-        </h2>
-        
-        <div class="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400">
-          <time datetime="{{ snippet.date | htmlDateString }}">
-            {{ snippet.date | readableDate }}
-          </time>
-          
-          {% if snippet.data.language %}
-          <span class="language badge">{{ snippet.data.language }}</span>
-          {% endif %}
-        </div>
-
-        {% if snippet.data.tags %}
-        <div class="mt-2 flex flex-wrap gap-2">
+      <article class="py-3 flex flex-col gap-1">
+        <a href="{{ snippet.url }}" class="font-medium text-gray-900 dark:text-gray-100 accent-link" style="text-decoration:none;">{{ snippet.data.title }}</a>
+        <div class="flex items-center gap-3">
+          <time class="meta-text text-[0.68rem] text-gray-400 dark:text-gray-500" datetime="{{ snippet.date | htmlDateString }}">{{ snippet.date | readableDate }}</time>
+          {% if snippet.data.language %}<span class="meta-text text-[0.65rem] px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400">{{ snippet.data.language }}</span>{% endif %}
           {% for snippetTag in snippet.data.tags | filterTagList %}
             {% if snippetTag != "snippets" %}
-              <a href="/snippets/tags/{{ snippetTag | slugify }}/" 
-                class="text-sm text-blue-600 dark:text-blue-400 hover:underline">#{{ snippetTag }}</a>
+              <a href="/snippets/tags/{{ snippetTag | slugify }}/" class="meta-text text-[0.65rem] text-gray-400 dark:text-gray-500 hover:underline">#{{ snippetTag }}</a>
             {% endif %}
           {% endfor %}
         </div>
-        {% endif %}
       </article>
     {% endif %}
   {%- endfor -%}
 </div>
 
-<p class="mt-8">
-  <a href="/snippets/" class="text-blue-600 dark:text-blue-400 hover:underline">← Back to all snippets</a>
-</p>
-
-<style>
-.badge {
-  @apply px-2 py-1 rounded bg-gray-200 dark:bg-gray-700;
-}
-</style>
+<p class="mt-6 text-sm"><a href="/snippets/" class="accent-link">← Back to all snippets</a></p>

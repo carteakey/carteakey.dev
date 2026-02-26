@@ -12,12 +12,12 @@ eleventyNavigation:
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&display=swap" rel="stylesheet">
 
 <div class="mx-auto space-y-10">
-  <header class="space-y-3">
-    <h1 class="text-3xl font-semibold tracking-tight text-gray-900 dark:text-white">Guestbook</h1>
-    <p class="text-sm text-gray-600 dark:text-gray-400 md:text-base">
+  <div>
+    <h1 class="text-2xl font-semibold tracking-tight m-0">Guestbook</h1>
+    <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
       Leave a note, share what brought you here, or drop a recommendation. 📌
     </p>
-  </header>
+  </div>
 
   {# ── Sticky-notes wall ── #}
   {% if guestbook.entries | length %}
@@ -61,7 +61,7 @@ eleventyNavigation:
   {% endif %}
 
   {# ── Submission form ── #}
-  {% set cardShell = "rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-100/80 dark:bg-gray-900/70 shadow-sm transition-shadow duration-200 hover:shadow-lg" %}
+  {% set cardShell = "border border-gray-200 dark:border-gray-800 rounded-lg" %}
   
   <section class="{{ cardShell }} p-5 sm:p-6">
     <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Leave a note ✍️</h2>
@@ -86,7 +86,7 @@ eleventyNavigation:
             type="text"
             name="name"
             required
-            class="rounded-lg border border-gray-300 bg-white/80 px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
+            class="rounded-lg border border-gray-300 bg-white/80 px-3 py-2 text-sm text-gray-900 accent-field focus:outline-none dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
             placeholder="How should I credit you?"
           >
         </label>
@@ -95,7 +95,7 @@ eleventyNavigation:
           <input
             type="url"
             name="website"
-            class="rounded-lg border border-gray-300 bg-white/80 px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
+            class="rounded-lg border border-gray-300 bg-white/80 px-3 py-2 text-sm text-gray-900 accent-field focus:outline-none dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
             placeholder="https://example.com"
           >
         </label>
@@ -107,7 +107,7 @@ eleventyNavigation:
           name="message"
           rows="4"
           required
-          class="rounded-lg border border-gray-300 bg-white/80 px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
+          class="rounded-lg border border-gray-300 bg-white/80 px-3 py-2 text-sm text-gray-900 accent-field focus:outline-none dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
           placeholder="Tell me something good."
         ></textarea>
       </label>

@@ -32,7 +32,7 @@ permalink: /stats/
   {% endif %}
 {% endfor %}
 
-{% set cardShell = "rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-100/80 dark:bg-gray-900/70 shadow-sm transition-shadow duration-200 hover:shadow-lg" %}
+{% set cardShell = "border border-gray-200 dark:border-gray-800 rounded-lg" %}
 
 <h1>Site Statistics</h1>
 
@@ -56,7 +56,7 @@ permalink: /stats/
       <span class="text-green-600 dark:text-green-400 font-medium">{{ postsThisYear }}</span>
       <span class="ml-1">this year</span>
       <span class="mx-2">•</span>
-      <span class="text-amber-600 dark:text-amber-400 font-medium">{{ postsThisMonth }}</span>
+      <span class="font-medium" style="color: var(--accent-color);">{{ postsThisMonth }}</span>
       <span class="ml-1">this month</span>
     </div>
   </div>
@@ -86,7 +86,7 @@ permalink: /stats/
         <p class="text-sm text-gray-600 dark:text-gray-400">Post Tags</p>
       </div>
       <div class="p-3 bg-amber-100 dark:bg-amber-900 rounded-full">
-        {% feather "tag", class="w-6 h-6 text-amber-600 dark:text-amber-400" %}
+        {% feather "tag", class="w-6 h-6" %}
       </div>
     </div>
     <div class="mt-4 flex items-center text-sm text-gray-600 dark:text-gray-400">
