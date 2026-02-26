@@ -1,5 +1,15 @@
 # Site Improvement TODO List
 
+## Creative Features (2026-02-27)
+- [ ] `/colophon` — How this site is built (stack, philosophy, AI-assisted dev)
+- [ ] `/now` archive timeline — reverse-chron list of past /now updates
+- [ ] Accent color → browser URL bar (`theme-color` meta tag tracks accent)
+- [ ] Keyboard shortcuts — `g+h/b/f/s/n` for nav, `?` for overlay
+- [ ] Stats page — denser layout, word count, avg post length, posts-per-year chart
+- [ ] `/changelog` — render CHANGELOG.md as visual timeline with Netlify deploy preview URLs
+- [ ] `/til` — Today I Learned collection (new type, integrated into feed)
+- [ ] `/reading` — reading shelf with progress bars (YAML data source)
+
 ## High Priority Features
 
 ### SEO & Navigation
