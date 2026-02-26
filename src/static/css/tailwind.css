@@ -418,6 +418,10 @@ picture img {
   .title-hover:hover {
     color: var(--accent-color);
   }
+  /* Higher specificity to beat Tailwind dark: utility classes (both have 0,2,0 — this 0,3,0 wins) */
+  .site-content .title-hover:hover {
+    color: var(--accent-color);
+  }
 
   .accent-link {
     color: var(--accent-color);

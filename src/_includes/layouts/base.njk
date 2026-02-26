@@ -321,7 +321,7 @@
               updateTheme(index) {
                 this.currentIndex = index;
                 this.currentTheme = this.themes[index].name;
-                setAccentTheme(this.currentTheme);
+                window.setAccentTheme(this.currentTheme);
               }
             }" 
             x-init="init()"
