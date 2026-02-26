@@ -29,7 +29,7 @@ permalink: /now/archive/
         <time class="meta-text text-xs text-gray-400 dark:text-gray-500 font-semibold">{{ entry.data.archiveDate | readableDate }}</time>
         <a href="{{ entry.url }}" class="text-xs text-gray-400 dark:text-gray-500 hover:underline" style="text-decoration:none;">permalink →</a>
       </div>
-      <div class="text-sm text-gray-700 dark:text-gray-300 site-content prose-sm">
+      <div class="text-sm text-gray-700 dark:text-gray-300 site-content prose-sm [&_img]:max-h-48 [&_img]:w-auto [&_img]:rounded [&_img]:my-2">
         {{ entry.templateContent | safe }}
       </div>
     </li>

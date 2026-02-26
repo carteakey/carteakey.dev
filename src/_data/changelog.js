@@ -68,7 +68,7 @@ export default function () {
       entries.push({
         version: `${monthName} ${year}`,
         date: `${ym}-01`,
-        sections: { Changed: commits.slice(0, 8) },
+        sections: { Changed: commits },
         fromGit: true,
       });
     }

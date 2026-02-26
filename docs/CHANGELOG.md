@@ -829,3 +829,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Stats: Lighthouse section is now 2-column grid on sm+ screens
 - `date()` filter: extended to support `"Y"`, `"n"`, `"X"`, `"MMM d"`, `"h:mm a"`, `"YYYY"` format strings
 - New filters: `countInYearMonth`, `sortByDate`
+
+## [1.8.3] - 2026-02-26
+
+### Changed
+- Keyboard shortcuts: removed all Ctrl/Cmd combos (hijacked browser shortcuts); now bare letter keys (h/b/f/s/n/t/r/d/?/) — no modifier required
+- Added `/` shortcut for search navigation
+
+### Fixed
+- Changelog: removed 8-entry-per-month cap on git history commits (show all)
+- Now archive: images constrained to max-h-48 so they don't dominate the timeline
