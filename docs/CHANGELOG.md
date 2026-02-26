@@ -5,7 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.5.6] - 2026-02-26
+## [1.5.7] - 2026-02-26
+
+### Fixed
+- tailwind.css: `.site-content a` link styling scoped to `:is(p, li, blockquote, td, th) a` — prevents accent-color from applying to UI/nav/card links inside site-content
+- base.njk: Added `not-prose` to `<nav>` and `<footer>` elements to isolate them from content typography styles
+- tailwind.css: Added TOC (`<nav class="toc">`) styles — no disc bullets, clean link style with accent hover
+- post.njk: Avatar hover glow → accent CSS variable gradient (removes hardcoded amber-400)
+
+
 
 ### Changed
 - page-header.njk: h1 `text-2xl` → `text-xl` for density consistency
