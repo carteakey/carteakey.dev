@@ -442,8 +442,9 @@
     const nav = { h:'/', b:'/blog/', f:'/feed/', s:'/snippets/', n:'/now/', t:'/til/', r:'/reading/' };
     document.addEventListener('keydown', function(e) {
       if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.isContentEditable) return;
-      // No modifier keys — bare letter shortcuts only
-      if (e.ctrlKey || e.metaKey || e.altKey || e.shiftKey) return;
+      // No modifier keys — bare letter shortcuts only (allow Shift for ? key)
+      if (e.ctrlKey || e.metaKey || e.altKey) return;
+      if (e.shiftKey && e.key !== '?') return;
       const k = e.key.toLowerCase();
       if (nav[k]) { window.location.href = nav[k]; return; }
       if (k === 'd') { document.getElementById('toggleDarkMode')?.click(); return; }
