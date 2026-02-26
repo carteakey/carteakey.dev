@@ -49,9 +49,9 @@
     <span class="feed-list-dot {{ dotColor }}" title="{{ badgeLabel }}"></span>
     <span class="feed-list-type meta-text text-gray-400 dark:text-gray-500">{{ badgeLabel }}</span>
     {% if item.url %}
-      <a href="{{ item.url | url }}" class="feed-list-title title-hover">{{ item.title }}</a>
+      <a href="{{ item.url | url }}" class="feed-list-title title-hover">{% if item.pinned %}<span style="color: var(--accent-color)" title="Pinned">★ </span>{% endif %}{{ item.title }}</a>
     {% else %}
-      <span class="feed-list-title">{{ item.title }}</span>
+      <span class="feed-list-title">{% if item.pinned %}<span style="color: var(--accent-color)" title="Pinned">★ </span>{% endif %}{{ item.title }}</span>
     {% endif %}
   </li>
 

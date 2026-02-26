@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.0] - 2026-02-27
+
+### Added
+- stats.njk: Hero callout strip with 4 large accent-colored numbers (Posts, Snippets, This Year, Tags)
+- feed.njk: List/grid toggle, type filter chips, inline search — list view defaults to homepage activity style
+- base.njk: Footer nav links now have feather icons (clock, activity, edit-3, code, box, image, music, etc.)
+- base.njk: Site title now shows accent color always (not just on hover)
+- base.njk: Dark mode toggle icon uses accent color
+- index.njk: Profile avatar larger (w-20 h-20) + conic gradient ring restored
+- index.njk: Homepage footer link text cleaned up ("Blog · Snippets · Feed · Search")
+- feed-card.njk: Pinned star icon (★) shown in list variant when item is pinned
+
+### Changed
+- theme.js: Exposed `setAccentTheme`, `isDarkMode`, `switchPrismTheme` as `window.*` globals — fixes accent slider in Alpine.js context
+- tailwind.css: Code block background mode-aware — light gray in light mode, dark navy in dark mode; removed `!important` overrides
+- package.json: Bumped all dependencies to latest (eleventy 3.1.2, tailwind 4.2.1, 11ty-img 6.0.4, sharp 0.34.5, etc.)
+
 ## [1.5.8] - 2026-02-26
 
 ### Changed

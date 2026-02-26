@@ -40,6 +40,26 @@ permalink: /stats/
   A data-driven (duh, <em>numbers</em>) look at this website. Numbers updated every time the site builds.
 </p>
 
+{# ── Hero callout strip ── #}
+<div class="not-prose grid grid-cols-2 sm:grid-cols-4 gap-0 border border-gray-200 dark:border-gray-800 rounded-lg overflow-hidden my-8">
+  <div class="p-4 sm:p-6 text-center border-r border-gray-200 dark:border-gray-800">
+    <div class="text-4xl sm:text-5xl font-black tracking-tight" style="color: var(--accent-color)">{{ totalPosts }}</div>
+    <div class="text-xs text-gray-500 dark:text-gray-400 mt-1 uppercase tracking-wide">Posts</div>
+  </div>
+  <div class="p-4 sm:p-6 text-center border-r border-gray-200 dark:border-gray-800">
+    <div class="text-4xl sm:text-5xl font-black tracking-tight" style="color: var(--accent-color)">{{ totalSnippets }}</div>
+    <div class="text-xs text-gray-500 dark:text-gray-400 mt-1 uppercase tracking-wide">Snippets</div>
+  </div>
+  <div class="p-4 sm:p-6 text-center border-r border-gray-200 dark:border-gray-800">
+    <div class="text-4xl sm:text-5xl font-black tracking-tight" style="color: var(--accent-color)">{{ postsThisYear }}</div>
+    <div class="text-xs text-gray-500 dark:text-gray-400 mt-1 uppercase tracking-wide">This Year</div>
+  </div>
+  <div class="p-4 sm:p-6 text-center">
+    <div class="text-4xl sm:text-5xl font-black tracking-tight" style="color: var(--accent-color)">{{ totalTags }}</div>
+    <div class="text-xs text-gray-500 dark:text-gray-400 mt-1 uppercase tracking-wide">Tags</div>
+  </div>
+</div>
+
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 my-8 not-prose">
   <!-- Posts Stats -->
   <div class="{{ cardShell }} p-3 sm:p-4">

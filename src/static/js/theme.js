@@ -80,3 +80,8 @@ function switchPrismTheme() {
 
 // Initialize Prism theme
 switchPrismTheme();
+
+// Expose globals needed by Alpine.js expressions and inline event handlers
+window.setAccentTheme = setAccentTheme;
+window.isDarkMode = isDarkMode;
+window.switchPrismTheme = switchPrismTheme;
