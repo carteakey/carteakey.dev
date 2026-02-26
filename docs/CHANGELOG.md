@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.9] - 2026-02-27
+
+### Changed
+- Default accent color changed from amber to teal (`#14b8a6`)
+- Feed grid on homepage now uses `items-start` for dynamic card heights (matches other grids)
+
+### Removed
+- Dead CSS: `.card-elevated`, `.card-glass`, `.intro-block` blocks removed from tailwind.css
+- Service worker: replaced stale `prism-coy.css` cache entry with `prism-light.css`
+
 ## [1.6.8] - 2026-02-27
 
 ### Changed

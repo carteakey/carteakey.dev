@@ -164,7 +164,7 @@
 
             {# Accent theme slider — inline in nav, always visible #}
             <li class="flex items-center ml-1" x-data="{
-              currentIndex: 7,
+              currentIndex: 12,
               themes: [
                 { name: 'gray',    hex: '#6b7280' },
                 { name: 'slate',   hex: '#64748b' },
@@ -190,9 +190,9 @@
                 { name: 'rose',    hex: '#f43f5e' }
               ],
               init() {
-                const saved = localStorage.accentTheme || 'amber';
+                const saved = localStorage.accentTheme || 'teal';
                 const idx = this.themes.findIndex(t => t.name === saved);
-                this.currentIndex = idx === -1 ? 7 : idx;
+                this.currentIndex = idx === -1 ? 12 : idx;
               },
               pick(i) {
                 this.currentIndex = i;

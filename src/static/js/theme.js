@@ -40,11 +40,11 @@ if (isDarkMode()) {
 
 // Accent color theme management
 const getAccentTheme = () => {
-  return localStorage.accentTheme || "amber";
+  return localStorage.accentTheme || "teal";
 };
 
 const setAccentVariables = (theme) => {
-  const accentColor = ACCENT_COLORS[theme] || ACCENT_COLORS.amber;
+  const accentColor = ACCENT_COLORS[theme] || ACCENT_COLORS.teal;
   document.documentElement.style.setProperty("--accent-color", accentColor);
 };
 

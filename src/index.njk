@@ -104,7 +104,7 @@ htmlTemplateEngine: "webc"
   </ul>
 
   {# Grid view #}
-  <div x-show="hView === 'grid'" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+  <div x-show="hView === 'grid'" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 items-start">
     {% for item in feedItems %}
       {{ feedCard(item, { variant: 'full' }) }}
     {% endfor %}
