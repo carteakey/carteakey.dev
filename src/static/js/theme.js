@@ -73,7 +73,7 @@ function switchPrismTheme() {
   if (isDarkMode()) {
     themeLink.setAttribute('href', '/static/css/prism/prism-twilight.css');
   } else {
-    themeLink.setAttribute('href', '/static/css/prism/prism-coy.css');
+    themeLink.setAttribute('href', '/static/css/prism/prism-light.css');
   }
   if (typeof Prism !== 'undefined') Prism.highlightAll();
 }

@@ -5,7 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.6.0] - 2026-02-27
+## [1.6.1] - 2026-02-27
+
+### Added
+- src/static/css/prism/prism-light.css: New clean GitHub-inspired light syntax theme (replaces broken prism-coy)
+
+### Fixed
+- index.njk: Homepage footer → "→ Feed" (single clean link)
+- index.njk: Profile avatar wrapped in constrained `w-20 h-20 rounded-full overflow-hidden` div — fixes blurriness and gradient ring
+- eleventy.config.mjs: Image shortcodes now use `widths: [400, 800, 1200, "auto"]` with proper `sizes` (was `["auto"]` = single size only); removed `style="max-width: 100%; height: auto;"` inline style override
+- tailwind.css: Added `picture { display: block }` + `picture img { max-width: 100%; height: auto }` global rules
+- projects.njk: Removed `intro-block` card wrapper → plain text description; GitHub table redesigned as clean bordered table with `title-hover` links and `meta-text` dates; description column hidden on mobile
+- gallery.njk: Removed `intro-block` card wrapper → plain text description
+- theme.js / base.njk: Switched default Prism theme from `prism-coy` to `prism-light`
+
+
 
 ### Added
 - stats.njk: Hero callout strip with 4 large accent-colored numbers (Posts, Snippets, This Year, Tags)

@@ -54,11 +54,7 @@ eleventyNavigation:
 </p> #}
 
 <div class="mx-auto">
-  <div class="mb-8">
-    <div class="intro-block">
-      <p>Here are some of my personal projects</p>
-    </div>
-  </div>
+  <p class="text-sm text-gray-500 dark:text-gray-400 mb-6">Here are some of my personal projects.</p>
 
   <ul class="not-prose divide-y divide-gray-200 dark:divide-gray-700">
     {% for project in projects.projects %}
@@ -92,7 +88,7 @@ eleventyNavigation:
     My contribution activity on GitHub over the past year.
   </p>
   
-  <div class="card card-padding">
+  <div class="card card-padding not-prose">
     {% include "components/github-contributions.njk" %}
     <p class="text-xs text-gray-500 dark:text-gray-400 mt-2 text-center">
       Data sourced live from <a href="https://github.com/carteakey" class="hover:underline accent-link">GitHub activity</a>.
@@ -105,33 +101,32 @@ eleventyNavigation:
 <p>
   Here are the rest of my projects on <a href="https://github.com/carteakey?tab=repositories">GitHub</a>.
 </p>
-<table>
+<div class="not-prose border border-gray-200 dark:border-gray-800 rounded-lg overflow-hidden">
+<table class="w-full text-xs">
   <thead>
-    <tr>
-      <th>Updated</th>
-      <th>Name</th>
-      <th>Description</th>
+    <tr class="bg-gray-50 dark:bg-gray-900">
+      <th class="text-left px-3 py-2 font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">Updated</th>
+      <th class="text-left px-3 py-2 font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">Name</th>
+      <th class="text-left px-3 py-2 font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide hidden sm:table-cell">Description</th>
     </tr>
   </thead>
-  <tbody id="repoTableBody">
+  <tbody class="divide-y divide-gray-200 dark:divide-gray-800">
     {% for repo in github.repos %}
-    <tr>
-      <td class="">
-        <time class=" postlist-date">{{ repo.repo_updated | formatDate }}</time>
+    <tr class="hover:bg-gray-50 dark:hover:bg-gray-900/50 transition-colors">
+      <td class="px-3 py-2 meta-text text-gray-500 dark:text-gray-400 whitespace-nowrap">
+        <time>{{ repo.repo_updated | formatDate }}</time>
       </td>
-
-      <td>
-        <a href="{{ repo.repo_url }}">
+      <td class="px-3 py-2">
+        <a href="{{ repo.repo_url }}" class="title-hover font-medium" target="_blank" rel="noopener">
           {{ repo.repo_name }}
         </a>
       </td>
-      <td>
+      <td class="px-3 py-2 text-gray-500 dark:text-gray-400 hidden sm:table-cell">
         {{ repo.repo_description }}
       </td>
-
-
     </tr>
     {% endfor %}
   </tbody>
 </table>
+</div>
 </div>
