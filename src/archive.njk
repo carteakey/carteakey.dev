@@ -22,7 +22,7 @@ eleventyNavigation:
         type="text"
         id="blogSearch"
         placeholder="Search..."
-        class="rounded-md border border-gray-200 dark:border-gray-700 bg-transparent py-1.5 pl-8 pr-3 text-sm focus:border-amber-400 focus:outline-none focus:ring-1 focus:ring-amber-300 dark:focus:ring-amber-600 dark:text-gray-100 w-40 placeholder:text-gray-400"
+        class="rounded-md border border-gray-200 dark:border-gray-700 bg-transparent py-1.5 pl-8 pr-3 text-sm accent-field focus:outline-none dark:text-gray-100 w-40 placeholder:text-gray-400"
       >
     </div>
     <div class="view-toggle" x-data="{ viewMode: 'list' }">
@@ -54,7 +54,7 @@ eleventyNavigation:
           <time class="meta-text text-xs text-gray-400 dark:text-gray-500" datetime="{{ post.date | htmlDateString }}">{{ post.date | readableDate }}</time>
           <div class="hidden md:flex flex-wrap gap-1 mt-0.5">
             {% for tag in filteredTags %}
-              <a href="/tags/{{ tag | slugify }}/" class="meta-text text-[0.62rem] px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:bg-amber-50 dark:hover:bg-amber-900/20 hover:text-amber-700 dark:hover:text-amber-400 transition-colors" style="text-decoration: none;">#{{ tag }}</a>
+              <a href="/tags/{{ tag | slugify }}/" class="meta-text text-[0.62rem] px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 title-hover" style="text-decoration: none;">#{{ tag }}</a>
             {% endfor %}
           </div>
         </div>
@@ -63,7 +63,7 @@ eleventyNavigation:
             {% if post.data.pinned %}
               <span class="inline-flex items-center mr-1.5 text-[0.62rem] font-semibold uppercase tracking-wider rounded px-1 py-0.5 bg-amber-100 text-amber-700 dark:bg-amber-900/50 dark:text-amber-400 align-middle">★ Pinned</span>
             {% endif %}
-            <a href="{{ post.url }}" class="font-semibold text-gray-900 dark:text-gray-100 hover:text-amber-600 dark:hover:text-amber-400 transition-colors" style="text-decoration: none;">{{ post.data.title }}</a>
+            <a href="{{ post.url }}" class="font-semibold text-gray-900 dark:text-gray-100 title-hover" style="text-decoration: none;">{{ post.data.title }}</a>
           </div>
           {% if post.data.description %}
             <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5 m-0 leading-relaxed">{{ post.data.description }}</p>
@@ -97,11 +97,11 @@ eleventyNavigation:
         <span class="feed-list-dot bg-blue-400 shrink-0"></span>
         <time class="meta-text text-[0.68rem] text-gray-400 dark:text-gray-500">{{ post.date | readableDate }}</time>
         {% if post.data.pinned %}
-          <span class="meta-text text-[0.65rem] text-amber-600 dark:text-amber-400 ml-auto">★ Pinned</span>
+          <span class="meta-text text-[0.65rem] ml-auto" style="color: var(--accent-color);">★ Pinned</span>
         {% endif %}
       </div>
       <h3 class="text-sm font-semibold leading-snug text-gray-900 dark:text-gray-100 m-0">
-        <a href="{{ post.url }}" class="hover:text-amber-600 dark:hover:text-amber-400 transition-colors" style="color: inherit; text-decoration: none;">{{ post.data.title }}</a>
+        <a href="{{ post.url }}" class="title-hover" style="color: inherit; text-decoration: none;">{{ post.data.title }}</a>
       </h3>
       {% if post.data.description %}
         <p class="text-xs leading-relaxed text-gray-500 dark:text-gray-400 mt-1.5 m-0">{{ post.data.description }}</p>
@@ -109,7 +109,7 @@ eleventyNavigation:
       {% if filteredTags | length %}
         <div class="flex flex-wrap gap-1 mt-2.5">
           {% for tag in filteredTags | head(3) %}
-            <a href="/tags/{{ tag | slugify }}/" class="text-[0.6rem] px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:bg-amber-100 dark:hover:bg-amber-900/40 transition-colors" style="text-decoration: none;">#{{ tag }}</a>
+            <a href="/tags/{{ tag | slugify }}/" class="text-[0.6rem] px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 title-hover" style="text-decoration: none;">#{{ tag }}</a>
           {% endfor %}
         </div>
       {% endif %}

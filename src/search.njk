@@ -147,10 +147,12 @@ eleventyNavigation:
     const articles = document.querySelectorAll('#searchResults article');
     articles.forEach((article, index) => {
       if (index === selectedIndex) {
-        article.classList.add('ring-2', 'ring-amber-500', 'bg-amber-50', 'dark:bg-amber-900/20');
+        article.style.outline = '2px solid var(--accent-color)';
+        article.style.outlineOffset = '-2px';
         article.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       } else {
-        article.classList.remove('ring-2', 'ring-amber-500', 'bg-amber-50', 'dark:bg-amber-900/20');
+        article.style.outline = '';
+        article.style.outlineOffset = '';
       }
     });
   }
@@ -195,7 +197,7 @@ eleventyNavigation:
           ${item.tags.length > 0 ? `
             <div class="flex flex-wrap gap-2 mt-2">
               ${item.tags.map(tag => `
-                <a href="/tags/${tag.toLowerCase()}/" class="text-xs px-2 py-1 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded hover:bg-amber-100 dark:hover:bg-amber-900">
+                <a href="/tags/${tag.toLowerCase()}/" class="text-xs px-2 py-1 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded hover:bg-gray-200 dark:hover:bg-gray-700">
                   ${tag}
                 </a>
               `).join('')}

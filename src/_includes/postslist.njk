@@ -11,7 +11,7 @@
           <div class="hidden md:flex flex-wrap gap-1 mt-0.5">
             {% for tag in post.data.tags | filterTagList %}
             {% set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
-            <a href="{{ tagUrl | url }}" class="meta-text text-[0.62rem] px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:bg-amber-50 dark:hover:bg-amber-900/20 hover:text-amber-700 dark:hover:text-amber-400 transition-colors" style="text-decoration: none;">#{{ tag }}</a>
+            <a href="{{ tagUrl | url }}" class="meta-text text-[0.62rem] px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 title-hover" style="text-decoration: none;">#{{ tag }}</a>
             {% endfor %}
           </div>
         </div>
@@ -22,7 +22,7 @@
             {% if post.data.pinned %}
               <span class="inline-flex items-center gap-0.5 mr-1.5 text-[0.62rem] font-semibold uppercase tracking-wider rounded px-1 py-0.5 bg-amber-100 text-amber-700 dark:bg-amber-900/50 dark:text-amber-400 align-middle">★ Pinned</span>
             {% endif %}
-            <a href="{{ post.url | url }}" class="font-semibold text-gray-900 dark:text-gray-100 hover:text-amber-600 dark:hover:text-amber-400 transition-colors" style="text-decoration: none;">
+            <a href="{{ post.url | url }}" class="font-semibold text-gray-900 dark:text-gray-100 title-hover" style="text-decoration: none;">
               {% if post.data.title %}{{ post.data.title }}{% else %}<code>{{ post.url }}</code>{% endif %}
             </a>
           </div>

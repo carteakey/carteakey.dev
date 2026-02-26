@@ -4,44 +4,39 @@ title: Workouts
 ---
 {% include "components/breadcrumbs.njk" %}
 
+<h1 class="text-2xl font-semibold tracking-tight m-0">Recent Workouts</h1>
+<p class="text-sm text-gray-500 dark:text-gray-400 mt-1 mb-6">Latest activities from Strava.</p>
 
-<div class="max-w-5xl mx-auto">
-    <h1>Recent Workouts</h1>
-    <div class="mt-4 intro-block">
-        <p>Here are my latest activities from Strava.</p>
-    </div>
+<div class="not-prose grid gap-3 md:grid-cols-2">
+    {% for activity in strava %}
+        <article class="card card-hover card-compact">
+            <header class="flex flex-col gap-1.5">
+                <a href="{{ activity.url }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-sm font-semibold text-gray-900 dark:text-gray-100 accent-link" style="text-decoration:none;">
+                    {{ activity.name }}
+                    {% feather "external-link", class="w-3.5 h-3.5 opacity-60" %}
+                </a>
+                <div class="flex flex-wrap items-center gap-2">
+                    <span class="meta-text text-[0.65rem] px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400">{{ activity.type }}</span>
+                    <time class="meta-text text-[0.65rem] text-gray-400 dark:text-gray-500" datetime="{{ activity.start_date | htmlDateString }}">{{ activity.start_date | readableDate }}</time>
+                </div>
+            </header>
 
-    <div class="mt-8 grid gap-4 md:grid-cols-2">
-        {% for activity in strava %}
-            <article class="card card-hover card-padding">
-                <header class="flex flex-col gap-2">
-                    <a href="{{ activity.url }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-lg font-semibold tracking-tight text-gray-900 link-accent dark:text-gray-100">
-                        {{ activity.name }}
-                        {% feather "external-link", class="w-4 h-4" %}
-                    </a>
-                    <div class="flex flex-wrap items-center gap-2 text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
-                        <span class="tag">{{ activity.type }}</span>
-                        <time datetime="{{ activity.start_date | htmlDateString }}">{{ activity.start_date | readableDate }}</time>
-                    </div>
-                </header>
+            <dl class="mt-3 grid grid-cols-2 gap-2 text-xs">
+                <div>
+                    <dt class="meta-text text-[0.6rem] uppercase text-gray-400 dark:text-gray-500">Distance</dt>
+                    <dd class="font-semibold text-gray-800 dark:text-gray-200">{{ activity.distance }} mi</dd>
+                </div>
+                <div>
+                    <dt class="meta-text text-[0.6rem] uppercase text-gray-400 dark:text-gray-500">Moving Time</dt>
+                    <dd class="font-semibold text-gray-800 dark:text-gray-200">{{ activity.moving_time }} min</dd>
+                </div>
+            </dl>
 
-                <dl class="mt-4 grid grid-cols-2 gap-3 text-sm text-gray-600 dark:text-gray-300">
-                    <div>
-                        <dt class="uppercase tracking-wide text-xs text-gray-500 dark:text-gray-400">Distance</dt>
-                        <dd class="font-medium text-gray-900 dark:text-gray-100">{{ activity.distance }} miles</dd>
-                    </div>
-                    <div>
-                        <dt class="uppercase tracking-wide text-xs text-gray-500 dark:text-gray-400">Moving Time</dt>
-                        <dd class="font-medium text-gray-900 dark:text-gray-100">{{ activity.moving_time }} minutes</dd>
-                    </div>
-                </dl>
-
-                {% if activity.mapImageUrl %}
-                    <div class="mt-4 overflow-hidden rounded-lg border border-gray-200 dark:border-gray-800">
-                        <img src="{{ activity.mapImageUrl }}" alt="Map of {{ activity.name }}" loading="lazy" decoding="async" class="w-full object-cover" style="height: auto;">
-                    </div>
-                {% endif %}
-            </article>
-        {% endfor %}
-    </div>
+            {% if activity.mapImageUrl %}
+                <div class="mt-3 overflow-hidden rounded border border-gray-200 dark:border-gray-800">
+                    <img src="{{ activity.mapImageUrl }}" alt="Map of {{ activity.name }}" loading="lazy" decoding="async" class="w-full object-cover" style="height: auto;">
+                </div>
+            {% endif %}
+        </article>
+    {% endfor %}
 </div>

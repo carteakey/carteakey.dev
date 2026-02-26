@@ -401,6 +401,14 @@ figure {
 }
 
 @layer components {
+  /* Title hover: stays gray, turns accent on hover */
+  .title-hover {
+    transition: color 150ms ease;
+  }
+  .title-hover:hover {
+    color: var(--accent-color);
+  }
+
   .accent-link {
     color: var(--accent-color);
     text-decoration-color: color-mix(in srgb, var(--accent-color) 60%, white);
@@ -729,12 +737,12 @@ figure {
 }
 
 .links a:hover {
-  color: var(--color-amber-600);
+  color: var(--accent-color);
   transform: translateY(-1px) scale(1.02);
 }
 
 .dark .links a:hover {
-  color: var(--color-amber-400);
+  color: var(--accent-color);
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
