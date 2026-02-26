@@ -686,6 +686,12 @@ export default function(eleventyConfig) {
       .filter(item => !item.inputPath.includes('_template.md'));
   });
 
+  // TIL collection
+  eleventyConfig.addCollection("til", function(collectionApi) {
+    return collectionApi.getFilteredByGlob("src/til/**/*.md")
+      .sort((a, b) => b.date - a.date);
+  });
+
   // Add a unified feed collection across key content types
   eleventyConfig.addCollection("feed", async function (collectionApi) {
     const now = new Date();
@@ -841,10 +847,31 @@ export default function(eleventyConfig) {
       })
       .filter(Boolean);
 
+    const tilEntries = collectionApi
+      .getFilteredByGlob("./src/til/**/*.md")
+      .filter((entry) => {
+        if (entry.data.hidden === true) return false;
+        if (entry.date && entry.date > now) return false;
+        return true;
+      })
+      .map((entry) => {
+        const summarySource = entry.data.description || entry.data.excerpt || "";
+        const summary = summarySource ? truncate(stripHtml(summarySource)) : null;
+        return {
+          type: "til",
+          title: entry.data.title,
+          date: entry.date,
+          url: entry.url,
+          summary,
+          original: entry,
+        };
+      });
+
     const combined = [
       ...posts,
       ...snippets,
       ...notes,
+      ...tilEntries,
       ...nowUpdates,
       ...photos,
       // ...vibes,

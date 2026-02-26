@@ -18,6 +18,7 @@
   {% set isPhoto = item.type == 'photo' %}
   {% set isVibe = item.type == 'vibe' %}
   {% set isNow = item.type == 'now' %}
+  {% set isTil = item.type == 'til' %}
 
   {# Type color dot classes #}
   {% set dotColor = "bg-gray-400" %}
@@ -40,15 +41,15 @@
   {% elif isNow %}
     {% set dotColor = "bg-cyan-400" %}
     {% set badgeLabel = "Now" %}
+  {% elif isTil %}
+    {% set dotColor = "bg-yellow-400" %}
+    {% set badgeLabel = "TIL" %}
   {% endif %}
 
   {# ── LIST VARIANT (homepage preview — single compact row) ── #}
   {% if variant == 'list' %}
   <li class="feed-list-row{% if extraClasses %} {{ extraClasses }}{% endif %}" {% if outerAttrs %}{{ outerAttrs | safe }}{% endif %}>
-    <span class="feed-list-date meta-text">
-      <span class="hidden-xs">{{ item.date | readableDate }}</span>
-      <span class="visible-xs">{{ item.date | shortDate }}</span>
-    </span>
+    <span class="feed-list-date meta-text">{{ item.date | shortDate }}</span>
     <span class="feed-list-dot {{ dotColor }}" title="{{ badgeLabel }}"></span>
     <span class="feed-list-type meta-text text-gray-400 dark:text-gray-500">{{ badgeLabel }}</span>
     {% if item.url %}

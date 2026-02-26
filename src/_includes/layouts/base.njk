@@ -39,6 +39,7 @@
   <script defer src="/static/js/alpine.min.js"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#14b8a6" id="theme-color-meta">
   <title>{{ title or metadata.title }}</title>
   <meta name="description" content="{{ description or metadata.description }}" />
   <meta name="generator" content="{{ eleventy.generator }}" />
@@ -146,7 +147,7 @@
             carteakey.dev
           </a>
 
-          <ul class="list-none m-0 p-0 flex items-center gap-1">
+          <ul class="list-none m-0 p-0 flex items-center gap-2">
             {# Main navigation items #}
             {%- for entry in navPages %}
               {% if entry.title == "About" or entry.title == "Blog" or entry.title == "Now" %}
@@ -156,8 +157,8 @@
               {% endif %}
             {%- endfor %}
 
-            <li class="flex items-center ml-1">
-              <a class="font-medium no-underline inline-flex items-center justify-center p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" href="{{ '/more/' | url }}" title="More pages" aria-label="More pages" style="color: var(--accent-color)">
+            <li class="flex items-center">
+              <a class="font-medium no-underline inline-flex items-center justify-center p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" href="{{ '/more/' | url }}" title="More pages" aria-label="More pages" style="color: var(--accent-color)">
                 {% feather "compass", class="w-4 h-4" %}
               </a>
             </li>
@@ -215,7 +216,7 @@
             </li>
 
             <li class="flex items-center">
-              <button id="toggleDarkMode" class="font-medium text-xs p-1.5 transition-all rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 focus-ring inline-flex items-center justify-center" aria-label="Toggle dark mode" style="color: var(--accent-color)">
+              <button id="toggleDarkMode" class="font-medium text-xs p-2 transition-all rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 focus-ring inline-flex items-center justify-center" aria-label="Toggle dark mode" style="color: var(--accent-color)">
                 {% feather "moon" , class="block dark:hidden w-4 h-4" %}
                 {% feather "sun" , class="hidden dark:block w-4 h-4"%}
               </button>
@@ -354,7 +355,7 @@
         
         {# Made with love section #}
         <div class="mt-4 text-xs text-gray-500 dark:text-gray-500">
-            Made with ❤️ · <a href="https://www.11ty.dev/" class="hover:underline" target="_blank" rel="noopener">Eleventy</a> + <a href="https://tailwindcss.com/" class="hover:underline" target="_blank" rel="noopener">Tailwind</a> · © {{ metadata.author.name }} 2025
+            Made with ❤️ · <a href="https://www.11ty.dev/" class="hover:underline" target="_blank" rel="noopener">Eleventy</a> + <a href="https://tailwindcss.com/" class="hover:underline" target="_blank" rel="noopener">Tailwind</a> · <a href="/colophon/" class="hover:underline">Colophon</a> · © {{ metadata.author.name }} 2025
         </div>
       </div>
     </div>
@@ -405,6 +406,47 @@
           });
       });
     }
+  </script>
+
+  {# ── Keyboard shortcuts ── #}
+  <div id="shortcuts-overlay" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.5);backdrop-filter:blur(2px);" onclick="document.getElementById('shortcuts-overlay').style.display='none'">
+    <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--bg,#fff);border:1px solid #e5e7eb;border-radius:0.75rem;padding:1.5rem 2rem;min-width:280px;max-width:360px;" onclick="event.stopPropagation()" class="dark:bg-zinc-900 dark:border-zinc-700">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+        <span style="font-weight:600;font-size:0.875rem;">Keyboard Shortcuts</span>
+        <button onclick="document.getElementById('shortcuts-overlay').style.display='none'" style="color:#9ca3af;font-size:1rem;background:none;border:none;cursor:pointer;">✕</button>
+      </div>
+      <table style="width:100%;border-collapse:collapse;font-size:0.8rem;">
+        <tr><td style="padding:0.25rem 0;color:#6b7280;">Navigation</td><td></td></tr>
+        <tr><td style="padding:0.2rem 0;"><kbd style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:3px;padding:1px 5px;font-size:0.7rem;font-family:monospace;">g h</kbd></td><td style="padding:0.2rem 0 0.2rem 1rem;color:#374151;" class="dark:text-gray-300">Home</td></tr>
+        <tr><td style="padding:0.2rem 0;"><kbd style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:3px;padding:1px 5px;font-size:0.7rem;font-family:monospace;">g b</kbd></td><td style="padding:0.2rem 0 0.2rem 1rem;color:#374151;" class="dark:text-gray-300">Blog</td></tr>
+        <tr><td style="padding:0.2rem 0;"><kbd style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:3px;padding:1px 5px;font-size:0.7rem;font-family:monospace;">g f</kbd></td><td style="padding:0.2rem 0 0.2rem 1rem;color:#374151;" class="dark:text-gray-300">Feed</td></tr>
+        <tr><td style="padding:0.2rem 0;"><kbd style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:3px;padding:1px 5px;font-size:0.7rem;font-family:monospace;">g s</kbd></td><td style="padding:0.2rem 0 0.2rem 1rem;color:#374151;" class="dark:text-gray-300">Snippets</td></tr>
+        <tr><td style="padding:0.2rem 0;"><kbd style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:3px;padding:1px 5px;font-size:0.7rem;font-family:monospace;">g n</kbd></td><td style="padding:0.2rem 0 0.2rem 1rem;color:#374151;" class="dark:text-gray-300">Now</td></tr>
+        <tr><td style="padding:0.2rem 0;"><kbd style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:3px;padding:1px 5px;font-size:0.7rem;font-family:monospace;">g t</kbd></td><td style="padding:0.2rem 0 0.2rem 1rem;color:#374151;" class="dark:text-gray-300">TIL</td></tr>
+        <tr><td style="padding:0.2rem 0;"><kbd style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:3px;padding:1px 5px;font-size:0.7rem;font-family:monospace;">g r</kbd></td><td style="padding:0.2rem 0 0.2rem 1rem;color:#374151;" class="dark:text-gray-300">Reading</td></tr>
+        <tr><td style="padding:0.25rem 0;color:#6b7280;padding-top:0.75rem;">Site</td><td></td></tr>
+        <tr><td style="padding:0.2rem 0;"><kbd style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:3px;padding:1px 5px;font-size:0.7rem;font-family:monospace;">d</kbd></td><td style="padding:0.2rem 0 0.2rem 1rem;color:#374151;" class="dark:text-gray-300">Toggle dark mode</td></tr>
+        <tr><td style="padding:0.2rem 0;"><kbd style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:3px;padding:1px 5px;font-size:0.7rem;font-family:monospace;">?</kbd></td><td style="padding:0.2rem 0 0.2rem 1rem;color:#374151;" class="dark:text-gray-300">This overlay</td></tr>
+      </table>
+    </div>
+  </div>
+  <script>
+  (function() {
+    let g = false;
+    const nav = { h:'/', b:'/blog/', f:'/feed/', s:'/snippets/', n:'/now/', t:'/til/', r:'/reading/' };
+    document.addEventListener('keydown', function(e) {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.isContentEditable) return;
+      const k = e.key;
+      if (g) {
+        g = false;
+        if (nav[k]) { window.location.href = nav[k]; return; }
+      }
+      if (k === 'g') { g = true; setTimeout(() => g = false, 1000); return; }
+      if (k === '?') { const o = document.getElementById('shortcuts-overlay'); o.style.display = o.style.display === 'none' ? 'flex' : 'none'; return; }
+      if (k === 'd') { document.getElementById('toggleDarkMode')?.click(); return; }
+      if (k === 'Escape') { document.getElementById('shortcuts-overlay').style.display = 'none'; }
+    });
+  })();
   </script>
 
   {% if hasEthicalAds and metadata.ethicalAds and metadata.ethicalAds.publisher %}

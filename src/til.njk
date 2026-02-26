@@ -1,0 +1,89 @@
+---
+layout: layouts/base.njk
+title: TIL
+description: Things I learned — short notes on discoveries, quirks, and "oh, that's how it works" moments.
+permalink: /til/
+eleventyNavigation:
+  key: TIL
+  order: 7
+---
+
+{% include "components/breadcrumbs.njk" %}
+
+<div class="flex items-baseline justify-between mb-2">
+  <div class="flex items-baseline gap-3">
+    <h1 class="text-2xl font-semibold tracking-tight m-0">TIL</h1>
+    <span class="meta-text text-xs text-gray-400 dark:text-gray-500">{{ collections.til | length }} entries</span>
+  </div>
+  <div class="flex items-center gap-2">
+    <div class="relative">
+      {% feather "search", class="w-3.5 h-3.5 text-gray-400 absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" %}
+      <input
+        type="text"
+        id="tilSearch"
+        placeholder="Search..."
+        class="rounded-md border border-gray-200 dark:border-gray-700 bg-transparent py-1.5 pl-8 pr-3 text-sm accent-field focus:outline-none dark:text-gray-100 w-40 placeholder:text-gray-400"
+      >
+    </div>
+  </div>
+</div>
+
+<p class="text-sm text-gray-500 dark:text-gray-400 mt-0 mb-4">Short notes on things I discover — CSS quirks, CLI tricks, API behaviour, random facts.</p>
+
+<div id="tilList" class="mt-2 divide-y divide-gray-100 dark:divide-gray-800/80">
+  {%- for entry in collections.til | reverse -%}
+    {% set rawTags = entry.data.tags | default([]) %}
+    {% set filteredTags = rawTags | filterTagList %}
+    {% set searchExcerpt = entry.templateContent | striptags | replace('\n', ' ') | truncate(200, true, '') | lower %}
+    <article
+      class="py-3.5 group"
+      data-til-card
+      data-title="{{ entry.data.title | lower }}"
+      data-tags="{{ filteredTags | join(' ') | lower }}"
+      data-body="{{ searchExcerpt }}"
+    >
+      <div class="flex flex-col md:flex-row md:gap-6">
+        <div class="shrink-0 md:w-28 flex flex-col gap-1 pt-0.5">
+          <time class="meta-text text-xs text-gray-400 dark:text-gray-500" datetime="{{ entry.date | htmlDateString }}">{{ entry.date | readableDate }}</time>
+          {% if filteredTags.length > 0 %}
+            <div class="hidden md:flex flex-wrap gap-1 mt-0.5">
+              {% for tag in filteredTags | slice(0, 2) %}
+                <span class="meta-text text-[0.62rem] px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400">{{ tag }}</span>
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
+        <div class="flex-1 min-w-0">
+          <div class="leading-snug">
+            <a href="{{ entry.url }}" class="font-semibold text-gray-900 dark:text-gray-100 title-hover" style="text-decoration: none;">{{ entry.data.title }}</a>
+          </div>
+          {% if entry.data.source %}
+            <a href="{{ entry.data.source }}" target="_blank" rel="noopener" class="text-xs text-gray-400 dark:text-gray-500 hover:underline" style="text-decoration: none;">{{ entry.data.source | truncate(60, true, '…') }} ↗</a>
+          {% endif %}
+          <div class="md:hidden flex flex-wrap items-center gap-x-2 gap-y-1 mt-1.5">
+            <span class="meta-text text-[0.65rem] text-gray-400 dark:text-gray-500">{{ entry.date | readableDate }}</span>
+            {% for tag in filteredTags | slice(0, 2) %}
+              <span class="meta-text text-[0.62rem] px-1 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400">{{ tag }}</span>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </article>
+  {%- endfor -%}
+</div>
+
+<script>
+  const tilSearch = document.getElementById('tilSearch');
+  if (tilSearch) {
+    tilSearch.addEventListener('input', function() {
+      const q = this.value.toLowerCase().trim();
+      document.querySelectorAll('[data-til-card]').forEach(card => {
+        const match = !q ||
+          card.dataset.title?.includes(q) ||
+          card.dataset.tags?.includes(q) ||
+          card.dataset.body?.includes(q);
+        card.style.display = match ? '' : 'none';
+      });
+    });
+  }
+</script>

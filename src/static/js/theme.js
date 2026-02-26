@@ -46,6 +46,8 @@ const getAccentTheme = () => {
 const setAccentVariables = (theme) => {
   const accentColor = ACCENT_COLORS[theme] || ACCENT_COLORS.teal;
   document.documentElement.style.setProperty("--accent-color", accentColor);
+  const tcMeta = document.getElementById("theme-color-meta");
+  if (tcMeta) tcMeta.setAttribute("content", accentColor);
 };
 
 const setAccentTheme = (theme) => {

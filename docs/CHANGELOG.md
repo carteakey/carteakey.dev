@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.8.0] - 2026-02-28
+
+### Added
+- `/colophon` page: stack, design philosophy, AI-assisted dev disclosure, source link; linked from footer
+- `/now/archive/` redesigned: timeline with vertical line + accent dots replacing flat link list
+- Now page: "Past updates →" link next to /now description
+- `/til/` collection: Today I Learned entries with layout, list page, search, feed integration (yellow dot)
+- `/reading/` shelf page: Currently Reading (with CSS progress bars), Read (star ratings), Want to Read
+- `/changelog/` page: visual timeline parsed from CHANGELOG.md — version badges, Added/Changed/Fixed/Removed sections color-coded
+- `src/_data/changelog.js`: parses CHANGELOG.md into version objects for the changelog page
+- `src/_data/reading.yaml`: book data structure for reading shelf
+- TIL type added to feed collection (yellow dot, "TIL" badge)
+- Colophon link added to footer credit line
+
 ## [1.7.2] - 2026-02-27
 
 ### Added
