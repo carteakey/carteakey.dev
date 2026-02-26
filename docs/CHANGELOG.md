@@ -5,7 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.6.7] - 2026-02-27
+## [1.6.8] - 2026-02-27
+
+### Changed
+- base.njk: Accent slider moved from extended footer (required scrolling ~1300 lines into page) into the nav bar, between the compass icon and dark mode toggle — now always visible on every page
+- base.njk: Slider redesigned as a compact inline gradient bar (w-20/w-28) with a white hairline indicator; no thumb ball needed (gradient itself shows position)
+- base.njk: Site title unified to "carteakey.dev" on both desktop and mobile — removes "Kartikey Chauhan" desktop variant and the `font-et-book` (Latin serif) font
+- base.njk: Nav `py-3` → `py-3.5` (slightly taller for consistency with body text size)
+- base.njk: Old footer slider block removed
+
+
 
 ### Fixed
 - tailwind.css: Moved `.title-hover:hover` completely OUT of `@layer components` — in Tailwind v4, `@layer utilities` always beats `@layer components` regardless of specificity, so hover color was always overridden by `text-gray-900 dark:text-gray-100`. Unlayered CSS beats all layers. Added `!important` as belt-and-suspenders.
