@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.8.5] - 2026-03-01
+
+### Added
+- uses.yaml: Audio section with AirPods Pro 2, Sennheiser HD 4.50 BTNC, Crinacle Zero 2, Moondrop Chu 2, Moondrop Quarks DSP
+
+### Changed
+- uses.yaml: Updated peripherals — Dell P3424WEB, Apple Magic Keyboard, Redragon Kumara, Logitech M720 Triathlon, Akai MPK Mini
+- uses.yaml: Retired Dell U2722D, Keychron K2, Logitech MX Master 3, Sony WH-1000XM4
+
 ## [1.8.4] - 2026-02-28
 
 ### Changed
