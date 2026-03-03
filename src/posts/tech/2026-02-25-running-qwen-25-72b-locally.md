@@ -6,7 +6,7 @@ updated: 2026-02-25
 tags:
   - AI
   - Self-Host
-hidden: false
+hidden: true
 pinned: false
 featured: false
 ---
