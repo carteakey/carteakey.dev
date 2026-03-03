@@ -117,6 +117,14 @@ Get a base sub (~$20/mo) as primary, then layer on free trials and cheap options
 **Local options**
 - Qwen3-Coder-Next (your first "usable" <60GB coding model), GPT-OSS-120B (matches o4-mini on coding benchmarks), Devstral, Kimi-Dev-72B, Codestral
 
+### Qwen Code (Free)
+
+- Open-source CLI coding agent by Alibaba/QwenLM, purpose-built for Qwen3-Coder. Claude Code-like terminal experience with Skills, SubAgents, and multi-session handling.
+- **1,000 free requests/day** via Qwen OAuth — just sign in with your qwen.ai account, no credit card.
+- Supports OpenAI, Anthropic, and Gemini-compatible APIs. Point it at any provider or run it entirely local via llama.cpp — it speaks the same OpenAI-compatible protocol that llama-server exposes.
+- The framework and the Qwen3-Coder model are co-developed and released together, so it gets first-class support for new model quirks.
+- Worth pairing with your D-tier local setup: Qwen3-Coder-Next on llama-server + Qwen Code on top = a fully offline coding agent at zero recurring cost.
+
 ## Free options worth considering
 
 - Google AI Pro free trial (includes Antigravity)

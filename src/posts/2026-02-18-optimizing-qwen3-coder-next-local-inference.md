@@ -48,7 +48,9 @@ taskset -c 0-11 $LLAMA_SERVER \
     --batch-size 2048 \
     --ubatch-size 512 \
     --prio 2 \
-    --no-warmup
+    --no-warmup \
+    -ctk q8_0 \
+    -ctv q8_0
 ```
 
 ## Why Qwen3-Coder-Next?
@@ -91,8 +93,37 @@ Qwen3-Coder-Next is faster because it activates fewer parameters per token (3B v
 Based on community feedback and my own testing:
 - **Coding**: Both are very capable. Q3CN is particularly good at Python, Go, and agentic tool use. GPT-OSS-120B has an edge on complex reasoning.
 - **Context handling**: Q3CN is significantly better at long context thanks to the hybrid attention. GPT-OSS-120B's KV cache for full attention gets expensive fast.
-- **Agentic use**: Q3CN is described as "aggressively completing tasks" - great for coding agents. It works well with OpenCode, Roo Code, and even Claude Code via llama-server. Because Q3CN is a non-thinking model, it doesn't waste tokens generating internal `<think>` blocks like GPT-OSS and other reasoning models. This keeps your context window clear and agent loops fast.
+- **Agentic use**: Q3CN is described as "aggressively completing tasks" - great for coding agents. It works well with OpenCode, Roo Code, Claude Code, and Qwen Code via llama-server. Because Q3CN is a non-thinking model, it doesn't waste tokens generating internal `<think>` blocks like GPT-OSS and other reasoning models. This keeps your context window clear and agent loops fast.
 - **Quirks**: Q3CN can be verbose and occasionally enters loops with certain agent frameworks. Setting `--temp 0` can help for pure coding tasks.
+
+## Using with Qwen Code
+
+Since llama-server exposes an OpenAI-compatible API, [Qwen Code](https://github.com/QwenLM/qwen-code) — the open-source terminal agent by QwenLM — can connect to it directly with no extra tooling.
+
+Full configuration steps are in the [Qwen Code local llama.cpp snippet](/snippets/qwen-code-local-llama-cpp), but the short version is a `~/.qwen/settings.json` like this:
+
+```json
+{
+  "modelProviders": {
+    "openai": [
+      {
+        "id": "unsloth/Qwen3-Coder-Next",
+        "name": "unsloth/Qwen3-Coder-Next",
+        "baseUrl": "http://localhost:8001/v1",
+        "envKey": "LOCAL_LLAMA_API_KEY"
+      }
+    ]
+  },
+  "env": { "LOCAL_LLAMA_API_KEY": "local" },
+  "security": { "auth": { "selectedType": "openai" } },
+  "model": {
+    "name": "unsloth/Qwen3-Coder-Next",
+    "generationConfig": { "contextWindowSize": 131072 }
+  }
+}
+```
+
+Match `id` to your `--alias`, `baseUrl` to your `--port`, and `contextWindowSize` to your `--ctx-size`. The result is a fully local coding agent — llama-server handles inference, Qwen Code handles the agentic loop.
 
 ## Optimization notes
 
@@ -116,6 +147,7 @@ sudo dmidecode -t memory | grep -E "Speed|Configured"
 
 ## Post-mortem / Changelog
 
+- 2026-03-02 - Added `-ctk q8_0` and `-ctv q8_0` parameters for KV cache and token vector quantization.
 - 2026-02-15 - Initial post. Getting ~38 t/s after enabling XMP and updating llama.cpp.
 
 ## Reference

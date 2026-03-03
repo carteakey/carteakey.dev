@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - post(2026-02-18-optimizing-qwen3-coder-next-local-inference): HTML comment stub for a future GPT-OSS-120B vs Qwen3-Coder-Next head-to-head comparison post.
+- post(2026-02-18-optimizing-qwen3-coder-next-local-inference): Added `-ctk q8_0` and `-ctv q8_0` parameters to llama-server configuration for KV cache and token vector quantization.
 
 ## [1.4.6] - 2026-02-09
 
