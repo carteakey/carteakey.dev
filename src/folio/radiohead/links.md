@@ -11,9 +11,8 @@ permalink: /folio/radiohead/links/
 
 ## Official & Band-Connected
 
-- [Radiohead Public Library](https://radiohead.com/library) — full archive organised by album, the mothership
+- [Radiohead Public Library](https://radiohead.com/library) — full archive organised by album
 - [W.A.S.T.E. Headquarters](https://www.wasteheadquarters.com/) — official news, mailing list, tour info ✅
-- [W.A.S.T.E. Links Page](https://links.wasteheadquarters.com/) — band's curated hub (Radiohead, Thom, The Smile, Donwood)
 - [W.A.S.T.E. Store](https://store.wasteheadquarters.com/) — official merch for all band members and Donwood
 - [Official Message Board](http://msgboard.radiohead.com) — original band-hosted board, now spam-flooded ⚠️
 
