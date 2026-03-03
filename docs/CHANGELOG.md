@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.9.0] - 2026-03-03
+
+### Added
+- `/folio/` section: themed standalone web pages for personal obsessions — each with its own design, fonts, palette
+- `/folio/radiohead/` — first folio: a curated web archive of Radiohead's internet presence, archive maze sites, essential albums, B-sides, fan databases, and personal notes
+- Folio link added to footer navigation (Explore category) and `/more/` page
+
 ## [1.8.5] - 2026-03-01
 
 ### Added

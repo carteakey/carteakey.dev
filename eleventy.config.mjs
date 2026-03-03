@@ -196,7 +196,7 @@ async function imageShortcodeWithCaptions(src, alt, css, caption) {
 }
 
 export const config = {
-	pathPrefix: "/",
+  pathPrefix: "/",
   // Control which files Eleventy will process
   // e.g.: *.md, *.njk, *.html, *.liquid
   templateFormats: ["md", "njk", "html", "liquid"],
@@ -207,20 +207,20 @@ export const config = {
   // Pre-process *.html files with: (default: `liquid`)
   htmlTemplateEngine: "njk",
   dir: {
-        input: "src",
-        includes: "_includes",
-        data: "_data",
-        output: "_site",
-      },
+    input: "src",
+    includes: "_includes",
+    data: "_data",
+    output: "_site",
+  },
 }
 
-export default function(eleventyConfig) {
+export default function (eleventyConfig) {
   eleventyConfig.setTemplateFormats("md,njk,html,liquid");
   eleventyConfig.addPlugin(EleventyHtmlBasePlugin)
   eleventyConfig.addWatchTarget("./src/**/*/*.css");
   // Copy the `img` and `css` folders to the output
   // Copy all static images (includes subfolders like /static/img/vibes)
-  eleventyConfig.addPassthroughCopy({"./src/static/img":"/img/"});
+  eleventyConfig.addPassthroughCopy({ "./src/static/img": "/img/" });
   eleventyConfig.addPassthroughCopy("./src/static/css/prism-a11y-dark.css");
   eleventyConfig.addPassthroughCopy({ "./src/static/css/prism": "/static/css/prism" });
   eleventyConfig.addPassthroughCopy({ "./src/static/js": "/static/js" });
@@ -257,14 +257,14 @@ export default function(eleventyConfig) {
   });
 
   // WebC
-	eleventyConfig.addPlugin(eleventyWebcPlugin, {
-		components: [
-			// …
-			// Add as a global WebC component
-			"npm:@11ty/eleventy-img/*.webc",
-		]
-	});
-   
+  eleventyConfig.addPlugin(eleventyWebcPlugin, {
+    components: [
+      // …
+      // Add as a global WebC component
+      "npm:@11ty/eleventy-img/*.webc",
+    ]
+  });
+
   // https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#valid-date-string
   eleventyConfig.addFilter("htmlDateString", (dateObj) => {
     return DateTime.fromJSDate(dateObj, { zone: "utc" }).toFormat("yyyy-LL-dd");
@@ -335,7 +335,7 @@ export default function(eleventyConfig) {
 
   //Image Plugin
   eleventyConfig.addAsyncShortcode("image", imageShortcode);
-  eleventyConfig.addAsyncShortcode("image_cc",imageShortcodeWithCaptions);
+  eleventyConfig.addAsyncShortcode("image_cc", imageShortcodeWithCaptions);
 
   // Generate thumbnails for gallery images
   async function galleryImageShortcode(src) {
@@ -383,43 +383,43 @@ export default function(eleventyConfig) {
   eleventyConfig.addFilter("filterTagList", filterTagList);
 
   // Sort tags by post count (descending)
-  eleventyConfig.addFilter("sortTagsByCount", function(tagList, collections) {
+  eleventyConfig.addFilter("sortTagsByCount", function (tagList, collections) {
     return tagList.map(tag => ({
       name: tag,
       count: (collections[tag] || []).filter(post => !post.data.hidden).length
     }))
-    .filter(item => item.count > 0)
-    .sort((a, b) => b.count - a.count);
+      .filter(item => item.count > 0)
+      .sort((a, b) => b.count - a.count);
   });
 
   // Add split filter for breadcrumbs
-  eleventyConfig.addFilter("split", function(str, separator) {
+  eleventyConfig.addFilter("split", function (str, separator) {
     if (typeof str !== 'string') return [];
     return str.split(separator);
   });
 
   // Add utility filters for stats page
-  eleventyConfig.addFilter("max", function(value, max) {
+  eleventyConfig.addFilter("max", function (value, max) {
     return Math.max(value, max);
   });
 
-  eleventyConfig.addFilter("min", function(value, max) {
+  eleventyConfig.addFilter("min", function (value, max) {
     return Math.min(value, max);
   });
 
-  eleventyConfig.addFilter("round", function(value, decimals = 0) {
+  eleventyConfig.addFilter("round", function (value, decimals = 0) {
     return decimals === 0 ? Math.round(value) : Math.round(value * Math.pow(10, decimals)) / Math.pow(10, decimals);
   });
 
-  eleventyConfig.addFilter("uniq", function(array) {
+  eleventyConfig.addFilter("uniq", function (array) {
     return [...new Set(array)];
   });
 
-  eleventyConfig.addFilter("map", function(array, property) {
+  eleventyConfig.addFilter("map", function (array, property) {
     return array.map(item => item[property]);
   });
 
-  eleventyConfig.addFilter("flat", function(array) {
+  eleventyConfig.addFilter("flat", function (array) {
     return array.flat();
   });
 
@@ -435,24 +435,24 @@ export default function(eleventyConfig) {
     }
   };
 
-  eleventyConfig.addFilter("domainFromUrl", function(value) {
+  eleventyConfig.addFilter("domainFromUrl", function (value) {
     return parseHostname(value);
   });
 
-  eleventyConfig.addFilter("domainInitial", function(value) {
+  eleventyConfig.addFilter("domainInitial", function (value) {
     const domain = parseHostname(value);
     return domain ? domain[0].toUpperCase() : '#';
   });
 
-  eleventyConfig.addFilter("faviconUrl", function(value) {
+  eleventyConfig.addFilter("faviconUrl", function (value) {
     const domain = parseHostname(value);
     return domain ? `https://icons.duckduckgo.com/ip3/${domain}.ico` : null;
   });
 
-  eleventyConfig.addFilter("date", function(date, format) {
+  eleventyConfig.addFilter("date", function (date, format) {
     if (!date) return '';
     const dateObj = typeof date === 'string' ? new Date(date) : date;
-    
+
     // Simple date formatting - extend as needed
     if (format === 'MMMM d, yyyy "at" h:mm a') {
       return dateObj.toLocaleString('en-US', {
@@ -472,28 +472,28 @@ export default function(eleventyConfig) {
     if (format === 'h:mm a') return dateObj.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
     if (format === 'YYYY') return dateObj.getFullYear().toString();
     if (format === 'MMM d, yyyy') return dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-    
+
     return dateObj.toLocaleDateString();
   });
 
-  eleventyConfig.addFilter("truncate", function(str, length = 100) {
+  eleventyConfig.addFilter("truncate", function (str, length = 100) {
     if (!str || str.length <= length) return str;
     return str.substring(0, length) + '...';
   });
 
   // Note: 'uniq' and 'head' filters are already defined above
 
-  eleventyConfig.addFilter("keys", function(obj) {
+  eleventyConfig.addFilter("keys", function (obj) {
     return Object.keys(obj);
   });
 
   // Format number with commas (e.g. 12345 → "12,345")
-  eleventyConfig.addFilter("numberString", function(n) {
+  eleventyConfig.addFilter("numberString", function (n) {
     return Number(n).toLocaleString('en-US');
   });
 
   // Merge two objects (for building maps in templates)
-  eleventyConfig.addFilter("merge", function(obj, extra) {
+  eleventyConfig.addFilter("merge", function (obj, extra) {
     return Object.assign({}, obj, extra);
   });
 
@@ -529,16 +529,16 @@ export default function(eleventyConfig) {
   });
 
   // Add reading time filter (estimates based on average reading speed of 200 words per minute)
-  eleventyConfig.addFilter("readingTime", function(content) {
+  eleventyConfig.addFilter("readingTime", function (content) {
     if (!content) return "1 min read";
-    
+
     // Strip HTML tags and count words
     const text = content.replace(/<[^>]+>/g, '');
     const wordCount = text.split(/\s+/).filter(word => word.length > 0).length;
-    
+
     // Average reading speed: 200 words per minute
     const readingTimeMinutes = Math.ceil(wordCount / 200);
-    
+
     if (readingTimeMinutes === 1) {
       return "1 min read";
     } else {
@@ -547,14 +547,14 @@ export default function(eleventyConfig) {
   });
 
   // Word count filter (returns raw number)
-  eleventyConfig.addFilter("wordCount", function(content) {
+  eleventyConfig.addFilter("wordCount", function (content) {
     if (!content) return 0;
     const text = content.replace(/<[^>]+>/g, '');
     return text.split(/\s+/).filter(word => word.length > 0).length;
   });
 
   // Sum word counts across a collection of posts (using templateContent)
-  eleventyConfig.addFilter("sumWordCounts", function(posts) {
+  eleventyConfig.addFilter("sumWordCounts", function (posts) {
     if (!Array.isArray(posts)) return 0;
     return posts.reduce((total, post) => {
       const text = (post.templateContent || '').replace(/<[^>]+>/g, '');
@@ -563,7 +563,7 @@ export default function(eleventyConfig) {
   });
 
   // Group collection items by year, return { year: count } map
-  eleventyConfig.addFilter("countByYear", function(posts) {
+  eleventyConfig.addFilter("countByYear", function (posts) {
     if (!Array.isArray(posts)) return {};
     const map = {};
     for (const post of posts) {
@@ -574,7 +574,7 @@ export default function(eleventyConfig) {
   });
 
   // Count posts in a given year+month (both strings like "2026", "2")
-  eleventyConfig.addFilter("countInYearMonth", function(posts, year, month) {
+  eleventyConfig.addFilter("countInYearMonth", function (posts, year, month) {
     if (!Array.isArray(posts)) return 0;
     return posts.filter(p => {
       const d = new Date(p.date);
@@ -583,13 +583,13 @@ export default function(eleventyConfig) {
   });
 
   // Sort posts by date descending regardless of pinned status
-  eleventyConfig.addFilter("sortByDate", function(posts) {
+  eleventyConfig.addFilter("sortByDate", function (posts) {
     if (!Array.isArray(posts)) return posts;
     return [...posts].sort((a, b) => new Date(b.date) - new Date(a.date));
   });
 
   // Add snippet tags collection
-  eleventyConfig.addCollection("snippetTags", function(collection) {
+  eleventyConfig.addCollection("snippetTags", function (collection) {
     let tagSet = new Set();
     collection.getFilteredByTag("snippets").forEach(item => {
       (item.data.tags || []).forEach(tag => {
@@ -614,28 +614,28 @@ export default function(eleventyConfig) {
   });
 
   // Custom posts collection: hide posts with hidden: true or future date
-  eleventyConfig.addCollection("posts", function(collectionApi) {
-      const now = new Date();
-      return collectionApi
-        .getFilteredByGlob("./src/posts/**/*.md")
-        .filter(post => {
-       // Hide if hidden: true in frontmatter
+  eleventyConfig.addCollection("posts", function (collectionApi) {
+    const now = new Date();
+    return collectionApi
+      .getFilteredByGlob("./src/posts/**/*.md")
+      .filter(post => {
+        // Hide if hidden: true in frontmatter
         if (post.data.hidden === true) return false;
         // Hide if date is in the future
         if (post.date && post.date > now) return false;
         return true;
-        })
-        .sort((a, b) => {
-          // Pinned posts first, then by date (newest first)
-          const aPinned = a.data.pinned ? 1 : 0;
-          const bPinned = b.data.pinned ? 1 : 0;
-          if (aPinned !== bPinned) return bPinned - aPinned;
-          return b.date - a.date;
-        });
-    });
+      })
+      .sort((a, b) => {
+        // Pinned posts first, then by date (newest first)
+        const aPinned = a.data.pinned ? 1 : 0;
+        const bPinned = b.data.pinned ? 1 : 0;
+        if (aPinned !== bPinned) return bPinned - aPinned;
+        return b.date - a.date;
+      });
+  });
 
   // Featured post: pick the best post with featured: true from the posts collection
-  eleventyConfig.addCollection("featuredPost", function(collectionApi) {
+  eleventyConfig.addCollection("featuredPost", function (collectionApi) {
     const now = new Date();
     const posts = collectionApi
       .getFilteredByGlob("./src/posts/**/*.md")
@@ -723,7 +723,7 @@ export default function(eleventyConfig) {
   });
 
   // Custom allPages collection: like collections.all but hides hidden:true and future-dated posts
-  eleventyConfig.addCollection("allPages", function(collectionApi) {
+  eleventyConfig.addCollection("allPages", function (collectionApi) {
     const now = new Date();
     return collectionApi.getAll().filter(page => {
       // Only filter posts, not all pages, for hidden/future
@@ -736,18 +736,18 @@ export default function(eleventyConfig) {
   });
 
   // Add a collection for now page lookbacks
-  eleventyConfig.addCollection("nowLookback", function(collectionApi) {
+  eleventyConfig.addCollection("nowLookback", function (collectionApi) {
     return collectionApi.getFilteredByGlob("src/now/lookback/*.md");
   });
 
   // Add a collection for now page archive
-  eleventyConfig.addCollection("nowArchive", function(collectionApi) {
+  eleventyConfig.addCollection("nowArchive", function (collectionApi) {
     return collectionApi.getFilteredByGlob("src/now/archive/*.md")
       .filter(item => !item.inputPath.includes('_template.md'));
   });
 
   // TIL collection
-  eleventyConfig.addCollection("til", function(collectionApi) {
+  eleventyConfig.addCollection("til", function (collectionApi) {
     return collectionApi.getFilteredByGlob("src/til/**/*.md")
       .sort((a, b) => b.date - a.date);
   });
@@ -927,11 +927,32 @@ export default function(eleventyConfig) {
         };
       });
 
+    const folioEntries = collectionApi
+      .getFilteredByGlob("./src/folio/**/index.html")
+      .filter((entry) => {
+        if (entry.data.hidden === true) return false;
+        if (entry.date && entry.date > now) return false;
+        return true;
+      })
+      .map((entry) => {
+        const summarySource = entry.data.description || "";
+        const summary = summarySource ? truncate(stripHtml(summarySource)) : null;
+        return {
+          type: "folio",
+          title: entry.data.title || "Folio",
+          date: entry.date,
+          url: entry.url,
+          summary,
+          original: entry,
+        };
+      });
+
     const combined = [
       ...posts,
       ...snippets,
       ...notes,
       ...tilEntries,
+      ...folioEntries,
       ...nowUpdates,
       ...photos,
       // ...vibes,
@@ -966,7 +987,7 @@ export default function(eleventyConfig) {
   eleventyConfig.addPlugin(pluginTOC, {
     ul: true
   })
-  
+
   markdownLibrary.renderer.rules.code_inline = (tokens, idx, { langPrefix = "" }) => {
     const token = tokens[idx];
     return `<code class="${langPrefix}">${markdownLibrary.utils.escapeHtml(token.content)}</code>`;

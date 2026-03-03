@@ -21,6 +21,7 @@ eleventyNavigation:
 - [/changelog](/changelog/): site changelog
 - [/colophon](/colophon/): how this site is built
 - [/cv](/cv/): my curriculum vitae
+- [/folio](/folio/): themed web pages for things I obsess over
 - [/feed](/feed/): all posts, snippets, and mini blogs
 - [/gallery](/gallery/): photo gallery
 - [/games](/games/): games I'm currently playing

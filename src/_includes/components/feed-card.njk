@@ -19,6 +19,7 @@
   {% set isVibe = item.type == 'vibe' %}
   {% set isNow = item.type == 'now' %}
   {% set isTil = item.type == 'til' %}
+  {% set isFolio = item.type == 'folio' %}
 
   {# Type color dot classes #}
   {% set dotColor = "bg-gray-400" %}
@@ -44,6 +45,9 @@
   {% elif isTil %}
     {% set dotColor = "bg-yellow-400" %}
     {% set badgeLabel = "TIL" %}
+  {% elif isFolio %}
+    {% set dotColor = "bg-orange-400" %}
+    {% set badgeLabel = "Folio" %}
   {% endif %}
 
   {# ── LIST VARIANT (homepage preview — single compact row) ── #}
