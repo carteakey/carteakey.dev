@@ -59,6 +59,7 @@ Designed with Stanley Donwood. Each is a different era. Sites 5, 6, and 11 are d
 - [Internet Archive — Live Hub](https://archive.org/details/RadioheadHub) — every live performance, On a Friday through TKOL ✅
 - [Essential Radiohead Bootlegs](https://theessentialradioheadbootlegs.tumblr.com) — curated guide to best recordings by era, with context + download links ✅
 - [Radiohead Almanac](https://the-radiohead-almanac.fandom.com/wiki/The_Radiohead_Almanac_Wiki) — fan wiki cataloguing every known live recording, ongoing project ✅
+- [Hail to the Thief Live Recordings 2003–2009](https://en.wikipedia.org/wiki/Hail_to_the_Thief_Live_Recordings_2003%E2%80%932009) — official live album; digital August 2025, physical October 2025; London, Amsterdam, Buenos Aires, Dublin ✅
 
 ## Interactive
 
