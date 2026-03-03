@@ -117,6 +117,29 @@ holes."
             color: var(--ink);
             letter-spacing: -1px;
             margin-bottom: 28px;
+            position: relative;
+        }
+
+        h1::after {
+            content: '█';
+            font-size: 0.4em;
+            color: var(--gold);
+            opacity: 0.6;
+            animation: blink 1.2s step-end infinite;
+            vertical-align: middle;
+            margin-left: 4px;
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 0.6;
+            }
+
+            50% {
+                opacity: 0;
+            }
         }
 
         h1 em {
@@ -872,6 +895,29 @@ holes."
                         facsimile specifically because the original is gone.</div>
                     <span class="site-tag">[wayback only]</span>
                 </div>
+                <div class="site" style="cursor: default;">
+                    <div class="site-num">✕</div>
+                    <span class="site-url" style="color: var(--dim);">injektilo.com</span>
+                    <div class="site-desc">Early FTP server hosting full live shows before DC++ and torrents existed.
+                        Absorbed into Green Plastic around 1999. Wayback Machine only.</div>
+                    <span class="site-tag">[wayback only]</span>
+                </div>
+                <div class="site" style="cursor: default;">
+                    <div class="site-num">✕</div>
+                    <span class="site-url" style="color: var(--dim);">injektilo.com</span>
+                    <div class="site-desc">Early FTP live-show host — one of the first places to distribute bootleg
+                        recordings. Absorbed into Green Plastic ~1999. Gone.</div>
+                    <span class="site-tag">[wayback only]</span>
+                </div>
+                <div class="site" style="cursor: default;">
+                    <div class="site-num">✕</div>
+                    <span class="site-url" style="color: var(--dim);">Planet Telex / Wasteland / FADE OUT / Tony's
+                        Page</span>
+                    <div class="site-desc">Named on Site 1's "Get your fix here" links page as the key mid-90s fan
+                        hubs. The band noted the list was already "disgustingly out of date" when they wrote it. All
+                        gone.</div>
+                    <span class="site-tag">[wayback only]</span>
+                </div>
             </div>
 
             <div class="scribble" style="margin-top: 32px;">
@@ -1114,12 +1160,26 @@ holes."
             </div>
             <div class="prose-entry">
                 <div>
-                    <div class="pe-title">W.A.S.T.E. Central</div>
-                    <div class="pe-desc">Fan community and blog network on Ning. Long-form writing on Radiohead's
-                        digital legacy and the Public Library.</div>
+                    <div class="pe-title">Green Plastic Cold Storage</div>
+                    <div class="pe-desc">The archive-within-the-archive. Print articles from 1993 onward, fan art,
+                        Ed O'Brien's diary, the W.A.S.T.E. mailing list archive, and a facsimile of "Lift" — Jonathan
+                        Moore's lost early fan site, preserved here specifically because the original is gone.</div>
                     <div class="entry-tags">
                         <span class="tag fansite">fansite</span>
-                        <span class="tag">community</span>
+                        <span class="tag archive">archive</span>
+                    </div>
+                </div>
+                <a class="pe-link" href="https://www.greenplastic.info/cold-storage/" target="_blank">cold-storage ↗</a>
+            </div>
+            <div class="prose-entry">
+                <div>
+                    <div class="pe-title">W.A.S.T.E. Central</div>
+                    <div class="pe-desc">Fan community and blog network on Ning. Still reachable but many accounts
+                        are inaccessible and the data is decaying. Password recovery is broken. A digital ruin.
+                    </div>
+                    <div class="entry-tags">
+                        <span class="tag fansite">fansite</span>
+                        <span class="tag uncharted">[decaying]</span>
                     </div>
                 </div>
                 <a class="pe-link" href="https://wastecentral.ning.com" target="_blank">wastecentral.ning.com ↗</a>
@@ -1164,6 +1224,31 @@ holes."
                     </div>
                 </div>
                 <a class="pe-link" href="https://radiohead-notforprofit.com" target="_blank">notforprofit.com ↗</a>
+            </div>
+            <div class="prose-entry">
+                <div>
+                    <div class="pe-title">Not For Profit — YouTube</div>
+                    <div class="pe-desc">Full-show audio uploads. Same material as the site but more accessible.
+                        Good for background listening while the links go cold.</div>
+                    <div class="entry-tags">
+                        <span class="tag live">live</span>
+                    </div>
+                </div>
+                <a class="pe-link" href="https://www.youtube.com/@Radioheadnotforprofitofficial" target="_blank">youtube
+                    ↗</a>
+            </div>
+            <div class="prose-entry">
+                <div>
+                    <div class="pe-title">Essential Radiohead Bootlegs</div>
+                    <div class="pe-desc">A Tumblr guide to the best live recordings by era — Utrecht 1997, Berlin
+                        2000, Bonnaroo 2006, and others — with descriptions and download links. Regularly referenced
+                        on r/radiohead when someone asks where to start with bootlegs.</div>
+                    <div class="entry-tags">
+                        <span class="tag live">live</span>
+                        <span class="tag fansite">curated</span>
+                    </div>
+                </div>
+                <a class="pe-link" href="https://theessentialradioheadbootlegs.tumblr.com" target="_blank">tumblr ↗</a>
             </div>
             <div class="prose-entry">
                 <div>
@@ -1216,10 +1301,32 @@ holes."
     </div>
 
     <footer>
-        <span><a href="/folio/">← carteakey.dev/folio</a></span>
+        <span><a href="/folio/">&#8592; carteakey.dev/folio</a></span>
         <span>not comprehensive. not finished.</span>
         <span>updated march 2026</span>
     </footer>
+    <div
+        style="text-align: center; padding: 12px 0 20px; font-family: 'Share Tech Mono', monospace; font-size: 11px; color: rgba(212, 207, 168, 0.15); letter-spacing: 0.15em;">
+        <span id="visitor-counter">[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;] souls have passed through</span>
+        &nbsp;&middot;&nbsp; ~51kb &nbsp;&middot;&nbsp; <em style="font-style: italic;">best viewed in netscape
+            navigator 4.0</em>
+    </div>
 </body>
+
+<script>
+    (function () {
+        const slug = 'folio-radiohead';
+        fetch(`/.netlify/functions/upvote?slug=${slug}&trackView=true`)
+            .then(r => r.json())
+            .then(data => {
+                if (data.views) {
+                    const formatted = String(data.views).padStart(7, '\u00a0');
+                    document.getElementById('visitor-counter').textContent =
+                        `[${formatted}] souls have passed through`;
+                }
+            })
+            .catch(() => { });
+    })();
+</script>
 
 </html>
