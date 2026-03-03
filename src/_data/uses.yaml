@@ -2,29 +2,79 @@ categories:
   - name: Hardware
     emoji: "🖥️"
     items:
-      - name: MacBook Pro 14" (M3 Pro)
+      - name: MacBook Pro 14" (M3 Pro) — Work
         emoji: "💻"
-        description: My primary development machine. The M3 chip handles everything from code editing to running local LLMs.
+        description: Primary development machine. The M3 chip handles everything from code editing to running local LLMs.
         link: https://www.apple.com/macbook-pro/
 
-      - name: Dell U2722D Monitor
+      - name: MacBook — Personal
+        emoji: "💻"
+        description: Personal laptop for everyday use.
+
+      - name: Windows PC — Gaming + Workstation
         emoji: "🖥️"
-        description: 27" 4K USB-C monitor for extended screen real estate when working from home.
+        description: Desktop for gaming and heavier workstation tasks.
 
-      - name: Keychron K2 Keyboard
+      - name: Asus FX505 — Home Server
+        emoji: "🗄️"
+        description: Repurposed gaming laptop running as a home server.
+
+      - name: Raspberry Pi — Always-on Server
+        emoji: "🍓"
+        description: Low-power always-on server for self-hosted services.
+
+      - name: Dell P3424WEB Monitor
+        emoji: "🖥️"
+        description: 34" curved ultrawide USB-C monitor.
+        link: https://www.dell.com/en-us/shop/dell-34-curved-usb-c-hub-monitor-p3424web/apd/210-bfxo
+
+      - name: Apple Magic Keyboard
         emoji: "⌨️"
-        description: Mechanical keyboard with brown switches. Great for typing long sessions.
-        link: https://www.keychron.com/products/keychron-k2-wireless-mechanical-keyboard
+        description: Wireless keyboard for Mac. Clean and minimal.
+        link: https://www.apple.com/shop/product/MK2C3LL/A/magic-keyboard-with-touch-id
 
-      - name: Logitech MX Master 3
+      - name: Redragon Kumara
+        emoji: "⌨️"
+        description: Mechanical keyboard for Windows/gaming use.
+        link: https://www.redragonzone.com/products/redragon-k552-kumara
+
+      - name: Logitech M720 Triathlon
         emoji: "🖱️"
-        description: The best mouse I've ever used. Ergonomic and packed with features.
-        link: https://www.logitech.com/products/mice/mx-master-3s.html
+        description: Multi-device mouse. Switches seamlessly between Mac and Windows.
+        link: https://www.logitech.com/products/mice/m720-triathlon.html
 
-      - name: Sony WH-1000XM4
+      - name: Akai MPK Mini
+        emoji: "🎹"
+        description: Compact MIDI keyboard controller for music production.
+        link: https://www.akaipro.com/mpk-mini-mk3
+
+  - name: Audio
+    emoji: "🎧"
+    items:
+      - name: AirPods Pro 2
         emoji: "🎧"
-        description: Noise-cancelling headphones for focused work sessions.
-        link: https://www.sony.com/electronics/headphones/wh-1000xm4
+        description: Primary headphones. ANC + transparency mode, great for on-the-go.
+        link: https://www.apple.com/airpods-pro/
+
+      - name: Sennheiser HD 4.50 BTNC
+        emoji: "🎧"
+        description: Over-ear wireless headphones with noise cancellation. Alternate pick for long sessions.
+        link: https://www.sennheiser.com/en-us/catalog/products/headphones/hd-4-50-btnc/hd-4-50-btnc-508384
+
+      - name: Crinacle Zero 2
+        emoji: "🎵"
+        description: Tuned IEM by Crinacle. Excellent value for neutral-ish sound signature.
+        link: https://www.crinacle.com/2023/05/19/crinacle-zero2/
+
+      - name: Moondrop Chu 2
+        emoji: "🎵"
+        description: Budget IEM with a clean, reference-adjacent sound.
+        link: https://www.moondroplab.com/en/articles/chu2
+
+      - name: Moondrop Quarks DSP
+        emoji: "🎵"
+        description: Ultra-compact USB-C IEM with built-in DSP.
+        link: https://www.moondroplab.com/en/articles/quarksdsp
 
   - name: Development Tools
     emoji: "⚡"
@@ -104,33 +154,75 @@ categories:
         description: Data transformation tool for analytics engineering.
         link: https://www.getdbt.com/
 
-  - name: Productivity
-    emoji: "✅"
+  - name: Organize
+    emoji: "📅"
     items:
-      - name: Obsidian
-        emoji: "🗒️"
-        description: Markdown-based knowledge management and note-taking.
-        link: https://obsidian.md/
-
       - name: Notion
         emoji: "📋"
-        description: Workspace for docs, projects, and collaboration.
+        description: Project management for Dev and Homelab projects. Replaced GitHub Projects.
         link: https://www.notion.so/
 
-      - name: Arc Browser
+      - name: Apple Notes
+        emoji: "🍎"
+        description: Personal note-taking. Simple and syncs seamlessly across Apple devices.
+
+      - name: Obsidian
+        emoji: "🗒️"
+        description: Knowledge base for technical notes and long-form writing.
+        link: https://obsidian.md/
+
+      - name: Google Calendar
+        emoji: "📆"
+        description: Calendar and scheduling.
+        link: https://calendar.google.com/
+
+      - name: Apple Reminders
+        emoji: "✅"
+        description: Task and todo management.
+
+      - name: Safari
+        emoji: "🧭"
+        description: Primary browser on Mac, iPhone, and iPad.
+        link: https://www.apple.com/safari/
+
+      - name: Edge
         emoji: "🌐"
-        description: A browser reimagined. Great tab management and workspaces.
-        link: https://arc.net/
+        description: Primary browser on Windows.
+        link: https://www.microsoft.com/en-us/edge
+
+      - name: Firefox
+        emoji: "🦊"
+        description: Secondary browser for dev and homelab work across Mac, Windows, and Linux.
+        link: https://www.mozilla.org/firefox/
+
+      - name: Raindrop.io
+        emoji: "🔖"
+        description: Primary bookmark manager.
+        link: https://raindrop.io/
+
+      - name: Hoarder
+        emoji: "📦"
+        description: Secondary bookmark manager for archiving and image-heavy content.
+        link: https://hoarder.app/
+
+      - name: Bitwarden
+        emoji: "🔐"
+        description: Primary password manager. Open-source and cross-platform.
+        link: https://bitwarden.com/
+
+      - name: Apple Passwords
+        emoji: "🔑"
+        description: Secondary password manager for Apple ecosystem.
+
+      - name: Microsoft Authenticator
+        emoji: "🔒"
+        description: 2FA authentication.
+        link: https://www.microsoft.com/en-us/security/mobile-authenticator-app
 
       - name: Raycast
         emoji: "🚀"
         description: Launcher and productivity tool for macOS.
         link: https://www.raycast.com/
-
-      - name: 1Password
-        emoji: "🔐"
-        description: Password manager for secure credential storage.
-        link: https://1password.com/
 
   - name: Services
     emoji: "☁️"
@@ -161,6 +253,36 @@ categories:
         link: https://giscus.app/
 
 retired:
+  - name: Dell U2722D Monitor
+    emoji: "🖥️"
+    description: Replaced by Dell P3424WEB ultrawide.
+    retired_date: "2026"
+
+  - name: Keychron K2
+    emoji: "⌨️"
+    description: Replaced by Apple Magic Keyboard + Redragon Kumara.
+    retired_date: "2026"
+
+  - name: Logitech MX Master 3
+    emoji: "🖱️"
+    description: Replaced by Logitech M720 Triathlon for multi-device support.
+    retired_date: "2026"
+
+  - name: Sony WH-1000XM4
+    emoji: "🎧"
+    description: Replaced by AirPods Pro 2 as primary + Sennheiser HD 4.50 BTNC as alt.
+    retired_date: "2026"
+
+  - name: Arc Browser
+    emoji: "🌐"
+    description: Switched to Safari/Edge as primary browsers.
+    retired_date: "2026"
+
+  - name: 1Password
+    emoji: "🔐"
+    description: Moved to Bitwarden for open-source, cross-platform password management.
+    retired_date: "2026"
+
   - name: Sublime Text
     emoji: "📝"
     description: Switched to VS Code for better extension support.
@@ -182,6 +304,12 @@ retired:
     retired_date: "2024"
 
 changelog:
+  - date: "2026-03"
+    change: "Added Audio section (AirPods Pro 2, Sennheiser HD 4.50, Crinacle Zero 2, Moondrop Chu 2, Moondrop Quarks DSP); updated peripherals (Dell P3424WEB, Apple Magic Keyboard, Redragon Kumara, Logitech M720, Akai MPK Mini)"
+
+  - date: "2026-02"
+    change: "Reorganized into Organize section; added all devices; switched to Bitwarden, Safari/Edge/Firefox, Raindrop.io + Hoarder; replaced GitHub Projects with Notion"
+
   - date: "2025-02"
     change: "Added GitHub Copilot to development tools"
 

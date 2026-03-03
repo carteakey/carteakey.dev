@@ -54,47 +54,33 @@ eleventyNavigation:
 </p> #}
 
 <div class="mx-auto">
-  <div class="mb-8">
-    <div class="intro-block">
-      <p>Here are some of my personal projects</p>
-    </div>
-  </div>
+  <p class="text-sm text-gray-500 dark:text-gray-400 mb-6">Here are some of my personal projects.</p>
 
-  <div class="grid gap-4 md:grid-cols-3">
+  <ul class="not-prose divide-y divide-gray-200 dark:divide-gray-700">
     {% for project in projects.projects %}
-      <article class="card card-hover overflow-hidden flex flex-col group">
-        {% if project.image_path %}
-          <div class="overflow-hidden">
-            {% image project.image_path, project.title, "h-40 w-full object-cover transition-transform duration-300 group-hover:scale-105" %}
-          </div>
-        {% endif %}
-
-        <div class="flex flex-1 flex-col card-padding gap-2">
-          <div class="flex items-start justify-between gap-2">
-            <a href="{% if project.url %}{{ project.url }}{% endif %}" title="View Project" class="inline-flex items-center gap-1 text-sm font-bold tracking-tight text-gray-900 link-accent dark:text-gray-100">
+      <li class="group flex items-start gap-4 py-4">
+        <div class="flex-1 min-w-0">
+          <div class="flex flex-wrap items-center gap-2">
+            <a href="{% if project.url %}{{ project.url }}{% else %}{{ project.github }}{% endif %}" title="View Project" class="inline-flex items-center gap-1 font-semibold text-gray-900 link-accent dark:text-gray-100">
               {{ project.title }}
-              {% if project.url %}
-                {% feather "arrow-up-right", class="w-3.5 h-3.5 opacity-50 group-hover:opacity-100 transition-opacity" %}
-              {% endif %}
+              {% feather "arrow-up-right", class="w-3.5 h-3.5 opacity-40 group-hover:opacity-100 transition-opacity" %}
             </a>
-            {% if project.github %}
-              <a class="inline-flex items-center text-gray-400 hover:text-gray-700 dark:text-gray-500 dark:hover:text-gray-300 transition-colors shrink-0" title="View Code" href="{{ project.github }}">
-                {% feather "github", class="w-4 h-4" %}
-              </a>
-            {% endif %}
-          </div>
-          <p class="text-sm leading-relaxed text-gray-600 dark:text-gray-400 line-clamp-2">
-            {{ project.description }}
-          </p>
-          <div class="mt-auto pt-1 flex flex-wrap gap-1.5">
             {% for tag in project.tags %}
               <span class="tag text-[0.6rem]">#{{ tag }}</span>
             {% endfor %}
           </div>
+          <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+            {{ project.description }}
+          </p>
         </div>
-      </article>
+        {% if project.github %}
+          <a class="mt-1 shrink-0 text-gray-400 hover:text-gray-700 dark:text-gray-500 dark:hover:text-gray-300 transition-colors" title="View Code" href="{{ project.github }}">
+            {% feather "github", class="w-4 h-4" %}
+          </a>
+        {% endif %}
+      </li>
     {% endfor %}
-  </div>
+  </ul>
 <hr />
 <h2>GitHub Activity</h2>
 <div class="not-prose">
@@ -102,7 +88,7 @@ eleventyNavigation:
     My contribution activity on GitHub over the past year.
   </p>
   
-  <div class="card card-padding">
+  <div class="card card-padding not-prose">
     {% include "components/github-contributions.njk" %}
     <p class="text-xs text-gray-500 dark:text-gray-400 mt-2 text-center">
       Data sourced live from <a href="https://github.com/carteakey" class="hover:underline accent-link">GitHub activity</a>.
@@ -115,33 +101,32 @@ eleventyNavigation:
 <p>
   Here are the rest of my projects on <a href="https://github.com/carteakey?tab=repositories">GitHub</a>.
 </p>
-<table>
+<div class="not-prose border border-gray-200 dark:border-gray-800 rounded-lg overflow-hidden">
+<table class="w-full text-xs">
   <thead>
-    <tr>
-      <th>Updated</th>
-      <th>Name</th>
-      <th>Description</th>
+    <tr class="bg-gray-50 dark:bg-gray-900">
+      <th class="text-left px-3 py-2 font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">Updated</th>
+      <th class="text-left px-3 py-2 font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">Name</th>
+      <th class="text-left px-3 py-2 font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide hidden sm:table-cell">Description</th>
     </tr>
   </thead>
-  <tbody id="repoTableBody">
+  <tbody class="divide-y divide-gray-200 dark:divide-gray-800">
     {% for repo in github.repos %}
-    <tr>
-      <td class="">
-        <time class=" postlist-date">{{ repo.repo_updated | formatDate }}</time>
+    <tr class="hover:bg-gray-50 dark:hover:bg-gray-900/50 transition-colors">
+      <td class="px-3 py-2 meta-text text-gray-500 dark:text-gray-400 whitespace-nowrap">
+        <time>{{ repo.repo_updated | formatDate }}</time>
       </td>
-
-      <td>
-        <a href="{{ repo.repo_url }}">
+      <td class="px-3 py-2">
+        <a href="{{ repo.repo_url }}" class="title-hover font-medium" target="_blank" rel="noopener">
           {{ repo.repo_name }}
         </a>
       </td>
-      <td>
+      <td class="px-3 py-2 text-gray-500 dark:text-gray-400 hidden sm:table-cell">
         {{ repo.repo_description }}
       </td>
-
-
     </tr>
     {% endfor %}
   </tbody>
 </table>
+</div>
 </div>

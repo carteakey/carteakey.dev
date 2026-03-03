@@ -144,28 +144,23 @@ async function imageShortcode(src, alt, css) {
   // Preserve animation for GIFs by bypassing transformation
   if (/\.gif$/i.test(src)) {
     const publicSrc = mapSrcToPublicUrl(src);
-    const sizes = "(min-width: 30em) 50vw, 100vw";
-    return `<img src="${publicSrc}" alt="${alt ?? ''}" class="${css ?? ''}" loading="lazy" decoding="async" sizes="${sizes}" style="max-width: 100%; height: auto;" data-zoomable />`;
+    return `<img src="${publicSrc}" alt="${alt ?? ''}" class="${css ?? ''}" loading="lazy" decoding="async" />`;
   }
   let metadata = await Image(src, {
-    widths: ["auto"],
+    widths: [400, 800, 1200, "auto"],
     formats: ['avif', 'webp', 'jpeg'],
     outputDir: "./_site/img/",
   });
 
-  const sizes = "(min-width: 30em) 50vw, 100vw";
-
   let imageAttributes = {
     class: css,
     alt,
-    sizes,
+    sizes: "(min-width: 768px) 720px, 100vw",
     loading: "lazy",
     decoding: "async",
-    style: "max-width: 100%; height: auto;",
     "data-zoomable": "",
   };
 
-  // You bet we throw an error on missing alt in `imageAttributes` (alt="" works okay)
   return generateHTML(metadata, imageAttributes, {
     whitespaceMode: "inline",
   });
@@ -175,25 +170,21 @@ async function imageShortcodeWithCaptions(src, alt, css, caption) {
   // Preserve animation for GIFs by bypassing transformation
   if (/\.gif$/i.test(src)) {
     const publicSrc = mapSrcToPublicUrl(src);
-    const sizes = "(min-width: 30em) 50vw, 100vw";
-    const imageMarkup = `<img src="${publicSrc}" alt="${alt ?? ''}" class="${css ?? ''}" loading="lazy" decoding="async" sizes="${sizes}" style="max-width: 100%; height: auto;" data-zoomable />`;
+    const imageMarkup = `<img src="${publicSrc}" alt="${alt ?? ''}" class="${css ?? ''}" loading="lazy" decoding="async" />`;
     return `<figure>${imageMarkup}${caption ? `<figcaption class="font-thin italic">${caption}</figcaption>` : ""}</figure>`;
   }
   let metadata = await Image(src, {
-    widths: ["auto"],
+    widths: [400, 800, 1200, "auto"],
     formats: ['avif', 'webp', 'jpeg'],
     outputDir: "./_site/img/",
   });
 
-  const sizes = "(min-width: 30em) 50vw, 100vw";
-
   let imageAttributes = {
     class: css,
     alt,
-    sizes,
+    sizes: "(min-width: 768px) 720px, 100vw",
     loading: "lazy",
     decoding: "async",
-    style: "max-width: 100%; height: auto;",
     "data-zoomable": "",
   };
 
@@ -288,7 +279,10 @@ export default function(eleventyConfig) {
   });
 
   eleventyConfig.addFilter("readableDate", (dateObj) => {
-    return DateTime.fromJSDate(dateObj).toLocaleString(DateTime.DATE_FULL);
+    return DateTime.fromJSDate(dateObj).toFormat("MMM d, yyyy");
+  });
+  eleventyConfig.addFilter("shortDate", (dateObj) => {
+    return DateTime.fromJSDate(dateObj).toFormat("MMM yy");
   });
 
   // Archive-specific date filters
@@ -470,6 +464,14 @@ export default function(eleventyConfig) {
         hour12: true
       });
     }
+    // PHP-style format chars
+    if (format === 'Y') return dateObj.getFullYear().toString();
+    if (format === 'n') return (dateObj.getMonth() + 1).toString();
+    if (format === 'X') return Math.floor(dateObj.getTime() / 1000).toString();
+    if (format === 'MMM d') return dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    if (format === 'h:mm a') return dateObj.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+    if (format === 'YYYY') return dateObj.getFullYear().toString();
+    if (format === 'MMM d, yyyy') return dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
     
     return dateObj.toLocaleDateString();
   });
@@ -483,6 +485,16 @@ export default function(eleventyConfig) {
 
   eleventyConfig.addFilter("keys", function(obj) {
     return Object.keys(obj);
+  });
+
+  // Format number with commas (e.g. 12345 → "12,345")
+  eleventyConfig.addFilter("numberString", function(n) {
+    return Number(n).toLocaleString('en-US');
+  });
+
+  // Merge two objects (for building maps in templates)
+  eleventyConfig.addFilter("merge", function(obj, extra) {
+    return Object.assign({}, obj, extra);
   });
 
   eleventyConfig.addTransform("normalizePostAssetLinks", function (content, outputPath) {
@@ -532,6 +544,48 @@ export default function(eleventyConfig) {
     } else {
       return `${readingTimeMinutes} min read`;
     }
+  });
+
+  // Word count filter (returns raw number)
+  eleventyConfig.addFilter("wordCount", function(content) {
+    if (!content) return 0;
+    const text = content.replace(/<[^>]+>/g, '');
+    return text.split(/\s+/).filter(word => word.length > 0).length;
+  });
+
+  // Sum word counts across a collection of posts (using templateContent)
+  eleventyConfig.addFilter("sumWordCounts", function(posts) {
+    if (!Array.isArray(posts)) return 0;
+    return posts.reduce((total, post) => {
+      const text = (post.templateContent || '').replace(/<[^>]+>/g, '');
+      return total + text.split(/\s+/).filter(w => w.length > 0).length;
+    }, 0);
+  });
+
+  // Group collection items by year, return { year: count } map
+  eleventyConfig.addFilter("countByYear", function(posts) {
+    if (!Array.isArray(posts)) return {};
+    const map = {};
+    for (const post of posts) {
+      const yr = new Date(post.date).getFullYear().toString();
+      map[yr] = (map[yr] || 0) + 1;
+    }
+    return map;
+  });
+
+  // Count posts in a given year+month (both strings like "2026", "2")
+  eleventyConfig.addFilter("countInYearMonth", function(posts, year, month) {
+    if (!Array.isArray(posts)) return 0;
+    return posts.filter(p => {
+      const d = new Date(p.date);
+      return d.getFullYear().toString() === year && (d.getMonth() + 1).toString() === month;
+    }).length;
+  });
+
+  // Sort posts by date descending regardless of pinned status
+  eleventyConfig.addFilter("sortByDate", function(posts) {
+    if (!Array.isArray(posts)) return posts;
+    return [...posts].sort((a, b) => new Date(b.date) - new Date(a.date));
   });
 
   // Add snippet tags collection
@@ -692,6 +746,12 @@ export default function(eleventyConfig) {
       .filter(item => !item.inputPath.includes('_template.md'));
   });
 
+  // TIL collection
+  eleventyConfig.addCollection("til", function(collectionApi) {
+    return collectionApi.getFilteredByGlob("src/til/**/*.md")
+      .sort((a, b) => b.date - a.date);
+  });
+
   // Add a unified feed collection across key content types
   eleventyConfig.addCollection("feed", async function (collectionApi) {
     const now = new Date();
@@ -756,24 +816,24 @@ export default function(eleventyConfig) {
         };
       });
 
-    const microposts = collectionApi
-      .getFilteredByGlob("./src/microposts/**/*.md")
+    const notes = collectionApi
+      .getFilteredByGlob("./src/notes/**/*.md")
       .filter((entry) => {
         if (entry.data.hidden === true) return false;
         if (entry.date && entry.date > now) return false;
         return true;
       })
-      .map((micropost) => {
-        micropost.data.feedType = "micropost";
-        const excerptSource = micropost.data.excerpt || "";
+      .map((note) => {
+        note.data.feedType = "note";
+        const excerptSource = note.data.excerpt || "";
         const summary = excerptSource ? truncate(stripHtml(excerptSource), 260) : null;
         return {
-          type: "micropost",
-          title: micropost.data.title || "Micropost",
-          date: micropost.date,
-          url: micropost.url && micropost.url !== false ? micropost.url : null,
+          type: "note",
+          title: note.data.title || "Note",
+          date: note.date,
+          url: note.url && note.url !== false ? note.url : null,
           summary,
-          original: micropost,
+          original: note,
         };
       });
 
@@ -847,10 +907,31 @@ export default function(eleventyConfig) {
       })
       .filter(Boolean);
 
+    const tilEntries = collectionApi
+      .getFilteredByGlob("./src/til/**/*.md")
+      .filter((entry) => {
+        if (entry.data.hidden === true) return false;
+        if (entry.date && entry.date > now) return false;
+        return true;
+      })
+      .map((entry) => {
+        const summarySource = entry.data.description || entry.data.excerpt || "";
+        const summary = summarySource ? truncate(stripHtml(summarySource)) : null;
+        return {
+          type: "til",
+          title: entry.data.title,
+          date: entry.date,
+          url: entry.url,
+          summary,
+          original: entry,
+        };
+      });
+
     const combined = [
       ...posts,
       ...snippets,
-      ...microposts,
+      ...notes,
+      ...tilEntries,
       ...nowUpdates,
       ...photos,
       // ...vibes,

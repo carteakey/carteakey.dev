@@ -1,7 +1,8 @@
 ---
 title: Social Media Detox
 date: 2025-10-02
-permalink: false
+layout: layouts/note.njk
+permalink: /notes/{{ page.fileSlug }}/
 ---
 
 

@@ -37,7 +37,7 @@ eleventyNavigation:
 
   <div id="loadingState" class="hidden">
     <div class="flex items-center justify-center py-8">
-      <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-amber-500"></div>
+      <div class="animate-spin rounded-full h-8 w-8 border-b-2" style="border-color: var(--accent-color);"></div>
     </div>
   </div>
 </div>
@@ -147,10 +147,12 @@ eleventyNavigation:
     const articles = document.querySelectorAll('#searchResults article');
     articles.forEach((article, index) => {
       if (index === selectedIndex) {
-        article.classList.add('ring-2', 'ring-amber-500', 'bg-amber-50', 'dark:bg-amber-900/20');
+        article.style.outline = '2px solid var(--accent-color)';
+        article.style.outlineOffset = '-2px';
         article.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       } else {
-        article.classList.remove('ring-2', 'ring-amber-500', 'bg-amber-50', 'dark:bg-amber-900/20');
+        article.style.outline = '';
+        article.style.outlineOffset = '';
       }
     });
   }
@@ -182,9 +184,9 @@ eleventyNavigation:
       const typeBadge = item.type === 'post' ? 'Post' : 'Snippet';
       
       return `
-        <article class="border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:border-amber-500 dark:hover:border-amber-500 transition-colors">
+        <article class="border border-gray-200 dark:border-gray-700 rounded-lg p-4 transition-colors" style="border-color: var(--result-border, );" onmouseover="this.style.borderColor='var(--accent-color)'" onmouseout="this.style.borderColor=''">
           <div class="flex items-start justify-between mb-2">
-            <a href="${item.url}" class="text-xl font-semibold hover:text-amber-600 dark:hover:text-amber-400">
+            <a href="${item.url}" class="text-base font-semibold" style="text-decoration:none; transition: color 0.15s;" onmouseover="this.style.color='var(--accent-color)'" onmouseout="this.style.color=''">
               ${item.title}
             </a>
             <span class="ml-2 px-2 py-1 text-xs rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400">
@@ -195,7 +197,7 @@ eleventyNavigation:
           ${item.tags.length > 0 ? `
             <div class="flex flex-wrap gap-2 mt-2">
               ${item.tags.map(tag => `
-                <a href="/tags/${tag.toLowerCase()}/" class="text-xs px-2 py-1 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded hover:bg-amber-100 dark:hover:bg-amber-900">
+                <a href="/tags/${tag.toLowerCase()}/" class="text-xs px-2 py-1 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded hover:bg-gray-200 dark:hover:bg-gray-700">
                   ${tag}
                 </a>
               `).join('')}
