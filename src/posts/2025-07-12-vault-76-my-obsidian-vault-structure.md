@@ -11,7 +11,7 @@ Obsidian is one of the most useful pieces of software I've used.
 
 If someone asked me to choose only two apps for life, VSCode and Obsidian would be my picks.
 
-I've mostly been a multi-vault/multi-app note taker, treating each vault as a separate project or domain. The only issue with this approach for me was to think about where to put a note, and the constant context switching between vaults. While I still use Apple Notes for personal notes and quick captures, I wanted a central point for all my knowledge, projects, and resources.
+I've mostly been a multi-vault/multi-app note taker, treating each vault as a separate project or domain. The only issue with this approach for me was to think about where to put a note, and the constant context switching between vaults. I wanted a central point for all my knowledge, projects, and resources.
 
 {% image_cc "./src/static/img/single-or-multiple-vaults.png", "", "", "Conflicts, conflicts" %}
 
@@ -38,35 +38,63 @@ The bottom line is "Can you find what you need when you need it?".
 
 So I wanted to share my own approach that has evolved over time. I call it "Vault 76" and it serves as a comprehensive knowledge management system for all my personal, professional, and academic content.
 
+## The Tool Selection Problem
+
+Before getting into the vault structure, I had to settle a bigger question: which app for what?
+
+I was running three apps simultaneously — Apple Reminders, Apple Notes, and Obsidian — and everything was spread across all three. Finances in both Notes and Reminders. Travel in both. Goals everywhere. 301 items in Reminders with no real system.
+
+The answer was simpler than I thought:
+
+| App | Job |
+|---|---|
+| **Reminders** | Actionable tasks only. If it has a verb and needs to be *done*, it goes here. Siri + iPhone integration is unbeatable for quick capture. |
+| **Obsidian** | Everything else — lists, knowledge, reference, projects. Cross-platform (Mac, Windows, Linux, iOS). |
+| **Apple Notes** | iPad Pencil sketches only, then export to Obsidian. |
+
+The forcing question: *if you'd be upset if it disappeared tomorrow, it belongs in Obsidian. If you complete it and forget it, Reminders.*
+
+### TODOs are not Bucket Lists
+
+One thing that was poisoning my Reminders was mixing task types. A TODO and a bucket list item look similar on the surface, but they're fundamentally different:
+
+- **TODO** — something you're committing to do, with implied urgency. Lives in Reminders. You'd feel bad if it didn't get done this week.
+- **Bucket List** — something you want to experience before you die, no timeline. Lives in Obsidian. Missing it this week changes nothing.
+
+Mixing them creates guilt without progress. Seeing "learn Spanish" next to "buy milk" is a recipe for ignoring both.
+
+> If you'd reschedule it, it's a TODO. If you'd reminisce about it, it's a bucket list.
+
 ## The Vault 76 System
 
-The system uses a numbered hierarchy (0-7) that mirrors a natural workflow of an inbox, organization and eventual archival.
+The system uses a numbered hierarchy (0-8) that mirrors a natural workflow from capture to archive.
 
 ### Top-Level Organization
 
 ```md
 vault-76/
 ├── 0. inbox 📥                    # Quick capture, daily notes, temporary items
-├── 1. system 📊                   # Vault management, templates, scripts
+├── 1. system 📊                   # Vault management, templates, scripts, attachments
 ├── 2. knowledge 🧠                # All learning content (theory + domain)
-├── 3. projects 🚀                 # Active work, development, assignments
-├── 4. career 💼                   # Job hunting, resume, interviews
+├── 3. projects 🚀                 # Active work, development, side projects
+├── 4. career 💼                   # Job hunting, interviews, experience
 ├── 5. finance 💰                  # Money management, investments, taxes
-├── 6. personal 👤                 # Hobbies, gaming, personal interests
+├── 6. personal 👤                 # Health, hobbies, home, media, self
 ├── 7. archive 📦                  # Completed/inactive content
-└── _attachments/                  # All media files, images, documents
+└── 8. config ⚙️                   # Vault setup, plugin notes, obsidian config docs
 ```
 
 The numbered system creates a natural flow:
 
 1. **Capture** (0. inbox) - Everything starts here via daily notes or quick capture
-2. **Process** (1. system) - Templates and scripts help organize and automate
+2. **Process** (1. system) - Templates, scripts and mental models live here
 3. **Learn** (2. knowledge) - Reference material and learning notes live here
 4. **Create** (3. projects) - Active work and development happens here
 5. **Grow** (4. career) - Professional development and job hunting
 6. **Manage** (5. finance) - Financial planning and tracking
-7. **Live** (6. personal) - Hobbies, health, and personal interests
+7. **Live** (6. personal) - Hobbies, health, media and personal interests
 8. **Archive** (7. archive) - Completed or outdated content
+9. **Configure** (8. config) - Vault setup, plugin documentation, obsidian config notes
 
 ### Detailed Structure (Examples)
 
@@ -88,35 +116,33 @@ The numbered system creates a natural flow:
 │   ├── meeting-notes.md
 ├── scripts/
 │   ├── rsync-to-git.sh
-│   ├── convert-inline-latex.sh 
-│   ├── rename-images.sh 
+│   ├── convert-inline-latex.sh
+│   ├── rename-images.sh
 │   └── rename-property.py
+└── mental-models/
+    ├── app-tool-selection.md
+    └── todos-vs-bucket-list.md
 ```
+
+I added a `mental-models/` folder to `1. system` for decisions about the system itself — which app to use for what, how to distinguish note types, etc. Meta-notes about how you think, not what you think about.
 
 #### 2. knowledge 🧠
 ```md
 2. knowledge/
-├── computer-science/
-│   ├── data-structures-algorithms/
-│   ├── databases/
-│   ├── system-design/
-│   └── programming-languages/
-├── data-science/
-│   ├── machine-learning/
-│   ├── deep-learning/
-│   ├── statistics/
-│   └── data-visualization/
-├── llm/
-├── maths/
-├── domain/
-│   ├── finance/
-│   └── business/
-├── tools-tech/
-│   ├── sql/
-│   ├── python/
-└── education/
+├── computer-science 💻/
+├── data-engineering ⚙️/
+├── data-science 🔬/
+├── llm 🤖/
+├── maths 🔢/
+├── domain 🏦/
+├── snippets ✂️/
+├── tools-tech 🔧/
+├── articles 📄/
+└── education 🎓/
     └── msc-notes/
 ```
+
+Articles saved from the web live here once read and worth keeping — not in inbox clippings (that's the queue), but here as processed reference.
 
 #### 3. projects 🚀
 ```md
@@ -175,21 +201,34 @@ The numbered system creates a natural flow:
 #### 6. personal 👤
 ```md
 6. personal/
-├── gaming/
-│   └── emulation/
-├── health/
-├── travel/
-└── hobbies/
+├── health 🏥/
+├── home 🏠/
+├── hobbies 🎮/
+├── media 🎬/
+│   ├── movies/
+│   └── shows/
+├── mazda 🚗/
+├── self 🪞/
+└── user-manuals 📖/
 ```
+
+`self/` covers inner life — relationships, personal philosophy, ramblings. `media/` is for notes and reviews after watching — the watchlist itself lives in Reminders.
 
 #### 7. archive 📦
 ```md
 7. archive/
-├── completed-projects/
-├── old-notes/
-└── outbox/
+├── past-projects 🗄️/
+└── outbox 📤/
 ```
 
-The beauty of this structure is that it grows with you - whether you add new domains, change careers, or pick up new hobbies, there's a logical place for everything. 
+#### 8. config ⚙️
+
+Notes about the vault itself — plugin setup guides, CSS snippet explanations, sync configuration. Not system templates (those are in `1. system`) but documentation about how the vault is configured and why.
+
+---
+
+The beauty of this structure is that it grows with you — whether you add new domains, change careers, or pick up new hobbies, there's a logical place for everything.
+
+A template for this vault is available on [GitHub](https://github.com/carteakey/vault-76-template).
 
 However, this is just my approach. The best system is the one you'll actually use consistently. Start simple, let it grow organically, and adjust as needed.
