@@ -61,8 +61,34 @@ Designed with Stanley Donwood. Each is a different era. Sites 5, 6, and 11 are d
 - [Radiohead Almanac](https://the-radiohead-almanac.fandom.com/wiki/The_Radiohead_Almanac_Wiki) — fan wiki cataloguing every known live recording, ongoing project ✅
 - [Hail to the Thief Live Recordings 2003–2009](https://en.wikipedia.org/wiki/Hail_to_the_Thief_Live_Recordings_2003%E2%80%932009) — official live album; digital August 2025, physical October 2025; London, Amsterdam, Buenos Aires, Dublin ✅
 
-## Interactive
+## The Music — A Way In
 
+Albums in release order. Start with OK Computer or In Rainbows, not Pablo Honey.
+
+- [Pablo Honey](https://en.wikipedia.org/wiki/Pablo_Honey) — 1993; origin point, not the entry point
+- [The Bends](https://en.wikipedia.org/wiki/The_Bends_(album)) — 1995; last guitar album; gateway for many
+- [OK Computer](https://en.wikipedia.org/wiki/OK_Computer) — 1997; essential
+- [Kid A](https://en.wikipedia.org/wiki/Kid_A) — 2000; essential
+- [Amnesiac](https://en.wikipedia.org/wiki/Amnesiac_(album)) — 2001; essential
+- [Hail to the Thief](https://en.wikipedia.org/wiki/Hail_to_the_Thief) — 2003; underrated
+- [In Rainbows](https://en.wikipedia.org/wiki/In_Rainbows) — 2007; essential; pay what you want changed everything
+- [The King of Limbs](https://en.wikipedia.org/wiki/The_King_of_Limbs) — 2011; live versions better than studio
+- [A Moon Shaped Pool](https://en.wikipedia.org/wiki/A_Moon_Shaped_Pool) — 2016; essential; True Love Waits finally here
+
+### Live Videos & Documents
+
+- [In Rainbows: From the Basement](https://www.youtube.com/watch?v=s_Q7FoM-8ow) — whole album live in a studio; essential entry point ✅
+- [Glastonbury 2003](https://archive.org/search?query=radiohead+glastonbury+2003) — legendary headline set; "2+2=5" opener before album was out ✅
+
+### B-sides, Reissues & Deep Cuts
+
+- [Talk Show Host](https://en.wikipedia.org/wiki/Street_Spirit_(Fade_Out)) — b-side, Street Spirit single; used in Romeo + Juliet
+- [The Daily Mail / Staircase](https://en.wikipedia.org/wiki/The_Daily_Mail_(song)) — standalone 2011; both better than half of TKOL
+- [Spectre](https://en.wikipedia.org/wiki/Spectre_(song)) — written for Bond, rejected, released Christmas 2015
+- [I Might Be Wrong: Live Recordings](https://en.wikipedia.org/wiki/I_Might_Be_Wrong:_Live_Recordings) — mini live album, Kid A/Amnesiac tours; essential
+- [OKNOTOK 1997 2017](https://en.wikipedia.org/wiki/OKNOTOK_1997_2017) — OK Computer 20th anniversary reissue + three unreleased tracks
+- [Kid A Mnesia](https://en.wikipedia.org/wiki/Kid_A_Mnesia) — Kid A + Amnesiac reissued with third disc; Follow Me Around finally here
+- [Hail to the Thief Live Recordings 2003–2009](https://en.wikipedia.org/wiki/Hail_to_the_Thief_Live_Recordings_2003%E2%80%932009) — official live album, 2025
 - [Kid A Mnesia Exhibition](https://kida-mnesia.com/) — free PC/Mac/PS5 experience; walk through the Kid A + Amnesiac artwork ✅
 
 ## Dead & Lost
