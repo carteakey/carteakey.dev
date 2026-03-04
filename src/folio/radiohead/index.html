@@ -678,14 +678,16 @@ holes."
             display: block;
             width: 64px;
             height: 64px;
-            object-fit: none;
+            object-fit: contain;
             mix-blend-mode: screen;
             opacity: 0.55;
             margin: 10px 0 0 auto;
             transition: opacity 0.2s;
         }
 
-        .album-card:hover .album-icon { opacity: 0.85; }
+        .album-card:hover .album-icon {
+            opacity: 0.85;
+        }
 
         /* ─── CLASSIFIED ─── */
         .classified {
@@ -702,11 +704,13 @@ holes."
             letter-spacing: 0.05em;
             line-height: 1.7;
             padding: 16px 20px;
-            background: rgba(0,0,0,0.4);
+            background: rgba(0, 0, 0, 0.4);
             border: 1px solid rgba(158, 58, 31, 0.25);
         }
 
-        .classified summary::-webkit-details-marker { display: none; }
+        .classified summary::-webkit-details-marker {
+            display: none;
+        }
 
         .classified[open] summary {
             color: var(--dim);
@@ -716,7 +720,7 @@ holes."
 
         .classified-content {
             padding: 16px 20px;
-            background: rgba(0,0,0,0.4);
+            background: rgba(0, 0, 0, 0.4);
             border: 1px solid rgba(158, 58, 31, 0.25);
             border-top: none;
             font-family: 'IM Fell English', serif;
@@ -981,7 +985,12 @@ holes."
                 <li><a href="#scrapbooks">Scrapbooks, Blogs, Notes</a></li>
                 <li><a href="#fan-sites">Fan Sites &amp; Deep Archives</a></li>
                 <li><a href="#community">Community &amp; Live Archive</a></li>
-                <li><a href="#music">The Music — A Way In</a></li>
+                <li><a href="#music">The Music — A Way In</a>
+                    <ol style="padding-left:18px; margin-top:4px; counter-reset:toc-sub;">
+                        <li style="counter-increment:none; padding:2px 0;"><a href="#live-videos"
+                                style="font-size:11px;">&#8627; Live Videos &amp; Documents</a></li>
+                    </ol>
+                </li>
                 <li><a href="#dead">The Dead &amp; The Lost</a></li>
             </ol>
         </div>
@@ -1187,12 +1196,15 @@ holes."
 
 
             <details class="classified">
-                <summary>████████████████████ ████████████████████████████ ███████████. ████████ ██ ████████████████████████ ███ ████████████████████ ████████████████ ████████████. ████ ██████ ████████ ██████.</summary>
+                <summary>████████████████████ ████████████████████████████ ███████████. ████████ ██
+                    ████████████████████████ ███ ████████████████████ ████████████████ ████████████. ████ ██████
+                    ████████ ██████.</summary>
                 <div class="classified-content">
                     <div class="classified-label">declassified // unverified</div>
                     <p>The band's 2004 renegotiation with EMI reportedly included a clause allowing one album to be
                         released outside standard label terms. <em>In Rainbows</em> was that album. The "pay what you
-                        want" model was not an accident. This is not a legal document and none of this should be cited.</p>
+                        want" model was not an accident. This is not a legal document and none of this should be cited.
+                    </p>
                 </div>
             </details>
 
@@ -1386,7 +1398,8 @@ holes."
             <div class="album-grid">
                 <a class="album-card" href="https://en.wikipedia.org/wiki/Pablo_Honey" target="_blank">
                     <div class="album-name">Pablo Honey</div>
-                    <img class="album-icon" src="/img/radiohead/icons-collage.png" style="object-position: -223px -118px" alt="" loading="lazy">
+                    <img class="album-icon" src="/img/radiohead/album-pablo-honey.png" alt="" loading="lazy"
+                        onerror="this.style.display='none'">
                     <div class="album-year">1993</div>
                     <div class="album-note">They were a different band. Britrock, still finding it. "Creep" happened and
                         they spent the next decade running from it. Worth knowing for where they started.</div>
@@ -1394,7 +1407,8 @@ holes."
                 </a>
                 <a class="album-card" href="https://en.wikipedia.org/wiki/The_Bends_(album)" target="_blank">
                     <div class="album-name">The Bends</div>
-                    <img class="album-icon" src="/img/radiohead/icons-collage.png" style="object-position: -648px -118px" alt="" loading="lazy">
+                    <img class="album-icon" src="/img/radiohead/album-the-bends.png" alt="" loading="lazy"
+                        onerror="this.style.display='none'">
                     <div class="album-year">1995</div>
                     <div class="album-note">The last album with guitars at the centre. "Fake Plastic Trees" and "Street
                         Spirit" are devastating songs written by a band that hadn't figured out how to be devastating
@@ -1403,7 +1417,8 @@ holes."
                 </a>
                 <a class="album-card" href="https://en.wikipedia.org/wiki/OK_Computer" target="_blank">
                     <div class="album-name">OK Computer</div>
-                    <img class="album-icon" src="/img/radiohead/icons-collage.png" style="object-position: -1008px -118px" alt="" loading="lazy">
+                    <img class="album-icon" src="/img/radiohead/album-ok-computer.png" alt="" loading="lazy"
+                        onerror="this.style.display='none'">
                     <div class="album-year">1997</div>
                     <div class="album-note">The one that broke everything open. "Fitter Happier" is a poem read by a
                         text-to-speech engine and it's more human than most lyrics.</div>
@@ -1411,7 +1426,8 @@ holes."
                 </a>
                 <a class="album-card" href="https://en.wikipedia.org/wiki/Kid_A" target="_blank">
                     <div class="album-name">Kid A</div>
-                    <img class="album-icon" src="/img/radiohead/icons-collage.png" style="object-position: -223px -308px" alt="" loading="lazy">
+                    <img class="album-icon" src="/img/radiohead/album-kid-a.png" alt="" loading="lazy"
+                        onerror="this.style.display='none'">
                     <div class="album-year">2000</div>
                     <div class="album-note">They deleted themselves and became something else. No singles. No guitars on
                         half the tracks. Still their best, probably.</div>
@@ -1419,7 +1435,8 @@ holes."
                 </a>
                 <a class="album-card" href="https://en.wikipedia.org/wiki/Amnesiac_(album)" target="_blank">
                     <div class="album-name">Amnesiac</div>
-                    <img class="album-icon" src="/img/radiohead/icons-collage.png" style="object-position: -648px -308px" alt="" loading="lazy">
+                    <img class="album-icon" src="/img/radiohead/album-amnesiac.png" alt="" loading="lazy"
+                        onerror="this.style.display='none'">
                     <div class="album-year">2001</div>
                     <div class="album-note">Kid A's shadow twin. Recorded in the same sessions but darker, jazzier,
                         weirder. "Life in a Glasshouse" has Humphrey Lyttelton's band playing funeral jazz.</div>
@@ -1427,7 +1444,8 @@ holes."
                 </a>
                 <a class="album-card" href="https://en.wikipedia.org/wiki/Hail_to_the_Thief" target="_blank">
                     <div class="album-name">Hail to the Thief</div>
-                    <img class="album-icon" src="/img/radiohead/icons-collage.png" style="object-position: -1008px -308px" alt="" loading="lazy">
+                    <img class="album-icon" src="/img/radiohead/album-hail-to-the-thief.png" alt="" loading="lazy"
+                        onerror="this.style.display='none'">
                     <div class="album-year">2003</div>
                     <div class="album-note">The political one. "2+2=5" opened Glastonbury before the album was even
                         out. Dense, loud, and underrated. "There There" is a career highlight.</div>
@@ -1435,7 +1453,8 @@ holes."
                 </a>
                 <a class="album-card" href="https://en.wikipedia.org/wiki/In_Rainbows" target="_blank">
                     <div class="album-name">In Rainbows</div>
-                    <img class="album-icon" src="/img/radiohead/icons-collage.png" style="object-position: -223px -503px" alt="" loading="lazy">
+                    <img class="album-icon" src="/img/radiohead/album-in-rainbows.png" alt="" loading="lazy"
+                        onerror="this.style.display='none'">
                     <div class="album-year">2007</div>
                     <div class="album-note">Pay what you want. The warmest thing they ever made. "Reckoner" is perfect.
                         "Videotape" hides its beat where you don't expect it.</div>
@@ -1443,14 +1462,16 @@ holes."
                 </a>
                 <a class="album-card" href="https://en.wikipedia.org/wiki/The_King_of_Limbs" target="_blank">
                     <div class="album-name">The King of Limbs</div>
-                    <img class="album-icon" src="/img/radiohead/icons-collage.png" style="object-position: -648px -503px" alt="" loading="lazy">
+                    <img class="album-icon" src="/img/radiohead/album-the-king-of-limbs.png" alt="" loading="lazy"
+                        onerror="this.style.display='none'">
                     <div class="album-year">2011</div>
                     <div class="album-note">Eight tracks of rhythm-first, loop-driven songwriting. The live versions are
                         better. That's intentional — they built it to be taken apart on stage.</div>
                 </a>
                 <a class="album-card" href="https://en.wikipedia.org/wiki/A_Moon_Shaped_Pool" target="_blank">
                     <div class="album-name">A Moon Shaped Pool</div>
-                    <img class="album-icon" src="/img/radiohead/icons-collage.png" style="object-position: -1008px -503px" alt="" loading="lazy">
+                    <img class="album-icon" src="/img/radiohead/album-a-moon-shaped-pool.png" alt="" loading="lazy"
+                        onerror="this.style.display='none'">
                     <div class="album-year">2016</div>
                     <div class="album-note">After the divorce. "True Love Waits" — written 21 years earlier — finally
                         recorded, solo piano. The saddest thing in their catalogue.</div>
@@ -1458,7 +1479,7 @@ holes."
                 </a>
             </div>
 
-            <div class="chunk-head" style="margin-top: 36px;">live videos &amp; documents</div>
+            <div class="chunk-head" id="live-videos" style="margin-top: 36px;">live videos &amp; documents</div>
             <div class="prose-entry">
                 <div>
                     <div class="pe-title">In Rainbows: From the Basement</div>
