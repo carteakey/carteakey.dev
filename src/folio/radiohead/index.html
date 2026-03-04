@@ -608,6 +608,61 @@ holes."
             position: relative;
         }
 
+        /* ─── TOC ─── */
+        .toc {
+            margin-top: 40px;
+            padding: 20px 24px;
+            border: 1px solid var(--line);
+            display: inline-block;
+            min-width: 280px;
+        }
+
+        .toc-label {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: var(--dim);
+            margin-bottom: 12px;
+        }
+
+        .toc ol {
+            list-style: none;
+            counter-reset: toc-counter;
+            padding: 0;
+            margin: 0;
+        }
+
+        .toc li {
+            counter-increment: toc-counter;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 12px;
+            letter-spacing: 0.08em;
+            color: var(--dim);
+            padding: 3px 0;
+            display: flex;
+            align-items: baseline;
+            gap: 0;
+        }
+
+        .toc li::before {
+            content: counter(toc-counter, decimal-leading-zero) '.';
+            color: var(--gold-dim);
+            margin-right: 10px;
+            flex-shrink: 0;
+        }
+
+        .toc a {
+            color: var(--dim);
+            text-decoration: none;
+            text-transform: uppercase;
+            transition: color 0.15s;
+        }
+
+        .toc a:hover {
+            color: var(--gold);
+        }
+
         /* ─── FOOTER ─── */
         footer {
             margin-top: 80px;
@@ -720,8 +775,21 @@ holes."
                 — a beginner's guide (image, large)</a>
         </p>
 
+        <div class="toc">
+            <div class="toc-label">contents</div>
+            <ol>
+                <li><a href="#official">Official &amp; Band-Connected</a></li>
+                <li><a href="#archive">Archive Sites — Memory Hole</a></li>
+                <li><a href="#scrapbooks">Scrapbooks, Blogs, Notes</a></li>
+                <li><a href="#fan-sites">Fan Sites &amp; Deep Archives</a></li>
+                <li><a href="#community">Community &amp; Live Archive</a></li>
+                <li><a href="#music">The Music — A Way In</a></li>
+                <li><a href="#dead">The Dead &amp; The Lost</a></li>
+            </ol>
+        </div>
+
         <!-- ═══ OFFICIAL & BAND-CONNECTED ═══ -->
-        <div class="chunk">
+        <div class="chunk" id="official">
             <span class="margin-scrawl">section 01</span>
             <div class="chunk-head">official &amp; band-connected</div>
             <div class="prose-entry">
@@ -763,7 +831,7 @@ holes."
         </div>
 
         <!-- ═══ ARCHIVE SITES — MEMORY HOLE ═══ -->
-        <div class="chunk">
+        <div class="chunk" id="archive">
             <div class="chunk-head">the archive sites — memory hole</div>
             <p class="maze-note">Designed with Stanley Donwood. Each one is a different era, a different mood. Some need
                 old browser plugins. Some just click forever. Start at 13 and work backwards.</p>
@@ -866,11 +934,241 @@ holes."
             </div>
         </div>
 
+        <!-- ═══ SCRAPBOOKS, BLOGS, NOTES ═══ -->
+        <div class="chunk" id="scrapbooks">
+            <div class="chunk-head">scrapbooks, blogs, notes</div>
+            <div class="scrap-block">
+                <div class="scrap-title">Dead Air Space</div>
+                <a class="scrap-url" href="http://archive.radiohead.com/Site12/deadairspace/"
+                    target="_blank">archive.radiohead.com/Site12/deadairspace/</a>
+                <p class="scrap-desc">Thom Yorke's blog from the In Rainbows and King of Limbs years. Studio dispatches,
+                    cryptic playlist scrawls, notes about canal boats and modular synthesis and tax investigations and
+                    global warming. Probably the most human thing they ever published.</p>
+                <div class="entry-tags">
+                    <span class="tag official">official</span>
+                    <span class="tag archive">archive</span>
+                </div>
+            </div>
+            <div class="scrap-block">
+                <div class="scrap-title">Diet of Worms</div>
+                <a class="scrap-url" href="https://radiohead.com/library" target="_blank">via radiohead.com/library →
+                    Memory Hole</a>
+                <p class="scrap-desc">The 2004 online scrapbook. Yorke dumped unused lyrics here then returned during
+                    writer's block. Burn the Witch was in here a decade before the album. Doodles, old photos, early-era
+                    fragments.</p>
+                <div class="entry-tags">
+                    <span class="tag official">official</span>
+                    <span class="tag archive">archive</span>
+                    <span class="tag maze">maze</span>
+                </div>
+            </div>
+            <div class="scrap-block">
+                <div class="scrap-title">Stanley Donwood — Slowly Downward</div>
+                <a class="scrap-url" href="https://www.slowlydownward.com/" target="_blank">slowlydownward.com</a>
+                <p class="scrap-desc">Donwood's actual site. Artwork, prints, archive. Woefully out of date by design —
+                    updates arrive when they arrive and feel significant when they do. The maze sites, the OK Computer
+                    sketchbook, every cover, all his.</p>
+                <div class="entry-tags">
+                    <span class="tag">donwood</span>
+                    <span class="tag">artwork</span>
+                </div>
+            </div>
+            <div class="scrap-block">
+                <div class="scrap-title">Stanley Donwood — Instagram</div>
+                <a class="scrap-url" href="https://www.instagram.com/stanleydonwood"
+                    target="_blank">instagram.com/stanleydonwood</a>
+                <p class="scrap-desc">Process work, new prints, work-in-progress. More active than the site.
+                    Worth following on its own terms.</p>
+                <div class="entry-tags">
+                    <span class="tag">donwood</span>
+                    <span class="tag">artwork</span>
+                </div>
+            </div>
+
+            <div class="aside">
+                <p>The word "Tchock" — Yorke's pseudonym — appears throughout the archive sites. Just a sound. Not an
+                    anagram of anything. Donwood and Tchock made art together the way other people make dinner —
+                    regularly, without ceremony, and the results accumulated into something extraordinary.</p>
+            </div>
+        </div>
+
+        <!-- ═══ FAN SITES & DEEP ARCHIVES ═══ -->
+        <div class="chunk" id="fan-sites">
+            <div class="chunk-head">fan sites &amp; deep archives</div>
+            <div class="prose-entry">
+                <div>
+                    <div class="pe-title">Radiohead.fr</div>
+                    <div class="pe-desc">French fan site. News, discography, interviews, and a deep archive of
+                        French-language Radiohead coverage.</div>
+                    <div class="entry-tags">
+                        <span class="tag fansite">fansite</span>
+                    </div>
+                </div>
+                <a class="pe-link" href="http://www.radiohead.fr/" target="_blank">radiohead.fr ↗</a>
+            </div>
+            <div class="prose-entry">
+                <div>
+                    <div class="pe-title">Citizen Insane</div>
+                    <div class="pe-desc">Every album, every side project, full discography, media coverage, live
+                        performances, videos. Made in Germany. Est. 2006. Probably the most complete reference that
+                        exists.</div>
+                    <div class="entry-tags">
+                        <span class="tag fansite">fansite</span>
+                        <span class="tag">database</span>
+                    </div>
+                </div>
+                <a class="pe-link" href="https://citizeninsane.eu" target="_blank">citizeninsane.eu ↗</a>
+            </div>
+            <div class="prose-entry">
+                <div>
+                    <div class="pe-title">Green Plastic Radiohead</div>
+                    <div class="pe-desc">Oldest US fan site. Launched March 1997. Frozen around 2012 but preserved —
+                        news archive, concert reports, band history, two decades of fan art. Still online.</div>
+                    <div class="entry-tags">
+                        <span class="tag fansite">fansite</span>
+                        <span class="tag">historic</span>
+                    </div>
+                </div>
+                <a class="pe-link" href="https://www.greenplastic.info" target="_blank">greenplastic.info ↗</a>
+            </div>
+            <div class="prose-entry">
+                <div>
+                    <div class="pe-title">Green Plastic Cold Storage</div>
+                    <div class="pe-desc">The archive-within-the-archive. Print articles from 1993 onward, fan art,
+                        Ed O'Brien's diary, the W.A.S.T.E. mailing list archive, and a facsimile of "Lift" — Jonathan
+                        Moore's lost early fan site, preserved here specifically because the original is gone.</div>
+                    <div class="entry-tags">
+                        <span class="tag fansite">fansite</span>
+                        <span class="tag archive">archive</span>
+                    </div>
+                </div>
+                <a class="pe-link" href="https://www.greenplastic.info/cold-storage/" target="_blank">cold-storage ↗</a>
+            </div>
+            <div class="prose-entry">
+                <div>
+                    <div class="pe-title">W.A.S.T.E. Central</div>
+                    <div class="pe-desc">Fan community and blog network on Ning. Still reachable but many accounts
+                        are inaccessible and the data is decaying. Password recovery is broken. A digital ruin.
+                    </div>
+                    <div class="entry-tags">
+                        <span class="tag fansite">fansite</span>
+                        <span class="tag uncharted">[decaying]</span>
+                    </div>
+                </div>
+                <a class="pe-link" href="https://wastecentral.ning.com" target="_blank">wastecentral.ning.com ↗</a>
+            </div>
+        </div>
+
+        <!-- ═══ COMMUNITY & LIVE ARCHIVE ═══ -->
+        <div class="chunk" id="community">
+            <div class="chunk-head">community &amp; live archive</div>
+            <div class="prose-entry">
+                <div>
+                    <div class="pe-title">r/radiohead</div>
+                    <div class="pe-desc">The active community. Good for rabbit holes, bootlegs, and someone explaining
+                        what the Amnesiac artwork means at 2am.</div>
+                    <div class="entry-tags">
+                        <span class="tag fansite">community</span>
+                    </div>
+                </div>
+                <a class="pe-link" href="https://reddit.com/r/radiohead" target="_blank">reddit.com/r/radiohead ↗</a>
+            </div>
+            <div class="prose-entry">
+                <div>
+                    <div class="pe-title">Internet Archive — Live Hub</div>
+                    <div class="pe-desc">Every Radiohead song ever played live. From the On a Friday days through The
+                        King of Limbs. Compiled by Radiohub. Thousands of recordings.</div>
+                    <div class="entry-tags">
+                        <span class="tag archive">archive</span>
+                        <span class="tag live">live</span>
+                    </div>
+                </div>
+                <a class="pe-link" href="https://archive.org/details/RadioheadHub" target="_blank">archive.org ↗</a>
+            </div>
+            <div class="prose-entry">
+                <div>
+                    <div class="pe-title">Radiohead Not For Profit</div>
+                    <div class="pe-desc">Free lossless full-show audio (FLAC/SHN). Individual show pages with
+                        setlists. No official releases — live only. Still actively maintained in 2026. Pairs with the
+                        Internet Archive hub.</div>
+                    <div class="entry-tags">
+                        <span class="tag live">live</span>
+                        <span class="tag fansite">fansite</span>
+                    </div>
+                </div>
+                <a class="pe-link" href="https://radiohead-notforprofit.com" target="_blank">notforprofit.com ↗</a>
+            </div>
+            <div class="prose-entry">
+                <div>
+                    <div class="pe-title">Not For Profit — YouTube</div>
+                    <div class="pe-desc">Full-show audio uploads. Same material as the site but more accessible —
+                        useful when FLAC downloads aren't practical.</div>
+                    <div class="entry-tags">
+                        <span class="tag live">live</span>
+                    </div>
+                </div>
+                <a class="pe-link" href="https://www.youtube.com/@Radioheadnotforprofitofficial" target="_blank">youtube
+                    ↗</a>
+            </div>
+            <div class="prose-entry">
+                <div>
+                    <div class="pe-title">Essential Radiohead Bootlegs</div>
+                    <div class="pe-desc">A Tumblr guide to the best live recordings by era — Utrecht 1997, Berlin
+                        2000, Bonnaroo 2006, and others — with descriptions and download links. Regularly referenced
+                        on r/radiohead when someone asks where to start with bootlegs.</div>
+                    <div class="entry-tags">
+                        <span class="tag live">live</span>
+                        <span class="tag fansite">curated</span>
+                    </div>
+                </div>
+                <a class="pe-link" href="https://essentialradioheadbootlegs.tumblr.com/" target="_blank">tumblr ↗</a>
+            </div>
+            <div class="prose-entry">
+                <div>
+                    <div class="pe-title">Et Cetera</div>
+                    <div class="pe-desc">Launched 2025 to replace At Ease and Mortigi Tempo. Proper forum structure,
+                        no karma, no algorithm. Already 2,000+ members, 14k music posts. The spiritual successor to
+                        the classic boards.</div>
+                    <div class="entry-tags">
+                        <span class="tag fansite">community</span>
+                        <span class="tag essential">new</span>
+                    </div>
+                </div>
+                <a class="pe-link" href="https://etceteraforum.com" target="_blank">etceteraforum.com ↗</a>
+            </div>
+            <div class="prose-entry">
+                <div>
+                    <div class="pe-title">At Ease</div>
+                    <div class="pe-desc">The message board is gone — server went down August 2024. But the news pages
+                        and live archive (e.g. "live 2004") still resolve. Had ~20,000 daily visitors in the OK
+                        Computer / Kid A years. The band pointed fans here.</div>
+                    <div class="entry-tags">
+                        <span class="tag archive">archive</span>
+                        <span class="tag uncharted">[board dead]</span>
+                    </div>
+                </div>
+                <a class="pe-link" href="https://ateaseweb.com" target="_blank">ateaseweb.com ↗</a>
+            </div>
+            <div class="prose-entry">
+                <div>
+                    <div class="pe-title">Radiohead Almanac</div>
+                    <div class="pe-desc">A Fandom wiki project cataloguing every known live recording — Radiohead and
+                        solo. Per-show pages, quality notes, recommended versions. A different approach to the live
+                        archive problem than the Internet Archive hub.</div>
+                    <div class="entry-tags">
+                        <span class="tag archive">archive</span>
+                        <span class="tag live">live</span>
+                    </div>
+                </div>
+                <a class="pe-link" href="https://the-radiohead-almanac.fandom.com" target="_blank">fandom wiki ↗</a>
+            </div>
+        </div>
+
         <p class="redacted" style="margin-top: 20px; font-family: 'IM Fell English', serif; font-size: 14px;">this was
             supposed to be organized alphabetically but that felt wrong</p>
 
         <!-- ═══ THE MUSIC — A WAY IN ═══ -->
-        <div class="chunk">
+        <div class="chunk" id="music">
             <span class="margin-scrawl">section 03</span>
             <div class="chunk-head glitch" data-text="the music — a way in">the music &mdash; a way in</div>
 
@@ -1054,238 +1352,8 @@ holes."
 
         </div>
 
-        <!-- ═══ SCRAPBOOKS, BLOGS, NOTES ═══ -->
-        <div class="chunk">
-            <div class="chunk-head">scrapbooks, blogs, notes</div>
-            <div class="scrap-block">
-                <div class="scrap-title">Dead Air Space</div>
-                <a class="scrap-url" href="http://archive.radiohead.com/Site12/deadairspace/"
-                    target="_blank">archive.radiohead.com/Site12/deadairspace/</a>
-                <p class="scrap-desc">Thom Yorke's blog from the In Rainbows and King of Limbs years. Studio dispatches,
-                    cryptic playlist scrawls, notes about canal boats and modular synthesis and tax investigations and
-                    global warming. Probably the most human thing they ever published.</p>
-                <div class="entry-tags">
-                    <span class="tag official">official</span>
-                    <span class="tag archive">archive</span>
-                </div>
-            </div>
-            <div class="scrap-block">
-                <div class="scrap-title">Diet of Worms</div>
-                <a class="scrap-url" href="https://radiohead.com/library" target="_blank">via radiohead.com/library →
-                    Memory Hole</a>
-                <p class="scrap-desc">The 2004 online scrapbook. Yorke dumped unused lyrics here then returned during
-                    writer's block. Burn the Witch was in here a decade before the album. Doodles, old photos, early-era
-                    fragments.</p>
-                <div class="entry-tags">
-                    <span class="tag official">official</span>
-                    <span class="tag archive">archive</span>
-                    <span class="tag maze">maze</span>
-                </div>
-            </div>
-            <div class="scrap-block">
-                <div class="scrap-title">Stanley Donwood — Slowly Downward</div>
-                <a class="scrap-url" href="https://www.slowlydownward.com/" target="_blank">slowlydownward.com</a>
-                <p class="scrap-desc">Donwood's actual site. Artwork, prints, archive. Woefully out of date by design —
-                    updates arrive when they arrive and feel significant when they do. The maze sites, the OK Computer
-                    sketchbook, every cover, all his.</p>
-                <div class="entry-tags">
-                    <span class="tag">donwood</span>
-                    <span class="tag">artwork</span>
-                </div>
-            </div>
-            <div class="scrap-block">
-                <div class="scrap-title">Stanley Donwood — Instagram</div>
-                <a class="scrap-url" href="https://www.instagram.com/stanleydonwood"
-                    target="_blank">instagram.com/stanleydonwood</a>
-                <p class="scrap-desc">Process work, new prints, work-in-progress. More active than the site.
-                    Worth following on its own terms.</p>
-                <div class="entry-tags">
-                    <span class="tag">donwood</span>
-                    <span class="tag">artwork</span>
-                </div>
-            </div>
-
-            <div class="aside">
-                <p>The word "Tchock" — Yorke's pseudonym — appears throughout the archive sites. Just a sound. Not an
-                    anagram of anything. Donwood and Tchock made art together the way other people make dinner —
-                    regularly, without ceremony, and the results accumulated into something extraordinary.</p>
-            </div>
-        </div>
-
-        <!-- ═══ FAN SITES & DEEP ARCHIVES ═══ -->
-        <div class="chunk">
-            <div class="chunk-head">fan sites &amp; deep archives</div>
-            <div class="prose-entry">
-                <div>
-                    <div class="pe-title">Radiohead.fr</div>
-                    <div class="pe-desc">French fan site. News, discography, interviews, and a deep archive of
-                        French-language Radiohead coverage.</div>
-                    <div class="entry-tags">
-                        <span class="tag fansite">fansite</span>
-                    </div>
-                </div>
-                <a class="pe-link" href="http://www.radiohead.fr/" target="_blank">radiohead.fr ↗</a>
-            </div>
-            <div class="prose-entry">
-                <div>
-                    <div class="pe-title">Citizen Insane</div>
-                    <div class="pe-desc">Every album, every side project, full discography, media coverage, live
-                        performances, videos. Made in Germany. Est. 2006. Probably the most complete reference that
-                        exists.</div>
-                    <div class="entry-tags">
-                        <span class="tag fansite">fansite</span>
-                        <span class="tag">database</span>
-                    </div>
-                </div>
-                <a class="pe-link" href="https://citizeninsane.eu" target="_blank">citizeninsane.eu ↗</a>
-            </div>
-            <div class="prose-entry">
-                <div>
-                    <div class="pe-title">Green Plastic Radiohead</div>
-                    <div class="pe-desc">Oldest US fan site. Launched March 1997. Frozen around 2012 but preserved —
-                        news archive, concert reports, band history, two decades of fan art. Still online.</div>
-                    <div class="entry-tags">
-                        <span class="tag fansite">fansite</span>
-                        <span class="tag">historic</span>
-                    </div>
-                </div>
-                <a class="pe-link" href="https://www.greenplastic.info" target="_blank">greenplastic.info ↗</a>
-            </div>
-            <div class="prose-entry">
-                <div>
-                    <div class="pe-title">Green Plastic Cold Storage</div>
-                    <div class="pe-desc">The archive-within-the-archive. Print articles from 1993 onward, fan art,
-                        Ed O'Brien's diary, the W.A.S.T.E. mailing list archive, and a facsimile of "Lift" — Jonathan
-                        Moore's lost early fan site, preserved here specifically because the original is gone.</div>
-                    <div class="entry-tags">
-                        <span class="tag fansite">fansite</span>
-                        <span class="tag archive">archive</span>
-                    </div>
-                </div>
-                <a class="pe-link" href="https://www.greenplastic.info/cold-storage/" target="_blank">cold-storage ↗</a>
-            </div>
-            <div class="prose-entry">
-                <div>
-                    <div class="pe-title">W.A.S.T.E. Central</div>
-                    <div class="pe-desc">Fan community and blog network on Ning. Still reachable but many accounts
-                        are inaccessible and the data is decaying. Password recovery is broken. A digital ruin.
-                    </div>
-                    <div class="entry-tags">
-                        <span class="tag fansite">fansite</span>
-                        <span class="tag uncharted">[decaying]</span>
-                    </div>
-                </div>
-                <a class="pe-link" href="https://wastecentral.ning.com" target="_blank">wastecentral.ning.com ↗</a>
-            </div>
-        </div>
-
-        <!-- ═══ COMMUNITY & LIVE ARCHIVE ═══ -->
-        <div class="chunk">
-            <div class="chunk-head">community &amp; live archive</div>
-            <div class="prose-entry">
-                <div>
-                    <div class="pe-title">r/radiohead</div>
-                    <div class="pe-desc">The active community. Good for rabbit holes, bootlegs, and someone explaining
-                        what the Amnesiac artwork means at 2am.</div>
-                    <div class="entry-tags">
-                        <span class="tag fansite">community</span>
-                    </div>
-                </div>
-                <a class="pe-link" href="https://reddit.com/r/radiohead" target="_blank">reddit.com/r/radiohead ↗</a>
-            </div>
-            <div class="prose-entry">
-                <div>
-                    <div class="pe-title">Internet Archive — Live Hub</div>
-                    <div class="pe-desc">Every Radiohead song ever played live. From the On a Friday days through The
-                        King of Limbs. Compiled by Radiohub. Thousands of recordings.</div>
-                    <div class="entry-tags">
-                        <span class="tag archive">archive</span>
-                        <span class="tag live">live</span>
-                    </div>
-                </div>
-                <a class="pe-link" href="https://archive.org/details/RadioheadHub" target="_blank">archive.org ↗</a>
-            </div>
-            <div class="prose-entry">
-                <div>
-                    <div class="pe-title">Radiohead Not For Profit</div>
-                    <div class="pe-desc">Free lossless full-show audio (FLAC/SHN). Individual show pages with
-                        setlists. No official releases — live only. Still actively maintained in 2026. Pairs with the
-                        Internet Archive hub.</div>
-                    <div class="entry-tags">
-                        <span class="tag live">live</span>
-                        <span class="tag fansite">fansite</span>
-                    </div>
-                </div>
-                <a class="pe-link" href="https://radiohead-notforprofit.com" target="_blank">notforprofit.com ↗</a>
-            </div>
-            <div class="prose-entry">
-                <div>
-                    <div class="pe-title">Not For Profit — YouTube</div>
-                    <div class="pe-desc">Full-show audio uploads. Same material as the site but more accessible —
-                        useful when FLAC downloads aren't practical.</div>
-                    <div class="entry-tags">
-                        <span class="tag live">live</span>
-                    </div>
-                </div>
-                <a class="pe-link" href="https://www.youtube.com/@Radioheadnotforprofitofficial" target="_blank">youtube
-                    ↗</a>
-            </div>
-            <div class="prose-entry">
-                <div>
-                    <div class="pe-title">Essential Radiohead Bootlegs</div>
-                    <div class="pe-desc">A Tumblr guide to the best live recordings by era — Utrecht 1997, Berlin
-                        2000, Bonnaroo 2006, and others — with descriptions and download links. Regularly referenced
-                        on r/radiohead when someone asks where to start with bootlegs.</div>
-                    <div class="entry-tags">
-                        <span class="tag live">live</span>
-                        <span class="tag fansite">curated</span>
-                    </div>
-                </div>
-                <a class="pe-link" href="https://essentialradioheadbootlegs.tumblr.com/" target="_blank">tumblr ↗</a>
-            </div>
-            <div class="prose-entry">
-                <div>
-                    <div class="pe-title">Et Cetera</div>
-                    <div class="pe-desc">Launched 2025 to replace At Ease and Mortigi Tempo. Proper forum structure,
-                        no karma, no algorithm. Already 2,000+ members, 14k music posts. The spiritual successor to
-                        the classic boards.</div>
-                    <div class="entry-tags">
-                        <span class="tag fansite">community</span>
-                        <span class="tag essential">new</span>
-                    </div>
-                </div>
-                <a class="pe-link" href="https://etceteraforum.com" target="_blank">etceteraforum.com ↗</a>
-            </div>
-            <div class="prose-entry">
-                <div>
-                    <div class="pe-title">At Ease</div>
-                    <div class="pe-desc">The message board is gone — server went down August 2024. But the news pages
-                        and live archive (e.g. "live 2004") still resolve. Had ~20,000 daily visitors in the OK
-                        Computer / Kid A years. The band pointed fans here.</div>
-                    <div class="entry-tags">
-                        <span class="tag archive">archive</span>
-                        <span class="tag uncharted">[board dead]</span>
-                    </div>
-                </div>
-                <a class="pe-link" href="https://ateaseweb.com" target="_blank">ateaseweb.com ↗</a>
-            </div>
-            <div class="prose-entry">
-                <div>
-                    <div class="pe-title">Radiohead Almanac</div>
-                    <div class="pe-desc">A Fandom wiki project cataloguing every known live recording — Radiohead and
-                        solo. Per-show pages, quality notes, recommended versions. A different approach to the live
-                        archive problem than the Internet Archive hub.</div>
-                    <div class="entry-tags">
-                        <span class="tag archive">archive</span>
-                        <span class="tag live">live</span>
-                    </div>
-                </div>
-                <a class="pe-link" href="https://the-radiohead-almanac.fandom.com" target="_blank">fandom wiki ↗</a>
-            </div>
-        </div>
-
         <!-- ═══ THE DEAD ═══ -->
-        <div class="chunk">
+        <div class="chunk" id="dead">
             <div class="chunk-head">the dead &amp; the lost</div>
             <div class="maze-note">Sites that were real, that people used, that are now gone or Wayback-only. Listed
                 here so they're not forgotten.</div>
