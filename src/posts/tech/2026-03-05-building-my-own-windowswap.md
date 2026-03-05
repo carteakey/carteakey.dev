@@ -13,7 +13,7 @@ authored_by: human
 
 I've been a fan of [WindowSwap](https://window-swap.com) for a while — the idea is simple and kind of beautiful. Someone points a camera out their window, streams it to the internet, and strangers get to borrow that view for a few minutes. A slice of someone else's world.
 
-{% image_cc "./src/static/img/windowswap-site.png", "WindowSwap website", "rounded-lg shadow-md", "The inspiration. Someone's window, somewhere in the world." %}
+{% image_cc "./src/static/img/windowswap-example.png", "WindowSwap — a window view with a cat", "rounded-lg shadow-md", "The inspiration. Someone's window, somewhere in the world. (Pre-recorded, not live — mine actually is.)" %}
 
 So I built my own.
 
@@ -44,6 +44,8 @@ Full-viewport stream, auto-hiding UI. When you move your mouse it fades in:
 - Pulsing live dot
 
 Everything rides on a Cloudflare tunnel. No port forwarding, no exposed IP, no headache.
+
+{% image_cc "./src/static/img/window-site.png", "window.carteakey.dev live view", "rounded-lg shadow-md", "window.carteakey.dev — Toronto intersection, rainy March. Actually live, just 30 seconds off." %}
 
 {% image_cc "./src/static/img/window-live.jpeg", "Live stream on monitor", "rounded-lg shadow-md", "Live on the monitor. The actual window is right there. I use Arch btw." %}
 
