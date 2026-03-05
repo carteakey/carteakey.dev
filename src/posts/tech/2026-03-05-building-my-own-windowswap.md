@@ -5,6 +5,7 @@ date: 2026-03-05
 updated: 2026-03-05
 tags:
   - rpi
+  - self-host
 pinned: false
 featured: false
 authored_by: human
