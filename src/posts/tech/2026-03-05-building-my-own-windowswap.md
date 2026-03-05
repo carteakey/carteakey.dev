@@ -6,13 +6,14 @@ updated: 2026-03-05
 tags:
   - Self-Host
   - Raspberry Pi
-  - Python
 pinned: false
 featured: false
 authored_by: human
 ---
 
 I've been a fan of [WindowSwap](https://window-swap.com) for a while — the idea is simple and kind of beautiful. Someone points a camera out their window, streams it to the internet, and strangers get to borrow that view for a few minutes. A slice of someone else's world.
+
+{% image_cc "./src/static/img/windowswap-site.png", "WindowSwap website", "rounded-lg shadow-md", "The inspiration. Someone's window, somewhere in the world." %}
 
 So I built my own.
 
@@ -21,6 +22,8 @@ So I built my own.
 A **Raspberry Pi 4B** sitting on my desk with an **OV5647 camera module** (the original Pi cam, 5MP) pointed out the window. The view: a busy Toronto intersection, a parking lot, some trees, a radio tower in the distance. Rainy March day vibes.
 
 Getting the camera working took about ten minutes. The lens ships slightly out of focus — you have to crack the glue seal and twist the lens ring by hand until the image snaps in. Worth it.
+
+{% image_cc "./src/static/img/window-contraption.jpeg", "Pi camera contraption", "rounded-lg shadow-md", "The contraption. 3D-printed mount, ribbon cable, zip tie. Engineering." %}
 
 ## Streaming
 
@@ -41,6 +44,8 @@ Full-viewport stream, auto-hiding UI. When you move your mouse it fades in:
 - Pulsing live dot
 
 Everything rides on a Cloudflare tunnel. No port forwarding, no exposed IP, no headache.
+
+{% image_cc "./src/static/img/window-live.jpeg", "Live stream on monitor", "rounded-lg shadow-md", "Live on the monitor. The actual window is right there. I use Arch btw." %}
 
 ## Snapshots and Timelapse
 
