@@ -2,6 +2,7 @@
 title: Ghiblify everything, or should we?....
 description: It's irresistibly fun, and yet, something doesn't sit quite right.
 date: 2025-03-28T03:02:25.814Z
+authored_by: human
 updated: 2025-06-25T03:02:25.814Z
 tags:
   - AI

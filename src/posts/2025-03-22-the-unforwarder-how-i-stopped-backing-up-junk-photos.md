@@ -2,6 +2,7 @@
 title: "The Unforwarder: How i stopped backing up junk photos"
 description: Taming the WhatsApp chaos
 date: 2025-03-22T22:20:08.060Z
+authored_by: human
 updated: 2025-03-22T22:20:08.064Z
 tags:
   - Self-Host

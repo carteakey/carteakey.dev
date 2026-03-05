@@ -2,6 +2,7 @@
 title: Exposing local llm's to the internet (draft)
 description: "Your very own AI-API "
 date: 2025-03-06T05:14:04.467Z
+authored_by: human
 updated: 2025-03-06T05:14:04.480Z
 tags:
   - AI

@@ -2,6 +2,7 @@
 title: GPT‑OSS vs GPT‑5 on GPT‑5’s example prompts
 description: A side‑by‑side benchmark on web dev tasks
 date: 2025-10-04T00:00:00.000Z 
+authored_by: ai-assisted
 updated: 2025-10-04T00:00:00.000Z
 tags:
   - LLMs

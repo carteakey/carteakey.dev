@@ -836,7 +836,12 @@ export default function (eleventyConfig) {
           date: note.date,
           url: note.url && note.url !== false ? note.url : null,
           summary,
-          original: note,
+          pinned: !!note.data.pinned,
+          original: {
+            get templateContent() {
+              try { return note.templateContent; } catch (_) { return ""; }
+            },
+          },
           authored_by: note.data.authored_by ?? null,
         };
       });
@@ -854,7 +859,11 @@ export default function (eleventyConfig) {
           date: archiveDate,
           url: entry.url,
           summary: summarySource ? truncate(stripHtml(summarySource), 220) : null,
-          original: entry,
+          original: {
+            get templateContent() {
+              try { return entry.templateContent; } catch (_) { return ""; }
+            },
+          },
         };
       });
 
@@ -963,9 +972,9 @@ export default function (eleventyConfig) {
     ].filter((item) => item.date instanceof Date && !Number.isNaN(item.date.valueOf()));
 
     return combined.sort((a, b) => {
-      // Pinned posts first, then by date (newest first)
-      const aPinned = (a.type === 'post' && a.pinned) ? 1 : 0;
-      const bPinned = (b.type === 'post' && b.pinned) ? 1 : 0;
+      // Pinned items first (any type), then by date (newest first)
+      const aPinned = a.pinned ? 1 : 0;
+      const bPinned = b.pinned ? 1 : 0;
       if (aPinned !== bPinned) return bPinned - aPinned;
       return b.date - a.date;
     });

@@ -2,6 +2,7 @@
 title: "The NEAT Framework: How I Built This Site"
 description: "The tech stack powering this site — Netlify, Eleventy, Alpine, and Tailwind — and all the services that make it tick"
 date: 2026-03-05
+authored_by: ai-assisted
 tags:
   - 11ty
   - Self-Host

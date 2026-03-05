@@ -2,6 +2,7 @@
 title: Don't give away to the gradient descent
 description: Ramblings on what gets quietly lost when intelligence becomes a utility.
 date: 2026-02-12T01:42:23.935Z
+authored_by: human
 updated: 2026-02-12T01:42:23.950Z
 hidden: false
 tags:

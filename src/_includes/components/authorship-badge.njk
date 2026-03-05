@@ -1,11 +1,33 @@
-{% macro authorshipBadge(authored_by) %}
+{% macro authorshipBadge(authored_by, compact=false) %}
   {% if authored_by == 'human' %}
-    <span class="inline-flex items-center gap-0.5 text-[0.62rem] font-semibold uppercase tracking-wider rounded px-1 py-0.5 align-middle" style="color: #16a34a; background: color-mix(in srgb, #16a34a 12%, transparent);">{% feather "edit-2", class="w-2.5 h-2.5 inline" %} Human</span>
+    {% set color = "#16a34a" %}
+    {% set icon = "edit-2" %}
+    {% set label = "Human" %}
+    {% set title = "Human — Written without AI assistance" %}
   {% elif authored_by == 'ai-assisted' %}
-    <span class="inline-flex items-center gap-0.5 text-[0.62rem] font-semibold uppercase tracking-wider rounded px-1 py-0.5 align-middle" style="color: #2563eb; background: color-mix(in srgb, #2563eb 12%, transparent);">{% feather "zap", class="w-2.5 h-2.5 inline" %} AI Assisted</span>
+    {% set color = "#2563eb" %}
+    {% set icon = "zap" %}
+    {% set label = "AI Assisted" %}
+    {% set title = "AI Assisted — Written with AI as a creative partner" %}
   {% elif authored_by == 'ai-generated' %}
-    <span class="inline-flex items-center gap-0.5 text-[0.62rem] font-semibold uppercase tracking-wider rounded px-1 py-0.5 align-middle" style="color: #7c3aed; background: color-mix(in srgb, #7c3aed 12%, transparent);">{% feather "cpu", class="w-2.5 h-2.5 inline" %} AI Generated</span>
+    {% set color = "#7c3aed" %}
+    {% set icon = "cpu" %}
+    {% set label = "AI Generated" %}
+    {% set title = "AI Generated — Primarily created by AI with human oversight" %}
   {% else %}
-    <span class="inline-flex items-center gap-0.5 text-[0.62rem] font-semibold uppercase tracking-wider rounded px-1 py-0.5 align-middle" style="color: #6b7280; background: color-mix(in srgb, #6b7280 12%, transparent);">{% feather "help-circle", class="w-2.5 h-2.5 inline" %} Unclassified</span>
+    {% set color = "#6b7280" %}
+    {% set icon = "help-circle" %}
+    {% set label = "Unclassified" %}
+    {% set title = "Unclassified — Authorship not yet tagged" %}
+  {% endif %}
+
+  {% if compact %}
+    <span class="inline-flex items-center justify-center rounded px-1 py-0.5 align-middle" title="{{ title }}" style="color: {{ color }}; background: color-mix(in srgb, {{ color }} 12%, transparent);">
+      {% feather icon, class="w-2.5 h-2.5" %}
+    </span>
+  {% else %}
+    <span class="inline-flex items-center gap-0.5 text-[0.62rem] font-semibold uppercase tracking-wider rounded px-1 py-0.5 align-middle" title="{{ title }}" style="color: {{ color }}; background: color-mix(in srgb, {{ color }} 12%, transparent);">
+      {% feather icon, class="w-2.5 h-2.5 inline" %} {{ label }}
+    </span>
   {% endif %}
 {% endmacro %}

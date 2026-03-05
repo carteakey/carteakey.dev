@@ -57,6 +57,7 @@
     <span class="feed-list-date meta-text">{{ item.date | shortDate }}</span>
     <span class="feed-list-dot {{ dotColor }}" title="{{ badgeLabel }}"></span>
     <span class="feed-list-type meta-text text-gray-400 dark:text-gray-500">{{ badgeLabel }}</span>
+    {% if item.authored_by is defined %}{{ authorshipBadge(item.authored_by, compact=true) }}{% endif %}
     {% if item.url %}
       <a href="{{ item.url | url }}" class="feed-list-title title-hover">{% if item.pinned %}<span style="color: var(--accent-color)" title="Pinned">★ </span>{% endif %}{{ item.title }}</a>
     {% else %}
@@ -74,7 +75,7 @@
       {% if item.pinned %}
         <span class="meta-text text-[0.65rem] ml-0.5" style="color: var(--accent-color);">· Pinned</span>
       {% endif %}
-      {% if item.authored_by is defined %}{{ authorshipBadge(item.authored_by) }}{% endif %}
+      {% if item.authored_by is defined %}{{ authorshipBadge(item.authored_by, compact=true) }}{% endif %}
       <time datetime="{{ item.date | htmlDateString }}" class="meta-text text-[0.68rem] text-gray-400 dark:text-gray-500 ml-auto">{{ item.date | readableDate }}</time>
     </div>
 

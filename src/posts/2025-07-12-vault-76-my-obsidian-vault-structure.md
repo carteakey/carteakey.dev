@@ -2,6 +2,7 @@
 title:  Vault 76 - My Obsidian Vault Structure
 description: How I organize my notes and resources.
 date: 2025-07-12
+authored_by: human
 tags:
   - Obsidian
   - PKM
