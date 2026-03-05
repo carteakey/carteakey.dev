@@ -4,7 +4,7 @@ description: What I learned along the way..
 date: 2023-02-14T21:47:18.818Z
       
 tags:
-  - Eleventy
+  - 11ty
   - Jekyll
 ---
 This is in continuation of my older [post.](https://www.carteakey.dev/moving-site-jekyll-to-eleventy/)

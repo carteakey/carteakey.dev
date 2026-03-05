@@ -641,6 +641,7 @@ export default function (eleventyConfig) {
       .getFilteredByGlob("./src/posts/**/*.md")
       .filter(post => {
         if (post.data.hidden === true) return false;
+        if (post.data.draft === true) return false;
         if (post.date && post.date > now) return false;
         if (!post.data.featured) return false;
         return true;

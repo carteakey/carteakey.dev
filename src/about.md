@@ -27,7 +27,7 @@ Here's a visual breakdown of [where my skills lie](/skills/) across the data lan
 
 **Movies:** Big on horror and sci-fi. The Thing (1982) is peak cinema and I will die on that hill. I can (and will) rewatch the Dark Knight trilogy at any time.
 
-**Tech & Self-hosting:** I run a home server on a repurposed laptop and self-host everything I can. I believe in the indie web, RSS feeds, and ethical ads. This blog runs on the TEA stack (Tailwind, Eleventy, Alpine.js) and I've let AI agents loose on it - the commit history is wild.
+**Tech & Self-hosting:** I run a home server on a repurposed laptop and self-host everything I can. I believe in the indie web, RSS feeds, and ethical ads. This blog runs on the NEAT stack (Netlify, Eleventy, Alpine.js, Tailwind) and I've let AI agents loose on it - the commit history is wild.
 
 **Organization:** I organize my life in Obsidian and call my vault "Vault 76" (yes, like Fallout). I've written about my [vault structure](/blog/2025-07-12-vault-76-my-obsidian-vault-structure) if you're into that sort of thing.
 

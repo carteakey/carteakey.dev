@@ -6,6 +6,7 @@ tags:
   - AI
   - Agents
 featured: true
+draft: true
 ---
 
 A few weeks ago I came across [this post on Marginalia](https://www.marginalia.nu/weird-ai-crap/hn/) showing that new Hacker News accounts are ten times more likely to use em dashes than older ones. Not as proof of anything — just as a signal. A stylistic fingerprint that's shifted measurably since large language models became mainstream.

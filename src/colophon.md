@@ -19,7 +19,7 @@ eleventyNavigation:
 
 ## Stack
 
-This site is built with the **TEA stack** — Eleventy, Tailwind, Alpine.
+This site is built with the **NEAT stack** — Netlify, Eleventy, Alpine, Tailwind.
 
 | Layer | Tool |
 |---|---|

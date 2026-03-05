@@ -3,7 +3,7 @@ title: Moving my site from Jekyll to Eleventy.
 description: How I revamped my personal site.
 date: 2022-10-10
 tags:
-  - Eleventy
+  - 11ty
   - Jekyll
 layout: layouts/post.njk
 ---
