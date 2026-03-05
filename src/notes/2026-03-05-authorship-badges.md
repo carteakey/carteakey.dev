@@ -18,7 +18,3 @@ Every piece of content on this site now carries an authorship badge — a small 
 I added this because transparency matters, especially as AI writing becomes indistinguishable from human writing. Most of my recent posts are AI-assisted — that's just how I work now. I'd rather be upfront about it than pretend otherwise.
 
 This note itself is AI-generated. Fitting.
-
-Honestly, everything on the web needs a toggle like this — a reader-controlled switch to filter by authorship. Your feed, your rules.
-
-On the flip side, I'm also building [aidar](/blog/aidar-tracking-ai-writing-drift) — a tool that scans websites and measures stylistic signals associated with AI-era writing. The badges here are self-reported; aidar is the attempt to detect the same thing from the outside.
