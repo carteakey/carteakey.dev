@@ -18,4 +18,6 @@ I added this because transparency matters, especially as AI writing becomes indi
 
 This note itself is AI-generated. Fitting.
 
+Honestly, everything on the web needs a toggle like this — a reader-controlled switch to filter by authorship. Your feed, your rules.
+
 On the flip side, I'm also building [aidar](/blog/aidar-tracking-ai-writing-drift) — a tool that scans websites and measures stylistic signals associated with AI-era writing. The badges here are self-reported; aidar is the attempt to detect the same thing from the outside.
