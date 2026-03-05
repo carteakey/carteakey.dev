@@ -2,6 +2,7 @@
 title: Optimizing gpt-oss-120b speed on consumer hardware
 description: Squeezing every token per second 
 date: 2025-09-21
+authored_by: human
 updated: 2025-09-21
 tags:
   - AI
