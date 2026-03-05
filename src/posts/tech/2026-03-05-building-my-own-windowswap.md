@@ -59,4 +59,4 @@ At midnight a systemd timer runs `make_timelapse.py`, which walks every complete
 
 Submitting a clip to the actual WindowSwap community. Their submission format requires a 10-minute window video, which is straightforward to generate from the HLS stream. After that, mostly just leaving it running and seeing what the timelapses look like across seasons.
 
-It lives at [window.carteakey.dev](https://window.carteakey.dev). Code on GitHub soon.
+It lives at [window.carteakey.dev](https://window.carteakey.dev). Code is live there too.
