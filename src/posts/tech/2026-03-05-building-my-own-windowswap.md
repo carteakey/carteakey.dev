@@ -4,7 +4,7 @@ description: A Raspberry Pi 4B, a Pi camera, an HLS stream, and a Cloudflare tun
 date: 2026-03-05
 updated: 2026-03-05
 tags:
-  - rpi
+  - RPi
   - self-host
 pinned: false
 featured: false
