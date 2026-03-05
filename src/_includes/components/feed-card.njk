@@ -90,7 +90,12 @@
 
     {# Body content #}
     {% if isNote or isNow %}
-      <div class="mt-2 text-xs leading-relaxed text-gray-600 dark:text-gray-300 max-w-none not-prose">{{ item.original.templateContent | safe }}</div>
+      {% set noteContent = item.original.templateContent %}
+      {% if noteContent %}
+        <div class="mt-2 text-xs leading-relaxed text-gray-600 dark:text-gray-300 max-w-none not-prose">{{ noteContent | safe }}</div>
+      {% elif item.summary %}
+        <p class="mt-1.5 text-xs leading-relaxed text-gray-500 dark:text-gray-400 m-0">{{ item.summary }}</p>
+      {% endif %}
     {% elif item.media %}
       <figure class="mt-2 overflow-hidden rounded border border-gray-200 dark:border-gray-700 m-0">
         <img src="{{ item.media.src }}" alt="{{ item.media.alt }}" loading="lazy" decoding="async" class="w-full h-auto block">
