@@ -2,6 +2,7 @@
 title: Running Qwen3-Coder-Next at 40 t/s on consumer hardware (draft)
 description: Squeezing every token per second - the sequel
 date: 2026-02-18
+authored_by: human
 updated: 2026-02-18
 tags:
   - AI

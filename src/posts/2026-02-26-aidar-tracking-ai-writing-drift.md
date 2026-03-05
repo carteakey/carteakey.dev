@@ -2,6 +2,7 @@
 title: "I built a tool to measure how AI-like a website writes. Then I scanned my own."
 description: aidar tracks stylistic signals associated with AI-era writing across the web
 date: 2026-02-26
+authored_by: ai-generated
 tags:
   - AI
   - Agents

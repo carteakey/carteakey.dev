@@ -2,6 +2,7 @@
 title: New Machine Setup (CachyOS)
 description: Install essential tools and configure git on a fresh CachyOS / Arch-based machine.
 date: 2026-02-23T00:00:00.000Z
+authored_by: ai-assisted
 updated: 2026-02-23T00:00:00.000Z
 slug: new-machine-setup-cachyos
 ---

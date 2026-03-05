@@ -2,6 +2,7 @@
 title: Using Claude Code (or any other agent) for data analysis on Databricks
 description: A lazy person's guide to exploratory data analysis that actually produces something at the end
 date: 2026-01-02T19:49:44.085Z
+authored_by: ai-assisted
 updated: 2026-02-25T00:00:00.000Z
 tags:
   - Data

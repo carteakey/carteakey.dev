@@ -2,6 +2,7 @@
 title: Personal Braumgartner Restoration
 description: Bringing old photos back to life.
 date: 2025-10-05T00:00:00.000Z
+authored_by: human
 updated: 2025-10-05T00:00:00.000Z
 tags:
   - Photography

@@ -2,6 +2,7 @@
 title: "New Entity: Folio"
 description: "Introducing /folio/ — themed, standalone web pages for things I obsess over. Part deep-dive, part visual essay, part personal reference guide."
 date: 2026-03-03
+authored_by: ai-assisted
 hidden: false
 tags:
   - Meta

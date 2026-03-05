@@ -2,6 +2,7 @@
 title: Enable SSH on CachyOS
 description: Install and enable the OpenSSH server on CachyOS (Arch-based), start it on boot, and open the firewall.
 date: 2026-02-23T00:00:00.000Z
+authored_by: ai-assisted
 updated: 2026-02-23T00:00:00.000Z
 slug: enable-ssh-cachyos
 ---

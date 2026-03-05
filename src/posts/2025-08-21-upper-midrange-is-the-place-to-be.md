@@ -2,6 +2,7 @@
 title: Upper Midrange is the Place to Be (draft)
 description: A practical, battle‑tested guide
 date: 2025-08-21T09:00:00.000Z
+authored_by: human
 updated:   2025-08-21T09:00:00.000Z
 tags:
     - Hardware

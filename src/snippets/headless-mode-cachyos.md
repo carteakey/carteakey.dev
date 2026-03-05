@@ -2,6 +2,7 @@
 title: Headless Mode on CachyOS
 description: Free up RAM by stopping all GUI services using systemd targets — useful when running LLMs locally on a TTY.
 date: 2026-02-25T00:00:00.000Z
+authored_by: ai-assisted
 updated: 2026-02-25T00:00:00.000Z
 slug: headless-mode-cachyos
 ---

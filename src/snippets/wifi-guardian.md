@@ -2,6 +2,7 @@
 title: Wifi-Guardian - Linux Wi-Fi Watchdog
 description: A script to monitor and restore Wi-Fi connectivity on Linux
 date: 2025-08-05T21:19:59.349Z
+authored_by: ai-assisted
 updated: 2025-08-05T21:19:59.355Z
 slug: wifi-guardian
 ---

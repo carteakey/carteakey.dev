@@ -2,6 +2,7 @@
 title: Fixing Wi-Fi Issues on Linux (draft)
 description: A practical, battle‑tested guide 
 date: 2025-08-10T09:00:00.000Z
+authored_by: ai-assisted
 updated: 2025-08-10T09:00:00.000Z
 tags:
   - Linux

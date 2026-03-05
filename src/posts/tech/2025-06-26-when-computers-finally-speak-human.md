@@ -2,6 +2,7 @@
 title: When Computers Finally Speak Human
 description: The end of programming as we know it
 date: 2025-06-26
+authored_by: ai-assisted
 updated: 2025-06-26
 tags:
   - AI

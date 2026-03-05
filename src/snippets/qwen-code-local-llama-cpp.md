@@ -2,6 +2,7 @@
 title: Connect Qwen Code to a Local llama.cpp Server
 description: Configure Qwen Code to use a local llama-server as an OpenAI-compatible model provider instead of a cloud API.
 date: 2026-02-28T00:00:00.000Z
+authored_by: ai-assisted
 updated: 2026-02-28T00:00:00.000Z
 slug: qwen-code-local-llama-cpp
 ---

@@ -2,6 +2,7 @@
 title: Working with Copilot & Codex on carteakey.dev (draft)
 description: The workflow behind using AI agents effectively
 date: 2025-10-04
+authored_by: ai-generated
 tags:
   - Agents
   - AI

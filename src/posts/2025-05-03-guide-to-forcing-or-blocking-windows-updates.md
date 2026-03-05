@@ -2,6 +2,7 @@
 title: Guide to forcing (or blocking) Windows updates.. (draft)
 description: which side are you on?
 date: 2025-05-03T22:01:26.448Z
+authored_by: human
 updated: 2025-05-03T22:01:26.455Z
 tags:
   - Windows

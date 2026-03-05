@@ -2,6 +2,7 @@
 title: How I Let AI Run Wild on My Blog (with Copilot & Codex) (draft)
 description: A peek at the playbook that lets AI assistants plan, ship, and report on updates to carteakey.dev.
 date: 2025-10-05
+authored_by: ai-generated
 tags:
   - AI
   - Workflow
