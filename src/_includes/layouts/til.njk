@@ -3,6 +3,7 @@ layout: layouts/base.njk
 ---
 
 {% include "components/breadcrumbs.njk" %}
+{% from "components/authorship-badge.njk" import authorshipBadge %}
 
 <header class="not-prose mb-4">
   <div class="flex items-center gap-2 mb-1">
@@ -12,6 +13,7 @@ layout: layouts/base.njk
     {% if source %}
       <span class="meta-text text-xs text-gray-400 dark:text-gray-500">· <a href="{{ source }}" target="_blank" rel="noopener" class="title-hover">Source ↗</a></span>
     {% endif %}
+    {{ authorshipBadge(authored_by) }}
   </div>
   <h1 class="text-2xl font-semibold tracking-tight mt-1 m-0">{{ title }}</h1>
 </header>

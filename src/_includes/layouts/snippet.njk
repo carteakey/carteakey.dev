@@ -4,6 +4,7 @@ hasEthicalAds: true
 ---
 
 {% include "components/breadcrumbs.njk" %}
+{% from "components/authorship-badge.njk" import authorshipBadge %}
 
 <div class="relative mx-auto w-full xl:max-w-3xl">
   <aside class="hidden  absolute -left-[260px] top-0">
@@ -17,9 +18,12 @@ hasEthicalAds: true
       <h1>{{ title }}</h1>
 
       <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between text-sm text-gray-600 dark:text-gray-400">
-        <time datetime="{{ page.date | htmlDateString }}" class="font-medium text-gray-700 dark:text-gray-200">
-          {{ page.date | readableDate }}
-        </time>
+        <div class="flex items-center gap-2">
+          <time datetime="{{ page.date | htmlDateString }}" class="font-medium text-gray-700 dark:text-gray-200">
+            {{ page.date | readableDate }}
+          </time>
+          {{ authorshipBadge(authored_by) }}
+        </div>
         {% if tags %}
           <div class="flex flex-wrap gap-2">
             {% for tag in tags | filterTagList %}

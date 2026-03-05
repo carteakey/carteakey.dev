@@ -41,6 +41,7 @@ These flags control visibility, display, and listing behaviour for posts in `src
 | `description` | Subtitle shown below title; used as feed summary |
 | `excerpt` | Alternative summary fallback for feed cards |
 | `tags` | Array of tags; filtered through `filterTagList` to strip internal tags |
+| `authored_by` | Authorship badge: `human`, `ai-assisted`, `ai-generated`. Omit = shows **Unclassified** badge. |
 | `image` | OG image path for social sharing |
 | `fullWidth: true` | Disables the sidebar on the post layout |
 | `conversationPlacement` | Where to show comments — `sidebar` (default) or `bottom` |

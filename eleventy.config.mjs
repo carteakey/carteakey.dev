@@ -792,6 +792,7 @@ export default function (eleventyConfig) {
           readingTime: post.data.readingTime,
           tags: (post.data.tags || []).filter((tag) => tag !== "posts" && tag !== "post"),
           pinned: !!post.data.pinned,
+          authored_by: post.data.authored_by ?? null,
         };
       });
 
@@ -814,6 +815,7 @@ export default function (eleventyConfig) {
           summary,
           readingTime: snippet.data.readingTime,
           original: snippet,
+          authored_by: snippet.data.authored_by ?? null,
         };
       });
 
@@ -835,6 +837,7 @@ export default function (eleventyConfig) {
           url: note.url && note.url !== false ? note.url : null,
           summary,
           original: note,
+          authored_by: note.data.authored_by ?? null,
         };
       });
 

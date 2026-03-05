@@ -29,7 +29,7 @@ Here's a visual breakdown of [where my skills lie](/skills/) across the data lan
 
 **Tech & Self-hosting:** I run a home server on a repurposed laptop and self-host everything I can. I believe in the indie web, RSS feeds, and ethical ads. This blog runs on the NEAT stack (Netlify, Eleventy, Alpine.js, Tailwind) and I've let AI agents loose on it - the commit history is wild.
 
-**Organization:** I organize my life in Obsidian and call my vault "Vault 76" (yes, like Fallout). I've written about my [vault structure](/blog/2025-07-12-vault-76-my-obsidian-vault-structure) if you're into that sort of thing.
+**Organization:** I organize my life in Obsidian and call my vault "Vault 76" (yes, like Fallout). I've written about my [vault structure](/blog/vault-76-my-obsidian-vault-structure) if you're into that sort of thing.
 
 ## Hobbies
 
@@ -44,6 +44,16 @@ Here's a visual breakdown of [where my skills lie](/skills/) across the data lan
 - Will you do it if no one's watching?
 - Social skills atrophy. Use them.
 - We don't understand the truth, we just discover it.
+
+## Why I Write Here
+
+I've always created personal sites as a form of expression — putting my learning out in public before anyone else gets to point it out. Exposing my stupidity and naivety on my own terms, basically.
+
+The philosophy I keep coming back to is this:
+
+> "[One] who works with the door open gets all kinds of interruptions, but [they] also occasionally gets clues as to what the world is and what might be important." — Richard Hamming
+
+Writing in public keeps me honest. Knowledge isn't a dump of everything you've seen or heard — it has to be relevant, distilled, worth saving. Not just something a Google search away. This site is my attempt at that.
 
 ## Let's Connect
 
