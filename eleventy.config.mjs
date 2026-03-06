@@ -753,6 +753,18 @@ export default function (eleventyConfig) {
       .sort((a, b) => b.date - a.date);
   });
 
+  // Notes collection
+  eleventyConfig.addCollection("notes", function (collectionApi) {
+    const now = new Date();
+    return collectionApi.getFilteredByGlob("./src/notes/**/*.md")
+      .filter((note) => {
+        if (note.data.hidden === true) return false;
+        if (note.date && note.date > now) return false;
+        return true;
+      })
+      .sort((a, b) => b.date - a.date);
+  });
+
   // Add a unified feed collection across key content types
   eleventyConfig.addCollection("feed", async function (collectionApi) {
     const now = new Date();

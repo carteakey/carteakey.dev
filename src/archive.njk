@@ -8,6 +8,7 @@ eleventyNavigation:
   order: 2
 ---
 
+{% from "components/authorship-badge.njk" import authorshipBadge %}
 {% include "components/breadcrumbs.njk" %}
 
 <div class="flex items-baseline justify-between mb-2" x-data="{ viewMode: 'list' }">
@@ -63,6 +64,7 @@ eleventyNavigation:
             {% if post.data.pinned %}
               <span class="inline-flex items-center mr-1.5 text-[0.62rem] font-semibold uppercase tracking-wider rounded px-1 py-0.5 align-middle" style="color: var(--accent-color); background: color-mix(in srgb, var(--accent-color) 12%, transparent);">★ Pinned</span>
             {% endif %}
+            {{ authorshipBadge(post.data.authored_by, compact=true) }}
             <a href="{{ post.url }}" class="font-semibold text-gray-900 dark:text-gray-100 title-hover" style="text-decoration: none;">{{ post.data.title }}</a>
           </div>
           {% if post.data.description %}
@@ -96,6 +98,7 @@ eleventyNavigation:
       <div class="flex items-center gap-2 mb-2">
         <span class="feed-list-dot bg-blue-400 shrink-0"></span>
         <time class="meta-text text-[0.68rem] text-gray-400 dark:text-gray-500">{{ post.date | readableDate }}</time>
+        {{ authorshipBadge(post.data.authored_by, compact=true) }}
         {% if post.data.pinned %}
           <span class="meta-text text-[0.65rem] ml-auto" style="color: var(--accent-color);">★ Pinned</span>
         {% endif %}

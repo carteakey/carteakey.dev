@@ -2,7 +2,7 @@
 title: Ramblings on Running an Army of Very Smart Five-Year-Olds
 description: truly the year of the agents
 date: 2026-02-25
-authored_by: ai-assisted
+authored_by: human
 tags:
   - AI
   - Agents

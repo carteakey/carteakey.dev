@@ -14,6 +14,8 @@ A few weeks ago I came across [this post on Marginalia](https://www.marginalia.n
 
 That felt like a project.
 
+{% image_cc "./src/static/img/projects/aidar.png", "aidar — AI writing drift detector", "rounded-lg shadow-md" %}
+
 ## What aidar does
 
 [aidar](https://github.com/carteakey/aidar) scans URLs and measures stylistic patterns that have become associated with AI-era writing. Not to declare something "AI-generated" — that framing is a trap — but to build a comparable, queryable dataset of how writing style is drifting across the web.

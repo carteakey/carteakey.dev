@@ -1,5 +1,25 @@
 ---
 projects:
+  - title: aidar
+    description: "Detects AI-era writing signals in web content. Scans sites and measures stylistic drift associated with LLM-generated text."
+    image_path: "./src/static/img/projects/aidar.png"
+    url: /blog/aidar-tracking-ai-writing-drift/
+    github: https://github.com/carteakey/aidar
+    tags:
+      - python
+      - nlp
+      - ai
+
+  - title: window.carteakey.dev
+    description: "A live window to Toronto. Raspberry Pi 4B + Pi camera streaming an HLS feed via Cloudflare Tunnel — weather, viewer count, music, timelapse."
+    image_path: "./src/static/img/window-site.png"
+    url: https://window.carteakey.dev
+    github: https://github.com/carteakey/window.carteakey.dev
+    tags:
+      - raspberry-pi
+      - hls
+      - python
+
   - title: carteakey.dev
     description: "This website!"
     image_path: "./src/static/img/projects/carteakey.png"
@@ -8,7 +28,7 @@ projects:
     tags:
       - eleventy
       - tailwind
-    
+
   - title: world-energy-stats
     description: World Energy Statistics using various data tools.
     image_path: "./src/static/img/projects/world-energy-stats.png"
@@ -26,7 +46,7 @@ projects:
     tags:
       - langchain
       - sveltekit
-  
+
   - title: server-compose
     description: A collection of sample docker compose files for self-hosted applications.
     image_path: "./src/static/img/projects/server-compose.png"
@@ -34,7 +54,7 @@ projects:
     tags:
       - docker
       - linux
-  
+
   - title: recomovi
     description: Movie Recommender & IMDb Dataset Generator.
     image_path: "./src/static/img/projects/recomovi.png"
@@ -43,7 +63,7 @@ projects:
     tags:
       - python
       - streamlit
-    
+
   - title: MicroHMS
     description: Hotel Management System to track bookings and generate invoices.
     image_path: "./src/static/img/projects/microhms.png"
@@ -52,7 +72,7 @@ projects:
     tags:
       - flask
       - postgresql
-    
+
   - title: vizima.in
     description: Website for a hospitality company. Featured in Chakra UI.
     image_path: "./src/static/img/projects/vizima.png"
@@ -60,7 +80,6 @@ projects:
     tags:
       - next.js
       - firebase
-
 
   - title: carteakey.github.io
     description: My old blog.

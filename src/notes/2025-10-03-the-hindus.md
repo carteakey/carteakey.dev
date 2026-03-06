@@ -4,6 +4,7 @@ date: 2025-10-03
 layout: layouts/note.njk
 permalink: /notes/{{ page.fileSlug }}/
 hidden: true
+authored_by: human
 ---
 
 Here is one of the greatest animations of Hindu culture - Ramayana: Legend of Prince Rama. The (1992, Original Hindi Dub), most importantly. 
