@@ -7,7 +7,7 @@ tags:
   - AI
   - Agents
 featured: true
-draft: true
+draft: false
 ---
 
 A few weeks ago I came across [this post on Marginalia](https://www.marginalia.nu/weird-ai-crap/hn/) showing that new Hacker News accounts are ten times more likely to use em dashes than older ones. Not as proof of anything - just as a signal. A stylistic fingerprint that's shifted measurably since large language models became mainstream.
@@ -20,41 +20,56 @@ That felt like a project.
 
 [aidar](https://github.com/carteakey/aidar) scans URLs and measures stylistic patterns that have become associated with AI-era writing. Not to declare something "AI-generated" - that framing is a trap - but to build a comparable, queryable dataset of how writing style is drifting across the web.
 
-The patterns it looks for:
+The patterns it looks for fall into two tiers.
 
-- **Em dash frequency** - 0–2 per 1000 words in human prose, 6–12+ in AI output
+**Structural and tonal tropes** - the patterns that are uniquely, embarrassingly AI. Sourced largely from [tropes.fyi](https://tropes.fyi/directory):
+
+- **Negative parallelism** - "It's not X - it's Y." The single most identified AI writing tell. One in a piece is fine; ten is an insult to the reader
+- **Em dash addiction** - AI uses 10–20+ per 1000 words; human prose uses 2–3
+- **Bold-first bullets** - every list item opens with a **bolded phrase**. Almost nobody writes this way by hand
+- **Rhetorical Q&A** - "The result? Devastating." The model poses a question nobody asked, then answers it
+- **Tricolon abuse** - "Products impress people; platforms empower them; participants thrive." Three-part parallel structures stacked back-to-back
+- **"Here's the kicker"** - false suspense transitions before unremarkable observations
+- **"Let's break this down"** - the pedagogical voice, even for expert audiences
+- **Signposted conclusions** - "In conclusion..." Competent writing doesn't announce itself
+- **Grandiose stakes inflation** - a blog post about API pricing becomes a meditation on the fate of civilization
+- **Vague attributions** - "experts argue", "studies suggest", "many observers" - without naming anyone
+- **Listicle in a trench coat** - "The first wall is... The second wall is..." - a numbered list disguised as prose
+- **"Despite its challenges"** - the rigid formula: acknowledge → dismiss → optimism
+
+**Word and phrase signals** - vocabulary that has statistically shifted since LLMs:
+
+- **Em dash frequency** - 0–2 per 1000 words in human prose; 6–12+ in AI output
 - **Hedging phrases** - "it's worth noting", "to be honest", "certainly", "genuinely"
-- **AI vocabulary idioms** - "delve into", "deep dive", "key takeaway", "paradigm shift", "seamlessly"
+- **"Delve" and friends** - delve, utilize, leverage, robust, streamline, harness, seamlessly, cutting-edge, actionable insights
+- **"Tapestry" and "landscape"** - ornate nouns where simpler words would do: tapestry, paradigm shift, ecosystem, cornerstone, at the intersection of
+- **Magic adverbs** - quietly, deeply, fundamentally, remarkably - used to make mundane descriptions feel weighty
+- **The "serves as" dodge** - replacing "is" with "serves as a reminder", "stands as a testament", "represents a fundamental"
 - **Bullet point density** - AI defaults to lists regardless of whether content warrants it
 - **Sentence burstiness** - humans mix short and long sentences; AI outputs uniform medium-length ones
 - **Question avoidance** - AI almost never asks questions; it answers them
-- **Type-token ratio** - a lightweight proxy for lexical diversity (low diversity = AI-like)
-- **Transition overload** - "furthermore", "moreover", "consequently" appearing in clusters
+- **Type-token ratio** - a lightweight proxy for lexical diversity
+- **Transition overload** - "furthermore", "moreover", "consequently" in clusters
 
 Each pattern produces a normalized 0–1 score. These aggregate into a per-category breakdown and a final **Stylistic Index** from 0–100.
 
 ## Scanning my own site
 
-I ran it against all 25 posts on this blog:
+I ran it against all 96 pages on this blog:
 
 ```
-aidar track carteakey.dev --save
+aidar discover carteakey.dev -o urls.txt
+aidar scan --batch urls.txt
 ```
 
-Results:
-- **Average index: 7.6/100**
-- Range: 0–22
-- All 25 posts labeled LIKELY HUMAN
+Results on **carteakey.dev** (current):
+- **Max score: 19/100** (the changelog - 8,500 words of dense list structure)
+- All 96 pages labeled **LIKELY HUMAN**
+- The tropes detectors - negative parallelism, bold-first bullets, tricolon abuse - scored 0.00 across every page
 
-The highest-scoring post - the one I wrote partly with Claude Code's help on a Databricks analysis piece - scored 22. The main signal was em dash frequency: 17.2 per 1000 words. That's real. I did use em dashes a lot in that post. Whether that's me, the AI, or me editing AI output and keeping its punctuation choices is genuinely unclear.
+Then I scanned an older build that had more AI-assisted posts. Top result: **36/100 LIKELY AI** on `/blog/tech/when-computers-finally-speak-human/`. That page fired four trope detectors simultaneously: em-dash addiction (10.6 per 1000 words), bold-first bullets (9.3/1000), tricolon abuse, and 13 writing trope matches. That's real. I wrote that post with heavy AI assistance and it shows.
 
-That ambiguity is the point.
-
-## The irony
-
-This tool was written by Claude (an AI). The codebase has em dashes in it. If you scanned the commit messages, the hedging detector would fire.
-
-I find this funny. 
+The highest-scoring page on the current site is the changelog - which scores high purely on structural signals (bullet density, semicolons) rather than AI vocabulary or tropes. That's a meaningful distinction the tool can make.
 
 ## How the scoring works
 
@@ -62,32 +77,54 @@ Patterns are YAML files in a `patterns/` directory. Adding a new signal means wr
 
 - **Calibrated thresholds** (`threshold_low`, `threshold_high`) - the range over which the score goes from 0 to 1
 - **A version number** - bump it when you recalibrate, so old scans get flagged as stale
-- **A detection type** - `regex`, `frequency`, `structural`, or `linguistic`
+- **A detection type** - `frequency`, `regex`, `html_regex`, `structural`, or `linguistic`
 
-The aggregate score is a weighted sum of category scores. Weights are in `_weights.yaml` and are tuned as more scan data comes in.
+The `html_regex` type is worth noting: it runs patterns against the raw HTML source rather than extracted text. This is how bold-first bullet detection works - trafilatura strips `<strong>` tags from the extracted text, but `<li><strong>Keyword</strong>` is detectable in the HTML itself.
 
-Right now the thresholds are calibrated against a small corpus. The interesting question is what happens when you have thousands of domains tracked over time - does the distribution shift? Are sites that scored 7 in 2024 scoring 15 in 2026?
+The aggregate score is a weighted sum of category scores. The tropes category carries the highest weight (0.40) since structural writing habits are the strongest and least gaming-prone signal.
+
+## The irony
+
+This tool was built by Claude. The codebase has em dashes in the comments. If you scanned the commit messages, the hedging detector would fire.
+
+I find this funny.
 
 ## What's coming
 
-The leaderboard site (aidar.lol) will show this over time. Once there's enough historical data - using the article publish date that trafilatura extracts from each page - you can start plotting a domain's stylistic drift as a time series.
+The leaderboard site (aidar.lol) will show stylistic drift over time. Once there's enough historical data - using the article publish date that trafilatura extracts from each page - you can plot a domain's stylistic drift as a time series.
 
 The TODO has things like:
-- Real perplexity scoring 
+- Dead Metaphor, One-Point Dilution, and Content Duplication detectors (the three that need NLP/semantic analysis rather than regex)
+- Real perplexity scoring via GPT-2
 - Wayback Machine integration for pre-AI baselines
-- An embed badge you can put on your site
+- An embed badge for your site
 
-If you want to contribute patterns or calibration data, there's a [CONTRIBUTING.md](https://github.com/carteakey/aidar/blob/main/CONTRIBUTING.md).
+If you want to contribute patterns or calibration data, the [GitHub repo](https://github.com/carteakey/aidar) is open.
 
 ## Running it yourself
 
 ```bash
 pip install git+https://github.com/carteakey/aidar.git
+
+# Analyze a single page
 aidar analyze https://yourblog.com/some-post
-aidar track yourblog.com --save
+
+# Or analyze raw text directly
+aidar analyze --text "paste your article here"
+
+# Discover and bulk scan a whole site
+aidar discover yourblog.com -o urls.txt
+aidar scan --batch urls.txt
 ```
 
-The scan takes a few seconds per page. The results go into `aidar.db` (SQLite, queryable directly if you want to dig into the data).
+The scan takes a few seconds per page. Results go into `aidar.db` (SQLite).
+
+---
+
+**References**
+- ["Wikipedia: Signs of AI writing"](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing) - 2023–present
+- ["Tropes - AI Writing Pattern Directory"](https://tropes.fyi/), Ossama Chaib - 2026
+- [New HN accounts ten times more likely to use em-dashes](https://www.marginalia.nu/weird-ai-crap/hn/), Marginalia
 
 ---
 
