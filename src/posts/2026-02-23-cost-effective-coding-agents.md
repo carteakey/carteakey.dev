@@ -30,8 +30,8 @@ We can tier the availability of intelligence and think of it as a "runway - cost
 - **SS tier (the big boys):** Claude Opus 4.6 (65.4% Terminal-Bench), GPT 5.2 Codex High, GPT 5.3 Codex High, Gemini 3.1 Pro High (77.1% ARC-AGI-2). Runtime (low), Intelligence (high) -> Great for the best / most effective coding.
 - **S tier (almost equally good but cheaper):** Claude Sonnet 4.6 (preferred over Opus 4.5 59% of the time for coding, at a fraction of the cost), GLM-5 (#1 open-source quality index), Grok 3 -> Great for longer sessions of coding when needed at almost same quality.
 - **A tier (OSS big boys):** Kimi K2.5, DeepSeek V3.2, Qwen3-Coder-480B. Lesser known, almost equally effective, at a fraction of the cost, often with free providers as well.
-- **B tier (great for regular work, agents):** Gemini 3.0 Flash, GPT 5 mini (59.8% score at $0.04/task — insane value), Claude Haiku -> Great for boilerplate work.
-- **C tier (awesome for running OpenClaw and longer agents without racking up API costs):** DeepSeek V3.2 via API ($0.28/1M tokens input, $0.42/1M tokens output — 95% cheaper than GPT 5). The sweet spot for long agent sessions that make hundreds of calls.
+- **B tier (great for regular work, agents):** Gemini 3.0 Flash, GPT 5 mini (59.8% score at $0.04/task - insane value), Claude Haiku -> Great for boilerplate work.
+- **C tier (awesome for running OpenClaw and longer agents without racking up API costs):** DeepSeek V3.2 via API ($0.28/1M tokens input, $0.42/1M tokens output - 95% cheaper than GPT 5). The sweet spot for long agent sessions that make hundreds of calls.
 - **D tier (Sorry r/localllama):** GPT OSS 120b, Devstral 2.1 Small, Qwen3-Coder-Next, Codestral. SOTA models for running locally, great if you know what you're doing. Not so great compared to money makers. In other news, water is wet.
 
 ## Strategy: Monthly Subs > API Costs
@@ -44,7 +44,7 @@ The single-plan approach:
 - **Cons:**
 	- Vendor lock-in, suboptimal pricing especially with so much competition and alternatives.
 	- You don't get to try the latest and best models as these guys take turns releasing.
-	- Each model has a smell / strength — Gemini is great for UI, Claude is great at most types of coding, ChatGPT is the best reviewer and long context.
+	- Each model has a smell / strength - Gemini is great for UI, Claude is great at most types of coding, ChatGPT is the best reviewer and long context.
 
 ## Best Single Value Today (Feb 2026)
 
@@ -59,16 +59,16 @@ The single-plan approach:
 
 Get a base sub (~$20/mo) as primary, then layer on free trials and cheap options. Here's what I rotate through:
 
-### Claude Code — Claude Pro ($20/month)
+### Claude Code - Claude Pro ($20/month)
 
 - Claude is much more straightforward and Claude Code is probably the best CLI tool available today, all things considered.
-- Claude Sonnet 4.6 (Model of Choice) — use this for primary work where speed and accuracy are important.
-- Claude Opus 4.6 — for tasks that need more brain.
+- Claude Sonnet 4.6 (Model of Choice) - use this for primary work where speed and accuracy are important.
+- Claude Opus 4.6 - for tasks that need more brain.
 - **Cons:** Much lower limits, but resets weekly.
 
 ### Google AI Pro (Free Trial)
 
-- Use this to try Antigravity IDE, which is another great option. It's a modded VSCode fork where agents get their own dedicated surface with direct access to the editor, terminal and browser — agents can autonomously plan and execute complex tasks simultaneously.
+- Use this to try Antigravity IDE, which is another great option. It's a modded VSCode fork where agents get their own dedicated surface with direct access to the editor, terminal and browser - agents can autonomously plan and execute complex tasks simultaneously.
 - Gemini 3.1 Pro Models - one of Big 3. Just dropped Feb 19 with leading scores on 13 of 16 benchmarks.
 - Also supports Claude Opus/Sonnet and GPT-OSS-120B (low limits) as well.
 - Also opens up Gemini CLI (not as good, use Antigravity directly)
@@ -77,8 +77,8 @@ Get a base sub (~$20/mo) as primary, then layer on free trials and cheap options
 ### Github Copilot ($10/month)
 
 - I've used this for the longest time.
-- They used to have 300 premium requests — 1 interaction/session counted as a request.
-- Now every message (small "hi" or "implement the world") counts against the same request — so it's easy to hit the limit if you're chatty.
+- They used to have 300 premium requests - 1 interaction/session counted as a request.
+- Now every message (small "hi" or "implement the world") counts against the same request - so it's easy to hit the limit if you're chatty.
 - But using their `<1x` models, especially Grok Code Fast 1, is a great fallback.
 - Built in with VSCode
 
@@ -104,7 +104,7 @@ Get a base sub (~$20/mo) as primary, then layer on free trials and cheap options
 
 - Open-source AI coding agent for VS Code, JetBrains, and CLI. Forked from Cline/Roo Code, raised $8M seed, 1.5M+ users, #1 on OpenRouter.
 - Free with bring-your-own API key, or Kilo Pass credits starting at $19/month with zero markup on model costs.
-- Access to 500+ AI models at provider rates. The Orchestrator mode breaks complex tasks into coordinated subtasks across planner, coder, and debugger agents — pretty neat.
+- Access to 500+ AI models at provider rates. The Orchestrator mode breaks complex tasks into coordinated subtasks across planner, coder, and debugger agents - pretty neat.
 - Contains a bunch of free models, and the ones being secretly tested.
 
 {% image "./src/static/img/coding-agents-kilo.png", "Kilo Code", "w-1/2 justify-center"  %}
@@ -112,7 +112,7 @@ Get a base sub (~$20/mo) as primary, then layer on free trials and cheap options
 ### OpenCode
 
 - Open-source CLI coding agent, like Claude Code but provider-agnostic. Go-based TUI with LSP support, multi-session handling, 75+ LLM providers via Models.dev.
-- Pipe in any OpenRouter model — unified API gateway with automatic fallback, rate limit handling, and cost tracking. Pay-as-you-go, pick your own model.
+- Pipe in any OpenRouter model - unified API gateway with automatic fallback, rate limit handling, and cost tracking. Pay-as-you-go, pick your own model.
 - OpenAI openly supports OpenCode via Codex OAuth, so you can use your ChatGPT sub directly.
 
 **Local options**
@@ -121,21 +121,21 @@ Get a base sub (~$20/mo) as primary, then layer on free trials and cheap options
 ### Qwen Code (Free)
 
 - Open-source CLI coding agent by Alibaba/QwenLM, purpose-built for Qwen3-Coder. Claude Code-like terminal experience with Skills, SubAgents, and multi-session handling.
-- **1,000 free requests/day** via Qwen OAuth — just sign in with your qwen.ai account, no credit card.
-- Supports OpenAI, Anthropic, and Gemini-compatible APIs. Point it at any provider or run it entirely local via llama.cpp — it speaks the same OpenAI-compatible protocol that llama-server exposes.
+- **1,000 free requests/day** via Qwen OAuth - just sign in with your qwen.ai account, no credit card.
+- Supports OpenAI, Anthropic, and Gemini-compatible APIs. Point it at any provider or run it entirely local via llama.cpp - it speaks the same OpenAI-compatible protocol that llama-server exposes.
 - The framework and the Qwen3-Coder model are co-developed and released together, so it gets first-class support for new model quirks.
 - Worth pairing with your D-tier local setup: Qwen3-Coder-Next on llama-server + Qwen Code on top = a fully offline coding agent at zero recurring cost.
 
 ## Free options worth considering
 
 - Google AI Pro free trial (includes Antigravity)
-- Zed Editor — 14-day trial with $20 of introductory tokens
-- ChatGPT Codex — temporarily free
-- Cursor — 14-day Pro trial (normally $20/mo)
-- Amp — $10 free daily grant (currently full for new users)
+- Zed Editor - 14-day trial with $20 of introductory tokens
+- ChatGPT Codex - temporarily free
+- Cursor - 14-day Pro trial (normally $20/mo)
+- Amp - $10 free daily grant (currently full for new users)
 
 ## A Note on TOS
 
-By no means does this promote trial hacking or the like. Don't try to break TOS, like using OAuth proxies for using Claude / Gemini for other services like OpenClaw — bans are in full effect (except OpenAI, which openly supports using OpenCode via Codex OAuth — yay Sam!?!?)
+By no means does this promote trial hacking or the like. Don't try to break TOS, like using OAuth proxies for using Claude / Gemini for other services like OpenClaw - bans are in full effect (except OpenAI, which openly supports using OpenCode via Codex OAuth - yay Sam!?!?)
 
 Try a few, find what sticks, rotate when limits hit. That's the whole strategy.

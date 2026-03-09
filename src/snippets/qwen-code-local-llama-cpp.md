@@ -22,7 +22,7 @@ llama-server \
   --ctx-size 131072
 ```
 
-Note the alias — it becomes the model ID sent to the API.
+Note the alias - it becomes the model ID sent to the API.
 
 ## 2. Configure ~/.qwen/settings.json
 
@@ -63,13 +63,13 @@ Replace `my-model-alias` with your `--alias` value, and set `contextWindowSize` 
 | Field | Purpose |
 |---|---|
 | `modelProviders.openai[].baseUrl` | Points to local llama-server |
-| `modelProviders.openai[].envKey` | Required — names the env var holding the API key |
+| `modelProviders.openai[].envKey` | Required - names the env var holding the API key |
 | `env.<KEY>` | Supplies a dummy key value (llama.cpp doesn't validate it) |
 | `security.auth.selectedType` | Must be `"openai"` for OpenAI-compatible providers |
 | `model.generationConfig.contextWindowSize` | Should match `--ctx-size` in llama-server |
 
 ## Pitfalls
 
-- `envKey` is **required** even for local servers — omitting it causes a "Missing credentials" error.
-- `security.auth` must only contain `selectedType` — extra fields like `apiKey` break auth detection.
+- `envKey` is **required** even for local servers - omitting it causes a "Missing credentials" error.
+- `security.auth` must only contain `selectedType` - extra fields like `apiKey` break auth detection.
 - `contextWindowSize` overrides Qwen Code's built-in model defaults; set it explicitly for local models.

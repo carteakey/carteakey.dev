@@ -3,22 +3,22 @@
     {% set color = "#16a34a" %}
     {% set icon = "edit-2" %}
     {% set label = "Human" %}
-    {% set title = "Human — Written without AI assistance" %}
+    {% set title = "Human - Written without AI assistance" %}
   {% elif authored_by == 'ai-assisted' %}
     {% set color = "#2563eb" %}
     {% set icon = "zap" %}
     {% set label = "AI Assisted" %}
-    {% set title = "AI Assisted — Written with AI as a creative partner" %}
+    {% set title = "AI Assisted - Written with AI as a creative partner" %}
   {% elif authored_by == 'ai-generated' %}
     {% set color = "#7c3aed" %}
     {% set icon = "cpu" %}
     {% set label = "AI Generated" %}
-    {% set title = "AI Generated — Primarily created by AI with human oversight" %}
+    {% set title = "AI Generated - Primarily created by AI with human oversight" %}
   {% else %}
     {% set color = "#6b7280" %}
     {% set icon = "help-circle" %}
     {% set label = "Unclassified" %}
-    {% set title = "Unclassified — Authorship not yet tagged" %}
+    {% set title = "Unclassified - Authorship not yet tagged" %}
   {% endif %}
 
   {% if compact %}

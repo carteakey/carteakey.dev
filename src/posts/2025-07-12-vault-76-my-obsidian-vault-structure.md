@@ -43,14 +43,14 @@ So I wanted to share my own approach that has evolved over time. I call it "Vaul
 
 Before getting into the vault structure, I had to settle a bigger question: which app for what?
 
-I was running three apps simultaneously — Apple Reminders, Apple Notes, and Obsidian — and everything was spread across all three. Finances in both Notes and Reminders. Travel in both. Goals everywhere. 301 items in Reminders with no real system.
+I was running three apps simultaneously - Apple Reminders, Apple Notes, and Obsidian - and everything was spread across all three. Finances in both Notes and Reminders. Travel in both. Goals everywhere. 301 items in Reminders with no real system.
 
 The answer was simpler than I thought:
 
 | App | Job |
 |---|---|
 | **Reminders** | Actionable tasks only. If it has a verb and needs to be *done*, it goes here. Siri + iPhone integration is unbeatable for quick capture. |
-| **Obsidian** | Everything else — lists, knowledge, reference, projects. Cross-platform (Mac, Windows, Linux, iOS). |
+| **Obsidian** | Everything else - lists, knowledge, reference, projects. Cross-platform (Mac, Windows, Linux, iOS). |
 | **Apple Notes** | iPad Pencil sketches only, then export to Obsidian. |
 
 The forcing question: *if you'd be upset if it disappeared tomorrow, it belongs in Obsidian. If you complete it and forget it, Reminders.*
@@ -59,8 +59,8 @@ The forcing question: *if you'd be upset if it disappeared tomorrow, it belongs 
 
 One thing that was poisoning my Reminders was mixing task types. A TODO and a bucket list item look similar on the surface, but they're fundamentally different:
 
-- **TODO** — something you're committing to do, with implied urgency. Lives in Reminders. You'd feel bad if it didn't get done this week.
-- **Bucket List** — something you want to experience before you die, no timeline. Lives in Obsidian. Missing it this week changes nothing.
+- **TODO** - something you're committing to do, with implied urgency. Lives in Reminders. You'd feel bad if it didn't get done this week.
+- **Bucket List** - something you want to experience before you die, no timeline. Lives in Obsidian. Missing it this week changes nothing.
 
 Mixing them creates guilt without progress. Seeing "learn Spanish" next to "buy milk" is a recipe for ignoring both.
 
@@ -125,7 +125,7 @@ The numbered system creates a natural flow:
     └── todos-vs-bucket-list.md
 ```
 
-I added a `mental-models/` folder to `1. system` for decisions about the system itself — which app to use for what, how to distinguish note types, etc. Meta-notes about how you think, not what you think about.
+I added a `mental-models/` folder to `1. system` for decisions about the system itself - which app to use for what, how to distinguish note types, etc. Meta-notes about how you think, not what you think about.
 
 #### 2. knowledge 🧠
 ```md
@@ -143,7 +143,7 @@ I added a `mental-models/` folder to `1. system` for decisions about the system 
     └── msc-notes/
 ```
 
-Articles saved from the web live here once read and worth keeping — not in inbox clippings (that's the queue), but here as processed reference.
+Articles saved from the web live here once read and worth keeping - not in inbox clippings (that's the queue), but here as processed reference.
 
 #### 3. projects 🚀
 ```md
@@ -213,7 +213,7 @@ Articles saved from the web live here once read and worth keeping — not in inb
 └── user-manuals 📖/
 ```
 
-`self/` covers inner life — relationships, personal philosophy, ramblings. `media/` is for notes and reviews after watching — the watchlist itself lives in Reminders.
+`self/` covers inner life - relationships, personal philosophy, ramblings. `media/` is for notes and reviews after watching - the watchlist itself lives in Reminders.
 
 #### 7. archive 📦
 ```md
@@ -224,11 +224,11 @@ Articles saved from the web live here once read and worth keeping — not in inb
 
 #### 8. config ⚙️
 
-Notes about the vault itself — plugin setup guides, CSS snippet explanations, sync configuration. Not system templates (those are in `1. system`) but documentation about how the vault is configured and why.
+Notes about the vault itself - plugin setup guides, CSS snippet explanations, sync configuration. Not system templates (those are in `1. system`) but documentation about how the vault is configured and why.
 
 ---
 
-The beauty of this structure is that it grows with you — whether you add new domains, change careers, or pick up new hobbies, there's a logical place for everything.
+The beauty of this structure is that it grows with you - whether you add new domains, change careers, or pick up new hobbies, there's a logical place for everything.
 
 A template for this vault is available on [GitHub](https://github.com/carteakey/vault-76-template).
 

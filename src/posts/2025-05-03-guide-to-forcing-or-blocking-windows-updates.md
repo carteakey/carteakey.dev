@@ -8,7 +8,7 @@ tags:
   - Windows
 hidden: true
 ---
-Probably a remnant of my Android ROMing days, I've always loved updates—hot take, I know. They keep me on my toes, prevent me from getting too comfortable with one system, and allow me to constantly explore new features and form opinions.
+Probably a remnant of my Android ROMing days, I've always loved updates-hot take, I know. They keep me on my toes, prevent me from getting too comfortable with one system, and allow me to constantly explore new features and form opinions.
 
 It’s always fascinating to see how a combination of the Mere Exposure Effect, Sunk Cost Fallacy, and nostalgia creates a cyclical reaction to software updates (or just about anything, really):
 
@@ -17,7 +17,7 @@ It’s always fascinating to see how a combination of the Mere Exposure Effect, 
 
 While it’s true that updates can occasionally break functionality, complicate simple tasks, or even feel like a step backward, they're usually a net positive, introducing security improvements and new capabilities.
 
-Veteran tech enthusiasts or professionals often become increasingly cautious of updates over time—not necessarily because updates themselves worsen, but due to the decreasing availability of time or energy to fix issues and adapt to frequent changes, especially when something mission-critical is at stake.
+Veteran tech enthusiasts or professionals often become increasingly cautious of updates over time-not necessarily because updates themselves worsen, but due to the decreasing availability of time or energy to fix issues and adapt to frequent changes, especially when something mission-critical is at stake.
 
 Regardless of personal preferences toward updates, one thing remains clear: the control over software updates on your system should always be entirely in your hands. And this is my primary frustration with Windows.
 

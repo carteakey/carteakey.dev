@@ -25,7 +25,7 @@ eleventyNavigation:
   <ul class="list-none m-0 p-0 space-y-8 pl-7">
     {% for entry in changelog %}
     <li class="relative">
-      {# timeline dot — smaller/gray for git history entries #}
+      {# timeline dot - smaller/gray for git history entries #}
       <div class="absolute -left-7 top-1.5 w-3 h-3 rounded-full border-2 border-white dark:border-zinc-950" style="background: {% if entry.fromGit %}#9ca3af{% else %}var(--accent-color){% endif %};"></div>
 
       <div class="flex flex-wrap items-baseline gap-3 mb-2">

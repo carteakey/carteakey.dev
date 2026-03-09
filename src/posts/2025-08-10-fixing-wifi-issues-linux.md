@@ -49,7 +49,7 @@ Why this matters: Linux Wi‑Fi reliability is primarily a driver story. In‑ke
 2) Buying advice (so you don’t end up fighting drivers)
 	•	Best bet (USB): Adapters using MediaTek chipsets supported by the mt76 driver family (e.g., mt76x2u, newer mt79xx).
 	•	Still OK (older): Atheros AR9271 class using ath9k_htc (2.4 GHz 802.11n only, but rock‑solid).
-	•	Avoid when you can: Realtek (8811/8812/8814/8821/8822/…) — many require out‑of‑tree DKMS, regress after kernel updates, and have power‑management quirks.
+	•	Avoid when you can: Realtek (8811/8812/8814/8821/8822/…) - many require out‑of‑tree DKMS, regress after kernel updates, and have power‑management quirks.
 
 Before buying, search the product’s USB VID:PID and confirm it maps to mt76/ath9k_htc. If you already own a Realtek: it can be made to work, but expect extra steps.
 
@@ -62,7 +62,7 @@ lsusb | grep -i -E 'mediatek|ralink|realtek|tp-link|netgear|alfa'
 dmesg | tail -n 80
 
 
-	2.	If it’s MediaTek: you should see the mt76xx driver binding automatically — connect with NetworkManager.
+	2.	If it’s MediaTek: you should see the mt76xx driver binding automatically - connect with NetworkManager.
 	3.	If it’s Atheros AR9271: install the firmware once (most distros ship it), then connect.
 	4.	If it’s Realtek: you may need a DKMS driver specific to your chipset (8812au/8814au/8821au/etc.). Install from a trusted maintainer, then sudo dkms status and reconnect. (If your distro ships a rtl88xxau-dkms or rtl8821ce-dkms, prefer that package to random forks.)
 
@@ -72,9 +72,9 @@ Tip: after any driver install, reboot once to ensure the right module loads and 
 
 4) Auto‑disable the internal Wi‑Fi when the USB adapter connects
 
-You want the external up, the internal out of the way — but only when the external is present.
+You want the external up, the internal out of the way - but only when the external is present.
 
-Option A — NetworkManager dispatcher (dynamic, recommended)
+Option A - NetworkManager dispatcher (dynamic, recommended)
 
 Create /etc/NetworkManager/dispatcher.d/80-wifi-external-prefer:
 
@@ -102,7 +102,7 @@ fi
 
 sudo chmod +x /etc/NetworkManager/dispatcher.d/80-wifi-external-prefer
 
-Option B — Blacklist internal driver (permanent, simple)
+Option B - Blacklist internal driver (permanent, simple)
 
 If you never want the internal card:
 

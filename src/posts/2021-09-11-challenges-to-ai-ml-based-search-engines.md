@@ -45,7 +45,7 @@ People realize that there are trade-offs when they use digital services, but man
 
 ### Challenges to AI-ML based search engines
 
-One of the most revolutionary aspects of the [GDPR](https://gdpr-info.eu/) was the “right to be forgotten” — a debated right that is sometimes interpreted as empowering individuals to request the erasure of their information on the internet, most commonly from search engines or social networks.
+One of the most revolutionary aspects of the [GDPR](https://gdpr-info.eu/) was the “right to be forgotten” - a debated right that is sometimes interpreted as empowering individuals to request the erasure of their information on the internet, most commonly from search engines or social networks.
 
 This data privacy principle simply means that any European consumer can request that a corporation erase and permanently remove any data that has been saved about them.
 

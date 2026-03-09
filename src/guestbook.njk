@@ -41,9 +41,9 @@ eleventyNavigation:
           <div class="sticky-footer">
             <span class="sticky-author">
               {% if entry.website %}
-                <a href="{{ entry.website }}" target="_blank" rel="noopener" class="sticky-link">— {{ entry.name }}</a>
+                <a href="{{ entry.website }}" target="_blank" rel="noopener" class="sticky-link">- {{ entry.name }}</a>
               {% else %}
-                — {{ entry.name }}
+                - {{ entry.name }}
               {% endif %}
             </span>
             <span class="sticky-date">{{ entry.date }}</span>

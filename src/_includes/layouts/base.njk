@@ -142,7 +142,7 @@
 
         <div class="flex flex-row w-full justify-between items-center gap-4">
 
-          {# Site title — same on desktop and mobile, consistent font #}
+          {# Site title - same on desktop and mobile, consistent font #}
           <a class="no-underline hover:no-underline font-bold text-base tracking-tight group flex items-center shrink-0" href="{{ '/' | url }}" style="color: var(--accent-color)">
             carteakey.dev
           </a>
@@ -163,7 +163,7 @@
               </a>
             </li>
 
-            {# Accent theme slider — inline in nav, always visible #}
+            {# Accent theme slider - inline in nav, always visible #}
             <li class="flex items-center ml-1" x-data="{
               currentIndex: 12,
               themes: [
@@ -255,7 +255,7 @@
             src="{{ spotify.nowPlaying.albumImageUrl }}" alt="{{ spotify.nowPlaying.title }}" width="20" height="20" loading="lazy">
           <span>Now playing:</span>
           <a href={{ spotify.nowPlaying.songUrl }} target='_blank' class='hover:underline text-gray-700 dark:text-gray-300 font-medium'>{{ spotify.nowPlaying.title }}</a>
-          <span class="text-gray-400 dark:text-gray-600">— {{ spotify.nowPlaying.artist }}</span>
+          <span class="text-gray-400 dark:text-gray-600">- {{ spotify.nowPlaying.artist }}</span>
         </div>
         {% else %}
         <div></div>
@@ -274,7 +274,7 @@
       {# Extended footer section #}
       <div class="border-t border-gray-200 dark:border-gray-700 pt-4 pb-6 not-prose">
 
-        {# Categorized footer navigation — 4-col on md+; flat link list on mobile #}
+        {# Categorized footer navigation - 4-col on md+; flat link list on mobile #}
 
         {# Mobile: 2-col compact grid with category headings + icons #}
         <div class="grid grid-cols-2 gap-x-4 gap-y-3 text-xs md:hidden">
@@ -304,7 +304,7 @@
         {# Desktop: 4-column categorized grid #}
         <div class="hidden md:grid grid-cols-4 gap-x-4 gap-y-2 text-xs">
           
-          {# Read — content for others #}
+          {# Read - content for others #}
           <div>
             <h4 class="font-semibold text-gray-500 dark:text-gray-500 mb-1 text-[0.65rem] uppercase tracking-wider">Read</h4>
             <ul class="space-y-0.5 list-none m-0 p-0">
@@ -318,7 +318,7 @@
             </ul>
           </div>
 
-          {# Explore — creative & fun #}
+          {# Explore - creative & fun #}
           <div>
             <h4 class="font-semibold text-gray-500 dark:text-gray-500 mb-1 text-[0.65rem] uppercase tracking-wider">Explore</h4>
             <ul class="space-y-0.5 list-none m-0 p-0">
@@ -332,7 +332,7 @@
             </ul>
           </div>
 
-          {# About Me — personal & professional #}
+          {# About Me - personal & professional #}
           <div>
             <h4 class="font-semibold text-gray-500 dark:text-gray-500 mb-1 text-[0.65rem] uppercase tracking-wider">About Me</h4>
             <ul class="space-y-0.5 list-none m-0 p-0">
@@ -343,7 +343,7 @@
             </ul>
           </div>
 
-          {# Meta — site utilities & links #}
+          {# Meta - site utilities & links #}
           <div>
             <h4 class="font-semibold text-gray-500 dark:text-gray-500 mb-1 text-[0.65rem] uppercase tracking-wider">Meta</h4>
             <ul class="space-y-0.5 list-none m-0 p-0">
@@ -444,7 +444,7 @@
     const nav = { h:'/', b:'/blog/', f:'/feed/', s:'/snippets/', n:'/now/', t:'/til/', r:'/reading/' };
     document.addEventListener('keydown', function(e) {
       if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.isContentEditable) return;
-      // No modifier keys — bare letter shortcuts only (allow Shift for ? key)
+      // No modifier keys - bare letter shortcuts only (allow Shift for ? key)
       if (e.ctrlKey || e.metaKey || e.altKey) return;
       if (e.shiftKey && e.key !== '?') return;
       const k = e.key.toLowerCase();

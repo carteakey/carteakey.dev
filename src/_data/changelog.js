@@ -73,7 +73,7 @@ export default function () {
       });
     }
   } catch (_) {
-    // git not available — skip
+    // git not available - skip
   }
 
   return entries;

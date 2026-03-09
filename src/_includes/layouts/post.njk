@@ -110,7 +110,7 @@ hasEthicalAds: false
             {% if hidden %}
             <span class="font-medium text-gray-900 dark:text-gray-100">Draft:</span> You've wandered into a work-in-progress post. Content may be incomplete or contain errors. Come back later for the finished version!
             {% else %}
-            <span class="font-medium text-gray-900 dark:text-gray-100">Draft:</span> This post is a work in progress — it may be incomplete or change. I publish drafts early because it's less stressful than waiting for perfect.
+            <span class="font-medium text-gray-900 dark:text-gray-100">Draft:</span> This post is a work in progress - it may be incomplete or change. I publish drafts early because it's less stressful than waiting for perfect.
             {% endif %}
           </div>
         </div>
@@ -135,7 +135,7 @@ hasEthicalAds: false
           </span>
           <span id="viewCount" class="flex items-center gap-1.5 text-gray-500 dark:text-gray-400">
             {% feather "eye", class="w-4 h-4 opacity-60" %}
-            <span id="viewCountNumber">—</span> views
+            <span id="viewCountNumber">-</span> views
           </span>
           {{ authorshipBadge(authored_by) }}
         </div>
@@ -159,12 +159,12 @@ hasEthicalAds: false
     {% if authored_by == 'ai-assisted' %}
     <div class="not-prose rounded-md border border-blue-200 dark:border-blue-900 bg-blue-50 dark:bg-blue-950/30 px-4 py-3 mb-6 text-sm text-blue-800 dark:text-blue-300 flex items-start gap-2">
       {% feather "zap", class="w-4 h-4 shrink-0 mt-0.5 opacity-70" %}
-      <span><span class="font-semibold">AI Assisted</span> — Written with AI as a creative partner. Ideas, structure, and editorial direction are mine; AI helped with drafting and wording.</span>
+      <span><span class="font-semibold">AI Assisted</span> - Written with AI as a creative partner. Ideas, structure, and editorial direction are mine; AI helped with drafting and wording.</span>
     </div>
     {% elif authored_by == 'ai-generated' %}
     <div class="not-prose rounded-md border border-purple-200 dark:border-purple-900 bg-purple-50 dark:bg-purple-950/30 px-4 py-3 mb-6 text-sm text-purple-800 dark:text-purple-300 flex items-start gap-2">
       {% feather "cpu", class="w-4 h-4 shrink-0 mt-0.5 opacity-70" %}
-      <span><span class="font-semibold">AI Generated</span> — AI wrote most of the words here. The ideas, research, and editorial direction are mine — I read and verify everything before it goes up.</span>
+      <span><span class="font-semibold">AI Generated</span> - AI wrote most of the words here. The ideas, research, and editorial direction are mine - I read and verify everything before it goes up.</span>
     </div>
     {% endif %}
 

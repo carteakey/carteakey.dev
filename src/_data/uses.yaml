@@ -2,24 +2,24 @@ categories:
   - name: Hardware
     emoji: "🖥️"
     items:
-      - name: MacBook Pro 14" (M3 Pro) — Work
+      - name: MacBook Pro 14" (M3 Pro) - Work
         emoji: "💻"
         description: Primary development machine. The M3 chip handles everything from code editing to running local LLMs.
         link: https://www.apple.com/macbook-pro/
 
-      - name: MacBook — Personal
+      - name: MacBook - Personal
         emoji: "💻"
         description: Personal laptop for everyday use.
 
-      - name: Windows PC — Gaming + Workstation
+      - name: Windows PC - Gaming + Workstation
         emoji: "🖥️"
         description: Desktop for gaming and heavier workstation tasks.
 
-      - name: Asus FX505 — Home Server
+      - name: Asus FX505 - Home Server
         emoji: "🗄️"
         description: Repurposed gaming laptop running as a home server.
 
-      - name: Raspberry Pi — Always-on Server
+      - name: Raspberry Pi - Always-on Server
         emoji: "🍓"
         description: Low-power always-on server for self-hosted services.
 
@@ -295,7 +295,7 @@ retired:
 
   - name: Alfred
     emoji: "🎩"
-    description: Replaced by Raycast — faster and more extensible.
+    description: Replaced by Raycast - faster and more extensible.
     retired_date: "2023"
 
   - name: Postman

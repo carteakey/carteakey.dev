@@ -14,7 +14,7 @@ These scripts help:
 - `wifi-guardian.sh` → Runs quick network resets to restore internet.
 - `wifi-fix-settings.sh` → Applies permanent tweaks to reduce disconnections, and auto-disables the internal adapter when an external one is working well.
 
-1. wifi-guardian.sh — Quick Fix Script
+1. wifi-guardian.sh - Quick Fix Script
 
 ```bash
 #!/usr/bin/env bash
@@ -246,7 +246,7 @@ main "$@"
 ```
 
 
-2. wifi-fix-settings.sh — Permanent Tweaks Script
+2. wifi-fix-settings.sh - Permanent Tweaks Script
 
 ```bash
 #!/bin/bash

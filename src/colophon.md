@@ -19,7 +19,7 @@ eleventyNavigation:
 
 ## Stack
 
-This site is built with the **NEAT stack** — Netlify, Eleventy, Alpine, Tailwind.
+This site is built with the **NEAT stack** - Netlify, Eleventy, Alpine, Tailwind.
 
 | Layer | Tool |
 |---|---|
@@ -31,7 +31,7 @@ This site is built with the **NEAT stack** — Netlify, Eleventy, Alpine, Tailwi
 | Upvotes | [Upstash Redis](https://upstash.com/) via Netlify Functions |
 | Search | Client-side JS (no external service) |
 | Analytics | None (privacy-first) |
-| Fonts | Inter (sans), JetBrains Mono (code) — self-hosted |
+| Fonts | Inter (sans), JetBrains Mono (code) - self-hosted |
 | Icons | [Feather Icons](https://feathericons.com/) |
 | Syntax highlighting | [Prism.js](https://prismjs.com/) with custom themes |
 | Images | [eleventy-img](https://www.11ty.dev/docs/plugins/image/) for responsive processing |
@@ -39,24 +39,24 @@ This site is built with the **NEAT stack** — Netlify, Eleventy, Alpine, Tailwi
 
 ## Design
 
-The design is called **Dense Editorial** — built in February 2026 during a complete redesign away from card grids and glassmorphism toward flat list rows, monospace metadata, and tight vertical rhythm.
+The design is called **Dense Editorial** - built in February 2026 during a complete redesign away from card grids and glassmorphism toward flat list rows, monospace metadata, and tight vertical rhythm.
 
 Inspirations: Stratechery, Hacker News, Bear Blog, newsletter-style layouts.
 
 Key design decisions:
 - 15px base font, system sans-serif stack
-- `--accent-color` CSS variable driving all highlights — user-selectable from 22 colors
+- `--accent-color` CSS variable driving all highlights - user-selectable from 22 colors
 - Flat `border-b` dividers instead of card shadows
 - List-first layouts with optional grid toggle
 
 ## AI-Assisted Development
 
-This site is actively developed with AI assistance — primarily GitHub Copilot (Claude Sonnet) and occasionally Codex. The AI helps with boilerplate, CSS wrangling, and feature implementation while I drive direction and make design decisions.
+This site is actively developed with AI assistance - primarily GitHub Copilot (Claude Sonnet) and occasionally Codex. The AI helps with boilerplate, CSS wrangling, and feature implementation while I drive direction and make design decisions.
 
 Some posts are also AI-assisted and marked accordingly. I think transparency here matters.
 
 ## Source
 
-The source code is [on GitHub](https://github.com/carteakey/carteakey.dev). It's not a template — it's a mess — but feel free to poke around.
+The source code is [on GitHub](https://github.com/carteakey/carteakey.dev). It's not a template - it's a mess - but feel free to poke around.
 
 </div>

@@ -11,7 +11,7 @@ projects:
       - ai
 
   - title: window.carteakey.dev
-    description: "A live window to Toronto. Raspberry Pi 4B + Pi camera streaming an HLS feed via Cloudflare Tunnel — weather, viewer count, music, timelapse."
+    description: "A live window to Toronto. Raspberry Pi 4B + Pi camera streaming an HLS feed via Cloudflare Tunnel - weather, viewer count, music, timelapse."
     image_path: "./src/static/img/window-site.png"
     url: https://window.carteakey.dev
     github: https://github.com/carteakey/window.carteakey.dev

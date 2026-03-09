@@ -51,7 +51,7 @@
     {% set badgeLabel = "Folio" %}
   {% endif %}
 
-  {# ── LIST VARIANT (homepage preview — single compact row) ── #}
+  {# ── LIST VARIANT (homepage preview - single compact row) ── #}
   {% if variant == 'list' %}
   <li class="feed-list-row{% if extraClasses %} {{ extraClasses }}{% endif %}" {% if outerAttrs %}{{ outerAttrs | safe }}{% endif %}>
     <span class="feed-list-date meta-text">{{ item.date | shortDate }}</span>
@@ -65,7 +65,7 @@
     {% endif %}
   </li>
 
-  {# ── FULL VARIANT (feed page — clean card in a grid) ── #}
+  {# ── FULL VARIANT (feed page - clean card in a grid) ── #}
   {% else %}
   <article class="feed-card feed-card-full{% if extraClasses %} {{ extraClasses }}{% endif %}" {% if outerAttrs %}{{ outerAttrs | safe }}{% endif %}>
     {# Header row: type dot + label + date #}

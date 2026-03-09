@@ -47,16 +47,16 @@ Here's a visual breakdown of [where my skills lie](/skills/) across the data lan
 
 ## Why I Write Here
 
-I've always created personal sites as a form of expression — putting my learning out in public before anyone else gets to point it out. Exposing my stupidity and naivety on my own terms, basically.
+I've always created personal sites as a form of expression - putting my learning out in public before anyone else gets to point it out. Exposing my stupidity and naivety on my own terms, basically.
 
 The philosophy I keep coming back to is this:
 
-> "[One] who works with the door open gets all kinds of interruptions, but [they] also occasionally gets clues as to what the world is and what might be important." — Richard Hamming
+> "[One] who works with the door open gets all kinds of interruptions, but [they] also occasionally gets clues as to what the world is and what might be important." - Richard Hamming
 
-Writing in public keeps me honest. Knowledge isn't a dump of everything you've seen or heard — it has to be relevant, distilled, worth saving. Not just something a Google search away. This site is my attempt at that.
+Writing in public keeps me honest. Knowledge isn't a dump of everything you've seen or heard - it has to be relevant, distilled, worth saving. Not just something a Google search away. This site is my attempt at that.
 
 ## Let's Connect
 
 If any of this resonates with you, or if you just want to chat about Bloodborne lore, AI, or why self-hosting is both a blessing and a curse, hit me up at **carteakey.dev[at]gmail[dot]com**.
 
-You can also sign my [guestbook](/guestbook) — yes, I have one in 2026. Retro is in.
+You can also sign my [guestbook](/guestbook) - yes, I have one in 2026. Retro is in.
