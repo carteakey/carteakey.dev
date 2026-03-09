@@ -36,6 +36,9 @@ The patterns it looks for fall into two tiers.
 - **Vague attributions** - "experts argue", "studies suggest", "many observers" - without naming anyone
 - **Listicle in a trench coat** - "The first wall is... The second wall is..." - a numbered list disguised as prose
 - **"Despite its challenges"** - the rigid formula: acknowledge → dismiss → optimism
+- **AI section headers** - "The Takeaway", "Why This Matters", "Key Takeaways", "Moving Forward", "What's Next". Detected in raw HTML heading tags so it fires even when the page is rendered by a JavaScript-heavy CMS
+- **Second-person direct address** - "We've all been there", "You might be wondering", "Picture this", "Let me walk you through", and the entire **"Here's how it actually went"** family - the reveal formula pasted into every AI-assisted dev.to and LinkedIn post
+- **"And honestly?"** - the dramatic-pause reveal. "And honestly? I lost all motivation." Flagged in the HN discussion on tropes.fyi as a Claude-specific emerging tell
 
 **Word and phrase signals** - vocabulary that has statistically shifted since LLMs:
 
@@ -83,6 +86,8 @@ The `html_regex` type is worth noting: it runs patterns against the raw HTML sou
 
 The aggregate score is a weighted sum of category scores. The tropes category carries the highest weight (0.40) since structural writing habits are the strongest and least gaming-prone signal.
 
+One comment from the HN thread on tropes.fyi nailed the calibration philosophy: *"Those tropes are things humans do too. But like once or twice in an article. Not every single freaking paragraph."* That's the whole point of threshold-based frequency scoring rather than binary detection.
+
 ## The irony
 
 This tool was built by Claude. The codebase has em dashes in the comments. If you scanned the commit messages, the hedging detector would fire.
@@ -114,7 +119,7 @@ aidar analyze --text "paste your article here"
 
 # Discover and bulk scan a whole site
 aidar discover yourblog.com -o urls.txt
-aidar scan --batch urls.txt
+aidar scan --batch urls.txt --min-words 50
 ```
 
 The scan takes a few seconds per page. Results go into `aidar.db` (SQLite).
@@ -125,6 +130,8 @@ The scan takes a few seconds per page. Results go into `aidar.db` (SQLite).
 - ["Wikipedia: Signs of AI writing"](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing) - 2023–present
 - ["Tropes - AI Writing Pattern Directory"](https://tropes.fyi/), Ossama Chaib - 2026
 - [New HN accounts ten times more likely to use em-dashes](https://www.marginalia.nu/weird-ai-crap/hn/), Marginalia
+- [LLM writing style: empirical stylometric research](https://arxiv.org/abs/2410.16107) (PNAS 2025) - found GPT-4o's second-most-overused word is "tapestry"; present participles alone are a near-sufficient stylometric classifier
+- [LLM writing style resources](https://www.refsmmat.com/notebooks/llm-style.html), Alex Reinhart - curated research notebook on this topic
 
 ---
 
