@@ -3,15 +3,16 @@ title: Running Qwen3-Coder-Next at 40 t/s on consumer hardware (draft)
 description: Squeezing every token per second - the sequel
 date: 2026-02-18
 authored_by: human
-updated: 2026-02-18
+updated: 2026-07-15
 tags:
   - AI
 ---
 ## TL;DR
 
 - **Hardware**: i5-12600K (6P + 4E), RTX 4070 (12 GB), 64 GB DDR5 6000 MT/s, Linux (CachyOS, CUDA 13.0).
+- **Scripts**: All bench and server scripts are in [carteakey/l3ms](https://github.com/carteakey/l3ms) under `bench-models/`.
 - **Model**: Qwen3-Coder-Next MXFP4 (~45 GB) - 80B total params, ~3B active per token.
-- **Result**: **~40 t/s** generation, 200+ t/s prompt processing at 32k context.
+- **Result**: **~40 t/s** generation, 450+ t/s prompt processing.
 - **For comparison**: GPT-OSS-120B on the same hardware gets ~30 t/s.
 
 ```bash
@@ -139,15 +140,86 @@ sudo dmidecode -t memory | grep -E "Speed|Configured"
 # Look for "Configured Memory Speed" - if it doesn't match your XMP profile, enable XMP in BIOS.
 ```
 
+### MoE offload strategies and `--fit`
+
+One of the core challenges with a 47 GB model on a 12 GB card is deciding *which* tensors stay on GPU. There are three broad approaches in upstream llama.cpp (UD-Q4_K_XL quant, `pp512+tg128`, RTX 4070 12 GB, 10 threads pinned to cores 0–11, flash-attn on, mmap off).
+
+**Benchmark context:** `pp512` = 512-token prompt, `tg128` = 128 tokens generated. llama-bench sizes its KV cache to exactly `n_prompt + n_gen` (640 tokens here) - all runs on equal footing. Synthetic throughput only; real-world speeds at longer contexts will differ, especially for prefill.
+
+| Strategy | Description | pp512 (t/s) | tg128 (t/s) |
+| -------- | ----------- | ----------: | ----------: |
+| `N_CPU_MOE=40` (default) | Keep first 40 MoE layers on CPU as integer count | 451 | **39.5** |
+| `--ot .ffn_.*_exps.=CPU` | All expert tensors to CPU via regex | 410 | 33.7 |
+| `--fit` (128 MiB margin, 131k ctx) | llama-fit-params auto-places tensors per-layer | **476** | 38.2 |
+
+**`--fit` wins on prefill.** With `--fit-target 128 --fit-ctx 131072`, llama-fit-params left only 128 MiB of headroom while still reserving full 131k context. It placed layers 0–4 fully on GPU, partially spilled layer 5 (`blk.5.ffn_down` only), and moved all MoE experts from layer 6 onward to CPU. That extra layer on GPU translates to ~25–66 t/s more prefill throughput.
+
+**`N_CPU_MOE=40` wins on generation.** The integer MoE offload path is slightly faster for token generation than the regex override, likely because the coarser granularity avoids some dispatch overhead. The fit result (38.2 tg) is competitive but marginally behind.
+
+**Manual `all-cpu-moe` is the worst of both.** Bluntly forcing all `_exps` tensors to CPU with a single regex hurts both prefill and generation. It's the right starting point for understanding your VRAM budget, not the ending point. The `up-down-cpu` and `up-cpu` strategies both OOM on a 12 GB card - 512 experts × gate/up/down projections across 40+ layers simply doesn't fit even with nothing else on GPU.
+
+**The `--fit` approach for llama-server** is what the production config at the top of this post uses. Because llama-server accepts `--fit` directly (unlike llama-bench, which requires a two-stage workaround), you get the auto-placement for free without manual regex tuning. The `--fit-ctx 131072` floor ensures fit never reduces context below 128k.
+
+### `--poll`, `--numa`, `-ctk`/`-ctv` - flat or negative
+
+Tested against the `N_CPU_MOE=40` baseline (pp512: ~453, tg128: ~39.5):
+
+| Experiment | pp512 (t/s) | tg128 (t/s) | verdict |
+| ---------- | ----------: | ----------: | ------- |
+| `--poll 0` | 453 | 37.4 | noise |
+| `--poll 50` (default) | 453 | 36.4 | baseline |
+| `--poll 100` | 454 | 37.1 | noise |
+| `--numa isolate` (no taskset) | 453 | 33.0 | worse |
+| `--numa distribute` (no taskset) | 454 | 33.3 | worse |
+| `-ctk q8_0 -ctv q8_0` | 453 | 36.0 | flat at bench ctx |
+
+Poll is completely flat - on hybrid CPU+GPU inference the synchronisation overhead dominates, polling level doesn't matter. NUMA modes are actually worse than `taskset -c 0-11` because this is a single-socket system with no NUMA topology to exploit. KV quantisation has no visible effect at the 640-token bench context; it will matter in production at 131k context where the KV cache is several GB.
+
+### `ik_llama.cpp` - in progress 🚧
+
+[ikawrakow/ik_llama.cpp](https://github.com/ikawrakow/ik_llama.cpp) is a fork with MoE-specific kernel optimisations not yet upstream. Results so far (same hardware, same model):
+
+| Config | pp512 (t/s) | tg128 (t/s) | notes |
+| ------ | ----------: | ----------: | ----- |
+| upstream baseline | **453** | 39.5 | reference |
+| ik fused-moe (default) | 215 | 40.5 | +1 tg, −238 pp |
+| ik fused-moe + merge-qkv | 217 | 40.9 | marginal over fused alone |
+| ik fused-moe + merge-up-gate | 215 | **41.1** | best tg; ~73 GB RAM needed |
+| ik fused-moe + ger + merge-up-gate | 215 | 41.2 | diminishing returns |
+
+The fused MoE kernel hits 40+ t/s on generation - the target - but cuts prefill roughly in half vs upstream. `--merge-up-gate-experts` repacks the up+gate weight matrices into a single tensor for better read locality; it gives another ~0.6 tg but nearly doubles RAM usage (model swells from 46 to 73 GB in memory). Not usable if you're tight on RAM.
+
+**Net verdict:** ik_llama is the right choice if you are generation-bottlenecked and have RAM headroom. Upstream llama.cpp remains better for prefill-heavy workloads. The best overall config depends on your use case - coding agents are tg-heavy, so ik_llama's fused-moe default is worth the pp regression.
+
+For benchmarking and experimentation, all scripts are in [carteakey/l3ms](https://github.com/carteakey/l3ms) under `bench-models/`:
+
+```bash
+# Upstream: simple default (N_CPU_MOE=40)
+./bench-llama-cpp-qwen3-coder-next.sh
+
+# Upstream: manual strategy presets
+STRATEGY=all-cpu-moe ./bench-llama-cpp-qwen3-coder-next-strategies.sh
+
+# Upstream: auto-fit
+FIT_TARGET=128 FIT_CTX=131072 ./bench-llama-cpp-qwen3-coder-next-fit.sh
+
+# ik_llama: default (fused-moe on)
+./bench-ik-llama-cpp-qwen3-coder-next.sh
+
+# ik_llama: strategy presets
+STRATEGY=fused-muge ./bench-ik-llama-cpp-qwen3-coder-next-strategies.sh
+```
+
 ### Things I haven't tried yet
 
 - **Vulkan backend** - some users report 2x speed for MoE partial offload
-- **Speculative decoding** with Qwen3 0.6B as draft model
-- **`ik_llama.cpp` fork** - reportedly better MoE performance
+- **Speculative decoding** with a small Qwen3 draft model
 - **DDR5 timing tightening** (tRFC especially) for more bandwidth
 
 ## Post-mortem / Changelog
 
+- 2026-07-15 - Extended benchmark: added poll, numa, ctk/ctv, and ik_llama results. Poll and NUMA flat/negative on single-socket hybrid inference. KV quant no effect at bench context. ik_llama fused-moe hits 40.5 tg (target!) but halves prefill vs upstream - best for generation-heavy workloads. Added ik_llama bench scripts and bench runbook to [carteakey/l3ms](https://github.com/carteakey/l3ms).
+- 2026-07-14 - Benchmarked MoE offload strategies. `--fit` wins on prefill (476 t/s); `N_CPU_MOE=40` leads on generation (39.5 t/s). llama-bench sizes KV cache to `n_prompt + n_gen` so comparisons are apples-to-apples.
 - 2026-03-02 - Added `-ctk q8_0` and `-ctv q8_0` parameters for KV cache and token vector quantization.
 - 2026-02-15 - Initial post. Getting ~38 t/s after enabling XMP and updating llama.cpp.
 
