@@ -3,7 +3,7 @@ title: Optimizing gpt-oss-120b speed on consumer hardware
 description: Squeezing every token per second 
 date: 2025-09-21
 authored_by: human
-updated: 2025-09-21
+updated: 2026-03-12
 tags:
   - AI
 pinned: true
@@ -13,37 +13,37 @@ pinned: true
 ## TL;DR
 
 - **Hardware**: i5-12600K (6P + 4E), RTX 4070 (12 GB), 64 GB DDR5 RAM, Linux (CachyOS, CUDA 13.0).
-- **Result**: ~~11 tokens/s~~ -> **30 tokens/s** generation, 190+ tokens/s prompt processing for 32k context.
+- **Result**: ~~11 tokens/s~~ -> **28 tokens/s** generation, 420+ tokens/s prompt processing for 32k context.
 - **Biggest win**: Enabling DDR5 XMP in BIOS. My RAM was running at 2000 MT/s instead of 6000 MT/s for **months**. 3x memory bandwidth = 3x token generation speed. See [the cautionary tale below](#check-your-ram-speed-seriously).
 - **Key flags** that made it possible:
-	- `--n-cpu-moe 31` (keep most MoE layers on CPU)
-	- `--n-gpu-layers 99` (only 5 layers on GPU)
+	- `--fit on` (automatic VRAM-aware layer placement - easiest starting point)
+	- `--parallel 1` (single slot - reclaims KV cache VRAM for model weights)
 	- `taskset -c 0-11` (P-core threads only)
 	- `-fa` (flash-attention)
 	- Latest llama.cpp build (significant MoE performance improvements since initial post)
 
-Final run script (save as `run-gpt-oss-120b.sh`, and tweak paths as needed):
+**Recommended run script** - uses `--fit` to auto-place layers, works on any system without tuning (tweak paths as needed). Full script in the [l3ms repo](https://github.com/kchauhan/l3ms/blob/main/run-models/run-llama-cpp-gpt-oss-120b.sh):
 
 ```bash
 #!/usr/bin/env bash
 
 export LLAMA_SET_ROWS=1
 export GGML_CUDA_GRAPH_OPT=1
-MODEL="/home/carteakey/lllms/models/ggml-org/gpt-oss-120b-GGUF/gpt-oss-120b-mxfp4-00001-of-00003.gguf"
+MODEL="/path/to/gpt-oss-120b-mxfp4-00001-of-00003.gguf"
 
 taskset -c 0-11 $LLAMA_CPP_CUDA_PATH \
 -m "$MODEL" \
 --alias "ggml-org/gpt-oss-120b" \
 --fit on \
---fit-ctx 32678 \
+--fit-ctx 32768 \
 --fit-target 512 \
 --no-mmap \
+--parallel 1 \
 --threads 10 \
 --threads-batch 12 \
 --flash-attn on \
 --batch-size 2048 \
 --ubatch-size 512 \
---prio 2 \
 --no-warmup \
 --temp 1.0 \
 --top-k 100 \
@@ -52,30 +52,13 @@ taskset -c 0-11 $LLAMA_CPP_CUDA_PATH \
 --jinja \
 --reasoning-format none \
 --chat-template-kwargs '{"reasoning_effort":"high"}' \
---chat-template-file /home/kchauhan/repos/lllms/chat-template.jinja \
+--chat-template-file /path/to/chat-template.jinja \
 --host 0.0.0.0 --port 8001
-
-# --n-cpu-moe 31 \ Replaced with better fit options newly added in llama cpp
-# --n-gpu-layers 99 \
-
-# Notes:
-# LLAMA_SET_ROWS=1: 1 row per thread for better CPU cache locality.
-# GGML_CUDA_GRAPH_OPT=1: experimental CUDA graph optimization for reduced kernel launch overhead.
-# --n-cpu-moe 31: keep first 31 MoE layers on CPU (model has 36 -> ~5 left for GPU).
-# --n-gpu-layers 99: offload as many non-CPU-forced layers as possible to GPU.
-# --ctx-size 24576: 24K context sized for 12 GB VRAM.
-# --no-mmap: faster prompt processing when the model sits in RAM.
-# --mlock: lock model in RAM to avoid paging.
-# --no-warmup: skip initial warm-up pass.
-# -b 2048 / -ub 2048: batch sizes for eval/compute; tune per VRAM.
-# --threads 10: P-core count minus 1 (leave headroom for system).
-# taskset -c 0-11: pin to P-cores only on i5-12600K (better than --cpu-range).
-# --temp, --top-k, --top-p, --min-p: sampling controls; top-k=100 gives a small speed boost.
-# -fa: enable flash-attention CUDA kernels.
-# --jinja and --chat-template-file: enable/use Jinja chat template and tools.
-# --reasoning-format none + --chat-template-kwargs: select reasoning via template (reasoning_effort=high).
-# --host/--port and --api-key: bind server and require a trivial API key.
 ```
+
+`--fit` probes free VRAM at startup and automatically computes the optimal `-ngl` + `--override-tensor` placement. No manual tuning needed. To see exactly what it would choose without running the server, use `llama-fit-params` directly - see the [n-cpu-moe / override-tensor section](#n-cpu-moe--override-tensor) below.
+
+**Advanced:** for a deterministic, zero-startup-overhead version with the placement hardcoded, see the [optimized run script](https://github.com/kchauhan/l3ms/blob/main/run-models/run-llama-cpp-gpt-oss-120b-optimized.sh) in the l3ms repo (`-ngl 37 --override-tensor ...`).
 
 
 ## Introduction
@@ -119,13 +102,13 @@ With the magic of llama.cpp and some tinkering, I've managed to get it running o
 
 {% image_cc "./src/static/img/summary.png", "Summary","", "Sample Prompt: Summary of this article" %}
 
-| Measure               |     First Attempt |   Current Attempt |    GPT-OSS-20B (same settings) |
-|-----------------------|----------:|----------:|---------:|
-| PP (tps)              |      4.40 |    191.71 |  1707.81 |
-| TG (tps)              |      5.32 |     10.95 |   107.35 |
-| Prompt tokens         |        69 |      5501 |      993 |
-| Eval tokens           |        37 |      1968 |     1023 |
-| Total tokens          |       106 |      7469 |     2016 |
+| Measure               |   Current Attempt |    GPT-OSS-20B (same settings) |
+|-----------------------|----------:|---------:|
+| PP (tps)              |    427.92 |  1707.81 |
+| TG (tps)              |     28.00 |   107.35 |
+| Prompt tokens         |       512 |      993 |
+| Eval tokens           |       128 |     1023 |
+| Total tokens          |       640 |     2016 |
 
 > :information_source: PP and TG come from llama.cpp’s performance metrics.
 - PP (tps): tokens per second during prompt evaluation (“ppNNN” tests in llama-bench).
@@ -147,12 +130,14 @@ Here's some notes after wandering in [r/LocalLLaMA](https://www.reddit.com/r/Loc
 
 1. **CHECK YOUR RAM SPEED** - Seriously. See [below](#check-your-ram-speed-seriously). This was a 3x improvement for me.
 2. **Run on Linux** - +~20% TPS (CUDA driver + scheduler).
-3. **Build llama.cpp from source with CUDA** (`-DLLAMA_CUBLAS=ON`). Keep it updated - MoE performance has improved significantly in recent builds.
-4. **Offload MoE layers to CPU** (`--n-cpu-moe 31`).
-5. **Pin threads to P-cores** (`taskset -c 0-11` on i5-12600K).
-6. **Use iGPU for display** (offload desktop rendering) - +~5% TPS.
-7. **Env vars**: `LLAMA_SET_ROWS=1` (CPU cache locality), `GGML_CUDA_GRAPH_OPT=1` (CUDA graph optimization).
-8. **Others**: `-fa` (flash-attention), `--top-k 100`, `--mlock`, `--no-mmap`.
+3. **Build llama.cpp from source with CUDA**. Keep it updated - MoE performance has improved significantly in recent builds.
+4. **Use `llama-fit-params` or `--override-tensor`** to place expert layers optimally. See [below](#n-cpu-moe--override-tensor).
+5. **Set `--parallel 1`** - single inference slot reclaims KV cache VRAM for model weights.
+6. **Go headless** - `sudo systemctl isolate multi-user.target` stops the compositor and display manager, freeing 200–400 MB RAM and VRAM before inference starts. See [snippet](https://carteakey.dev/snippets/headless-mode-cachyos).
+7. **Pin threads to P-cores** (`taskset -c 0-11` on i5-12600K).
+8. **Use iGPU for display** - alternative to headless if you need the desktop; offloads rendering off the dGPU.
+9. **Env vars**: `LLAMA_SET_ROWS=1` (CPU cache locality), `GGML_CUDA_GRAPH_OPT=1` (CUDA graph optimization).
+10. **Others**: `-fa` (flash-attention), `--top-k 100`, `--no-mmap`.
 
 ### Check your RAM speed. Seriously.
 
@@ -216,6 +201,42 @@ If you're running DDR5 and haven't explicitly enabled XMP/EXPO in your BIOS, **g
 - WSL2 is not the ultimate solution; it helps but not halfway.
 - Dual boot if you want to play anti-cheat games (**tip:** install linux on drives separate from windows)
 
+### Go headless
+
+If you're on Linux with a desktop environment, your display manager, compositor, and graphical services are sitting in RAM and consuming a slice of VRAM for display. Switching to headless mode frees all of that up before starting inference - worth 200–400 MB RAM and whatever VRAM the compositor was holding.
+
+Full snippet and fish functions at [carteakey.dev/snippets/headless-mode-cachyos](https://carteakey.dev/snippets/headless-mode-cachyos). The short version:
+
+```bash
+# Enter headless mode (stops display manager + compositor, frees RAM/VRAM)
+sudo systemctl isolate multi-user.target
+
+# Restore GUI when done
+sudo systemctl isolate graphical.target
+```
+
+For a one-shot shell alias that also drops page caches - pick your shell:
+
+**Bash** (`~/.bashrc` or `~/.bash_aliases`):
+
+```bash
+alias headless-mode='sudo systemctl isolate multi-user.target && sudo sync && sudo sh -c "echo 3 > /proc/sys/vm/drop_caches" && free -h'
+alias headless-mode-off='sudo systemctl isolate graphical.target'
+```
+
+**Fish** (`~/.config/fish/functions/headless-mode.fish`):
+
+```fish
+function headless-mode
+    sudo systemctl isolate multi-user.target
+    sudo sync
+    sudo sh -c 'echo 3 > /proc/sys/vm/drop_caches'
+    free -h
+end
+```
+
+Without a display server you lose your terminal emulator - use [zellij](https://zellij.dev) in a TTY for split panes and tabs: `sudo pacman -S zellij && zellij`. Keybindings are shown on screen.
+
 ### llama.cpp instead of ollama 
 
 - ollama is great for people who dont wanna fiddle, you're not those people. 
@@ -224,21 +245,57 @@ If you're running DDR5 and haven't explicitly enabled XMP/EXPO in your BIOS, **g
 - See the [Readme](https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md) for the overwhelming list of params you've unlocked.
 - **Keep it updated** - MoE inference performance has improved significantly across builds. Rebuilding from latest source contributed to the speed increase alongside XMP.
 
-### n-cpu-moe
+### n-cpu-moe / override-tensor
 
-- llama.cpp [recently added](https://github.com/ggml-org/llama.cpp/pull/15077) a super helpful param to keeps the MoE weights of the first N layers in the CPU.  
-- `--cpu-moe` to keep all MoE weights in the CPU
-- `--n-cpu-moe N` to keep the MoE weights of the first N layers in the CPU
+There are three approaches to MoE layer placement, in increasing order of control:
 
-That means
-- No more need for super-complex regular expression in the `-ot` / `--override-tensor` option 
-- Just do `--cpu-moe` or `--n-cpu-moe #`and reduce the number until the model no longer fits on the GPU.
+**1. `--n-cpu-moe N`** (simplest)
 
-You can still fine-tune by  customize the regex in the `--override-tensor`, some examples from the unsloth 
-- `-ot ".ffn_.*_exps.=CPU"` offloads all MoE layers to the CPU!
-- `-ot ".ffn_(up|down)_exps.=CPU"` This offloads up and down projection MoE layers.
-- `-ot ".ffn_(up)_exps.=CPU"` offloads only up projection MoE layers.
-- `-ot "\.(6|7|8|9|[0-9][0-9]|[0-9][0-9][0-9])\.ffn_(gate|up|down)_exps.=CPU"` means to offload gate, up and down MoE layers but only from the 6th layer onwards.
+llama.cpp [added](https://github.com/ggml-org/llama.cpp/pull/15077) this param to keep the MoE weights of the first N layers on CPU. Quick to tune - just reduce N until the model fits in VRAM. The downside is it can push all expert weights into RAM and crash a 64 GB system if N is too high.
+
+```bash
+--n-cpu-moe 31   # keep first 31 of 36 MoE layers on CPU
+```
+
+**2. `--fit on`** (recommended - just works)
+
+Add `--fit on`, `--fit-ctx 32768`, and `--fit-target 512` to your server command and llama.cpp handles placement automatically at startup. It probes free VRAM, computes the optimal `-ngl` + layer placement, and starts serving - no manual tuning needed. This is what the [recommended run script](https://github.com/kchauhan/l3ms/blob/main/run-models/run-llama-cpp-gpt-oss-120b.sh) uses.
+
+```bash
+--fit on \
+--fit-ctx 32768 \    # minimum context to guarantee fits
+--fit-target 512     # leave 512 MiB VRAM headroom
+```
+
+If you're curious what fit would choose before committing to a run, `llama-fit-params` prints the computed flags to stdout without starting the server:
+
+```bash
+./vendor/llama.cpp/build/bin/llama-fit-params \
+  -m /path/to/gpt-oss-120b-mxfp4-00001-of-00003.gguf \
+  -fitt 512 \
+  -fitc 32768
+# outputs: -c 32768 -ngl 37 -ot "blk\.5\.ffn_..."
+```
+
+That output is also what you'd hardcode if you want a static placement (see option 3 below). See the [l3ms bench scripts](https://github.com/kchauhan/l3ms/tree/main/bench-models) for scripted examples.
+
+**3. `--override-tensor` regex** (most control)
+
+Fine-grained per-layer, per-projection control. More complex but lets you pack the GPU tighter than `--n-cpu-moe` can.
+
+> ⚠️ **Critical gotcha for models with shared experts** (e.g. Qwen3.5-122B, some gpt-oss variants): these models have *two* expert tensor families - routed experts (`_exps`) and a shared expert (`_shexp`). Patterns like `.ffn_.*_exps.=CPU` only match routed experts. The shared expert stays on GPU and silently consumes VRAM, causing CUDA OOM. Use `(ch|)exps` to match both:
+
+```bash
+# Safe - matches both routed (_exps) and shared (_shexp) experts:
+--override-tensor ".ffn_(up|down|gate)_(ch|)exps=CPU"
+
+# Partial-CPU (best result for gpt-oss-120b on 12 GB - blk 0-4 on GPU, rest on CPU):
+--override-tensor "blk\.(5|[6-9]|[0-9][0-9]|[0-9][0-9][0-9])\.ffn_(up|down|gate)_(ch|)exps=CPU"
+```
+
+The partial-CPU pattern (blk 5+ on CPU) was the bench winner for gpt-oss-120b: **pp=428 t/s, tg=28 t/s** confirmed in the server. It packs 9.7 GB of model weight into VRAM with only 12 MiB free - every available MiB goes to weights.
+
+> ⚠️ **RAM ceiling warning**: `--n-cpu-moe 36` (all experts on CPU) loads ~60 GB into RAM and will hard-crash a 64 GB system. Always use `llama-fit-params` or the partial-CPU `-ot` pattern to keep RAM under ~50 GB.
 
 ### iGPU utilization
 
@@ -305,25 +362,29 @@ Top-K sampling is a fancy name for “keep only `K` most probable tokens” al
 
 ## Conclusion
 
-Overall, I'm very happy with the results. The model is usable for interactive coding tasks now and is a joy to use. I’ll keep updating this post as I find more optimizations and as llama.cpp matures. 
+Overall, I'm very happy with the results. The model is usable for interactive coding tasks now and is a joy to use. I'll keep updating this post as I find more optimizations and as llama.cpp matures. 
 
-Some of the options I haven’t experimented with yet but seem promising:
-- Kv cache quantization (preliminary tests show it worsened performance for me but ymmv) 
+Some of the options I haven't experimented with yet but seem promising:
+- KV cache quantization (preliminary tests show it worsened performance for me but YMMV)
 - Vulkan backend instead of CUDA (haven't tried yet)
-- Using alternative llama.cpp forks like ik_llama.cpp
-- Using other ways to pin CPU cores like `taskset` or `numactl`
-- Fine tuned override tensor regex (`--override-tensor`) instead of `--n-cpu-moe`
+- ik_llama.cpp fork - tested briefly, CUDA graph compilation overhead hurt pp badly on hybrid CPU+GPU configs. Not competitive here.
 - DDR5 timing tightening (tRFC, tRCD, tRP) for additional bandwidth gains
 - Speculative decoding with a small draft model
+- `GGML_CUDA_FORCE_CUBLAS=ON` build - tested, actually slower (~45 t/s pp regression) because the GGML MMQ mxfp4 kernel outperforms cuBLAS at decode-batch sizes. Default build wins.
+
+All bench scripts, run scripts, and a structured runbook are maintained in the [l3ms repo](https://github.com/kchauhan/l3ms).
 
 ## Post-mortem / Changelog
 - 2025-09-21 - Initial draft
 - 2025-09-22 - Updated threads to 10 as per Reddit suggestion. This means using 10/12 threads (only P-cores) to not choke the CPU.
 - 2025-09-22 - Updated CPU pinning to use taskset instead of llama.cpp's cpu-range, thanks to [this Reddit suggestion](https://www.reddit.com/r/LocalLLaMA/comments/1nn72ji/comment/nfihoid). This better isolates the process to P-cores only.
 - 2026-02-15 - **The XMP incident.** Discovered my DDR5-6000 RAM was running at 2000 MT/s because BIOS DRAM frequency was set to "Auto." Enabling XMP tripled token generation from ~10 t/s to ~30 t/s. This explains why my performance was so far behind users with similar hardware.
-- Added "Check your RAM speed" section. Shoutout to the community members who kept telling me something was off with my numbers.
+- 2026-02-15 - Added "Check your RAM speed" section. Shoutout to the community members who kept telling me something was off with my numbers.
 - 2026-02-15 - Updated to latest llama.cpp build. MoE inference improvements in recent builds also contributed to the speed increase. Added `GGML_CUDA_GRAPH_OPT=1` env var.
-- 2026-02-15 - Suggest using `fit` instead of `n-cpu-moe` going forward
+- 2026-02-15 - Suggest using `fit` instead of `n-cpu-moe` going forward.
+- 2026-03-12 - **Static placement wins.** Replaced `--fit` with hardcoded `-ngl 37 --override-tensor` derived from `llama-fit-params`. Faster startup, deterministic placement, no run-to-run variance. Added `--parallel 1` - dropping from default 4 slots reclaimed 540 MiB VRAM for model weights (+1 t/s tg). TG updated to 28 t/s (server observed). Full bench runbook and all scripts in [l3ms](https://github.com/kchauhan/l3ms).
+- 2026-03-12 - Expanded `--override-tensor` section with `llama-fit-params` workflow, shared-expert gotcha (`(ch|)exps` pattern), and RAM ceiling warning for 64 GB systems.
+- 2026-03-12 - Tested `GGML_CUDA_FORCE_CUBLAS=ON` build and ik_llama.cpp - both slower than default llama.cpp on this hybrid CPU+GPU config. Closed out.
 
 ### Bouncing Balls Prompt
 
