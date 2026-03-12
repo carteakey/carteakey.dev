@@ -420,51 +420,35 @@ Lots of help from the community on reddit and github discussions
 
 ### Measuring tps incrementally
 
-##### No params
+All benchmarks below use [`llama-bench`](https://github.com/ggml-org/llama.cpp) from a source build with CUDA. Scripts are maintained in the [l3ms repo](https://github.com/carteakey/l3ms/tree/main/bench-models). Run with `taskset -c 0-11` for P-core pinning.
+
+##### Baseline (no params, pre-XMP - historical reference)
+
+> These were run before enabling XMP with DDR5 running at 2000 MT/s instead of 6000 MT/s. Multiply tg128 by ~3x for current numbers.
+
+| test | pp (t/s) | tg (t/s) |
+|------|----------|----------|
+| `--n-cpu-moe 31 -ngl 99` | 82.11 ± 3.14 | 9.72 ± 0.44 |
+| `--n-cpu-moe 31 -ngl 99 -t 6` | 86.45 ± 2.03 | 9.77 ± 0.23 |
+
+##### Current - fit-derived placement + XMP enabled
+
+Using the bench scripts from [l3ms](https://github.com/carteakey/l3ms/tree/main/bench-models):
+
 ```bash
-./vendor/llama.cpp/build/bin/llama-bench \
-    -m /home/carteakey/repos/lllms/models/ggml-org/gpt-oss-120b-GGUF/gpt-oss-120b-mxfp4-00001-of-00003.gguf
+# from l3ms repo root
+bash bench-models/bench-llama-cpp-gpt-oss-120b.sh
 ```
 
-##### n-cpu-moe
-```bash
-./vendor/llama.cpp/build/bin/llama-bench \
-    -m /home/carteakey/repos/lllms/models/ggml-org/gpt-oss-120b-GGUF/gpt-oss-120b-mxfp4-00001-of-00003.gguf \
-    --n-cpu-moe 31 \
-    --n-gpu-layers 999
+This uses `-ngl 37` + `--override-tensor` (fit-derived), `LLAMA_SET_ROWS=1`, `GGML_CUDA_GRAPH_OPT=1`, 10 threads, FA=1, no-mmap.
 
-kchauhan@kpc:~/Desktop/repos/lllms$ ./bench-llama-cpp.sh
-ggml_cuda_init: GGML_CUDA_FORCE_MMQ:    no
-ggml_cuda_init: GGML_CUDA_FORCE_CUBLAS: no
-ggml_cuda_init: found 1 CUDA devices:
-  Device 0: NVIDIA GeForce RTX 4070, compute capability 8.9, VMM: yes
-| model                          |       size |     params | backend    | ngl |            test |                  t/s |
-| ------------------------------ | ---------: | ---------: | ---------- | --: | --------------: | -------------------: |
-| gpt-oss 120B MXFP4 MoE         |  59.02 GiB |   116.83 B | CUDA       |  99 |           pp512 |         82.11 ± 3.14 |
-| gpt-oss 120B MXFP4 MoE         |  59.02 GiB |   116.83 B | CUDA       |  99 |           tg128 |          9.72 ± 0.44 |
+| KV cache | pp (t/s) | tg (t/s) | notes |
+|----------|----------|----------|-------|
+| f16 (default) | 429.90 ± 5.28 | 23.85 ± 2.28 | baseline |
+| q8_0 | 429.65 ± 4.75 | 23.69 ± 2.40 | **free win** - half the KV VRAM, within noise |
+| q4_0 | 403.97 ± 6.67 | 24.04 ± 2.48 | pp regression, no tg gain - skip |
 
-build: da30ab5f (6531)
-./bench-llama-cpp.sh: line 10: --n-gpu-layers: command not found
-```
+**q8_0 is the sweet spot.** Lossless for most purposes, saves ~570 MiB VRAM at 32k context, zero measurable performance cost. Both run scripts now default to `-ctk q8_0 -ctv q8_0`.
 
-> Note: The above benchmarks were run **before** enabling XMP. With XMP at DDR5-6000, expect ~3x the tg128 numbers.
-
-##### threads (cpu-range doesn't behave nicely with llama-bench for some reason)
-```bash
-./vendor/llama.cpp/build/bin/llama-bench \
-    -m /home/carteakey/repos/lllms/models/ggml-org/gpt-oss-120b-GGUF/gpt-oss-120b-mxfp4-00001-of-00003.gguf \
-    --n-cpu-moe 31 \
-    --n-gpu-layers 999 \
-    --threads 6 
-
-kchauhan@kpc:~/Desktop/repos/lllms$ ./bench-llama-cpp.sh
-ggml_cuda_init: GGML_CUDA_FORCE_MMQ:    no
-ggml_cuda_init: GGML_CUDA_FORCE_CUBLAS: no
-ggml_cuda_init: found 1 CUDA devices:
-  Device 0: NVIDIA GeForce RTX 4070, compute capability 8.9, VMM: yes
-| model                          |       size |     params | backend    | ngl |            test |                  t/s |
-| ------------------------------ | ---------: | ---------: | ---------- | --: | --------------: | -------------------: |
-| gpt-oss 120B MXFP4 MoE         |  59.02 GiB |   116.83 B | CUDA       |  99 |           pp512 |         86.45 ± 2.03 |
-| gpt-oss 120B MXFP4 MoE         |  59.02 GiB |   116.83 B | CUDA       |  99 |           tg128 |          9.77 ± 0.23 |
-```
+Server observed tg (single slot, short prompt, `--parallel 1`): **~28 t/s**.
 
