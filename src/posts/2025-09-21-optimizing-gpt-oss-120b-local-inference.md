@@ -4,6 +4,7 @@ description: Squeezing every token per second
 date: 2025-09-21
 authored_by: human
 updated: 2026-03-12
+giscusTerm: /blog/optimizing%20gpt-oss-120b-local%20inference/
 tags:
   - AI
 pinned: true
@@ -450,6 +451,33 @@ This uses `-ngl 37` + `--override-tensor` (fit-derived), `LLAMA_SET_ROWS=1`, `GG
 | q8_0 | 429.65 ± 4.75 | 23.69 ± 2.40 | **free win** - half the KV VRAM, within noise |
 | q4_0 | 403.97 ± 6.67 | 24.04 ± 2.48 | pp regression, no tg gain - skip |
 
+<<<<<<< HEAD
 **q8_0 is the sweet spot.** Lossless for most purposes, saves ~570 MiB VRAM at 32k context, zero measurable performance cost. Both run scripts now default to `-ctk q8_0 -ctv q8_0`.
 
 Server observed tg (single slot, short prompt, `--parallel 1`): **~25 t/s** (stable post tuned-ppd fix).
+=======
+build: da30ab5f (6531)
+./bench-llama-cpp.sh: line 10: --n-gpu-layers: command not found
+```
+
+> Note: The above benchmarks were run **before** enabling XMP. With XMP at DDR5-6000, expect ~3x the tg128 numbers.
+
+##### threads (cpu-range doesn't behave nicely with llama-bench for some reason)
+```bash
+./vendor/llama.cpp/build/bin/llama-bench \
+    -m /home/carteakey/repos/lllms/models/ggml-org/gpt-oss-120b-GGUF/gpt-oss-120b-mxfp4-00001-of-00003.gguf \
+    --n-cpu-moe 31 \
+    --n-gpu-layers 999 \
+    --threads 6 
+
+kchauhan@kpc:~/Desktop/repos/lllms$ ./bench-llama-cpp.sh
+ggml_cuda_init: GGML_CUDA_FORCE_MMQ:    no
+ggml_cuda_init: GGML_CUDA_FORCE_CUBLAS: no
+ggml_cuda_init: found 1 CUDA devices:
+  Device 0: NVIDIA GeForce RTX 4070, compute capability 8.9, VMM: yes
+| model                          |       size |     params | backend    | ngl |            test |                  t/s |
+| ------------------------------ | ---------: | ---------: | ---------- | --: | --------------: | -------------------: |
+| gpt-oss 120B MXFP4 MoE         |  59.02 GiB |   116.83 B | CUDA       |  99 |           pp512 |         86.45 ± 2.03 |
+| gpt-oss 120B MXFP4 MoE         |  59.02 GiB |   116.83 B | CUDA       |  99 |           tg128 |          9.77 ± 0.23 |
+```
+>>>>>>> sonnet

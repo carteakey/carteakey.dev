@@ -21,6 +21,9 @@
 - [x] Add search filter to blog page like snippets (2026-02-09)
 - [x] Update card backgrounds to white for consistency (2026-02-09)
 - [x] Add social media icon links to footer (2026-02-09)
+- [x] Preserve upvotes and discussion thread continuity when post slugs are renamed (2026-03-13)
+- [x] Add snippet view counts and namespaced counter tracking to avoid collisions with post slugs (2026-03-13)
+- [x] Add a merge-check CLI for old/new slug engagement counters (views + upvotes) (2026-03-13)
 
 
 

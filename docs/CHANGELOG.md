@@ -5,6 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.9.3] - 2026-03-13
+
+### Added
+- Added `npm run metrics:merge-check` admin utility to compare old/new slug Redis counters and print expected merged totals for both `upvotes` and `views` (supports optional namespace, e.g. snippets).
+
+## [1.9.2] - 2026-03-13
+
+### Added
+- Snippet pages now track and display per-snippet view counts using namespaced keys (`snippet:{fileSlug}`) to avoid collisions with post counters.
+
+### Fixed
+- Expanded slug transition merging for engagement counters so legacy and canonical keys are summed for both `upvotes` and `views`, including historical draft→final renames and space→hyphen slug transitions.
+
+## [1.9.1] - 2026-03-13
+
+### Fixed
+- Preserved engagement continuity for renamed posts by merging legacy Redis upvote/view keys into canonical slugs (including `optimizing gpt-oss-120b-local inference` -> `optimizing-gpt-oss-120b-local-inference`).
+- Restored the existing GPT-OSS post discussion thread after slug rename by allowing a post-level Giscus term override.
+
 ## [1.9.0] - 2026-03-03
 
 ### Added

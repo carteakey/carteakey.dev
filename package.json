@@ -13,7 +13,8 @@
     "start": "npm-run-all -p start:*",
     "start:11ty": "npx @11ty/eleventy --serve",
     "start:css": "npx @tailwindcss/cli -i ./src/static/css/tailwind.css -o ./_site/css/tailwind.css --watch --postcss",
-    "debug": "DEBUG=* npx @11ty/eleventy"
+    "debug": "DEBUG=* npx @11ty/eleventy",
+    "metrics:merge-check": "node ./check-engagement-merge.mjs"
   },
   "repository": {
     "type": "git",
