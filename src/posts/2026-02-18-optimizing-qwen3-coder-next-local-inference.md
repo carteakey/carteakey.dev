@@ -12,8 +12,16 @@ tags:
 - **Hardware**: i5-12600K (6P + 4E), RTX 4070 (12 GB), 64 GB DDR5 6000 MT/s, Linux (CachyOS, CUDA 13.0).
 - **Scripts**: All bench and server scripts are in [carteakey/l3ms](https://github.com/carteakey/l3ms) under `bench-models/`.
 - **Model**: Qwen3-Coder-Next MXFP4 (~45 GB) - 80B total params, ~3B active per token.
-- **Result**: **~40 t/s** generation, 450+ t/s prompt processing.
-- **For comparison**: GPT-OSS-120B on the same hardware gets ~30 t/s.
+- **Result**: **~40 t/s** generation, 510+ t/s prompt processing.
+- **For comparison**: GPT-OSS-120B on the same hardware gets ~25 t/s.
+- **Key flags** that made it possible:
+	- `--fit on` (automatic VRAM-aware layer placement - easiest starting point)
+	- `-ctk q8_0 -ctv q8_0` (KV quantization - halves KV VRAM, unlocks extra GPU layers)
+	- `--parallel 1` (single slot - reclaims KV cache VRAM for model weights)
+	- `taskset -c 0-11` (P-core threads only)
+	- `-fa` (flash-attention)
+
+**Recommended run script** - uses `--fit` to auto-place layers, works on any system without tuning (tweak paths as needed). Full script in the [l3ms repo](https://github.com/carteakey/l3ms/blob/main/run-models/run-llama-cpp-qwen3-coder-next-optimized.sh):
 
 ```bash
 #!/usr/bin/env bash
@@ -21,27 +29,19 @@ tags:
 export LLAMA_SET_ROWS=1
 export GGML_CUDA_GRAPH_OPT=1
 
-# Disable swap to prevent model paging
-sudo sysctl vm.swappiness=0
-
-MODEL="/home/carteakey/models/unsloth/Qwen3-Coder-Next-GGUF/Qwen3-Coder-Next-MXFP4_MOE.gguf"
+MODEL="/path/to/Qwen3-Coder-Next-UD-Q4_K_XL.gguf"
 LLAMA_SERVER="./vendor/llama.cpp/build/bin/llama-server"
 
 taskset -c 0-11 $LLAMA_SERVER \
     -m "$MODEL" \
     --alias "unsloth/Qwen3-Coder-Next" \
-    --seed 3407 \
-    --temp 1.0 \
-    --top-p 0.95 \
-    --min-p 0.01 \
-    --top-k 40 \
-    --host 0.0.0.0 \
-    --port 8001 \
-    --jinja \
-    --ctx-size 131072 \
+    --ctx-size 65536 \
     --fit on \
-    --fit-ctx 131072 \
+    --fit-ctx 65536 \
     --fit-target 128 \
+    -ctk q8_0 \
+    -ctv q8_0 \
+    --parallel 1 \
     --no-mmap \
     --mlock \
     --threads 10 \
@@ -49,11 +49,21 @@ taskset -c 0-11 $LLAMA_SERVER \
     --flash-attn on \
     --batch-size 2048 \
     --ubatch-size 512 \
+    --seed 3407 \
+    --temp 1.0 \
+    --top-p 0.95 \
+    --min-p 0.01 \
+    --top-k 40 \
+    --jinja \
+    --host 0.0.0.0 \
+    --port 8001 \
     --prio 2 \
-    --no-warmup \
-    -ctk q8_0 \
-    -ctv q8_0
+    --no-warmup
 ```
+
+`--fit` probes free VRAM at startup and automatically computes the optimal `-ngl` + `--override-tensor` placement. No manual tuning needed. On an RTX 4070 12 GB with 64k context and q8_0 KV, it places blk 0–7 fully on GPU and spills blk 8 gate+down + blk 9–48 experts to CPU. To see exactly what it would choose without running the server, use `llama-fit-params` directly - see the [optimization notes](#optimization-notes) below.
+
+**Advanced:** for a deterministic, zero-startup-overhead version with the placement hardcoded, see the [optimized run script](https://github.com/carteakey/l3ms/blob/main/run-models/run-llama-cpp-qwen3-coder-next-optimized.sh) in the l3ms repo (`-ngl 49 --override-tensor ...`).
 
 ## Why Qwen3-Coder-Next?
 
@@ -148,17 +158,20 @@ One of the core challenges with a 47 GB model on a 12 GB card is deciding *which
 
 | Strategy | Description | pp512 (t/s) | tg128 (t/s) |
 | -------- | ----------- | ----------: | ----------: |
-| `N_CPU_MOE=40` (default) | Keep first 40 MoE layers on CPU as integer count | 451 | **39.5** |
+| `N_CPU_MOE=40` (default) | Keep first 40 MoE layers on CPU as integer count | 451 | **40.6** |
 | `--ot .ffn_.*_exps.=CPU` | All expert tensors to CPU via regex | 410 | 33.7 |
-| `--fit` (128 MiB margin, 131k ctx) | llama-fit-params auto-places tensors per-layer | **476** | 38.2 |
+| `--fit` (128 MiB margin, 131k ctx) | llama-fit-params auto-places tensors per-layer | 476 | 38.2 |
+| `--fit` (128 MiB margin, 64k ctx) | Smaller ctx floor frees VRAM for 2 more GPU layers | 497 | 39.60 |
+| `--fit` + q8\_0 KV (64k ctx, 128 MiB margin) | q8\_0 KV frees another ~2 GB, one more GPU layer | 511 | 39.93 |
+| `--fit` + q8\_0 KV (64k ctx, 512 MiB margin) | 512 MiB margin for VMM pool safety | **502** | **39.62** |
 
-**`--fit` wins on prefill.** With `--fit-target 128 --fit-ctx 131072`, llama-fit-params left only 128 MiB of headroom while still reserving full 131k context. It placed layers 0–4 fully on GPU, partially spilled layer 5 (`blk.5.ffn_down` only), and moved all MoE experts from layer 6 onward to CPU. That extra layer on GPU translates to ~25–66 t/s more prefill throughput.
+**`--fit` wins on prefill, and gets better with a smaller context floor.** At 131k context, llama-fit-params placed blk 0–4 fully on GPU, partially spilled blk 5 (`ffn_down` only), and moved all MoE experts from blk 6 onward to CPU (pp=476). Dropping to a 64k context floor freed enough VRAM to keep blks 5–6 fully on GPU, pushing the CPU boundary to blk 7 (pp=497, +21 t/s). Passing `-ctk q8_0 -ctv q8_0` to `llama-fit-params` told it to account for the smaller KV footprint (~2 GB at 64k vs ~4 GB at 64k f16), freeing one more layer - blk 7 fully on GPU, CPU starting at blk 8 (pp=**511**, tg=**39.93**).
 
-**`N_CPU_MOE=40` wins on generation.** The integer MoE offload path is slightly faster for token generation than the regex override, likely because the coarser granularity avoids some dispatch overhead. The fit result (38.2 tg) is competitive but marginally behind.
+**`N_CPU_MOE=40` no longer wins on generation.** The 64k+q8_0 fit result (39.93 tg) matches the N_CPU_MOE=40 baseline (40.6 tg) within bench noise, while delivering 60 t/s more prefill.
 
 **Manual `all-cpu-moe` is the worst of both.** Bluntly forcing all `_exps` tensors to CPU with a single regex hurts both prefill and generation. It's the right starting point for understanding your VRAM budget, not the ending point. The `up-down-cpu` and `up-cpu` strategies both OOM on a 12 GB card - 512 experts × gate/up/down projections across 40+ layers simply doesn't fit even with nothing else on GPU.
 
-**The `--fit` approach for llama-server** is what the production config at the top of this post uses. Because llama-server accepts `--fit` directly (unlike llama-bench, which requires a two-stage workaround), you get the auto-placement for free without manual regex tuning. The `--fit-ctx 131072` floor ensures fit never reduces context below 128k.
+**The production server script** (`run-llama-cpp-qwen3-coder-next-optimized.sh`) uses the static `-ot` derived from the 64k+q8_0 fit for deterministic startup - same placement, no fit probing delay. The `--fit` approach (with `--fit-ctx 65536`) is still useful for experimentation or for adapting to different VRAM configurations.
 
 ### `--poll`, `--numa`, `-ctk`/`-ctv` - flat or negative
 
@@ -181,7 +194,7 @@ Poll is completely flat - on hybrid CPU+GPU inference the synchronisation overhe
 
 | Config | pp512 (t/s) | tg128 (t/s) | notes |
 | ------ | ----------: | ----------: | ----- |
-| upstream baseline | **453** | 39.5 | reference |
+| upstream baseline | **453** | 40.6 | reference |
 | ik fused-moe (default) | 215 | 40.5 | +1 tg, −238 pp |
 | ik fused-moe + merge-qkv | 217 | 40.9 | marginal over fused alone |
 | ik fused-moe + merge-up-gate | 215 | **41.1** | best tg; ~73 GB RAM needed |
@@ -218,8 +231,10 @@ STRATEGY=fused-muge ./bench-ik-llama-cpp-qwen3-coder-next-strategies.sh
 
 ## Post-mortem / Changelog
 
+- 2026-07-16 - 64k context + q8_0 KV fit: best bench pp=511 (FIT_TARGET=128). Production script uses FIT_TARGET=512 (pp=502, tg=39.62) to avoid CUDA VMM pool OOM at long prompts - GGML's pool grows in 1 GiB chunks; 128 MiB headroom is insufficient for mid-session growth. Also disabled `GGML_CUDA_GRAPH_OPT` which triggers CUDA graph re-capture at new context depths.
 - 2026-07-15 - Extended benchmark: added poll, numa, ctk/ctv, and ik_llama results. Poll and NUMA flat/negative on single-socket hybrid inference. KV quant no effect at bench context. ik_llama fused-moe hits 40.5 tg (target!) but halves prefill vs upstream - best for generation-heavy workloads. Added ik_llama bench scripts and bench runbook to [carteakey/l3ms](https://github.com/carteakey/l3ms).
 - 2026-07-14 - Benchmarked MoE offload strategies. `--fit` wins on prefill (476 t/s); `N_CPU_MOE=40` leads on generation (39.5 t/s). llama-bench sizes KV cache to `n_prompt + n_gen` so comparisons are apples-to-apples.
+- 2026-03-13 - Found root cause of intermittent slow tg (32–35 t/s): `power-profiles-daemon` (KDE default) was setting a non-performance HWP state on some boots - all sysfs checks looked fine but hardware was degraded. Replaced with `tuned-ppd` + `throughput-performance` profile (CachyOS recommended). Clean reboot now consistently delivers **40.6 t/s** with zero manual tuning. Updated baselines.
 - 2026-03-02 - Added `-ctk q8_0` and `-ctv q8_0` parameters for KV cache and token vector quantization.
 - 2026-02-15 - Initial post. Getting ~38 t/s after enabling XMP and updating llama.cpp.
 

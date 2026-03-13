@@ -1,6 +1,6 @@
 ---
 title: Optimizing gpt-oss-120b speed on consumer hardware
-description: Squeezing every token per second 
+description: Squeezing every token per second
 date: 2025-09-21
 authored_by: human
 updated: 2026-03-12
@@ -13,7 +13,7 @@ pinned: true
 ## TL;DR
 
 - **Hardware**: i5-12600K (6P + 4E), RTX 4070 (12 GB), 64 GB DDR5 RAM, Linux (CachyOS, CUDA 13.0).
-- **Result**: ~~11 tokens/s~~ -> **28 tokens/s** generation, 420+ tokens/s prompt processing for 32k context.
+- **Result**: ~~11 tokens/s~~ -> **25 tokens/s** generation, 420+ tokens/s prompt processing for 32k context.
 - **Biggest win**: Enabling DDR5 XMP in BIOS. My RAM was running at 2000 MT/s instead of 6000 MT/s for **months**. 3x memory bandwidth = 3x token generation speed. See [the cautionary tale below](#check-your-ram-speed-seriously).
 - **Key flags** that made it possible:
 	- `--fit on` (automatic VRAM-aware layer placement - easiest starting point)
@@ -22,7 +22,7 @@ pinned: true
 	- `-fa` (flash-attention)
 	- Latest llama.cpp build (significant MoE performance improvements since initial post)
 
-**Recommended run script** - uses `--fit` to auto-place layers, works on any system without tuning (tweak paths as needed). Full script in the [l3ms repo](https://github.com/kchauhan/l3ms/blob/main/run-models/run-llama-cpp-gpt-oss-120b.sh):
+**Recommended run script** - uses `--fit` to auto-place layers, works on any system without tuning (tweak paths as needed). Full script in the [l3ms repo](https://github.com/carteakey/l3ms/blob/main/run-models/run-llama-cpp-gpt-oss-120b-optimized.sh):
 
 ```bash
 #!/usr/bin/env bash
@@ -58,7 +58,7 @@ taskset -c 0-11 $LLAMA_CPP_CUDA_PATH \
 
 `--fit` probes free VRAM at startup and automatically computes the optimal `-ngl` + `--override-tensor` placement. No manual tuning needed. To see exactly what it would choose without running the server, use `llama-fit-params` directly - see the [n-cpu-moe / override-tensor section](#n-cpu-moe--override-tensor) below.
 
-**Advanced:** for a deterministic, zero-startup-overhead version with the placement hardcoded, see the [optimized run script](https://github.com/kchauhan/l3ms/blob/main/run-models/run-llama-cpp-gpt-oss-120b-optimized.sh) in the l3ms repo (`-ngl 37 --override-tensor ...`).
+**Advanced:** for a deterministic, zero-startup-overhead version with the placement hardcoded, see the [optimized run script](https://github.com/carteakey/l3ms/blob/main/run-models/run-llama-cpp-gpt-oss-120b-optimized.sh) in the l3ms repo (`-ngl 37 --override-tensor ...`).
 
 
 ## Introduction
@@ -68,14 +68,14 @@ taskset -c 0-11 $LLAMA_CPP_CUDA_PATH \
 
 {% image_cc "./src/static/img/most-attractive-quadrant.png", "Most Attractive Quadrant","", "GPT-OSS-120B and Qwen-3-30B-A3B are the most attractive local models in the current landscape" %}
 
-See https://artificialanalysis.ai/methodology/intelligence-benchmarking 
+See https://artificialanalysis.ai/methodology/intelligence-benchmarking
 
-However, the model is still very large (120B parameters) and requires a lot of RAM/VRAM to run. The [official recommendation](https://huggingface.co/ggml-org/gpt-oss-120b-GGUF) is an single 80GB GPU (like NVIDIA H100 or AMD MI300X). Not exactly consumer hardware. 
+However, the model is still very large (120B parameters) and requires a lot of RAM/VRAM to run. The [official recommendation](https://huggingface.co/ggml-org/gpt-oss-120b-GGUF) is an single 80GB GPU (like NVIDIA H100 or AMD MI300X). Not exactly consumer hardware.
 
 ## Motivation
-As a selfhosting enthusiast, its fun to have the option of running very capable intelligence, for free (my utilities are included in my rent :P). 
+As a selfhosting enthusiast, its fun to have the option of running very capable intelligence, for free (my utilities are included in my rent :P).
 
-Having a local model is great for privacy, offline use, and avoiding vendor lock-in. No API keys, no rate limits, no "we have to change our pricing model" surprises. 
+Having a local model is great for privacy, offline use, and avoiding vendor lock-in. No API keys, no rate limits, no "we have to change our pricing model" surprises.
 
 While I still use paid services for most tasks, having a local model is a great fallback option (and when the AI winter comes, i'll still have something to fall back on).
 
@@ -90,7 +90,7 @@ With the magic of llama.cpp and some tinkering, I've managed to get it running o
 
 ~~I can squeeze 10-11 tok/s on large outputs at 32k context length (considering decay + me being GPU poor).~~
 
-**Update (2026-02-15):** After enabling XMP (see [the story below](#check-your-ram-speed-seriously)), I'm now getting **30 tok/s** on gpt-oss-120b. This also applies to Qwen3-Coder-Next where I'm seeing **40 tok/s** with MXFP4. llama.cpp improvements since the original post also contribute to the speed increase.
+**Update (2026-02-15):** After enabling XMP (see [the story below](#check-your-ram-speed-seriously)), I'm now getting **25+ tok/s** on gpt-oss-120b. This also applies to Qwen3-Coder-Next where I'm seeing **40 tok/s** with MXFP4. llama.cpp improvements since the original post also contribute to the speed increase.
 
 [According to reddit](https://www.reddit.com/r/LocalLLaMA/comments/162pgx9/what_do_yall_consider_acceptable_tokens_per/), 10 tok/s is the bare minimum for general use.
 
@@ -123,7 +123,7 @@ Here's the famous bouncing balls prompt being one-shot by this model.
 
 Here's some notes after wandering in [r/LocalLLaMA](https://www.reddit.com/r/LocalLLaMA/) (some of which may not make sense) on how to get there if you're on a similar system - in the order of priority. Hugely YMMV based on your hardware.
 
-> :information_source: Always use the original [MXFP4 model files](https://huggingface.co/ggml-org/gpt-oss-120b-GGUF). The `gpt-oss` models are natively "quantized". I.e. they are trained in the MXFP4 format which is roughly equivalent to `ggml`'s `Q4_0`. The main difference with `Q4_0` is that the MXFP4 models get to keep their full quality. This means that no quantization in the usual sense is necessary.  
+> :information_source: Always use the original [MXFP4 model files](https://huggingface.co/ggml-org/gpt-oss-120b-GGUF). The `gpt-oss` models are natively "quantized". I.e. they are trained in the MXFP4 format which is roughly equivalent to `ggml`'s `Q4_0`. The main difference with `Q4_0` is that the MXFP4 models get to keep their full quality. This means that no quantization in the usual sense is necessary.
 
 
 ### Optimization checklist (in order of impact)
@@ -136,8 +136,9 @@ Here's some notes after wandering in [r/LocalLLaMA](https://www.reddit.com/r/Loc
 6. **Go headless** - `sudo systemctl isolate multi-user.target` stops the compositor and display manager, freeing 200–400 MB RAM and VRAM before inference starts. See [snippet](https://carteakey.dev/snippets/headless-mode-cachyos).
 7. **Pin threads to P-cores** (`taskset -c 0-11` on i5-12600K).
 8. **Use iGPU for display** - alternative to headless if you need the desktop; offloads rendering off the dGPU.
-9. **Env vars**: `LLAMA_SET_ROWS=1` (CPU cache locality), `GGML_CUDA_GRAPH_OPT=1` (CUDA graph optimization).
-10. **Others**: `-fa` (flash-attention), `--top-k 100`, `--no-mmap`.
+9. **Check your power profile** (CachyOS/KDE users) - `power-profiles-daemon` can silently degrade HWP state on some boots even when `governor` and `EPP` read "performance" in sysfs. Replace with `tuned-ppd`: `sudo pacman -S tuned-ppd && sudo systemctl enable --now tuned && sudo tuned-adm profile throughput-performance`. A clean reboot after this gave a consistent +1–2 t/s on MoE inference with zero other changes.
+10. **Env vars**: `LLAMA_SET_ROWS=1` (CPU cache locality), `GGML_CUDA_GRAPH_OPT=1` (CUDA graph optimization).
+11. **Others**: `-fa` (flash-attention), `--top-k 100`, `--no-mmap`.
 
 ### Check your RAM speed. Seriously.
 
@@ -193,11 +194,11 @@ If you're running DDR5 and haven't explicitly enabled XMP/EXPO in your BIOS, **g
 
 - Unified Memory, like on Apple Silicon, is the next best thing. AMD Strix Halo is one of the best options for Windows users.
 
-- For consumer systems - DDR5 makes a ton of difference over DDR4. 
+- For consumer systems - DDR5 makes a ton of difference over DDR4.
 
 ### install linux
 
-- It's time - just do it and you'll get  20% extra performance (tokens per sec aka tps), dont ask me why. 
+- It's time - just do it and you'll get  20% extra performance (tokens per sec aka tps), dont ask me why.
 - WSL2 is not the ultimate solution; it helps but not halfway.
 - Dual boot if you want to play anti-cheat games (**tip:** install linux on drives separate from windows)
 
@@ -237,11 +238,11 @@ end
 
 Without a display server you lose your terminal emulator - use [zellij](https://zellij.dev) in a TTY for split panes and tabs: `sudo pacman -S zellij && zellij`. Keybindings are shown on screen.
 
-### llama.cpp instead of ollama 
+### llama.cpp instead of ollama
 
-- ollama is great for people who dont wanna fiddle, you're not those people. 
+- ollama is great for people who dont wanna fiddle, you're not those people.
 - llama.cpp comes with a host of settings that you'd need to get your hands dirty on to make it go brr for your system (instead of fixed defaults in ollama)
-- [build from source](https://github.com/ggml-org/llama.cpp/blob/master/docs/build.md) so its tuned per your hardware. Here's a [sample script](https://github.com/carteakey/lllms/blob/86e316ce4a15f4fc60ab9bb422d0fd000ba228b8/build-llama-cpp.sh) for Nvidia folks 
+- [build from source](https://github.com/ggml-org/llama.cpp/blob/master/docs/build.md) so its tuned per your hardware. Here's a [sample script](https://github.com/carteakey/lllms/blob/86e316ce4a15f4fc60ab9bb422d0fd000ba228b8/build-llama-cpp.sh) for Nvidia folks
 - See the [Readme](https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md) for the overwhelming list of params you've unlocked.
 - **Keep it updated** - MoE inference performance has improved significantly across builds. Rebuilding from latest source contributed to the speed increase alongside XMP.
 
@@ -259,7 +260,7 @@ llama.cpp [added](https://github.com/ggml-org/llama.cpp/pull/15077) this param t
 
 **2. `--fit on`** (recommended - just works)
 
-Add `--fit on`, `--fit-ctx 32768`, and `--fit-target 512` to your server command and llama.cpp handles placement automatically at startup. It probes free VRAM, computes the optimal `-ngl` + layer placement, and starts serving - no manual tuning needed. This is what the [recommended run script](https://github.com/kchauhan/l3ms/blob/main/run-models/run-llama-cpp-gpt-oss-120b.sh) uses.
+Add `--fit on`, `--fit-ctx 32768`, and `--fit-target 512` to your server command and llama.cpp handles placement automatically at startup. It probes free VRAM, computes the optimal `-ngl` + layer placement, and starts serving - no manual tuning needed. This is what the [recommended run script](https://github.com/carteakey/l3ms/blob/main/run-models/run-llama-cpp-gpt-oss-120b-optimized.sh) uses.
 
 ```bash
 --fit on \
@@ -277,7 +278,7 @@ If you're curious what fit would choose before committing to a run, `llama-fit-p
 # outputs: -c 32768 -ngl 37 -ot "blk\.5\.ffn_..."
 ```
 
-That output is also what you'd hardcode if you want a static placement (see option 3 below). See the [l3ms bench scripts](https://github.com/kchauhan/l3ms/tree/main/bench-models) for scripted examples.
+That output is also what you'd hardcode if you want a static placement (see option 3 below). See the [l3ms bench scripts](https://github.com/carteakey/l3ms/tree/main/bench-models) for scripted examples.
 
 **3. `--override-tensor` regex** (most control)
 
@@ -299,12 +300,12 @@ The partial-CPU pattern (blk 5+ on CPU) was the bench winner for gpt-oss-120b: *
 
 ### iGPU utilization
 
-- Since I've got an iGPU in my chipset, I can offload a few hundred MB of VRAM of running the desktop through that. 
+- Since I've got an iGPU in my chipset, I can offload a few hundred MB of VRAM of running the desktop through that.
 - It lets me squeeze just 1 more layer into VRAM (so I have `--n-cpu-moe 31` now)
 
 - Plug in the HDMI / Displayport in the motherboard port instead of GPU (this only applies to PC's)
 - Switch to iGPU as the primary GPU in the BIOS
-	
+
 Here's my card running with 0% utilization
 
 **Using Nvidia**
@@ -341,7 +342,7 @@ kchauhan@kpc:~$ nvidia-smi
 
 ### P cores only
 
-Intel CPU (12th gen onwards) come with a 6 performance cores and 4 efficiency (E) cores. The P-cores clock at 4.90 GHz while E-cores clock at 3.60 GHz. Running LLM inference on e-cores causes slowdowns. 
+Intel CPU (12th gen onwards) come with a 6 performance cores and 4 efficiency (E) cores. The P-cores clock at 4.90 GHz while E-cores clock at 3.60 GHz. Running LLM inference on e-cores causes slowdowns.
 
 Efficiency cores effect on performance has been known for a while and the standard way to avoid to avoid efficiency cores has been to leave the number of threads low.
 
@@ -354,7 +355,7 @@ taskset -c 0-11 ./vendor/llama.cpp/build/bin/llama-server ...
 ```
 
 ### Top-k
-Top-K sampling is a fancy name for “keep only `K` most probable tokens” algorithm. Higher values can result in more diverse text, because there’s more tokens to choose from when generating responses. The default top-k being 0 means using the full vocabulary. Capping it to 100 seems to help with speed without much quality loss. 
+Top-K sampling is a fancy name for “keep only `K` most probable tokens” algorithm. Higher values can result in more diverse text, because there’s more tokens to choose from when generating responses. The default top-k being 0 means using the full vocabulary. Capping it to 100 seems to help with speed without much quality loss.
 
 ```bash
 --top-k 100
@@ -362,7 +363,7 @@ Top-K sampling is a fancy name for “keep only `K` most probable tokens” al
 
 ## Conclusion
 
-Overall, I'm very happy with the results. The model is usable for interactive coding tasks now and is a joy to use. I'll keep updating this post as I find more optimizations and as llama.cpp matures. 
+Overall, I'm very happy with the results. The model is usable for interactive coding tasks now and is a joy to use. I'll keep updating this post as I find more optimizations and as llama.cpp matures.
 
 Some of the options I haven't experimented with yet but seem promising:
 - KV cache quantization (preliminary tests show it worsened performance for me but YMMV)
@@ -372,7 +373,7 @@ Some of the options I haven't experimented with yet but seem promising:
 - Speculative decoding with a small draft model
 - `GGML_CUDA_FORCE_CUBLAS=ON` build - tested, actually slower (~45 t/s pp regression) because the GGML MMQ mxfp4 kernel outperforms cuBLAS at decode-batch sizes. Default build wins.
 
-All bench scripts, run scripts, and a structured runbook are maintained in the [l3ms repo](https://github.com/kchauhan/l3ms).
+All bench scripts, run scripts, and a structured runbook are maintained in the [l3ms repo](https://github.com/carteakey/l3ms).
 
 ## Post-mortem / Changelog
 - 2025-09-21 - Initial draft
@@ -382,9 +383,10 @@ All bench scripts, run scripts, and a structured runbook are maintained in the [
 - 2026-02-15 - Added "Check your RAM speed" section. Shoutout to the community members who kept telling me something was off with my numbers.
 - 2026-02-15 - Updated to latest llama.cpp build. MoE inference improvements in recent builds also contributed to the speed increase. Added `GGML_CUDA_GRAPH_OPT=1` env var.
 - 2026-02-15 - Suggest using `fit` instead of `n-cpu-moe` going forward.
-- 2026-03-12 - **Static placement wins.** Replaced `--fit` with hardcoded `-ngl 37 --override-tensor` derived from `llama-fit-params`. Faster startup, deterministic placement, no run-to-run variance. Added `--parallel 1` - dropping from default 4 slots reclaimed 540 MiB VRAM for model weights (+1 t/s tg). TG updated to 28 t/s (server observed). Full bench runbook and all scripts in [l3ms](https://github.com/kchauhan/l3ms).
+- 2026-03-12 - **Static placement wins.** Replaced `--fit` with hardcoded `-ngl 37 --override-tensor` derived from `llama-fit-params`. Faster startup, deterministic placement, no run-to-run variance. Added `--parallel 1` - dropping from default 4 slots reclaimed 540 MiB VRAM for model weights (+1 t/s tg). TG updated to 28 t/s (server observed). Full bench runbook and all scripts in [l3ms](https://github.com/carteakey/l3ms).
 - 2026-03-12 - Expanded `--override-tensor` section with `llama-fit-params` workflow, shared-expert gotcha (`(ch|)exps` pattern), and RAM ceiling warning for 64 GB systems.
 - 2026-03-12 - Tested `GGML_CUDA_FORCE_CUBLAS=ON` build and ik_llama.cpp - both slower than default llama.cpp on this hybrid CPU+GPU config. Closed out.
+- 2026-03-13 - Found and fixed intermittent slow tg (20–30% below expected): `power-profiles-daemon` (KDE default on CachyOS) was degrading CPU HWP state on some boots despite sysfs showing `governor=performance` and `EPP=performance`. All standard diagnostics looked clean. Replaced with `tuned-ppd` + `throughput-performance` profile. Added to optimization checklist (item 9).
 
 ### Bouncing Balls Prompt
 
@@ -450,5 +452,4 @@ This uses `-ngl 37` + `--override-tensor` (fit-derived), `LLAMA_SET_ROWS=1`, `GG
 
 **q8_0 is the sweet spot.** Lossless for most purposes, saves ~570 MiB VRAM at 32k context, zero measurable performance cost. Both run scripts now default to `-ctk q8_0 -ctv q8_0`.
 
-Server observed tg (single slot, short prompt, `--parallel 1`): **~28 t/s**.
-
+Server observed tg (single slot, short prompt, `--parallel 1`): **~25 t/s** (stable post tuned-ppd fix).
