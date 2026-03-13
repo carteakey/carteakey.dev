@@ -4,6 +4,7 @@ description: Squeezing every token per second
 date: 2025-09-21
 authored_by: human
 updated: 2025-09-21
+giscusTerm: /blog/optimizing%20gpt-oss-120b-local%20inference/
 tags:
   - AI
 pinned: true
@@ -406,4 +407,3 @@ ggml_cuda_init: found 1 CUDA devices:
 | gpt-oss 120B MXFP4 MoE         |  59.02 GiB |   116.83 B | CUDA       |  99 |           pp512 |         86.45 ± 2.03 |
 | gpt-oss 120B MXFP4 MoE         |  59.02 GiB |   116.83 B | CUDA       |  99 |           tg128 |          9.77 ± 0.23 |
 ```
-

@@ -241,7 +241,7 @@ hasEthicalAds: false
             upvoteLoading.classList.remove('hidden');
             upvoteCount.classList.add('opacity-50');
             
-            const url = `/.netlify/functions/upvote?slug=${postSlug}${trackView ? '&trackView=true' : ''}`;
+            const url = `/.netlify/functions/upvote?slug=${encodeURIComponent(postSlug)}${trackView ? '&trackView=true' : ''}`;
             const response = await fetch(url, {
               method: 'GET'
             });
@@ -409,7 +409,7 @@ hasEthicalAds: false
 
           async function fetchReactionCounts() {
             try {
-              const response = await fetch(`/.netlify/functions/reactions?slug=${postSlug}`);
+              const response = await fetch(`/.netlify/functions/reactions?slug=${encodeURIComponent(postSlug)}`);
               if (!response.ok) {
                 throw new Error('Failed to fetch reactions');
               }
@@ -544,7 +544,8 @@ hasEthicalAds: false
         script.setAttribute("data-repo-id", "R_kgDOIHTsrg");
         script.setAttribute("data-category", "Announcements");
         script.setAttribute("data-category-id", "DIC_kwDOIHTsrs4CnZpB");
-        script.setAttribute("data-mapping", "pathname");
+        script.setAttribute("data-mapping", "specific");
+        script.setAttribute("data-term", {{ (giscusTerm or page.url) | dump | safe }});
         script.setAttribute("data-strict", "0");
         script.setAttribute("data-reactions-enabled", "0");
         script.setAttribute("data-emit-metadata", "0");
