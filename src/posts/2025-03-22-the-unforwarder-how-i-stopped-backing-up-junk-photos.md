@@ -40,7 +40,7 @@ For ease of use (available out of the box for [ollama](https://ollama.com/search
 1. Gemma-3 (12B) by Google.
 2. Llama3.2 - Vision (11B) by Meta.
 
-I like the idea of using Meta's model against the problems it has created, so we'll go with #2. (even though the [VLM leaderboard](https://huggingface.co/spaces/opencompass/open_vlm_leaderboard) recommends otherwise). 
+I like the idea of using Meta's model against the problems it has created, so we'll go with #2. (even though the [VLM leaderboard](https://huggingface.co/spaces/opencompass/open_vlm_leaderboard) recommends otherwise).
 
 {% image_cc "./src/static/img/potter.jpeg", "","50vw" , "Severus Zuck" %}
 

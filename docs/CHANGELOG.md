@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.9.4] - 2026-03-17
+
+### Added
+- `/folio/ai-memes/` — "Agent Tick ✓": a visual chronicle of AI absurdity featuring memes about vibe coding, ChatGPT, Claude, prompt engineering, and the agent era
+- Terminal-meets-editorial design: Playfair Display headlines + IBM Plex Mono metadata, terminal green (#00ff87) accent, the ✓ as brand glyph
+- Random meme button with scroll + highlight animation
+- Source attribution links for meme origins
+- First 3 memes: XKCD-style agent/vibe coding + prompt engineer dating
+
 ## [1.9.3] - 2026-03-13
 
 ### Added
