@@ -59,9 +59,9 @@
     <span class="feed-list-type meta-text text-gray-400 dark:text-gray-500">{{ badgeLabel }}</span>
     {% if item.authored_by is defined %}{{ authorshipBadge(item.authored_by, compact=true) }}{% else %}<span></span>{% endif %}
     {% if item.url %}
-      <a href="{{ item.url | url }}" class="feed-list-title title-hover">{% if item.pinned %}<span style="color: var(--accent-color)" title="Pinned">★ </span>{% endif %}{{ item.title }}</a>
+      <a href="{{ item.url | url }}" class="feed-list-title title-hover">{% if item.pinned %}<span style="color: var(--accent-color); margin-right: 0.35rem;" title="Pinned" aria-label="Pinned">★</span>{% endif %}{{ item.title }}</a>
     {% else %}
-      <span class="feed-list-title">{% if item.pinned %}<span style="color: var(--accent-color)" title="Pinned">★ </span>{% endif %}{{ item.title }}</span>
+      <span class="feed-list-title">{% if item.pinned %}<span style="color: var(--accent-color); margin-right: 0.35rem;" title="Pinned" aria-label="Pinned">★</span>{% endif %}{{ item.title }}</span>
     {% endif %}
   </li>
 
@@ -73,7 +73,7 @@
       <span class="feed-list-dot {{ dotColor }} shrink-0"></span>
       <span class="meta-text text-gray-400 dark:text-gray-500 text-[0.68rem] uppercase tracking-wide">{{ badgeLabel }}</span>
       {% if item.pinned %}
-        <span class="meta-text text-[0.65rem] ml-0.5" style="color: var(--accent-color);">· Pinned</span>
+        <span class="meta-text text-sm ml-0.5" style="color: var(--accent-color);" title="Pinned" aria-label="Pinned">★</span>
       {% endif %}
       {% if item.authored_by is defined %}{{ authorshipBadge(item.authored_by, compact=true) }}{% endif %}
       <time datetime="{{ item.date | htmlDateString }}" class="meta-text text-[0.68rem] text-gray-400 dark:text-gray-500 ml-auto">{{ item.date | readableDate }}</time>
