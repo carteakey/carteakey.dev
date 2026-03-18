@@ -4,7 +4,7 @@ These notes codify the rules I follow when pairing with Copilot/Codex on the blo
 
 ## Pre-edit checklist
 - Read these instructions before touching code.
-- Keep changes scoped to the `sonnet` branch and stay consistent with the existing stack.
+- Keep changes scoped to the `main` branch and stay consistent with the existing stack.
 - Prefer the simplest possible solution; no `var`, no jQuery, no IE shims.
 
 ## Manual workflow
@@ -13,7 +13,7 @@ These notes codify the rules I follow when pairing with Copilot/Codex on the blo
 3. Update `docs/CHANGELOG.md` with a SemVer entry under the current date.
 4. Bump the release number in `versions.json`.
 5. Confirm keyboard shortcuts, dark mode, and accent themes still behave.
-6. Commit with a concise message and push `sonnet`.
+6. Commit with a concise message and push `main`.
 
 ## Project context
 - Eleventy 3 drives the static site (`eleventy.config.mjs`).

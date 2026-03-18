@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Folio index now points to the Agent Tick canonical URL (`/folio/agent-tick/`) and legacy `/folio/ai-memes/` links redirect correctly.
-- GPT-OSS optimization post cleanup: removed leaked merge-conflict markers (`<<<<<<< HEAD`, `>>>>>>> sonnet`) from the published content.
+- GPT-OSS optimization post cleanup: removed leaked merge-conflict markers (`<<<<<<< HEAD` / branch tail) from the published content.
 
 ## [1.9.4] - 2026-03-17
 

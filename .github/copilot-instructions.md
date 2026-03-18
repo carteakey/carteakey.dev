@@ -2,7 +2,7 @@
 
 You're working at the `carteakey.dev` codebase, a personal blog and portfolio site built with Eleventy, Tailwind CSS, and Alpine.js. This playbook outlines the key guidelines, practices, and workflows to follow when contributing to this project.
 
-The branch is `sonnet`. This is where you should make all your changes.
+The branch is `main`. This is where you should make all your changes.
 
  ## 📋 PRE-EDIT CHECKLIST
 
@@ -51,7 +51,7 @@ This project uses a manual versioning process. It is your responsibility to keep
 * `docs/CHANGELOG.md` updated.
 
 
-5. **Push**: Push your changes to the `sonnet` branch.
+5. **Push**: Push your changes to the `main` branch.
 
 6. Update the docs/TODO.md file if you added or fixed something that should be noted there.
 ---
