@@ -1457,6 +1457,7 @@ description: "A visual chronicle of AI absurdity — memes that capture how Chat
                 </div>
                 <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;">
                     <div class="footer-badge">v2026.∞</div>
+                    <div class="footer-text" id="visitor-counter" style="text-align:right">[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;] agents have passed through</div>
                     <div class="footer-text" style="text-align:right">
                         fine-tuned on pain<br>
                         <span style="color:var(--dim2)">deprecated soon, probably</span>
@@ -1740,6 +1741,23 @@ description: "A visual chronicle of AI absurdity — memes that capture how Chat
         const memeCards = document.querySelectorAll('.meme-card');
         document.getElementById('meme-count').textContent = memeCards.length;
         document.getElementById('status-count').textContent = memeCards.length + ' memes indexed';
+
+        // ── VIEW COUNTER ──
+        (() => {
+            const visitorCounter = document.getElementById('visitor-counter');
+            if (!visitorCounter) return;
+
+            const slug = 'folio-agent-tick';
+            fetch(`/.netlify/functions/upvote?slug=${slug}&trackView=true`)
+                .then((r) => r.json())
+                .then((data) => {
+                    if (data && typeof data.views !== 'undefined') {
+                        const formatted = String(data.views).padStart(7, '\u00a0');
+                        visitorCounter.textContent = `[${formatted}] agents have passed through`;
+                    }
+                })
+                .catch(() => { });
+        })();
 
         // ── TAG FILTERING ──
         document.getElementById('tag-filters').addEventListener('click', (e) => {
