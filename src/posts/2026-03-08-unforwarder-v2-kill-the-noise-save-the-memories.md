@@ -4,6 +4,7 @@ description: From one script to a two-tool WhatsApp hygiene system — destroy t
 date: 2026-03-08T00:00:00.000Z
 authored_by: ai-assisted
 updated: 2026-03-08T00:00:00.000Z
+hidden: true
 tags:
   - Self-Host
   - VLM
