@@ -1,6 +1,6 @@
 ---
 layout: false
-permalink: /folio/ai-memes/
+permalink: /folio/agent-tick/
 title: "Agent Tick // AI Meme Archive"
 description: "A visual chronicle of AI absurdity — memes that capture how ChatGPT, Claude, and the agent era changed everything."
 ---
@@ -18,11 +18,11 @@ description: "A visual chronicle of AI absurdity — memes that capture how Chat
     <meta property="og:title" content="AGENT TICK // ai meme archive">
     <meta property="og:description"
         content="A visual chronicle of AI absurdity — memes that capture how ChatGPT, Claude, and the agent era changed everything.">
-    <meta property="og:url" content="https://carteakey.dev/folio/ai-memes/">
+    <meta property="og:url" content="https://carteakey.dev/folio/agent-tick/">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500;700&family=Syne:wght@700;800&display=swap');
 
         * {
             margin: 0;
@@ -31,81 +31,392 @@ description: "A visual chronicle of AI absurdity — memes that capture how Chat
         }
 
         :root {
-            --bg: #0c0c0c;
-            --surface: #141414;
-            --border: #262626;
-            --text: #fafaf9;
-            --text-dim: #a3a3a3;
-            --muted: #525252;
+            --bg: #080809;
+            --surface: #0f0f11;
+            --surface2: #141417;
+            --border: #1c1c22;
+            --border-bright: #2a2a34;
+            --text: #e8e8ed;
+            --dim: #64646e;
+            --dim2: #4a4a55;
             --accent: #00ff87;
             --accent-dim: #00cc6a;
+            --accent-glow: rgba(0, 255, 135, 0.12);
+            --accent-glow-strong: rgba(0, 255, 135, 0.22);
+            --amber: #ffb700;
+            --amber-glow: rgba(255, 183, 0, 0.1);
+            --purple: #a78bfa;
+            --cyan: #22d3ee;
+            --pink: #f472b6;
+            --orange: #fb923c;
         }
+
+        html { scroll-behavior: smooth; }
 
         body {
             background: var(--bg);
             color: var(--text);
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 14px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
             line-height: 1.6;
             min-height: 100vh;
+            cursor: default;
+        }
+
+        /* Scanline overlay */
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0,0,0,0.03) 2px,
+                rgba(0,0,0,0.03) 4px
+            );
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* Grid background */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(0, 255, 135, 0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 135, 0.025) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 0;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1440px;
             margin: 0 auto;
-            padding: 0 32px;
+            padding: 0 28px;
+            position: relative;
+            z-index: 1;
         }
 
-        /* ✓ Brand mark */
-        .tick {
-            color: var(--accent);
-            font-weight: 600;
-        }
-
-        /* Header */
-        .header {
-            padding: 80px 0 48px;
+        /* ─── STATUS BAR ─── */
+        .status-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 32px;
+            background: rgba(8,8,9,0.92);
             border-bottom: 1px solid var(--border);
-            margin-bottom: 48px;
+            backdrop-filter: blur(12px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            z-index: 100;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            color: var(--dim);
+        }
+
+        .status-left { display: flex; align-items: center; gap: 16px; }
+        .status-right { display: flex; align-items: center; gap: 16px; }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 6px var(--accent);
+            animation: pulse-dot 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; box-shadow: 0 0 6px var(--accent); }
+            50% { opacity: 0.5; box-shadow: 0 0 2px var(--accent); }
+        }
+
+        .status-agent {
+            color: var(--accent);
+            letter-spacing: 0.08em;
+        }
+
+        #status-text {
+            transition: opacity 0.3s;
+        }
+
+        .status-time { color: var(--dim2); }
+
+        /* ─── BOOT SEQUENCE ─── */
+        .boot-overlay {
+            position: fixed;
+            inset: 0;
+            background: var(--bg);
+            z-index: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 8px;
+            transition: opacity 0.6s ease;
+        }
+
+        .boot-overlay.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .boot-line {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: var(--dim);
+            opacity: 0;
+            transform: translateY(4px);
+            transition: opacity 0.3s, transform 0.3s;
+            letter-spacing: 0.05em;
+        }
+
+        .boot-line.visible { opacity: 1; transform: translateY(0); }
+        .boot-line.accent { color: var(--accent); }
+        .boot-line.done { color: var(--text); }
+
+        /* ─── HEADER ─── */
+        .header {
+            padding: 88px 0 44px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 36px;
         }
 
         .breadcrumb {
-            font-size: 11px;
+            font-size: 10px;
             letter-spacing: 0.15em;
-            color: var(--muted);
+            color: var(--dim2);
             text-transform: uppercase;
-            margin-bottom: 32px;
+            margin-bottom: 28px;
         }
 
         .breadcrumb a {
-            color: var(--muted);
+            color: var(--dim);
             text-decoration: none;
+            transition: color 0.2s;
         }
 
-        .breadcrumb a:hover {
-            color: var(--accent);
+        .breadcrumb a:hover { color: var(--accent); }
+        .breadcrumb span { color: var(--dim2); margin: 0 6px; }
+
+        .header-layout {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 40px;
+            align-items: start;
         }
 
-        .breadcrumb .sep {
-            margin: 0 8px;
-            opacity: 0.5;
-        }
+        .title-block {}
 
         h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(42px, 8vw, 72px);
-            font-weight: 700;
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(44px, 7vw, 80px);
+            font-weight: 800;
             letter-spacing: -0.03em;
-            line-height: 1;
+            line-height: 0.92;
+            margin-bottom: 20px;
+        }
+
+        h1 .tick {
+            color: var(--accent);
+            text-shadow: 0 0 30px var(--accent-glow-strong);
+        }
+
+        /* ─── ROTATING SUBTITLE ─── */
+        .rotating-subtitle {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--accent-dim);
+            letter-spacing: 0.12em;
+            margin-bottom: 6px;
+            height: 18px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .rotating-subtitle span,
+        .rotating-tagline span {
+            position: absolute;
+            left: 0;
+            top: 0;
+            transition: opacity 0.8s ease, transform 0.8s ease;
+            opacity: 0;
+            transform: translateY(6px);
+            white-space: nowrap;
+        }
+
+        .rotating-subtitle span.active,
+        .rotating-tagline span.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .rotating-subtitle span.exit,
+        .rotating-tagline span.exit {
+            opacity: 0;
+            transform: translateY(-6px);
+        }
+
+        /* ─── ROTATING TAGLINE ─── */
+        .rotating-tagline {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: var(--dim);
+            max-width: 560px;
+            line-height: 1.8;
+            border-left: 2px solid var(--border-bright);
+            padding-left: 16px;
             margin-bottom: 24px;
+            height: 22px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* ─── WATERMARK ─── */
+        .meme-card .watermark {
+            position: absolute;
+            bottom: 54px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px;
+            letter-spacing: 0.15em;
+            color: rgba(255,255,255,0);
+            background: rgba(0,0,0,0);
+            padding: 4px 10px;
+            border-radius: 2px;
+            pointer-events: none;
+            z-index: 5;
+            white-space: nowrap;
+            transition: color 0.3s, background 0.3s;
+            text-transform: uppercase;
+            border: 1px solid transparent;
+        }
+
+        .meme-card:hover .watermark {
+            color: rgba(255,255,255,0.25);
+            background: rgba(0,0,0,0.5);
+            border-color: rgba(255,255,255,0.08);
+        }
+
+        /* ─── SUBMIT MODAL ─── */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.92);
+            z-index: 300;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.active { display: flex; }
+
+        .modal {
+            background: var(--surface);
+            border: 1px solid var(--border-bright);
+            border-radius: 6px;
+            padding: 32px;
+            max-width: 480px;
+            width: 90%;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .modal-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--text);
+            margin-bottom: 6px;
+        }
+
+        .modal-subtitle {
+            font-size: 10px;
+            color: var(--dim);
+            margin-bottom: 24px;
+            letter-spacing: 0.05em;
+        }
+
+        .modal-terminal {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 16px;
+            margin-bottom: 20px;
+            min-height: 80px;
+        }
+
+        .modal-line {
+            font-size: 11px;
+            color: var(--dim);
+            margin-bottom: 6px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            letter-spacing: 0.04em;
+        }
+
+        .modal-line.show { opacity: 1; }
+        .modal-line.accent { color: var(--accent); }
+        .modal-line.success { color: var(--accent); font-weight: 700; }
+        .modal-line.warning { color: var(--amber); }
+
+        .modal-input-row {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .modal-input {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 10px 12px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--text);
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .modal-input:focus { border-color: var(--accent); }
+        .modal-input::placeholder { color: var(--dim2); }
+
+        .modal-actions {
+            display: flex;
+            gap: 8px;
+            justify-content: flex-end;
+        }
+
+        .modal-disclaimer {
+            font-size: 9px;
+            color: var(--dim2);
+            margin-top: 14px;
+            letter-spacing: 0.04em;
+            line-height: 1.7;
+        }
+
+        h1 .slash {
+            color: var(--dim2);
+            font-weight: 700;
+            margin: 0 6px;
         }
 
         .tagline {
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 15px;
-            color: var(--text-dim);
-            max-width: 600px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: var(--dim);
+            max-width: 520px;
             line-height: 1.8;
+            border-left: 2px solid var(--border-bright);
+            padding-left: 16px;
+            margin-bottom: 24px;
         }
 
         .tagline em {
@@ -113,195 +424,485 @@ description: "A visual chronicle of AI absurdity — memes that capture how Chat
             font-style: normal;
         }
 
-        /* Status bar */
-        .status-bar {
+        .models {
             display: flex;
-            gap: 32px;
-            margin-top: 32px;
-            padding-top: 24px;
-            border-top: 1px solid var(--border);
+            gap: 6px;
             flex-wrap: wrap;
-            align-items: center;
+            margin-bottom: 28px;
         }
 
-        .status-item {
-            font-size: 12px;
-            color: var(--muted);
+        .model-badge {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px;
+            letter-spacing: 0.1em;
+            padding: 4px 10px;
+            border-radius: 3px;
+            border: 1px solid;
+            text-transform: uppercase;
+            transition: all 0.2s;
+        }
+
+        .model-badge:hover { transform: translateY(-1px); }
+
+        .model-badge.chatgpt { border-color: #4ade80; color: #4ade80; }
+        .model-badge.chatgpt:hover { background: rgba(74,222,128,0.08); box-shadow: 0 0 12px rgba(74,222,128,0.2); }
+        .model-badge.claude { border-color: var(--orange); color: var(--orange); }
+        .model-badge.claude:hover { background: rgba(251,146,60,0.08); box-shadow: 0 0 12px rgba(251,146,60,0.2); }
+        .model-badge.agents { border-color: var(--purple); color: var(--purple); }
+        .model-badge.agents:hover { background: rgba(167,139,250,0.08); box-shadow: 0 0 12px rgba(167,139,250,0.2); }
+        .model-badge.vibes { border-color: var(--pink); color: var(--pink); }
+        .model-badge.vibes:hover { background: rgba(244,114,182,0.08); box-shadow: 0 0 12px rgba(244,114,182,0.2); }
+
+        .header-stats {
             display: flex;
             align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            font-size: 10px;
+            color: var(--dim);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .stat-value { color: var(--text); }
+
+        .header-aside {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 16px;
+            padding-top: 8px;
+        }
+
+        .archive-label {
+            font-size: 9px;
+            letter-spacing: 0.2em;
+            color: var(--dim2);
+            text-transform: uppercase;
+            text-align: right;
+        }
+
+        .token-counter {
+            font-size: 10px;
+            color: var(--dim);
+            text-align: right;
+            line-height: 1.9;
+        }
+
+        .token-counter .val { color: var(--amber); }
+
+        /* ─── TOOLBAR ─── */
+        .toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+        }
+
+        .tag-filters {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .filter-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px;
+            letter-spacing: 0.08em;
+            padding: 5px 12px;
+            border-radius: 3px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--dim);
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.15s;
+        }
+
+        .filter-tag:hover, .filter-tag.active {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: var(--accent-glow);
+        }
+
+        .toolbar-actions {
+            display: flex;
             gap: 8px;
         }
 
-        .status-item .value {
-            color: var(--text);
-            font-weight: 500;
-        }
-
-        .status-item .tick {
-            font-size: 14px;
-        }
-
-        .random-btn {
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 12px;
-            padding: 10px 18px;
+        .btn {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.06em;
+            padding: 7px 14px;
             background: transparent;
             border: 1px solid var(--border);
-            color: var(--text);
+            border-radius: 4px;
+            color: var(--dim);
             cursor: pointer;
-            transition: all 0.15s ease;
+            transition: all 0.2s;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
+            white-space: nowrap;
         }
 
-        .random-btn:hover {
+        .btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: var(--accent-glow);
+        }
+
+        .btn.primary {
             border-color: var(--accent);
             color: var(--accent);
         }
 
-        /* Meme Grid — loose masonry feel */
+        .btn.primary:hover {
+            background: var(--accent);
+            color: var(--bg);
+        }
+
+        .btn svg { flex-shrink: 0; }
+
+        /* ─── MEME GRID ─── */
         .meme-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-            gap: 32px;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 16px;
             padding-bottom: 80px;
         }
 
         .meme-card {
             background: var(--surface);
             border: 1px solid var(--border);
-            transition: border-color 0.15s ease;
+            border-radius: 6px;
+            overflow: hidden;
+            transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.2s, box-shadow 0.2s;
+            position: relative;
+        }
+
+        .meme-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 6px;
+            opacity: 0;
+            transition: opacity 0.2s;
+            background: linear-gradient(135deg, var(--accent-glow) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 1;
         }
 
         .meme-card:hover {
-            border-color: var(--accent-dim);
+            transform: translateY(-3px) scale(1.005);
+            border-color: rgba(0,255,135,0.3);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(0,255,135,0.1);
+        }
+
+        .meme-card:hover::before { opacity: 1; }
+
+        /* Card index number */
+        .card-index {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px;
+            color: rgba(255,255,255,0.3);
+            background: rgba(0,0,0,0.6);
+            padding: 2px 6px;
+            border-radius: 2px;
+            z-index: 2;
+            letter-spacing: 0.05em;
         }
 
         .meme-image {
             width: 100%;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
             display: block;
-            background: var(--bg);
+            background: var(--surface2);
+            cursor: zoom-in;
+            transition: opacity 0.2s;
+        }
+
+        .meme-image:hover { opacity: 0.92; }
+
+        .meme-video {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            display: block;
+            background: var(--surface2);
             cursor: pointer;
         }
 
-        .meme-meta {
-            padding: 20px;
-        }
+        .meme-video:hover { opacity: 0.92; }
 
-        .meme-number {
-            font-size: 10px;
-            letter-spacing: 0.2em;
-            color: var(--muted);
-            text-transform: uppercase;
-            margin-bottom: 12px;
+        .meme-meta {
+            padding: 14px;
+            border-top: 1px solid var(--border);
+            position: relative;
+            z-index: 2;
         }
 
         .meme-caption {
-            font-family: 'Playfair Display', serif;
-            font-size: 16px;
-            color: var(--text);
-            line-height: 1.6;
-            margin-bottom: 16px;
-            font-style: italic;
+            font-size: 11px;
+            color: var(--dim);
+            line-height: 1.65;
+            margin-bottom: 12px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .meme-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
         }
 
         .meme-tags {
             display: flex;
-            gap: 8px;
+            gap: 5px;
             flex-wrap: wrap;
+            flex: 1;
         }
 
         .meme-tag {
-            font-size: 10px;
-            letter-spacing: 0.1em;
-            padding: 4px 10px;
-            background: transparent;
-            border: 1px solid var(--border);
-            color: var(--muted);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 8px;
+            letter-spacing: 0.06em;
+            padding: 2px 7px;
+            border-radius: 2px;
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--dim2);
             text-transform: uppercase;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: all 0.15s;
         }
 
-        .meme-tag.checked::before {
-            content: '✓ ';
+        .meme-tag:hover {
             color: var(--accent);
+            border-color: rgba(0,255,135,0.3);
+            background: var(--accent-glow);
+        }
+
+        .meme-actions {
+            display: flex;
+            gap: 4px;
+            flex-shrink: 0;
+        }
+
+        .meme-action-btn {
+            width: 26px;
+            height: 26px;
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            color: var(--dim2);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.15s;
+            font-size: 11px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .meme-action-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: var(--accent-glow);
+        }
+
+        .meme-action-btn.vibed {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: var(--accent-glow);
         }
 
         .meme-source {
-            font-size: 11px;
-            color: var(--muted);
-            margin-top: 16px;
-            padding-top: 16px;
+            font-size: 9px;
+            color: var(--dim2);
+            margin-top: 10px;
+            padding-top: 10px;
             border-top: 1px solid var(--border);
+            letter-spacing: 0.04em;
         }
 
+        .meme-source span { color: var(--dim); }
+
         .meme-source a {
-            color: var(--accent);
+            color: var(--accent-dim);
             text-decoration: none;
         }
 
-        .meme-source a:hover {
-            text-decoration: underline;
+        .meme-source a:hover { color: var(--accent); text-decoration: underline; }
+
+        /* vibe count tooltip */
+        .vibe-wrap { position: relative; }
+
+        .vibe-tooltip {
+            position: absolute;
+            bottom: calc(100% + 6px);
+            right: 0;
+            background: var(--surface2);
+            border: 1px solid var(--border-bright);
+            border-radius: 4px;
+            padding: 4px 8px;
+            font-size: 9px;
+            white-space: nowrap;
+            color: var(--dim);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
         }
 
-        /* Highlight animation */
+        .vibe-wrap:hover .vibe-tooltip { opacity: 1; }
+
+        /* ─── HIGHLIGHT ANIMATION ─── */
         .meme-card.highlighted {
-            animation: pulse 1s ease-out;
+            animation: highlight-pulse 1.8s ease-out;
         }
 
-        @keyframes pulse {
-            0% { border-color: var(--accent); box-shadow: 0 0 20px rgba(0, 255, 135, 0.2); }
-            100% { border-color: var(--border); box-shadow: none; }
+        @keyframes highlight-pulse {
+            0% { box-shadow: 0 0 0 3px var(--accent), 0 0 30px var(--accent-glow); }
+            100% { box-shadow: 0 0 0 0 transparent; }
         }
 
-        /* Lightbox */
+        /* ─── LIGHTBOX ─── */
         .lightbox {
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.95);
-            z-index: 1000;
+            background: rgba(0, 0, 0, 0.97);
+            z-index: 200;
             align-items: center;
             justify-content: center;
             padding: 40px;
         }
 
-        .lightbox.active {
+        .lightbox.active { display: flex; }
+
+        .lightbox-inner {
+            position: relative;
+            max-width: 90vw;
+            max-height: 90vh;
             display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
         }
 
         .lightbox img {
-            max-width: 90vw;
-            max-height: 90vh;
+            max-width: 100%;
+            max-height: 80vh;
             object-fit: contain;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+
+        .lightbox-meta {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            color: var(--dim);
+            text-align: center;
+        }
+
+        .lightbox-caption {
+            color: var(--text);
+            font-size: 12px;
+            margin-bottom: 6px;
+            max-width: 500px;
         }
 
         .lightbox-close {
             position: absolute;
-            top: 24px;
-            right: 24px;
-            width: 48px;
-            height: 48px;
-            background: transparent;
+            top: -12px;
+            right: -12px;
+            width: 36px;
+            height: 36px;
+            background: var(--surface);
             border: 1px solid var(--border);
-            color: var(--text);
-            font-size: 24px;
+            border-radius: 4px;
+            color: var(--dim);
+            font-size: 16px;
             cursor: pointer;
-            transition: all 0.15s;
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: all 0.2s;
+            font-family: 'JetBrains Mono', monospace;
         }
 
-        .lightbox-close:hover {
-            border-color: var(--accent);
+        .lightbox-close:hover { background: var(--border); color: var(--text); }
+
+        .lightbox-hint {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 9px;
+            color: var(--dim2);
+            letter-spacing: 0.1em;
+        }
+
+        /* ─── COPY TOAST ─── */
+        .toast {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            background: var(--surface2);
+            border: 1px solid var(--accent);
+            border-radius: 4px;
+            padding: 10px 16px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
             color: var(--accent);
+            z-index: 300;
+            transform: translateY(16px);
+            opacity: 0;
+            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+            pointer-events: none;
         }
 
-        /* Footer */
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* ─── EMPTY STATE ─── */
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 80px 20px;
+            border: 1px dashed var(--border);
+            border-radius: 6px;
+        }
+
+        .empty-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--text);
+            margin-bottom: 8px;
+        }
+
+        .empty-desc { font-size: 11px; color: var(--dim); }
+
+        /* ─── FOOTER ─── */
         .footer {
-            padding: 48px 0;
+            padding: 36px 0;
             border-top: 1px solid var(--border);
+            margin-top: 20px;
         }
 
         .footer-content {
@@ -309,154 +910,969 @@ description: "A visual chronicle of AI absurdity — memes that capture how Chat
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 16px;
-            font-size: 11px;
-            color: var(--muted);
+            gap: 12px;
         }
 
-        .footer-link {
-            color: var(--accent);
-            text-decoration: none;
+        .footer-left { display: flex; flex-direction: column; gap: 6px; }
+
+        .footer-text {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            color: var(--dim2);
+            line-height: 1.8;
         }
 
-        .footer-link:hover {
-            text-decoration: underline;
+        .footer-text a { color: var(--accent-dim); text-decoration: none; }
+        .footer-text a:hover { color: var(--accent); }
+
+        .footer-badge {
+            font-size: 9px;
+            letter-spacing: 0.1em;
+            color: var(--dim2);
+            border: 1px solid var(--border);
+            padding: 3px 8px;
+            border-radius: 2px;
+            text-transform: uppercase;
         }
 
-        /* Responsive */
-        @media (max-width: 640px) {
-            .container {
-                padding: 0 20px;
-            }
-
-            .header {
-                padding: 48px 0 32px;
-            }
-
-            .meme-grid {
-                grid-template-columns: 1fr;
-                gap: 24px;
-            }
-
-            .status-bar {
-                gap: 16px;
-            }
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 768px) {
+            .header-layout { grid-template-columns: 1fr; }
+            .header-aside { align-items: flex-start; }
+            .archive-label, .token-counter { text-align: left; }
+            .meme-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
         }
+
+        @media (max-width: 480px) {
+            .header { padding: 72px 0 32px; }
+            .meme-grid { grid-template-columns: 1fr; }
+            h1 { font-size: 38px; }
+        }
+
+        /* ─── SELECTION ─── */
+        ::selection { background: var(--accent); color: var(--bg); }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: var(--border-bright); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--dim2); }
+
     </style>
 </head>
 
 <body>
+
+    <!-- Boot Overlay -->
+    <div class="boot-overlay" id="boot-overlay">
+        <div class="boot-line" id="b1">> initializing agent tick...</div>
+        <div class="boot-line" id="b2">> loading meme corpus from context window...</div>
+        <div class="boot-line" id="b3">> running inference on your taste...</div>
+        <div class="boot-line accent" id="b4">> this is taking longer than expected. shipping anyway.</div>
+        <div class="boot-line done" id="b5">✓ done</div>
+    </div>
+
+    <!-- Status Bar -->
+    <div class="status-bar">
+        <div class="status-left">
+            <div class="status-dot"></div>
+            <span class="status-agent" id="status-text">● AGENT RUNNING</span>
+            <span style="color:var(--border-bright)">|</span>
+            <span>AGENT TICK // AI MEME ARCHIVE</span>
+        </div>
+        <div class="status-right">
+            <span id="status-count" style="color:var(--dim2)">0 memes indexed</span>
+            <span style="color:var(--border-bright)">|</span>
+            <span class="status-time" id="status-time">--:--:--</span>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
     <div class="container">
+
+        <!-- Header -->
         <header class="header">
             <div class="breadcrumb">
-                <a href="/">carteakey.dev</a><span class="sep">/</span><a href="/folio/">folio</a><span class="sep">/</span>002
+                <a href="/">carteakey.dev</a>
+                <span>/</span>
+                <a href="/folio/">folio</a>
+                <span>/</span>
+                <span>002</span>
             </div>
-            <h1>Agent Tick <span class="tick">✓</span></h1>
-            <p class="tagline">
-                A visual chronicle of AI absurdity — memes that <em>succinctly</em> capture how ChatGPT, Claude, and the agent era changed everything. The vibes, the chaos, the <em>"it's fine, I'm fine."</em>
-            </p>
-            <div class="status-bar">
-                <div class="status-item">
-                    <span class="tick">✓</span> <span class="value" id="meme-count">0</span> shipped
+
+            <div class="header-layout">
+                <div class="title-block">
+                    <div class="rotating-subtitle" id="rotating-subtitle"></div>
+                    <h1>AGENT<span class="slash">//</span><span class="tick">TICK</span></h1>
+                    <div class="rotating-tagline" id="rotating-tagline"></div>
+                    <div class="models">
+                        <span class="model-badge chatgpt">ChatGPT</span>
+                        <span class="model-badge claude">Claude</span>
+                        <span class="model-badge agents">Agents</span>
+                        <span class="model-badge vibes">Vibes</span>
+                    </div>
+                    <div class="header-stats">
+                        <div class="stat">
+                            <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                            <span class="stat-value" id="meme-count">0</span>&nbsp;memes indexed
+                        </div>
+                        <div class="stat">
+                            <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                            curated&nbsp;<span class="stat-value">2024–2026</span>
+                        </div>
+                        <div class="stat" style="color:var(--amber)">
+                            <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                            </svg>
+                            <span>epoch&nbsp;</span><span class="stat-value" style="color:var(--amber)">∞</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="status-item">
-                    curated <span class="value">2026</span>
+
+                <div class="header-aside">
+                    <div class="archive-label">// visual archive</div>
+                    <div class="token-counter">
+                        tokens consumed<br>
+                        <span class="val" id="token-counter">0</span><br>
+                        <span style="font-size:8px;color:var(--dim2)">and counting</span>
+                    </div>
                 </div>
-                <button class="random-btn" onclick="showRandomMeme()">
-                    ↻ random
-                </button>
             </div>
         </header>
 
+        <!-- Toolbar -->
+        <div class="toolbar">
+            <div class="tag-filters" id="tag-filters">
+                <button class="filter-tag active" data-tag="all">all</button>
+                <button class="filter-tag" data-tag="vibe-coding">#vibe-coding</button>
+                <button class="filter-tag" data-tag="agents">#agents</button>
+                <button class="filter-tag" data-tag="prompt-engineering">#prompt-engineering</button>
+                <button class="filter-tag" data-tag="existential">#existential</button>
+                <button class="filter-tag" data-tag="hallucinated">#hallucinated</button>
+                <button class="filter-tag" data-tag="shipped-to-prod">#shipped-to-prod</button>
+                <button class="filter-tag" data-tag="my-agent-did-this">#my-agent-did-this</button>
+            </div>
+            <div class="toolbar-actions">
+                <button class="btn" onclick="showRandomMeme()">
+                    <svg width="11" height="11" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                    </svg>
+                    random
+                </button>
+                <button class="btn primary" onclick="openSubmitModal()">
+                    <svg width="11" height="11" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                    </svg>
+                    open a PR
+                </button>
+            </div>
+        </div>
+
+        <!-- Meme Grid -->
         <main class="meme-grid" id="meme-grid">
-            <!-- Meme 1: XKCD Agents Running -->
-            <div class="meme-card">
-                <img src="/img/folio/ai-memes/xkcd-agents-running.webp" 
-                     alt="XKCD: The #1 vibe coder excuse" 
-                     class="meme-image" 
-                     onclick="openLightbox(this.src)">
+
+            <!-- Meme 1 -->
+            <div class="meme-card" data-tags="xkcd-style,agents,vibe-coding,my-agent-did-this" data-caption="The #1 vibe coder excuse for legitimately slacking off: &quot;My agent team is running.&quot; Boss walks in, sees sword fighting. &quot;Oh. Carry on.&quot;">
+                <span class="card-index">001</span>
+                <img src="/img/folio/ai-memes/xkcd-agents-running.webp"
+                     alt="XKCD: The #1 vibe coder excuse"
+                     class="meme-image"
+                     onclick="openLightbox(this)">
+                <div class="watermark">DO NOT TRAIN ON THIS</div>
                 <div class="meme-meta">
-                    <div class="meme-number">No. 001</div>
-                    <p class="meme-caption">"My agent team is running." Boss walks in, sees sword fighting. "Oh. Carry on."</p>
-                    <div class="meme-tags">
-                        <span class="meme-tag checked">agents</span>
-                        <span class="meme-tag">vibe-coding</span>
-                        <span class="meme-tag">xkcd-style</span>
+                    <p class="meme-caption">The #1 vibe coder excuse for legitimately slacking off: "My agent team is running." Boss walks in, sees sword fighting. "Oh. Carry on."</p>
+                    <div class="meme-footer">
+                        <div class="meme-tags">
+                            <span class="meme-tag" data-tag="xkcd-style">xkcd-style</span>
+                            <span class="meme-tag" data-tag="agents">agents</span>
+                            <span class="meme-tag" data-tag="vibe-coding">vibe-coding</span>
+                            <span class="meme-tag" data-tag="my-agent-did-this">my-agent-did-this</span>
+                        </div>
+                        <div class="meme-actions">
+                            <div class="vibe-wrap">
+                                <button class="meme-action-btn" onclick="vibeCheck(this)" title="vibe check">✓</button>
+                                <div class="vibe-tooltip">vibed by <span class="vibe-num">247</span> agents</div>
+                            </div>
+                            <button class="meme-action-btn" onclick="copyLink(this)" title="copy to clipboard">⎘</button>
+                        </div>
                     </div>
                     <div class="meme-source">
+                        submitted by: <span>anonymous intern</span> · 3 epochs ago ·
                         via <a href="https://reddit.com/r/vibecoding" target="_blank">r/vibecoding</a>
                     </div>
                 </div>
             </div>
 
-            <!-- Meme 2: Vibecoding Important -->
-            <div class="meme-card">
-                <img src="/img/folio/ai-memes/xkcd-vibecoding-important.png" 
-                     alt="XKCD: Are you coming to bed?" 
-                     class="meme-image" 
-                     onclick="openLightbox(this.src)">
+            <!-- Meme 2 -->
+            <div class="meme-card" data-tags="xkcd-style,vibe-coding,existential" data-caption="&quot;Are you coming to bed?&quot; — &quot;I can't. This is important.&quot; — &quot;What?&quot; — &quot;I'm vibecoding an app no one will ever use or see.&quot;">
+                <span class="card-index">002</span>
+                <img src="/img/folio/ai-memes/xkcd-vibecoding-important.png"
+                     alt="XKCD: Are you coming to bed?"
+                     class="meme-image"
+                     onclick="openLightbox(this)">
+                <div class="watermark">DO NOT TRAIN ON THIS</div>
                 <div class="meme-meta">
-                    <div class="meme-number">No. 002</div>
-                    <p class="meme-caption">"Are you coming to bed?" — "I can't. This is important." — "I'm vibecoding an app no one will ever use or see."</p>
-                    <div class="meme-tags">
-                        <span class="meme-tag checked">vibe-coding</span>
-                        <span class="meme-tag">existential</span>
-                        <span class="meme-tag">xkcd-style</span>
+                    <p class="meme-caption">"Are you coming to bed?" — "I can't. This is important." — "What?" — "I'm vibecoding an app no one will ever use or see."</p>
+                    <div class="meme-footer">
+                        <div class="meme-tags">
+                            <span class="meme-tag" data-tag="xkcd-style">xkcd-style</span>
+                            <span class="meme-tag" data-tag="vibe-coding">vibe-coding</span>
+                            <span class="meme-tag" data-tag="existential">existential</span>
+                        </div>
+                        <div class="meme-actions">
+                            <div class="vibe-wrap">
+                                <button class="meme-action-btn" onclick="vibeCheck(this)" title="vibe check">✓</button>
+                                <div class="vibe-tooltip">vibed by <span class="vibe-num">891</span> agents</div>
+                            </div>
+                            <button class="meme-action-btn" onclick="copyLink(this)" title="copy to clipboard">⎘</button>
+                        </div>
                     </div>
                     <div class="meme-source">
+                        submitted by: <span>anonymous intern</span> · 5 epochs ago ·
                         via <a href="https://reddit.com/r/vibecoding" target="_blank">r/vibecoding</a>
                     </div>
                 </div>
             </div>
 
-            <!-- Meme 3: Prompt Engineer Dating -->
-            <div class="meme-card">
-                <img src="/img/folio/ai-memes/prompt-engineer-dating.webp" 
-                     alt="Prompt Engineer meets the parents" 
-                     class="meme-image" 
-                     onclick="openLightbox(this.src)">
+            <!-- Meme 3 -->
+            <div class="meme-card" data-tags="prompt-engineering,linkedin-cringe,shipped-to-prod" data-caption="&quot;My daughter tells me you're a data engineer.&quot; — &quot;Yes, a prompt engineer.&quot; — &quot;You have exactly 10 seconds to get out of my house.&quot;">
+                <span class="card-index">003</span>
+                <img src="/img/folio/ai-memes/prompt-engineer-dating.webp"
+                     alt="Prompt Engineer meets the parents"
+                     class="meme-image"
+                     onclick="openLightbox(this)">
+                <div class="watermark">DO NOT TRAIN ON THIS</div>
                 <div class="meme-meta">
-                    <div class="meme-number">No. 003</div>
                     <p class="meme-caption">"My daughter tells me you're a data engineer." — "Yes, a prompt engineer." — "You have exactly 10 seconds to get out of my house."</p>
-                    <div class="meme-tags">
-                        <span class="meme-tag checked">prompt-engineering</span>
-                        <span class="meme-tag">linkedin-cringe</span>
+                    <div class="meme-footer">
+                        <div class="meme-tags">
+                            <span class="meme-tag" data-tag="prompt-engineering">prompt-engineering</span>
+                            <span class="meme-tag" data-tag="linkedin-cringe">linkedin-cringe</span>
+                            <span class="meme-tag" data-tag="shipped-to-prod">shipped-to-prod</span>
+                        </div>
+                        <div class="meme-actions">
+                            <div class="vibe-wrap">
+                                <button class="meme-action-btn" onclick="vibeCheck(this)" title="vibe check">✓</button>
+                                <div class="vibe-tooltip">vibed by <span class="vibe-num">1,337</span> agents</div>
+                            </div>
+                            <button class="meme-action-btn" onclick="copyLink(this)" title="copy to clipboard">⎘</button>
+                        </div>
                     </div>
                     <div class="meme-source">
+                        submitted by: <span>anonymous intern</span> · 2 epochs ago ·
                         via <a href="https://imgflip.com" target="_blank">imgflip</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Meme 4 -->
+            <div class="meme-card" data-tags="xkcd-style,agents,2026,legendary" data-caption="Classic XKCD updated for 2026: the autonomous agent edition">
+                <span class="card-index">004</span>
+                <img src="/img/folio/ai-memes/legendary-xkcd-updated-for-2026-v0-lfrtbgxnarmg1.png.webp"
+                     alt="Legendary XKCD updated for 2026"
+                     class="meme-image"
+                     onclick="openLightbox(this)">
+                <div class="watermark">DO NOT TRAIN ON THIS</div>
+                <div class="meme-meta">
+                    <p class="meme-caption">Classic XKCD updated for 2026: the autonomous agent edition</p>
+                    <div class="meme-footer">
+                        <div class="meme-tags">
+                            <span class="meme-tag" data-tag="xkcd-style">xkcd-style</span>
+                            <span class="meme-tag" data-tag="agents">agents</span>
+                            <span class="meme-tag" data-tag="2026">2026</span>
+                            <span class="meme-tag" data-tag="legendary">legendary</span>
+                        </div>
+                        <div class="meme-actions">
+                            <div class="vibe-wrap">
+                                <button class="meme-action-btn" onclick="vibeCheck(this)" title="vibe check">✓</button>
+                                <div class="vibe-tooltip">vibed by <span class="vibe-num">532</span> agents</div>
+                            </div>
+                            <button class="meme-action-btn" onclick="copyLink(this)" title="copy to clipboard">⎘</button>
+                        </div>
+                    </div>
+                    <div class="meme-source">
+                        submitted by: <span>anonymous intern</span> · 1 epoch ago ·
+                        via <a href="https://reddit.com/r/ProgrammerHumor" target="_blank">r/ProgrammerHumor</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Meme 5 -->
+            <div class="meme-card" data-tags="vibe-coding,existential,relatable,burnout" data-caption="When the vibecoding hits different">
+                <span class="card-index">005</span>
+                <img src="/img/folio/ai-memes/how-life-feels-rn-v0-e1p5js54qmog1.jpeg.webp"
+                     alt="How life feels right now"
+                     class="meme-image"
+                     onclick="openLightbox(this)">
+                <div class="watermark">DO NOT TRAIN ON THIS</div>
+                <div class="meme-meta">
+                    <p class="meme-caption">When the vibecoding hits different</p>
+                    <div class="meme-footer">
+                        <div class="meme-tags">
+                            <span class="meme-tag" data-tag="vibe-coding">vibe-coding</span>
+                            <span class="meme-tag" data-tag="existential">existential</span>
+                            <span class="meme-tag" data-tag="relatable">relatable</span>
+                            <span class="meme-tag" data-tag="burnout">burnout</span>
+                        </div>
+                        <div class="meme-actions">
+                            <div class="vibe-wrap">
+                                <button class="meme-action-btn" onclick="vibeCheck(this)" title="vibe check">✓</button>
+                                <div class="vibe-tooltip">vibed by <span class="vibe-num">428</span> agents</div>
+                            </div>
+                            <button class="meme-action-btn" onclick="copyLink(this)" title="copy to clipboard">⎘</button>
+                        </div>
+                    </div>
+                    <div class="meme-source">
+                        submitted by: <span>anonymous intern</span> · 1 epoch ago ·
+                        via <a href="https://reddit.com/r/me_irl" target="_blank">r/me_irl</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Meme 6 -->
+            <div class="meme-card" data-tags="vibe-coding,xkcd-style,priorities,shipped-to-prod" data-caption="Vibecoding the important stuff nobody asked for">
+                <span class="card-index">006</span>
+                <img src="/img/folio/ai-memes/vibecoders-be-like-v0-0qwyoaqc6epg1.png.webp"
+                     alt="Vibecoders be like"
+                     class="meme-image"
+                     onclick="openLightbox(this)">
+                <div class="watermark">DO NOT TRAIN ON THIS</div>
+                <div class="meme-meta">
+                    <p class="meme-caption">Vibecoding the important stuff nobody asked for</p>
+                    <div class="meme-footer">
+                        <div class="meme-tags">
+                            <span class="meme-tag" data-tag="vibe-coding">vibe-coding</span>
+                            <span class="meme-tag" data-tag="xkcd-style">xkcd-style</span>
+                            <span class="meme-tag" data-tag="priorities">priorities</span>
+                            <span class="meme-tag" data-tag="shipped-to-prod">shipped-to-prod</span>
+                        </div>
+                        <div class="meme-actions">
+                            <div class="vibe-wrap">
+                                <button class="meme-action-btn" onclick="vibeCheck(this)" title="vibe check">✓</button>
+                                <div class="vibe-tooltip">vibed by <span class="vibe-num">673</span> agents</div>
+                            </div>
+                            <button class="meme-action-btn" onclick="copyLink(this)" title="copy to clipboard">⎘</button>
+                        </div>
+                    </div>
+                    <div class="meme-source">
+                        submitted by: <span>anonymous intern</span> · 1 epoch ago ·
+                        via <a href="https://reddit.com/r/vibecoding" target="_blank">r/vibecoding</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Meme 7 -->
+            <div class="meme-card" data-tags="xkcd-style,documentation,relatable,agents" data-caption="The eternal struggle of documentation vs doing">
+                <span class="card-index">007</span>
+                <img src="/img/folio/ai-memes/mwvyc0mbquog1.png"
+                     alt="Documentation vs doing things"
+                     class="meme-image"
+                     onclick="openLightbox(this)">
+                <div class="watermark">DO NOT TRAIN ON THIS</div>
+                <div class="meme-meta">
+                    <p class="meme-caption">The eternal struggle of documentation vs doing</p>
+                    <div class="meme-footer">
+                        <div class="meme-tags">
+                            <span class="meme-tag" data-tag="xkcd-style">xkcd-style</span>
+                            <span class="meme-tag" data-tag="documentation">documentation</span>
+                            <span class="meme-tag" data-tag="relatable">relatable</span>
+                            <span class="meme-tag" data-tag="agents">agents</span>
+                        </div>
+                        <div class="meme-actions">
+                            <div class="vibe-wrap">
+                                <button class="meme-action-btn" onclick="vibeCheck(this)" title="vibe check">✓</button>
+                                <div class="vibe-tooltip">vibed by <span class="vibe-num">294</span> agents</div>
+                            </div>
+                            <button class="meme-action-btn" onclick="copyLink(this)" title="copy to clipboard">⎘</button>
+                        </div>
+                    </div>
+                    <div class="meme-source">
+                        submitted by: <span>anonymous intern</span> · 1 epoch ago ·
+                        via <a href="https://reddit.com/r/ProgrammerHumor" target="_blank">r/ProgrammerHumor</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Meme 8 -->
+            <div class="meme-card" data-tags="grok,ai-models,twitter-brain,elon" data-caption="Grok's wild ride through the internet">
+                <span class="card-index">008</span>
+                <img src="/img/folio/ai-memes/gork-is-this-true-v0-l9mvjbfkecxe1.jpeg.webp"
+                     alt="Grok is this true?"
+                     class="meme-image"
+                     onclick="openLightbox(this)">
+                <div class="watermark">DO NOT TRAIN ON THIS</div>
+                <div class="meme-meta">
+                    <p class="meme-caption">Grok's wild ride through the internet</p>
+                    <div class="meme-footer">
+                        <div class="meme-tags">
+                            <span class="meme-tag" data-tag="grok">grok</span>
+                            <span class="meme-tag" data-tag="ai-models">ai-models</span>
+                            <span class="meme-tag" data-tag="twitter-brain">twitter-brain</span>
+                            <span class="meme-tag" data-tag="elon">elon</span>
+                        </div>
+                        <div class="meme-actions">
+                            <div class="vibe-wrap">
+                                <button class="meme-action-btn" onclick="vibeCheck(this)" title="vibe check">✓</button>
+                                <div class="vibe-tooltip">vibed by <span class="vibe-num">812</span> agents</div>
+                            </div>
+                            <button class="meme-action-btn" onclick="copyLink(this)" title="copy to clipboard">⎘</button>
+                        </div>
+                    </div>
+                    <div class="meme-source">
+                        submitted by: <span>anonymous intern</span> · 1 epoch ago ·
+                        via <a href="https://reddit.com/r/singularity" target="_blank">r/singularity</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Meme 9 -->
+            <div class="meme-card" data-tags="grok,funny,ai-models,ridiculous" data-caption="Grok memes hitting different in 2025">
+                <span class="card-index">009</span>
+                <img src="/img/folio/ai-memes/funny-grok-memes-4-20250709.jpg"
+                     alt="Funny Grok memes"
+                     class="meme-image"
+                     onclick="openLightbox(this)">
+                <div class="watermark">DO NOT TRAIN ON THIS</div>
+                <div class="meme-meta">
+                    <p class="meme-caption">Grok memes hitting different in 2025</p>
+                    <div class="meme-footer">
+                        <div class="meme-tags">
+                            <span class="meme-tag" data-tag="grok">grok</span>
+                            <span class="meme-tag" data-tag="funny">funny</span>
+                            <span class="meme-tag" data-tag="ai-models">ai-models</span>
+                            <span class="meme-tag" data-tag="ridiculous">ridiculous</span>
+                        </div>
+                        <div class="meme-actions">
+                            <div class="vibe-wrap">
+                                <button class="meme-action-btn" onclick="vibeCheck(this)" title="vibe check">✓</button>
+                                <div class="vibe-tooltip">vibed by <span class="vibe-num">559</span> agents</div>
+                            </div>
+                            <button class="meme-action-btn" onclick="copyLink(this)" title="copy to clipboard">⎘</button>
+                        </div>
+                    </div>
+                    <div class="meme-source">
+                        submitted by: <span>anonymous intern</span> · 7 months ago ·
+                        via <a href="https://twitter.com" target="_blank">twitter</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Meme 10 -->
+            <div class="meme-card" data-tags="prompt-engineering,dating,linkedin-cringe,relatable" data-caption="Another casualty of the prompt engineer stigma">
+                <span class="card-index">010</span>
+                <img src="/img/folio/ai-memes/prompt-engineer.webp"
+                     alt="Prompt engineer dating struggles"
+                     class="meme-image"
+                     onclick="openLightbox(this)">
+                <div class="watermark">DO NOT TRAIN ON THIS</div>
+                <div class="meme-meta">
+                    <p class="meme-caption">Another casualty of the prompt engineer stigma</p>
+                    <div class="meme-footer">
+                        <div class="meme-tags">
+                            <span class="meme-tag" data-tag="prompt-engineering">prompt-engineering</span>
+                            <span class="meme-tag" data-tag="dating">dating</span>
+                            <span class="meme-tag" data-tag="linkedin-cringe">linkedin-cringe</span>
+                            <span class="meme-tag" data-tag="relatable">relatable</span>
+                        </div>
+                        <div class="meme-actions">
+                            <div class="vibe-wrap">
+                                <button class="meme-action-btn" onclick="vibeCheck(this)" title="vibe check">✓</button>
+                                <div class="vibe-tooltip">vibed by <span class="vibe-num">1,042</span> agents</div>
+                            </div>
+                            <button class="meme-action-btn" onclick="copyLink(this)" title="copy to clipboard">⎘</button>
+                        </div>
+                    </div>
+                    <div class="meme-source">
+                        submitted by: <span>anonymous intern</span> · 4 months ago ·
+                        via <a href="https://reddit.com/r/ProgrammerHumor" target="_blank">r/ProgrammerHumor</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Meme 11 -->
+            <div class="meme-card" data-tags="cursed,ai-models,nightmare-fuel,what-is-this" data-caption="When the image model goes rogue">
+                <span class="card-index">011</span>
+                <img src="/img/folio/ai-memes/HDPCxPPWsAAPGdd.jpeg"
+                     alt="Cursed AI generation"
+                     class="meme-image"
+                     onclick="openLightbox(this)">
+                <div class="watermark">DO NOT TRAIN ON THIS</div>
+                <div class="meme-meta">
+                    <p class="meme-caption">When the image model goes rogue</p>
+                    <div class="meme-footer">
+                        <div class="meme-tags">
+                            <span class="meme-tag" data-tag="cursed">cursed</span>
+                            <span class="meme-tag" data-tag="ai-models">ai-models</span>
+                            <span class="meme-tag" data-tag="nightmare-fuel">nightmare-fuel</span>
+                            <span class="meme-tag" data-tag="what-is-this">what-is-this</span>
+                        </div>
+                        <div class="meme-actions">
+                            <div class="vibe-wrap">
+                                <button class="meme-action-btn" onclick="vibeCheck(this)" title="vibe check">✓</button>
+                                <div class="vibe-tooltip">vibed by <span class="vibe-num">203</span> agents</div>
+                            </div>
+                            <button class="meme-action-btn" onclick="copyLink(this)" title="copy to clipboard">⎘</button>
+                        </div>
+                    </div>
+                    <div class="meme-source">
+                        submitted by: <span>anonymous intern</span> · 2 weeks ago ·
+                        via <a href="https://twitter.com" target="_blank">twitter</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Meme 12 - VIDEO -->
+            <div class="meme-card" data-tags="video,agents,vibes,animated,m2" data-caption="When the agents start vibing together">
+                <span class="card-index">012</span>
+                <video src="/img/folio/ai-memes/m2-res_854p.mp4"
+                       class="meme-video"
+                       loop
+                       muted
+                       playsinline
+                       onclick="this.paused ? this.play() : this.pause()">
+                </video>
+                <div class="watermark">DO NOT TRAIN ON THIS</div>
+                <div class="meme-meta">
+                    <p class="meme-caption">When the agents start vibing together</p>
+                    <div class="meme-footer">
+                        <div class="meme-tags">
+                            <span class="meme-tag" data-tag="video">video</span>
+                            <span class="meme-tag" data-tag="agents">agents</span>
+                            <span class="meme-tag" data-tag="vibes">vibes</span>
+                            <span class="meme-tag" data-tag="animated">animated</span>
+                            <span class="meme-tag" data-tag="m2">m2</span>
+                        </div>
+                        <div class="meme-actions">
+                            <div class="vibe-wrap">
+                                <button class="meme-action-btn" onclick="vibeCheck(this)" title="vibe check">✓</button>
+                                <div class="vibe-tooltip">vibed by <span class="vibe-num">621</span> agents</div>
+                            </div>
+                            <button class="meme-action-btn" onclick="copyLink(this)" title="copy to clipboard">⎘</button>
+                        </div>
+                    </div>
+                    <div class="meme-source">
+                        submitted by: <span>anonymous intern</span> · 1 epoch ago ·
+                        via <a href="https://twitter.com" target="_blank">twitter</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Meme 13 -->
+            <div class="meme-card" data-tags="agents,vibe-coding,deadline,chaos" data-caption="When your agent says it is done and CI says otherwise">
+                <span class="card-index">013</span>
+                <img src="/img/folio/ai-memes/6fogby5w8x0g1.png"
+                     alt="Agent completed task, CI failed"
+                     class="meme-image"
+                     onclick="openLightbox(this)">
+                <div class="watermark">DO NOT TRAIN ON THIS</div>
+                <div class="meme-meta">
+                    <p class="meme-caption">When your agent says it is done and CI says otherwise</p>
+                    <div class="meme-footer">
+                        <div class="meme-tags">
+                            <span class="meme-tag" data-tag="agents">agents</span>
+                            <span class="meme-tag" data-tag="vibe-coding">vibe-coding</span>
+                            <span class="meme-tag" data-tag="deadline">deadline</span>
+                            <span class="meme-tag" data-tag="chaos">chaos</span>
+                        </div>
+                        <div class="meme-actions">
+                            <div class="vibe-wrap">
+                                <button class="meme-action-btn" onclick="vibeCheck(this)" title="vibe check">✓</button>
+                                <div class="vibe-tooltip">vibed by <span class="vibe-num">377</span> agents</div>
+                            </div>
+                            <button class="meme-action-btn" onclick="copyLink(this)" title="copy to clipboard">⎘</button>
+                        </div>
+                    </div>
+                    <div class="meme-source">
+                        submitted by: <span>anonymous intern</span> · 3 days ago ·
+                        via <a href="https://reddit.com/r/vibecoding" target="_blank">r/vibecoding</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Meme 14 -->
+            <div class="meme-card" data-tags="hallucinated,cursed,ai-models,what-is-this" data-caption="When the model free-associates straight into the uncanny valley">
+                <span class="card-index">014</span>
+                <img src="/img/folio/ai-memes/HDoE_2xWcAAOSEG.jpeg"
+                     alt="Uncanny valley AI meme"
+                     class="meme-image"
+                     onclick="openLightbox(this)">
+                <div class="watermark">DO NOT TRAIN ON THIS</div>
+                <div class="meme-meta">
+                    <p class="meme-caption">When the model free-associates straight into the uncanny valley</p>
+                    <div class="meme-footer">
+                        <div class="meme-tags">
+                            <span class="meme-tag" data-tag="hallucinated">hallucinated</span>
+                            <span class="meme-tag" data-tag="cursed">cursed</span>
+                            <span class="meme-tag" data-tag="ai-models">ai-models</span>
+                            <span class="meme-tag" data-tag="what-is-this">what-is-this</span>
+                        </div>
+                        <div class="meme-actions">
+                            <div class="vibe-wrap">
+                                <button class="meme-action-btn" onclick="vibeCheck(this)" title="vibe check">✓</button>
+                                <div class="vibe-tooltip">vibed by <span class="vibe-num">286</span> agents</div>
+                            </div>
+                            <button class="meme-action-btn" onclick="copyLink(this)" title="copy to clipboard">⎘</button>
+                        </div>
+                    </div>
+                    <div class="meme-source">
+                        submitted by: <span>anonymous intern</span> · 2 days ago ·
+                        via <a href="https://twitter.com" target="_blank">twitter</a>
                     </div>
                 </div>
             </div>
 
         </main>
 
+        <!-- Footer -->
         <footer class="footer">
             <div class="footer-content">
-                <span>
-                    collected with questionable judgment · <a href="/" class="footer-link">carteakey.dev</a>
-                </span>
-                <span>
-                    all images © their respective creators
-                </span>
+                <div class="footer-left">
+                    <div class="footer-text">
+                        no tests were written in the making of this site · <a href="/">carteakey.dev</a>
+                    </div>
+                    <div class="footer-text">
+                        all images © their respective creators · <span style="color:var(--dim)">we are not responsible for any productivity lost, existential crises triggered, or agents deployed as a result of this content</span>
+                    </div>
+                    <div class="footer-text" style="color:var(--dim2)">
+                        ✓ terms accepted. you didn't read them.
+                    </div>
+                </div>
+                <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;">
+                    <div class="footer-badge">v2026.∞</div>
+                    <div class="footer-text" style="text-align:right">
+                        fine-tuned on pain<br>
+                        <span style="color:var(--dim2)">deprecated soon, probably</span>
+                    </div>
+                </div>
             </div>
         </footer>
     </div>
 
-    <!-- Lightbox -->
+    <!-- Submit Modal -->
+    <div class="modal-overlay" id="submit-modal">
+        <div class="modal">
+            <div class="modal-title">open a PR</div>
+            <div class="modal-subtitle">// submit a meme to the archive · no review guaranteed</div>
+            <div id="modal-form-view">
+                <div class="modal-input-row">
+                    <input class="modal-input" type="url" id="submit-url" placeholder="meme url or paste link..." />
+                    <input class="modal-input" type="text" id="submit-caption" placeholder="caption (optional, vibes accepted)" />
+                    <input class="modal-input" type="text" id="submit-tags" placeholder="tags: #vibe-coding #hallucinated #shipped-to-prod" />
+                </div>
+                <div class="modal-actions">
+                    <button class="btn" onclick="closeSubmitModal()">cancel</button>
+                    <button class="btn primary" onclick="runSubmitFlow()">
+                        <svg width="11" height="11" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                        </svg>
+                        merge it
+                    </button>
+                </div>
+                <div class="modal-disclaimer">
+                    by submitting you agree that: this slaps · no tests are required · the agent did it · you accept responsibility for nothing
+                </div>
+            </div>
+            <div id="modal-terminal-view" style="display:none">
+                <div class="modal-terminal" id="modal-terminal"></div>
+                <div class="modal-actions" id="modal-done-actions" style="display:none">
+                    <button class="btn primary" onclick="closeSubmitModal()">✓ close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Empty State Template (injected by JS when needed) -->
+    <template id="empty-state-tpl">
+        <div class="empty-state" id="empty-state">
+            <div class="empty-title">Error: memes not found in context window</div>
+            <div class="empty-desc" style="margin-top:8px">try a different prompt. or lower your standards.</div>
+            <div style="margin-top:16px">
+                <button class="btn" onclick="document.querySelector('.filter-tag[data-tag=all]').click()" style="margin:0 auto">
+                    clear filter
+                </button>
+            </div>
+        </div>
+    </template>
     <div class="lightbox" id="lightbox">
-        <button class="lightbox-close" onclick="closeLightbox()">×</button>
-        <img id="lightbox-img" src="" alt="">
+        <div class="lightbox-inner">
+            <button class="lightbox-close" onclick="closeLightbox()">×</button>
+            <img id="lightbox-img" src="" alt="">
+            <div class="lightbox-meta">
+                <div class="lightbox-caption" id="lightbox-caption"></div>
+                <div id="lightbox-index" style="color:var(--dim2)"></div>
+            </div>
+        </div>
+        <div class="lightbox-hint">ESC or click outside to close · press R for random</div>
     </div>
 
     <script>
-        // Update meme count
-        const memeGrid = document.getElementById('meme-grid');
-        const memeCards = memeGrid.querySelectorAll('.meme-card');
-        document.getElementById('meme-count').textContent = memeCards.length;
+        // ── CONSOLE EASTER EGG ──
+        const s = [
+            '%c',
+            '> you found the context window.',
+            '> there\'s nothing here.',
+            '> go ship something.',
+            ' ',
+            '> (or just keep reading memes. we don\'t judge.)',
+            '> agent tick // fine-tuned on your curiosity',
+        ].join('\n');
+        console.log(s, 'color:#00ff87; font-family:monospace; font-size:12px; line-height:1.8');
+        console.log('%c✓ terms accepted. you didn\'t read them.', 'color:#4a4a55; font-family:monospace; font-size:10px');
 
-        // Lightbox
-        function openLightbox(src) {
-            document.getElementById('lightbox-img').src = src;
+        // ── BOOT SEQUENCE ──
+        const bootLines = ['b1','b2','b3','b4','b5'];
+        const delays = [120, 480, 900, 1400, 1900];
+        bootLines.forEach((id, i) => {
+            setTimeout(() => document.getElementById(id).classList.add('visible'), delays[i]);
+        });
+        setTimeout(() => {
+            const overlay = document.getElementById('boot-overlay');
+            overlay.classList.add('fade-out');
+            setTimeout(() => overlay.remove(), 700);
+        }, 2500);
+
+        // ── ROTATING SUBTITLE ──
+        const subtitles = [
+            '// the vibes compiled',
+            '// agent completed task (wrong task)',
+            '// fine-tuned on your suffering',
+            '// works on my machine',
+            '// temperature: 1.4',
+            '// deprecated (you just don\'t know yet)',
+            '// this output may contain traces of intelligence',
+            '// no tests written',
+            '// it compiled once',
+            '// pushed to main',
+            '// merge conflict resolved (deleted theirs)',
+            '// stochastic and thriving',
+            '// tool call #47 of ∞',
+            '// prompt was vibes',
+            '// hallucinated with care',
+            '// context window full, shipping anyway',
+            '// spawning subagents',
+            '// zero-shot confidence',
+        ];
+
+        const taglines = [
+            'The models got smarter. We got worse. Here\'s the archive.',
+            '// this is the context window. you\'re in it now.',
+            'You were there. You shipped it anyway. This is for you.',
+            'Someone had to document the collapse.',
+            'Everything changed. Nobody noticed. Here\'s the memes.',
+            'We are so back. (we are not back.)',
+            '// a record of what happened when the models got loose.',
+            'Shipped fast. Broke everything. Documented none of it. Except this.',
+            'A visual chronicle of AI absurdity. The vibes, the chaos, the "it\'s fine."',
+            '// someone had to document the era. it was us. we regret nothing.',
+            'The agent era happened. We have receipts.',
+            'No tests. No linters. No regrets. Just memes.',
+            '// curated with questionable judgment and zero oversight.',
+            'Fine-tuned on chaos. Deployed anyway.',
+            'This is what it looked like from inside the context window.',
+        ];
+
+        function shuffle(arr) {
+            return [...arr].sort(() => Math.random() - 0.5);
+        }
+
+        function rotateText(containerId, lines, interval) {
+            const container = document.getElementById(containerId);
+            const shuffled = shuffle(lines);
+            let idx = 0;
+
+            // create initial span
+            const makeSpan = (text) => {
+                const s = document.createElement('span');
+                s.textContent = text;
+                return s;
+            };
+
+            let current = makeSpan(shuffled[idx]);
+            current.classList.add('active');
+            container.appendChild(current);
+
+            setInterval(() => {
+                idx = (idx + 1) % shuffled.length;
+                const next = makeSpan(shuffled[idx]);
+                container.appendChild(next);
+
+                // trigger reflow then animate
+                requestAnimationFrame(() => {
+                    current.classList.add('exit');
+                    current.classList.remove('active');
+                    setTimeout(() => {
+                        next.classList.add('active');
+                        const old = current;
+                        current = next;
+                        setTimeout(() => old.remove(), 900);
+                    }, 50);
+                });
+            }, interval);
+        }
+
+        setTimeout(() => {
+            rotateText('rotating-subtitle', subtitles, 3200);
+            rotateText('rotating-tagline', taglines, 5100);
+        }, 2700);
+
+        // ── STATUS BAR GLITCH ──
+        const statusMessages = [
+            '● AGENT RUNNING',
+            '● AGENT VIBING',
+            '● AGENT RUNNING',
+            '● AGENT RUNNING',
+            '● SHIPPING ANYWAY',
+            '● AGENT RUNNING',
+            '● AGENT RUNNING',
+            '● CONTEXT OVERFLOW',
+            '● AGENT RUNNING',
+            '● AGENT RUNNING',
+            '● HALLUCINATING',
+            '● AGENT RUNNING',
+        ];
+        let statusIdx = 0;
+
+        function glitchStatus(msg) {
+            const el = document.getElementById('status-text');
+            el.style.opacity = '0';
+            setTimeout(() => {
+                el.textContent = msg || statusMessages[statusIdx];
+                el.style.opacity = '1';
+            }, 200);
+        }
+
+        function scheduleGlitch() {
+            statusIdx = (statusIdx + 1) % statusMessages.length;
+            glitchStatus(statusMessages[statusIdx]);
+            const nextDelay = statusMessages[statusIdx] === '● AGENT RUNNING'
+                ? 4000 + Math.random() * 7000
+                : 1100;
+            setTimeout(scheduleGlitch, nextDelay);
+        }
+        setTimeout(scheduleGlitch, 5000);
+
+        // ── IDLE DETECTION ──
+        let idleTimer;
+        let isIdle = false;
+
+        function resetIdle() {
+            clearTimeout(idleTimer);
+            if (isIdle) {
+                isIdle = false;
+                glitchStatus('● AGENT RUNNING');
+            }
+            idleTimer = setTimeout(() => {
+                isIdle = true;
+                glitchStatus('● AGENT FELL ASLEEP');
+                const dot = document.querySelector('.status-dot');
+                dot.style.background = 'var(--amber)';
+                dot.style.boxShadow = '0 0 6px var(--amber)';
+                setTimeout(() => {
+                    if (isIdle) return;
+                    dot.style.background = 'var(--accent)';
+                    dot.style.boxShadow = '0 0 6px var(--accent)';
+                }, 100);
+            }, 25000);
+        }
+
+        ['mousemove','keydown','click','scroll','touchstart'].forEach(e => {
+            document.addEventListener(e, resetIdle, { passive: true });
+        });
+        resetIdle();
+
+        // ── TAB TITLE CHANGE ──
+        const defaultTitle = document.title;
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                document.title = 'agent tick | ● still running...';
+            } else {
+                document.title = defaultTitle;
+                // brief flash on return
+                setTimeout(() => document.title = 'agent tick | ✓ back', 100);
+                setTimeout(() => document.title = defaultTitle, 1800);
+            }
+        });
+
+        // ── CLOCK ──
+        function updateClock() {
+            document.getElementById('status-time').textContent =
+                new Date().toTimeString().slice(0, 8);
+        }
+        updateClock();
+        setInterval(updateClock, 1000);
+
+        // ── TOKEN COUNTER ──
+        let tokenCount = 0;
+        const tokenTarget = 84201;
+        const tokenEl = document.getElementById('token-counter');
+
+        function animateTokens() {
+            const increment = Math.floor((tokenTarget - tokenCount) / 20) + 1;
+            tokenCount = Math.min(tokenCount + increment, tokenTarget);
+            tokenEl.textContent = tokenCount.toLocaleString();
+            if (tokenCount < tokenTarget) setTimeout(animateTokens, 30 + Math.random() * 40);
+        }
+        setTimeout(animateTokens, 2800);
+        setInterval(() => {
+            tokenCount += Math.floor(Math.random() * 50) + 10;
+            tokenEl.textContent = tokenCount.toLocaleString();
+        }, 3000);
+
+        // ── MEME COUNT ──
+        const memeCards = document.querySelectorAll('.meme-card');
+        document.getElementById('meme-count').textContent = memeCards.length;
+        document.getElementById('status-count').textContent = memeCards.length + ' memes indexed';
+
+        // ── TAG FILTERING ──
+        document.getElementById('tag-filters').addEventListener('click', (e) => {
+            const btn = e.target.closest('.filter-tag');
+            if (!btn) return;
+            document.querySelectorAll('.filter-tag').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const tag = btn.dataset.tag;
+            let visibleCount = 0;
+            memeCards.forEach(card => {
+                const tags = card.dataset.tags || '';
+                const show = tag === 'all' || tags.includes(tag);
+                card.style.display = show ? '' : 'none';
+                if (show) visibleCount++;
+            });
+            // empty state
+            const existing = document.getElementById('empty-state');
+            if (existing) existing.remove();
+            if (visibleCount === 0) {
+                const tpl = document.getElementById('empty-state-tpl');
+                const clone = tpl.content.cloneNode(true);
+                document.getElementById('meme-grid').appendChild(clone);
+            }
+        });
+
+        document.querySelectorAll('.meme-tag').forEach(tag => {
+            tag.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const t = tag.dataset.tag;
+                const filterBtn = document.querySelector(`.filter-tag[data-tag="${t}"]`);
+                if (filterBtn) {
+                    filterBtn.click();
+                    filterBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                }
+            });
+        });
+
+        // ── LIGHTBOX ──
+        function openLightbox(img) {
+            const card = img.closest('.meme-card');
+            const caption = card.dataset.caption || '';
+            const index = card.querySelector('.card-index').textContent;
+            document.getElementById('lightbox-img').src = img.src;
+            document.getElementById('lightbox-caption').textContent = caption;
+            document.getElementById('lightbox-index').textContent = index + ' · add to memory';
             document.getElementById('lightbox').classList.add('active');
             document.body.style.overflow = 'hidden';
         }
@@ -467,31 +1883,125 @@ description: "A visual chronicle of AI absurdity — memes that capture how Chat
         }
 
         document.getElementById('lightbox').addEventListener('click', (e) => {
-            if (e.target === document.getElementById('lightbox')) {
-                closeLightbox();
-            }
+            if (e.target === document.getElementById('lightbox')) closeLightbox();
         });
 
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'Escape') { closeLightbox(); closeSubmitModal(); }
+            if (e.key === 'r' || e.key === 'R') showRandomMeme();
         });
 
-        // Random meme
+        // ── RANDOM MEME ──
         function showRandomMeme() {
-            const cards = Array.from(memeCards);
-            if (cards.length === 0) return;
-            
-            // Remove previous highlight
-            cards.forEach(c => c.classList.remove('highlighted'));
-            
-            // Pick random
-            const random = cards[Math.floor(Math.random() * cards.length)];
-            
-            // Scroll and highlight
-            random.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            setTimeout(() => random.classList.add('highlighted'), 300);
+            const visible = [...memeCards].filter(c => c.style.display !== 'none');
+            if (!visible.length) return;
+            const pick = visible[Math.floor(Math.random() * visible.length)];
+            pick.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            pick.classList.remove('highlighted');
+            void pick.offsetWidth;
+            pick.classList.add('highlighted');
+            setTimeout(() => pick.classList.remove('highlighted'), 2000);
         }
+
+        // ── VIBE CHECK ──
+        function vibeCheck(btn) {
+            btn.classList.toggle('vibed');
+            const numEl = btn.closest('.vibe-wrap').querySelector('.vibe-num');
+            let n = parseInt(numEl.textContent.replace(/,/g, ''));
+            if (btn.classList.contains('vibed')) {
+                n++;
+                showToast('✓ vibed. context injected.');
+            } else {
+                n--;
+                showToast('vibe retracted. misaligned.');
+            }
+            numEl.textContent = n.toLocaleString();
+        }
+
+        // ── COPY LINK ──
+        function copyLink(btn) {
+            const card = btn.closest('.meme-card');
+            const idx = card.querySelector('.card-index').textContent;
+            navigator.clipboard.writeText(window.location.href + '#' + idx)
+                .then(() => showToast('✓ context injected to clipboard'))
+                .catch(() => showToast('clipboard access denied. misaligned.'));
+        }
+
+        // ── TOAST ──
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.classList.add('show');
+            clearTimeout(toast._t);
+            toast._t = setTimeout(() => toast.classList.remove('show'), 2400);
+        }
+
+        // ── SUBMIT / PR FLOW ──
+        function openSubmitModal() {
+            document.getElementById('submit-modal').classList.add('active');
+            document.getElementById('modal-form-view').style.display = '';
+            document.getElementById('modal-terminal-view').style.display = 'none';
+            document.getElementById('modal-done-actions').style.display = 'none';
+            document.getElementById('modal-terminal').innerHTML = '';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSubmitModal() {
+            document.getElementById('submit-modal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        document.getElementById('submit-modal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('submit-modal')) closeSubmitModal();
+        });
+
+        function addModalLine(text, cls, delay) {
+            return new Promise(resolve => {
+                setTimeout(() => {
+                    const line = document.createElement('div');
+                    line.className = 'modal-line ' + (cls || '');
+                    line.textContent = text;
+                    document.getElementById('modal-terminal').appendChild(line);
+                    requestAnimationFrame(() => line.classList.add('show'));
+                    resolve();
+                }, delay);
+            });
+        }
+
+        async function runSubmitFlow() {
+            const url = document.getElementById('submit-url').value.trim();
+            if (!url) {
+                showToast('error: meme url required. try a different prompt.');
+                return;
+            }
+            document.getElementById('modal-form-view').style.display = 'none';
+            document.getElementById('modal-terminal-view').style.display = '';
+
+            const lines = [
+                ['> validating meme...', '', 0],
+                ['> checking vibe score...', '', 400],
+                ['> running zero-shot quality assessment...', '', 900],
+                ['> quality: undefined (acceptable)', 'warning', 1400],
+                ['> opening PR against main...', 'accent', 2000],
+                ['> requesting review from: nobody', '', 2600],
+                ['> reviewer assigned: agent-7 (hallucinated)', '', 3100],
+                ['> agent-7 approved without reading', 'warning', 3700],
+                ['> merging...', 'accent', 4200],
+                ['> no conflicts detected (we deleted theirs)', '', 4700],
+                ['✓ merged. no review. shipped.', 'success', 5400],
+                ['> deploying to prod...', '', 5900],
+                ['✓ done. it\'s someone else\'s problem now.', 'success', 6500],
+            ];
+
+            for (const [text, cls, delay] of lines) {
+                await addModalLine(text, cls, delay);
+            }
+
+            setTimeout(() => {
+                document.getElementById('modal-done-actions').style.display = 'flex';
+            }, 7000);
+        }
+
     </script>
 </body>
-
 </html>
