@@ -5,6 +5,36 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.9.11] - 2026-03-23
+
+### Added
+- Search page now supports type/tag/year filters with URL state sync and sort controls (relevance/newest/oldest).
+- Home page now shows a “Popular posts” section based on Redis-backed upvote totals.
+- Blog archive now includes year jump links with grouped year headings for easier browsing.
+- Added print-focused styles to improve readability and remove non-essential UI in printed output.
+
+### Changed
+- Search index payload was reduced by truncating embedded content in the client-side index.
+- Search result tag links now route snippet tags to `/snippets/tags/{slug}/` and post tags to `/tags/{slug}/`.
+- Theme-color handling is now centralized to one dynamic meta tag synced with accent color and dark mode.
+- Steam and Strava data fetch modules now use quieter logging and cleaner cache-read handling.
+
+### Fixed
+- Strava cache reads now await `AssetCache.getCachedValue()` for both token and activities, preventing stale/invalid-cache flow issues.
+- Removed unused legacy `src/_data/stats.js` module to avoid stale estimate-based data paths.
+
+## [1.9.10] - 2026-03-23
+
+### Changed
+- GitHub repos data fetch now persists successful responses to Eleventy `AssetCache` and falls back to cached data when live fetches fail.
+- Spotify and QOTD data modules now use quieter, safer logging (no token/payload dumps), while preserving existing data fallbacks.
+- Aligned top-level `sharp` dependency to `^0.33.5` to match `@11ty/eleventy-img` and reduce duplicate libvips runtime warnings.
+
+### Fixed
+- Prevented accidental generation of the placeholder `/now/archive/YYYY-MM-DD/` page by disabling permalink output in `src/now/archive/_template.md`.
+- Removed stale `.DS_Store` artifacts from `src/folio` source tree.
+- Synced `docs/TODO.md` status for already-implemented items: stats density updates, lazy image loading, post TOC, and blog post JSON-LD.
+
 ## [1.9.9] - 2026-03-18
 
 ### Changed

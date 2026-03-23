@@ -19,6 +19,7 @@ import { feedPlugin } from "@11ty/eleventy-plugin-rss";
 
 import Image, { generateHTML } from "@11ty/eleventy-img";
 import 'dotenv/config';
+import upvotesData from "./src/_data/upvotes.js";
 
 function mapSrcToPublicUrl(src) {
   // If already an absolute URL or starts with site public path, return as-is
@@ -990,6 +991,27 @@ export default function (eleventyConfig) {
       if (aPinned !== bPinned) return bPinned - aPinned;
       return b.date - a.date;
     });
+  });
+
+  eleventyConfig.addCollection("popularPosts", async function (collectionApi) {
+    const now = new Date();
+    const upvoteMap = (await upvotesData())?.posts || {};
+
+    return collectionApi
+      .getFilteredByGlob("./src/posts/**/*.md")
+      .filter((post) => {
+        if (post.data.hidden === true) return false;
+        if (post.date && post.date > now) return false;
+        return true;
+      })
+      .map((post) => ({
+        title: post.data.title,
+        url: post.url,
+        count: Number(upvoteMap[post.fileSlug] || 0),
+        date: post.date,
+      }))
+      .filter((entry) => entry.count > 0)
+      .sort((a, b) => b.count - a.count || b.date - a.date);
   });
 
   // Customize Markdown library and settings:

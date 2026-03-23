@@ -12,7 +12,6 @@ export default async function() {
     let gameCache = new AssetCache("steam_games");
 
     if (gameCache.isCacheValid("15m")) {
-        console.log("Using cached Steam games");
         return gameCache.getCachedValue();
     }
 
@@ -51,8 +50,6 @@ export default async function() {
         }));
 
         await gameCache.save(filteredGames, "json");
-        console.log("Fetched and cached new Steam games");
-
         return filteredGames;
     } catch (error) {
         console.error("Error fetching Steam games:", error);

@@ -53,18 +53,35 @@ const setAccentVariables = (theme) => {
 const setAccentTheme = (theme) => {
   localStorage.accentTheme = theme;
   updateAccentClasses(theme);
+  syncThemeColorMeta();
 };
 
 const updateAccentClasses = (theme) => {
   setAccentVariables(theme);
 };
 
+const syncThemeColorMeta = () => {
+  const meta = document.getElementById("theme-color-meta");
+  if (!meta) return;
+
+  if (isDarkMode()) {
+    meta.setAttribute("content", "#000000");
+    return;
+  }
+
+  const accentTheme = getAccentTheme();
+  const accentColor = ACCENT_COLORS[accentTheme] || ACCENT_COLORS.teal;
+  meta.setAttribute("content", accentColor);
+};
+
 // Initialize accent variables immediately
 setAccentVariables(getAccentTheme());
+syncThemeColorMeta();
 
 // Apply saved accent theme on page load
 document.addEventListener('DOMContentLoaded', () => {
   updateAccentClasses(getAccentTheme());
+  syncThemeColorMeta();
 });
 
 // Prism syntax highlighting theme switching
@@ -87,3 +104,4 @@ switchPrismTheme();
 window.setAccentTheme = setAccentTheme;
 window.isDarkMode = isDarkMode;
 window.switchPrismTheme = switchPrismTheme;
+window.syncThemeColorMeta = syncThemeColorMeta;
