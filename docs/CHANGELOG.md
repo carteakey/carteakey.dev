@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.9.12] - 2026-03-24
+
+### Changed
+- Agent Tick folio caption QA pass: refined several meme titles/captions for clearer, less generic copy while preserving the original tone.
+- Improved Agent Tick meme media accessibility by tightening alt text wording and adding an explicit `aria-label` on the video card.
+
 ## [1.9.11] - 2026-03-23
 
 ### Added

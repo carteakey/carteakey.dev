@@ -30,7 +30,7 @@
 
 
 ### Content Features
-- [ ] Agent Tick folio: audit meme captions/titles and fix mismatched descriptions on some cards
+- [x] Agent Tick folio: audit meme captions/titles and fix mismatched descriptions on some cards (2026-03-24)
 - [x] Smaller fonts across the board. I find the site to be better at 90% zoom.
 - [x] Add a random facts about me in the about me section. It can be a random fact from a list of facts that I can update.
 - [x] Feed icon - in the more page and footer, to link to the feed page.
