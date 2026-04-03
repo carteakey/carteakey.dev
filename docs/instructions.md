@@ -21,6 +21,12 @@ These notes codify the rules I follow when pairing with Copilot/Codex on the blo
 - Alpine.js sprinkles live behaviour through `src/_includes/layouts/base.njk`.
 - Content lives in `src/` (posts, snippets, data files). Build output is `_site/`; never edit it manually.
 
+## Folio page dates
+- Folio pages (like `now.njk`) use a permanent `lastUpdated` field in the frontmatter.
+- This date should be manually updated when the content is meaningfully changed.
+- Some pages (like `bookmarks.njk`) compute dates dynamically from their data sources.
+- The dates are **not** automatically updated—they remain fixed until manually changed.
+
 ## Data and integrations
 - Dynamic data modules (`_data/*.js`) cache responses via `@11ty/eleventy-fetch`.
 - Spotify, Steam, Upstash, OpenAI/OpenRouter, and Ollama credentials must be provided via `.env`.

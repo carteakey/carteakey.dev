@@ -832,6 +832,29 @@ export default function (eleventyConfig) {
         };
       });
 
+    const prompts = collectionApi
+      .getFilteredByTag("prompts")
+      .filter((prompt) => {
+        if (prompt.data.hidden === true) return false;
+        if (prompt.date && prompt.date > now) return false;
+        return true;
+      })
+      .map((prompt) => {
+        prompt.data.feedType = "prompt";
+        const summarySource = prompt.data.description || prompt.data.excerpt || "";
+        const summary = summarySource ? truncate(stripHtml(summarySource)) : null;
+        return {
+          type: "prompt",
+          title: prompt.data.title,
+          date: prompt.date,
+          url: prompt.url,
+          summary,
+          readingTime: prompt.data.readingTime,
+          original: prompt,
+          authored_by: prompt.data.authored_by ?? null,
+        };
+      });
+
     const notes = collectionApi
       .getFilteredByGlob("./src/notes/**/*.md")
       .filter((entry) => {

@@ -4,11 +4,16 @@ description: End-to-end Gemma 4 setup on mainline llama.cpp with text and vision
 date: 2026-04-03
 updated: 2026-04-03
 authored_by: ai-assisted
+draft: true
 tags:
   - AI
   - Self-Host
 pinned: false
 ---
+
+Google DeepMind's Gemma 4 family is out—truly open with Apache 2 licenses, multimodal with support for text, image, and audio, and efficient enough to run on-device. The 26B-A4B variant is a mixture-of-experts model with only 4B parameters active per token, making it an ideal candidate for consumer hardware.
+
+This post covers my setup running Gemma 4 26B-A4B on 12GB VRAM using mainline llama.cpp, with real-world throughput numbers for both text and vision workloads.
 
 ## TL;DR
 
@@ -18,7 +23,7 @@ pinned: false
 - **Server-realistic throughput**:
   - **Text @ 128k context**: `~44.20 tok/s`
   - **Vision @ 64k context**: `~42.09 tok/s`
-- **Most important stability note**: vision can OOM with aggressive fit headroom (`FIT_TARGET=512`) on a 12GB card. A safer vision profile was `FIT_TARGET=3072`, `BATCH_SIZE=256`, `UBATCH_SIZE=512`.
+- **Most important stability note**: vision can OOM with aggressive fit headroom (`FIT_TARGET=512`) on a 12GB card. A safer vision profile was `FIT_TARGET=2048`, `BATCH_SIZE=256`, `UBATCH_SIZE=512`.
 
 If you want one local model that stays strong across coding + long context + multimodal use, this variant is an excellent default.
 
@@ -63,7 +68,7 @@ Vision server (stable profile for 12GB VRAM):
 
 ```bash
 PORT=8001 \
-FIT_TARGET=3072 \
+FIT_TARGET=2048 \
 CTX_SIZE=65536 \
 FIT_CTX=65536 \
 BATCH_SIZE=256 \
@@ -78,6 +83,19 @@ Both scripts keep Gemma-recommended sampling defaults:
 - `top_k=64`
 
 ## Benchmarks and observed results
+
+The model's pretty good. Gemma series of models (and even Gemini) have always been praised for their language capabilities;they're much more natural sounding - compared to something like Qwen3.5. Every model's geography of origin seems to influence its writing style (gemma/qwen/sarvam) - almost as if we're embedding the culture itself into the model weights. (more on that later)
+
+In the traditional sense of simonw's pelican test (https://simonwillison.net/2026/Apr/2/gemma-4/)
+(which it nailed!, maybe due to being in the training set now) - i like to test the models one-shotting capabilities on the bouncing ball prompts like
+
+Here's it one-shotting the bouncing balls prompt (easy version).
+
+bouncing_balls-gemma-html.gif
+
+With a minimal harness (pi) - it also does the [hard version](/prompts/bouncing-balls-spinning-heptagon/) pretty well
+
+bouncing-balls-gemma.gif
 
 ### Synthetic bench (llama-bench style)
 

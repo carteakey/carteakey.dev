@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.9.13] - 2026-04-03
+
+### Added
+- Created Prompt Library page (`/prompts/`) with prompts collection for testing language models.
+- Added first prompt: "Bouncing Balls in Spinning Heptagon" - complex physics simulation challenge.
+- Added short introduction to Gemma 4 26B-A4B post highlighting key features and model capabilities.
+- Added folio page dates documentation in `docs/instructions.md` to clarify that dates are permanent and manually controlled.
+
+### Changed
+- Moved utility scripts (`add-photo.mjs`, `bulk-add-photos.mjs`, `check-engagement-merge.mjs`, `remove_em_dashes.py`) from root to `utils/` directory.
+- Updated package.json script references to point to new `utils/` location.
+- Updated documentation references in `.github/copilot-instructions.md` and `AGENTS.md` to reflect new script paths.
+- Linked bouncing balls prompt from Gemma post benchmarks section.
+
 ## [1.9.12] - 2026-03-24
 
 ### Changed
