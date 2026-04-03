@@ -4,6 +4,7 @@ description: Squeezing every token per second
 date: 2025-09-21
 authored_by: human
 updated: 2026-03-12
+giscusTerm: /blog/optimizing%20gpt-oss-120b-local%20inference/
 tags:
   - AI
 pinned: true

@@ -88,11 +88,6 @@
   <meta name="author" content="{{ metadata.author.name }}" />
   <link rel="canonical" href="{{ metadata.url }}{{ page.url }}" />
   
-  {# Theme Color for mobile browsers #}
-  <meta name="theme-color" content="#f59e0b" media="(prefers-color-scheme: light)" />
-  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
-  <meta name="theme-color" content="#f59e0b" />
-  
   <link rel="stylesheet" href="{{ '/css/tailwind.css' | url }}" />
 
   <link rel="alternate" type="application/atom+xml" title="{{ metadata.title }} - Atom Feed" href="{{ '/feed.xml' | url }}">
@@ -243,6 +238,9 @@
                   document.documentElement.classList.add("dark");
                 }
                 switchPrismTheme();
+                if (typeof window.syncThemeColorMeta === "function") {
+                  window.syncThemeColorMeta();
+                }
               });
 
           </script>

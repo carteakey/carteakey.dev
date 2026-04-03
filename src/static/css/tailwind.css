@@ -1209,6 +1209,50 @@ picture img {
   }
 }
 
+@media print {
+  html {
+    font-size: 100%;
+  }
+
+  body {
+    background: #fff !important;
+    color: #111 !important;
+  }
+
+  body::before,
+  nav,
+  footer,
+  #shortcuts-overlay,
+  #toggleDarkMode,
+  .view-toggle,
+  .upvote-button,
+  .copy-code-btn,
+  script {
+    display: none !important;
+  }
+
+  main {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .prose {
+    max-width: none !important;
+  }
+
+  a,
+  a:visited {
+    color: #111 !important;
+    text-decoration: underline !important;
+  }
+
+  .not-prose .meta-text,
+  .meta-text {
+    color: #444 !important;
+  }
+}
+
 /* Text gradient utility */
 @layer utilities {
   .text-gradient {

@@ -13,7 +13,8 @@
     "start": "npm-run-all -p start:*",
     "start:11ty": "npx @11ty/eleventy --serve",
     "start:css": "npx @tailwindcss/cli -i ./src/static/css/tailwind.css -o ./_site/css/tailwind.css --watch --postcss",
-    "debug": "DEBUG=* npx @11ty/eleventy"
+    "debug": "DEBUG=* npx @11ty/eleventy",
+    "metrics:merge-check": "node ./check-engagement-merge.mjs"
   },
   "repository": {
     "type": "git",
@@ -49,7 +50,7 @@
     "npm-check-updates": "^19.6.0",
     "npm-run-all": "^4.1.5",
     "openai": "^6.25.0",
-    "sharp": "^0.34.5",
+    "sharp": "^0.33.5",
     "steamwidgets": "^1.0.9",
     "yargs": "^18.0.0"
   },

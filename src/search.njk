@@ -10,14 +10,14 @@ eleventyNavigation:
 
 <div class=" mx-auto">
   <h1>Search</h1>
-  <p class="text-gray-600 dark:text-gray-300 mb-8">Find posts and snippets across the site</p>
+  <p class="text-gray-600 dark:text-gray-300 mb-6">Find posts and snippets across the site</p>
 
-  <div class="mb-8">
+  <div class="mb-6">
     <div class="relative">
       <input 
         type="text" 
         id="searchInput" 
-        placeholder="Type to search..." 
+        placeholder="Type to search or filter..." 
         class="w-full border px-4 py-3 rounded-lg accent-field text-gray-900 dark:text-gray-100 focus:outline-none"
         autocomplete="off"
       />
@@ -25,9 +25,32 @@ eleventyNavigation:
         {% feather "search", class="w-6 h-6 text-gray-400" %}
       </div>
     </div>
+
+    <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
+      <select id="typeFilter" class="rounded-md border border-gray-200 dark:border-gray-700 bg-transparent px-2.5 py-2 text-sm accent-field focus:outline-none dark:text-gray-100">
+        <option value="">All types</option>
+        <option value="post">Posts</option>
+        <option value="snippet">Snippets</option>
+      </select>
+
+      <select id="tagFilter" class="rounded-md border border-gray-200 dark:border-gray-700 bg-transparent px-2.5 py-2 text-sm accent-field focus:outline-none dark:text-gray-100">
+        <option value="">All tags</option>
+      </select>
+
+      <select id="yearFilter" class="rounded-md border border-gray-200 dark:border-gray-700 bg-transparent px-2.5 py-2 text-sm accent-field focus:outline-none dark:text-gray-100">
+        <option value="">All years</option>
+      </select>
+
+      <select id="sortFilter" class="rounded-md border border-gray-200 dark:border-gray-700 bg-transparent px-2.5 py-2 text-sm accent-field focus:outline-none dark:text-gray-100">
+        <option value="relevance">Sort: Relevance</option>
+        <option value="newest">Sort: Newest</option>
+        <option value="oldest">Sort: Oldest</option>
+      </select>
+    </div>
     
     <div id="searchStats" class="mt-2 text-sm text-gray-500 dark:text-gray-400 hidden">
       <span id="resultCount">0</span> results found
+      <span id="activeFilters" class="ml-1"></span>
     </div>
   </div>
 
@@ -45,7 +68,69 @@ eleventyNavigation:
 <script>
   let searchIndex = [];
   let isIndexLoaded = false;
-  let selectedIndex = -1; // For keyboard navigation
+  let selectedIndex = -1;
+  let currentResults = [];
+
+  const slugifyTag = (value = '') =>
+    value
+      .toLowerCase()
+      .trim()
+      .replace(/[^\w\s-]/g, '')
+      .replace(/[\s_-]+/g, '-')
+      .replace(/^-+|-+$/g, '');
+
+  const escapeHtml = (value = '') =>
+    String(value).replace(/[&<>"']/g, (char) => ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;',
+    }[char]));
+
+  const truncateText = (value = '', limit = 180) => {
+    if (value.length <= limit) return value;
+    return `${value.slice(0, limit).trimEnd()}…`;
+  };
+
+  function getStateFromURL() {
+    const params = new URLSearchParams(window.location.search);
+    return {
+      query: params.get('q') || '',
+      type: params.get('type') || '',
+      tag: params.get('tag') || '',
+      year: params.get('year') || '',
+      sort: params.get('sort') || 'relevance',
+    };
+  }
+
+  function updateURL(query, filters) {
+    const url = new URL(window.location);
+    const values = {
+      q: query.trim(),
+      type: filters.type,
+      tag: filters.tag,
+      year: filters.year,
+      sort: filters.sort === 'relevance' ? '' : filters.sort,
+    };
+
+    Object.entries(values).forEach(([key, value]) => {
+      if (value) {
+        url.searchParams.set(key, value);
+      } else {
+        url.searchParams.delete(key);
+      }
+    });
+
+    window.history.replaceState({}, '', url);
+  }
+
+  function getTagHref(itemType, tag) {
+    const slug = slugifyTag(tag);
+    return itemType === 'snippet'
+      ? `/snippets/tags/${slug}/`
+      : `/tags/${slug}/`;
+  }
 
   // Build search index from posts and snippets
   async function buildSearchIndex() {
@@ -60,12 +145,13 @@ eleventyNavigation:
         {%- for post in collections.posts %}
         {
           title: {{ post.data.title | dump | safe }},
-          description: {{ post.data.description | dump | safe }},
+          description: {{ (post.data.description or '') | dump | safe }},
           url: {{ post.url | dump | safe }},
           tags: {{ post.data.tags | filterTagList | dump | safe }},
-          content: {{ post.templateContent | striptags | dump | safe }},
+          content: {{ post.templateContent | striptags | replace('\n', ' ') | replace('\r', ' ') | truncate(420) | dump | safe }},
           type: 'post',
-          date: {{ post.date | dump | safe }}
+          date: {{ post.date | dump | safe }},
+          year: {{ post.date | date("Y") | dump | safe }}
         }{% if not loop.last %},{% endif %}
         {%- endfor %}
       ];
@@ -79,15 +165,27 @@ eleventyNavigation:
           description: {{ (snippet.data.description or '') | dump | safe }},
           url: {{ snippet.url | dump | safe }},
           tags: {{ snippet.data.tags | filterTagList | dump | safe }},
-          content: {{ snippet.templateContent | striptags | dump | safe }},
+          content: {{ snippet.templateContent | striptags | replace('\n', ' ') | replace('\r', ' ') | truncate(260) | dump | safe }},
           type: 'snippet',
-          date: {{ snippet.date | dump | safe }}
+          date: {{ snippet.date | dump | safe }},
+          year: {{ snippet.date | date("Y") | dump | safe }}
         }{% if not loop.last %},{% endif %}
         {%- endfor %}
         {%- endif %}
       ];
 
       searchIndex = [...posts, ...snippets];
+      searchIndex = searchIndex.map((item) => ({
+        ...item,
+        dateValue: new Date(item.date),
+        searchText: [
+          item.title || '',
+          item.description || '',
+          item.content || '',
+          (item.tags || []).join(' '),
+        ].join(' ').toLowerCase(),
+      }));
+
       isIndexLoaded = true;
     } catch (error) {
       console.error('Error building search index:', error);
@@ -96,54 +194,91 @@ eleventyNavigation:
     }
   }
 
-  // Sync search query with URL
-  function updateURL(query) {
-    const url = new URL(window.location);
-    if (query.trim()) {
-      url.searchParams.set('q', query);
-    } else {
-      url.searchParams.delete('q');
+  function populateFilterOptions() {
+    const tagFilter = document.getElementById('tagFilter');
+    const yearFilter = document.getElementById('yearFilter');
+    const currentTag = tagFilter.value;
+    const currentYear = yearFilter.value;
+
+    const tags = [...new Set(searchIndex.flatMap((item) => item.tags || []))]
+      .sort((a, b) => a.localeCompare(b));
+
+    const years = [...new Set(searchIndex.map((item) => item.year).filter(Boolean))]
+      .sort((a, b) => Number(b) - Number(a));
+
+    tagFilter.innerHTML = '<option value="">All tags</option>';
+    tags.forEach((tag) => {
+      const option = document.createElement('option');
+      option.value = tag;
+      option.textContent = `#${tag}`;
+      tagFilter.appendChild(option);
+    });
+
+    yearFilter.innerHTML = '<option value="">All years</option>';
+    years.forEach((year) => {
+      const option = document.createElement('option');
+      option.value = year;
+      option.textContent = year;
+      yearFilter.appendChild(option);
+    });
+
+    if ([...tagFilter.options].some((option) => option.value === currentTag)) {
+      tagFilter.value = currentTag;
     }
-    window.history.replaceState({}, '', url);
+    if ([...yearFilter.options].some((option) => option.value === currentYear)) {
+      yearFilter.value = currentYear;
+    }
   }
 
-  // Get query from URL
-  function getQueryFromURL() {
-    const params = new URLSearchParams(window.location.search);
-    return params.get('q') || '';
+  function getScore(item, query) {
+    if (!query) return 0;
+    const lower = query.toLowerCase();
+    const titleMatch = item.title.toLowerCase().includes(lower) ? 4 : 0;
+    const descMatch = item.description.toLowerCase().includes(lower) ? 2 : 0;
+    const tagMatch = item.tags.some((tag) => tag.toLowerCase().includes(lower)) ? 2 : 0;
+    const contentMatch = item.content.toLowerCase().includes(lower) ? 1 : 0;
+    return titleMatch + descMatch + tagMatch + contentMatch;
   }
 
-  // Perform search
-  function search(query) {
-    if (!query.trim()) {
+  function search(query, filters) {
+    const trimmedQuery = query.trim();
+    const type = filters.type || '';
+    const tag = filters.tag || '';
+    const year = filters.year || '';
+    const sort = filters.sort || 'relevance';
+    const hasQuery = trimmedQuery.length > 0;
+    const hasFilters = Boolean(type || tag || year);
+
+    if (!hasQuery && !hasFilters) {
       return [];
     }
 
-    const lowerQuery = query.toLowerCase();
-    const results = searchIndex.filter(item => {
-      const titleMatch = item.title.toLowerCase().includes(lowerQuery);
-      const descMatch = item.description.toLowerCase().includes(lowerQuery);
-      const contentMatch = item.content.toLowerCase().includes(lowerQuery);
-      const tagMatch = item.tags.some(tag => tag.toLowerCase().includes(lowerQuery));
-      
-      return titleMatch || descMatch || contentMatch || tagMatch;
-    });
+    const lowerQuery = trimmedQuery.toLowerCase();
+    const filtered = searchIndex
+      .filter((item) => {
+        const matchesQuery = !hasQuery || item.searchText.includes(lowerQuery);
+        const matchesType = !type || item.type === type;
+        const matchesTag = !tag || item.tags.includes(tag);
+        const matchesYear = !year || item.year === year;
+        return matchesQuery && matchesType && matchesTag && matchesYear;
+      })
+      .map((item) => ({
+        ...item,
+        score: hasQuery ? getScore(item, lowerQuery) : 0,
+      }));
 
-    // Sort by relevance (title matches first, then description, then content)
-    return results.sort((a, b) => {
-      const aTitle = a.title.toLowerCase().includes(lowerQuery) ? 3 : 0;
-      const bTitle = b.title.toLowerCase().includes(lowerQuery) ? 3 : 0;
-      const aDesc = a.description.toLowerCase().includes(lowerQuery) ? 2 : 0;
-      const bDesc = b.description.toLowerCase().includes(lowerQuery) ? 2 : 0;
-      const aTag = a.tags.some(tag => tag.toLowerCase().includes(lowerQuery)) ? 1 : 0;
-      const bTag = b.tags.some(tag => tag.toLowerCase().includes(lowerQuery)) ? 1 : 0;
-      
-      return (bTitle + bDesc + bTag) - (aTitle + aDesc + aTag);
+    return filtered.sort((a, b) => {
+      if (sort === 'newest') {
+        return b.dateValue - a.dateValue;
+      }
+      if (sort === 'oldest') {
+        return a.dateValue - b.dateValue;
+      }
+      return b.score - a.score || b.dateValue - a.dateValue;
     });
   }
 
-  // Update keyboard selection highlighting
-  function updateSelection(results) {
+  function updateSelection() {
     const articles = document.querySelectorAll('#searchResults article');
     articles.forEach((article, index) => {
       if (index === selectedIndex) {
@@ -157,48 +292,60 @@ eleventyNavigation:
     });
   }
 
-  // Display search results
-  function displayResults(results, query) {
+  function displayResults(results, query, filters) {
     const resultsContainer = document.getElementById('searchResults');
     const statsContainer = document.getElementById('searchStats');
     const resultCount = document.getElementById('resultCount');
-    selectedIndex = -1; // Reset selection on new search
+    const activeFilters = document.getElementById('activeFilters');
+    selectedIndex = -1;
 
-    if (!query.trim()) {
-      resultsContainer.innerHTML = '<p class="text-gray-500 dark:text-gray-400">Start typing to search...</p>';
+    const hasFilters = Boolean(filters.type || filters.tag || filters.year);
+    if (!query.trim() && !hasFilters) {
+      resultsContainer.innerHTML = '<p class="text-gray-500 dark:text-gray-400">Start typing or pick a filter...</p>';
       statsContainer.classList.add('hidden');
+      activeFilters.textContent = '';
       return;
     }
 
     if (results.length === 0) {
       resultsContainer.innerHTML = '<p class="text-gray-500 dark:text-gray-400">No results found.</p>';
       statsContainer.classList.add('hidden');
+      activeFilters.textContent = '';
       return;
     }
 
     resultCount.textContent = results.length;
     statsContainer.classList.remove('hidden');
+    const filterSummary = [];
+    if (filters.type) filterSummary.push(filters.type);
+    if (filters.tag) filterSummary.push(`#${filters.tag}`);
+    if (filters.year) filterSummary.push(filters.year);
+    if (filters.sort && filters.sort !== 'relevance') filterSummary.push(filters.sort);
+    activeFilters.textContent = filterSummary.length ? `· ${filterSummary.join(' · ')}` : '';
 
-    const html = results.map((item, index) => {
-      const typeIcon = item.type === 'post' ? 'file-text' : 'code';
+    const html = results.map((item) => {
       const typeBadge = item.type === 'post' ? 'Post' : 'Snippet';
+      const safeTitle = escapeHtml(item.title);
+      const safeDescription = escapeHtml(item.description || 'No description provided.');
+      const safeUrl = escapeHtml(item.url);
       
       return `
-        <article class="border border-gray-200 dark:border-gray-700 rounded-lg p-4 transition-colors" style="border-color: var(--result-border, );" onmouseover="this.style.borderColor='var(--accent-color)'" onmouseout="this.style.borderColor=''">
+        <article class="border border-gray-200 dark:border-gray-700 rounded-lg p-4 transition-colors" onmouseover="this.style.borderColor='var(--accent-color)'" onmouseout="this.style.borderColor=''">
           <div class="flex items-start justify-between mb-2">
-            <a href="${item.url}" class="text-base font-semibold" style="text-decoration:none; transition: color 0.15s;" onmouseover="this.style.color='var(--accent-color)'" onmouseout="this.style.color=''">
-              ${item.title}
+            <a href="${safeUrl}" class="text-base font-semibold" style="text-decoration:none; transition: color 0.15s;" onmouseover="this.style.color='var(--accent-color)'" onmouseout="this.style.color=''">
+              ${safeTitle}
             </a>
             <span class="ml-2 px-2 py-1 text-xs rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400">
               ${typeBadge}
             </span>
           </div>
-          <p class="text-gray-600 dark:text-gray-300 mb-2">${item.description}</p>
+          <p class="text-gray-600 dark:text-gray-300 mb-1.5">${escapeHtml(truncateText(item.description || item.content, 180))}</p>
+          <p class="meta-text text-[0.65rem] text-gray-400 dark:text-gray-500 mb-2">${escapeHtml(item.year || '')}</p>
           ${item.tags.length > 0 ? `
             <div class="flex flex-wrap gap-2 mt-2">
               ${item.tags.map(tag => `
-                <a href="/tags/${tag.toLowerCase()}/" class="text-xs px-2 py-1 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded hover:bg-gray-200 dark:hover:bg-gray-700">
-                  ${tag}
+                <a href="${getTagHref(item.type, tag)}" class="text-xs px-2 py-1 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded hover:bg-gray-200 dark:hover:bg-gray-700">
+                  ${escapeHtml(tag)}
                 </a>
               `).join('')}
             </div>
@@ -210,30 +357,61 @@ eleventyNavigation:
     resultsContainer.innerHTML = html;
   }
 
-  // Initialize search
+  function runSearch() {
+    const searchInput = document.getElementById('searchInput');
+    const typeFilter = document.getElementById('typeFilter');
+    const tagFilter = document.getElementById('tagFilter');
+    const yearFilter = document.getElementById('yearFilter');
+    const sortFilter = document.getElementById('sortFilter');
+
+    const query = searchInput.value;
+    const filters = {
+      type: typeFilter.value,
+      tag: tagFilter.value,
+      year: yearFilter.value,
+      sort: sortFilter.value,
+    };
+
+    updateURL(query, filters);
+    currentResults = search(query, filters);
+    displayResults(currentResults, query, filters);
+  }
+
   document.addEventListener('DOMContentLoaded', async () => {
     await buildSearchIndex();
+    populateFilterOptions();
 
     const searchInput = document.getElementById('searchInput');
+    const typeFilter = document.getElementById('typeFilter');
+    const tagFilter = document.getElementById('tagFilter');
+    const yearFilter = document.getElementById('yearFilter');
+    const sortFilter = document.getElementById('sortFilter');
+    const state = getStateFromURL();
     let debounceTimer;
-    let currentResults = [];
 
-    // Load query from URL if present
-    const urlQuery = getQueryFromURL();
-    if (urlQuery) {
-      searchInput.value = urlQuery;
-      currentResults = search(urlQuery);
-      displayResults(currentResults, urlQuery);
+    searchInput.value = state.query;
+    if (state.type) typeFilter.value = state.type;
+    if (state.tag && [...tagFilter.options].some((option) => option.value === state.tag)) {
+      tagFilter.value = state.tag;
     }
+    if (state.year && [...yearFilter.options].some((option) => option.value === state.year)) {
+      yearFilter.value = state.year;
+    }
+    if (state.sort) sortFilter.value = state.sort;
+
+    runSearch();
 
     searchInput.addEventListener('input', (e) => {
       clearTimeout(debounceTimer);
       debounceTimer = setTimeout(() => {
-        const query = e.target.value;
-        updateURL(query);
-        currentResults = search(query);
-        displayResults(currentResults, query);
+        runSearch();
       }, 300);
+    });
+
+    [typeFilter, tagFilter, yearFilter, sortFilter].forEach((element) => {
+      element.addEventListener('change', () => {
+        runSearch();
+      });
     });
 
     // Keyboard navigation
@@ -244,13 +422,13 @@ eleventyNavigation:
         e.preventDefault();
         if (resultsCount > 0) {
           selectedIndex = Math.min(selectedIndex + 1, resultsCount - 1);
-          updateSelection(currentResults);
+          updateSelection();
         }
       } else if (e.key === 'ArrowUp') {
         e.preventDefault();
         if (resultsCount > 0) {
           selectedIndex = Math.max(selectedIndex - 1, 0);
-          updateSelection(currentResults);
+          updateSelection();
         }
       } else if (e.key === 'Enter') {
         e.preventDefault();
@@ -261,7 +439,7 @@ eleventyNavigation:
         }
       } else if (e.key === 'Escape') {
         selectedIndex = -1;
-        updateSelection(currentResults);
+        updateSelection();
         searchInput.blur();
       }
     });

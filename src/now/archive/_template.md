@@ -1,7 +1,8 @@
 ---
 layout: layouts/home.njk
+eleventyExcludeFromCollections: true
 title: "{{ 'YYYY-MM-DD' | archiveTitle }}"
-permalink: "{{ 'YYYY-MM-DD' | archivePermalink }}"
+permalink: false
 archiveDate: YYYY-MM-DD
 ---
 
