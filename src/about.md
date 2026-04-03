@@ -21,11 +21,6 @@ I'm currently a Senior Data Analyst at McAfee, working on product analytics, ret
 
 Here's a visual breakdown of [where my skills lie](/skills/) across the data landscape.
 
-## GitHub
-
-If you want a quick profile snapshot, here's my GitHub card:
-
-[![GitHubCard](https://githubcard.com/carteakey.svg)](https://github.com/carteakey)
 
 ## Interests
 
@@ -66,3 +61,5 @@ Writing in public keeps me honest. Knowledge isn't a dump of everything you've s
 If any of this resonates with you, or if you just want to chat about Bloodborne lore, AI, or why self-hosting is both a blessing and a curse, hit me up at **carteakey.dev[at]gmail[dot]com**.
 
 You can also sign my [guestbook](/guestbook) - yes, I have one in 2026. Retro is in.
+
+

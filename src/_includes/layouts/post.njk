@@ -156,6 +156,10 @@ hasEthicalAds: false
 
     <hr class="divider-gradient" />
 
+    <div class="flex justify-end mt-4 mb-2">
+      {% include "components/copy-markdown.njk" %}
+    </div>
+
     {% if authored_by == 'ai-assisted' %}
     <div class="not-prose rounded-md border border-blue-200 dark:border-blue-900 bg-blue-50 dark:bg-blue-950/30 px-4 py-3 mb-6 text-sm text-blue-800 dark:text-blue-300 flex items-start gap-2">
       {% feather "zap", class="w-4 h-4 shrink-0 mt-0.5 opacity-70" %}

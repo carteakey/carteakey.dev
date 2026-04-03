@@ -83,7 +83,10 @@ This project uses a manual versioning process. It is your responsibility to keep
 
 - Netlify Function `netlify/functions/upvote.js` powers the upvote widget; GET returns counts, POST increments. Local changes should preserve method handling and JSON payload structure.
 
-- Image tooling: use `eleventy-img` shortcodes (`eleventy.config.mjs`) and scripts `utils/add-photo.mjs` / `utils/bulk-add-photos.mjs` to append entries to `src/_data/photos.yaml` and copy assets into `src/static/img/photography/{real|virtual}` (requires Ollama/OpenAI creds). GIFs bypass processing via `mapSrcToPublicUrl`.
+- Image tooling: ALWAYS use custom Eleventy shortcodes for images rather than standard markdown `![]()` syntax. The paths must be relative to the project root (e.g., `"./src/static/img/..."`).
+  - `{% image "./src/static/img/my-image.png", "Alt text", "optional-css-classes" %}`
+  - `{% image_cc "./src/static/img/my-image.png", "Alt text", "optional-css-classes", "Optional visible caption" %}`
+  - Also use scripts `utils/add-photo.mjs` / `utils/bulk-add-photos.mjs` to append entries to `src/_data/photos.yaml` and copy assets into `src/static/img/photography/{real|virtual}` (requires Ollama/OpenAI creds). GIFs bypass processing via `mapSrcToPublicUrl`.
 
 - Styling lives in `src/static/css/tailwind.css` with Tailwind v4 `@theme` tokens and custom fonts copied via passthrough; regenerate CSS through the Tailwind CLI scripts rather than editing `_site/css` directly.
 - CMS editing goes through Netlify CMS (`src/admin/config.yml`); any new collection should update both the folder structure and allowed fields there.

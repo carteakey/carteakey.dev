@@ -84,18 +84,18 @@ Both scripts keep Gemma-recommended sampling defaults:
 
 ## Benchmarks and observed results
 
-The model's pretty good. Gemma series of models (and even Gemini) have always been praised for their language capabilities;they're much more natural sounding - compared to something like Qwen3.5. Every model's geography of origin seems to influence its writing style (gemma/qwen/sarvam) - almost as if we're embedding the culture itself into the model weights. (more on that later)
+The model's pretty good. Gemma series of models (and even Gemini) have always been praised for their language capabilities; they're much more natural sounding - compared to something like Qwen3.5. Every model's geography of origin seems to influence its writing style (gemma/qwen/sarvam) - almost as if we're embedding the culture itself into the model weights. (more on that in another post)
 
-In the traditional sense of simonw's pelican test (https://simonwillison.net/2026/Apr/2/gemma-4/)
-(which it nailed!, maybe due to being in the training set now) - i like to test the models one-shotting capabilities on the bouncing ball prompts like
+In the traditional sense of [simonw's pelican test](https://simonwillison.net/2026/Apr/2/gemma-4/) (which it nailed!, maybe due to being in the training set now) - i like to test the models one-shotting capabilities on the bouncing ball prompts.
 
 Here's it one-shotting the bouncing balls prompt (easy version).
 
-bouncing_balls-gemma-html.gif
+{% image_cc "./src/static/img/bouncing-balls-gemma-html.gif", "Bouncing balls easy version", "", "Here's it one-shotting the bouncing balls prompt (easy version)." %}
 
 With a minimal harness (pi) - it also does the [hard version](/prompts/bouncing-balls-spinning-heptagon/) pretty well
 
-bouncing-balls-gemma.gif
+{% image "./src/static/img/bouncing-balls-gemma.gif", "Bouncing balls hard version" %}
+
 
 ### Synthetic bench (llama-bench style)
 

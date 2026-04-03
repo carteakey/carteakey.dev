@@ -40,6 +40,10 @@ hasEthicalAds: true
       </div>
     </header>
 
+    <div class="flex justify-end mt-4 mb-2">
+      {% include "components/copy-markdown.njk" %}
+    </div>
+
     <div class="snippet-content space-y-6">
       {{ content | safe }}
     </div>
