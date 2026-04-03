@@ -12,7 +12,13 @@ permalink: /prompts/
 
 {% set promptsList = collections.prompts | reverse %}
 {% set totalCount = promptsList | length %}
-{% set categories = promptsList | map('data.category') | uniq | sort %}
+{% set categories = [] %}
+{% for prompt in promptsList %}
+  {% if prompt.data.category and prompt.data.category not in categories %}
+    {% set categories = (categories.push(prompt.data.category), categories) %}
+  {% endif %}
+{% endfor %}
+{% set categories = categories | sort %}
 
 {% set pageTitle = title %}
 {% set pageDescription = "Test prompts for evaluating local and remote language models across coding, writing, multimodal, and reasoning tasks." %}
@@ -31,8 +37,12 @@ permalink: /prompts/
   </div>
 
   {% for category in categories %}
-    {% set items = promptsList | selectattr('data.category', 'equalto', category) %}
-    {% set catCount = items | length %}
+    {% set catCount = 0 %}
+    {% for prompt in promptsList %}
+      {% if prompt.data.category == category %}
+        {% set catCount = catCount + 1 %}
+      {% endif %}
+    {% endfor %}
     <section id="{{ category | slugify }}" class="mt-8">
       <h2 class="text-sm font-semibold text-gray-900 dark:text-white flex items-center gap-2">
         {{ category }}
@@ -40,7 +50,8 @@ permalink: /prompts/
       </h2>
 
       <div class="mt-3 space-y-2">
-        {% for prompt in items %}
+        {% for prompt in promptsList %}
+          {% if prompt.data.category == category %}
           <article class="card card-hover card-compact group">
             <div class="flex items-start justify-between gap-4">
               <div class="flex-1 min-w-0">
@@ -63,6 +74,7 @@ permalink: /prompts/
               </time>
             </div>
           </article>
+          {% endif %}
         {% endfor %}
       </div>
     </section>

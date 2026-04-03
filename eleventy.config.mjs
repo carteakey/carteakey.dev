@@ -377,7 +377,7 @@ export default function (eleventyConfig) {
 
   function filterTagList(tags) {
     return (tags || []).filter(
-      (tag) => ["all", "nav", "post", "posts", "snippets"].indexOf(tag) === -1
+      (tag) => ["all", "nav", "post", "posts", "snippets", "prompts"].indexOf(tag) === -1
     );
   }
 
@@ -635,6 +635,18 @@ export default function (eleventyConfig) {
       });
   });
 
+  eleventyConfig.addCollection("prompts", function (collectionApi) {
+    const now = new Date();
+    return collectionApi
+      .getFilteredByTag("prompts")
+      .filter(prompt => {
+        if (prompt.data.hidden === true) return false;
+        if (prompt.date && prompt.date > now) return false;
+        return true;
+      })
+      .sort((a, b) => b.date - a.date);
+  });
+
   // Featured post: pick the best post with featured: true from the posts collection
   eleventyConfig.addCollection("featuredPost", function (collectionApi) {
     const now = new Date();
@@ -734,6 +746,16 @@ export default function (eleventyConfig) {
         if (page.date && page.date > now) return false;
       }
       return true;
+    });
+  });
+
+  // Collection for raw.txt generation
+  eleventyConfig.addCollection("rawPages", function (collectionApi) {
+    const types = ["posts", "snippets", "prompts", "notes", "til"];
+    return collectionApi.getAll().filter(item => {
+      if (!item.data.tags) return false;
+      if (!item.url) return false; // skip items without a URL
+      return types.some(t => item.data.tags.includes(t));
     });
   });
 

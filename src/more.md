@@ -31,6 +31,7 @@ eleventyNavigation:
 - [/now](/now/): what I'm up to, now
 - [/blog](/blog/): blog posts and articles
 - [/projects](/projects/): things I've built
+- [/prompts](/prompts/): prompt library for testing language models
 - [/quotes](/quotes/): quotes I like
 - [/reading](/reading/): my reading shelf
 - [/search](/search/): search posts and snippets
