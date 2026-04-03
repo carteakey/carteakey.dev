@@ -21,6 +21,12 @@ I'm currently a Senior Data Analyst at McAfee, working on product analytics, ret
 
 Here's a visual breakdown of [where my skills lie](/skills/) across the data landscape.
 
+## GitHub
+
+If you want a quick profile snapshot, here's my GitHub card:
+
+[![GitHubCard](https://githubcard.com/carteakey.svg)](https://github.com/carteakey)
+
 ## Interests
 
 **Gaming:** Massive Soulsborne fan. Bloodborne's lore lives rent-free in my head. I also dabble in retro gaming and emulation when the nostalgia hits.
