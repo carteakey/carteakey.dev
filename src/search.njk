@@ -165,7 +165,7 @@ eleventyNavigation:
           description: {{ (snippet.data.description or '') | dump | safe }},
           url: {{ snippet.url | dump | safe }},
           tags: {{ snippet.data.tags | filterTagList | dump | safe }},
-          content: {{ snippet.templateContent | striptags | replace('\n', ' ') | replace('\r', ' ') | truncate(260) | dump | safe }},
+          content: {{ snippet.templateContent | striptags | replace('\n', ' ') | replace('\r', ' ') | dump | safe }},
           type: 'snippet',
           date: {{ snippet.date | dump | safe }},
           year: {{ snippet.date | date("Y") | dump | safe }}

@@ -153,6 +153,12 @@
             {%- endfor %}
 
             <li class="flex items-center">
+              <a class="font-medium no-underline inline-flex items-center justify-center p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" href="{{ '/search/' | url }}" title="Search" aria-label="Search" style="color: var(--accent-color)">
+                {% feather "search", class="w-4 h-4" %}
+              </a>
+            </li>
+
+            <li class="flex items-center">
               <a class="font-medium no-underline inline-flex items-center justify-center p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" href="{{ '/more/' | url }}" title="More pages" aria-label="More pages" style="color: var(--accent-color)">
                 {% feather "compass", class="w-4 h-4" %}
               </a>
