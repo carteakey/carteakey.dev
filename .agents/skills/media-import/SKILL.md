@@ -43,7 +43,24 @@ Build a table of unimported files per target:
 | ... | inbox/ai-memes/funny.webp | ai-memes folio | ⏳ pending |
 | ... | inbox/something.jpg | ❓ unclassified | needs routing |
 
-**Hashing / dedup**: A file is considered already imported if its filename (basename) matches an existing path in the target destination. If unsure, flag it.
+**Hash-based dedup (required for photography)**:
+Do NOT rely on filename matching for photos — the same image may be deployed under a different name.
+Run MD5 hashes against all deployed photos and cross-check before importing:
+
+```bash
+# Hash all inbox photos
+md5 inbox/photography/*.{jpg,jpeg,png,JPG} 2>/dev/null
+
+# Hash all deployed photos
+md5 src/static/img/photography/real/*.{jpg,jpeg,png,JPG} 2>/dev/null | sort -k4
+
+# Any matching hash = already imported, skip it
+```
+
+If a hash match is found, update the existing YAML entry with the correct title, path rename, and real EXIF data — do NOT add a new entry. Rename the deployed file to the human title slug.
+
+For vibes and ai-memes, filename-based dedup is sufficient (filenames are stable Reddit/Twitter hashes).
+
 
 Show the user this table and ask: **"Which of these should I import, and to which target?"** before proceeding.
 

@@ -126,52 +126,51 @@
   height: 1147
   description: A lone fishing boat on an empty beach at dusk.
   location: Unknown
-- title: Beach sunset
+- title: Juhu sunset
   category: real
-  path: >-
-    /img/photography/real/a-beautiful-sunset-at-the-beach-with-great-sky-and-air.jpg
-  device: Unknown
-  make: Unknown
+  path: /img/photography/real/juhu-sunset.jpg
+  device: ONEPLUS A5000
+  make: OnePlus
   lens: Unknown
-  focalLength: Unknown
-  aperture: Unknown
-  iso: Unknown
-  shutterSpeed: Unknown
-  date: '2025-07-27'
+  focalLength: 4.103mm
+  aperture: f/1.7
+  iso: 100
+  shutterSpeed: 1/492s
+  date: '2019-10-06'
   width: 4656
   height: 3496
-  location: Unknown
-- title: Autumn bench
+  location: Mumbai, India
+- title: Bench in the fall
   category: real
-  path: /img/photography/real/autumnal-serenity.jpg
-  device: Unknown
-  make: Unknown
+  path: /img/photography/real/bench-in-the-fall.jpg
+  device: A142
+  make: Nothing
   lens: Unknown
-  focalLength: Unknown
-  aperture: Unknown
-  iso: Unknown
-  shutterSpeed: Unknown
-  date: '2025-07-27'
+  focalLength: 5.56mm
+  aperture: f/1.87
+  iso: 100
+  shutterSpeed: 1/251s
+  date: '2024-10-27'
   width: 3072
   height: 4080
-  location: Unknown
-- title: Fall afternoon
+  location: Markham, Ontario, Canada
+- title: Red tree by the lake
   category: real
-  path: /img/photography/real/cozy-afternoon-in-a-vibrant-fall-scene.jpg
-  device: Unknown
-  make: Unknown
+  path: /img/photography/real/red-tree-by-the-lake.jpg
+  device: A142
+  make: Nothing
   lens: Unknown
-  focalLength: Unknown
-  aperture: Unknown
-  iso: Unknown
-  shutterSpeed: Unknown
-  date: '2025-07-27'
+  focalLength: 5.56mm
+  aperture: f/1.87
+  iso: 100
+  shutterSpeed: 1/373s
+  date: '2024-10-27'
   width: 3072
   height: 4080
-  location: Unknown
-- title: City at dusk
+  location: Markham, Ontario, Canada
+- title: Mumbai skyline
   category: real
-  path: /img/photography/real/cityscape-at-dusk.jpg
+  path: /img/photography/real/mumbai-skyline.jpg
   device: Unknown
   make: Unknown
   lens: Unknown
@@ -179,10 +178,10 @@
   aperture: Unknown
   iso: Unknown
   shutterSpeed: Unknown
-  date: '2025-07-27'
+  date: '2019-08-25'
   width: 1529
   height: 1147
-  location: Unknown
+  location: Mumbai, India
 - title: CN Tower in the mist
   category: real
   path: /img/photography/real/cn-tower.jpg
