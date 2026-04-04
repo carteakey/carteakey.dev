@@ -883,6 +883,15 @@ picture img {
     border-color: rgb(63 63 70 / 0.8);
   }
 
+  /* Fade overlay for clipped note content in feed cards */
+  .feed-card-note-fade {
+    background: linear-gradient(to top, rgb(255 255 255), transparent);
+  }
+
+  .dark .feed-card-note-fade {
+    background: linear-gradient(to top, rgb(17 17 17), transparent);
+  }
+
   /* Links inside note/now content previews in feed cards */
   .feed-card-full .not-prose a {
     text-decoration: underline;
