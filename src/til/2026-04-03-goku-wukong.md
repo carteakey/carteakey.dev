@@ -1,6 +1,6 @@
 ---
 title: "Goku is the Japanese pronunciation of Wukong"
-date: 2026-04-04T17:49:00-04:00
+date: 2026-04-03
 authored_by: human
 ---
 
