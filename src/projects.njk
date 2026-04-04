@@ -82,22 +82,44 @@ eleventyNavigation:
     {% endfor %}
   </ul>
 <hr />
+<h2>GitHub Profile</h2>
+<div class="not-prose">
+  <p class="text-gray-600 dark:text-gray-400 mb-4">
+    Find me on GitHub at <a href="https://github.com/carteakey" class="accent-link hover:underline" target="_blank" rel="noopener">@carteakey</a>.
+  </p>
+
+  {# Light mode cards #}
+  <div class="dark:hidden flex flex-col sm:flex-row gap-3">
+    <a href="https://github.com/carteakey" target="_blank" rel="noopener">
+      <img src="https://github-readme-stats.vercel.app/api?username=carteakey&show_icons=true&count_private=true&bg_color=ffffff&border_color=e5e7eb&title_color=111827&text_color=374151&icon_color=6366f1&border_radius=8" alt="GitHub stats for carteakey" height="160" loading="lazy">
+    </a>
+    <a href="https://github.com/carteakey?tab=repositories" target="_blank" rel="noopener">
+      <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=carteakey&layout=compact&bg_color=ffffff&border_color=e5e7eb&title_color=111827&text_color=374151&border_radius=8" alt="Top languages for carteakey" height="160" loading="lazy">
+    </a>
+  </div>
+
+  {# Dark mode cards #}
+  <div class="hidden dark:flex flex-col sm:flex-row gap-3">
+    <a href="https://github.com/carteakey" target="_blank" rel="noopener">
+      <img src="https://github-readme-stats.vercel.app/api?username=carteakey&show_icons=true&count_private=true&bg_color=111111&border_color=27272a&title_color=f4f4f5&text_color=a1a1aa&icon_color=818cf8&border_radius=8" alt="GitHub stats for carteakey" height="160" loading="lazy">
+    </a>
+    <a href="https://github.com/carteakey?tab=repositories" target="_blank" rel="noopener">
+      <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=carteakey&layout=compact&bg_color=111111&border_color=27272a&title_color=f4f4f5&text_color=a1a1aa&border_radius=8" alt="Top languages for carteakey" height="160" loading="lazy">
+    </a>
+  </div>
+</div>
+
+<hr />
 <h2>GitHub Activity</h2>
 <div class="not-prose">
   <p class="text-gray-600 dark:text-gray-400 mb-4">
     My contribution activity on GitHub over the past year.
   </p>
-
-  <div class="flex flex-col sm:flex-row gap-4 items-start mb-4">
-    <a href="https://github.cards" target="_blank" rel="noopener" class="shrink-0">
-      {% image "./src/static/img/carteakey-github-cards.png", "GitHub profile stats card for @carteakey", "w-48 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-md transition-shadow" %}
-    </a>
-    <div class="card card-padding not-prose flex-1">
-      {% include "components/github-contributions.njk" %}
-      <p class="text-xs text-gray-500 dark:text-gray-400 mt-2 text-center">
-        Data sourced live from <a href="https://github.com/carteakey" class="hover:underline accent-link">GitHub activity</a>.
-      </p>
-    </div>
+  <div class="card card-padding not-prose">
+    {% include "components/github-contributions.njk" %}
+    <p class="text-xs text-gray-500 dark:text-gray-400 mt-2 text-center">
+      Data sourced live from <a href="https://github.com/carteakey" class="hover:underline accent-link">GitHub activity</a>.
+    </p>
   </div>
 </div>
 
