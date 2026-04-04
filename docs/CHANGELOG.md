@@ -5,7 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.9.13] - 2026-04-03
+## [1.9.14] - 2026-04-04
+
+### Added
+- 10 new Agent Tick (AI memes) cards added to the folio.
+- 9 new vibes screenshots added to the vibes collection.
+- 4 original local photos imported with accurate EXIF tracking and metadata.
+
+### Changed
+- Unified media ingestion skill (`.agents/skills/media-import/SKILL.md`) established, defining standard pipeline logic for processing raw files from the `inbox/` into `photos.yaml`, `vibes`, and `ai-memes`.
+- Enforced MD5 hashing for photography imports to deduplicate uploads against previously ingested local photos.
+- Radiohead visual archive imagery fully migrated from root images folder directly into `src/static/img/folio/radiohead/` for better isolation.
 
 ### Added
 - Created Prompt Library page (`/prompts/`) with prompts collection for testing language models.

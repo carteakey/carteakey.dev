@@ -82,12 +82,66 @@ eleventyNavigation:
     {% endfor %}
   </ul>
 <hr />
+<h2>GitHub Profile</h2>
+<div class="not-prose">
+  <a href="https://github.com/carteakey" target="_blank" rel="noopener" class="block" style="text-decoration:none;">
+    <div class="card card-padding hover:border-gray-300 dark:hover:border-gray-600 transition-colors cursor-pointer">
+
+      {# Avatar + name #}
+      <div class="flex items-center gap-3 mb-4">
+        <img src="{{ githubCard.avatarUrl }}" alt="{{ githubCard.login }} avatar" width="40" height="40" class="rounded-full border border-gray-200 dark:border-gray-700">
+        <div>
+          <p class="font-semibold text-sm text-gray-900 dark:text-gray-100 m-0">{{ githubCard.name }}</p>
+          <p class="text-xs text-gray-500 dark:text-gray-400 m-0 meta-text">@{{ githubCard.login }}</p>
+        </div>
+        <span class="ml-auto">{% feather "github", class="w-4 h-4 text-gray-400 dark:text-gray-500" %}</span>
+      </div>
+
+      {% if githubCard.bio %}
+        <p class="text-xs text-gray-600 dark:text-gray-400 mb-4 m-0">{{ githubCard.bio }}</p>
+      {% endif %}
+
+      {# Stats row #}
+      <div class="grid grid-cols-4 gap-3 mb-4">
+        <div class="text-center">
+          <p class="text-lg font-bold text-gray-900 dark:text-gray-100 m-0">{{ githubCard.totalStars }}</p>
+          <p class="text-[0.65rem] text-gray-500 dark:text-gray-400 uppercase tracking-wide m-0 meta-text">Stars</p>
+        </div>
+        <div class="text-center">
+          <p class="text-lg font-bold text-gray-900 dark:text-gray-100 m-0">{{ githubCard.totalForks }}</p>
+          <p class="text-[0.65rem] text-gray-500 dark:text-gray-400 uppercase tracking-wide m-0 meta-text">Forks</p>
+        </div>
+        <div class="text-center">
+          <p class="text-lg font-bold text-gray-900 dark:text-gray-100 m-0">{{ githubCard.repoCount }}</p>
+          <p class="text-[0.65rem] text-gray-500 dark:text-gray-400 uppercase tracking-wide m-0 meta-text">Repos</p>
+        </div>
+        <div class="text-center">
+          <p class="text-lg font-bold text-gray-900 dark:text-gray-100 m-0">{{ githubCard.followers }}</p>
+          <p class="text-[0.65rem] text-gray-500 dark:text-gray-400 uppercase tracking-wide m-0 meta-text">Followers</p>
+        </div>
+      </div>
+
+      {# Top languages #}
+      {% if githubCard.topLanguages | length %}
+        <div>
+          <p class="text-[0.65rem] text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-1.5 m-0 meta-text">Top Languages</p>
+          <div class="flex flex-wrap gap-1.5">
+            {% for lang in githubCard.topLanguages %}
+              <span class="text-[0.65rem] px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300">{{ lang.name }}</span>
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </a>
+</div>
+
+<hr />
 <h2>GitHub Activity</h2>
 <div class="not-prose">
   <p class="text-gray-600 dark:text-gray-400 mb-4">
     My contribution activity on GitHub over the past year.
   </p>
-  
   <div class="card card-padding not-prose">
     {% include "components/github-contributions.njk" %}
     <p class="text-xs text-gray-500 dark:text-gray-400 mt-2 text-center">
