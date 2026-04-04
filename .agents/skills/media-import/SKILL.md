@@ -194,7 +194,7 @@ Show a thumbnail description and let them route to A/B/C or skip.
 For each approved file:
 1. Copy the file to its destination.
 2. Make the appropriate data or HTML edit.
-3. **Do not delete from inbox/** unless explicitly asked — the inbox is a staging area.
+3. By default, plan to delete successfully imported files from the `inbox/` directory at the end of the run to keep it clean.
 
 After all imports, run a quick sanity check:
 ```bash
@@ -216,6 +216,17 @@ grep -c 'class="meme-card"' src/folio/ai-memes/index.html
 git add src/_data/photos.yaml src/static/img/photography/ src/static/img/vibes/ src/static/img/folio/ai-memes/ src/folio/ai-memes/index.html
 git commit -m "feat(inbox): import [N] photos / [N] vibes / [N] ai-memes"
 git push origin main
+```
+
+---
+
+## Step 5 — Inbox Cleanup
+
+After successfully committing and verifying the media is live in the destination folders, automatically delete the original files from the `inbox/` subdirectories to keep the staging area clean.
+
+```bash
+# Example: delete imported photos after commit
+rm inbox/photography/IMG_xxx.jpg
 ```
 
 ---
