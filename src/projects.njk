@@ -87,12 +87,17 @@ eleventyNavigation:
   <p class="text-gray-600 dark:text-gray-400 mb-4">
     My contribution activity on GitHub over the past year.
   </p>
-  
-  <div class="card card-padding not-prose">
-    {% include "components/github-contributions.njk" %}
-    <p class="text-xs text-gray-500 dark:text-gray-400 mt-2 text-center">
-      Data sourced live from <a href="https://github.com/carteakey" class="hover:underline accent-link">GitHub activity</a>.
-    </p>
+
+  <div class="flex flex-col sm:flex-row gap-4 items-start mb-4">
+    <a href="https://github.cards" target="_blank" rel="noopener" class="shrink-0">
+      {% image "./src/static/img/carteakey-github-cards.png", "GitHub profile stats card for @carteakey", "w-48 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-md transition-shadow" %}
+    </a>
+    <div class="card card-padding not-prose flex-1">
+      {% include "components/github-contributions.njk" %}
+      <p class="text-xs text-gray-500 dark:text-gray-400 mt-2 text-center">
+        Data sourced live from <a href="https://github.com/carteakey" class="hover:underline accent-link">GitHub activity</a>.
+      </p>
+    </div>
   </div>
 </div>
 
