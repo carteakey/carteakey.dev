@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.9.14] - 2026-04-04
 
 ### Added
+- 4 new quotes added to the Quotes collection (Anonymous, David Foster Wallace, Nassim Nicholas Taleb, Douglas Adams).
 - 10 new Agent Tick (AI memes) cards added to the folio.
 - 9 new vibes screenshots added to the vibes collection.
 - 4 original local photos imported with accurate EXIF tracking and metadata.
