@@ -21,11 +21,13 @@ eleventyNavigation:
 - [/changelog](/changelog/): site changelog
 - [/colophon](/colophon/): how this site is built
 - [/cv](/cv/): my curriculum vitae
+- [/data](/data/): my life in data — a scrollable dashboard from cartebase
 - [/folio](/folio/): themed web pages for things I obsess over
 - [/feed](/feed/): all posts, snippets, and mini blogs
 - [/gallery](/gallery/): photo gallery
 - [/games](/games/): games I'm currently playing
 - [/guestbook](/guestbook/): sign my guestbook
+- [/listening](/listening/): full Spotify listening history, wrapped
 - [/newsletter](/newsletter/): subscribe to updates
 - [/notes](/notes/): short notes and micro posts
 - [/now](/now/): what I'm up to, now
