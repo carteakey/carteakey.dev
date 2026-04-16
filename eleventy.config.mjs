@@ -1085,6 +1085,62 @@ export default function (eleventyConfig) {
     return `<code class="${langPrefix}">${markdownLibrary.utils.escapeHtml(token.content)}</code>`;
   };
 
+  // ═══════════════════════════════════════════════════════════════════════════
+  // 📰 Editorial shortcodes — minimal set
+  //   {% analysis %}  boxed section with title + optional winner pill
+  //   {% wide %}      full-bleed scrollable wrapper for wide tables
+  //   {% annotate %}  handwritten comment + squiggly arrow on highlighted text
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  const escapeHtml = (value) => String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+
+  const normalizeSide = (side) => (String(side || "").toLowerCase() === "b" ? "b" : "a");
+
+  const renderInnerMarkdown = (content) => {
+    if (!content || typeof content !== "string") return "";
+    const trimmed = content.replace(/^\s*\n/, "").replace(/\n\s*$/, "");
+    return markdownLibrary.render(trimmed);
+  };
+
+  // {% analysis title="Risk Comparison", winner="AAPL Lower Risk", side="a" %} markdown {% endanalysis %}
+  eleventyConfig.addPairedShortcode("analysis", function (content, opts = {}) {
+    const options = (opts && typeof opts === "object") ? opts : {};
+    const title = options.title ?? "";
+    const winner = options.winner;
+    const side = normalizeSide(options.side);
+    const winnerHtml = winner
+      ? `<span class="winner-badge" data-side="${side}">${escapeHtml(winner)}</span>`
+      : "";
+    const body = renderInnerMarkdown(content);
+    return `\n\n<section class="analysis-card" data-side="${side}">\n<header class="analysis-header"><h3 class="analysis-title">${escapeHtml(title)}</h3>${winnerHtml}</header>\n<div class="analysis-body">${body}</div>\n</section>\n\n`;
+  });
+
+  // {% wide %} markdown table (or anything wide) {% endwide %}
+  // Breaks out of article container; horizontally scrollable on mobile.
+  eleventyConfig.addPairedShortcode("wide", function (content) {
+    const body = renderInnerMarkdown(content);
+    return `\n\n<div class="wide-wrap not-prose">\n${body}\n</div>\n\n`;
+  });
+
+  // {% annotate "handwritten comment here" %}phrase to highlight{% endannotate %}
+  // Renders highlighted text with a Caveat-font note and squiggly arrow.
+  eleventyConfig.addPairedShortcode("annotate", function (content, comment) {
+    const safeComment = escapeHtml(comment || "");
+    return `<span class="note"><span class="note-target">${content}</span><span class="note-comment" aria-label="Note">${safeComment}</span></span>`;
+  });
+
+  // Render a string as markdown. Used by the sidebar partial so `sidebar.content:`
+  // frontmatter can contain real markdown instead of raw HTML.
+  eleventyConfig.addFilter("markdownify", function (str) {
+    if (!str || typeof str !== "string") return "";
+    return markdownLibrary.render(str);
+  });
+
   eleventyConfig.on("eleventy.after", async () => {
     const srcDir = path.resolve("src/posts");
     const destDirs = [path.resolve("_site/blog"), path.resolve("_site/posts")];

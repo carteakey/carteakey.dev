@@ -14,6 +14,9 @@
 
 ### SEO & Navigation
 
+### Editorial Mode
+- [ ] Annotation comments should float into the right margin on xl+ screens but currently collide with the Outline / "Join the Conversation" sidebar. Today they stay inline on every breakpoint as a workaround. Options to explore: a per-post `marginalia: true` frontmatter that hides the right sidebar, a JS measurer that aligns comments to highlighted lines, or a layout that reserves a dedicated annotation gutter separate from the TOC. (2026-04-16)
+
 ### User Experience
 
 - [x] change all email references to carteakey.dev@gmail.com (2026-01-03)
