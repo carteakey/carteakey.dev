@@ -34,27 +34,64 @@ hasEthicalAds: false
 
 {% include "components/breadcrumbs.njk" %}
 {% from "components/comment-pointer.njk" import commentPointer %}
+{% from "components/authorship-badge.njk" import authorshipBadge %}
+
+{% set isDraft = hidden or draft or (title and (title | lower).includes('draft')) %}
 
 {% set showSidebar = not fullWidth %}
 {% set tocHtml = (content | toc) | default('') %}
 {% set conversationPlacement = conversationPlacement or 'sidebar' %}
 {% set showAds = false %}
+{% set isEditorial = (theme == 'editorial') %}
+{% set edPair = pair or 'teal-rose' %}
 
-<div class="relative mx-auto w-full ">
-  {% if showSidebar and showAds %}
-  <aside class="hidden xl:block absolute -left-[260px] top-0">
-    <div class="sticky top-24 w-[220px] space-y-3">
-      {# {% include "components/ethical-ads.njk" %} #}
+<div class="relative mx-auto w-full"{% if isEditorial %} data-pair="{{ edPair }}"{% endif %}>
+  {# Left Sidebar - Author Card (or editorial meta-sidebar) #}
+  {% if showSidebar %}
+  <aside class="hidden xl:block absolute -left-[280px] top-0">
+    <div class="sticky top-24 w-[240px] space-y-4">
+      {% if isEditorial and sidebar %}
+        {% include "components/editorial-sidebar.njk" %}
+      {% endif %}
+      {# Author Card #}
+      <section class="border border-gray-200 dark:border-gray-800 rounded-xl p-5 text-center not-prose">
+        <a href="/about" class="block group">
+          <div class="relative w-20 h-20 mx-auto mb-3">
+            <div class="absolute -inset-1 rounded-full blur-sm opacity-0 group-hover:opacity-60 transition-opacity duration-300" style="background: linear-gradient(135deg, var(--accent-color), color-mix(in srgb, var(--accent-color) 70%, #ec4899));"></div>
+            {% image "./src/static/img/headshot.png", "{{ metadata.author.name }}", "relative w-20 h-20 rounded-full object-cover ring-2 ring-gray-200 dark:ring-gray-700 transition-all shadow-sm" %}
+          </div>
+        </a>
+        <a href="/about" class="font-semibold text-gray-900 dark:text-gray-100 hover:text-gradient transition-colors no-underline">
+          {{ metadata.author.name }}
+        </a>
+        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 mb-3">Data Analyst & Tech Tinkerer</p>
+        <div class="flex justify-center gap-1 mt-3">
+          <a href="https://github.com/carteakey" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100" title="GitHub" aria-label="GitHub">
+            {% feather "github", class="w-4 h-4" %}
+          </a>
+          <a href="https://www.linkedin.com/in/kartikeychauhan/" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100" title="LinkedIn" aria-label="LinkedIn">
+            {% feather "linkedin", class="w-4 h-4" %}
+          </a>
+          <a href="mailto:{{ metadata.author.email }}" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100" title="Email" aria-label="Email">
+            {% feather "mail", class="w-4 h-4" %}
+          </a>
+        </div>
+      </section>
     </div>
   </aside>
   {% endif %}
+
+  {# Right Sidebar - TOC & Comments #}
 
   {% if showSidebar %}
   <aside class="hidden xl:block absolute -right-[300px] top-0 text-sm text-gray-600 dark:text-gray-300">
     <div class="sticky top-24 space-y-6 w-[260px]">
       {% if tocHtml | trim %}
-      <section class=" md:bg-gray-100 md:dark:bg-gray-800  border border-gray-200/70 dark:border-zinc-800/70 px-6 py-6 shadow-sm">
-        <p class="text-lg font-semibold my-0 text-gray-800 dark:text-gray-100">Outline</p>
+      <section class="border border-gray-200 dark:border-gray-800 rounded-xl px-6 py-6">
+        <p class="text-sm font-semibold my-0 text-gray-800 dark:text-gray-100 flex items-center gap-2">
+          {% feather "list", class="w-5 h-5 opacity-70" %}
+          Outline
+        </p>
         <div class="mt-4 max-h-[60vh] overflow-y-auto pr-1 space-y-2">
           {{ tocHtml | safe }}
         </div>
@@ -67,25 +104,45 @@ hasEthicalAds: false
   </aside>
   {% endif %}
 
-  <article class="min-w-0 space-y-8 px-4 sm:px-6 xl:px-0">
-    <header class="space-y-4">
-      <h1>{{ title }}</h1>
+  <article class="min-w-0 space-y-6 px-4 sm:px-6 xl:px-0 animate-enter">
+    <header class="space-y-3">
+      <h1 class="text-gradient">{{ title }}</h1>
+
+      {% if isDraft %}
+      <div class="rounded-md border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50 px-4 py-3">
+        <div class="flex items-start gap-2.5">
+          <div class="flex-1 text-sm text-gray-700 dark:text-gray-300">
+            {% if hidden %}
+            <span class="font-medium text-gray-900 dark:text-gray-100">Draft:</span> You've wandered into a work-in-progress post. Content may be incomplete or contain errors. Come back later for the finished version!
+            {% else %}
+            <span class="font-medium text-gray-900 dark:text-gray-100">Draft:</span> This post is a work in progress - it may be incomplete or change. I publish drafts early because it's less stressful than waiting for perfect.
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% endif %}
 
       {% if description %}
-        <p class="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+        <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed mt-1">
           {{ description }}
         </p>
       {% endif %}
 
       <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between text-sm text-gray-600 dark:text-gray-400">
         <div class="flex flex-wrap items-center gap-3">
-          <time datetime="{{ page.date | htmlDateString }}" class="font-medium text-gray-700 dark:text-gray-200">
+          <time datetime="{{ page.date | htmlDateString }}" class="font-medium text-gray-700 dark:text-gray-200 flex items-center gap-1.5">
+            {% feather "calendar", class="w-4 h-4 opacity-60" %}
             {{ page.date | readableDate }}
           </time>
-          <span class="flex items-center gap-1">
-            {% feather "clock", class="w-4 h-4" %}
+          <span class="flex items-center gap-1.5">
+            {% feather "clock", class="w-4 h-4 opacity-60" %}
             {{ content | readingTime }}
           </span>
+          <span id="viewCount" class="flex items-center gap-1.5 text-gray-500 dark:text-gray-400">
+            {% feather "eye", class="w-4 h-4 opacity-60" %}
+            <span id="viewCountNumber">-</span> views
+          </span>
+          {{ authorshipBadge(authored_by) }}
         </div>
 
         {% set visibleTags = tags | filterTagList %}
@@ -93,7 +150,7 @@ hasEthicalAds: false
           <div class="flex flex-wrap gap-2">
             {% for tag in visibleTags %}
               {% set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
-              <a href="{{ tagUrl | url }}" class="px-2 py-1 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+              <a href="{{ tagUrl | url }}" class="px-2.5 py-1 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all hover:scale-105 text-xs font-semibold uppercase tracking-wide">
                 #{{ tag }}
               </a>
             {% endfor %}
@@ -102,14 +159,33 @@ hasEthicalAds: false
       </div>
     </header>
 
-    <hr class="border-gray-200 dark:border-gray-800" />
+    <hr class="divider-gradient" />
 
+    <div class="flex justify-end mt-4 mb-2">
+      {% include "components/copy-markdown.njk" %}
+    </div>
+
+    {% if authored_by == 'ai-assisted' %}
+    <div class="not-prose rounded-md border border-blue-200 dark:border-blue-900 bg-blue-50 dark:bg-blue-950/30 px-4 py-3 mb-6 text-sm text-blue-800 dark:text-blue-300 flex items-start gap-2">
+      {% feather "zap", class="w-4 h-4 shrink-0 mt-0.5 opacity-70" %}
+      <span><span class="font-semibold">AI Assisted</span> - Written with AI as a creative partner. Ideas, structure, and editorial direction are mine; AI helped with drafting and wording.</span>
+    </div>
+    {% elif authored_by == 'ai-generated' %}
+    <div class="not-prose rounded-md border border-purple-200 dark:border-purple-900 bg-purple-50 dark:bg-purple-950/30 px-4 py-3 mb-6 text-sm text-purple-800 dark:text-purple-300 flex items-start gap-2">
+      {% feather "cpu", class="w-4 h-4 shrink-0 mt-0.5 opacity-70" %}
+      <span><span class="font-semibold">AI Generated</span> - AI wrote most of the words here. The ideas, research, and editorial direction are mine - I read and verify everything before it goes up.</span>
+    </div>
+    {% endif %}
+
+    {% if isEditorial %}
+    <div class="ed-prose">{{ content | safe }}</div>
+    {% else %}
     {{ content | safe }}
+    {% endif %}
 
     {% if updated %}
-      <p class="text-sm text-gray-500 dark:text-gray-400">
-        Updated:
-        <time datetime="{{ updated | htmlDateString }}">{{ updated | readableDate }}</time>
+      <p class="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
+        Updated <time datetime="{{ updated | htmlDateString }}">{{ updated | readableDate }}</time>
       </p>
     {% endif %}
 
@@ -129,22 +205,22 @@ hasEthicalAds: false
           {{ upvotes.posts[page.fileSlug] | default(0) }}
         </span>
         <span id="upvoteLoading" class="ml-2 hidden">
-          <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-amber-500"></div>
+          <div class="animate-spin rounded-full h-4 w-4 border-b-2" style="border-color: var(--accent-color);"></div>
         </span>
       </button>
       <span id="upvoteMessage" class="ml-2 text-sm text-gray-500 dark:text-gray-400 hidden">Thanks for your upvote!</span>
     </div>
 
     <div id="postReactions" class="hidden mt-6" data-slug="{{ page.fileSlug }}">
-      <h3 class=" text-sm font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400 flex items-center gap-2">
+      <h2 class="text-sm font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400 flex items-center gap-2">
         {% feather "smile", class="w-4 h-4" %}
         React to this post
-      </h3>
+      </h2>
       <div class="mt-3 flex flex-wrap gap-2">
         {% for reaction in reactionOptions %}
           <button
             type="button"
-            class="reaction-button flex items-center gap-2 rounded-full border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 px-3 py-2 text-sm text-gray-600 dark:text-gray-300 hover:border-amber-400 dark:hover:border-amber-500 transition-colors"
+            class="reaction-button flex items-center gap-2 rounded-full border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 px-3 py-2 text-sm text-gray-600 dark:text-gray-300 hover:border-gray-400 dark:hover:border-gray-500 transition-colors"
             data-reaction="{{ reaction.id }}"
             aria-label="{{ reaction.label }}"
             title="{{ reaction.label }}"
@@ -164,31 +240,47 @@ hasEthicalAds: false
         const upvoteCount = document.getElementById('upvoteCount');
         const upvoteMessage = document.getElementById('upvoteMessage');
         const upvoteLoading = document.getElementById('upvoteLoading');
+        const viewCountNumber = document.getElementById('viewCountNumber');
         const postSlug = '{{ page.fileSlug }}';
         const storageKey = `upvote_${postSlug}`;
+        const viewStorageKey = `viewed_${postSlug}`;
         
-        // Function to fetch current upvote count
-        async function fetchUpvoteCount() {
+        // Check if user has viewed this post in this session
+        const hasViewed = sessionStorage.getItem(viewStorageKey) === 'true';
+        
+        // Function to fetch current counts and optionally track view
+        async function fetchCounts(trackView = false) {
           try {
             upvoteLoading.classList.remove('hidden');
             upvoteCount.classList.add('opacity-50');
             
-            const response = await fetch(`/.netlify/functions/upvote?slug=${postSlug}`, {
+            const url = `/.netlify/functions/upvote?slug=${encodeURIComponent(postSlug)}${trackView ? '&trackView=true' : ''}`;
+            const response = await fetch(url, {
               method: 'GET'
             });
             if (!response.ok) throw new Error('Failed to fetch count');
             const data = await response.json();
             upvoteCount.textContent = data.count;
+            
+            // Update view count display
+            if (viewCountNumber && data.views !== undefined) {
+              viewCountNumber.textContent = data.views.toLocaleString();
+            }
+            
+            // Mark as viewed in this session
+            if (trackView) {
+              sessionStorage.setItem(viewStorageKey, 'true');
+            }
           } catch (error) {
-            console.error('Error fetching upvote count:', error);
+            console.error('Error fetching counts:', error);
           } finally {
             upvoteLoading.classList.add('hidden');
             upvoteCount.classList.remove('opacity-50');
           }
         }
 
-        // Fetch current count on page load
-        await fetchUpvoteCount();
+        // Fetch current count on page load, track view if first time this session
+        await fetchCounts(!hasViewed);
         
         // Check if user has already upvoted this post
         let hasUpvoted = localStorage.getItem(storageKey) === 'true';
@@ -196,8 +288,8 @@ hasEthicalAds: false
         // If user has already upvoted, style the button accordingly
         if (hasUpvoted) {
           upvoteButton.classList.add('upvoted');
-          upvoteButton.querySelector('svg').classList.add('text-amber-500');
-          upvoteButton.querySelector('svg').classList.remove('text-gray-500', 'dark:text-gray-400');
+          upvoteButton.querySelector('svg').style.color = 'var(--accent-color)';
+          upvoteButton.querySelector('svg').style.removeProperty('color');
         }
         
         upvoteButton.addEventListener('click', async function() {
@@ -227,8 +319,13 @@ hasEthicalAds: false
             
             const data = await response.json();
             
-            // Fetch fresh count after successful upvote
-            await fetchUpvoteCount();
+            // Update count immediately from response
+            upvoteCount.textContent = data.count;
+            
+            // Update view count display if present
+            if (viewCountNumber && data.views !== undefined) {
+              viewCountNumber.textContent = data.views.toLocaleString();
+            }
             
             // Save upvote state to localStorage and update local state
             localStorage.setItem(storageKey, 'true');
@@ -236,8 +333,8 @@ hasEthicalAds: false
             
             // Style the button as upvoted
             upvoteButton.classList.add('upvoted');
-            upvoteButton.querySelector('svg').classList.add('text-amber-500');
-            upvoteButton.querySelector('svg').classList.remove('text-gray-500', 'dark:text-gray-400');
+            upvoteButton.querySelector('svg').style.color = 'var(--accent-color)';
+            upvoteButton.querySelector('svg').style.removeProperty('color');
             
             // Show thank you message
             upvoteMessage.classList.remove('hidden');
@@ -296,10 +393,12 @@ hasEthicalAds: false
 
           function setButtonState(button, isActive) {
             if (isActive) {
-              button.classList.add('border-amber-500', 'bg-amber-100', 'dark:bg-amber-900/30', 'text-amber-900', 'dark:text-amber-200');
+              button.style.borderColor = 'var(--accent-color)';
+              button.style.backgroundColor = 'color-mix(in srgb, var(--accent-color) 15%, transparent)';
               button.classList.remove('border-gray-200', 'dark:border-gray-700', 'text-gray-600', 'dark:text-gray-300');
             } else {
-              button.classList.remove('border-amber-500', 'bg-amber-100', 'dark:bg-amber-900/30', 'text-amber-900', 'dark:text-amber-200');
+              button.style.borderColor = '';
+              button.style.backgroundColor = '';
               button.classList.add('border-gray-200', 'dark:border-gray-700', 'text-gray-600', 'dark:text-gray-300');
             }
           }
@@ -323,7 +422,7 @@ hasEthicalAds: false
 
           async function fetchReactionCounts() {
             try {
-              const response = await fetch(`/.netlify/functions/reactions?slug=${postSlug}`);
+              const response = await fetch(`/.netlify/functions/reactions?slug=${encodeURIComponent(postSlug)}`);
               if (!response.ok) {
                 throw new Error('Failed to fetch reactions');
               }
@@ -404,14 +503,14 @@ hasEthicalAds: false
       {%- if sortedRelated.length > 0 %}
         <hr class="my-8" />
         <section class="related-posts">
-          <h3 class="text-lg font-semibold mb-3 flex items-center gap-2">
+          <h3 class="text-sm font-semibold mb-3 flex items-center gap-2">
             {% feather "link", class="w-4 h-4" %}
             Related Posts
           </h3>
           <div class="space-y-2">
             {%- for item in sortedRelated | head(3) %}
               <div class="border-l-2 border-gray-300 dark:border-gray-600 pl-3 py-1">
-                <a href="{{ item.post.url | url }}" class="font-medium hover:text-amber-600 dark:hover:text-amber-400">
+                <a href="{{ item.post.url | url }}" class="font-medium accent-link" style="text-decoration:none;">
                   {{ item.post.data.title }}
                 </a>
                 <p class="text-gray-600 dark:text-gray-300 text-sm mt-0.5">{{ item.post.data.description }}</p>
@@ -425,17 +524,17 @@ hasEthicalAds: false
       {%- set nextPost = collections.posts | getNextCollectionItem(page) %}
       {%- set previousPost = collections.posts | getPreviousCollectionItem(page) %}
       {%- if nextPost or previousPost %}
-        <nav aria-label="Post navigation" class="flex flex-col gap-2 text-sm">
+        <nav aria-label="Post navigation" class="flex flex-col gap-2 text-sm not-prose">
           {%- if nextPost %}
-            <a class="block" href="{{ nextPost.url | url }}">
-              <span class="font-semibold">Next:</span>
-              {{ nextPost.data.title }}
+            <a class="block title-hover" href="{{ nextPost.url | url }}" style="text-decoration: none;">
+              <span class="text-xs uppercase tracking-wide font-semibold text-gray-400">Next →</span>
+              <span class="block">{{ nextPost.data.title }}</span>
             </a>
           {%- endif %}
           {%- if previousPost %}
-            <a class="block" href="{{ previousPost.url | url }}">
-              <span class="font-semibold">Previous:</span>
-              {{ previousPost.data.title }}
+            <a class="block title-hover" href="{{ previousPost.url | url }}" style="text-decoration: none;">
+              <span class="text-xs uppercase tracking-wide font-semibold text-gray-400">← Previous</span>
+              <span class="block">{{ previousPost.data.title }}</span>
             </a>
           {%- endif %}
         </nav>
@@ -458,7 +557,8 @@ hasEthicalAds: false
         script.setAttribute("data-repo-id", "R_kgDOIHTsrg");
         script.setAttribute("data-category", "Announcements");
         script.setAttribute("data-category-id", "DIC_kwDOIHTsrs4CnZpB");
-        script.setAttribute("data-mapping", "pathname");
+        script.setAttribute("data-mapping", "specific");
+        script.setAttribute("data-term", {{ (giscusTerm or page.url) | dump | safe }});
         script.setAttribute("data-strict", "0");
         script.setAttribute("data-reactions-enabled", "0");
         script.setAttribute("data-emit-metadata", "0");
@@ -493,7 +593,7 @@ hasEthicalAds: false
   {% if tocHtml | trim %}
   <div class="xl:hidden mt-12">
     <section class=" border border-gray-200/70 dark:border-zinc-800/70  px-5 py-5 space-y-4 text-sm text-gray-600 dark:text-gray-300">
-      <p class="text-lg font-semibold my-0 text-gray-900 dark:text-gray-100">Outline</p>
+      <p class="text-sm font-semibold my-0 text-gray-900 dark:text-gray-100">Outline</p>
       <div class="max-h-[50vh] overflow-y-auto pr-1 space-y-2">
         {{ tocHtml | safe }}
       </div>

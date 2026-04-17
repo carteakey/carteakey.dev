@@ -3,6 +3,19 @@
   command = "npm run build"
   functions = "netlify/functions"
 
+# Force redirect for blog post URLs with spaces (percent-encoded)
+[[redirects]]
+  from = "/blog/optimizing gpt-oss-120b-local inference/"
+  to = "/blog/optimizing-gpt-oss-120b-local-inference/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/optimizing gpt-oss-120b-local inference"
+  to = "/blog/optimizing-gpt-oss-120b-local-inference/"
+  status = 301
+  force = true
+
 [[plugins]]
 package = "netlify-plugin-cache"
 

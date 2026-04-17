@@ -1,0 +1,9 @@
+---
+pagination:
+  data: collections.rawPages
+  size: 1
+  alias: item
+permalink: "{{ item.url }}raw.txt"
+eleventyExcludeFromCollections: true
+---
+{{ item.page.rawInput | safe }}

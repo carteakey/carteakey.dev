@@ -1,4 +1,13 @@
 bookmarks:
+  - title: "Steph Ango"
+    url: "https://stephango.com"
+    description: "Ideas, essays, and projects by Steph Ango."
+    category: "Writing"
+    tags:
+      - design
+      - writing
+      - personal
+    date: 2026-03-01
   - title: "The Grug Brained Developer"
     url: "https://grugbrain.dev/"
     description: "A layman's guide to thinking like the self-aware smol brained developer"

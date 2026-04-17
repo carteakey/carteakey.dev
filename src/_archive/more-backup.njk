@@ -1,0 +1,90 @@
+---
+layout: layouts/base.njk
+title: More
+permalink: /more-card/
+eleventyNavigation:
+  key: ...More
+  order: 8
+---
+
+{% include "components/breadcrumbs.njk" %}
+
+{% set pageTitle = "Sitemap" %}
+{% set pageDescription = "All pages on this site, organized by category." %}
+{% set pageIcon = "map" %}
+
+<div class="max-w-4xl mx-auto">
+  {% include "components/page-header.njk" %}
+
+  <div class="mt-8 grid gap-6 md:grid-cols-2">
+    
+    {# Content & Writing #}
+    <section class="card card-padding bg-white dark:bg-gray-900">
+      <h3 class="font-semibold text-gray-900 dark:text-white flex items-center gap-2 mb-4">
+        {% feather "edit-3", class="w-4 h-4" %} Content
+      </h3>
+      <div class="space-y-3 text-sm">
+        <div><a href="/blog/" class="font-medium link-accent">/blog</a> - blog posts and articles</div>
+        <div><a href="/snippets/" class="font-medium link-accent">/snippets</a> - code snippets and quick notes</div>
+        <div><a href="/feed/" class="font-medium link-accent">/feed</a> - all posts, snippets, and mini blogs</div>
+        <div><a href="/quotes/" class="font-medium link-accent">/quotes</a> - quotes I like</div>
+      </div>
+    </section>
+
+    {# About Me #}
+    <section class="card card-padding bg-white dark:bg-gray-900">
+      <h3 class="font-semibold text-gray-900 dark:text-white flex items-center gap-2 mb-4">
+        {% feather "user", class="w-4 h-4" %} About Me
+      </h3>
+      <div class="space-y-3 text-sm">
+        <div><a href="/about/" class="font-medium link-accent">/about</a> - who am I?</div>
+        <div><a href="/cv/" class="font-medium link-accent">/cv</a> - my curriculum vitae</div>
+        <div><a href="/now/" class="font-medium link-accent">/now</a> - what I'm up to, now</div>
+        <div><a href="/uses/" class="font-medium link-accent">/uses</a> - what I use</div>
+      </div>
+    </section>
+
+    {# Interests #}
+    <section class="card card-padding bg-white dark:bg-gray-900">
+      <h3 class="font-semibold text-gray-900 dark:text-white flex items-center gap-2 mb-4">
+        {% feather "heart", class="w-4 h-4" %} Interests
+      </h3>
+      <div class="space-y-3 text-sm">
+        <div><a href="/games/" class="font-medium link-accent">/games</a> - games I'm currently playing</div>
+        <div><a href="/vibes/" class="font-medium link-accent">/vibes</a> - random images/memes I like</div>
+        <div><a href="/gallery/" class="font-medium link-accent">/gallery</a> - photo gallery</div>
+        <div><a href="/workouts/" class="font-medium link-accent">/workouts</a> - my fitness journey</div>
+      </div>
+    </section>
+
+    {# Resources #}
+    <section class="card card-padding bg-white dark:bg-gray-900">
+      <h3 class="font-semibold text-gray-900 dark:text-white flex items-center gap-2 mb-4">
+        {% feather "bookmark", class="w-4 h-4" %} Resources
+      </h3>
+      <div class="space-y-3 text-sm">
+        <div><a href="/bookmarks/" class="font-medium link-accent">/bookmarks</a> - curated reading list</div>
+        <div><a href="/blogroll/" class="font-medium link-accent">/blogroll</a> - blogs and sites I follow</div>
+        <div><a href="/projects/" class="font-medium link-accent">/projects</a> - things I've built</div>
+      </div>
+    </section>
+
+    {# Utilities #}
+    <section class="card card-padding bg-white dark:bg-gray-900">
+      <h3 class="font-semibold text-gray-900 dark:text-white flex items-center gap-2 mb-4">
+        {% feather "tool", class="w-4 h-4" %} Utilities
+      </h3>
+      <div class="space-y-3 text-sm">
+        <div><a href="/search/" class="font-medium link-accent">/search</a> - search posts and snippets</div>
+        <div><a href="/stats/" class="font-medium link-accent">/stats</a> - site statistics and metrics</div>
+        <div><a href="/newsletter/" class="font-medium link-accent">/newsletter</a> - subscribe to updates</div>
+        <div><a href="/feed.xml" class="font-medium link-accent">/feed.xml</a> - RSS feed</div>
+      </div>
+    </section>
+
+  </div>
+
+  <p class="mt-8 text-xs text-gray-500 dark:text-gray-400">
+    Inspired by <a href="https://slashpages.net" target="_blank" rel="noopener" class="link-accent">slashpages.net</a>
+  </p>
+</div>
