@@ -1,0 +1,28 @@
+{# 
+  Page Header Component
+  =====================
+  A compact, consistent header for collection/listing pages.
+  
+  Usage:
+  {% set pageTitle = "Snippets" %}
+  {% set pageDescription = "A collection of useful code snippets" %}
+  {% set pageIcon = "code" %}
+  {% set itemCount = 42 %}
+  {% set itemLabel = "snippets" %}
+  {% include "components/page-header.njk" %}
+#}
+
+<header class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+  <div class="flex-1">
+    <h1 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white flex items-center gap-2">
+      {% if pageIcon %}{% feather pageIcon, class="w-5 h-5" %}{% endif %}
+      {{ pageTitle }}
+      {% if itemCount %}
+      <span class="badge-count ml-2">{{ itemCount }}</span>
+      {% endif %}
+    </h1>
+    {% if pageDescription %}
+    <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">{{ pageDescription }}</p>
+    {% endif %}
+  </div>
+</header>

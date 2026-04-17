@@ -1,12 +1,39 @@
 # Site Improvement TODO List
 
+## Creative Features (2026-02-27)
+- [x] `/colophon` - How this site is built (stack, philosophy, AI-assisted dev) ✅ 2026-02-28
+- [x] `/now` archive timeline - reverse-chron list of past /now updates ✅ 2026-02-28
+- [x] Accent color → browser URL bar (`theme-color` meta tag tracks accent) ✅ 2026-02-27
+- [x] Keyboard shortcuts - `g+h/b/f/s/n` for nav, `?` for overlay ✅ 2026-02-27
+- [x] Stats page - denser layout, word count, avg post length, posts-per-year chart (2026-03-23)
+- [x] `/changelog` - render CHANGELOG.md as visual timeline with Netlify deploy preview URLs ✅ 2026-02-28
+- [x] `/til` - Today I Learned collection (new type, integrated into feed) ✅ 2026-02-28
+- [x] `/reading` - reading shelf with progress bars (YAML data source) ✅ 2026-02-28
+
 ## High Priority Features
 
 ### SEO & Navigation
 
+### Editorial Mode
+- [ ] Annotation comments should float into the right margin on xl+ screens but currently collide with the Outline / "Join the Conversation" sidebar. Today they stay inline on every breakpoint as a workaround. Options to explore: a per-post `marginalia: true` frontmatter that hides the right sidebar, a JS measurer that aligns comments to highlighted lines, or a layout that reserves a dedicated annotation gutter separate from the TOC. (2026-04-16)
+
 ### User Experience
 
+- [x] change all email references to carteakey.dev@gmail.com (2026-01-03)
+- [x] Standardize UPDATED labels to uppercase across all pages (2026-02-09)
+- [x] Add search filter to blog page like snippets (2026-02-09)
+- [x] Update card backgrounds to white for consistency (2026-02-09)
+- [x] Add social media icon links to footer (2026-02-09)
+- [x] Preserve upvotes and discussion thread continuity when post slugs are renamed (2026-03-13)
+- [x] Add snippet view counts and namespaced counter tracking to avoid collisions with post slugs (2026-03-13)
+- [x] Add a merge-check CLI for old/new slug engagement counters (views + upvotes) (2026-03-13)
+- [x] Agent Tick folio: added latest meme assets, switched canonical URL to `/folio/agent-tick/`, and preserved legacy `/folio/ai-memes/` via redirect (2026-03-18)
+- [x] GPT-OSS post: removed accidental merge conflict marker leak (`HEAD` / branch label) from published markdown (2026-03-18)
+
+
+
 ### Content Features
+- [x] Agent Tick folio: audit meme captions/titles and fix mismatched descriptions on some cards (2026-03-24)
 - [x] Smaller fonts across the board. I find the site to be better at 90% zoom.
 - [x] Add a random facts about me in the about me section. It can be a random fact from a list of facts that I can update.
 - [x] Feed icon - in the more page and footer, to link to the feed page.
@@ -42,7 +69,7 @@
 - [x] Quotes - same masonry layout as feed and gallery. (2025-10-12)
 - [x] I've moved the blog to blog folder but all the old links to the posts are broken. I need to set up redirects from /post-title to /blog/post-title. (2025-10-12)
 - [x] Now page - images look too big , handle them the same way as the posts. (2025-10-12)
-- [ ] Uses Page
+- [x] Uses Page (2026-01-03)
 
 
 
@@ -58,6 +85,12 @@
 - [x] Webrings Page 
 - [x] Guestbook Page
 - [x] Colophon 
+- [x] Footer: Reorganize into categorized grid with icons (2026-02-09)
+- [x] Guestbook: Sticky-notes redesign with pastel colors and handwriting font (2026-02-09)
+- [x] Projects page: Redesign cards with consistent image heights and better layout (2026-02-09)
+- [x] Uses page: Text-based multi-column layout with emojis, neofetch block, retired & changelog sections (2026-02-09)
+- [x] More page: Fix width shrinkage, switch to compass icon (2026-02-09)
+- [x] Footer: Move theme picker below nav, compact layout (2026-02-09)
 
 
 ## Medium Priority
@@ -77,39 +110,39 @@ After: https://carteakey.dev
 Buy me a coffee
 
 ### Performance & Technical
-- [ ] Add service worker for offline reading
-- [ ] Implement lazy loading for images (if not already present)
-- [ ] Add RSS feed enhancements (full content)
+- [x] Add service worker for offline reading (2026-01-03)
+- [x] Implement lazy loading for images (if not already present) (2026-03-23)
+- [x] Add RSS feed enhancements (full content) (2026-01-03)
 
 ### Interactive Features
-- [ ] Tag filtering - Interactive tag-based post filtering
+- [x] Tag filtering - Interactive tag-based post filtering (2026-01-03)
 - [ ] Code snippet favorites - Let visitors save useful snippets
 
 ### Analytics & Insights
 
 - [ ] Learning progress tracker
-- [ ] View count tracking (privacy-friendly)
+- [x] View count tracking (privacy-friendly) (2026-01-03)
 
 ### Content Organization
-- [ ] Archive page improvements
-- [ ] Add skip links for accessibility
-- [ ] Improve heading hierarchy
-- [ ] Add table of contents for long posts
+- [x] Archive page improvements (2026-03-23)
+- [x] Add skip links for accessibility (2026-01-03)
+- [x] Improve heading hierarchy (2026-01-03)
+- [x] Add table of contents for long posts (2026-03-23)
 
 ### Future Enhancements
-- [ ] Dark/light mode improvements
+- [x] Dark/light mode improvements (2026-03-23)
 
 ## Maybe Later
 
-- [ ] Add print styles - Better printing experience
-- [ ] Add JSON-LD structured data for blog posts
+- [x] Add print styles - Better printing experience (2026-03-23)
+- [x] Add JSON-LD structured data for blog posts (2026-03-23)
 - [ ] Comment threading - Enhanced Giscus comments
 - [ ] Live typing effect - Animate text on homepage
-- [ ] Popular posts widget - Most upvoted content
+- [x] Popular posts widget - Most upvoted content (2026-03-23)
 - [ ] Blog series navigation - Group related posts with prev/next
 - [ ] Custom fonts optimization
-- [ ] Progressive web app features
-- [ ] Advanced search with filters
+- [x] Progressive web app features (service worker added 2026-01-03)
+- [x] Advanced search with filters (2026-03-23)
 - [ ] Multi-language support
 
 ## Completed TODOs
@@ -210,4 +243,4 @@ Buy me a coffee
 
 ---
 
-**Next Up: Stats Page Implementation** 📊
+**Next Up: Content Polish & New Pages** 🎨

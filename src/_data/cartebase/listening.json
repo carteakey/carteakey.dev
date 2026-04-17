@@ -1,0 +1,2986 @@
+{
+  "last_updated": "2026-04-16T23:34:02Z",
+  "plays_total": 120413,
+  "minutes_total": 185005.0,
+  "plays_per_month": [
+    {
+      "month": "2016-10",
+      "plays": 6
+    },
+    {
+      "month": "2017-02",
+      "plays": 2
+    },
+    {
+      "month": "2017-09",
+      "plays": 17
+    },
+    {
+      "month": "2018-02",
+      "plays": 13
+    },
+    {
+      "month": "2018-09",
+      "plays": 10
+    },
+    {
+      "month": "2019-01",
+      "plays": 43
+    },
+    {
+      "month": "2019-02",
+      "plays": 37
+    },
+    {
+      "month": "2019-03",
+      "plays": 187
+    },
+    {
+      "month": "2019-05",
+      "plays": 232
+    },
+    {
+      "month": "2019-06",
+      "plays": 997
+    },
+    {
+      "month": "2019-07",
+      "plays": 1423
+    },
+    {
+      "month": "2019-08",
+      "plays": 1961
+    },
+    {
+      "month": "2019-09",
+      "plays": 2941
+    },
+    {
+      "month": "2019-10",
+      "plays": 1671
+    },
+    {
+      "month": "2019-11",
+      "plays": 2480
+    },
+    {
+      "month": "2019-12",
+      "plays": 1700
+    },
+    {
+      "month": "2020-01",
+      "plays": 3138
+    },
+    {
+      "month": "2020-02",
+      "plays": 1849
+    },
+    {
+      "month": "2020-03",
+      "plays": 1705
+    },
+    {
+      "month": "2020-04",
+      "plays": 1472
+    },
+    {
+      "month": "2020-05",
+      "plays": 1764
+    },
+    {
+      "month": "2020-06",
+      "plays": 961
+    },
+    {
+      "month": "2020-07",
+      "plays": 593
+    },
+    {
+      "month": "2020-08",
+      "plays": 713
+    },
+    {
+      "month": "2020-09",
+      "plays": 1235
+    },
+    {
+      "month": "2020-10",
+      "plays": 489
+    },
+    {
+      "month": "2020-11",
+      "plays": 342
+    },
+    {
+      "month": "2020-12",
+      "plays": 399
+    },
+    {
+      "month": "2021-01",
+      "plays": 397
+    },
+    {
+      "month": "2021-02",
+      "plays": 294
+    },
+    {
+      "month": "2021-03",
+      "plays": 332
+    },
+    {
+      "month": "2021-04",
+      "plays": 479
+    },
+    {
+      "month": "2021-05",
+      "plays": 628
+    },
+    {
+      "month": "2021-06",
+      "plays": 335
+    },
+    {
+      "month": "2021-07",
+      "plays": 393
+    },
+    {
+      "month": "2021-08",
+      "plays": 430
+    },
+    {
+      "month": "2021-09",
+      "plays": 304
+    },
+    {
+      "month": "2021-10",
+      "plays": 322
+    },
+    {
+      "month": "2021-11",
+      "plays": 621
+    },
+    {
+      "month": "2021-12",
+      "plays": 1448
+    },
+    {
+      "month": "2022-01",
+      "plays": 928
+    },
+    {
+      "month": "2022-02",
+      "plays": 152
+    },
+    {
+      "month": "2022-03",
+      "plays": 179
+    },
+    {
+      "month": "2022-04",
+      "plays": 519
+    },
+    {
+      "month": "2022-05",
+      "plays": 10
+    },
+    {
+      "month": "2022-06",
+      "plays": 4
+    },
+    {
+      "month": "2022-08",
+      "plays": 2
+    },
+    {
+      "month": "2022-09",
+      "plays": 302
+    },
+    {
+      "month": "2022-10",
+      "plays": 1263
+    },
+    {
+      "month": "2022-11",
+      "plays": 630
+    },
+    {
+      "month": "2022-12",
+      "plays": 251
+    },
+    {
+      "month": "2023-02",
+      "plays": 5
+    },
+    {
+      "month": "2023-03",
+      "plays": 306
+    },
+    {
+      "month": "2023-04",
+      "plays": 1262
+    },
+    {
+      "month": "2023-05",
+      "plays": 989
+    },
+    {
+      "month": "2023-06",
+      "plays": 1062
+    },
+    {
+      "month": "2023-07",
+      "plays": 703
+    },
+    {
+      "month": "2023-08",
+      "plays": 494
+    },
+    {
+      "month": "2023-11",
+      "plays": 402
+    },
+    {
+      "month": "2023-12",
+      "plays": 3296
+    },
+    {
+      "month": "2024-01",
+      "plays": 3597
+    },
+    {
+      "month": "2024-02",
+      "plays": 3262
+    },
+    {
+      "month": "2024-03",
+      "plays": 3520
+    },
+    {
+      "month": "2024-04",
+      "plays": 2621
+    },
+    {
+      "month": "2024-05",
+      "plays": 3319
+    },
+    {
+      "month": "2024-06",
+      "plays": 2640
+    },
+    {
+      "month": "2024-07",
+      "plays": 4242
+    },
+    {
+      "month": "2024-08",
+      "plays": 3382
+    },
+    {
+      "month": "2024-09",
+      "plays": 1592
+    },
+    {
+      "month": "2024-10",
+      "plays": 3927
+    },
+    {
+      "month": "2024-11",
+      "plays": 4279
+    },
+    {
+      "month": "2024-12",
+      "plays": 3132
+    },
+    {
+      "month": "2025-01",
+      "plays": 2750
+    },
+    {
+      "month": "2025-02",
+      "plays": 2403
+    },
+    {
+      "month": "2025-03",
+      "plays": 2700
+    },
+    {
+      "month": "2025-04",
+      "plays": 3256
+    },
+    {
+      "month": "2025-05",
+      "plays": 2289
+    },
+    {
+      "month": "2025-06",
+      "plays": 3402
+    },
+    {
+      "month": "2025-07",
+      "plays": 3304
+    },
+    {
+      "month": "2025-08",
+      "plays": 1642
+    },
+    {
+      "month": "2025-09",
+      "plays": 1404
+    },
+    {
+      "month": "2025-10",
+      "plays": 2398
+    },
+    {
+      "month": "2025-11",
+      "plays": 1802
+    },
+    {
+      "month": "2025-12",
+      "plays": 1329
+    },
+    {
+      "month": "2026-01",
+      "plays": 1968
+    },
+    {
+      "month": "2026-02",
+      "plays": 1312
+    },
+    {
+      "month": "2026-03",
+      "plays": 1531
+    },
+    {
+      "month": "2026-04",
+      "plays": 288
+    }
+  ],
+  "top_artists_all_time": [
+    {
+      "artist": "Radiohead",
+      "plays": 8139,
+      "minutes": 20050.8,
+      "share_pct": 6.76
+    },
+    {
+      "artist": "Pritam",
+      "plays": 3793,
+      "minutes": 7021.0,
+      "share_pct": 3.15
+    },
+    {
+      "artist": "Coldplay",
+      "plays": 2518,
+      "minutes": 5148.5,
+      "share_pct": 2.09
+    },
+    {
+      "artist": "The Local Train",
+      "plays": 1934,
+      "minutes": 3322.7,
+      "share_pct": 1.61
+    },
+    {
+      "artist": "Pink Floyd",
+      "plays": 1806,
+      "minutes": 4206.1,
+      "share_pct": 1.5
+    },
+    {
+      "artist": "Atif Aslam",
+      "plays": 1692,
+      "minutes": 3064.1,
+      "share_pct": 1.41
+    },
+    {
+      "artist": "Cigarettes After Sex",
+      "plays": 1475,
+      "minutes": 4107.2,
+      "share_pct": 1.22
+    },
+    {
+      "artist": "A.R. Rahman",
+      "plays": 1452,
+      "minutes": 2670.6,
+      "share_pct": 1.21
+    },
+    {
+      "artist": "Amit Trivedi",
+      "plays": 1340,
+      "minutes": 2319.0,
+      "share_pct": 1.11
+    },
+    {
+      "artist": "Imagine Dragons",
+      "plays": 1327,
+      "minutes": 1390.6,
+      "share_pct": 1.1
+    },
+    {
+      "artist": "Tame Impala",
+      "plays": 1308,
+      "minutes": 2579.4,
+      "share_pct": 1.09
+    },
+    {
+      "artist": "Avicii",
+      "plays": 1231,
+      "minutes": 1056.1,
+      "share_pct": 1.02
+    },
+    {
+      "artist": "Anuv Jain",
+      "plays": 1225,
+      "minutes": 2464.3,
+      "share_pct": 1.02
+    },
+    {
+      "artist": "Arijit Singh",
+      "plays": 1121,
+      "minutes": 1552.5,
+      "share_pct": 0.93
+    },
+    {
+      "artist": "Low Roar",
+      "plays": 1109,
+      "minutes": 2198.4,
+      "share_pct": 0.92
+    },
+    {
+      "artist": "The Strokes",
+      "plays": 1033,
+      "minutes": 2066.1,
+      "share_pct": 0.86
+    },
+    {
+      "artist": "Joji",
+      "plays": 931,
+      "minutes": 1934.7,
+      "share_pct": 0.77
+    },
+    {
+      "artist": "The Weeknd",
+      "plays": 815,
+      "minutes": 1537.5,
+      "share_pct": 0.68
+    },
+    {
+      "artist": "Post Malone",
+      "plays": 784,
+      "minutes": 1224.6,
+      "share_pct": 0.65
+    },
+    {
+      "artist": "Mohit Chauhan",
+      "plays": 778,
+      "minutes": 1236.7,
+      "share_pct": 0.65
+    },
+    {
+      "artist": "Vishal-Shekhar",
+      "plays": 738,
+      "minutes": 997.2,
+      "share_pct": 0.61
+    },
+    {
+      "artist": "Ritviz",
+      "plays": 690,
+      "minutes": 724.6,
+      "share_pct": 0.57
+    },
+    {
+      "artist": "Shankar-Ehsaan-Loy",
+      "plays": 669,
+      "minutes": 1271.1,
+      "share_pct": 0.56
+    },
+    {
+      "artist": "Papon",
+      "plays": 668,
+      "minutes": 1524.1,
+      "share_pct": 0.55
+    },
+    {
+      "artist": "Beach House",
+      "plays": 660,
+      "minutes": 1287.9,
+      "share_pct": 0.55
+    },
+    {
+      "artist": "Linkin Park",
+      "plays": 628,
+      "minutes": 822.2,
+      "share_pct": 0.52
+    },
+    {
+      "artist": "Strings",
+      "plays": 603,
+      "minutes": 778.9,
+      "share_pct": 0.5
+    },
+    {
+      "artist": "Lucky Ali",
+      "plays": 584,
+      "minutes": 888.8,
+      "share_pct": 0.48
+    },
+    {
+      "artist": "Sachin-Jigar",
+      "plays": 574,
+      "minutes": 964.3,
+      "share_pct": 0.48
+    },
+    {
+      "artist": "David Bowie",
+      "plays": 566,
+      "minutes": 956.0,
+      "share_pct": 0.47
+    },
+    {
+      "artist": "Hans Zimmer",
+      "plays": 546,
+      "minutes": 961.7,
+      "share_pct": 0.45
+    },
+    {
+      "artist": "Jagjit Singh",
+      "plays": 539,
+      "minutes": 1142.5,
+      "share_pct": 0.45
+    },
+    {
+      "artist": "Kailash Kher",
+      "plays": 532,
+      "minutes": 857.9,
+      "share_pct": 0.44
+    },
+    {
+      "artist": "The Smile",
+      "plays": 522,
+      "minutes": 1220.5,
+      "share_pct": 0.43
+    },
+    {
+      "artist": "Billie Eilish",
+      "plays": 517,
+      "minutes": 1007.0,
+      "share_pct": 0.43
+    },
+    {
+      "artist": "Jasleen Royal",
+      "plays": 502,
+      "minutes": 645.1,
+      "share_pct": 0.42
+    },
+    {
+      "artist": "Daft Punk",
+      "plays": 479,
+      "minutes": 737.6,
+      "share_pct": 0.4
+    },
+    {
+      "artist": "The Family Crest",
+      "plays": 469,
+      "minutes": 804.4,
+      "share_pct": 0.39
+    },
+    {
+      "artist": "Queen",
+      "plays": 468,
+      "minutes": 567.5,
+      "share_pct": 0.39
+    },
+    {
+      "artist": "OneRepublic",
+      "plays": 461,
+      "minutes": 435.6,
+      "share_pct": 0.38
+    },
+    {
+      "artist": "Akhil Sachdeva",
+      "plays": 453,
+      "minutes": 958.7,
+      "share_pct": 0.38
+    },
+    {
+      "artist": "Maroon 5",
+      "plays": 447,
+      "minutes": 546.0,
+      "share_pct": 0.37
+    },
+    {
+      "artist": "B Praak",
+      "plays": 433,
+      "minutes": 516.9,
+      "share_pct": 0.36
+    },
+    {
+      "artist": "Khalid",
+      "plays": 432,
+      "minutes": 742.5,
+      "share_pct": 0.36
+    },
+    {
+      "artist": "Hassan & Roshaan",
+      "plays": 423,
+      "minutes": 961.9,
+      "share_pct": 0.35
+    },
+    {
+      "artist": "The Beatles",
+      "plays": 413,
+      "minutes": 688.6,
+      "share_pct": 0.34
+    },
+    {
+      "artist": "Vishal Mishra",
+      "plays": 400,
+      "minutes": 518.0,
+      "share_pct": 0.33
+    },
+    {
+      "artist": "Prateek Kuhad",
+      "plays": 387,
+      "minutes": 482.2,
+      "share_pct": 0.32
+    },
+    {
+      "artist": "Mazzy Star",
+      "plays": 383,
+      "minutes": 733.9,
+      "share_pct": 0.32
+    },
+    {
+      "artist": "Eminem",
+      "plays": 381,
+      "minutes": 561.8,
+      "share_pct": 0.32
+    }
+  ],
+  "top_albums_all_time": [
+    {
+      "album": "The Bends",
+      "artist": "Radiohead",
+      "plays": 1601,
+      "minutes": 4205.4
+    },
+    {
+      "album": "In Rainbows",
+      "artist": "Radiohead",
+      "plays": 1509,
+      "minutes": 3780.8
+    },
+    {
+      "album": "OK Computer",
+      "artist": "Radiohead",
+      "plays": 1476,
+      "minutes": 4221.2
+    },
+    {
+      "album": "Aalas Ka Pedh",
+      "artist": "The Local Train",
+      "plays": 1256,
+      "minutes": 2066.7
+    },
+    {
+      "album": "Parachutes",
+      "artist": "Coldplay",
+      "plays": 893,
+      "minutes": 1958.6
+    },
+    {
+      "album": "Currents",
+      "artist": "Tame Impala",
+      "plays": 848,
+      "minutes": 1885.4
+    },
+    {
+      "album": "The Dark Side of the Moon",
+      "artist": "Pink Floyd",
+      "plays": 683,
+      "minutes": 1448.6
+    },
+    {
+      "album": "The New Abnormal",
+      "artist": "The Strokes",
+      "plays": 629,
+      "minutes": 1420.4
+    },
+    {
+      "album": "Vaaqif",
+      "artist": "The Local Train",
+      "plays": 584,
+      "minutes": 1060.4
+    },
+    {
+      "album": "Kid A",
+      "artist": "Radiohead",
+      "plays": 556,
+      "minutes": 1334.0
+    },
+    {
+      "album": "A Rush of Blood to the Head",
+      "artist": "Coldplay",
+      "plays": 553,
+      "minutes": 1396.8
+    },
+    {
+      "album": "Cigarettes After Sex",
+      "artist": "Cigarettes After Sex",
+      "plays": 542,
+      "minutes": 1406.6
+    },
+    {
+      "album": "A Moon Shaped Pool",
+      "artist": "Radiohead",
+      "plays": 530,
+      "minutes": 1241.0
+    },
+    {
+      "album": "Hail To the Thief",
+      "artist": "Radiohead",
+      "plays": 518,
+      "minutes": 1177.1
+    },
+    {
+      "album": "OK Computer OKNOTOK 1997 2017",
+      "artist": "Radiohead",
+      "plays": 479,
+      "minutes": 1104.1
+    },
+    {
+      "album": "TIM",
+      "artist": "Avicii",
+      "plays": 477,
+      "minutes": 462.4
+    },
+    {
+      "album": "The Wall",
+      "artist": "Pink Floyd",
+      "plays": 445,
+      "minutes": 953.1
+    },
+    {
+      "album": "Wish You Were Here",
+      "artist": "Pink Floyd",
+      "plays": 445,
+      "minutes": 1314.0
+    },
+    {
+      "album": "Evolve",
+      "artist": "Imagine Dragons",
+      "plays": 420,
+      "minutes": 449.0
+    },
+    {
+      "album": "Rockstar",
+      "artist": "Mohit Chauhan",
+      "plays": 378,
+      "minutes": 615.6
+    },
+    {
+      "album": "Dhaani",
+      "artist": "Strings",
+      "plays": 358,
+      "minutes": 565.9
+    },
+    {
+      "album": "Cry",
+      "artist": "Cigarettes After Sex",
+      "plays": 353,
+      "minutes": 1044.3
+    },
+    {
+      "album": "Low Roar",
+      "artist": "Low Roar",
+      "plays": 353,
+      "minutes": 717.3
+    },
+    {
+      "album": "Love Aaj Kal",
+      "artist": "Pritam",
+      "plays": 344,
+      "minutes": 800.5
+    },
+    {
+      "album": "Random Access Memories",
+      "artist": "Daft Punk",
+      "plays": 342,
+      "minutes": 513.7
+    },
+    {
+      "album": "SMITHEREENS",
+      "artist": "Joji",
+      "plays": 334,
+      "minutes": 659.0
+    },
+    {
+      "album": "0",
+      "artist": "Low Roar",
+      "plays": 313,
+      "minutes": 678.4
+    },
+    {
+      "album": "KID A MNESIA",
+      "artist": "Radiohead",
+      "plays": 313,
+      "minutes": 796.2
+    },
+    {
+      "album": "Hollywood's Bleeding",
+      "artist": "Post Malone",
+      "plays": 299,
+      "minutes": 349.8
+    },
+    {
+      "album": "Once in a Long, Long While...",
+      "artist": "Low Roar",
+      "plays": 293,
+      "minutes": 559.0
+    }
+  ],
+  "top_tracks_all_time": [
+    {
+      "track": "Fake Plastic Trees",
+      "artist": "Radiohead",
+      "plays": 360,
+      "minutes": 1226.7
+    },
+    {
+      "track": "Let Down",
+      "artist": "Radiohead",
+      "plays": 346,
+      "minutes": 1063.3
+    },
+    {
+      "track": "Choo Lo",
+      "artist": "The Local Train",
+      "plays": 332,
+      "minutes": 531.8
+    },
+    {
+      "track": "Karma Police",
+      "artist": "Radiohead",
+      "plays": 322,
+      "minutes": 1038.1
+    },
+    {
+      "track": "No Surprises",
+      "artist": "Radiohead",
+      "plays": 296,
+      "minutes": 785.3
+    },
+    {
+      "track": "All I Need",
+      "artist": "Radiohead",
+      "plays": 268,
+      "minutes": 623.3
+    },
+    {
+      "track": "Wish You Were Here",
+      "artist": "Pink Floyd",
+      "plays": 254,
+      "minutes": 637.2
+    },
+    {
+      "track": "Black Star",
+      "artist": "Radiohead",
+      "plays": 248,
+      "minutes": 717.1
+    },
+    {
+      "track": "High and Dry",
+      "artist": "Radiohead",
+      "plays": 247,
+      "minutes": 684.2
+    },
+    {
+      "track": "Maahi Ve",
+      "artist": "A.R. Rahman",
+      "plays": 238,
+      "minutes": 426.9
+    },
+    {
+      "track": "Ode To The Mets",
+      "artist": "The Strokes",
+      "plays": 237,
+      "minutes": 634.4
+    },
+    {
+      "track": "Jigsaw Falling Into Place",
+      "artist": "Radiohead",
+      "plays": 235,
+      "minutes": 656.5
+    },
+    {
+      "track": "How to Disappear Completely",
+      "artist": "Radiohead",
+      "plays": 230,
+      "minutes": 679.5
+    },
+    {
+      "track": "Khumaar",
+      "artist": "Papon",
+      "plays": 224,
+      "minutes": 743.2
+    },
+    {
+      "track": "Bandey",
+      "artist": "The Local Train",
+      "plays": 213,
+      "minutes": 433.4
+    },
+    {
+      "track": "(Nice Dream)",
+      "artist": "Radiohead",
+      "plays": 210,
+      "minutes": 430.1
+    },
+    {
+      "track": "Comfortably Numb",
+      "artist": "Pink Floyd",
+      "plays": 207,
+      "minutes": 534.3
+    },
+    {
+      "track": "Man of War",
+      "artist": "Radiohead",
+      "plays": 204,
+      "minutes": 533.9
+    },
+    {
+      "track": "Waqt Ki Baatein",
+      "artist": "Dream Note",
+      "plays": 199,
+      "minutes": 321.7
+    },
+    {
+      "track": "Nothing's Gonna Hurt You Baby",
+      "artist": "Cigarettes After Sex",
+      "plays": 197,
+      "minutes": 545.7
+    },
+    {
+      "track": "Breathe (In the Air)",
+      "artist": "Pink Floyd",
+      "plays": 196,
+      "minutes": 314.2
+    },
+    {
+      "track": "Apocalypse",
+      "artist": "Cigarettes After Sex",
+      "plays": 194,
+      "minutes": 560.6
+    },
+    {
+      "track": "Heroes - 2017 Remaster",
+      "artist": "David Bowie",
+      "plays": 184,
+      "minutes": 405.1
+    },
+    {
+      "track": "The Nights",
+      "artist": "Avicii",
+      "plays": 181,
+      "minutes": 175.2
+    },
+    {
+      "track": "Chaand Baaliyan",
+      "artist": "Aditya A",
+      "plays": 179,
+      "minutes": 165.4
+    },
+    {
+      "track": "Bullet Proof ... I Wish I Was",
+      "artist": "Radiohead",
+      "plays": 175,
+      "minutes": 445.2
+    },
+    {
+      "track": "Lovers Rock",
+      "artist": "TV Girl",
+      "plays": 175,
+      "minutes": 244.9
+    },
+    {
+      "track": "Sparks",
+      "artist": "Coldplay",
+      "plays": 175,
+      "minutes": 378.8
+    },
+    {
+      "track": "Give Up",
+      "artist": "Low Roar",
+      "plays": 173,
+      "minutes": 258.8
+    },
+    {
+      "track": "Apna Bana Le",
+      "artist": "Sachin-Jigar",
+      "plays": 169,
+      "minutes": 416.1
+    }
+  ],
+  "top_artists_per_year": {
+    "2016": [
+      {
+        "artist": "Pritam",
+        "plays": 3
+      },
+      {
+        "artist": "Alan Walker",
+        "plays": 1
+      },
+      {
+        "artist": "Morodo",
+        "plays": 1
+      },
+      {
+        "artist": "Strings",
+        "plays": 1
+      }
+    ],
+    "2017": [
+      {
+        "artist": "Adrenalize",
+        "plays": 2
+      },
+      {
+        "artist": "Calvin Harris",
+        "plays": 2
+      },
+      {
+        "artist": "Florian Picasso",
+        "plays": 2
+      },
+      {
+        "artist": "ILLENIUM",
+        "plays": 2
+      },
+      {
+        "artist": "Mall Grab",
+        "plays": 2
+      },
+      {
+        "artist": "Young Guns",
+        "plays": 2
+      },
+      {
+        "artist": "Diskord",
+        "plays": 1
+      },
+      {
+        "artist": "Eric Clapton",
+        "plays": 1
+      },
+      {
+        "artist": "Gryffin",
+        "plays": 1
+      },
+      {
+        "artist": "Lost Sky",
+        "plays": 1
+      }
+    ],
+    "2018": [
+      {
+        "artist": "Coldplay",
+        "plays": 3
+      },
+      {
+        "artist": "David Bowie",
+        "plays": 2
+      },
+      {
+        "artist": "Imagine Dragons",
+        "plays": 2
+      },
+      {
+        "artist": "MHD",
+        "plays": 2
+      },
+      {
+        "artist": "The Best Team",
+        "plays": 2
+      },
+      {
+        "artist": "Champions League Orchestra",
+        "plays": 1
+      },
+      {
+        "artist": "David Sides",
+        "plays": 1
+      },
+      {
+        "artist": "Double Zero",
+        "plays": 1
+      },
+      {
+        "artist": "Green Day",
+        "plays": 1
+      },
+      {
+        "artist": "Guns N' Roses",
+        "plays": 1
+      }
+    ],
+    "2019": [
+      {
+        "artist": "Avicii",
+        "plays": 534
+      },
+      {
+        "artist": "The Local Train",
+        "plays": 481
+      },
+      {
+        "artist": "Pritam",
+        "plays": 400
+      },
+      {
+        "artist": "Strings",
+        "plays": 339
+      },
+      {
+        "artist": "Arijit Singh",
+        "plays": 331
+      },
+      {
+        "artist": "Imagine Dragons",
+        "plays": 259
+      },
+      {
+        "artist": "A.R. Rahman",
+        "plays": 213
+      },
+      {
+        "artist": "Amit Trivedi",
+        "plays": 206
+      },
+      {
+        "artist": "Queen",
+        "plays": 202
+      },
+      {
+        "artist": "Mohit Chauhan",
+        "plays": 199
+      }
+    ],
+    "2020": [
+      {
+        "artist": "Pritam",
+        "plays": 637
+      },
+      {
+        "artist": "The Local Train",
+        "plays": 510
+      },
+      {
+        "artist": "Arijit Singh",
+        "plays": 339
+      },
+      {
+        "artist": "The Family Crest",
+        "plays": 261
+      },
+      {
+        "artist": "Amit Trivedi",
+        "plays": 232
+      },
+      {
+        "artist": "Avicii",
+        "plays": 219
+      },
+      {
+        "artist": "Coldplay",
+        "plays": 207
+      },
+      {
+        "artist": "Vishal-Shekhar",
+        "plays": 185
+      },
+      {
+        "artist": "Akhil Sachdeva",
+        "plays": 181
+      },
+      {
+        "artist": "A.R. Rahman",
+        "plays": 173
+      }
+    ],
+    "2021": [
+      {
+        "artist": "The Local Train",
+        "plays": 322
+      },
+      {
+        "artist": "Vilen",
+        "plays": 126
+      },
+      {
+        "artist": "Coldplay",
+        "plays": 119
+      },
+      {
+        "artist": "Ritviz",
+        "plays": 118
+      },
+      {
+        "artist": "Pink Floyd",
+        "plays": 117
+      },
+      {
+        "artist": "B Praak",
+        "plays": 100
+      },
+      {
+        "artist": "Creedence Clearwater Revival",
+        "plays": 96
+      },
+      {
+        "artist": "Papon",
+        "plays": 85
+      },
+      {
+        "artist": "Jasleen Royal",
+        "plays": 84
+      },
+      {
+        "artist": "Fiddlecraft",
+        "plays": 78
+      }
+    ],
+    "2022": [
+      {
+        "artist": "Pritam",
+        "plays": 364
+      },
+      {
+        "artist": "The Local Train",
+        "plays": 155
+      },
+      {
+        "artist": "Amit Trivedi",
+        "plays": 84
+      },
+      {
+        "artist": "Imagine Dragons",
+        "plays": 79
+      },
+      {
+        "artist": "A.R. Rahman",
+        "plays": 77
+      },
+      {
+        "artist": "Jasleen Royal",
+        "plays": 77
+      },
+      {
+        "artist": "Tanishk Bagchi",
+        "plays": 75
+      },
+      {
+        "artist": "Pink Floyd",
+        "plays": 61
+      },
+      {
+        "artist": "AP Dhillon",
+        "plays": 60
+      },
+      {
+        "artist": "Low Roar",
+        "plays": 58
+      }
+    ],
+    "2023": [
+      {
+        "artist": "Pritam",
+        "plays": 360
+      },
+      {
+        "artist": "Imagine Dragons",
+        "plays": 314
+      },
+      {
+        "artist": "Low Roar",
+        "plays": 276
+      },
+      {
+        "artist": "Atif Aslam",
+        "plays": 175
+      },
+      {
+        "artist": "The Local Train",
+        "plays": 166
+      },
+      {
+        "artist": "Avicii",
+        "plays": 141
+      },
+      {
+        "artist": "CoComelon",
+        "plays": 139
+      },
+      {
+        "artist": "Baldev Krishna (Jagadhari Wale)",
+        "plays": 137
+      },
+      {
+        "artist": "The Weeknd",
+        "plays": 137
+      },
+      {
+        "artist": "The Script",
+        "plays": 123
+      }
+    ],
+    "2024": [
+      {
+        "artist": "Radiohead",
+        "plays": 3969
+      },
+      {
+        "artist": "Pritam",
+        "plays": 1424
+      },
+      {
+        "artist": "Coldplay",
+        "plays": 1095
+      },
+      {
+        "artist": "Cigarettes After Sex",
+        "plays": 1027
+      },
+      {
+        "artist": "Anuv Jain",
+        "plays": 781
+      },
+      {
+        "artist": "Atif Aslam",
+        "plays": 725
+      },
+      {
+        "artist": "Joji",
+        "plays": 625
+      },
+      {
+        "artist": "Amit Trivedi",
+        "plays": 507
+      },
+      {
+        "artist": "Post Malone",
+        "plays": 476
+      },
+      {
+        "artist": "A.R. Rahman",
+        "plays": 440
+      }
+    ],
+    "2025": [
+      {
+        "artist": "Radiohead",
+        "plays": 3475
+      },
+      {
+        "artist": "Pink Floyd",
+        "plays": 1071
+      },
+      {
+        "artist": "Tame Impala",
+        "plays": 988
+      },
+      {
+        "artist": "Coldplay",
+        "plays": 920
+      },
+      {
+        "artist": "The Strokes",
+        "plays": 662
+      },
+      {
+        "artist": "Pritam",
+        "plays": 496
+      },
+      {
+        "artist": "Atif Aslam",
+        "plays": 486
+      },
+      {
+        "artist": "Beach House",
+        "plays": 467
+      },
+      {
+        "artist": "Cigarettes After Sex",
+        "plays": 410
+      },
+      {
+        "artist": "A.R. Rahman",
+        "plays": 375
+      }
+    ],
+    "2026": [
+      {
+        "artist": "Radiohead",
+        "plays": 691
+      },
+      {
+        "artist": "Pink Floyd",
+        "plays": 234
+      },
+      {
+        "artist": "Shashwat Sachdev",
+        "plays": 221
+      },
+      {
+        "artist": "Tame Impala",
+        "plays": 181
+      },
+      {
+        "artist": "The Smile",
+        "plays": 163
+      },
+      {
+        "artist": "The Strokes",
+        "plays": 153
+      },
+      {
+        "artist": "Coldplay",
+        "plays": 136
+      },
+      {
+        "artist": "Gorillaz",
+        "plays": 117
+      },
+      {
+        "artist": "Beach House",
+        "plays": 105
+      },
+      {
+        "artist": "Khalid",
+        "plays": 86
+      }
+    ]
+  },
+  "top_tracks_per_year": {
+    "2016": [
+      {
+        "track": "Ae Dil Hai Mushkil Title Track (From \"Ae Dil Hai Mushkil\")",
+        "artist": "Pritam",
+        "plays": 2
+      },
+      {
+        "track": "Channa Mereya (From \"Ae Dil Hai Mushkil\")",
+        "artist": "Pritam",
+        "plays": 1
+      },
+      {
+        "track": "Dhaani",
+        "artist": "Strings",
+        "plays": 1
+      },
+      {
+        "track": "Divina Ciencia",
+        "artist": "Morodo",
+        "plays": 1
+      },
+      {
+        "track": "Faded",
+        "artist": "Alan Walker",
+        "plays": 1
+      }
+    ],
+    "2017": [
+      {
+        "track": "Broadfields",
+        "artist": "Young Guns",
+        "plays": 2
+      },
+      {
+        "track": "Drive",
+        "artist": "Mall Grab",
+        "plays": 2
+      },
+      {
+        "track": "Feels (feat. Pharrell Williams, Katy Perry & Big Sean)",
+        "artist": "Calvin Harris",
+        "plays": 2
+      },
+      {
+        "track": "Guns Down",
+        "artist": "Florian Picasso",
+        "plays": 2
+      },
+      {
+        "track": "Wherever The Light Ends",
+        "artist": "Adrenalize",
+        "plays": 2
+      },
+      {
+        "track": "Anything U Want (CRaymak Remix)",
+        "artist": "Diskord",
+        "plays": 1
+      },
+      {
+        "track": "Bell Bottom Blues - Live at Staples Center, Los Angeles, CA, 8/18-19/2001",
+        "artist": "Eric Clapton",
+        "plays": 1
+      },
+      {
+        "track": "Channa Mereya (From \"Ae Dil Hai Mushkil\")",
+        "artist": "Pritam",
+        "plays": 1
+      },
+      {
+        "track": "Faith",
+        "artist": "T-Mass",
+        "plays": 1
+      },
+      {
+        "track": "Fearless",
+        "artist": "Lost Sky",
+        "plays": 1
+      }
+    ],
+    "2018": [
+      {
+        "track": "Afro Trap, Pt. 3 (Champions League) - TroyBoi Remix",
+        "artist": "MHD",
+        "plays": 2
+      },
+      {
+        "track": "Champions League - Zadok the Priest Remix",
+        "artist": "The Best Team",
+        "plays": 2
+      },
+      {
+        "track": "Thunder",
+        "artist": "Imagine Dragons",
+        "plays": 2
+      },
+      {
+        "track": "Viva La Vida - Live from Spotify London",
+        "artist": "Coldplay",
+        "plays": 2
+      },
+      {
+        "track": "Bom Diggy",
+        "artist": "Zack Knight",
+        "plays": 1
+      },
+      {
+        "track": "Champions League - Remix",
+        "artist": "Double Zero",
+        "plays": 1
+      },
+      {
+        "track": "Champions League Remix",
+        "artist": "Plaf",
+        "plays": 1
+      },
+      {
+        "track": "Champions League Theme",
+        "artist": "Champions League Orchestra",
+        "plays": 1
+      },
+      {
+        "track": "Living Football - Official FIFA Theme",
+        "artist": "Hans Zimmer",
+        "plays": 1
+      },
+      {
+        "track": "Silence",
+        "artist": "Marshmello",
+        "plays": 1
+      }
+    ],
+    "2019": [
+      {
+        "track": "Bandey",
+        "artist": "The Local Train",
+        "plays": 94
+      },
+      {
+        "track": "Don't Stop Believin'",
+        "artist": "Journey",
+        "plays": 84
+      },
+      {
+        "track": "Seasons",
+        "artist": "Olly Murs",
+        "plays": 77
+      },
+      {
+        "track": "Tujhe Kitna Chahne Lage (From \"Kabir Singh\")",
+        "artist": "Arijit Singh",
+        "plays": 72
+      },
+      {
+        "track": "Aldrig Mer",
+        "artist": "Kasbo",
+        "plays": 67
+      },
+      {
+        "track": "Dhaani",
+        "artist": "Strings",
+        "plays": 67
+      },
+      {
+        "track": "Tearing at the Seams",
+        "artist": "Nathaniel Rateliff & The Night Sweats",
+        "plays": 64
+      },
+      {
+        "track": "Mizaaj",
+        "artist": "The Local Train",
+        "plays": 62
+      },
+      {
+        "track": "Waqt Ki Baatein",
+        "artist": "Dream Note",
+        "plays": 61
+      },
+      {
+        "track": "Forever Dreaming",
+        "artist": "Czecho No Republic",
+        "plays": 59
+      }
+    ],
+    "2020": [
+      {
+        "track": "Take Tonight",
+        "artist": "The Family Crest",
+        "plays": 79
+      },
+      {
+        "track": "Bandey",
+        "artist": "The Local Train",
+        "plays": 73
+      },
+      {
+        "track": "Aaoge Tum Kabhi",
+        "artist": "The Local Train",
+        "plays": 72
+      },
+      {
+        "track": "Namo Namo",
+        "artist": "Amit Trivedi",
+        "plays": 70
+      },
+      {
+        "track": "Never Gonna Stop",
+        "artist": "The Family Crest",
+        "plays": 66
+      },
+      {
+        "track": "Ghungroo (From \"War\")",
+        "artist": "Vishal-Shekhar",
+        "plays": 65
+      },
+      {
+        "track": "Choo Lo",
+        "artist": "The Local Train",
+        "plays": 64
+      },
+      {
+        "track": "O Saajna",
+        "artist": "Akhil Sachdeva",
+        "plays": 61
+      },
+      {
+        "track": "Dhaani",
+        "artist": "Strings",
+        "plays": 59
+      },
+      {
+        "track": "Tidal Wave",
+        "artist": "Old Sea Brigade",
+        "plays": 59
+      }
+    ],
+    "2021": [
+      {
+        "track": "Jaani & B Praak Live",
+        "artist": "Jaani",
+        "plays": 74
+      },
+      {
+        "track": "Main Chala Jaunga",
+        "artist": "Fiddlecraft",
+        "plays": 70
+      },
+      {
+        "track": "Chidiya",
+        "artist": "Vilen",
+        "plays": 65
+      },
+      {
+        "track": "Khumaar",
+        "artist": "Papon",
+        "plays": 64
+      },
+      {
+        "track": "Khudi",
+        "artist": "The Local Train",
+        "plays": 62
+      },
+      {
+        "track": "Ranjha (From \"Shershaah\")",
+        "artist": "Jasleen Royal",
+        "plays": 62
+      },
+      {
+        "track": "Wish You Were Here",
+        "artist": "Pink Floyd",
+        "plays": 59
+      },
+      {
+        "track": "Faasle",
+        "artist": "Anand Bhaskar Collective",
+        "plays": 55
+      },
+      {
+        "track": "What Colour Is Your Raindrop",
+        "artist": "Tajdar Junaid",
+        "plays": 55
+      },
+      {
+        "track": "Poetic Love",
+        "artist": "Tech Panda",
+        "plays": 53
+      }
+    ],
+    "2022": [
+      {
+        "track": "Choo Lo",
+        "artist": "The Local Train",
+        "plays": 54
+      },
+      {
+        "track": "Rasiya (From \"Brahmastra\")",
+        "artist": "Pritam",
+        "plays": 49
+      },
+      {
+        "track": "Rangisari (From \"Jugjugg Jeeyo\")",
+        "artist": "Kanishk Seth",
+        "plays": 48
+      },
+      {
+        "track": "Trouble",
+        "artist": "The Satellite Station",
+        "plays": 44
+      },
+      {
+        "track": "Ranjha (From \"Shershaah\")",
+        "artist": "Jasleen Royal",
+        "plays": 41
+      },
+      {
+        "track": "Deva Deva (From \"Brahmastra\")",
+        "artist": "Pritam",
+        "plays": 40
+      },
+      {
+        "track": "Kesariya (From \"Brahmastra\")",
+        "artist": "Pritam",
+        "plays": 39
+      },
+      {
+        "track": "Wish You Were Here",
+        "artist": "Pink Floyd",
+        "plays": 39
+      },
+      {
+        "track": "Chaand Baaliyan",
+        "artist": "Aditya A",
+        "plays": 37
+      },
+      {
+        "track": "Heart Upon My Sleeve (feat. Imagine Dragons)",
+        "artist": "Avicii",
+        "plays": 37
+      }
+    ],
+    "2023": [
+      {
+        "track": "Saanwariya Le Chal Parli Paar",
+        "artist": "Baldev Krishna (Jagadhari Wale)",
+        "plays": 101
+      },
+      {
+        "track": "Johny Johny Yes Papa",
+        "artist": "CoComelon",
+        "plays": 81
+      },
+      {
+        "track": "Baby Shark",
+        "artist": "Pinkfong",
+        "plays": 79
+      },
+      {
+        "track": "Tur Kalleyan",
+        "artist": "Pritam",
+        "plays": 58
+      },
+      {
+        "track": "Mileya Mileya",
+        "artist": "Rekha Bhardwaj",
+        "plays": 56
+      },
+      {
+        "track": "Give Up",
+        "artist": "Low Roar",
+        "plays": 54
+      },
+      {
+        "track": "Sail",
+        "artist": "AWOLNATION",
+        "plays": 49
+      },
+      {
+        "track": "Unstoppable",
+        "artist": "Sia",
+        "plays": 49
+      },
+      {
+        "track": "The Man Who Can't Be Moved",
+        "artist": "The Script",
+        "plays": 47
+      },
+      {
+        "track": "We Don't Talk Anymore (feat. Selena Gomez)",
+        "artist": "Charlie Puth",
+        "plays": 47
+      }
+    ],
+    "2024": [
+      {
+        "track": "Fake Plastic Trees",
+        "artist": "Radiohead",
+        "plays": 260
+      },
+      {
+        "track": "No Surprises",
+        "artist": "Radiohead",
+        "plays": 221
+      },
+      {
+        "track": "Karma Police",
+        "artist": "Radiohead",
+        "plays": 209
+      },
+      {
+        "track": "Let Down",
+        "artist": "Radiohead",
+        "plays": 185
+      },
+      {
+        "track": "High and Dry",
+        "artist": "Radiohead",
+        "plays": 177
+      },
+      {
+        "track": "(Nice Dream)",
+        "artist": "Radiohead",
+        "plays": 174
+      },
+      {
+        "track": "Black Star",
+        "artist": "Radiohead",
+        "plays": 166
+      },
+      {
+        "track": "Apocalypse",
+        "artist": "Cigarettes After Sex",
+        "plays": 152
+      },
+      {
+        "track": "Nothing's Gonna Hurt You Baby",
+        "artist": "Cigarettes After Sex",
+        "plays": 150
+      },
+      {
+        "track": "Bullet Proof ... I Wish I Was",
+        "artist": "Radiohead",
+        "plays": 137
+      }
+    ],
+    "2025": [
+      {
+        "track": "Let Down",
+        "artist": "Radiohead",
+        "plays": 150
+      },
+      {
+        "track": "Man of War",
+        "artist": "Radiohead",
+        "plays": 142
+      },
+      {
+        "track": "All I Need",
+        "artist": "Radiohead",
+        "plays": 141
+      },
+      {
+        "track": "Breathe (In the Air)",
+        "artist": "Pink Floyd",
+        "plays": 138
+      },
+      {
+        "track": "How to Disappear Completely",
+        "artist": "Radiohead",
+        "plays": 128
+      },
+      {
+        "track": "Myth",
+        "artist": "Beach House",
+        "plays": 125
+      },
+      {
+        "track": "Comfortably Numb",
+        "artist": "Pink Floyd",
+        "plays": 122
+      },
+      {
+        "track": "Ode To The Mets",
+        "artist": "The Strokes",
+        "plays": 122
+      },
+      {
+        "track": "Eventually",
+        "artist": "Tame Impala",
+        "plays": 121
+      },
+      {
+        "track": "A Wolf At the Door",
+        "artist": "Radiohead",
+        "plays": 111
+      }
+    ],
+    "2026": [
+      {
+        "track": "Give Up The Ghost",
+        "artist": "Radiohead",
+        "plays": 39
+      },
+      {
+        "track": "The Smoke",
+        "artist": "The Smile",
+        "plays": 34
+      },
+      {
+        "track": "Airbag",
+        "artist": "Radiohead",
+        "plays": 32
+      },
+      {
+        "track": "Not The Same Anymore",
+        "artist": "The Strokes",
+        "plays": 32
+      },
+      {
+        "track": "Bending Hectic",
+        "artist": "The Smile",
+        "plays": 30
+      },
+      {
+        "track": "8TEEN",
+        "artist": "Khalid",
+        "plays": 27
+      },
+      {
+        "track": "Ishq Jalakar - Karvaan",
+        "artist": "Shashwat Sachdev",
+        "plays": 27
+      },
+      {
+        "track": "Saturday Nights",
+        "artist": "Khalid",
+        "plays": 27
+      },
+      {
+        "track": "Kaho Na Kaho - From \"Murder\"",
+        "artist": "Amir Jamal",
+        "plays": 26
+      },
+      {
+        "track": "Kazinama - Yaad Kiya Dil Ne",
+        "artist": "Kazinama",
+        "plays": 26
+      }
+    ]
+  },
+  "artist_share_per_year": {
+    "years": [
+      "2016",
+      "2017",
+      "2018",
+      "2019",
+      "2020",
+      "2021",
+      "2022",
+      "2023",
+      "2024",
+      "2025",
+      "2026"
+    ],
+    "series": [
+      {
+        "artist": "Radiohead",
+        "data": [
+          0.0,
+          0.0,
+          0.0,
+          0.01,
+          0.0,
+          0.02,
+          0.05,
+          0.0,
+          10.04,
+          12.12,
+          13.55
+        ]
+      },
+      {
+        "artist": "Pritam",
+        "data": [
+          50.0,
+          5.26,
+          0.0,
+          2.93,
+          4.35,
+          1.29,
+          8.58,
+          4.23,
+          3.6,
+          1.73,
+          0.61
+        ]
+      },
+      {
+        "artist": "Coldplay",
+        "data": [
+          0.0,
+          0.0,
+          13.04,
+          0.09,
+          1.41,
+          1.99,
+          0.14,
+          0.23,
+          2.77,
+          3.21,
+          2.67
+        ]
+      },
+      {
+        "artist": "The Local Train",
+        "data": [
+          0.0,
+          0.0,
+          0.0,
+          3.52,
+          3.48,
+          5.38,
+          3.66,
+          1.95,
+          0.56,
+          0.26,
+          0.06
+        ]
+      },
+      {
+        "artist": "Pink Floyd",
+        "data": [
+          0.0,
+          0.0,
+          0.0,
+          0.21,
+          0.55,
+          1.96,
+          1.44,
+          0.61,
+          0.41,
+          3.73,
+          4.59
+        ]
+      },
+      {
+        "artist": "Cigarettes After Sex",
+        "data": [
+          0.0,
+          0.0,
+          0.0,
+          0.01,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          2.6,
+          1.43,
+          0.71
+        ]
+      },
+      {
+        "artist": "Atif Aslam",
+        "data": [
+          0.0,
+          0.0,
+          0.0,
+          1.05,
+          0.71,
+          0.38,
+          0.64,
+          2.05,
+          1.83,
+          1.69,
+          0.18
+        ]
+      },
+      {
+        "artist": "A.R. Rahman",
+        "data": [
+          0.0,
+          0.0,
+          0.0,
+          1.56,
+          1.18,
+          1.14,
+          1.82,
+          1.01,
+          1.11,
+          1.31,
+          0.39
+        ]
+      },
+      {
+        "artist": "Tame Impala",
+        "data": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.02,
+          0.0,
+          0.0,
+          0.35,
+          3.45,
+          3.55
+        ]
+      },
+      {
+        "artist": "Amit Trivedi",
+        "data": [
+          0.0,
+          0.0,
+          0.0,
+          1.51,
+          1.58,
+          1.19,
+          1.98,
+          1.36,
+          1.28,
+          0.35,
+          0.47
+        ]
+      },
+      {
+        "artist": "Avicii",
+        "data": [
+          0.0,
+          0.0,
+          0.0,
+          3.91,
+          1.49,
+          0.89,
+          1.25,
+          1.66,
+          0.38,
+          0.28,
+          0.02
+        ]
+      },
+      {
+        "artist": "The Strokes",
+        "data": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.55,
+          2.31,
+          3.0
+        ]
+      },
+      {
+        "artist": "Other",
+        "data": [
+          50.0,
+          94.74,
+          86.96,
+          85.22,
+          85.25,
+          85.76,
+          80.45,
+          86.9,
+          74.5,
+          68.13,
+          70.21
+        ]
+      }
+    ]
+  },
+  "hour_weekday_heatmap": [
+    [
+      1252,
+      785,
+      758,
+      720,
+      439,
+      536,
+      404,
+      291,
+      311,
+      231,
+      313,
+      268,
+      265,
+      305,
+      452,
+      880,
+      1187,
+      1097,
+      1033,
+      972,
+      964,
+      828,
+      1097,
+      964
+    ],
+    [
+      1239,
+      1222,
+      1573,
+      959,
+      932,
+      397,
+      377,
+      128,
+      154,
+      237,
+      467,
+      369,
+      476,
+      824,
+      659,
+      987,
+      870,
+      802,
+      934,
+      1361,
+      961,
+      776,
+      681,
+      918
+    ],
+    [
+      1169,
+      1182,
+      879,
+      1053,
+      1228,
+      503,
+      235,
+      251,
+      311,
+      278,
+      355,
+      626,
+      209,
+      414,
+      480,
+      488,
+      1057,
+      684,
+      854,
+      1105,
+      780,
+      615,
+      873,
+      1148
+    ],
+    [
+      1757,
+      1189,
+      778,
+      822,
+      976,
+      556,
+      468,
+      150,
+      152,
+      265,
+      433,
+      338,
+      867,
+      401,
+      518,
+      1000,
+      806,
+      722,
+      1019,
+      868,
+      738,
+      890,
+      868,
+      731
+    ],
+    [
+      804,
+      1109,
+      866,
+      674,
+      958,
+      390,
+      172,
+      407,
+      140,
+      146,
+      253,
+      179,
+      176,
+      567,
+      465,
+      629,
+      594,
+      552,
+      889,
+      743,
+      383,
+      592,
+      788,
+      928
+    ],
+    [
+      971,
+      617,
+      628,
+      918,
+      1176,
+      648,
+      342,
+      216,
+      190,
+      210,
+      229,
+      214,
+      256,
+      370,
+      518,
+      656,
+      986,
+      1184,
+      1303,
+      948,
+      749,
+      707,
+      1363,
+      1314
+    ],
+    [
+      1468,
+      1358,
+      895,
+      564,
+      615,
+      891,
+      513,
+      617,
+      308,
+      177,
+      346,
+      669,
+      517,
+      497,
+      851,
+      1163,
+      1089,
+      1776,
+      1243,
+      1293,
+      1185,
+      1107,
+      1273,
+      1137
+    ]
+  ],
+  "new_artists_per_month": [
+    {
+      "month": "2016-10",
+      "new_artists": 4
+    },
+    {
+      "month": "2017-02",
+      "new_artists": 1
+    },
+    {
+      "month": "2017-09",
+      "new_artists": 11
+    },
+    {
+      "month": "2018-02",
+      "new_artists": 10
+    },
+    {
+      "month": "2018-09",
+      "new_artists": 7
+    },
+    {
+      "month": "2019-01",
+      "new_artists": 31
+    },
+    {
+      "month": "2019-02",
+      "new_artists": 27
+    },
+    {
+      "month": "2019-03",
+      "new_artists": 70
+    },
+    {
+      "month": "2019-05",
+      "new_artists": 80
+    },
+    {
+      "month": "2019-06",
+      "new_artists": 118
+    },
+    {
+      "month": "2019-07",
+      "new_artists": 117
+    },
+    {
+      "month": "2019-08",
+      "new_artists": 166
+    },
+    {
+      "month": "2019-09",
+      "new_artists": 193
+    },
+    {
+      "month": "2019-10",
+      "new_artists": 89
+    },
+    {
+      "month": "2019-11",
+      "new_artists": 113
+    },
+    {
+      "month": "2019-12",
+      "new_artists": 131
+    },
+    {
+      "month": "2020-01",
+      "new_artists": 142
+    },
+    {
+      "month": "2020-02",
+      "new_artists": 67
+    },
+    {
+      "month": "2020-03",
+      "new_artists": 112
+    },
+    {
+      "month": "2020-04",
+      "new_artists": 123
+    },
+    {
+      "month": "2020-05",
+      "new_artists": 80
+    },
+    {
+      "month": "2020-06",
+      "new_artists": 28
+    },
+    {
+      "month": "2020-07",
+      "new_artists": 22
+    },
+    {
+      "month": "2020-08",
+      "new_artists": 19
+    },
+    {
+      "month": "2020-09",
+      "new_artists": 32
+    },
+    {
+      "month": "2020-10",
+      "new_artists": 30
+    },
+    {
+      "month": "2020-11",
+      "new_artists": 48
+    },
+    {
+      "month": "2020-12",
+      "new_artists": 10
+    },
+    {
+      "month": "2021-01",
+      "new_artists": 8
+    },
+    {
+      "month": "2021-02",
+      "new_artists": 55
+    },
+    {
+      "month": "2021-03",
+      "new_artists": 27
+    },
+    {
+      "month": "2021-04",
+      "new_artists": 34
+    },
+    {
+      "month": "2021-05",
+      "new_artists": 28
+    },
+    {
+      "month": "2021-06",
+      "new_artists": 7
+    },
+    {
+      "month": "2021-07",
+      "new_artists": 30
+    },
+    {
+      "month": "2021-08",
+      "new_artists": 27
+    },
+    {
+      "month": "2021-09",
+      "new_artists": 16
+    },
+    {
+      "month": "2021-10",
+      "new_artists": 30
+    },
+    {
+      "month": "2021-11",
+      "new_artists": 26
+    },
+    {
+      "month": "2021-12",
+      "new_artists": 79
+    },
+    {
+      "month": "2022-01",
+      "new_artists": 21
+    },
+    {
+      "month": "2022-02",
+      "new_artists": 16
+    },
+    {
+      "month": "2022-03",
+      "new_artists": 9
+    },
+    {
+      "month": "2022-04",
+      "new_artists": 15
+    },
+    {
+      "month": "2022-05",
+      "new_artists": 3
+    },
+    {
+      "month": "2022-08",
+      "new_artists": 1
+    },
+    {
+      "month": "2022-09",
+      "new_artists": 14
+    },
+    {
+      "month": "2022-10",
+      "new_artists": 115
+    },
+    {
+      "month": "2022-11",
+      "new_artists": 21
+    },
+    {
+      "month": "2022-12",
+      "new_artists": 4
+    },
+    {
+      "month": "2023-02",
+      "new_artists": 1
+    },
+    {
+      "month": "2023-03",
+      "new_artists": 10
+    },
+    {
+      "month": "2023-04",
+      "new_artists": 84
+    },
+    {
+      "month": "2023-05",
+      "new_artists": 23
+    },
+    {
+      "month": "2023-06",
+      "new_artists": 59
+    },
+    {
+      "month": "2023-07",
+      "new_artists": 23
+    },
+    {
+      "month": "2023-08",
+      "new_artists": 6
+    },
+    {
+      "month": "2023-11",
+      "new_artists": 25
+    },
+    {
+      "month": "2023-12",
+      "new_artists": 75
+    },
+    {
+      "month": "2024-01",
+      "new_artists": 109
+    },
+    {
+      "month": "2024-02",
+      "new_artists": 77
+    },
+    {
+      "month": "2024-03",
+      "new_artists": 41
+    },
+    {
+      "month": "2024-04",
+      "new_artists": 27
+    },
+    {
+      "month": "2024-05",
+      "new_artists": 177
+    },
+    {
+      "month": "2024-06",
+      "new_artists": 155
+    },
+    {
+      "month": "2024-07",
+      "new_artists": 134
+    },
+    {
+      "month": "2024-08",
+      "new_artists": 210
+    },
+    {
+      "month": "2024-09",
+      "new_artists": 29
+    },
+    {
+      "month": "2024-10",
+      "new_artists": 46
+    },
+    {
+      "month": "2024-11",
+      "new_artists": 104
+    },
+    {
+      "month": "2024-12",
+      "new_artists": 167
+    },
+    {
+      "month": "2025-01",
+      "new_artists": 41
+    },
+    {
+      "month": "2025-02",
+      "new_artists": 88
+    },
+    {
+      "month": "2025-03",
+      "new_artists": 72
+    },
+    {
+      "month": "2025-04",
+      "new_artists": 59
+    },
+    {
+      "month": "2025-05",
+      "new_artists": 41
+    },
+    {
+      "month": "2025-06",
+      "new_artists": 144
+    },
+    {
+      "month": "2025-07",
+      "new_artists": 106
+    },
+    {
+      "month": "2025-08",
+      "new_artists": 86
+    },
+    {
+      "month": "2025-09",
+      "new_artists": 10
+    },
+    {
+      "month": "2025-10",
+      "new_artists": 84
+    },
+    {
+      "month": "2025-11",
+      "new_artists": 34
+    },
+    {
+      "month": "2025-12",
+      "new_artists": 23
+    },
+    {
+      "month": "2026-01",
+      "new_artists": 116
+    },
+    {
+      "month": "2026-02",
+      "new_artists": 38
+    },
+    {
+      "month": "2026-03",
+      "new_artists": 77
+    },
+    {
+      "month": "2026-04",
+      "new_artists": 4
+    }
+  ],
+  "yearly": [
+    {
+      "year": "2016",
+      "hours": 0.0,
+      "plays": 6,
+      "unique_artists": 4,
+      "unique_tracks": 5
+    },
+    {
+      "year": "2017",
+      "hours": 0.2,
+      "plays": 19,
+      "unique_artists": 13,
+      "unique_tracks": 14
+    },
+    {
+      "year": "2018",
+      "hours": 0.4,
+      "plays": 23,
+      "unique_artists": 17,
+      "unique_tracks": 19
+    },
+    {
+      "year": "2019",
+      "hours": 171.2,
+      "plays": 13672,
+      "unique_artists": 1157,
+      "unique_tracks": 2720
+    },
+    {
+      "year": "2020",
+      "hours": 333.2,
+      "plays": 14660,
+      "unique_artists": 1240,
+      "unique_tracks": 2888
+    },
+    {
+      "year": "2021",
+      "hours": 128.4,
+      "plays": 5983,
+      "unique_artists": 761,
+      "unique_tracks": 1540
+    },
+    {
+      "year": "2022",
+      "hours": 84.3,
+      "plays": 4240,
+      "unique_artists": 582,
+      "unique_tracks": 1209
+    },
+    {
+      "year": "2023",
+      "hours": 191.9,
+      "plays": 8519,
+      "unique_artists": 764,
+      "unique_tracks": 1833
+    },
+    {
+      "year": "2024",
+      "hours": 1206.9,
+      "plays": 39513,
+      "unique_artists": 2158,
+      "unique_tracks": 5917
+    },
+    {
+      "year": "2025",
+      "hours": 805.6,
+      "plays": 28679,
+      "unique_artists": 1903,
+      "unique_tracks": 6497
+    },
+    {
+      "year": "2026",
+      "hours": 161.3,
+      "plays": 5099,
+      "unique_artists": 761,
+      "unique_tracks": 2123
+    }
+  ],
+  "annual_champions": [
+    {
+      "year": "2016",
+      "top_artist": {
+        "artist": "Pritam",
+        "plays": 3
+      },
+      "top_track": {
+        "track": "Ae Dil Hai Mushkil Title Track (From \"Ae Dil Hai Mushkil\")",
+        "artist": "Pritam",
+        "plays": 2
+      }
+    },
+    {
+      "year": "2017",
+      "top_artist": {
+        "artist": "Adrenalize",
+        "plays": 2
+      },
+      "top_track": {
+        "track": "Broadfields",
+        "artist": "Young Guns",
+        "plays": 2
+      }
+    },
+    {
+      "year": "2018",
+      "top_artist": {
+        "artist": "Coldplay",
+        "plays": 3
+      },
+      "top_track": {
+        "track": "Afro Trap, Pt. 3 (Champions League) - TroyBoi Remix",
+        "artist": "MHD",
+        "plays": 2
+      }
+    },
+    {
+      "year": "2019",
+      "top_artist": {
+        "artist": "Avicii",
+        "plays": 534
+      },
+      "top_track": {
+        "track": "Bandey",
+        "artist": "The Local Train",
+        "plays": 94
+      }
+    },
+    {
+      "year": "2020",
+      "top_artist": {
+        "artist": "Pritam",
+        "plays": 637
+      },
+      "top_track": {
+        "track": "Take Tonight",
+        "artist": "The Family Crest",
+        "plays": 79
+      }
+    },
+    {
+      "year": "2021",
+      "top_artist": {
+        "artist": "The Local Train",
+        "plays": 322
+      },
+      "top_track": {
+        "track": "Jaani & B Praak Live",
+        "artist": "Jaani",
+        "plays": 74
+      }
+    },
+    {
+      "year": "2022",
+      "top_artist": {
+        "artist": "Pritam",
+        "plays": 364
+      },
+      "top_track": {
+        "track": "Choo Lo",
+        "artist": "The Local Train",
+        "plays": 54
+      }
+    },
+    {
+      "year": "2023",
+      "top_artist": {
+        "artist": "Pritam",
+        "plays": 360
+      },
+      "top_track": {
+        "track": "Saanwariya Le Chal Parli Paar",
+        "artist": "Baldev Krishna (Jagadhari Wale)",
+        "plays": 101
+      }
+    },
+    {
+      "year": "2024",
+      "top_artist": {
+        "artist": "Radiohead",
+        "plays": 3969
+      },
+      "top_track": {
+        "track": "Fake Plastic Trees",
+        "artist": "Radiohead",
+        "plays": 260
+      }
+    },
+    {
+      "year": "2025",
+      "top_artist": {
+        "artist": "Radiohead",
+        "plays": 3475
+      },
+      "top_track": {
+        "track": "Let Down",
+        "artist": "Radiohead",
+        "plays": 150
+      }
+    },
+    {
+      "year": "2026",
+      "top_artist": {
+        "artist": "Radiohead",
+        "plays": 691
+      },
+      "top_track": {
+        "track": "Give Up The Ghost",
+        "artist": "Radiohead",
+        "plays": 39
+      }
+    }
+  ]
+}

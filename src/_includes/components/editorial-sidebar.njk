@@ -1,0 +1,19 @@
+{# Optional sidebar panel — enabled via `sidebar:` frontmatter on a post.  #}
+{# Shape (all fields optional):                                             #}
+{#   sidebar:                                                               #}
+{#     label: "UPPER LABEL"                                                 #}
+{#     title: "Panel heading"                                               #}
+{#     content: |                                                           #}
+{#       Markdown content. Links, **bold**, bullet lists all work.          #}
+{#                                                                          #}
+{# `sidebar:` can also be a plain string — it gets rendered as markdown.    #}
+{% if sidebar %}
+{% set sidebarContent = sidebar.content if sidebar.content else (sidebar if sidebar is string else '') %}
+<section class="ed-sidebar-section not-prose">
+  {% if sidebar.label %}<span class="ed-sidebar-label">{{ sidebar.label }}</span>{% endif %}
+  {% if sidebar.title %}<h3 class="ed-sidebar-title">{{ sidebar.title }}</h3>{% endif %}
+  {% if sidebarContent %}
+  <div class="ed-sidebar-body">{{ sidebarContent | markdownify | safe }}</div>
+  {% endif %}
+</section>
+{% endif %}

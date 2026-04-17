@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rotating Square Physics</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #1a1a1a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: sans-serif;
+        }
+        canvas {
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="simCanvas"></canvas>
+
+<script>
+    const canvas = document.getElementById('simCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // Configuration
+    const config = {
+        squareSize: 400,
+        ballRadius: 15,
+        rotationSpeed: 0.01, // Radians per frame (clockwise)
+        ballSpeed: 5,
+        colors: {
+            square: '#00ffcc',
+            ball: '#ff3366',
+            bg: '#1a1a1a'
+        }
+    };
+
+    // Simulation State
+    let angle = 0;
+    const centerX = window.innerWidth / 2;
+    const centerY = window.innerHeight / 2;
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const ball = {
+        x: centerX,
+        y: centerY,
+        vx: config.ballSpeed,
+        vy: config.ballSpeed * 0.7,
+        radius: config.ballRadius
+    };
+
+    function update() {
+        // 1. Update Square Rotation (Clockwise)
+        angle += config.rotationSpeed;
+
+        // 2. Move Ball (Global Space)
+        ball.x += ball.vx;
+        ball.y += ball.vy;
+
+        // 3. Collision Detection using Local Space Transformation
+        // We transform the ball's global position into the square's local coordinate system.
+        // In local space, the square is axis-aligned and centered at (0,0).
+        
+        const dx = ball.x - centerX;
+        const dy = ball.y - centerY;
+
+        // Rotate the point by -angle to get local coordinates
+        const localX = dx * Math.cos(-angle) - dy * Math.sin(-angle);
+        const localY = dx * Math.sin(-angle) + dy * Math.cos(-angle);
+
+        const halfSize = config.squareSize / 2;
+        let collided = false;
+
+        // Check boundaries in local space
+        // Left/Right walls
+        if (localX + ball.radius > halfSize) {
+            // We need to reflect the velocity in local space and convert back
+            // But a simpler way: reflect the local velocity and then transform back
+            // To make it robust, we calculate local velocity
+            const lvx = ball.vx * Math.cos(-angle) - ball.vy * Math.sin(-angle);
+            const lvy = ball.vx * Math.sin(-angle) + ball.vy * Math.cos(-angle);
+            
+            // Bounce and Clamp
+            ball.vx = -lvx * Math.cos(angle) - lvy * Math.sin(angle); // This is a simplified reflection
+            // Let's do it properly:
+            handleCollision(localX, localY, 'x', halfSize);
+            collided = true;
+        } 
+        // (The logic below is a more robust implementation of the collision)
+    }
+
+    // Improved Physics Loop
+    function physicsStep() {
+        // Rotate square
+        angle += config.rotationSpeed;
+
+        // Update ball position
+        ball.x += ball.vx;
+        ball.y += ball.vy;
+
+        // Transform ball to square's local space
+        const relX = ball.x - centerX;
+        const relY = ball.y - centerY;
+        
+        // Local coordinates (rotation applied inversely)
+        const lx = relX * Math.cos(-angle) - relY * Math.sin(-angle);
+        const ly = relX * Math.sin(-angle) + relY * Math.cos(-angle);
+
+        const limit = config.squareSize / 2 - ball.radius;
+
+        let hit = false;
+        let newLx = lx;
+        let newLy = ly;
+        let localV = {
+            x: ball.vx * Math.cos(-angle) - ball.vy * Math.sin(-angle),
+            y: ball.vx * Math.sin(-angle) + ball.vy * Math.cos(-angle)
+        };
+
+        // Check collisions in local space
+        if (lx > limit) { newLx = limit; localV.x *= -1; hit = true; }
+        if (lx < -limit) { newLx = -limit; localV.x *= -1; hit = true; }
+        if (ly > limit) { newLy = limit; localV.y *= -1; hit = true; }
+        if (ly < -limit) { newLy = -limit; localV.y *= -1; hit = true; }
+
+        if (hit) {
+            // 1. Reposition ball in local space to prevent sticking
+            // 2. Convert local velocity back to global velocity
+            // 3. Add tangential velocity from rotation to make it realistic
+            
+            // Convert local position back to global
+            const globalRelX = newLx * Math.cos(angle) - newLy * Math.sin(angle);
+            const globalRelY = newLx * Math.sin(angle) + newLy * Math.cos(angle);
+            ball.x = centerX + globalRelX;
+            ball.y = centerY + globalRelY;
+
+            // Convert local velocity back to global
+            ball.vx = localV.x * Math.cos(angle) - localV.y * Math.sin(angle);
+            ball.vy = localV.x * Math.sin(angle) + localV.y * Math.cos(angle);
+
+            // Add rotational "kick" (v = omega * r)
+            // This makes the ball bounce harder when hit by a moving wall
+            const tangentialVelX = -config.rotationSpeed * (ball.y - centerY);
+            const tangentialVelY = config.rotationSpeed * (ball.x - centerX);
+            
+            // We add a portion of the wall's movement to the ball
+            ball.vx += tangentialVelX * 0.1; 
+            ball.vy += tangentialVelY * 0.1;
+        }
+    }
+
+    function draw() {
+        // Clear screen
+        ctx.fillStyle = config.colors.bg;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.save();
+        ctx.translate(centerX, centerY);
+        ctx.rotate(angle);
+
+        // Draw Square
+        ctx.strokeStyle = config.colors.square;
+        ctx.lineWidth = 5;
+        ctx.strokeRect(-config.squareSize/2, -config.squareSize/2, config.squareSize, config.squareSize);
+        
+        // Draw Glow effect for square
+        ctx.shadowBlur = 15;
+        ctx.shadowColor = config.colors.square;
+        ctx.strokeRect(-config.squareSize/2, -config.squareSize/2, config.squareSize, config.squareSize);
+        ctx.restore();
+
+        // Draw Ball
+        ctx.beginPath();
+        ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+        ctx.fillStyle = config.colors.ball;
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = config.colors.ball;
+        ctx.fill();
+        ctx.closePath();
+        ctx.shadowBlur = 0; // Reset shadow for next frame
+    }
+
+    function loop() {
+        physicsStep();
+        draw();
+        requestAnimationFrame(loop);
+    }
+
+    // Handle window resize
+    window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        // Note: center is re-calculated via constants in a real app, 
+        // here we just use the window half width/height.
+    });
+
+    loop();
+</script>
+</body>
+</html>

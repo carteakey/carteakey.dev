@@ -2,6 +2,7 @@
 title: Mounting additional drives in WSL2 (draft)
 description: Y'all got any more of that...storage
 date: 2025-03-15T19:59:51.454Z
+authored_by: human
 updated: 2025-03-15T19:59:51.459Z
 tags:
   - WSL

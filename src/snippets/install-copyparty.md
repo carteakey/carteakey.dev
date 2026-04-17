@@ -2,6 +2,7 @@
 title: Installing Copyparty on your server.
 slug: install-copyparty
 date: 2025-08-05T21:19:59.349Z
+authored_by: human
 updated: 2025-08-05T21:19:59.355Z
 ---
 

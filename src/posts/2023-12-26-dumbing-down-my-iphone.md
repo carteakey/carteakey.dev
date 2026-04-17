@@ -2,6 +2,7 @@
 title: Dumbing down my iPhone.
 description: Trying to stay away from distractions.
 date: 2023-09-04T16:39:26.330Z
+authored_by: human
 tags:
   - Life
   - Productivity

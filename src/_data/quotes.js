@@ -51,6 +51,25 @@ export default [
     quote:
         "And when the hourglass has run out, the hourglass of temporality, when the noise of secular life has grown silent and its restless or ineffectual activism has come to an end, when everything around you is still, as it is in eternity, then eternity asks you and every individual in these millions and millions about only one thing: whether you have lived in despair or not.",
     author: "Soren Kierkegaard, \"The Sickness Unto Death\", Datalinks",
-}
-
+  },
+  {
+    quote:
+      "Fathers and mothers, tell your sons and daughters you love them. For if not, they will wander the streets as a child devoid of love and respect for themselves, and that loneliness and insecurity will stand out like an unique scent. This scent is known to society and the youth; and will attract those with malice in their intentions. And thus it will happen that your child will follow this person; because for them, this is the first person of the opposite sex that tells them they love them. And they will follow them like a lost puppy to the end of to world, unconditionally, without any second thought.",
+    author: "Unknown",
+  },
+  {
+    quote:
+      "I learned that the world of men as it exists today is a bureaucracy. This is an obvious truth, of course, though it is also one the ignorance of which causes great suffering.\n\nBut moreover, I discovered, in the only way that a man ever really learns anything important, the real skill that is required to succeed in a bureaucracy. I mean really succeed: do good, make a difference, serve. I discovered the key. This key is not efficiency, or probity, or insight, or wisdom. It is not political cunning, interpersonal skills, raw IQ, loyalty, vision, or any of the qualities that the bureaucratic world calls virtues, and tests for. The key is a certain capacity that underlies all these qualities, rather the way that an ability to breathe and pump blood underlies all thought and action.\n\nThe underlying bureaucratic key is the ability to deal with boredom. To function effectively in an environment that precludes everything vital and human. To breathe, so to speak, without air.\n\nThe key is the ability, whether innate or conditioned, to find the other side of the rote, the picayune, the meaningless, the repetitive, the pointlessly complex.\nTo be, in a word, unborable.\n\nIt is the key to modern life. If you are immune to boredom, there is literally nothing you cannot accomplish.",
+    author: "David Foster Wallace, The Pale King",
+  },
+  {
+    quote:
+      "If a book has been in print for forty years, I can expect it to be in print for another forty years. But, and that is the main difference, if it survives another decade, then it will be expected to be in print another fifty years. This, simply, as a rule, tells you why things that have been around for a long time are not \"aging\" like persons, but \"aging\" in reverse.\n\nEvery year that passes without extinction doubles the additional life expectancy.\nThis is an indicator of some robustness.\nThe robustness of an item is proportional to its life.",
+    author: "Nassim Nicholas Taleb, Antifragile",
+  },
+  {
+    quote:
+      "I've come up with a set of rules that describe our reactions to technologies:\n1. Anything that is in the world when you're born is normal and ordinary and is just a natural part of the way the world works.\n2. Anything that's invented between when you're fifteen and thirty-five is new and exciting and revolutionary and you can probably get a career in it.\n3. Anything invented after you're thirty-five is against the natural order of things.",
+    author: "Douglas Adams",
+  }
 ];

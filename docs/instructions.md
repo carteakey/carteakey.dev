@@ -4,7 +4,7 @@ These notes codify the rules I follow when pairing with Copilot/Codex on the blo
 
 ## Pre-edit checklist
 - Read these instructions before touching code.
-- Keep changes scoped to the `sonnet` branch and stay consistent with the existing stack.
+- Keep changes scoped to the `main` branch and stay consistent with the existing stack.
 - Prefer the simplest possible solution; no `var`, no jQuery, no IE shims.
 
 ## Manual workflow
@@ -13,13 +13,19 @@ These notes codify the rules I follow when pairing with Copilot/Codex on the blo
 3. Update `docs/CHANGELOG.md` with a SemVer entry under the current date.
 4. Bump the release number in `versions.json`.
 5. Confirm keyboard shortcuts, dark mode, and accent themes still behave.
-6. Commit with a concise message and push `sonnet`.
+6. Commit with a concise message and push `main`.
 
 ## Project context
 - Eleventy 3 drives the static site (`eleventy.config.mjs`).
 - Tailwind 4 is compiled from `src/static/css/tailwind.css` to `_site/css` by the CLI.
 - Alpine.js sprinkles live behaviour through `src/_includes/layouts/base.njk`.
 - Content lives in `src/` (posts, snippets, data files). Build output is `_site/`; never edit it manually.
+
+## Folio page dates
+- Folio pages (like `now.njk`) use a permanent `lastUpdated` field in the frontmatter.
+- This date should be manually updated when the content is meaningfully changed.
+- Some pages (like `bookmarks.njk`) compute dates dynamically from their data sources.
+- The dates are **not** automatically updated—they remain fixed until manually changed.
 
 ## Data and integrations
 - Dynamic data modules (`_data/*.js`) cache responses via `@11ty/eleventy-fetch`.
