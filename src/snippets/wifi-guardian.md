@@ -2,6 +2,7 @@
 title: Wifi-Guardian - Linux Wi-Fi Watchdog
 description: A script to monitor and restore Wi-Fi connectivity on Linux
 date: 2025-08-05T21:19:59.349Z
+authored_by: ai-assisted
 updated: 2025-08-05T21:19:59.355Z
 slug: wifi-guardian
 ---
@@ -13,7 +14,7 @@ These scripts help:
 - `wifi-guardian.sh` → Runs quick network resets to restore internet.
 - `wifi-fix-settings.sh` → Applies permanent tweaks to reduce disconnections, and auto-disables the internal adapter when an external one is working well.
 
-1. wifi-guardian.sh — Quick Fix Script
+1. wifi-guardian.sh - Quick Fix Script
 
 ```bash
 #!/usr/bin/env bash
@@ -245,7 +246,7 @@ main "$@"
 ```
 
 
-2. wifi-fix-settings.sh — Permanent Tweaks Script
+2. wifi-fix-settings.sh - Permanent Tweaks Script
 
 ```bash
 #!/bin/bash

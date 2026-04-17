@@ -7,26 +7,24 @@ eleventyNavigation:
   order: 7
 ---
 
-{% set cardShell = "rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-100/80 dark:bg-gray-900/70 shadow-sm" %}
-
 <div class="max-w-5xl mx-auto space-y-8">
     {% include "components/breadcrumbs.njk" %}
 
     <header class="space-y-3">
-        <h1 class="text-3xl font-semibold tracking-tight text-gray-900 dark:text-white">Quotes</h1>
+        <h1 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">Quotes</h1>
         <p class="text-sm text-gray-600 dark:text-gray-400 md:text-base">
-            Words that stick with me—updated whenever I stumble upon lines worth rereading.
+            Words that stick with me-updated whenever I stumble upon lines worth rereading.
         </p>
     </header>
 
     <!-- Quote of the Day Section -->
-    <section class="{{ cardShell }} p-5 sm:p-6 not-prose">
+    <section class="card card-padding not-prose">
         <div class="flex flex-col gap-3">
-            <div class="flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-amber-700 dark:text-amber-300">
+            <div class="flex items-center gap-2 text-sm font-semibold uppercase tracking-wide" style="color: var(--accent-color);">
                 {% feather "zap", class="w-4 h-4" %}
                 Quote of the Day
             </div>
-            <blockquote id="qotd" class="text-lg font-medium leading-relaxed text-gray-900 dark:text-gray-100">
+            <blockquote id="qotd" class="text-sm font-medium leading-relaxed text-gray-900 dark:text-gray-100">
                 {{ qotd.quote }}
             </blockquote>
             <p class="text-right text-xs italic text-gray-500 dark:text-gray-400" id="who">
@@ -37,17 +35,17 @@ eleventyNavigation:
 
     <!-- Static Quotes Section -->
     <section class="space-y-4">
-        <h2 class="text-xl font-semibold text-gray-900 dark:text-white">Saved Lines</h2>
+        <h2 class="text-base font-semibold text-gray-900 dark:text-white">Saved Lines</h2>
         <div
-          class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 items-start feed-masonry"
+          class="grid gap-4 sm:grid-cols-2 lg:grid-cols-2 items-start feed-masonry"
           data-feed-masonry
           style="--feed-row-height: 18px;"
         >
             {% for quote in quotes %}
-            <article class="{{ cardShell }} feed-card p-5 sm:p-6">
-                <blockquote class="space-y-3 text-gray-800 dark:text-gray-100">
-                    <p class="text-base leading-relaxed italic">“{{ quote.quote }}”</p>
-                    <cite class="block text-sm font-medium not-italic text-gray-600 dark:text-gray-400">— {{ quote.author }}</cite>
+            <article class="card feed-card card-compact">
+                <blockquote class="space-y-2 text-gray-800 dark:text-gray-100">
+                    <p class="text-sm leading-relaxed italic">"{{ quote.quote }}"</p>
+                    <cite class="block text-xs font-medium not-italic text-gray-500 dark:text-gray-400">- {{ quote.author }}</cite>
                 </blockquote>
             </article>
             {% endfor %}
@@ -57,7 +55,7 @@ eleventyNavigation:
 
 {% include "components/feed-masonry-script.njk" %}
 <!-- The script itself, loaded AFTER your root element. -->
-<script src="https://unpkg.com/typeit@8.7.1/dist/index.umd.js"></script>
+<script src="/static/js/typeit.min.js"></script>
 <script>
     const instance = new TypeIt("#qotd", {
     speed: 30,

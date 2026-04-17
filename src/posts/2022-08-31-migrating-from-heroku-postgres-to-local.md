@@ -2,6 +2,7 @@
 title: Migrating Heroku Postgres Database to a Cloud VM.
 description: How to jump ship your hobby projects.
 date: 2022-08-31
+authored_by: human
 tags:
   - Heroku
   - Postgres

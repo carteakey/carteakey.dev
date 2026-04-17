@@ -1,0 +1,153 @@
+---
+layout: layouts/base.njk
+title: Listening
+description: My Spotify listening wrapped — top artists, albums, tracks, year in review.
+permalink: /listening/
+eleventyExcludeFromCollections: true
+---
+
+{% include "components/breadcrumbs.njk" %}
+{% import "components/cartebase-charts.njk" as cb %}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+
+{% set listening = cartebase.listening %}
+{% set topArtist = listening.top_artists_all_time[0] %}
+{% set topAlbum = listening.top_albums_all_time[0] %}
+{% set topTrack = listening.top_tracks_all_time[0] %}
+{% set allYears = listening.yearly %}
+{% set totalPlays = listening.plays_total %}
+{% set totalMinutes = listening.minutes_total %}
+
+<div class="flex items-baseline justify-between mb-1">
+  <h1 class="text-2xl font-semibold tracking-tight m-0">Listening, wrapped</h1>
+  <span class="meta-text text-xs text-gray-400 dark:text-gray-500">Updated {{ (listening.last_updated | split('T'))[0] }}</span>
+</div>
+<p class="text-sm text-gray-500 dark:text-gray-400 mt-1 mb-6 not-prose">
+  My whole Spotify listening history, all-time — not just the last year.
+  Pulled from <a href="https://github.com/carteakey/cartebase" class="accent-link">cartebase</a>.
+  <a href="/data/" class="accent-link">Back to /data/ →</a>
+</p>
+
+{{ cb.now_playing_strip(spotify.nowPlaying) }}
+
+<div class="not-prose mb-4">
+  {{ cb.wrapped_card(
+    label="My top artist, all time",
+    title=topArtist.artist,
+    subtitle=topArtist.artist + " is " + (topArtist.share_pct | string) + "% of every play I've logged — more than any other artist.",
+    stats=[
+      {"label": "Plays", "value": topArtist.plays | localeNumber},
+      {"label": "Minutes", "value": topArtist.minutes | round(0) | localeNumber},
+      {"label": "Share of all plays", "value": (topArtist.share_pct | string) + "%"}
+    ]
+  ) }}
+</div>
+
+<div class="not-prose grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+  {{ cb.wrapped_card(
+    label="My top album",
+    title=topAlbum.album,
+    subtitle="by " + topAlbum.artist,
+    stats=[
+      {"label": "Plays", "value": topAlbum.plays | localeNumber},
+      {"label": "Minutes", "value": topAlbum.minutes | round(0) | localeNumber}
+    ],
+    size="small"
+  ) }}
+  {{ cb.wrapped_card(
+    label="My top track",
+    title=topTrack.track,
+    subtitle="by " + topTrack.artist,
+    stats=[
+      {"label": "Plays", "value": topTrack.plays | localeNumber},
+      {"label": "Minutes", "value": topTrack.minutes | round(0) | localeNumber}
+    ],
+    size="small"
+  ) }}
+</div>
+
+<div class="not-prose grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
+  {{ cb.stat_tile("Total plays", totalPlays | localeNumber) }}
+  {{ cb.stat_tile("Total minutes", totalMinutes | round(0) | localeNumber, "≈ " + (totalMinutes / 60) | round(0) | localeNumber + " hours") }}
+  {{ cb.stat_tile("Tracked years", allYears | length) }}
+  {{ cb.stat_tile("First play", (cartebase.summary.data_starts_at | split('T'))[0]) }}
+</div>
+
+{{ cb.section_header("Top artists", "All time, top 10 with share of total plays", "star") }}
+<div class="not-prose">
+  {{ cb.share_bars(listening.top_artists_all_time, "artist", "plays", totalPlays, limit=10) }}
+</div>
+
+{{ cb.section_header("Top albums", "All time, top 10", "disc") }}
+<div class="not-prose space-y-1.5">
+  {% for a in listening.top_albums_all_time | head(10) %}
+    {% set pct = (a.plays * 100 / totalPlays) | round(2) %}
+    <div>
+      <div class="flex items-baseline justify-between text-sm mb-0.5">
+        <span class="font-medium text-gray-900 dark:text-gray-100 truncate pr-2">{{ loop.index }}. {{ a.album }} <span class="text-gray-400 font-normal text-xs">· {{ a.artist }}</span></span>
+        <span class="text-xs text-gray-500 dark:text-gray-400 tabular-nums shrink-0">{{ a.plays | localeNumber }} · {{ pct }}%</span>
+      </div>
+      <div class="h-1.5 bg-gray-100 dark:bg-zinc-800 rounded-full overflow-hidden">
+        <div class="h-full rounded-full" style="width: {{ pct }}%; background: var(--accent-color);"></div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+{{ cb.section_header("Top tracks", "All time, top 10", "play") }}
+<div class="not-prose space-y-1.5">
+  {% for t in listening.top_tracks_all_time | head(10) %}
+    {% set pct = (t.plays * 100 / totalPlays) | round(2) %}
+    <div>
+      <div class="flex items-baseline justify-between text-sm mb-0.5">
+        <span class="font-medium text-gray-900 dark:text-gray-100 truncate pr-2">{{ loop.index }}. {{ t.track }} <span class="text-gray-400 font-normal text-xs">· {{ t.artist }}</span></span>
+        <span class="text-xs text-gray-500 dark:text-gray-400 tabular-nums shrink-0">{{ t.plays | localeNumber }} · {{ pct }}%</span>
+      </div>
+      <div class="h-1.5 bg-gray-100 dark:bg-zinc-800 rounded-full overflow-hidden">
+        <div class="h-full rounded-full" style="width: {{ pct }}%; background: var(--accent-color);"></div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+{{ cb.section_header("Plays over time", "Monthly", "trending-up") }}
+<div class="not-prose">
+  {{ cb.line_chart("chart_l_plays_per_month", listening.plays_per_month | map('month'), listening.plays_per_month | map('plays'), "Plays", height=220) }}
+</div>
+
+{{ cb.section_header("Discovery rate", "New artists per month (first-ever play)", "search") }}
+<div class="not-prose">
+  {{ cb.line_chart("chart_l_discovery", listening.new_artists_per_month | map('month'), listening.new_artists_per_month | map('new_artists'), "New artists", height=180) }}
+</div>
+
+{{ cb.section_header("Listening rhythm", "Hour × weekday (UTC)", "clock") }}
+<div class="not-prose">
+  {{ cb.heatmap(listening.hour_weekday_heatmap) }}
+</div>
+<p class="text-[0.65rem] text-gray-400 mt-2 not-prose">Darker = more plays. Hours are UTC; my local time is America/Toronto (UTC−5/−4).</p>
+
+{{ cb.section_header("Year in review", "Top artist + top track, per year", "calendar") }}
+<div class="not-prose grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+  {% for y in allYears | reverse %}
+    {% set champs = None %}
+    {% for c in listening.annual_champions %}{% if c.year == y.year %}{% set champs = c %}{% endif %}{% endfor %}
+    {{ cb.year_card(y.year, champs.top_artist, champs.top_track, y.plays | localeNumber, y.hours, y.unique_artists) }}
+  {% endfor %}
+</div>
+
+<div class="mt-12 border-t border-gray-200 dark:border-zinc-800 pt-6 text-xs text-gray-500 dark:text-gray-400 not-prose">
+  <h3 class="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-2">Notes</h3>
+  <p class="mb-2">
+    "Plays" counts every track play event. "Minutes" is the sum of <code>ms_played</code>, so a
+    10-second skip counts as ~0.17 minutes. Early-years data (2016–2018) often lacks precise
+    <code>ms_played</code>, so the minutes numbers lean recent.
+  </p>
+  <p class="mb-2">
+    "New artists" per month is the count of artists whose earliest play falls in that month —
+    a crude proxy for discovery that biases toward the start of the dataset.
+  </p>
+  <p>
+    Heatmap hours are UTC — not adjusted for local time or DST.
+  </p>
+</div>

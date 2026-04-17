@@ -1,0 +1,50 @@
+<div class="inline-flex rounded-md shadow-sm mb-4" role="group" x-data="{ copied: false, open: false }">
+  <button 
+    type="button" 
+    class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-gray-700 bg-white border border-gray-200 rounded-l-lg hover:bg-gray-100 hover:text-blue-600 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white transition-colors"
+    @click="
+      fetch('{{ page.url }}raw.txt')
+        .then(res => res.text())
+        .then(text => {
+          navigator.clipboard.writeText(text);
+          copied = true;
+          setTimeout(() => copied = false, 2000);
+        })
+        .catch(err => console.error('Failed to copy', err))
+    "
+  >
+    <span x-show="!copied">{% feather "copy", class="w-3.5 h-3.5" %}</span>
+    <span x-show="copied">{% feather "check", class="w-3.5 h-3.5 text-green-500" %}</span>
+    <span x-text="copied ? 'Copied!' : 'Copy as Markdown'"></span>
+  </button>
+
+  <div class="relative">
+    <button 
+      type="button" 
+      class="inline-flex items-center px-2 py-1.5 text-xs font-medium text-gray-700 bg-white border border-l-0 border-gray-200 rounded-r-lg hover:bg-gray-100 hover:text-blue-600 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white transition-colors h-full"
+      @click="open = !open"
+      @click.outside="open = false"
+    >
+      {% feather "chevron-down", class="w-3.5 h-3.5" %}
+    </button>
+
+    <div 
+      x-show="open" 
+      x-transition:enter="transition ease-out duration-100"
+      x-transition:enter-start="transform opacity-0 scale-95"
+      x-transition:enter-end="transform opacity-100 scale-100"
+      x-transition:leave="transition ease-in duration-75"
+      x-transition:leave-start="transform opacity-100 scale-100"
+      x-transition:leave-end="transform opacity-0 scale-95"
+      class="absolute right-0 z-10 mt-2 w-32 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-gray-800 dark:border dark:border-gray-700" 
+      style="display: none;"
+    >
+      <div class="py-1" role="none">
+        <a href="{{ page.url }}raw.txt" target="_blank" class="flex items-center gap-2 px-4 py-2 text-xs text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white transition-colors" role="menuitem">
+          {% feather "external-link", class="w-3.5 h-3.5" %}
+          View Raw (.txt)
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

@@ -2,6 +2,7 @@
 title: "Repurposing my laptop as a Home Server - Part I"
 description: Putting old hardware to good use.
 date: 2023-05-22T16:38:56.031Z
+authored_by: human
 updated: 2023-12-26
 tags:
   - Self-Host

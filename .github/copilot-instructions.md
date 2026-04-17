@@ -2,7 +2,7 @@
 
 You're working at the `carteakey.dev` codebase, a personal blog and portfolio site built with Eleventy, Tailwind CSS, and Alpine.js. This playbook outlines the key guidelines, practices, and workflows to follow when contributing to this project.
 
-The branch is `sonnet`. This is where you should make all your changes.
+The branch is `main`. This is where you should make all your changes.
 
  ## 📋 PRE-EDIT CHECKLIST
 
@@ -51,7 +51,7 @@ This project uses a manual versioning process. It is your responsibility to keep
 * `docs/CHANGELOG.md` updated.
 
 
-5. **Push**: Push your changes to the `sonnet` branch.
+5. **Push**: Push your changes to the `main` branch.
 
 6. Update the docs/TODO.md file if you added or fixed something that should be noted there.
 ---
@@ -83,7 +83,7 @@ This project uses a manual versioning process. It is your responsibility to keep
 
 - Netlify Function `netlify/functions/upvote.js` powers the upvote widget; GET returns counts, POST increments. Local changes should preserve method handling and JSON payload structure.
 
-- Image tooling: use `eleventy-img` shortcodes (`eleventy.config.mjs`) and scripts `add-photo.mjs` / `bulk-add-photos.mjs` to append entries to `src/_data/photos.yaml` and copy assets into `src/static/img/photography/{real|virtual}` (requires Ollama/OpenAI creds). GIFs bypass processing via `mapSrcToPublicUrl`.
+- Image tooling: use `eleventy-img` shortcodes (`eleventy.config.mjs`) and scripts `utils/add-photo.mjs` / `utils/bulk-add-photos.mjs` to append entries to `src/_data/photos.yaml` and copy assets into `src/static/img/photography/{real|virtual}` (requires Ollama/OpenAI creds). GIFs bypass processing via `mapSrcToPublicUrl`.
 
 - Styling lives in `src/static/css/tailwind.css` with Tailwind v4 `@theme` tokens and custom fonts copied via passthrough; regenerate CSS through the Tailwind CLI scripts rather than editing `_site/css` directly.
 - CMS editing goes through Netlify CMS (`src/admin/config.yml`); any new collection should update both the folder structure and allowed fields there.

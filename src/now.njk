@@ -5,49 +5,67 @@ permalink: /now/
 eleventyNavigation:
   key: Now
   order: 3
-lastUpdated: 2025-10-12
+lastUpdated: 2026-03-05
 ---
 
-{% set cardShell = "rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-100/80 dark:bg-gray-900/70 shadow-sm" %}
+{% include "components/breadcrumbs.njk" %}
 
-<div class="max-w-5xl mx-auto space-y-10">
-  {% include "components/breadcrumbs.njk" %}
-
-  <header class="space-y-3">
-    <h1 class="text-3xl font-semibold tracking-tight text-gray-900 dark:text-white">Now</h1>
-    <p class="text-sm text-gray-600 dark:text-gray-400 md:text-base">
-      This is my now page, inspired by <a href="https://nownownow.com/about" class="accent-link">nownownow.com</a>.
-    </p>
-    {% if lastUpdated %}
-      <p class="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
-        Updated <time datetime="{{ lastUpdated | htmlDateString }}">{{ lastUpdated | readableDate }}</time>
-      </p>
-    {% endif %}
-  </header>
-
-  <ul class="list-disc space-y-2 pl-4">
-  <li>Trying to get a few hikes in before we've all got to burrow indoors for the winters, eh.</li>
-      </ul>
-<div class="overflow-hidden">
-      {% image "./src/static/img/rouge.jpeg", "Rouge Conservation Area", "w-1/2 object-cover" %}
-    </div>
-
-    <ul class="list-disc space-y-2 pl-4">
-      <li>I've been having a lot of fun recently exploring the libraries in Toronto. TPL is awesome!</li>
-      <li>Gave this site a bit of a facelift, letting codex run YOLO.</li>
-      <li>Listening to the live version of "Hail to the Thief" by Radiohead.</li>
-    </ul>
-
-  <section class="space-y-8">
-    {% include "components/workouts-snippet.njk" %}
-    {% include "components/games-snippet.njk" %}
-  </section>
-
-  <p class="text-sm text-gray-600 dark:text-gray-400">
-    Want to see how this page has changed over time? Check out the
-    <a href="/now/archive/" class="accent-link inline-flex items-center gap-1">
-      archives
-      {% feather "arrow-right", class="w-4 h-4" %}
-    </a>.
-  </p>
+<div class="flex items-baseline justify-between mb-1">
+  <h1 class="text-2xl font-semibold tracking-tight m-0">Now</h1>
+  {% if lastUpdated %}
+    <span class="meta-text text-xs text-gray-400 dark:text-gray-500">Updated {{ lastUpdated | readableDate }}</span>
+  {% endif %}
 </div>
+<p class="text-sm text-gray-500 dark:text-gray-400 mt-1 mb-4">
+  A snapshot of what I'm up to, inspired by <a href="https://nownownow.com/about" class="accent-link">nownownow.com</a>. · <a href="{{ '/now/archive/' | url }}" class="title-hover" style="text-decoration:none;">Past updates →</a>
+</p>
+
+<ul class="list-disc space-y-2 pl-4">
+  <li>On a bit of a <strong>project building spree</strong> - Claude Code has become my pair programmer and the speed is genuinely startling. Shipped more in the past few weeks than the past few months (read: years). Claude tells me I've used ~4× more tokens than the word count of Dune. Checks out. And that's just one device - I've got Antigravity, Copilot, and 3 others to multiply by.</li>
+</ul>
+
+{% image_cc "./src/static/img/claude-code-stats.jpg", "Claude Code usage stats", "rounded-lg border border-gray-200 dark:border-gray-700 max-w-sm", "Rookie numbers. (This is just one device.)" %}
+
+<ul class="list-disc space-y-2 pl-4">
+  <li>Built <a href="/blog/aidar-tracking-ai-writing-drift/" class="accent-link">aidar</a> - a tool that scans websites and measures stylistic signals associated with AI-era writing. Still very early.</li>
+  <li>Built <a href="https://window.carteakey.dev" class="accent-link">window.carteakey.dev</a> - a live window to a Toronto intersection. Raspberry Pi 4B, a Pi camera, an HLS stream, and a Cloudflare tunnel.</li>
+  <li>Also been putting together the <a href="/folio/" class="accent-link">folio</a> - themed standalone pages for things I obsess over. First one is a Radiohead web archive. A Bloodborne one is next.</li>
+  <li>This site itself keeps evolving - added a <a href="/feed/" class="accent-link">unified feed</a>, authorship badges, and a notes section. Trying to post more short-form stuff instead of letting every idea die in a draft.</li>
+  <li>Thinking a lot about what "authentic" writing looks like in the AI era - hence the <a href="/notes/authorship-badges/" class="accent-link">authorship badges</a> experiment.</li>
+  <li>Reading Dune for the first time. Finally.</li>
+  <li>Radiohead back on heavy rotation - <em>Exit Music (For a Film)</em>, and I promise.</li>
+  <li>Spring in Toronto feels close.</li>
+</ul>
+
+<div class="mt-10 space-y-8 not-prose">
+  {% include "components/workouts-snippet.njk" %}
+  {% include "components/games-snippet.njk" %}
+</div>
+
+{# ── Currently Reading ── #}
+{% if reading.currently_reading and reading.currently_reading.length > 0 %}
+<div class="not-prose mt-10">
+  <h2 class="text-xs font-semibold uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-3">Currently Reading</h2>
+  <div class="divide-y divide-gray-100 dark:divide-gray-800/80">
+    {% for book in reading.currently_reading %}
+    <div class="py-3">
+      <div class="flex items-baseline justify-between gap-4">
+        <div class="min-w-0">
+          <span class="font-medium text-sm text-gray-900 dark:text-gray-100">{{ book.title }}</span>
+          <span class="text-sm text-gray-400 dark:text-gray-500"> - {{ book.author }}</span>
+        </div>
+        <span class="meta-text text-xs text-gray-400 shrink-0">{{ book.progress }}%</span>
+      </div>
+      <div class="mt-1.5 h-1 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden max-w-xs">
+        <div class="h-full rounded-full" style="width: {{ book.progress }}%; background: var(--accent-color);"></div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  <a href="/reading/" class="text-xs text-gray-400 hover:underline mt-2 inline-block" style="text-decoration:none;">Full reading shelf →</a>
+</div>
+{% endif %}
+
+<p class="text-sm text-gray-500 dark:text-gray-400 mt-10">
+  Want to see how this page has changed? <a href="/now/archive/" class="accent-link">Browse the archives →</a>
+</p>

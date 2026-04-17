@@ -1,0 +1,384 @@
+{
+  "last_updated": "2026-04-16T23:34:02Z",
+  "top_domains_all_time": [
+    {
+      "domain": "reddit.com",
+      "visits": 20722,
+      "share_pct": 19.75
+    },
+    {
+      "domain": "google.com",
+      "visits": 20680,
+      "share_pct": 19.71
+    },
+    {
+      "domain": "instagram.com",
+      "visits": 8830,
+      "share_pct": 8.42
+    },
+    {
+      "domain": "youtube.com",
+      "visits": 3953,
+      "share_pct": 3.77
+    },
+    {
+      "domain": "m.youtube.com",
+      "visits": 3817,
+      "share_pct": 3.64
+    },
+    {
+      "domain": "amazon.ca",
+      "visits": 2716,
+      "share_pct": 2.59
+    },
+    {
+      "domain": "github.com",
+      "visits": 2016,
+      "share_pct": 1.92
+    },
+    {
+      "domain": "x.com",
+      "visits": 1632,
+      "share_pct": 1.56
+    },
+    {
+      "domain": "forums.redflagdeals.com",
+      "visits": 1626,
+      "share_pct": 1.55
+    },
+    {
+      "domain": "facebook.com",
+      "visits": 1525,
+      "share_pct": 1.45
+    },
+    {
+      "domain": "photos.google.com",
+      "visits": 1506,
+      "share_pct": 1.44
+    },
+    {
+      "domain": "accounts.google.com",
+      "visits": 1291,
+      "share_pct": 1.23
+    },
+    {
+      "domain": "mail.google.com",
+      "visits": 1136,
+      "share_pct": 1.08
+    },
+    {
+      "domain": "amazon.in",
+      "visits": 1040,
+      "share_pct": 0.99
+    },
+    {
+      "domain": "linkedin.com",
+      "visits": 902,
+      "share_pct": 0.86
+    },
+    {
+      "domain": "files.carteakey.systems",
+      "visits": 511,
+      "share_pct": 0.49
+    },
+    {
+      "domain": "docs.google.com",
+      "visits": 489,
+      "share_pct": 0.47
+    },
+    {
+      "domain": "costco.ca",
+      "visits": 385,
+      "share_pct": 0.37
+    },
+    {
+      "domain": "temu.com",
+      "visits": 381,
+      "share_pct": 0.36
+    },
+    {
+      "domain": "jeevansathi.com",
+      "visits": 368,
+      "share_pct": 0.35
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "visits": 365,
+      "share_pct": 0.35
+    },
+    {
+      "domain": "one.google.com",
+      "visits": 341,
+      "share_pct": 0.33
+    },
+    {
+      "domain": "my.wealthsimple.com",
+      "visits": 299,
+      "share_pct": 0.29
+    },
+    {
+      "domain": "doordash.com",
+      "visits": 288,
+      "share_pct": 0.27
+    },
+    {
+      "domain": "news.ycombinator.com",
+      "visits": 282,
+      "share_pct": 0.27
+    },
+    {
+      "domain": "ubereats.com",
+      "visits": 269,
+      "share_pct": 0.26
+    },
+    {
+      "domain": "carteakey.dev",
+      "visits": 256,
+      "share_pct": 0.24
+    },
+    {
+      "domain": "aliexpress.com",
+      "visits": 247,
+      "share_pct": 0.24
+    },
+    {
+      "domain": "huggingface.co",
+      "visits": 246,
+      "share_pct": 0.23
+    },
+    {
+      "domain": "app.dataannotation.tech",
+      "visits": 241,
+      "share_pct": 0.23
+    }
+  ],
+  "top_domains_per_year": {
+    "2025": [
+      {
+        "domain": "google.com",
+        "visits": 14704
+      },
+      {
+        "domain": "reddit.com",
+        "visits": 14413
+      },
+      {
+        "domain": "instagram.com",
+        "visits": 6949
+      },
+      {
+        "domain": "youtube.com",
+        "visits": 2891
+      },
+      {
+        "domain": "amazon.ca",
+        "visits": 2266
+      },
+      {
+        "domain": "m.youtube.com",
+        "visits": 2261
+      },
+      {
+        "domain": "facebook.com",
+        "visits": 1296
+      },
+      {
+        "domain": "forums.redflagdeals.com",
+        "visits": 1229
+      },
+      {
+        "domain": "photos.google.com",
+        "visits": 1191
+      },
+      {
+        "domain": "github.com",
+        "visits": 1061
+      },
+      {
+        "domain": "amazon.in",
+        "visits": 967
+      },
+      {
+        "domain": "accounts.google.com",
+        "visits": 699
+      },
+      {
+        "domain": "linkedin.com",
+        "visits": 623
+      },
+      {
+        "domain": "mail.google.com",
+        "visits": 599
+      },
+      {
+        "domain": "x.com",
+        "visits": 580
+      },
+      {
+        "domain": "costco.ca",
+        "visits": 352
+      },
+      {
+        "domain": "docs.google.com",
+        "visits": 352
+      },
+      {
+        "domain": "ubereats.com",
+        "visits": 269
+      },
+      {
+        "domain": "jeevansathi.com",
+        "visits": 258
+      },
+      {
+        "domain": "en.wikipedia.org",
+        "visits": 244
+      }
+    ],
+    "2026": [
+      {
+        "domain": "reddit.com",
+        "visits": 6309
+      },
+      {
+        "domain": "google.com",
+        "visits": 5976
+      },
+      {
+        "domain": "instagram.com",
+        "visits": 1881
+      },
+      {
+        "domain": "m.youtube.com",
+        "visits": 1556
+      },
+      {
+        "domain": "youtube.com",
+        "visits": 1062
+      },
+      {
+        "domain": "x.com",
+        "visits": 1052
+      },
+      {
+        "domain": "github.com",
+        "visits": 955
+      },
+      {
+        "domain": "accounts.google.com",
+        "visits": 592
+      },
+      {
+        "domain": "mail.google.com",
+        "visits": 537
+      },
+      {
+        "domain": "files.carteakey.systems",
+        "visits": 458
+      },
+      {
+        "domain": "amazon.ca",
+        "visits": 450
+      },
+      {
+        "domain": "forums.redflagdeals.com",
+        "visits": 397
+      },
+      {
+        "domain": "photos.google.com",
+        "visits": 315
+      },
+      {
+        "domain": "one.google.com",
+        "visits": 304
+      },
+      {
+        "domain": "linkedin.com",
+        "visits": 279
+      },
+      {
+        "domain": "facebook.com",
+        "visits": 229
+      },
+      {
+        "domain": "app.dataannotation.tech",
+        "visits": 217
+      },
+      {
+        "domain": "carteakey.dev",
+        "visits": 209
+      },
+      {
+        "domain": "huggingface.co",
+        "visits": 202
+      },
+      {
+        "domain": "myaccount.google.com",
+        "visits": 180
+      }
+    ]
+  },
+  "visits_per_weekday": [
+    18082,
+    16062,
+    14598,
+    12940,
+    13032,
+    12862,
+    17325
+  ],
+  "visits_per_month": [
+    {
+      "month": "2025-04",
+      "visits": 4764
+    },
+    {
+      "month": "2025-05",
+      "visits": 10453
+    },
+    {
+      "month": "2025-06",
+      "visits": 12431
+    },
+    {
+      "month": "2025-07",
+      "visits": 6430
+    },
+    {
+      "month": "2025-08",
+      "visits": 5717
+    },
+    {
+      "month": "2025-09",
+      "visits": 7298
+    },
+    {
+      "month": "2025-10",
+      "visits": 10313
+    },
+    {
+      "month": "2025-11",
+      "visits": 7288
+    },
+    {
+      "month": "2025-12",
+      "visits": 6189
+    },
+    {
+      "month": "2026-01",
+      "visits": 7403
+    },
+    {
+      "month": "2026-02",
+      "visits": 9820
+    },
+    {
+      "month": "2026-03",
+      "visits": 12660
+    },
+    {
+      "month": "2026-04",
+      "visits": 4135
+    }
+  ]
+}

@@ -1,5 +1,4 @@
 import { AssetCache } from "@11ty/eleventy-fetch";
-import Fetch from "@11ty/eleventy-fetch";
 import querystring from "querystring";
 import fetch from "node-fetch";
 
@@ -19,10 +18,7 @@ async function fetchAccessToken() {
   let accessTokenCache = new AssetCache("token");
 
   if (accessTokenCache.isCacheValid("1h")) {
-    // return cached data.
-    console.log("using access token cache");
-    accessToken = await accessTokenCache.getCachedValue(); // a promise
-    console.log(accessToken);
+    accessToken = await accessTokenCache.getCachedValue();
   } else {
     let response = await fetch(auth_endpoint, {
       method: "POST",
@@ -38,17 +34,13 @@ async function fetchAccessToken() {
       }),
     });
 
-    console.log(response.status);
     if (response.status == 204 || response.status > 400) {
-      console.log("Unable to fetch access token");
-      accessToken = await accessTokenCache.getCachedValue(); // a promise
-      console.log(accessToken);
+      console.warn("Unable to fetch Spotify access token, using cached token if available");
+      accessToken = await accessTokenCache.getCachedValue();
     } else {
-      console.log("Response:");
       const data = await response.json();
-      console.log(data);
       accessToken = data.access_token;
-      accessTokenCache.save(accessToken, "string");
+      await accessTokenCache.save(accessToken, "string");
     }
   }
   return accessToken;
@@ -60,10 +52,7 @@ export default async function () {
   let nowPlayingCache = new AssetCache("now-playing");
 
   if (nowPlayingCache.isCacheValid("1m")) {
-    // return cached data.
-    console.log("using now playing cache");
     nowPlaying = await nowPlayingCache.getCachedValue();
-    console.log(nowPlaying);
   } else {
     let response = await fetch(api_endpoint, {
       headers: {
@@ -71,9 +60,8 @@ export default async function () {
       },
     });
 
-    console.log(response.status);
     if (response.status == 204 || response.status > 400) {
-      console.log("API Error. No Song Playing");
+      console.warn("Spotify now-playing unavailable, using cached value if available");
       try {
         nowPlaying = await nowPlayingCache.getCachedValue();
       } catch (e) {
@@ -91,28 +79,47 @@ export default async function () {
       }
     } else {
       const song = await response.json();
-      console.log(song);
-      const isPlaying = song.is_playing;
-      const title = song.item.name;
-      const artist = song.item.artists
-        .map((_artist) => _artist.name)
-        .join(", ");
-      const album = song.item.album.name;
-      const albumImageUrl = song.item.album.images[0].url;
-      const songUrl = song.item.external_urls.spotify;
+      
+      // Handle case when item is null (e.g., podcast episodes)
+      if (!song.item) {
+        console.warn("Spotify item has no track data, using cached value if available");
+        try {
+          nowPlaying = await nowPlayingCache.getCachedValue();
+        } catch (e) {
+          return {
+            nowPlaying: {
+              album: "Meteora (Bonus Edition)",
+              albumImageUrl:
+                "https://i.scdn.co/image/ab67616d0000b27389a8fab8bf8cd2b77da1fd17",
+              artist: "Linkin Park",
+              isPlaying: true,
+              songUrl: "https://open.spotify.com/track/3fjmSxt0PskST13CSdBUFx",
+              title: "Somewhere I Belong",
+            },
+          };
+        }
+      } else {
+        const isPlaying = song.is_playing;
+        const title = song.item.name;
+        const artist = song.item.artists
+          .map((_artist) => _artist.name)
+          .join(", ");
+        const album = song.item.album.name;
+        const albumImageUrl = song.item.album.images[0].url;
+        const songUrl = song.item.external_urls.spotify;
 
-      nowPlaying = {
-        nowPlaying: {
-          album,
-          albumImageUrl,
-          artist,
-          isPlaying,
-          songUrl,
-          title,
-        },
-      };
-      console.log(nowPlaying);
-      nowPlayingCache.save(nowPlaying, "json");
+        nowPlaying = {
+          nowPlaying: {
+            album,
+            albumImageUrl,
+            artist,
+            isPlaying,
+            songUrl,
+            title,
+          },
+        };
+        await nowPlayingCache.save(nowPlaying, "json");
+      }
     }
   }
   return nowPlaying;

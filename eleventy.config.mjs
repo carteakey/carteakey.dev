@@ -19,6 +19,7 @@ import { feedPlugin } from "@11ty/eleventy-plugin-rss";
 
 import Image, { generateHTML } from "@11ty/eleventy-img";
 import 'dotenv/config';
+import upvotesData from "./src/_data/upvotes.js";
 
 function mapSrcToPublicUrl(src) {
   // If already an absolute URL or starts with site public path, return as-is
@@ -144,27 +145,23 @@ async function imageShortcode(src, alt, css) {
   // Preserve animation for GIFs by bypassing transformation
   if (/\.gif$/i.test(src)) {
     const publicSrc = mapSrcToPublicUrl(src);
-    const sizes = "(min-width: 30em) 50vw, 100vw";
-    return `<img src="${publicSrc}" alt="${alt ?? ''}" class="${css ?? ''}" loading="lazy" decoding="async" sizes="${sizes}" style="max-width: 100%; height: auto;" />`;
+    return `<img src="${publicSrc}" alt="${alt ?? ''}" class="${css ?? ''}" loading="lazy" decoding="async" />`;
   }
   let metadata = await Image(src, {
-    widths: ["auto"],
+    widths: [400, 800, 1200, "auto"],
     formats: ['avif', 'webp', 'jpeg'],
     outputDir: "./_site/img/",
   });
 
-  const sizes = "(min-width: 30em) 50vw, 100vw";
-  
   let imageAttributes = {
     class: css,
     alt,
-    sizes,
+    sizes: "(min-width: 768px) 720px, 100vw",
     loading: "lazy",
     decoding: "async",
-    style: "max-width: 100%; height: auto;",
+    "data-zoomable": "",
   };
 
-  // You bet we throw an error on missing alt in `imageAttributes` (alt="" works okay)
   return generateHTML(metadata, imageAttributes, {
     whitespaceMode: "inline",
   });
@@ -174,25 +171,22 @@ async function imageShortcodeWithCaptions(src, alt, css, caption) {
   // Preserve animation for GIFs by bypassing transformation
   if (/\.gif$/i.test(src)) {
     const publicSrc = mapSrcToPublicUrl(src);
-    const sizes = "(min-width: 30em) 50vw, 100vw";
-    const imageMarkup = `<img src="${publicSrc}" alt="${alt ?? ''}" class="${css ?? ''}" loading="lazy" decoding="async" sizes="${sizes}" style="max-width: 100%; height: auto;" />`;
+    const imageMarkup = `<img src="${publicSrc}" alt="${alt ?? ''}" class="${css ?? ''}" loading="lazy" decoding="async" />`;
     return `<figure>${imageMarkup}${caption ? `<figcaption class="font-thin italic">${caption}</figcaption>` : ""}</figure>`;
   }
   let metadata = await Image(src, {
-    widths: ["auto"],
+    widths: [400, 800, 1200, "auto"],
     formats: ['avif', 'webp', 'jpeg'],
     outputDir: "./_site/img/",
   });
 
-  const sizes = "(min-width: 30em) 50vw, 100vw";
-  
   let imageAttributes = {
     class: css,
     alt,
-    sizes,
+    sizes: "(min-width: 768px) 720px, 100vw",
     loading: "lazy",
     decoding: "async",
-    style: "max-width: 100%; height: auto;",
+    "data-zoomable": "",
   };
 
   const imageMarkup = generateHTML(metadata, imageAttributes, {
@@ -203,7 +197,7 @@ async function imageShortcodeWithCaptions(src, alt, css, caption) {
 }
 
 export const config = {
-	pathPrefix: "/",
+  pathPrefix: "/",
   // Control which files Eleventy will process
   // e.g.: *.md, *.njk, *.html, *.liquid
   templateFormats: ["md", "njk", "html", "liquid"],
@@ -214,21 +208,23 @@ export const config = {
   // Pre-process *.html files with: (default: `liquid`)
   htmlTemplateEngine: "njk",
   dir: {
-        input: "src",
-        includes: "_includes",
-        data: "_data",
-        output: "_site",
-      },
+    input: "src",
+    includes: "_includes",
+    data: "_data",
+    output: "_site",
+  },
 }
 
-export default function(eleventyConfig) {
+export default function (eleventyConfig) {
   eleventyConfig.setTemplateFormats("md,njk,html,liquid");
   eleventyConfig.addPlugin(EleventyHtmlBasePlugin)
   eleventyConfig.addWatchTarget("./src/**/*/*.css");
   // Copy the `img` and `css` folders to the output
   // Copy all static images (includes subfolders like /static/img/vibes)
-  eleventyConfig.addPassthroughCopy({"./src/static/img":"/img/"});
+  eleventyConfig.addPassthroughCopy({ "./src/static/img": "/img/" });
   eleventyConfig.addPassthroughCopy("./src/static/css/prism-a11y-dark.css");
+  eleventyConfig.addPassthroughCopy({ "./src/static/css/prism": "/static/css/prism" });
+  eleventyConfig.addPassthroughCopy({ "./src/static/js": "/static/js" });
   eleventyConfig.addPassthroughCopy("./src/_redirects");
   eleventyConfig.addPassthroughCopy("./src/static/Kartikey_Chauhan_Resume_2023.pdf");
   eleventyConfig.addPassthroughCopy({ "./src/static/img/favicon": "/" });
@@ -247,7 +243,7 @@ export default function(eleventyConfig) {
     outputPath: "/feed.xml", // Desired output path
     collection: {
       name: "posts", // Use the 'posts' collection
-      limit: 10,     // Number of posts to include (0 for all)
+      limit: 0,      // Include all posts (0 = no limit)
     },
     metadata: {
       language: "en", // From site metadata
@@ -256,20 +252,20 @@ export default function(eleventyConfig) {
       base: "https://carteakey.dev/", // From site metadata (metadata.url)
       author: {
         name: "Kartikey Chauhan", // From site metadata
-        email: "kartychauhan@gmail.com" // From site metadata
+        email: "carteakey.dev@gmail.com" // Updated email
       }
     }
   });
 
   // WebC
-	eleventyConfig.addPlugin(eleventyWebcPlugin, {
-		components: [
-			// …
-			// Add as a global WebC component
-			"npm:@11ty/eleventy-img/*.webc",
-		]
-	});
-   
+  eleventyConfig.addPlugin(eleventyWebcPlugin, {
+    components: [
+      // …
+      // Add as a global WebC component
+      "npm:@11ty/eleventy-img/*.webc",
+    ]
+  });
+
   // https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#valid-date-string
   eleventyConfig.addFilter("htmlDateString", (dateObj) => {
     return DateTime.fromJSDate(dateObj, { zone: "utc" }).toFormat("yyyy-LL-dd");
@@ -284,7 +280,10 @@ export default function(eleventyConfig) {
   });
 
   eleventyConfig.addFilter("readableDate", (dateObj) => {
-    return DateTime.fromJSDate(dateObj).toLocaleString(DateTime.DATE_FULL);
+    return DateTime.fromJSDate(dateObj).toFormat("MMM d, yyyy");
+  });
+  eleventyConfig.addFilter("shortDate", (dateObj) => {
+    return DateTime.fromJSDate(dateObj).toFormat("MMM yy");
   });
 
   // Archive-specific date filters
@@ -337,7 +336,7 @@ export default function(eleventyConfig) {
 
   //Image Plugin
   eleventyConfig.addAsyncShortcode("image", imageShortcode);
-  eleventyConfig.addAsyncShortcode("image_cc",imageShortcodeWithCaptions);
+  eleventyConfig.addAsyncShortcode("image_cc", imageShortcodeWithCaptions);
 
   // Generate thumbnails for gallery images
   async function galleryImageShortcode(src) {
@@ -378,37 +377,56 @@ export default function(eleventyConfig) {
 
   function filterTagList(tags) {
     return (tags || []).filter(
-      (tag) => ["all", "nav", "post", "posts", "snippets"].indexOf(tag) === -1
+      (tag) => ["all", "nav", "post", "posts", "snippets", "prompts"].indexOf(tag) === -1
     );
   }
 
   eleventyConfig.addFilter("filterTagList", filterTagList);
 
+  // Sort tags by post count (descending)
+  eleventyConfig.addFilter("sortTagsByCount", function (tagList, collections) {
+    return tagList.map(tag => ({
+      name: tag,
+      count: (collections[tag] || []).filter(post => !post.data.hidden).length
+    }))
+      .filter(item => item.count > 0)
+      .sort((a, b) => b.count - a.count);
+  });
+
   // Add split filter for breadcrumbs
-  eleventyConfig.addFilter("split", function(str, separator) {
+  eleventyConfig.addFilter("split", function (str, separator) {
     if (typeof str !== 'string') return [];
     return str.split(separator);
   });
 
   // Add utility filters for stats page
-  eleventyConfig.addFilter("max", function(value, max) {
+  eleventyConfig.addFilter("max", function (value, max) {
     return Math.max(value, max);
   });
 
-  eleventyConfig.addFilter("min", function(value, max) {
+  eleventyConfig.addFilter("min", function (value, max) {
     return Math.min(value, max);
   });
 
-  eleventyConfig.addFilter("round", function(value, decimals = 0) {
+  eleventyConfig.addFilter("round", function (value, decimals = 0) {
     return decimals === 0 ? Math.round(value) : Math.round(value * Math.pow(10, decimals)) / Math.pow(10, decimals);
   });
 
-  eleventyConfig.addFilter("uniq", function(array) {
+  eleventyConfig.addFilter("localeNumber", function (value) {
+    const n = Number(value);
+    return Number.isFinite(n) ? n.toLocaleString("en-US") : value;
+  });
+
+  eleventyConfig.addFilter("uniq", function (array) {
     return [...new Set(array)];
   });
 
-  eleventyConfig.addFilter("map", function(array, property) {
+  eleventyConfig.addFilter("map", function (array, property) {
     return array.map(item => item[property]);
+  });
+
+  eleventyConfig.addFilter("flat", function (array) {
+    return array.flat();
   });
 
   const parseHostname = (value) => {
@@ -423,24 +441,24 @@ export default function(eleventyConfig) {
     }
   };
 
-  eleventyConfig.addFilter("domainFromUrl", function(value) {
+  eleventyConfig.addFilter("domainFromUrl", function (value) {
     return parseHostname(value);
   });
 
-  eleventyConfig.addFilter("domainInitial", function(value) {
+  eleventyConfig.addFilter("domainInitial", function (value) {
     const domain = parseHostname(value);
     return domain ? domain[0].toUpperCase() : '#';
   });
 
-  eleventyConfig.addFilter("faviconUrl", function(value) {
+  eleventyConfig.addFilter("faviconUrl", function (value) {
     const domain = parseHostname(value);
     return domain ? `https://icons.duckduckgo.com/ip3/${domain}.ico` : null;
   });
 
-  eleventyConfig.addFilter("date", function(date, format) {
+  eleventyConfig.addFilter("date", function (date, format) {
     if (!date) return '';
     const dateObj = typeof date === 'string' ? new Date(date) : date;
-    
+
     // Simple date formatting - extend as needed
     if (format === 'MMMM d, yyyy "at" h:mm a') {
       return dateObj.toLocaleString('en-US', {
@@ -452,25 +470,37 @@ export default function(eleventyConfig) {
         hour12: true
       });
     }
-    
+    // PHP-style format chars
+    if (format === 'Y') return dateObj.getFullYear().toString();
+    if (format === 'n') return (dateObj.getMonth() + 1).toString();
+    if (format === 'X') return Math.floor(dateObj.getTime() / 1000).toString();
+    if (format === 'MMM d') return dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    if (format === 'h:mm a') return dateObj.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+    if (format === 'YYYY') return dateObj.getFullYear().toString();
+    if (format === 'MMM d, yyyy') return dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+
     return dateObj.toLocaleDateString();
   });
 
-  eleventyConfig.addFilter("truncate", function(str, length = 100) {
+  eleventyConfig.addFilter("truncate", function (str, length = 100) {
     if (!str || str.length <= length) return str;
     return str.substring(0, length) + '...';
   });
 
-  eleventyConfig.addFilter("uniq", function(array) {
-    return [...new Set(array)];
-  });
+  // Note: 'uniq' and 'head' filters are already defined above
 
-  eleventyConfig.addFilter("keys", function(obj) {
+  eleventyConfig.addFilter("keys", function (obj) {
     return Object.keys(obj);
   });
 
-  eleventyConfig.addFilter("head", function(array, count) {
-    return array.slice(0, count);
+  // Format number with commas (e.g. 12345 → "12,345")
+  eleventyConfig.addFilter("numberString", function (n) {
+    return Number(n).toLocaleString('en-US');
+  });
+
+  // Merge two objects (for building maps in templates)
+  eleventyConfig.addFilter("merge", function (obj, extra) {
+    return Object.assign({}, obj, extra);
   });
 
   eleventyConfig.addTransform("normalizePostAssetLinks", function (content, outputPath) {
@@ -505,16 +535,16 @@ export default function(eleventyConfig) {
   });
 
   // Add reading time filter (estimates based on average reading speed of 200 words per minute)
-  eleventyConfig.addFilter("readingTime", function(content) {
+  eleventyConfig.addFilter("readingTime", function (content) {
     if (!content) return "1 min read";
-    
+
     // Strip HTML tags and count words
     const text = content.replace(/<[^>]+>/g, '');
     const wordCount = text.split(/\s+/).filter(word => word.length > 0).length;
-    
+
     // Average reading speed: 200 words per minute
     const readingTimeMinutes = Math.ceil(wordCount / 200);
-    
+
     if (readingTimeMinutes === 1) {
       return "1 min read";
     } else {
@@ -522,8 +552,50 @@ export default function(eleventyConfig) {
     }
   });
 
+  // Word count filter (returns raw number)
+  eleventyConfig.addFilter("wordCount", function (content) {
+    if (!content) return 0;
+    const text = content.replace(/<[^>]+>/g, '');
+    return text.split(/\s+/).filter(word => word.length > 0).length;
+  });
+
+  // Sum word counts across a collection of posts (using templateContent)
+  eleventyConfig.addFilter("sumWordCounts", function (posts) {
+    if (!Array.isArray(posts)) return 0;
+    return posts.reduce((total, post) => {
+      const text = (post.templateContent || '').replace(/<[^>]+>/g, '');
+      return total + text.split(/\s+/).filter(w => w.length > 0).length;
+    }, 0);
+  });
+
+  // Group collection items by year, return { year: count } map
+  eleventyConfig.addFilter("countByYear", function (posts) {
+    if (!Array.isArray(posts)) return {};
+    const map = {};
+    for (const post of posts) {
+      const yr = new Date(post.date).getFullYear().toString();
+      map[yr] = (map[yr] || 0) + 1;
+    }
+    return map;
+  });
+
+  // Count posts in a given year+month (both strings like "2026", "2")
+  eleventyConfig.addFilter("countInYearMonth", function (posts, year, month) {
+    if (!Array.isArray(posts)) return 0;
+    return posts.filter(p => {
+      const d = new Date(p.date);
+      return d.getFullYear().toString() === year && (d.getMonth() + 1).toString() === month;
+    }).length;
+  });
+
+  // Sort posts by date descending regardless of pinned status
+  eleventyConfig.addFilter("sortByDate", function (posts) {
+    if (!Array.isArray(posts)) return posts;
+    return [...posts].sort((a, b) => new Date(b.date) - new Date(a.date));
+  });
+
   // Add snippet tags collection
-  eleventyConfig.addCollection("snippetTags", function(collection) {
+  eleventyConfig.addCollection("snippetTags", function (collection) {
     let tagSet = new Set();
     collection.getFilteredByTag("snippets").forEach(item => {
       (item.data.tags || []).forEach(tag => {
@@ -548,19 +620,63 @@ export default function(eleventyConfig) {
   });
 
   // Custom posts collection: hide posts with hidden: true or future date
-  eleventyConfig.addCollection("posts", function(collectionApi) {
-      const now = new Date();
-      return collectionApi
-        .getFilteredByGlob("./src/posts/**/*.md")
-        .filter(post => {
-       // Hide if hidden: true in frontmatter
+  eleventyConfig.addCollection("posts", function (collectionApi) {
+    const now = new Date();
+    return collectionApi
+      .getFilteredByGlob("./src/posts/**/*.md")
+      .filter(post => {
+        // Hide if hidden: true in frontmatter
         if (post.data.hidden === true) return false;
         // Hide if date is in the future
         if (post.date && post.date > now) return false;
         return true;
-        })
-        .sort((a, b) => b.date - a.date); // newest first
+      })
+      .sort((a, b) => {
+        // Pinned posts first, then by date (newest first)
+        const aPinned = a.data.pinned ? 1 : 0;
+        const bPinned = b.data.pinned ? 1 : 0;
+        if (aPinned !== bPinned) return bPinned - aPinned;
+        return b.date - a.date;
+      });
+  });
+
+  eleventyConfig.addCollection("prompts", function (collectionApi) {
+    const now = new Date();
+    return collectionApi
+      .getFilteredByTag("prompts")
+      .filter(prompt => {
+        if (prompt.data.hidden === true) return false;
+        if (prompt.date && prompt.date > now) return false;
+        return true;
+      })
+      .sort((a, b) => b.date - a.date);
+  });
+
+  // Featured post: pick the best post with featured: true from the posts collection
+  eleventyConfig.addCollection("featuredPost", function (collectionApi) {
+    const now = new Date();
+    const posts = collectionApi
+      .getFilteredByGlob("./src/posts/**/*.md")
+      .filter(post => {
+        if (post.data.hidden === true) return false;
+        if (post.data.draft === true) return false;
+        if (post.date && post.date > now) return false;
+        if (!post.data.featured) return false;
+        return true;
+      });
+
+    // Sort by weight (lower first), then by updated/date (newest first)
+    posts.sort((a, b) => {
+      const wA = (typeof a.data.featured === 'object' ? a.data.featured.weight : undefined) ?? Infinity;
+      const wB = (typeof b.data.featured === 'object' ? b.data.featured.weight : undefined) ?? Infinity;
+      if (wA !== wB) return wA - wB;
+      const dateA = new Date(a.data.updated || a.date).getTime() || 0;
+      const dateB = new Date(b.data.updated || b.date).getTime() || 0;
+      return dateB - dateA;
     });
+
+    return posts[0] || null;
+  });
 
   // Group posts by folder for /blog/{folder}/ listings
   eleventyConfig.addCollection("postFolders", function (collectionApi) {
@@ -626,7 +742,7 @@ export default function(eleventyConfig) {
   });
 
   // Custom allPages collection: like collections.all but hides hidden:true and future-dated posts
-  eleventyConfig.addCollection("allPages", function(collectionApi) {
+  eleventyConfig.addCollection("allPages", function (collectionApi) {
     const now = new Date();
     return collectionApi.getAll().filter(page => {
       // Only filter posts, not all pages, for hidden/future
@@ -638,15 +754,43 @@ export default function(eleventyConfig) {
     });
   });
 
+  // Collection for raw.txt generation
+  eleventyConfig.addCollection("rawPages", function (collectionApi) {
+    const types = ["posts", "snippets", "prompts", "notes", "til"];
+    return collectionApi.getAll().filter(item => {
+      if (!item.data.tags) return false;
+      if (!item.url) return false; // skip items without a URL
+      return types.some(t => item.data.tags.includes(t));
+    });
+  });
+
   // Add a collection for now page lookbacks
-  eleventyConfig.addCollection("nowLookback", function(collectionApi) {
+  eleventyConfig.addCollection("nowLookback", function (collectionApi) {
     return collectionApi.getFilteredByGlob("src/now/lookback/*.md");
   });
 
   // Add a collection for now page archive
-  eleventyConfig.addCollection("nowArchive", function(collectionApi) {
+  eleventyConfig.addCollection("nowArchive", function (collectionApi) {
     return collectionApi.getFilteredByGlob("src/now/archive/*.md")
       .filter(item => !item.inputPath.includes('_template.md'));
+  });
+
+  // TIL collection
+  eleventyConfig.addCollection("til", function (collectionApi) {
+    return collectionApi.getFilteredByGlob("src/til/**/*.md")
+      .sort((a, b) => b.date - a.date);
+  });
+
+  // Notes collection
+  eleventyConfig.addCollection("notes", function (collectionApi) {
+    const now = new Date();
+    return collectionApi.getFilteredByGlob("./src/notes/**/*.md")
+      .filter((note) => {
+        if (note.data.hidden === true) return false;
+        if (note.date && note.date > now) return false;
+        return true;
+      })
+      .sort((a, b) => b.date - a.date);
   });
 
   // Add a unified feed collection across key content types
@@ -687,6 +831,8 @@ export default function(eleventyConfig) {
           summary,
           readingTime: post.data.readingTime,
           tags: (post.data.tags || []).filter((tag) => tag !== "posts" && tag !== "post"),
+          pinned: !!post.data.pinned,
+          authored_by: post.data.authored_by ?? null,
         };
       });
 
@@ -709,27 +855,57 @@ export default function(eleventyConfig) {
           summary,
           readingTime: snippet.data.readingTime,
           original: snippet,
+          authored_by: snippet.data.authored_by ?? null,
         };
       });
 
-    const microposts = collectionApi
-      .getFilteredByGlob("./src/microposts/**/*.md")
+    const prompts = collectionApi
+      .getFilteredByTag("prompts")
+      .filter((prompt) => {
+        if (prompt.data.hidden === true) return false;
+        if (prompt.date && prompt.date > now) return false;
+        return true;
+      })
+      .map((prompt) => {
+        prompt.data.feedType = "prompt";
+        const summarySource = prompt.data.description || prompt.data.excerpt || "";
+        const summary = summarySource ? truncate(stripHtml(summarySource)) : null;
+        return {
+          type: "prompt",
+          title: prompt.data.title,
+          date: prompt.date,
+          url: prompt.url,
+          summary,
+          readingTime: prompt.data.readingTime,
+          original: prompt,
+          authored_by: prompt.data.authored_by ?? null,
+        };
+      });
+
+    const notes = collectionApi
+      .getFilteredByGlob("./src/notes/**/*.md")
       .filter((entry) => {
         if (entry.data.hidden === true) return false;
         if (entry.date && entry.date > now) return false;
         return true;
       })
-      .map((micropost) => {
-        micropost.data.feedType = "micropost";
-        const excerptSource = micropost.data.excerpt || "";
+      .map((note) => {
+        note.data.feedType = "note";
+        const excerptSource = note.data.excerpt || "";
         const summary = excerptSource ? truncate(stripHtml(excerptSource), 260) : null;
         return {
-          type: "micropost",
-          title: micropost.data.title || "Micropost",
-          date: micropost.date,
-          url: micropost.url && micropost.url !== false ? micropost.url : null,
+          type: "note",
+          title: note.data.title || "Note",
+          date: note.date,
+          url: note.url && note.url !== false ? note.url : null,
           summary,
-          original: micropost,
+          pinned: !!note.data.pinned,
+          original: {
+            get templateContent() {
+              try { return note.templateContent; } catch (_) { return ""; }
+            },
+          },
+          authored_by: note.data.authored_by ?? null,
         };
       });
 
@@ -746,7 +922,11 @@ export default function(eleventyConfig) {
           date: archiveDate,
           url: entry.url,
           summary: summarySource ? truncate(stripHtml(summarySource), 220) : null,
-          original: entry,
+          original: {
+            get templateContent() {
+              try { return entry.templateContent; } catch (_) { return ""; }
+            },
+          },
         };
       });
 
@@ -803,16 +983,85 @@ export default function(eleventyConfig) {
       })
       .filter(Boolean);
 
+    const tilEntries = collectionApi
+      .getFilteredByGlob("./src/til/**/*.md")
+      .filter((entry) => {
+        if (entry.data.hidden === true) return false;
+        if (entry.date && entry.date > now) return false;
+        return true;
+      })
+      .map((entry) => {
+        const summarySource = entry.data.description || entry.data.excerpt || "";
+        const summary = summarySource ? truncate(stripHtml(summarySource)) : null;
+        return {
+          type: "til",
+          title: entry.data.title,
+          date: entry.date,
+          url: entry.url,
+          summary,
+          original: entry,
+        };
+      });
+
+    const folioEntries = collectionApi
+      .getFilteredByGlob("./src/folio/**/index.html")
+      .filter((entry) => {
+        if (entry.data.hidden === true) return false;
+        if (entry.date && entry.date > now) return false;
+        return true;
+      })
+      .map((entry) => {
+        const summarySource = entry.data.description || "";
+        const summary = summarySource ? truncate(stripHtml(summarySource)) : null;
+        return {
+          type: "folio",
+          title: entry.data.title || "Folio",
+          date: entry.date,
+          url: entry.url,
+          summary,
+          original: entry,
+        };
+      });
+
     const combined = [
       ...posts,
       ...snippets,
-      ...microposts,
+      ...notes,
+      ...tilEntries,
+      ...folioEntries,
       ...nowUpdates,
       ...photos,
       // ...vibes,
     ].filter((item) => item.date instanceof Date && !Number.isNaN(item.date.valueOf()));
 
-    return combined.sort((a, b) => b.date - a.date);
+    return combined.sort((a, b) => {
+      // Pinned items first (any type), then by date (newest first)
+      const aPinned = a.pinned ? 1 : 0;
+      const bPinned = b.pinned ? 1 : 0;
+      if (aPinned !== bPinned) return bPinned - aPinned;
+      return b.date - a.date;
+    });
+  });
+
+  eleventyConfig.addCollection("popularPosts", async function (collectionApi) {
+    const now = new Date();
+    const upvoteMap = (await upvotesData())?.posts || {};
+
+    return collectionApi
+      .getFilteredByGlob("./src/posts/**/*.md")
+      .filter((post) => {
+        if (post.data.hidden === true) return false;
+        if (post.date && post.date > now) return false;
+        return true;
+      })
+      .map((post) => ({
+        title: post.data.title,
+        url: post.url,
+        count: Number(upvoteMap[post.fileSlug] || 0),
+        date: post.date,
+      }))
+      .filter((entry) => entry.count > 0)
+      .sort((a, b) => b.count - a.count || b.date - a.date);
   });
 
   // Customize Markdown library and settings:
@@ -835,11 +1084,67 @@ export default function(eleventyConfig) {
   eleventyConfig.addPlugin(pluginTOC, {
     ul: true
   })
-  
+
   markdownLibrary.renderer.rules.code_inline = (tokens, idx, { langPrefix = "" }) => {
     const token = tokens[idx];
     return `<code class="${langPrefix}">${markdownLibrary.utils.escapeHtml(token.content)}</code>`;
   };
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // 📰 Editorial shortcodes — minimal set
+  //   {% analysis %}  boxed section with title + optional winner pill
+  //   {% wide %}      full-bleed scrollable wrapper for wide tables
+  //   {% annotate %}  handwritten comment + squiggly arrow on highlighted text
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  const escapeHtml = (value) => String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+
+  const normalizeSide = (side) => (String(side || "").toLowerCase() === "b" ? "b" : "a");
+
+  const renderInnerMarkdown = (content) => {
+    if (!content || typeof content !== "string") return "";
+    const trimmed = content.replace(/^\s*\n/, "").replace(/\n\s*$/, "");
+    return markdownLibrary.render(trimmed);
+  };
+
+  // {% analysis title="Risk Comparison", winner="AAPL Lower Risk", side="a" %} markdown {% endanalysis %}
+  eleventyConfig.addPairedShortcode("analysis", function (content, opts = {}) {
+    const options = (opts && typeof opts === "object") ? opts : {};
+    const title = options.title ?? "";
+    const winner = options.winner;
+    const side = normalizeSide(options.side);
+    const winnerHtml = winner
+      ? `<span class="winner-badge" data-side="${side}">${escapeHtml(winner)}</span>`
+      : "";
+    const body = renderInnerMarkdown(content);
+    return `\n\n<section class="analysis-card" data-side="${side}">\n<header class="analysis-header"><h3 class="analysis-title">${escapeHtml(title)}</h3>${winnerHtml}</header>\n<div class="analysis-body">${body}</div>\n</section>\n\n`;
+  });
+
+  // {% wide %} markdown table (or anything wide) {% endwide %}
+  // Breaks out of article container; horizontally scrollable on mobile.
+  eleventyConfig.addPairedShortcode("wide", function (content) {
+    const body = renderInnerMarkdown(content);
+    return `\n\n<div class="wide-wrap not-prose">\n${body}\n</div>\n\n`;
+  });
+
+  // {% annotate "handwritten comment here" %}phrase to highlight{% endannotate %}
+  // Renders highlighted text with a Caveat-font note and squiggly arrow.
+  eleventyConfig.addPairedShortcode("annotate", function (content, comment) {
+    const safeComment = escapeHtml(comment || "");
+    return `<span class="note"><span class="note-target">${content}</span><span class="note-comment" aria-label="Note">${safeComment}</span></span>`;
+  });
+
+  // Render a string as markdown. Used by the sidebar partial so `sidebar.content:`
+  // frontmatter can contain real markdown instead of raw HTML.
+  eleventyConfig.addFilter("markdownify", function (str) {
+    if (!str || typeof str !== "string") return "";
+    return markdownLibrary.render(str);
+  });
 
   eleventyConfig.on("eleventy.after", async () => {
     const srcDir = path.resolve("src/posts");

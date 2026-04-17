@@ -16,16 +16,15 @@ async function getAccessToken() {
     let tokenCache = new AssetCache("strava_token");
 
     if (tokenCache.isCacheValid("1h")) {
-        console.log("Using cached Strava token");
         try {
-            const cachedToken = tokenCache.getCachedValue();
+            const cachedToken = await tokenCache.getCachedValue();
             if (cachedToken && typeof cachedToken === 'string') {
                 return cachedToken;
             }
-            console.log("Invalid cached token, clearing cache");
+            console.warn("Invalid cached Strava token, clearing cache");
             await tokenCache.destroy();
         } catch (error) {
-            console.log("Error reading cached token, clearing cache:", error.message);
+            console.warn("Error reading cached Strava token, clearing cache:", error.message);
             await tokenCache.destroy();
         }
     }
@@ -51,7 +50,6 @@ async function getAccessToken() {
     const data = await response.json();
     const accessToken = data.access_token;
     await tokenCache.save(accessToken, "string");
-    console.log("Fetched and cached new Strava token");
     return accessToken;
 }
 
@@ -59,9 +57,8 @@ export default async function() {
     let activityCache = new AssetCache("strava_activities");
 
     if (activityCache.isCacheValid("15m")) {
-        console.log("Using cached Strava activities");
         try {
-            const cachedData = activityCache.getCachedValue();
+            const cachedData = await activityCache.getCachedValue();
             // Ensure cached data is an array and convert date strings back to Date objects
             if (Array.isArray(cachedData) && cachedData.length >= 0) {
                 return cachedData.map(activity => ({
@@ -70,10 +67,10 @@ export default async function() {
                 }));
             }
             // If cached data is invalid, clear cache and continue
-            console.log("Invalid cached data, clearing cache");
+            console.warn("Invalid cached Strava activities, clearing cache");
             await activityCache.destroy();
         } catch (error) {
-            console.log("Error reading cached data, clearing cache:", error.message);
+            console.warn("Error reading cached Strava activities, clearing cache:", error.message);
             await activityCache.destroy();
         }
     }
@@ -116,7 +113,5 @@ export default async function() {
     });
 
     await activityCache.save(filteredActivities, "json");
-    console.log("Fetched and cached new Strava activities");
-
     return filteredActivities;
 };

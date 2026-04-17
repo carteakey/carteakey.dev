@@ -1,0 +1,261 @@
+{# Cartebase dashboard chart + tile macros. Relies on Chart.js v4 being loaded
+   before any chart macro is rendered (include the CDN <script> near the top
+   of the page). Each macro emits an IIFE so vars don't collide. #}
+
+{% macro stat_tile(label, value, sublabel="") %}
+<div class="bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 rounded-lg p-4">
+  <div class="text-[0.65rem] uppercase tracking-widest text-gray-400 dark:text-gray-500">{{ label }}</div>
+  <div class="text-2xl font-semibold mt-1 text-gray-900 dark:text-gray-100 leading-tight">{{ value }}</div>
+  {% if sublabel %}<div class="text-xs text-gray-400 dark:text-gray-500 mt-0.5">{{ sublabel }}</div>{% endif %}
+</div>
+{% endmacro %}
+
+{% macro section_header(title, sub="", icon="") %}
+<div class="flex items-baseline justify-between mt-10 mb-4 not-prose">
+  <div class="flex items-center gap-2">
+    {% if icon %}<span class="text-gray-400 dark:text-gray-500">{% feather icon, class="w-4 h-4" %}</span>{% endif %}
+    <h2 class="text-lg font-semibold tracking-tight m-0 text-gray-900 dark:text-gray-100">{{ title }}</h2>
+  </div>
+  {% if sub %}<span class="text-xs text-gray-400 dark:text-gray-500">{{ sub }}</span>{% endif %}
+</div>
+{% endmacro %}
+
+{% macro line_chart(id, labels, data, label="", height=220) %}
+<div class="bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 rounded-lg p-3" style="height: {{ height }}px;">
+  <canvas id="{{ id }}"></canvas>
+</div>
+<script>
+(function(){
+  const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent-color').trim() || '#14b8a6';
+  const ctx = document.getElementById('{{ id }}').getContext('2d');
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: {{ labels | dump | safe }},
+      datasets: [{
+        label: {{ label | dump | safe }},
+        data: {{ data | dump | safe }},
+        borderColor: accent,
+        backgroundColor: accent + '22',
+        borderWidth: 1.5,
+        pointRadius: 0,
+        tension: 0.25,
+        fill: true,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { intersect: false, mode: 'index' },
+      scales: {
+        y: { beginAtZero: true, grid: { color: 'rgba(128,128,128,0.1)' }, ticks: { color: 'rgba(128,128,128,0.9)', font: { size: 10 } } },
+        x: { grid: { display: false }, ticks: { color: 'rgba(128,128,128,0.9)', font: { size: 10 }, maxTicksLimit: 12, autoSkip: true } }
+      },
+      plugins: { legend: { display: false } }
+    }
+  });
+})();
+</script>
+{% endmacro %}
+
+{% macro bar_chart(id, labels, data, label="", horizontal=false, height=260) %}
+<div class="bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 rounded-lg p-3" style="height: {{ height }}px;">
+  <canvas id="{{ id }}"></canvas>
+</div>
+<script>
+(function(){
+  const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent-color').trim() || '#14b8a6';
+  const ctx = document.getElementById('{{ id }}').getContext('2d');
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: {{ labels | dump | safe }},
+      datasets: [{
+        label: {{ label | dump | safe }},
+        data: {{ data | dump | safe }},
+        backgroundColor: accent + 'cc',
+        borderColor: accent,
+        borderWidth: 0,
+        borderRadius: 2,
+      }]
+    },
+    options: {
+      indexAxis: '{{ 'y' if horizontal else 'x' }}',
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        x: { grid: { display: {{ 'true' if horizontal else 'false' }}, color: 'rgba(128,128,128,0.1)' }, ticks: { color: 'rgba(128,128,128,0.9)', font: { size: 10 } } },
+        y: { grid: { display: {{ 'false' if horizontal else 'true' }}, color: 'rgba(128,128,128,0.1)' }, ticks: { color: 'rgba(128,128,128,0.9)', font: { size: 10 } } }
+      },
+      plugins: { legend: { display: false } }
+    }
+  });
+})();
+</script>
+{% endmacro %}
+
+{% macro heatmap(matrix, rowLabels=None, colLabels=None) %}
+{# matrix is 2D list (rows x cols). Renders a CSS-grid heatmap. #}
+{% set rows = rowLabels or ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"] %}
+{% set cols = colLabels or ["0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23"] %}
+{% set maxVal = 0 %}
+{% for row in matrix %}{% for v in row %}{% if v > maxVal %}{% set maxVal = v %}{% endif %}{% endfor %}{% endfor %}
+
+<div class="bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 rounded-lg p-3 overflow-x-auto">
+  <div style="display: grid; grid-template-columns: 2rem repeat({{ cols | length }}, minmax(14px, 1fr)); gap: 2px; min-width: 540px;">
+    <div></div>
+    {% for c in cols %}
+      <div class="text-[0.55rem] text-gray-400 text-center font-mono leading-3">{{ c if loop.index0 % 3 == 0 else "" }}</div>
+    {% endfor %}
+    {% for row in matrix %}
+      <div class="text-[0.6rem] text-gray-500 dark:text-gray-400 font-mono pr-1 leading-4">{{ rows[loop.index0] }}</div>
+      {% for v in row %}
+        {% set pct = (v / maxVal) if maxVal > 0 else 0 %}
+        <div title="{{ rows[loop.index0 % 7] }} {{ cols[loop.index0] }}: {{ v }}"
+             style="aspect-ratio: 1 / 1; background-color: rgba(20, 184, 166, {{ pct | round(2) if pct > 0 else 0.04 }}); border-radius: 2px;"></div>
+      {% endfor %}
+    {% endfor %}
+  </div>
+</div>
+{% endmacro %}
+
+{% macro wrapped_card(label, title, subtitle="", stats=[], size="large", image="", image_alt="") %}
+<div class="relative overflow-hidden rounded-xl border border-gray-200 dark:border-zinc-800 bg-gradient-to-br from-gray-50 to-white dark:from-zinc-900 dark:to-black {% if size == 'large' %}p-6 md:p-10{% else %}p-5 md:p-6{% endif %}">
+  <div class="absolute -top-10 -right-10 w-40 h-40 rounded-full opacity-10" style="background: var(--accent-color);"></div>
+  <div class="relative {% if image %}grid md:grid-cols-[1fr_auto] gap-6 items-center{% endif %}">
+    <div>
+      <div class="text-[0.65rem] uppercase tracking-[0.2em] text-gray-400 dark:text-gray-500 mb-3">{{ label }}</div>
+      <div class="{% if size == 'large' %}text-4xl md:text-6xl{% else %}text-2xl md:text-4xl{% endif %} font-bold tracking-tight leading-[0.95] mb-3 break-words" style="color: var(--accent-color);">{{ title }}</div>
+      {% if subtitle %}<div class="text-sm text-gray-500 dark:text-gray-400 mb-4">{{ subtitle }}</div>{% endif %}
+      {% if stats | length > 0 %}
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mt-5 pt-4 border-t border-gray-200 dark:border-zinc-800">
+        {% for s in stats %}
+        <div>
+          <div class="text-[0.6rem] uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-0.5">{{ s.label }}</div>
+          <div class="text-base md:text-lg font-semibold text-gray-900 dark:text-gray-100">{{ s.value }}</div>
+          {% if s.sub %}<div class="text-[0.65rem] text-gray-400 dark:text-gray-500 mt-0.5">{{ s.sub }}</div>{% endif %}
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+    {% if image %}
+    <div class="flex-shrink-0 mx-auto md:mx-0">
+      <img src="{{ image }}" alt="{{ image_alt or title }}" class="w-40 md:w-56 h-auto rounded-lg shadow-sm object-contain" loading="lazy" />
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endmacro %}
+
+{% macro stacked_area(id, labels, series, height=320) %}
+<div class="bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 rounded-lg p-3" style="height: {{ height }}px;">
+  <canvas id="{{ id }}"></canvas>
+</div>
+<script>
+(function(){
+  const palette = ['#14b8a6','#f59e0b','#ec4899','#6366f1','#22c55e','#8b5cf6','#f97316','#06b6d4','#eab308','#0ea5e9','#d946ef','#f43f5e'];
+  const otherColor = '#e5e7eb';
+  const rawSeries = {{ series | dump | safe }};
+  const datasets = rawSeries.map((s, i) => {
+    const label = s.artist || s.label;
+    const isOther = label === 'Other';
+    const color = isOther ? otherColor : palette[i % palette.length];
+    return {
+      label: label,
+      data: s.data,
+      borderColor: isOther ? color : color,
+      backgroundColor: isOther ? color + '66' : color + 'dd',
+      borderWidth: 0.5,
+      pointRadius: 0,
+      fill: true,
+      tension: 0.25,
+    };
+  });
+  const ctx = document.getElementById('{{ id }}').getContext('2d');
+  new Chart(ctx, {
+    type: 'line',
+    data: { labels: {{ labels | dump | safe }}, datasets },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      scales: {
+        y: {
+          stacked: true, min: 0, max: 100,
+          ticks: { callback: v => v + '%', color: 'rgba(128,128,128,0.9)', font: { size: 10 } },
+          grid: { color: 'rgba(128,128,128,0.1)' }
+        },
+        x: {
+          grid: { display: false },
+          ticks: { color: 'rgba(128,128,128,0.9)', font: { size: 10 } }
+        }
+      },
+      plugins: {
+        legend: { position: 'bottom', labels: { color: 'rgba(128,128,128,0.95)', font: { size: 10 }, boxWidth: 10, padding: 8 } },
+        tooltip: { callbacks: { label: (ctx) => `${ctx.dataset.label}: ${ctx.parsed.y.toFixed(1)}%` } }
+      }
+    }
+  });
+})();
+</script>
+{% endmacro %}
+
+{% macro now_playing_strip(track) %}
+{% if track %}
+<div class="flex items-center gap-3 p-3 rounded-lg border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 mb-4">
+  {% if track.albumImageUrl %}
+    <img src="{{ track.albumImageUrl }}" alt="" class="w-10 h-10 rounded-md flex-shrink-0" width="40" height="40" loading="lazy">
+  {% endif %}
+  <div class="min-w-0 flex-1">
+    <div class="text-[0.6rem] uppercase tracking-widest" style="color: var(--accent-color);">Now playing</div>
+    <div class="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">{{ track.title }}</div>
+    <div class="text-xs text-gray-500 dark:text-gray-400 truncate">{{ track.artist }}</div>
+  </div>
+  {% if track.songUrl %}
+    <a href="{{ track.songUrl }}" target="_blank" rel="noopener" class="text-xs text-gray-400 hover:underline flex-shrink-0" style="text-decoration:none;">Open →</a>
+  {% endif %}
+</div>
+{% endif %}
+{% endmacro %}
+
+{% macro share_bars(items, key_name, key_count, total, limit=10) %}
+<div class="space-y-1.5 not-prose">
+  {% for item in items | head(limit) %}
+    {% set pct = (item[key_count] * 100 / total) | round(2) %}
+    <div class="relative">
+      <div class="flex items-baseline justify-between text-sm mb-0.5">
+        <span class="font-medium text-gray-900 dark:text-gray-100 truncate pr-2">{{ loop.index }}. {{ item[key_name] }}</span>
+        <span class="text-xs text-gray-500 dark:text-gray-400 tabular-nums shrink-0">{{ item[key_count] | localeNumber }} · {{ pct }}%</span>
+      </div>
+      <div class="h-1.5 bg-gray-100 dark:bg-zinc-800 rounded-full overflow-hidden">
+        <div class="h-full rounded-full" style="width: {{ pct }}%; background: var(--accent-color);"></div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+{% endmacro %}
+
+{% macro year_card(year, top_artist, top_track, plays, hours, new_artists) %}
+<div class="bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 rounded-lg p-4">
+  <div class="flex items-baseline justify-between mb-2">
+    <div class="text-xl font-semibold text-gray-900 dark:text-gray-100">{{ year }}</div>
+    <div class="text-[0.65rem] uppercase tracking-widest text-gray-400">Year in review</div>
+  </div>
+  <div class="grid grid-cols-2 gap-2 text-xs mb-3">
+    <div><span class="text-gray-400">Plays</span> <div class="font-medium text-sm">{{ plays }}</div></div>
+    <div><span class="text-gray-400">Hours</span> <div class="font-medium text-sm">{{ hours }}</div></div>
+    <div><span class="text-gray-400">New artists</span> <div class="font-medium text-sm">{{ new_artists }}</div></div>
+  </div>
+  {% if top_artist %}
+    <div class="text-xs text-gray-400 mt-2">Top artist</div>
+    <div class="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">{{ top_artist.artist }}</div>
+    <div class="text-[0.65rem] text-gray-400">{{ top_artist.plays }} plays</div>
+  {% endif %}
+  {% if top_track %}
+    <div class="text-xs text-gray-400 mt-2">Top track</div>
+    <div class="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">{{ top_track.track }}</div>
+    <div class="text-[0.65rem] text-gray-400 truncate">{{ top_track.artist }} · {{ top_track.plays }} plays</div>
+  {% endif %}
+</div>
+{% endmacro %}

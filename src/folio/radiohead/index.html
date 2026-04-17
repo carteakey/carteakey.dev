@@ -1,0 +1,1727 @@
+---
+layout: false
+permalink: /folio/radiohead/
+title: "Radiohead // Web Archive"
+description: "A curated inventory of Radiohead's web presence - official sites, archive mazes, fan databases, and rabbit
+holes."
+---
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RADIOHEAD // web archive - carteakey.dev/folio</title>
+    <meta name="description"
+        content="A curated inventory of Radiohead's web presence - official sites, archive mazes, fan databases, and rabbit holes.">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <!-- OpenGraph -->
+    <meta property="og:title" content="RADIOHEAD // web archive">
+    <meta property="og:description"
+        content="A curated inventory of Radiohead's web presence - official sites, archive mazes, fan databases, and rabbit holes.">
+    <meta property="og:image" content="https://carteakey.dev/img/folio/radiohead/og-cover.png">
+    <meta property="og:url" content="https://carteakey.dev/folio/radiohead/">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://carteakey.dev/img/folio/radiohead/og-cover.png">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Special+Elite&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=IM+Fell+English:ital@0;1&family=Share+Tech+Mono&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #0e0d0a;
+            --ink: #d4cfa8;
+            --dim: #7a7560;
+            --gold: #c9a84c;
+            --gold-dim: #6b5a28;
+            --rust: #9e3a1f;
+            --red: #8b2020;
+            --line: #2c2b22;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--ink);
+            font-family: 'Courier Prime', monospace;
+            font-size: 23px;
+            line-height: 1.7;
+            background-image: repeating-linear-gradient(0deg, transparent, transparent 24px,
+                    rgba(255, 255, 255, 0.015) 24px, rgba(255, 255, 255, 0.015) 25px);
+        }
+
+        .header {
+            padding: 80px 0 60px;
+            border-bottom: 1px solid var(--line);
+            position: relative;
+            overflow: hidden;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding-left: 60px;
+            padding-right: 60px;
+        }
+
+        .header::before {
+            content: 'everything\Ain its\Aright place';
+            white-space: pre;
+            position: absolute;
+            right: 20px;
+            top: 30px;
+            font-family: 'Special Elite', serif;
+            font-size: 90px;
+            line-height: 0.9;
+            color: rgba(201, 168, 76, 0.06);
+            text-align: right;
+            pointer-events: none;
+        }
+
+        .stamp {
+            font-family: 'Special Elite', serif;
+            font-size: 12px;
+            letter-spacing: 0.3em;
+            color: var(--dim);
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .corner-mark {
+            position: absolute;
+            top: 70px;
+            right: 40px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 11px;
+            color: var(--dim);
+            letter-spacing: 0.1em;
+            text-align: right;
+            text-transform: uppercase;
+        }
+
+        .eyebrow {
+            font-size: 13px;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: var(--dim);
+            margin-bottom: 24px;
+        }
+
+        .eyebrow a {
+            color: var(--dim);
+            text-decoration: none;
+            border-bottom: 1px dotted var(--line);
+        }
+
+        .eyebrow a:hover {
+            color: var(--gold);
+        }
+
+        h1 {
+            font-family: 'Special Elite', serif;
+            font-size: clamp(52px, 9vw, 96px);
+            font-weight: normal;
+            line-height: 0.9;
+            color: var(--ink);
+            letter-spacing: -1px;
+            margin-bottom: 28px;
+            position: relative;
+        }
+
+        h1::after {
+            content: '█';
+            font-size: 0.4em;
+            color: var(--gold);
+            opacity: 0.6;
+            animation: blink 1.2s step-end infinite;
+            vertical-align: middle;
+            margin-left: 4px;
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 0.6;
+            }
+
+            50% {
+                opacity: 0;
+            }
+        }
+
+        h1 em {
+            color: var(--gold);
+            font-style: normal;
+            display: block;
+            font-size: 0.55em;
+            letter-spacing: 0.05em;
+            margin-top: 8px;
+        }
+
+        .header-note {
+            font-family: 'IM Fell English', serif;
+            font-style: italic;
+            font-size: 23px;
+            color: var(--dim);
+            max-width: 520px;
+            line-height: 1.6;
+        }
+
+        .subtitle {
+            margin-top: 10px;
+            color: var(--dim);
+            font-size: 12px;
+            letter-spacing: 0.2em;
+            font-style: italic;
+            font-family: 'IM Fell English', serif;
+        }
+
+        /* ─── BODY ─── */
+        .body {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 60px 100px;
+        }
+
+        .chunk {
+            padding: 52px 0 0;
+        }
+
+        .chunk-head {
+            font-size: 14px;
+            letter-spacing: 0.4em;
+            text-transform: uppercase;
+            color: var(--rust);
+            margin-bottom: 32px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .chunk-head::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--line);
+        }
+
+        /* ─── PROSE ENTRIES ─── */
+        .prose-entry {
+            padding: 20px 0;
+            border-bottom: 1px solid var(--line);
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 20px;
+        }
+
+        .prose-entry:last-child {
+            border-bottom: none;
+        }
+
+        .pe-title {
+            font-family: 'IM Fell English', serif;
+            font-size: 29px;
+            color: var(--ink);
+            margin-bottom: 6px;
+        }
+
+        .pe-desc {
+            font-size: 20px;
+            color: var(--dim);
+            font-family: 'IM Fell English', serif;
+            font-style: italic;
+            line-height: 1.6;
+            max-width: 580px;
+        }
+
+        .pe-link {
+            font-size: 14px;
+            color: var(--gold);
+            text-decoration: none;
+            letter-spacing: 0.05em;
+            white-space: nowrap;
+            padding-top: 5px;
+            border-bottom: 1px dotted rgba(201, 168, 76, 0.3);
+            align-self: start;
+        }
+
+        .pe-link:hover {
+            color: #e8c870;
+        }
+
+        /* ─── TAGS ─── */
+        .entry-tags {
+            margin-top: 8px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .tag {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            padding: 2px 6px;
+            border: 1px solid var(--line);
+            color: var(--dim);
+        }
+
+        .tag.official {
+            border-color: var(--gold-dim);
+            color: var(--gold);
+        }
+
+        .tag.archive {
+            border-color: #3a3a5a;
+            color: #7a7aaa;
+        }
+
+        .tag.fansite {
+            border-color: #2a4a2a;
+            color: #6a9a6a;
+        }
+
+        .tag.maze {
+            border-color: var(--red);
+            color: #cc4444;
+        }
+
+        .tag.uncharted {
+            border-color: #3a3a3a;
+            color: #5a5a5a;
+            font-style: italic;
+        }
+
+        .tag.essential {
+            border-color: var(--rust);
+            color: #cc6644;
+        }
+
+        .tag.live {
+            border-color: #2a3a4a;
+            color: #6a8aaa;
+        }
+
+        /* ─── ARCHIVE MAZE GRID ─── */
+        .maze-note {
+            font-family: 'IM Fell English', serif;
+            font-style: italic;
+            font-size: 19px;
+            color: var(--dim);
+            margin-bottom: 36px;
+            padding-left: 20px;
+            border-left: 2px solid var(--line);
+        }
+
+        .sites-scatter {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .site {
+            padding: 18px 20px;
+            border: 1px solid var(--line);
+            margin: -1px 0 0 -1px;
+            text-decoration: none;
+            display: block;
+            transition: background 0.2s;
+        }
+
+        .site:nth-child(5n) {
+            border-color: #3a3820;
+        }
+
+        .site:nth-child(7n) {
+            border-color: #2a2a30;
+        }
+
+        .site:nth-child(13) {
+            background: rgba(158, 58, 31, 0.08);
+            border-color: rgba(158, 58, 31, 0.4);
+        }
+
+        .site:hover {
+            background: rgba(201, 168, 76, 0.06);
+        }
+
+        .site-thumb {
+            display: block;
+            width: calc(100% + 24px);
+            margin: -12px -12px 12px;
+            height: 110px;
+            object-fit: cover;
+            filter: grayscale(100%) opacity(0.55) contrast(1.1);
+            border-bottom: 1px solid var(--line);
+        }
+
+        .site-num {
+            font-family: 'Special Elite', serif;
+            font-size: 52px;
+            color: rgba(212, 207, 168, 0.12);
+            line-height: 1;
+            margin-bottom: 6px;
+        }
+
+        .site:nth-child(13) .site-num {
+            color: rgba(201, 168, 76, 0.4);
+        }
+
+        .site-url {
+            font-size: 13px;
+            color: var(--gold);
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .site-desc {
+            font-family: 'IM Fell English', serif;
+            font-style: italic;
+            font-size: 18px;
+            color: var(--dim);
+            line-height: 1.5;
+        }
+
+        .site:nth-child(13) .site-desc {
+            color: #a07060;
+        }
+
+        .site-tag {
+            display: inline-block;
+            margin-top: 6px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 7px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            padding: 1px 4px;
+            border: 1px solid #3a3a3a;
+            color: #5a5a5a;
+            font-style: normal;
+        }
+
+        /* ─── SCRAPBOOKS / BLOG ENTRIES ─── */
+        .scrap-block {
+            padding: 28px 0;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .scrap-title {
+            font-family: 'Special Elite', serif;
+            font-size: 31px;
+            color: var(--ink);
+            margin-bottom: 8px;
+        }
+
+        .scrap-url {
+            font-size: 12px;
+            color: var(--gold);
+            text-decoration: none;
+            border-bottom: 1px dotted rgba(201, 168, 76, 0.3);
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+
+        .scrap-url:hover {
+            color: #e8c870;
+        }
+
+        .scrap-desc {
+            font-family: 'IM Fell English', serif;
+            font-style: italic;
+            font-size: 22px;
+            color: var(--dim);
+            line-height: 1.7;
+            max-width: 640px;
+        }
+
+        /* ─── ASIDE / SCRIBBLE BLOCKS ─── */
+        .aside {
+            margin: 48px 0;
+            padding: 24px 28px;
+            border-left: 3px solid var(--rust);
+            background: rgba(158, 58, 31, 0.05);
+        }
+
+        .aside p {
+            font-family: 'IM Fell English', serif;
+            font-style: italic;
+            font-size: 20px;
+            color: #a08070;
+            line-height: 1.7;
+        }
+
+        .scribble {
+            margin: 36px 0;
+            padding: 20px 24px;
+            border-left: 2px solid var(--gold-dim);
+            background: rgba(198, 168, 75, 0.03);
+        }
+
+        .scribble p {
+            font-family: 'IM Fell English', serif;
+            font-style: italic;
+            font-size: 19px;
+            color: var(--dim);
+            line-height: 1.7;
+        }
+
+        .scribble .scribble-label {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--gold-dim);
+            margin-bottom: 8px;
+            font-style: normal;
+        }
+
+        /* ─── MUSIC SECTION ─── */
+        .album-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .album-card {
+            border: 1px solid var(--line);
+            padding: 20px;
+            transition: border-color 0.2s;
+        }
+
+        a.album-card {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .album-card:hover {
+            border-color: var(--gold-dim);
+        }
+
+        a.album-card:hover .album-name {
+            color: var(--gold);
+        }
+
+        .album-name {
+            font-family: 'Special Elite', serif;
+            font-size: 24px;
+            color: var(--ink);
+            margin-bottom: 4px;
+        }
+
+        .album-year {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 10px;
+            color: var(--dim);
+            letter-spacing: 0.2em;
+            margin-bottom: 8px;
+        }
+
+        .album-note {
+            font-family: 'IM Fell English', serif;
+            font-style: italic;
+            font-size: 18px;
+            color: var(--dim);
+            line-height: 1.5;
+        }
+
+        /* ─── CHAOS TOUCHES ─── */
+        .album-card:nth-child(2) {
+            transform: rotate(-0.4deg);
+        }
+
+        .album-card:nth-child(4) {
+            transform: rotate(0.3deg);
+        }
+
+        .album-card:nth-child(5) {
+            transform: rotate(-0.2deg);
+            margin-top: 6px;
+        }
+
+        .site:nth-child(3) {
+            transform: rotate(0.3deg);
+        }
+
+        .site:nth-child(8) {
+            transform: rotate(-0.4deg);
+        }
+
+        .site:nth-child(11) {
+            transform: rotate(0.2deg);
+        }
+
+        .prose-entry:nth-child(3) {
+            margin-left: 8px;
+        }
+
+        .scrap-block:nth-child(2) {
+            margin-left: 12px;
+        }
+
+        .aside {
+            transform: rotate(-0.2deg);
+        }
+
+        .scribble:nth-of-type(odd) {
+            transform: rotate(0.15deg);
+        }
+
+        /* ─── MORE QUIRKS ─── */
+        .pulled-right {
+            margin-left: auto;
+            margin-right: 0;
+            max-width: 70%;
+            text-align: right;
+            border-left: none;
+            border-right: 2px solid var(--gold-dim);
+            padding-left: 0;
+            padding-right: 24px;
+        }
+
+        .redacted {
+            text-decoration: line-through;
+            color: rgba(212, 207, 168, 0.25);
+            font-style: italic;
+        }
+
+        .glitch {
+            position: relative;
+        }
+
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            left: 2px;
+            top: 0;
+            color: var(--rust);
+            opacity: 0.15;
+            pointer-events: none;
+        }
+
+        .margin-scrawl {
+            position: absolute;
+            right: -20px;
+            font-family: 'Special Elite', serif;
+            font-size: 11px;
+            color: rgba(201, 168, 76, 0.2);
+            transform: rotate(-90deg);
+            transform-origin: right top;
+            white-space: nowrap;
+        }
+
+        .chunk {
+            position: relative;
+        }
+
+        /* ─── TOC ─── */
+        .toc {
+            margin-top: 40px;
+            padding: 20px 24px;
+            border: 1px solid var(--line);
+            display: inline-block;
+            min-width: 280px;
+        }
+
+        .toc-label {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: var(--dim);
+            margin-bottom: 12px;
+        }
+
+        .toc ol {
+            list-style: none;
+            counter-reset: toc-counter;
+            padding: 0;
+            margin: 0;
+        }
+
+        .toc li {
+            counter-increment: toc-counter;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 12px;
+            letter-spacing: 0.08em;
+            color: var(--dim);
+            padding: 3px 0;
+            display: flex;
+            align-items: baseline;
+            gap: 0;
+        }
+
+        .toc li::before {
+            content: counter(toc-counter, decimal-leading-zero) '.';
+            color: var(--gold-dim);
+            margin-right: 10px;
+            flex-shrink: 0;
+        }
+
+        .toc a {
+            color: var(--dim);
+            text-decoration: none;
+            text-transform: uppercase;
+            transition: color 0.15s;
+        }
+
+        .toc a:hover {
+            color: var(--gold);
+        }
+
+
+        /* ─── ALBUM ICONS ─── */
+        .album-icon {
+            display: block;
+            width: 64px;
+            height: 64px;
+            object-fit: contain;
+            mix-blend-mode: screen;
+            opacity: 0.55;
+            margin: 10px 0 0 auto;
+            transition: opacity 0.2s;
+        }
+
+        .album-card:hover .album-icon {
+            opacity: 0.85;
+        }
+
+        /* ─── CLASSIFIED ─── */
+        .classified {
+            margin: 40px 0;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .classified summary {
+            list-style: none;
+            font-family: 'Courier Prime', monospace;
+            font-size: 15px;
+            color: rgba(212, 207, 168, 0.15);
+            letter-spacing: 0.05em;
+            line-height: 1.7;
+            padding: 16px 20px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(158, 58, 31, 0.25);
+        }
+
+        .classified summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .classified[open] summary {
+            color: var(--dim);
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .classified-content {
+            padding: 16px 20px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(158, 58, 31, 0.25);
+            border-top: none;
+            font-family: 'IM Fell English', serif;
+            font-style: italic;
+            font-size: 19px;
+            color: #a08070;
+            line-height: 1.7;
+        }
+
+        .classified-label {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 9px;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: var(--rust);
+            margin-bottom: 10px;
+            font-style: normal;
+        }
+
+        /* ─── ERR LINE ─── */
+        .err-line {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 11px;
+            color: rgba(158, 58, 31, 0.35);
+            letter-spacing: 0.1em;
+            text-align: right;
+            margin: -12px 0 24px;
+        }
+
+        /* ─── PRINT SURVIVAL NOTE ─── */
+        .print-survival {
+            display: none;
+        }
+
+        /* ─── PRINT ─── */
+        @media print {
+            body {
+                background: white;
+                color: #111;
+                background-image: none;
+                font-size: 13px;
+            }
+
+            .header::before,
+            .corner-mark,
+            .margin-scrawl,
+            .toc,
+            footer,
+            #visitor-counter {
+                display: none;
+            }
+
+            .header {
+                padding: 20px 0 16px;
+                border-bottom: 1px solid #ccc;
+            }
+
+            h1 {
+                color: #111;
+                font-size: 48px;
+            }
+
+            h1::after {
+                display: none;
+            }
+
+            h1 em {
+                color: #555;
+            }
+
+            .chunk-head {
+                color: #333;
+            }
+
+            .chunk-head::after {
+                background: #ccc;
+            }
+
+            .pe-title {
+                color: #111;
+            }
+
+            .pe-desc,
+            .scrap-desc,
+            .site-desc,
+            .album-note {
+                color: #444;
+            }
+
+            .pe-link,
+            .scrap-url,
+            .site-url {
+                color: #333;
+            }
+
+            .tag {
+                border-color: #ccc;
+                color: #666;
+            }
+
+            .aside,
+            .scribble {
+                border-color: #999;
+                background: none;
+                transform: none;
+            }
+
+            .aside p,
+            .scribble p {
+                color: #444;
+            }
+
+            .sites-scatter {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .album-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            a {
+                color: inherit;
+            }
+
+            .print-cat {
+                display: block;
+                text-align: center;
+                font-size: 48px;
+                margin: 8px 0 4px;
+                line-height: 1;
+            }
+        }
+
+        @media screen {
+            .print-cat {
+                display: none;
+            }
+        }
+
+        /* ─── FOOTER ─── */
+        footer {
+            margin-top: 80px;
+            padding: 24px 60px;
+            border-top: 1px solid var(--line);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            color: var(--dim);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            flex-wrap: nowrap;
+            gap: 24px;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+            white-space: nowrap;
+        }
+
+        footer a {
+            color: var(--dim);
+            text-decoration: none;
+            border-bottom: 1px dotted var(--line);
+        }
+
+        footer a:hover {
+            color: var(--gold);
+        }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 52px;
+            }
+
+            .header,
+            .body {
+                padding-left: 24px;
+                padding-right: 24px;
+            }
+
+            .sites-scatter {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .prose-entry {
+                grid-template-columns: 1fr;
+            }
+
+            .album-grid {
+                grid-template-columns: 1fr;
+            }
+
+            footer {
+                padding-left: 24px;
+                padding-right: 24px;
+                flex-wrap: wrap;
+                white-space: normal;
+                gap: 12px;
+            }
+
+            .pulled-right {
+                max-width: 100%;
+            }
+
+            .corner-mark {
+                display: none;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .sites-scatter {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 44px;
+            }
+
+            .header {
+                padding: 40px 16px 30px;
+            }
+
+            .body {
+                padding: 0 16px 60px;
+            }
+
+            footer {
+                padding: 20px 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="stamp">compiled inventory // document 001</div>
+        <img class="print-cat" src="/img/folio/radiohead/bear-icon.png" alt="Radiohead">
+        <span class="print-survival">some things don't survive reproduction.</span>
+        <h1>Radio<br>head<em>// web archive</em></h1>
+        <p class="header-note">a hoard of links, notes, scribbles, and rabbit holes.<br>not comprehensive. not finished.
+            never finished.</p>
+        <p
+            style="margin-top:8px; font-family:'Share Tech Mono',monospace; font-size:11px; color:var(--dim); letter-spacing:0.12em;">
+            formerly On a Friday, 1985–1991</p>
+        <div class="corner-mark">est. 1991<br>updated 2026</div>
+    </div>
+
+    <div class="body">
+
+        <p style="margin-top: 40px; font-family: 'Share Tech Mono', monospace; font-size: 13px; color: var(--dim);">
+            ↳ <a href="/img/radiohead-guide.png" target="_blank"
+                style="color: var(--gold); border-bottom: 1px dotted rgba(201, 168, 76, 0.3); text-decoration: none;">radiohead
+                - a beginner's guide (image, large)</a>
+        </p>
+
+        <div class="toc">
+            <div class="toc-label">contents</div>
+            <ol>
+                <li><a href="#official">Official &amp; Band-Connected</a></li>
+                <li><a href="#archive">Archive Sites - Memory Hole</a></li>
+                <li><a href="#scrapbooks">Scrapbooks, Blogs, Notes</a></li>
+                <li><a href="#fan-sites">Fan Sites &amp; Deep Archives</a></li>
+                <li><a href="#community">Community &amp; Live Archive</a></li>
+                <li><a href="#music">The Music - A Way In</a>
+                    <ol style="padding-left:18px; margin-top:4px; counter-reset:toc-sub;">
+                        <li style="counter-increment:none; padding:2px 0;"><a href="#live-videos"
+                                style="font-size:11px;">&#8627; Live Videos &amp; Documents</a></li>
+                    </ol>
+                </li>
+                <li><a href="#dead">The Dead &amp; The Lost</a></li>
+            </ol>
+        </div>
+        <p class="err-line">ERR: everything in its right place [0x00]</p>
+
+        <!-- ═══ OFFICIAL & BAND-CONNECTED ═══ -->
+        <div class="chunk" id="official">
+            <span class="margin-scrawl">section 01</span>
+            <div class="chunk-head">official &amp; band-connected</div>
+            <div class="prose-entry">
+                <div>
+                    <div class="pe-title">Radiohead Public Library</div>
+                    <div class="pe-desc">The official archive. Organised by album - live footage, artwork, music
+                        videos, scrapbooks. The Memory Hole section links back to every old site. TKOL section is
+                        mostly a photo archive. The real depth is in OK Computer and Kid A entries.</div>
+                    <div class="entry-tags">
+                        <span class="tag official">official</span>
+                        <span class="tag archive">archive</span>
+                    </div>
+                </div>
+                <a class="pe-link" href="https://radiohead.com/library" target="_blank">radiohead.com/library ↗</a>
+            </div>
+            <div class="prose-entry">
+                <div>
+                    <div class="pe-title">W.A.S.T.E. Headquarters</div>
+                    <div class="pe-desc">Official news, mailing list, tour. The active presence since 1991. Named after
+                        the underground mail system in Pynchon's <em>The Crying of Lot 49</em>.</div>
+                    <div class="entry-tags">
+                        <span class="tag official">official</span>
+                    </div>
+                </div>
+                <a class="pe-link" href="https://www.wasteheadquarters.com" target="_blank">wasteheadquarters.com ↗</a>
+            </div>
+            <div class="prose-entry">
+                <div>
+                    <div class="pe-title">W.A.S.T.E. Store</div>
+                    <div class="pe-desc">Official merch for all band members and Donwood. On-demand reprints of older
+                        stuff.</div>
+                    <div class="entry-tags">
+                        <span class="tag official">official</span>
+                    </div>
+                </div>
+                <a class="pe-link" href="https://store.wasteheadquarters.com"
+                    target="_blank">store.wasteheadquarters.com ↗</a>
+            </div>
+        </div>
+
+        <!-- ═══ ARCHIVE SITES - MEMORY HOLE ═══ -->
+        <div class="chunk" id="archive">
+            <div class="chunk-head">the archive sites - memory hole</div>
+            <p class="maze-note">Designed with Stanley Donwood. Each one is a different era, a different mood. Some need
+                old browser plugins. Some just click forever. Start at 13 and work backwards.</p>
+
+            <div class="sites-scatter">
+                <a class="site" href="http://archive.radiohead.com/Site1/" target="_blank">
+                    <img class="site-thumb" src="/img/folio/radiohead/site-01.png" alt="Site 1 screenshot" loading="lazy"
+                        onerror="this.style.display='none'">
+                    <div class="site-num">01</div>
+                    <span class="site-url">archive.radiohead.com/Site1/</span>
+                    <div class="site-desc">Netscape. 640×480. 256 colours. "Watch that phone bill."</div>
+                    <span class="site-tag" style="border-color: var(--gold-dim); color: var(--gold);">pablo honey
+                        era</span>
+                </a>
+                <a class="site" href="http://archive.radiohead.com/Site2/" target="_blank">
+                    <img class="site-thumb" src="/img/folio/radiohead/site-02.png" alt="Site 2 screenshot" loading="lazy"
+                        onerror="this.style.display='none'">
+                    <div class="site-num">02</div>
+                    <span class="site-url">archive.radiohead.com/Site2/</span>
+                    <div class="site-desc">"This is the Radiohead internet site." Early era, dead simple.</div>
+                    <span class="site-tag" style="border-color: var(--gold-dim); color: var(--gold);">the bends
+                        era</span>
+                </a>
+                <a class="site" href="http://archive.radiohead.com/Site3/" target="_blank">
+                    <img class="site-thumb" src="/img/folio/radiohead/site-03.png" alt="Site 3 screenshot" loading="lazy"
+                        onerror="this.style.display='none'">
+                    <div class="site-num">03</div>
+                    <span class="site-url">archive.radiohead.com/Site3/</span>
+                    <div class="site-desc">"a site by radiohead and stnly dnwd who is a confused man"</div>
+                    <span class="site-tag" style="border-color: var(--gold-dim); color: var(--gold);">ok computer
+                        era</span>
+                </a>
+                <a class="site" href="http://archive.radiohead.com/Site4/" target="_blank">
+                    <img class="site-thumb" src="/img/folio/radiohead/site-04.png" alt="Site 4 screenshot" loading="lazy"
+                        onerror="this.style.display='none'">
+                    <div class="site-num">04</div>
+                    <span class="site-url">archive.radiohead.com/Site4/</span>
+                    <div class="site-desc">A sincere Geocities link lives somewhere in here. Mid-90s internet at its
+                        most earnest.</div>
+                </a>
+                <a class="site" href="http://archive.radiohead.com/Site7/" target="_blank">
+                    <img class="site-thumb" src="/img/folio/radiohead/site-07.png" alt="Site 7 screenshot" loading="lazy"
+                        onerror="this.style.display='none'">
+                    <div class="site-num">07</div>
+                    <span class="site-url">archive.radiohead.com/Site7/</span>
+                    <div class="site-desc">Links to Friends of the Earth climate campaign. The internet as activism. Kid
+                        A energy.</div>
+                    <span class="site-tag" style="border-color: var(--gold-dim); color: var(--gold);">kid a era</span>
+                </a>
+                <a class="site" href="http://archive.radiohead.com/Site8/" target="_blank">
+                    <img class="site-thumb" src="/img/folio/radiohead/site-08.png" alt="Site 8 screenshot" loading="lazy"
+                        onerror="this.style.display='none'">
+                    <div class="site-num">08</div>
+                    <span class="site-url">archive.radiohead.com/Site8/</span>
+                    <div class="site-desc">Donwood labyrinth. Corridors of dead links and half-remembered
+                        artwork. Darker than 13.</div>
+                </a>
+                <a class="site" href="http://archive.radiohead.com/Site9/" target="_blank">
+                    <img class="site-thumb" src="/img/folio/radiohead/site-09.png" alt="Site 9 screenshot" loading="lazy"
+                        onerror="this.style.display='none'">
+                    <div class="site-num">09</div>
+                    <span class="site-url">archive.radiohead.com/Site9/</span>
+                    <div class="site-desc">"HAIL TO THE THIEF." Flash-era labyrinth. Links to radiohead.tv
+                        (launched 2003 as internet TV; resurfaced as YouTube livestream 2026) and slowlydownward.com.
+                    </div>
+                    <span class="site-tag" style="border-color: var(--gold-dim); color: var(--gold);">httt era</span>
+                </a>
+                <a class="site" href="http://archive.radiohead.com/Site10/" target="_blank">
+                    <img class="site-thumb" src="/img/folio/radiohead/site-10.png" alt="Site 10 screenshot" loading="lazy"
+                        onerror="this.style.display='none'">
+                    <div class="site-num">10</div>
+                    <span class="site-url">archive.radiohead.com/Site10/</span>
+                    <div class="site-desc">"TEMPORARY RESTRAINING ORDER." One link. One page. Deliberately minimal.
+                    </div>
+                </a>
+                <a class="site" href="http://archive.radiohead.com/Site12/" target="_blank">
+                    <img class="site-thumb" src="/img/folio/radiohead/site-12.png" alt="Site 12 screenshot" loading="lazy"
+                        onerror="this.style.display='none'">
+                    <div class="site-num">12</div>
+                    <span class="site-url">archive.radiohead.com/Site12/</span>
+                    <div class="site-desc">"the official website where we put things." Dead Air Space lives here.</div>
+                    <span class="site-tag" style="border-color: var(--gold-dim); color: var(--gold);">in rainbows
+                        era</span>
+                </a>
+                <a class="site" href="http://archive.radiohead.com/Site13/" target="_blank">
+                    <img class="site-thumb" src="/img/folio/radiohead/site-13.png" alt="Site 13 screenshot" loading="lazy"
+                        onerror="this.style.display='none'">
+                    <div class="site-num">13</div>
+                    <span class="site-url">archive.radiohead.com/Site13/</span>
+                    <div class="site-desc">"goes all over the place in a meaningless series of loops, filled with
+                        discarded ephemera from the broken hard drives of Donwood &amp; Tchock"</div>
+                    <span class="site-tag" style="border-color: var(--rust); color: #cc4444;">the ur-maze</span>
+                </a>
+            </div>
+
+            <div class="scribble pulled-right">
+                <div class="scribble-label">personal note</div>
+                <p>★ Site 13 is the ur-maze. Start there. Work backwards. If you find yourself clicking through broken
+                    Flash links at 2am wondering if the 404 is part of the art - it probably is. Site 12 contains Dead
+                    Air Space, which is maybe the most honest thing the band ever put online.</p>
+            </div>
+        </div>
+
+        <!-- ═══ SCRAPBOOKS, BLOGS, NOTES ═══ -->
+        <div class="chunk" id="scrapbooks">
+            <div class="chunk-head">scrapbooks, blogs, notes</div>
+            <div class="scrap-block">
+                <div class="scrap-title">Dead Air Space</div>
+                <a class="scrap-url" href="http://archive.radiohead.com/Site12/deadairspace/"
+                    target="_blank">archive.radiohead.com/Site12/deadairspace/</a>
+                <p class="scrap-desc">Thom Yorke's blog from the In Rainbows and King of Limbs years. Studio dispatches,
+                    cryptic playlist scrawls, notes about canal boats and modular synthesis and tax investigations and
+                    global warming. Probably the most human thing they ever published.</p>
+                <div class="entry-tags">
+                    <span class="tag official">official</span>
+                    <span class="tag archive">archive</span>
+                </div>
+            </div>
+            <div class="scrap-block">
+                <div class="scrap-title">Diet of Worms</div>
+                <a class="scrap-url" href="https://radiohead.com/library" target="_blank">via radiohead.com/library →
+                    Memory Hole</a>
+                <p class="scrap-desc">The 2004 online scrapbook. Yorke dumped unused lyrics here then returned during
+                    writer's block. Burn the Witch was in here a decade before the album. Doodles, old photos, early-era
+                    fragments.</p>
+                <div class="entry-tags">
+                    <span class="tag official">official</span>
+                    <span class="tag archive">archive</span>
+                    <span class="tag maze">maze</span>
+                </div>
+            </div>
+            <div class="scrap-block">
+                <div class="scrap-title">Stanley Donwood - Slowly Downward</div>
+                <a class="scrap-url" href="https://www.slowlydownward.com/" target="_blank">slowlydownward.com</a>
+                <p class="scrap-desc">Donwood's actual site. Artwork, prints, archive. Woefully out of date by design -
+                    updates arrive when they arrive and feel significant when they do. The maze sites, the OK Computer
+                    sketchbook, every cover, all his.</p>
+                <div class="entry-tags">
+                    <span class="tag">donwood</span>
+                    <span class="tag">artwork</span>
+                </div>
+            </div>
+            <div class="scrap-block">
+                <div class="scrap-title">Stanley Donwood - Instagram</div>
+                <a class="scrap-url" href="https://www.instagram.com/stanleydonwood"
+                    target="_blank">instagram.com/stanleydonwood</a>
+                <p class="scrap-desc">Process work, new prints, work-in-progress. More active than the site.
+                    Worth following on its own terms.</p>
+                <div class="entry-tags">
+                    <span class="tag">donwood</span>
+                    <span class="tag">artwork</span>
+                </div>
+            </div>
+
+
+            <details class="classified">
+                <summary>████████████████████ ████████████████████████████ ███████████. ████████ ██
+                    ████████████████████████ ███ ████████████████████ ████████████████ ████████████. ████ ██████
+                    ████████ ██████.</summary>
+                <div class="classified-content">
+                    <div class="classified-label">declassified // unverified</div>
+                    <p>The band's 2004 renegotiation with EMI reportedly included a clause allowing one album to be
+                        released outside standard label terms. <em>In Rainbows</em> was that album. The "pay what you
+                        want" model was not an accident. This is not a legal document and none of this should be cited.
+                    </p>
+                </div>
+            </details>
+
+            <div class="aside">
+                <p>The word "Tchock" - Yorke's pseudonym - appears throughout the archive sites. Just a sound. Not an
+                    anagram of anything. Donwood and Tchock made art together the way other people make dinner -
+                    regularly, without ceremony, and the results accumulated into something extraordinary.</p>
+            </div>
+        </div>
+
+        <!-- ═══ FAN SITES & DEEP ARCHIVES ═══ -->
+        <div class="chunk" id="fan-sites">
+            <div class="chunk-head">fan sites &amp; deep archives</div>
+            <div class="prose-entry">
+                <div>
+                    <div class="pe-title">Radiohead.fr</div>
+                    <div class="pe-desc">French fan site. News, discography, interviews, and a deep archive of
+                        French-language Radiohead coverage.</div>
+                    <div class="entry-tags">
+                        <span class="tag fansite">fansite</span>
+                    </div>
+                </div>
+                <a class="pe-link" href="http://www.radiohead.fr/" target="_blank">radiohead.fr ↗</a>
+            </div>
+            <div class="prose-entry">
+                <div>
+                    <div class="pe-title">Citizen Insane</div>
+                    <div class="pe-desc">Every album, every side project, full discography, media coverage, live
+                        performances, videos. Made in Germany. Est. 2006. Probably the most complete reference that
+                        exists.</div>
+                    <div class="entry-tags">
+                        <span class="tag fansite">fansite</span>
+                        <span class="tag">database</span>
+                    </div>
+                </div>
+                <a class="pe-link" href="https://citizeninsane.eu" target="_blank">citizeninsane.eu ↗</a>
+            </div>
+            <div class="prose-entry">
+                <div>
+                    <div class="pe-title">Green Plastic Radiohead</div>
+                    <div class="pe-desc">Oldest US fan site. Launched March 1997. Frozen around 2012 but preserved -
+                        news archive, concert reports, band history, two decades of fan art. Still online.</div>
+                    <div class="entry-tags">
+                        <span class="tag fansite">fansite</span>
+                        <span class="tag">historic</span>
+                    </div>
+                </div>
+                <a class="pe-link" href="https://www.greenplastic.info" target="_blank">greenplastic.info ↗</a>
+            </div>
+            <div class="prose-entry">
+                <div>
+                    <div class="pe-title">Green Plastic Cold Storage</div>
+                    <div class="pe-desc">The archive-within-the-archive. Print articles from 1993 onward, fan art,
+                        Ed O'Brien's diary, the W.A.S.T.E. mailing list archive, and a facsimile of "Lift" - Jonathan
+                        Moore's lost early fan site, preserved here specifically because the original is gone.</div>
+                    <div class="entry-tags">
+                        <span class="tag fansite">fansite</span>
+                        <span class="tag archive">archive</span>
+                    </div>
+                </div>
+                <a class="pe-link" href="https://www.greenplastic.info/cold-storage/" target="_blank">cold-storage ↗</a>
+            </div>
+            <div class="prose-entry">
+                <div>
+                    <div class="pe-title">W.A.S.T.E. Central</div>
+                    <div class="pe-desc">Fan community and blog network on Ning. Still reachable but many accounts
+                        are inaccessible and the data is decaying. Password recovery is broken. A digital ruin.
+                    </div>
+                    <div class="entry-tags">
+                        <span class="tag fansite">fansite</span>
+                        <span class="tag uncharted">[decaying]</span>
+                    </div>
+                </div>
+                <a class="pe-link" href="https://wastecentral.ning.com" target="_blank">wastecentral.ning.com ↗</a>
+            </div>
+        </div>
+
+        <!-- ═══ COMMUNITY & LIVE ARCHIVE ═══ -->
+        <div class="chunk" id="community">
+            <div class="chunk-head">community &amp; live archive</div>
+            <div class="prose-entry">
+                <div>
+                    <div class="pe-title">r/radiohead</div>
+                    <div class="pe-desc">The active community. Good for rabbit holes, bootlegs, and someone explaining
+                        what the Amnesiac artwork means at 2am.</div>
+                    <div class="entry-tags">
+                        <span class="tag fansite">community</span>
+                    </div>
+                </div>
+                <a class="pe-link" href="https://reddit.com/r/radiohead" target="_blank">reddit.com/r/radiohead ↗</a>
+            </div>
+            <div class="prose-entry">
+                <div>
+                    <div class="pe-title">Internet Archive - Live Hub</div>
+                    <div class="pe-desc">Every Radiohead song ever played live. From the On a Friday days through The
+                        King of Limbs. Compiled by Radiohub. Thousands of recordings.</div>
+                    <div class="entry-tags">
+                        <span class="tag archive">archive</span>
+                        <span class="tag live">live</span>
+                    </div>
+                </div>
+                <a class="pe-link" href="https://archive.org/details/RadioheadHub" target="_blank">archive.org ↗</a>
+            </div>
+            <div class="prose-entry">
+                <div>
+                    <div class="pe-title">Radiohead Not For Profit</div>
+                    <div class="pe-desc">Free lossless full-show audio (FLAC/SHN). Individual show pages with
+                        setlists. No official releases - live only. Still actively maintained in 2026. Pairs with the
+                        Internet Archive hub.</div>
+                    <div class="entry-tags">
+                        <span class="tag live">live</span>
+                        <span class="tag fansite">fansite</span>
+                    </div>
+                </div>
+                <a class="pe-link" href="https://radiohead-notforprofit.com" target="_blank">notforprofit.com ↗</a>
+            </div>
+            <div class="prose-entry">
+                <div>
+                    <div class="pe-title">Not For Profit - YouTube</div>
+                    <div class="pe-desc">Full-show audio uploads. Same material as the site but more accessible -
+                        useful when FLAC downloads aren't practical.</div>
+                    <div class="entry-tags">
+                        <span class="tag live">live</span>
+                    </div>
+                </div>
+                <a class="pe-link" href="https://www.youtube.com/@Radioheadnotforprofitofficial" target="_blank">youtube
+                    ↗</a>
+            </div>
+            <div class="prose-entry">
+                <div>
+                    <div class="pe-title">Essential Radiohead Bootlegs</div>
+                    <div class="pe-desc">A Tumblr guide to the best live recordings by era - Utrecht 1997, Berlin
+                        2000, Bonnaroo 2006, and others - with descriptions and download links. Regularly referenced
+                        on r/radiohead when someone asks where to start with bootlegs.</div>
+                    <div class="entry-tags">
+                        <span class="tag live">live</span>
+                        <span class="tag fansite">curated</span>
+                    </div>
+                </div>
+                <a class="pe-link" href="https://essentialradioheadbootlegs.tumblr.com/" target="_blank">tumblr ↗</a>
+            </div>
+            <div class="prose-entry">
+                <div>
+                    <div class="pe-title">Et Cetera</div>
+                    <div class="pe-desc">Launched 2025 to replace At Ease and Mortigi Tempo. Proper forum structure,
+                        no karma, no algorithm. Already 2,000+ members, 14k music posts. The spiritual successor to
+                        the classic boards.</div>
+                    <div class="entry-tags">
+                        <span class="tag fansite">community</span>
+                        <span class="tag essential">new</span>
+                    </div>
+                </div>
+                <a class="pe-link" href="https://etceteraforum.com" target="_blank">etceteraforum.com ↗</a>
+            </div>
+            <div class="prose-entry">
+                <div>
+                    <div class="pe-title">At Ease</div>
+                    <div class="pe-desc">The message board is gone - server went down August 2024. But the news pages
+                        and live archive (e.g. "live 2004") still resolve. Had ~20,000 daily visitors in the OK
+                        Computer / Kid A years. The band pointed fans here.</div>
+                    <div class="entry-tags">
+                        <span class="tag archive">archive</span>
+                        <span class="tag uncharted">[board dead]</span>
+                    </div>
+                </div>
+                <a class="pe-link" href="https://ateaseweb.com" target="_blank">ateaseweb.com ↗</a>
+            </div>
+            <div class="prose-entry">
+                <div>
+                    <div class="pe-title">Radiohead Almanac</div>
+                    <div class="pe-desc">A Fandom wiki project cataloguing every known live recording - Radiohead and
+                        solo. Per-show pages, quality notes, recommended versions. A different approach to the live
+                        archive problem than the Internet Archive hub.</div>
+                    <div class="entry-tags">
+                        <span class="tag archive">archive</span>
+                        <span class="tag live">live</span>
+                    </div>
+                </div>
+                <a class="pe-link" href="https://the-radiohead-almanac.fandom.com" target="_blank">fandom wiki ↗</a>
+            </div>
+        </div>
+
+        <p class="redacted" style="margin-top: 20px; font-family: 'IM Fell English', serif; font-size: 14px;">this was
+            supposed to be organized alphabetically but that felt wrong</p>
+
+        <!-- ═══ THE MUSIC - A WAY IN ═══ -->
+        <div class="chunk" id="music">
+            <span class="margin-scrawl">section 03</span>
+            <div class="chunk-head glitch" data-text="the music - a way in">the music &mdash; a way in</div>
+
+            <div class="album-grid">
+                <a class="album-card" href="https://en.wikipedia.org/wiki/Pablo_Honey" target="_blank">
+                    <div class="album-name">Pablo Honey</div>
+                    <img class="album-icon" src="/img/folio/radiohead/album-pablo-honey.png" alt="" loading="lazy"
+                        onerror="this.style.display='none'">
+                    <div class="album-year">1993</div>
+                    <div class="album-note">They were a different band. Britrock, still finding it. "Creep" happened and
+                        they spent the next decade running from it. Worth knowing for where they started.</div>
+                    <div class="entry-tags"><span class="tag">origin</span></div>
+                </a>
+                <a class="album-card" href="https://en.wikipedia.org/wiki/The_Bends_(album)" target="_blank">
+                    <div class="album-name">The Bends</div>
+                    <img class="album-icon" src="/img/folio/radiohead/album-the-bends.png" alt="" loading="lazy"
+                        onerror="this.style.display='none'">
+                    <div class="album-year">1995</div>
+                    <div class="album-note">The last album with guitars at the centre. "Fake Plastic Trees" and "Street
+                        Spirit" are devastating songs written by a band that hadn't figured out how to be devastating
+                        yet. You can hear them getting there.</div>
+                    <div class="entry-tags"><span class="tag">gateway</span></div>
+                </a>
+                <a class="album-card" href="https://en.wikipedia.org/wiki/OK_Computer" target="_blank">
+                    <div class="album-name">OK Computer</div>
+                    <img class="album-icon" src="/img/folio/radiohead/album-ok-computer.png" alt="" loading="lazy"
+                        onerror="this.style.display='none'">
+                    <div class="album-year">1997</div>
+                    <div class="album-note">The one that broke everything open. "Fitter Happier" is a poem read by a
+                        text-to-speech engine and it's more human than most lyrics.</div>
+                    <div class="entry-tags"><span class="tag essential">essential</span></div>
+                </a>
+                <a class="album-card" href="https://en.wikipedia.org/wiki/Kid_A" target="_blank">
+                    <div class="album-name">Kid A</div>
+                    <img class="album-icon" src="/img/folio/radiohead/album-kid-a.png" alt="" loading="lazy"
+                        onerror="this.style.display='none'">
+                    <div class="album-year">2000</div>
+                    <div class="album-note">They deleted themselves and became something else. No singles. No guitars on
+                        half the tracks. Still their best, probably.</div>
+                    <div class="entry-tags"><span class="tag essential">essential</span></div>
+                </a>
+                <a class="album-card" href="https://en.wikipedia.org/wiki/Amnesiac_(album)" target="_blank">
+                    <div class="album-name">Amnesiac</div>
+                    <img class="album-icon" src="/img/folio/radiohead/album-amnesiac.png" alt="" loading="lazy"
+                        onerror="this.style.display='none'">
+                    <div class="album-year">2001</div>
+                    <div class="album-note">Kid A's shadow twin. Recorded in the same sessions but darker, jazzier,
+                        weirder. "Life in a Glasshouse" has Humphrey Lyttelton's band playing funeral jazz.</div>
+                    <div class="entry-tags"><span class="tag essential">essential</span></div>
+                </a>
+                <a class="album-card" href="https://en.wikipedia.org/wiki/Hail_to_the_Thief" target="_blank">
+                    <div class="album-name">Hail to the Thief</div>
+                    <img class="album-icon" src="/img/folio/radiohead/album-hail-to-the-thief.png" alt="" loading="lazy"
+                        onerror="this.style.display='none'">
+                    <div class="album-year">2003</div>
+                    <div class="album-note">The political one. "2+2=5" opened Glastonbury before the album was even
+                        out. Dense, loud, and underrated. "There There" is a career highlight.</div>
+                    <div class="entry-tags"><span class="tag">underrated</span></div>
+                </a>
+                <a class="album-card" href="https://en.wikipedia.org/wiki/In_Rainbows" target="_blank">
+                    <div class="album-name">In Rainbows</div>
+                    <img class="album-icon" src="/img/folio/radiohead/album-in-rainbows.png" alt="" loading="lazy"
+                        onerror="this.style.display='none'">
+                    <div class="album-year">2007</div>
+                    <div class="album-note">Pay what you want. The warmest thing they ever made. "Reckoner" is perfect.
+                        "Videotape" hides its beat where you don't expect it.</div>
+                    <div class="entry-tags"><span class="tag essential">essential</span></div>
+                </a>
+                <a class="album-card" href="https://en.wikipedia.org/wiki/The_King_of_Limbs" target="_blank">
+                    <div class="album-name">The King of Limbs</div>
+                    <img class="album-icon" src="/img/folio/radiohead/album-the-king-of-limbs.png" alt="" loading="lazy"
+                        onerror="this.style.display='none'">
+                    <div class="album-year">2011</div>
+                    <div class="album-note">Eight tracks of rhythm-first, loop-driven songwriting. The live versions are
+                        better. That's intentional - they built it to be taken apart on stage.</div>
+                </a>
+                <a class="album-card" href="https://en.wikipedia.org/wiki/A_Moon_Shaped_Pool" target="_blank">
+                    <div class="album-name">A Moon Shaped Pool</div>
+                    <img class="album-icon" src="/img/folio/radiohead/album-a-moon-shaped-pool.png" alt="" loading="lazy"
+                        onerror="this.style.display='none'">
+                    <div class="album-year">2016</div>
+                    <div class="album-note">After the divorce. "True Love Waits" - written 21 years earlier - finally
+                        recorded, solo piano. The saddest thing in their catalogue.</div>
+                    <div class="entry-tags"><span class="tag essential">essential</span></div>
+                </a>
+            </div>
+
+            <div class="chunk-head" id="live-videos" style="margin-top: 36px;">live videos &amp; documents</div>
+            <div class="prose-entry">
+                <div>
+                    <div class="pe-title">In Rainbows: From the Basement</div>
+                    <div class="pe-desc">The whole album played live in a studio, filmed by Nigel Godrich. Some of the
+                        best live performance footage ever recorded. "Reckoner" and "All I Need" are the standout
+                        moments. The real gateway for anyone who hasn't heard them yet.</div>
+                    <div class="entry-tags"><span class="tag live">live</span><span
+                            class="tag essential">essential</span><span class="tag official">official</span></div>
+                </div>
+                <a class="pe-link" href="https://www.youtube.com/watch?v=s_Q7FoM-8ow" target="_blank">youtube ↗</a>
+            </div>
+            <div class="prose-entry">
+                <div>
+                    <div class="pe-title">Glastonbury 2003</div>
+                    <div class="pe-desc">The legendary headline set. They opened with "2+2=5" before the album was out.
+                        Closed with "Everything in Its Right Place" in the rain. Widely bootlegged, pieces on YouTube.
+                    </div>
+                    <div class="entry-tags"><span class="tag live">live</span></div>
+                </div>
+                <a class="pe-link"
+                    href="https://www.youtube.com/results?search_query=radiohead+glastonbury+2003+full+set"
+                    target="_blank">youtube search ↗</a>
+            </div>
+            <div class="prose-entry">
+                <div>
+                    <div class="pe-title">Live at the Astoria 1994</div>
+                    <div class="pe-desc">Recorded 27 May 1994, officially uploaded to YouTube in 2020. Pre-Bends
+                        transition caught on tape - the first official footage of "Fake Plastic Trees," "My Iron Lung,"
+                        and "Street Spirit." The "My Iron Lung" from this show was the take used on The Bends album
+                        with re-recorded vocals.</div>
+                    <div class="entry-tags"><span class="tag live">live</span><span
+                            class="tag official">official</span><span class="tag">1994</span></div>
+                </div>
+                <a class="pe-link" href="https://www.youtube.com/watch?v=RjQZd8p-eBM" target="_blank">youtube ↗</a>
+            </div>
+
+            <div class="chunk-head" style="margin-top: 36px;">b-sides, reissues &amp; deep cuts</div>
+            <div class="prose-entry">
+                <div>
+                    <div class="pe-title">Talk Show Host</div>
+                    <div class="pe-desc">B-side from the Street Spirit single. Used in Romeo + Juliet. Darker and slower
+                        than anything on The Bends. Trip-hop before they committed to it.</div>
+                    <div class="entry-tags"><span class="tag">b-side</span><span class="tag">the bends era</span></div>
+                </div>
+                <a class="pe-link" href="https://en.wikipedia.org/wiki/Street_Spirit_(Fade_Out)" target="_blank">on
+                    street spirit single ↗</a>
+            </div>
+            <div class="prose-entry">
+                <div>
+                    <div class="pe-title">The Daily Mail / Staircase</div>
+                    <div class="pe-desc">Two tracks released standalone in 2011. The Daily Mail is a piano-driven
+                        protest song that builds to a wall of sound. Staircase is a hypnotic loop. Both are better than
+                        half of TKOL.</div>
+                    <div class="entry-tags"><span class="tag">standalone</span><span class="tag">2011</span></div>
+                </div>
+                <a class="pe-link" href="https://en.wikipedia.org/wiki/The_Daily_Mail_(song)" target="_blank">wikipedia
+                    ↗</a>
+            </div>
+            <div class="prose-entry">
+                <div>
+                    <div class="pe-title">Spectre</div>
+                    <div class="pe-desc">Written for the Bond film. Rejected. Released on Christmas Day 2015.
+                        Orchestral, haunting, and arguably better than the Sam Smith song they went with.</div>
+                    <div class="entry-tags"><span class="tag">standalone</span><span class="tag">2015</span></div>
+                </div>
+                <a class="pe-link" href="https://en.wikipedia.org/wiki/Spectre_(song)" target="_blank">wikipedia ↗</a>
+            </div>
+            <div class="prose-entry">
+                <div>
+                    <div class="pe-title">I Might Be Wrong: Live Recordings</div>
+                    <div class="pe-desc">Mini live album from the Kid A / Amnesiac tours. "Like Spinning Plates" live is
+                        a completely different song - piano and voice, devastating. Essential.</div>
+                    <div class="entry-tags"><span class="tag live">live</span><span
+                            class="tag essential">essential</span></div>
+                </div>
+                <a class="pe-link" href="https://en.wikipedia.org/wiki/I_Might_Be_Wrong:_Live_Recordings"
+                    target="_blank">wikipedia ↗</a>
+            </div>
+            <div class="prose-entry">
+                <div>
+                    <div class="pe-title">OKNOTOK 1997 2017</div>
+                    <div class="pe-desc">20th anniversary reissue of OK Computer with three unreleased tracks: I
+                        Promise, Man of War, and Lift. All three had been circulating as bootlegs for years. Lift
+                        especially - fans campaigned for it almost as long as Follow Me Around.</div>
+                    <div class="entry-tags"><span class="tag archive">reissue</span></div>
+                </div>
+                <a class="pe-link" href="https://en.wikipedia.org/wiki/OKNOTOK_1997_2017" target="_blank">wikipedia
+                    ↗</a>
+            </div>
+            <div class="prose-entry">
+                <div>
+                    <div class="pe-title">Kid A Mnesia</div>
+                    <div class="pe-desc">Kid A + Amnesiac reissued together with a third disc, "Kid Amnesiae" -
+                        unreleased recordings from the sessions. "Follow Me Around" is finally here.</div>
+                    <div class="entry-tags"><span class="tag archive">reissue</span></div>
+                </div>
+                <a class="pe-link" href="https://en.wikipedia.org/wiki/Kid_A_Mnesia" target="_blank">wikipedia ↗</a>
+            </div>
+            <div class="prose-entry">
+                <div>
+                    <div class="pe-title">Hail to the Thief Live Recordings 2003–2009</div>
+                    <div class="pe-desc">Official live album, digital release August 2025, physical October 2025.
+                        Recorded in London, Amsterdam, Buenos Aires, and Dublin across the HTTT touring years.
+                        Mixed by Ben Baptie. Thom rediscovered the tapes while working on a <em>Hamlet / Hail to the
+                            Thief</em> theatre production - surprised by the energy, they mixed and released the
+                        archive.
+                        The underrated album finally gets its live document.</div>
+                    <div class="entry-tags"><span class="tag live">live</span><span
+                            class="tag archive">official</span><span class="tag">2025</span></div>
+                </div>
+                <a class="pe-link"
+                    href="https://en.wikipedia.org/wiki/Hail_to_the_Thief_Live_Recordings_2003%E2%80%932009"
+                    target="_blank">wikipedia ↗</a>
+            </div>
+
+        </div>
+
+        <!-- ═══ THE DEAD ═══ -->
+        <div class="chunk" id="dead">
+            <div class="chunk-head">the dead &amp; the lost</div>
+            <div class="maze-note">Sites that were real, that people used, that are now gone or Wayback-only. Listed
+                here so they're not forgotten.</div>
+
+            <div class="sites-scatter" style="grid-template-columns: repeat(2, 1fr);">
+                <div class="site" style="cursor: default;">
+                    <div class="site-num">✕</div>
+                    <a class="site-url" href="https://web.archive.org/web/*/ateaseweb.com/board" target="_blank"
+                        style="color: var(--dim);">ateaseweb.com/board</a>
+                    <div class="site-desc">The At Ease message board. ~20k daily visitors at its peak. The band pointed
+                        fans here. Server stopped paying bills August 2024.</div>
+                    <span class="site-tag">[board dead]</span>
+                </div>
+                <div class="site" style="cursor: default;">
+                    <div class="site-num">✕</div>
+                    <a class="site-url" href="https://web.archive.org/web/*/mortigitempo.com" target="_blank"
+                        style="color: var(--dim);">mortigitempo.com</a>
+                    <div class="site-desc">Green Plastic's message board, became its own community. More welcoming than
+                        At Ease. Central during Kid A through TKOL. Now effectively gone.</div>
+                    <span class="site-tag">[offline]</span>
+                </div>
+                <div class="site" style="cursor: default;">
+                    <div class="site-num">✕</div>
+                    <a class="site-url" href="https://web.archive.org/web/*/58hours.com" target="_blank"
+                        style="color: var(--dim);">58hours.com</a>
+                    <div class="site-desc">Radiohead gig database with a world-map interface. Used as the canonical
+                        setlist source for years. Gone around 2022.</div>
+                    <span class="site-tag">[offline]</span>
+                </div>
+                <div class="site" style="cursor: default;">
+                    <div class="site-num">✕</div>
+                    <a class="site-url" href="http://msgboard.radiohead.com" target="_blank"
+                        style="color: var(--dim);">msgboard.radiohead.com</a>
+                    <div class="site-desc">The official band message board. Still resolves, but overrun by spam. A
+                        relic.</div>
+                    <span class="site-tag">[spam ruin]</span>
+                </div>
+                <div class="site" style="cursor: default;">
+                    <div class="site-num">✕</div>
+                    <a class="site-url" href="https://web.archive.org/web/*/followmearound.com" target="_blank"
+                        style="color: var(--dim);">followmearound.com</a>
+                    <div class="site-desc">The fan campaign that pressured Thom to debut "Follow Me Around" live - it
+                        worked. The song finally appeared on Kid A Mnesia. Site's gone.</div>
+                    <span class="site-tag">[offline]</span>
+                </div>
+                <div class="site" style="cursor: default;">
+                    <div class="site-num">✕</div>
+                    <span class="site-url" style="color: var(--dim);">lift (site)</span>
+                    <div class="site-desc">Jonathan Moore's early fan site. Green Plastic's Cold Storage preserves a
+                        facsimile specifically because the original is gone.</div>
+                    <span class="site-tag">[wayback only]</span>
+                </div>
+                <div class="site" style="cursor: default;">
+                    <div class="site-num">✕</div>
+                    <a class="site-url" href="https://web.archive.org/web/*/injektilo.com" target="_blank"
+                        style="color: var(--dim);">injektilo.com</a>
+                    <div class="site-desc">Early FTP server hosting full live shows before DC++ and torrents existed.
+                        Absorbed into Green Plastic around 1999. Wayback Machine only.</div>
+                    <span class="site-tag">[wayback only]</span>
+                </div>
+                <div class="site" style="cursor: default;">
+                    <div class="site-num">✕</div>
+                    <a class="site-url" href="https://web.archive.org/web/*/planettelex.net" target="_blank"
+                        style="color: var(--dim);">Planet Telex / Wasteland / FADE OUT / Tony's Page</a>
+                    <div class="site-desc">Named on Site 1's "Get your fix here" links page as the key mid-90s fan
+                        hubs. The band noted the list was already "disgustingly out of date" when they wrote it. All
+                        gone.</div>
+                    <span class="site-tag">[wayback only]</span>
+                </div>
+            </div>
+
+            <div class="scribble" style="margin-top: 32px;">
+                <div class="scribble-label">note</div>
+                <p>The internet of 1997–2012 was a different place. These sites built communities and transmitted
+                    culture that the band's official presence never could. Their loss is a real loss.</p>
+            </div>
+        </div>
+
+        <div class="scribble pulled-right">
+            <div class="scribble-label">on what gets included</div>
+            <p>Add if it has a story worth telling, or if it's the best-of-class reference for its category. Skip if it
+                duplicates something already here, if it clashes with the archival spirit of the page, or if it's just a
+                generic database. No Spotify. No solo work. Radiohead only.</p>
+        </div>
+
+        <div class="scribble pulled-right">
+            <div class="scribble-label">last thought</div>
+            <p>This page will never be finished, which feels appropriate. The band's whole web presence was built on the
+                idea that a website is just another medium - as temporary and strange as any vinyl pressing or
+                screenprint. The links will break. Some already have. That's part of it.</p>
+        </div>
+
+    </div>
+
+    <footer>
+        <span><a href="/folio/">&#8592; carteakey.dev/folio</a></span>
+        <span>not comprehensive. not finished.</span>
+        <span><a href="/folio/radiohead/links/"
+                style="color: inherit; border-bottom: 1px dotted rgba(212,207,168,0.3);">plain link index ↗</a></span>
+        <span>updated march 2026</span>
+    </footer>
+    <div
+        style="text-align: center; padding: 12px 0 20px; font-family: 'Share Tech Mono', monospace; font-size: 12px; color: rgba(212, 207, 168, 0.4); letter-spacing: 0.12em;">
+        <span id="visitor-counter">[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;] souls have passed through</span>
+        &nbsp;&middot;&nbsp; ~64kb &nbsp;&middot;&nbsp; <em style="font-style: italic;">best viewed in netscape
+            navigator 4.0</em>
+    </div>
+</body>
+
+<script>
+    (function () {
+        const slug = 'folio-radiohead';
+        fetch(`/.netlify/functions/upvote?slug=${slug}&trackView=true`)
+            .then(r => r.json())
+            .then(data => {
+                if (data.views) {
+                    const formatted = String(data.views).padStart(7, '\u00a0');
+                    document.getElementById('visitor-counter').textContent =
+                        `[${formatted}] souls have passed through`;
+                }
+            })
+            .catch(() => { });
+    })();
+</script>
+
+</html>
