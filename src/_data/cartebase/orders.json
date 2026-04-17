@@ -1,0 +1,387 @@
+{
+  "last_updated": "2026-04-16T23:34:02Z",
+  "orders_per_month": [
+    {
+      "month": "2019-01",
+      "orders": 2
+    },
+    {
+      "month": "2019-02",
+      "orders": 4
+    },
+    {
+      "month": "2019-03",
+      "orders": 10
+    },
+    {
+      "month": "2019-04",
+      "orders": 6
+    },
+    {
+      "month": "2019-05",
+      "orders": 6
+    },
+    {
+      "month": "2019-06",
+      "orders": 14
+    },
+    {
+      "month": "2019-07",
+      "orders": 11
+    },
+    {
+      "month": "2019-08",
+      "orders": 12
+    },
+    {
+      "month": "2019-09",
+      "orders": 13
+    },
+    {
+      "month": "2019-10",
+      "orders": 10
+    },
+    {
+      "month": "2019-11",
+      "orders": 7
+    },
+    {
+      "month": "2019-12",
+      "orders": 13
+    },
+    {
+      "month": "2020-01",
+      "orders": 4
+    },
+    {
+      "month": "2020-02",
+      "orders": 12
+    },
+    {
+      "month": "2020-03",
+      "orders": 17
+    },
+    {
+      "month": "2020-05",
+      "orders": 10
+    },
+    {
+      "month": "2020-06",
+      "orders": 11
+    },
+    {
+      "month": "2020-07",
+      "orders": 27
+    },
+    {
+      "month": "2020-08",
+      "orders": 31
+    },
+    {
+      "month": "2020-09",
+      "orders": 29
+    },
+    {
+      "month": "2020-10",
+      "orders": 21
+    },
+    {
+      "month": "2020-11",
+      "orders": 11
+    },
+    {
+      "month": "2020-12",
+      "orders": 18
+    },
+    {
+      "month": "2021-01",
+      "orders": 16
+    },
+    {
+      "month": "2021-02",
+      "orders": 20
+    },
+    {
+      "month": "2021-03",
+      "orders": 11
+    },
+    {
+      "month": "2021-04",
+      "orders": 12
+    },
+    {
+      "month": "2021-05",
+      "orders": 10
+    },
+    {
+      "month": "2021-06",
+      "orders": 13
+    },
+    {
+      "month": "2021-07",
+      "orders": 8
+    },
+    {
+      "month": "2021-08",
+      "orders": 16
+    },
+    {
+      "month": "2021-09",
+      "orders": 25
+    },
+    {
+      "month": "2021-10",
+      "orders": 18
+    },
+    {
+      "month": "2021-11",
+      "orders": 19
+    },
+    {
+      "month": "2021-12",
+      "orders": 20
+    },
+    {
+      "month": "2022-01",
+      "orders": 34
+    },
+    {
+      "month": "2022-02",
+      "orders": 19
+    },
+    {
+      "month": "2022-03",
+      "orders": 20
+    },
+    {
+      "month": "2022-04",
+      "orders": 14
+    },
+    {
+      "month": "2022-05",
+      "orders": 18
+    },
+    {
+      "month": "2022-06",
+      "orders": 15
+    },
+    {
+      "month": "2022-07",
+      "orders": 22
+    },
+    {
+      "month": "2022-08",
+      "orders": 12
+    },
+    {
+      "month": "2022-09",
+      "orders": 17
+    },
+    {
+      "month": "2022-10",
+      "orders": 8
+    },
+    {
+      "month": "2022-11",
+      "orders": 16
+    },
+    {
+      "month": "2022-12",
+      "orders": 9
+    },
+    {
+      "month": "2023-01",
+      "orders": 13
+    },
+    {
+      "month": "2023-02",
+      "orders": 23
+    },
+    {
+      "month": "2023-03",
+      "orders": 11
+    },
+    {
+      "month": "2023-04",
+      "orders": 8
+    },
+    {
+      "month": "2023-05",
+      "orders": 21
+    },
+    {
+      "month": "2023-06",
+      "orders": 5
+    },
+    {
+      "month": "2023-07",
+      "orders": 8
+    },
+    {
+      "month": "2023-08",
+      "orders": 14
+    },
+    {
+      "month": "2023-09",
+      "orders": 4
+    },
+    {
+      "month": "2023-10",
+      "orders": 9
+    },
+    {
+      "month": "2023-11",
+      "orders": 5
+    },
+    {
+      "month": "2023-12",
+      "orders": 14
+    },
+    {
+      "month": "2024-01",
+      "orders": 25
+    },
+    {
+      "month": "2024-02",
+      "orders": 8
+    },
+    {
+      "month": "2024-03",
+      "orders": 9
+    },
+    {
+      "month": "2024-04",
+      "orders": 8
+    },
+    {
+      "month": "2024-05",
+      "orders": 11
+    },
+    {
+      "month": "2024-06",
+      "orders": 22
+    },
+    {
+      "month": "2024-07",
+      "orders": 14
+    },
+    {
+      "month": "2024-08",
+      "orders": 28
+    },
+    {
+      "month": "2024-09",
+      "orders": 19
+    },
+    {
+      "month": "2024-10",
+      "orders": 25
+    },
+    {
+      "month": "2024-11",
+      "orders": 18
+    },
+    {
+      "month": "2024-12",
+      "orders": 17
+    },
+    {
+      "month": "2025-01",
+      "orders": 10
+    },
+    {
+      "month": "2025-02",
+      "orders": 10
+    },
+    {
+      "month": "2025-03",
+      "orders": 17
+    },
+    {
+      "month": "2025-04",
+      "orders": 14
+    },
+    {
+      "month": "2025-05",
+      "orders": 32
+    },
+    {
+      "month": "2025-06",
+      "orders": 35
+    },
+    {
+      "month": "2025-07",
+      "orders": 9
+    },
+    {
+      "month": "2025-08",
+      "orders": 13
+    },
+    {
+      "month": "2025-09",
+      "orders": 6
+    },
+    {
+      "month": "2025-10",
+      "orders": 22
+    },
+    {
+      "month": "2025-11",
+      "orders": 19
+    },
+    {
+      "month": "2025-12",
+      "orders": 19
+    },
+    {
+      "month": "2026-01",
+      "orders": 10
+    },
+    {
+      "month": "2026-02",
+      "orders": 29
+    },
+    {
+      "month": "2026-03",
+      "orders": 14
+    },
+    {
+      "month": "2026-04",
+      "orders": 7
+    }
+  ],
+  "orders_per_year": [
+    {
+      "year": "2019",
+      "orders": 108
+    },
+    {
+      "year": "2020",
+      "orders": 191
+    },
+    {
+      "year": "2021",
+      "orders": 188
+    },
+    {
+      "year": "2022",
+      "orders": 204
+    },
+    {
+      "year": "2023",
+      "orders": 135
+    },
+    {
+      "year": "2024",
+      "orders": 204
+    },
+    {
+      "year": "2025",
+      "orders": 206
+    },
+    {
+      "year": "2026",
+      "orders": 60
+    }
+  ]
+}

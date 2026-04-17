@@ -1,4 +1,4 @@
-- title: 'Toronto Towers: A Glimpse into Urban Urban Vitality'
+- title: Toronto skyline
   category: real
   path: >-
     /img/photography/real/toronto-towers-a-glimpse-into-urban-urban-vitality-2023.jpeg
@@ -12,12 +12,8 @@
   date: '2025-05-25'
   width: 1280
   height: 1190
-  description: >-
-    The image captures a cityscape of towering skyscrapers and broad, tree-lined
-    avenues, evoking a sense of urban vitality through its bustling streets and
-    vibrant architecture.
-  location: Unknown
-- title: Serenity of the Golden Hour
+  location: Toronto, Canada
+- title: Golden hour on the lake
   category: real
   path: /img/photography/real/serenity-of-the-golden-hour.jpeg
   device: iPhone 16
@@ -30,11 +26,8 @@
   date: '2025-06-11'
   width: 960
   height: 1280
-  description: >-
-    The image captures a serene and peaceful scene as a couple canoes down a
-    tranquil river or lake, bathed in the golden light of sunset.
   location: Unknown
-- title: '''Tranquil Serenity'''
+- title: Still waters
   category: real
   path: /img/photography/real/tranquil-serenity.jpeg
   device: iPhone 16
@@ -47,11 +40,8 @@
   date: '2025-05-11'
   width: 960
   height: 1280
-  description: >-
-    The photograph presents a serene and tranquil atmosphere of the outdoor
-    environment, creating an impression of calmness and relaxation.
   location: Unknown
-- title: Rainbow Over Rainy City
+- title: Rainbow after the rain
   category: real
   path: /img/photography/real/rainbow-over-rainy-city.jpg
   device: ONEPLUS A5000
@@ -64,13 +54,8 @@
   date: '2020-05-31'
   width: 5262
   height: 2279
-  description: >-
-    The image captures a serene cityscape on a rainy day, with a vibrant rainbow
-    stretching across the sky, as a heavy rain cloud casts a shadow over the
-    buildings in the background, contrasting with the bright rainbow in the
-    foreground.
   location: Unknown
-- title: Serene Sunset Reflections.
+- title: Sunset on the water
   category: real
   path: /img/photography/real/serene-sunset-reflections.jpeg
   device: iPhone 16
@@ -83,12 +68,8 @@
   date: '2025-06-22'
   width: 1280
   height: 840
-  description: >-
-    The image captures a serene moment of a sunset over a body of water, with a
-    subtle haze of mist rising from the surface, evoking a sense of peacefulness
-    and tranquility.
   location: Unknown
-- title: Parked Cars in the Rain
+- title: Rainy parking lot
   category: real
   path: /img/photography/real/parked-cars-in-the-rain.jpg
   device: Unknown
@@ -101,11 +82,8 @@
   date: '2025-07-27'
   width: 1600
   height: 1200
-  description: >-
-    This photograph captures a rainy day in a parking lot, with rain dripping
-    down the camera lens, giving the image a misty and rainy feel.
   location: Unknown
-- title: Vibrant Orange Sports Car On A Street
+- title: Orange beast
   category: real
   path: /img/photography/real/vibrant-orange-sports-car-on-a-street.JPG
   device: DSC-H70
@@ -118,11 +96,8 @@
   date: '2011-07-07'
   width: 4608
   height: 3456
-  description: >-
-    This image captures a vibrant orange sports car parked on the street, with
-    its rear end facing the camera, in front of a row of buildings.
   location: Unknown
-- title: Tennis Stadium with Overcast Sky
+- title: National Bank Open
   category: real
   path: /img/photography/real/tennis-stadium-with-overcast-sky.jpeg
   device: iPhone 12 mini
@@ -135,13 +110,8 @@
   date: '2023-08-07'
   width: 4032
   height: 3024
-  description: >-
-    The image shows a high-angle view of the National Bank Open stadium,
-    featuring the tennis court in the center with players on the court,
-    surrounded by dark blue stands filled with spectators. The sky above is
-    overcast, giving the image a moody and dramatic feel.
-  location: Unknown
-- title: End of a Day's Work on the Empty Beach.
+  location: Toronto, Canada
+- title: End of the day
   category: real
   path: /img/photography/real/end-of-a-days-work-on-the-empty-beach.jpg
   device: Unknown
@@ -154,77 +124,53 @@
   date: '2025-07-27'
   width: 1529
   height: 1147
-  description: >-
-    As the sun sets over this vast, nearly-empty beach, a weathered,
-    blue-and-white fishing boat is all that remains to serve as a reminder of a
-    day's work long since done.
+  description: A lone fishing boat on an empty beach at dusk.
   location: Unknown
-- title: A Beautiful Sunset at the Beach with Great Sky and Air.
+- title: Juhu sunset
   category: real
-  path: >-
-    /img/photography/real/a-beautiful-sunset-at-the-beach-with-great-sky-and-air.jpg
-  device: Unknown
-  make: Unknown
+  path: /img/photography/real/juhu-sunset.jpg
+  device: ONEPLUS A5000
+  make: OnePlus
   lens: Unknown
-  focalLength: Unknown
-  aperture: Unknown
-  iso: Unknown
-  shutterSpeed: Unknown
-  date: '2025-07-27'
+  focalLength: 4.103mm
+  aperture: f/1.7
+  iso: 100
+  shutterSpeed: 1/492s
+  date: '2019-10-06'
   width: 4656
   height: 3496
-  description: >-
-    It seems like you want this piece of software to generate writing according
-    to what you've provided it. This piece of software, a large language model,
-    uses a specific task and response structure in training. The task is to
-    generate a one-sentence description and a title based on the given prompt.
-    This answer can't be more creative and precise, as your specific prompt and
-    the previous answer provide it with the required information. It can be more
-    evocative and creative but not in an innovative way. The requested answer
-    provides a single-sentence description and a title as per the requirement.
-    However, it is generated based on the previous answer; and for more
-    creative, evocative, and precise results, using this software as it is, you
-    can provide it with new prompts for responses.
-  location: Unknown
-- title: Autumnal Serenity
+  location: Mumbai, India
+- title: Bench in the fall
   category: real
-  path: /img/photography/real/autumnal-serenity.jpg
-  device: Unknown
-  make: Unknown
+  path: /img/photography/real/bench-in-the-fall.jpg
+  device: A142
+  make: Nothing
   lens: Unknown
-  focalLength: Unknown
-  aperture: Unknown
-  iso: Unknown
-  shutterSpeed: Unknown
-  date: '2025-07-27'
+  focalLength: 5.56mm
+  aperture: f/1.87
+  iso: 100
+  shutterSpeed: 1/251s
+  date: '2024-10-27'
   width: 3072
   height: 4080
-  description: >-
-    A serene and peaceful park bench is nestled under a tree with lush green
-    leaves to the right, offering a gentle contrast to the nearby lake's
-    tranquil waters, creating a sense of calm and relaxation.
-  location: Unknown
-- title: Cozy Afternoon in a Vibrant Fall Scene
+  location: Markham, Ontario, Canada
+- title: Red tree by the lake
   category: real
-  path: /img/photography/real/cozy-afternoon-in-a-vibrant-fall-scene.jpg
-  device: Unknown
-  make: Unknown
+  path: /img/photography/real/red-tree-by-the-lake.jpg
+  device: A142
+  make: Nothing
   lens: Unknown
-  focalLength: Unknown
-  aperture: Unknown
-  iso: Unknown
-  shutterSpeed: Unknown
-  date: '2025-07-27'
+  focalLength: 5.56mm
+  aperture: f/1.87
+  iso: 100
+  shutterSpeed: 1/373s
+  date: '2024-10-27'
   width: 3072
   height: 4080
-  description: >-
-    The photograph showcases the vibrant colors of the changing seasons, with
-    sunlight casting a warm glow on the leaves, trees, and ground, creating a
-    sense of coziness and serenity.
-  location: Unknown
-- title: Cityscape at Dusk
+  location: Markham, Ontario, Canada
+- title: Mumbai skyline
   category: real
-  path: /img/photography/real/cityscape-at-dusk.jpg
+  path: /img/photography/real/mumbai-skyline.jpg
   device: Unknown
   make: Unknown
   lens: Unknown
@@ -232,17 +178,10 @@
   aperture: Unknown
   iso: Unknown
   shutterSpeed: Unknown
-  date: '2025-07-27'
+  date: '2019-08-25'
   width: 1529
   height: 1147
-  description: >-
-    The image offers a striking city skyline set against a backdrop of an
-    expansive body of water, with the cityscape becoming increasingly indistinct
-    as it recedes into the distance. The water's surface appears calm and grey,
-    reflecting the dull and grey sky. A darkly shaded breakwater made of large,
-    irregularly shaped rocks adds a touch of rustic beauty to the image,
-    creating an atmosphere of serenity and quietude.
-  location: Unknown
+  location: Mumbai, India
 - title: CN Tower in the mist
   category: real
   path: /img/photography/real/cn-tower.jpg

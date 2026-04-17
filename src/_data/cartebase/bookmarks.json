@@ -1,0 +1,344 @@
+{
+  "last_updated": "2026-04-16T23:34:02Z",
+  "added_per_month": [
+    {
+      "month": "2021-01",
+      "added": 15
+    },
+    {
+      "month": "2021-03",
+      "added": 5
+    },
+    {
+      "month": "2021-04",
+      "added": 3
+    },
+    {
+      "month": "2021-05",
+      "added": 1
+    },
+    {
+      "month": "2021-07",
+      "added": 3
+    },
+    {
+      "month": "2021-08",
+      "added": 1
+    },
+    {
+      "month": "2021-09",
+      "added": 1
+    },
+    {
+      "month": "2021-10",
+      "added": 3
+    },
+    {
+      "month": "2021-11",
+      "added": 3
+    },
+    {
+      "month": "2022-01",
+      "added": 1
+    },
+    {
+      "month": "2022-04",
+      "added": 1
+    },
+    {
+      "month": "2022-05",
+      "added": 3
+    },
+    {
+      "month": "2022-06",
+      "added": 7
+    },
+    {
+      "month": "2022-07",
+      "added": 7
+    },
+    {
+      "month": "2022-08",
+      "added": 12
+    },
+    {
+      "month": "2022-09",
+      "added": 3
+    },
+    {
+      "month": "2022-10",
+      "added": 7
+    },
+    {
+      "month": "2022-11",
+      "added": 8
+    },
+    {
+      "month": "2022-12",
+      "added": 38
+    },
+    {
+      "month": "2023-01",
+      "added": 10
+    },
+    {
+      "month": "2023-02",
+      "added": 13
+    },
+    {
+      "month": "2023-03",
+      "added": 16
+    },
+    {
+      "month": "2023-04",
+      "added": 31
+    },
+    {
+      "month": "2023-05",
+      "added": 30
+    },
+    {
+      "month": "2023-06",
+      "added": 9
+    },
+    {
+      "month": "2023-07",
+      "added": 5
+    },
+    {
+      "month": "2023-08",
+      "added": 3
+    },
+    {
+      "month": "2023-09",
+      "added": 7
+    },
+    {
+      "month": "2023-10",
+      "added": 8
+    },
+    {
+      "month": "2023-11",
+      "added": 4
+    },
+    {
+      "month": "2023-12",
+      "added": 8
+    },
+    {
+      "month": "2024-01",
+      "added": 3
+    },
+    {
+      "month": "2024-02",
+      "added": 20
+    },
+    {
+      "month": "2024-04",
+      "added": 1
+    },
+    {
+      "month": "2024-05",
+      "added": 16
+    },
+    {
+      "month": "2024-09",
+      "added": 1
+    },
+    {
+      "month": "2024-10",
+      "added": 1
+    },
+    {
+      "month": "2024-11",
+      "added": 4
+    },
+    {
+      "month": "2024-12",
+      "added": 472
+    },
+    {
+      "month": "2025-01",
+      "added": 1
+    },
+    {
+      "month": "2025-02",
+      "added": 8
+    },
+    {
+      "month": "2025-03",
+      "added": 12
+    },
+    {
+      "month": "2025-04",
+      "added": 2
+    },
+    {
+      "month": "2025-05",
+      "added": 3
+    },
+    {
+      "month": "2025-06",
+      "added": 4
+    },
+    {
+      "month": "2025-07",
+      "added": 1
+    },
+    {
+      "month": "2025-08",
+      "added": 1
+    },
+    {
+      "month": "2025-09",
+      "added": 6
+    },
+    {
+      "month": "2025-11",
+      "added": 1
+    },
+    {
+      "month": "2025-12",
+      "added": 28
+    },
+    {
+      "month": "2026-01",
+      "added": 5
+    },
+    {
+      "month": "2026-02",
+      "added": 29
+    },
+    {
+      "month": "2026-03",
+      "added": 16
+    },
+    {
+      "month": "2026-04",
+      "added": 1100
+    }
+  ],
+  "top_domains": [
+    {
+      "domain": "reddit.com",
+      "count": 309
+    },
+    {
+      "domain": "i.redd.it",
+      "count": 80
+    },
+    {
+      "domain": "v.redd.it",
+      "count": 59
+    },
+    {
+      "domain": "github.com",
+      "count": 32
+    },
+    {
+      "domain": "docs.google.com",
+      "count": 19
+    },
+    {
+      "domain": "torontomu.ca",
+      "count": 17
+    },
+    {
+      "domain": "linkedin.com",
+      "count": 16
+    },
+    {
+      "domain": "youtube.com",
+      "count": 13
+    },
+    {
+      "domain": "medium.com",
+      "count": 9
+    },
+    {
+      "domain": "huggingface.co",
+      "count": 8
+    },
+    {
+      "domain": "news.ycombinator.com",
+      "count": 8
+    },
+    {
+      "domain": "carteakey.dev",
+      "count": 7
+    },
+    {
+      "domain": "kaggle.com",
+      "count": 7
+    },
+    {
+      "domain": "icloud.com",
+      "count": 6
+    },
+    {
+      "domain": "google.com",
+      "count": 5
+    },
+    {
+      "domain": "nytimes.com",
+      "count": 5
+    },
+    {
+      "domain": "platform.openai.com",
+      "count": 5
+    },
+    {
+      "domain": "analyticsvidhya.com",
+      "count": 4
+    },
+    {
+      "domain": "app.netlify.com",
+      "count": 4
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "count": 4
+    },
+    {
+      "domain": "gist.github.com",
+      "count": 4
+    },
+    {
+      "domain": "hbr.org",
+      "count": 4
+    },
+    {
+      "domain": "mail.google.com",
+      "count": 4
+    },
+    {
+      "domain": "paperswithcode.com",
+      "count": 4
+    },
+    {
+      "domain": "perplexity.ai",
+      "count": 4
+    },
+    {
+      "domain": "simonwillison.net",
+      "count": 4
+    },
+    {
+      "domain": "steamdb.info",
+      "count": 4
+    },
+    {
+      "domain": "youtu.be",
+      "count": 4
+    },
+    {
+      "domain": "alinpanaitiu.com",
+      "count": 3
+    },
+    {
+      "domain": "analytics.google.com",
+      "count": 3
+    }
+  ],
+  "with_notes_count": 1954
+}

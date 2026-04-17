@@ -1,0 +1,146 @@
+---
+layout: layouts/home.njk
+title: Uses
+description: A list of hardware, software, and tools I use for work and personal projects.
+eleventyNavigation:
+  key: Uses
+  order: 11
+---
+
+<h1>Uses</h1>
+<p class="text-gray-600 dark:text-gray-300 mb-8">
+  A comprehensive list of the tools, software, and hardware I use daily. Inspired by 
+  <a href="https://uses.tech/" class="accent-link" target="_blank" rel="noopener">uses.tech</a>.
+</p>
+
+{# ── Neofetch-style hardware block ── #}
+<div class="not-prose mb-12 animate-enter stagger-1">
+  <div class="card bg-[#1e1e1e] dark:bg-[#1a1b26] text-[#a9b1d6] font-mono text-sm overflow-hidden border border-gray-800 shadow-xl rounded-xl">
+    <div class="flex items-center gap-2 px-4 py-3 bg-[#2d2d2d] dark:bg-[#16161e] border-b border-gray-800">
+      <div class="flex gap-1.5 shrink-0">
+        <div class="w-3 h-3 rounded-full bg-[#ff5f56]"></div>
+        <div class="w-3 h-3 rounded-full bg-[#ffbd2e]"></div>
+        <div class="w-3 h-3 rounded-full bg-[#27c93f]"></div>
+      </div>
+      <div class="flex-1 text-center text-xs font-semibold text-gray-400 select-none">kartikey@macbook:~</div>
+    </div>
+    
+    <div class="p-6 overflow-x-auto">
+      <div class="flex flex-col md:flex-row gap-8 items-center md:items-start">
+        <pre class="text-[#7aa2f7] shrink-0 leading-[1.15] hidden sm:block font-bold">
+                    c.',
+                 ,xNMM.
+               .OMMMMo
+               lMM"
+             .;lNMMMx.
+            .OMMMMo
+            lMM"
+          .;lNMMM.        Kartikey
+         .OMMMMo          Chauhan
+         lMM"             -------
+       .;lNMMMx.
+      .OMMMMo
+      lMM"
+    .;lNMMM.
+   .OMMMMo
+   lMM"
+        </pre>
+        <div class="flex-1 min-w-0">
+          <div class="font-bold mb-1 text-[#9ece6a]">kartikey<span class="text-white">@</span>macbook</div>
+          <div class="text-gray-500 mb-3">----------------</div>
+          <div class="grid grid-cols-[max-content_1fr] gap-x-3 gap-y-1.5">
+            {% for key, value in uses.neofetch %}
+              <div class="font-bold text-[#7aa2f7]">{{ key }}</div>
+              <div class="text-[#c0caf5]">{{ value }}</div>
+            {% endfor %}
+          </div>
+          <div class="flex gap-1 mt-6">
+            <div class="w-5 h-5 bg-[#3b4261]"></div>
+            <div class="w-5 h-5 bg-[#f7768e]"></div>
+            <div class="w-5 h-5 bg-[#9ece6a]"></div>
+            <div class="w-5 h-5 bg-[#e0af68]"></div>
+            <div class="w-5 h-5 bg-[#7aa2f7]"></div>
+            <div class="w-5 h-5 bg-[#bb9af7]"></div>
+            <div class="w-5 h-5 bg-[#7dcfff]"></div>
+            <div class="w-5 h-5 bg-[#a9b1d6]"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{# ── Main categories in multi-column text layout ── #}
+<div class="not-prose animate-enter stagger-2">
+  <div class="grid md:grid-cols-2 gap-x-12 gap-y-12">
+    {% for category in uses.categories %}
+      <section>
+        <h2 class="text-base font-bold text-gray-900 dark:text-gray-100 mb-4 flex items-center gap-2">
+          <span>{{ category.emoji }}</span> {{ category.name }}
+        </h2>
+        <div class="space-y-4">
+          {% for item in category.items %}
+            <div class="group">
+              <div class="flex items-baseline gap-2">
+                <span class="opacity-80">{{ item.emoji }}</span>
+                {% if item.link %}
+                  <a href="{{ item.link }}" target="_blank" rel="noopener" class="font-semibold text-gray-900 dark:text-gray-100 link-accent decoration-dotted underline-offset-4">{{ item.name }}</a>
+                {% else %}
+                  <span class="font-semibold text-gray-900 dark:text-gray-100">{{ item.name }}</span>
+                {% endif %}
+              </div>
+              {% if item.description %}
+                <p class="text-sm leading-relaxed text-gray-600 dark:text-gray-400 ml-7 mt-1">{{ item.description }}</p>
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+      </section>
+    {% endfor %}
+  </div>
+</div>
+
+{# ── Retired section ── #}
+<div class="not-prose mt-16 animate-enter stagger-3">
+  <h2 class="text-base font-bold text-gray-900 dark:text-gray-100 mb-4 flex items-center gap-2">
+    <span>🪦</span> Retired
+  </h2>
+  <div class="grid md:grid-cols-2 gap-x-12 gap-y-4">
+    {% for item in uses.retired %}
+      <div class="opacity-60 hover:opacity-100 transition-opacity duration-300">
+        <div class="flex items-baseline gap-2">
+          <span>{{ item.emoji }}</span>
+          <span class="font-semibold text-gray-900 dark:text-gray-100 line-through decoration-1">{{ item.name }}</span>
+          <span class="text-xs font-mono bg-gray-200 dark:bg-gray-800 px-1.5 py-0.5 rounded">{{ item.retired_date }}</span>
+        </div>
+        {% if item.description %}
+          <p class="text-sm text-gray-500 dark:text-gray-400 ml-7 mt-0.5">{{ item.description }}</p>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+{# ── Changelog section ── #}
+<div class="not-prose mt-16 animate-enter stagger-4">
+  <h2 class="text-base font-bold text-gray-900 dark:text-gray-100 mb-4 flex items-center gap-2">
+    <span>📋</span> Changelog
+  </h2>
+  <div class="card card-padding space-y-3">
+    {% for entry in uses.changelog %}
+      <div class="flex flex-col sm:flex-row gap-1 sm:gap-4 text-sm group">
+        <span class="font-mono text-xs text-gray-400 dark:text-gray-500 shrink-0 sm:pt-0.5 sm:w-20">{{ entry.date }}</span>
+        <span class="text-gray-700 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-gray-100 transition-colors">{{ entry.change }}</span>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<div class="mt-12 card card-padding not-prose">
+  <h3 class="font-semibold text-gray-900 dark:text-gray-100 mb-2">
+    ❓ Want to know more?
+  </h3>
+  <p class="text-sm text-gray-600 dark:text-gray-400">
+    Feel free to <a href="mailto:{{ metadata.author.email }}" class="accent-link">reach out</a> if you have questions about any of these tools or want recommendations for your own setup.
+  </p>
+</div>

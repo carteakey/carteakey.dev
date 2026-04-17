@@ -1,11 +1,152 @@
 ---
-layout: layouts/home.njk
+layout: layouts/base.njk
+title: Blog
+description: Articles, tutorials, and thoughts on tech, life, and everything in between
 permalink: /blog/
 eleventyNavigation:
   key: Blog
   order: 2
 ---
 
-<h1>Blog</h1>
-{% set postslist = collections.posts | reverse %}
-{% include "postslist.njk" %}
+{% from "components/authorship-badge.njk" import authorshipBadge %}
+{% include "components/breadcrumbs.njk" %}
+{% set byYear = collections.posts | countByYear %}
+{% set archiveYears = byYear | keys | sort | reverse %}
+
+<div class="flex items-baseline justify-between mb-2" x-data="{ viewMode: 'list' }">
+  <div class="flex items-baseline gap-3">
+    <h1 class="text-2xl font-semibold tracking-tight m-0">Blog</h1>
+    <span class="meta-text text-xs text-gray-400 dark:text-gray-500">{{ collections.posts | length }} posts</span>
+  </div>
+  <div class="flex items-center gap-2">
+    <div class="relative">
+      {% feather "search", class="w-3.5 h-3.5 text-gray-400 absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" %}
+      <input
+        type="text"
+        id="blogSearch"
+        placeholder="Search..."
+        class="rounded-md border border-gray-200 dark:border-gray-700 bg-transparent py-1.5 pl-8 pr-3 text-sm accent-field focus:outline-none dark:text-gray-100 w-40 placeholder:text-gray-400"
+      >
+    </div>
+    <div class="view-toggle" x-data="{ viewMode: 'list' }">
+      <button type="button" title="List view" :class="{ 'active': viewMode === 'list' }" @click="viewMode = 'list'; document.getElementById('blogGrid').classList.add('hidden'); document.getElementById('blogList').classList.remove('hidden');">
+        {% feather "list", class="w-4 h-4" %}
+      </button>
+      <button type="button" title="Grid view" :class="{ 'active': viewMode === 'grid' }" @click="viewMode = 'grid'; document.getElementById('blogList').classList.add('hidden'); document.getElementById('blogGrid').classList.remove('hidden');">
+        {% feather "grid", class="w-4 h-4" %}
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="not-prose mb-3 flex flex-wrap items-center gap-1.5">
+  <span class="meta-text text-[0.65rem] uppercase tracking-wide text-gray-400 dark:text-gray-500">Jump to</span>
+  {% for year in archiveYears %}
+    <a href="#year-{{ year }}" class="meta-text text-[0.65rem] px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 title-hover" style="text-decoration: none;">
+      {{ year }}
+    </a>
+  {% endfor %}
+</div>
+
+{# ── LIST VIEW (default) ─────────────────────────────── #}
+<div id="blogList" class="mt-4 divide-y divide-gray-100 dark:divide-gray-800/80">
+  {% for year in archiveYears %}
+    <h2 id="year-{{ year }}" class="not-prose scroll-mt-20 text-xs font-semibold uppercase tracking-widest text-gray-400 dark:text-gray-500 py-2">
+      {{ year }}
+    </h2>
+    {% for post in collections.posts %}
+      {% if (post.date | date("Y")) == year %}
+        {% set rawTags = post.data.tags | default([]) %}
+        {% set filteredTags = rawTags | filterTagList %}
+        {% set searchDesc = post.data.description | default('') | lower %}
+        <article
+          class="py-3.5 group"
+          data-blog-card
+          data-title="{{ post.data.title | lower }}"
+          data-tags="{{ filteredTags | join(' ') | lower }}"
+          data-body="{{ searchDesc }}"
+        >
+          <div class="flex flex-col md:flex-row md:gap-6">
+            <div class="shrink-0 md:w-36 flex flex-col gap-1 pt-0.5">
+              <time class="meta-text text-xs text-gray-400 dark:text-gray-500" datetime="{{ post.date | htmlDateString }}">{{ post.date | readableDate }}</time>
+              <div class="hidden md:flex flex-wrap gap-1 mt-0.5">
+                {% for tag in filteredTags %}
+                  <a href="/tags/{{ tag | slugify }}/" class="meta-text text-[0.62rem] px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 title-hover" style="text-decoration: none;">#{{ tag }}</a>
+                {% endfor %}
+              </div>
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="leading-snug">
+                {% if post.data.pinned %}
+                  <span class="inline-flex items-center mr-1.5 text-sm align-middle" style="color: var(--accent-color);" title="Pinned" aria-label="Pinned">★</span>
+                {% endif %}
+                {{ authorshipBadge(post.data.authored_by, compact=true) }}
+                <a href="{{ post.url }}" class="font-semibold text-gray-900 dark:text-gray-100 title-hover" style="text-decoration: none;">{{ post.data.title }}</a>
+              </div>
+              {% if post.data.description %}
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5 m-0 leading-relaxed">{{ post.data.description }}</p>
+              {% endif %}
+              <div class="md:hidden flex flex-wrap items-center gap-x-2 gap-y-1 mt-1.5">
+                <span class="meta-text text-[0.65rem] text-gray-400 dark:text-gray-500">{{ post.date | readableDate }}</span>
+                {% for tag in filteredTags %}
+                  <a href="/tags/{{ tag | slugify }}/" class="meta-text text-[0.62rem] px-1 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400" style="text-decoration: none;">#{{ tag }}</a>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </article>
+      {% endif %}
+    {% endfor %}
+  {% endfor %}
+</div>
+
+{# ── GRID VIEW ───────────────────────────────────────── #}
+<div id="blogGrid" class="hidden mt-4 grid gap-3 md:grid-cols-2 lg:grid-cols-3 items-start">
+  {% for post in collections.posts %}
+    {% set rawTags = post.data.tags | default([]) %}
+    {% set filteredTags = rawTags | filterTagList %}
+    {% set searchDesc = post.data.description | default('') | lower %}
+    <article
+      class="feed-card-full"
+      data-blog-card
+      data-title="{{ post.data.title | lower }}"
+      data-tags="{{ filteredTags | join(' ') | lower }}"
+      data-body="{{ searchDesc }}"
+    >
+      <div class="flex items-center gap-2 mb-2">
+        <span class="feed-list-dot bg-blue-400 shrink-0"></span>
+        <time class="meta-text text-[0.68rem] text-gray-400 dark:text-gray-500">{{ post.date | readableDate }}</time>
+        {{ authorshipBadge(post.data.authored_by, compact=true) }}
+        {% if post.data.pinned %}
+          <span class="meta-text text-sm ml-auto" style="color: var(--accent-color);" title="Pinned" aria-label="Pinned">★</span>
+        {% endif %}
+      </div>
+      <h3 class="text-sm font-semibold leading-snug text-gray-900 dark:text-gray-100 m-0">
+        <a href="{{ post.url }}" class="title-hover" style="color: inherit; text-decoration: none;">{{ post.data.title }}</a>
+      </h3>
+      {% if post.data.description %}
+        <p class="text-xs leading-relaxed text-gray-500 dark:text-gray-400 mt-1.5 m-0">{{ post.data.description }}</p>
+      {% endif %}
+      {% if filteredTags | length %}
+        <div class="flex flex-wrap gap-1 mt-2.5">
+          {% for tag in filteredTags | head(3) %}
+            <a href="/tags/{{ tag | slugify }}/" class="text-[0.6rem] px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 title-hover" style="text-decoration: none;">#{{ tag }}</a>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </article>
+  {% endfor %}
+</div>
+
+<script>
+  const searchInput = document.getElementById('blogSearch');
+  const blogCards = Array.from(document.querySelectorAll('[data-blog-card]'));
+
+  searchInput.addEventListener('input', (e) => {
+    const term = e.target.value.trim().toLowerCase();
+    blogCards.forEach((card) => {
+      const matches = !term || ['title','tags','body'].some(k => (card.dataset[k] || '').includes(term));
+      card.closest('article').classList.toggle('hidden', !matches);
+    });
+  });
+</script>

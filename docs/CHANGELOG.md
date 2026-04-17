@@ -5,6 +5,541 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.9.14] - 2026-04-04
+
+### Added
+- 4 new quotes added to the Quotes collection (Anonymous, David Foster Wallace, Nassim Nicholas Taleb, Douglas Adams).
+- 10 new Agent Tick (AI memes) cards added to the folio.
+- 9 new vibes screenshots added to the vibes collection.
+- 4 original local photos imported with accurate EXIF tracking and metadata.
+
+### Changed
+- Unified media ingestion skill (`.agents/skills/media-import/SKILL.md`) established, defining standard pipeline logic for processing raw files from the `inbox/` into `photos.yaml`, `vibes`, and `ai-memes`.
+- Enforced MD5 hashing for photography imports to deduplicate uploads against previously ingested local photos.
+- Radiohead visual archive imagery fully migrated from root images folder directly into `src/static/img/folio/radiohead/` for better isolation.
+
+### Added
+- Created Prompt Library page (`/prompts/`) with prompts collection for testing language models.
+- Added first prompt: "Bouncing Balls in Spinning Heptagon" - complex physics simulation challenge.
+- Added short introduction to Gemma 4 26B-A4B post highlighting key features and model capabilities.
+- Added folio page dates documentation in `docs/instructions.md` to clarify that dates are permanent and manually controlled.
+
+### Changed
+- Moved utility scripts (`add-photo.mjs`, `bulk-add-photos.mjs`, `check-engagement-merge.mjs`, `remove_em_dashes.py`) from root to `utils/` directory.
+- Updated package.json script references to point to new `utils/` location.
+- Updated documentation references in `.github/copilot-instructions.md` and `AGENTS.md` to reflect new script paths.
+- Linked bouncing balls prompt from Gemma post benchmarks section.
+
+## [1.9.12] - 2026-03-24
+
+### Changed
+- Agent Tick folio caption QA pass: refined several meme titles/captions for clearer, less generic copy while preserving the original tone.
+- Improved Agent Tick meme media accessibility by tightening alt text wording and adding an explicit `aria-label` on the video card.
+
+## [1.9.11] - 2026-03-23
+
+### Added
+- Search page now supports type/tag/year filters with URL state sync and sort controls (relevance/newest/oldest).
+- Home page now shows a “Popular posts” section based on Redis-backed upvote totals.
+- Blog archive now includes year jump links with grouped year headings for easier browsing.
+- Added print-focused styles to improve readability and remove non-essential UI in printed output.
+
+### Changed
+- Search index payload was reduced by truncating embedded content in the client-side index.
+- Search result tag links now route snippet tags to `/snippets/tags/{slug}/` and post tags to `/tags/{slug}/`.
+- Theme-color handling is now centralized to one dynamic meta tag synced with accent color and dark mode.
+- Steam and Strava data fetch modules now use quieter logging and cleaner cache-read handling.
+
+### Fixed
+- Strava cache reads now await `AssetCache.getCachedValue()` for both token and activities, preventing stale/invalid-cache flow issues.
+- Removed unused legacy `src/_data/stats.js` module to avoid stale estimate-based data paths.
+
+## [1.9.10] - 2026-03-23
+
+### Changed
+- GitHub repos data fetch now persists successful responses to Eleventy `AssetCache` and falls back to cached data when live fetches fail.
+- Spotify and QOTD data modules now use quieter, safer logging (no token/payload dumps), while preserving existing data fallbacks.
+- Aligned top-level `sharp` dependency to `^0.33.5` to match `@11ty/eleventy-img` and reduce duplicate libvips runtime warnings.
+
+### Fixed
+- Prevented accidental generation of the placeholder `/now/archive/YYYY-MM-DD/` page by disabling permalink output in `src/now/archive/_template.md`.
+- Removed stale `.DS_Store` artifacts from `src/folio` source tree.
+- Synced `docs/TODO.md` status for already-implemented items: stats density updates, lazy image loading, post TOC, and blog post JSON-LD.
+
+## [1.9.9] - 2026-03-18
+
+### Changed
+- Pinned post indicators are now icon-only (★) across blog archive list view, blog grid view, and feed cards (list/grid), removing the extra `Pinned` text label.
+
+## [1.9.8] - 2026-03-18
+
+### Added
+- Agent Tick folio now tracks and displays a live visitor view counter using the existing Netlify `upvote` function (`trackView=true`), aligned with the Radiohead folio pattern.
+
+## [1.9.7] - 2026-03-18
+
+### Changed
+- Agent Tick UI copy now uses a terminal prompt glyph (`❯`) instead of `//`, and the main header title now includes a tick icon next to `TICK`.
+
+### Fixed
+- Deduplicated AI meme media by file hash and removed older long-caption duplicate cards/assets.
+
+## [1.9.6] - 2026-03-18
+
+### Changed
+- Hidden `Unforwarder v2: Kill the Noise, Save the Memories` from public collections/feed while keeping its direct URL accessible.
+
+## [1.9.5] - 2026-03-18
+
+### Added
+- AI memes folio: 11 new memes added (total: 14 entries)
+- Video support for folio memes with inline playback (click to play/pause)
+
+### Changed
+- AI memes folio: Updated permalink from `/folio/ai-memes/` to `/folio/agent-tick/`
+- AI memes folio: Improved captions - replaced text-copying descriptions with concise, witty titles
+
+### Fixed
+- Folio index now points to the Agent Tick canonical URL (`/folio/agent-tick/`) and legacy `/folio/ai-memes/` links redirect correctly.
+- GPT-OSS optimization post cleanup: removed leaked merge-conflict markers (`<<<<<<< HEAD` / branch tail) from the published content.
+
+## [1.9.4] - 2026-03-17
+
+### Added
+- `/folio/ai-memes/` - "Agent Tick ✓": a visual chronicle of AI absurdity featuring memes about vibe coding, ChatGPT, Claude, prompt engineering, and the agent era
+- Terminal-meets-editorial design: Playfair Display headlines + IBM Plex Mono metadata, terminal green (#00ff87) accent, the ✓ as brand glyph
+- Random meme button with scroll + highlight animation
+- Source attribution links for meme origins
+- First 3 memes: XKCD-style agent/vibe coding + prompt engineer dating
+
+## [1.9.3] - 2026-03-13
+
+### Added
+- Added `npm run metrics:merge-check` admin utility to compare old/new slug Redis counters and print expected merged totals for both `upvotes` and `views` (supports optional namespace, e.g. snippets).
+
+## [1.9.2] - 2026-03-13
+
+### Added
+- Snippet pages now track and display per-snippet view counts using namespaced keys (`snippet:{fileSlug}`) to avoid collisions with post counters.
+
+### Fixed
+- Expanded slug transition merging for engagement counters so legacy and canonical keys are summed for both `upvotes` and `views`, including historical draft→final renames and space→hyphen slug transitions.
+
+## [1.9.1] - 2026-03-13
+
+### Fixed
+- Preserved engagement continuity for renamed posts by merging legacy Redis upvote/view keys into canonical slugs (including `optimizing gpt-oss-120b-local inference` -> `optimizing-gpt-oss-120b-local-inference`).
+- Restored the existing GPT-OSS post discussion thread after slug rename by allowing a post-level Giscus term override.
+
+## [1.9.0] - 2026-03-03
+
+### Added
+- `/folio/` section: themed standalone web pages for personal obsessions - each with its own design, fonts, palette
+- `/folio/radiohead/` - first folio: a curated web archive of Radiohead's internet presence, archive maze sites, essential albums, B-sides, fan databases, and personal notes
+- Folio link added to footer navigation (Explore category) and `/more/` page
+
+## [1.8.5] - 2026-03-01
+
+### Added
+- uses.yaml: Audio section with AirPods Pro 2, Sennheiser HD 4.50 BTNC, Crinacle Zero 2, Moondrop Chu 2, Moondrop Quarks DSP
+
+### Changed
+- uses.yaml: Updated peripherals - Dell P3424WEB, Apple Magic Keyboard, Redragon Kumara, Logitech M720 Triathlon, Akai MPK Mini
+- uses.yaml: Retired Dell U2722D, Keychron K2, Logitech MX Master 3, Sony WH-1000XM4
+
+## [1.8.4] - 2026-02-28
+
+### Changed
+- uses.yaml: Renamed Productivity → Organize section; added all devices (Mac Work/Personal, Windows PC, Asus FX505, Raspberry Pi); switched password manager to Bitwarden + Apple Passwords + Microsoft Authenticator; switched browsers to Safari/Edge/Firefox; added Raindrop.io + Hoarder bookmarks; added Apple Notes, Google Calendar, Apple Reminders; replaced GitHub Projects with Notion for project tracking
+- uses.yaml: Retired Arc Browser and 1Password
+
+## [1.8.1] - 2026-02-28
+
+### Changed
+- Stats page (`/stats/`) full redesign: Dense Editorial layout, row-item stats, posts-per-year CSS bar chart, real word count (summed from rendered post content), avg words/post - removed card grid and fake estimated word count
+
+### Added
+- `sumWordCounts` filter: sums word counts across a posts collection using actual rendered content
+- `countByYear` filter: groups collection items by year, returns `{ year: count }` map
+- `wordCount` filter: strips HTML and counts words in a content string
+- `numberString` filter: formats numbers with thousands commas (e.g. 12,345)
+- `merge` filter: merges two objects (used in template data building)
+
+## [1.8.0] - 2026-02-28
+
+### Added
+- `/colophon` page: stack, design philosophy, AI-assisted dev disclosure, source link; linked from footer
+- `/now/archive/` redesigned: timeline with vertical line + accent dots replacing flat link list
+- Now page: "Past updates →" link next to /now description
+- `/til/` collection: Today I Learned entries with layout, list page, search, feed integration (yellow dot)
+- `/reading/` shelf page: Currently Reading (with CSS progress bars), Read (star ratings), Want to Read
+- `/changelog/` page: visual timeline parsed from CHANGELOG.md - version badges, Added/Changed/Fixed/Removed sections color-coded
+- `src/_data/changelog.js`: parses CHANGELOG.md into version objects for the changelog page
+- `src/_data/reading.yaml`: book data structure for reading shelf
+- TIL type added to feed collection (yellow dot, "TIL" badge)
+- Colophon link added to footer credit line
+
+## [1.7.2] - 2026-02-27
+
+### Added
+- Notes: `src/microposts/` renamed to `src/notes/`; "micropost" → "note" everywhere (type, badge, filter)
+- Notes: each note now has a permalink at `/notes/{slug}/` and renders via `layouts/note.njk`
+- More page: proper h1 + description line below title (matches other listing pages)
+
+### Fixed
+- Nav: font bumped to `text-base` on title + links; `gap-1` added to icon list for mobile breathing room
+- Mobile footer: 2-col categorized grid with icons (Read + Explore) instead of unstructured flat list
+- Profile image: `items-center` on mobile flex column; text block `text-center sm:text-left`
+- Feed list on mobile: date column hidden below 480px (3-col grid: dot + type + title); visible on wider screens
+
+
+
+### Fixed
+- Homepage feed grid: add `data-feed-masonry` + masonry script include so grid cards have true dynamic heights (matching feed page)
+- Mobile slider: replaced w-20 touch-hostile range input with a tap-to-cycle colored dot on xs screens; full gradient slider remains on sm+
+- Footer mobile: replaced 2×2 grid (ugly) with flat wrapped inline link list on mobile; 4-column categorized grid retained for md+
+
+
+
+### Changed
+- Navbar: About/Blog/Now text links hidden on mobile (sm: breakpoint) - compass + slider + dark mode remain; no more squished nav
+- Homepage feed view toggle: replaced custom active state with `view-toggle` CSS + feather icons (consistent with blog/snippets)
+- Feed page: search moved into header row alongside view toggle (like blog); view toggle uses `view-toggle` CSS + icon-only feather icons; h1 now matches blog sizing; item count shown inline
+
+
+
+### Changed
+- Default accent color changed from amber to teal (`#14b8a6`)
+- Feed grid on homepage now uses `items-start` for dynamic card heights (matches other grids)
+
+### Removed
+- Dead CSS: `.card-elevated`, `.card-glass`, `.intro-block` blocks removed from tailwind.css
+- Service worker: replaced stale `prism-coy.css` cache entry with `prism-light.css`
+
+## [1.6.8] - 2026-02-27
+
+### Changed
+- base.njk: Accent slider moved from extended footer (required scrolling ~1300 lines into page) into the nav bar, between the compass icon and dark mode toggle - now always visible on every page
+- base.njk: Slider redesigned as a compact inline gradient bar (w-20/w-28) with a white hairline indicator; no thumb ball needed (gradient itself shows position)
+- base.njk: Site title unified to "carteakey.dev" on both desktop and mobile - removes "Kartikey Chauhan" desktop variant and the `font-et-book` (Latin serif) font
+- base.njk: Nav `py-3` → `py-3.5` (slightly taller for consistency with body text size)
+- base.njk: Old footer slider block removed
+
+
+
+### Fixed
+- tailwind.css: Moved `.title-hover:hover` completely OUT of `@layer components` - in Tailwind v4, `@layer utilities` always beats `@layer components` regardless of specificity, so hover color was always overridden by `text-gray-900 dark:text-gray-100`. Unlayered CSS beats all layers. Added `!important` as belt-and-suspenders.
+- base.njk: Accent slider thumb was invisible - Tailwind v4 only scans static HTML class names; dynamic Alpine `:class="themes[currentIndex].color"` bindings like `bg-amber-500` are never included in generated CSS. Fixed by switching to `:style="background-color: ${themes[currentIndex].hex}"` with hex values embedded directly in the data object (matching the `ACCENT_COLORS` map in theme.js).
+- base.njk: Slider label now uses `x-text="themes[currentIndex].name"` (was `.label` - removed unused label field from theme data).
+
+
+
+### Fixed
+- tailwind.css: Added `.site-content .title-hover:hover` (specificity 0,3,0) alongside `.title-hover:hover` (0,2,0) - Tailwind's `dark:text-gray-100:is(.dark *)` also has 0,2,0 and wins by cascade order when equal; the higher-specificity rule now correctly applies accent color on hover in blog/snippets list rows
+- base.njk: Accent slider `updateTheme()` now calls `window.setAccentTheme()` explicitly instead of bare `setAccentTheme()` - Alpine.js component scope doesn't reliably fall through to window globals, causing the slider to move visually but not update the CSS variable
+
+
+
+### Fixed
+- snippets.njk: Added `| reverse` to both list and grid loops - snippets collection is oldest-first by default (unlike posts which has an explicit sort); now shows newest snippets first, matching blog behavior
+
+
+
+### Changed
+- snippets.njk: Full rewrite to match blog (archive.njk) exactly - same inline h1+count header, same search field style, list view as default, list button first then grid, same list row design (date col + title + language tag), same grid card design (feed-card-full style with purple dot). Removed page-header component and wrapping max-w div.
+- index.njk: Homepage feed now shows list toggle FIRST, then grid toggle (consistent with blog/snippets). Removed redundant "→ Feed" footer link (was duplicate of "All →" in header). Grid bumped to 3-col (lg:grid-cols-3). Shows 9 items.
+- index.njk: Feed default is now list view (localStorage key h-feed-view), matching editorial density preference.
+
+### Fixed
+- index.njk: "All →" and "→ Feed" both linking to /feed/ (duplicate). Kept only "All →" in the section header.
+
+
+
+### Fixed
+- tailwind.css: Links are now gray (color: inherit) with underline by default, accent color on hover - removes all accent-as-default link color. Works consistently in both prose and not-prose contexts
+- tailwind.css: Removed `!important` from `.not-prose a` reset - no longer needed since content links don't set accent by default
+- tailwind.css: `.site-content picture` centering now scoped to `article picture` only - fixes profile avatar being pushed/clipped by `margin: 1.5em auto`
+- tailwind.css: `.not-prose picture` reset added - avatars/icon images in UI components no longer affected by post-image centering rules
+- feed.njk: Description changed from "/now snapshots" to "and updates"
+
+### Changed
+- index.njk: Homepage feed section now defaults to grid view (2-col compact cards); list toggle added; view persisted to localStorage key `h-feed-view`
+
+## [1.6.2] - 2026-02-27
+
+### Added
+- base.njk: Global code block copy button - clipboard SVG icon appears on pre:hover, turns accent on hover, switches to checkmark on success
+- tailwind.css: `.copy-code-btn` styles - positioned absolute, dark semi-transparent background, accent on hover
+
+### Fixed
+- base.njk: "More" (compass) nav icon now uses accent color
+- tailwind.css: `.site-content .not-prose a` reset uses `!important` to definitively prevent accent color from leaking into feed cards and UI components
+- archive.njk: Removed `| reverse` from both list/grid loops - `collections.posts` is already sorted newest-first in eleventy.config.mjs; `| reverse` was making it oldest-first
+- snippets.njk: Grid cards switched from `card card-hover card-compact` to flat `border border-gray-200` style; list view rewritten as `divide-y` rows with date col + title + language tag (matches blog list design)
+- tailwind.css: `.site-content picture` and `.site-content picture img` rules added - images in post content are now centered with `margin: auto`
+- picture CSS: Added `text-align: center` and `display: inline-block` on img for proper centering
+
+
+
+### Added
+- src/static/css/prism/prism-light.css: New clean GitHub-inspired light syntax theme (replaces broken prism-coy)
+
+### Fixed
+- index.njk: Homepage footer → "→ Feed" (single clean link)
+- index.njk: Profile avatar wrapped in constrained `w-20 h-20 rounded-full overflow-hidden` div - fixes blurriness and gradient ring
+- eleventy.config.mjs: Image shortcodes now use `widths: [400, 800, 1200, "auto"]` with proper `sizes` (was `["auto"]` = single size only); removed `style="max-width: 100%; height: auto;"` inline style override
+- tailwind.css: Added `picture { display: block }` + `picture img { max-width: 100%; height: auto }` global rules
+- projects.njk: Removed `intro-block` card wrapper → plain text description; GitHub table redesigned as clean bordered table with `title-hover` links and `meta-text` dates; description column hidden on mobile
+- gallery.njk: Removed `intro-block` card wrapper → plain text description
+- theme.js / base.njk: Switched default Prism theme from `prism-coy` to `prism-light`
+
+
+
+### Added
+- stats.njk: Hero callout strip with 4 large accent-colored numbers (Posts, Snippets, This Year, Tags)
+- feed.njk: List/grid toggle, type filter chips, inline search - list view defaults to homepage activity style
+- base.njk: Footer nav links now have feather icons (clock, activity, edit-3, code, box, image, music, etc.)
+- base.njk: Site title now shows accent color always (not just on hover)
+- base.njk: Dark mode toggle icon uses accent color
+- index.njk: Profile avatar larger (w-20 h-20) + conic gradient ring restored
+- index.njk: Homepage footer link text cleaned up ("Blog · Snippets · Feed · Search")
+- feed-card.njk: Pinned star icon (★) shown in list variant when item is pinned
+
+### Changed
+- theme.js: Exposed `setAccentTheme`, `isDarkMode`, `switchPrismTheme` as `window.*` globals - fixes accent slider in Alpine.js context
+- tailwind.css: Code block background mode-aware - light gray in light mode, dark navy in dark mode; removed `!important` overrides
+- package.json: Bumped all dependencies to latest (eleventy 3.1.2, tailwind 4.2.1, 11ty-img 6.0.4, sharp 0.34.5, etc.)
+
+## [1.5.8] - 2026-02-26
+
+### Changed
+- post.njk: Post navigation redesigned - "Next →" / "← Previous" labels with title-hover links
+
+
+
+### Fixed
+- tailwind.css: `.site-content a` link styling scoped to `:is(p, li, blockquote, td, th) a` - prevents accent-color from applying to UI/nav/card links inside site-content
+- base.njk: Added `not-prose` to `<nav>` and `<footer>` elements to isolate them from content typography styles
+- tailwind.css: Added TOC (`<nav class="toc">`) styles - no disc bullets, clean link style with accent hover
+- post.njk: Avatar hover glow → accent CSS variable gradient (removes hardcoded amber-400)
+
+
+
+### Changed
+- page-header.njk: h1 `text-2xl` → `text-xl` for density consistency
+- 404.md: h1 `text-4xl/5xl` → `text-3xl/4xl`, cards flattened (removed bg+shadow), text-lg → text-sm, amber hover links → `title-hover`, py-20 → py-16
+- quotes.njk: h1 `text-3xl` → `text-xl`, quote cards `card-padding` → `card-compact`, `text-base` → `text-sm`
+- skills.njk: `text-lg` → `text-sm` on breakdown heading
+- stats.njk: card padding `p-5 sm:p-6` → `p-3 sm:p-4`, tag icon bg → accent color via CSS variable
+- guestbook.njk: headings `text-lg` → `text-sm`
+- newsletter.njk: headings `text-lg` → `text-sm`
+- blogroll.njk, bookmarks.njk: headings `text-lg` → `text-sm`
+- postslist.njk, archive.njk: Pinned badge → accent CSS variable (removes hardcoded amber)
+- post.njk: avatar hover glow → accent CSS variable gradient (removes hardcoded amber)
+- base.njk: skip-link `focus:bg-amber-500` → `style="background: var(--accent-color)"`
+- tailwind.css: `.badge-count` → accent CSS variable (removes hardcoded amber); `.tag-interactive:hover` → accent CSS variable; `color-mix` for consistent theming
+
+
+
+### Changed
+- base.njk: Drop Tailwind prose entirely - replaced with custom `.site-content` typography class; body set to `text-sm` (14px); nav links tightened to `text-sm` (no md:text-base); site title reduced to `text-base`
+- tailwind.css: Added comprehensive `.site-content` typography block (~200 lines) - 0.9375rem base, 1.65 line-height, all HTML elements styled. `.not-prose` escape hatch fully defined. Removes dependency on `@tailwindcss/typography`
+- eleventy.config.mjs: `readableDate` filter changed from `DATE_FULL` to `MMM d, yyyy` (e.g., "Feb 26, 2026")
+- theme.js: Fixed accent slider - removed `.prose` class manipulation from `updateAccentClasses` (only `setAccentVariables` needed)
+- post.njk: Post article spacing tightened (`space-y-8` → `space-y-6`, header `space-y-5` → `space-y-3`); description `text-lg` → `text-sm`; sidebar headings `text-lg` → `text-sm`
+- feed-card.njk: Removed `prose-sm dark:prose-invert` - replaced with `not-prose` to use site-content typography
+- search.njk, uses.njk, newsletter.njk, guestbook.njk, stats.njk, quotes.njk, bookmarks.njk, blogroll.njk: Replaced `text-lg`/`text-xl` headings with `text-sm`/`text-base` for density consistency
+
+## [1.5.3] - 2026-02-26
+
+### Changed
+- stats.njk, guestbook.njk, newsletter.njk: Replaced heavy glassmorphism `cardShell` (shadow-lg + bg-gray-100/80) with clean flat `border` cards - consistent with new dense editorial design language.
+- post.njk: Sidebar author/TOC cards replaced `card-elevated` with flat border. Upvote/reaction active states now use `var(--accent-color)` via inline style instead of hardcoded amber classes.
+- comment-pointer.njk: Replaced `card-elevated` with flat border card.
+- snippet-tags.njk: Full rewrite - flat `divide-y` row list matching snippets.njk list view. Added breadcrumbs.
+- newsletter.njk: Input focus rings use `accent-field` class. Icon circles simplified (no amber background). Removed `hover:shadow-lg`.
+- guestbook.njk: Form inputs use `accent-field`. Header aligned with other pages.
+- stats.njk: postsThisMonth counter uses `var(--accent-color)`. Tag icon no longer hardcoded amber.
+- page width: Stepped down one Tailwind size at each breakpoint (md:2xl, lg:3xl, xl:4xl).
+
+
+### Fixed
+- index.njk: Featured section `★ Featured` label and `Read →` link now use `var(--accent-color)` instead of hardcoded amber, respecting the accent theme switcher.
+- now.njk: Removed `cardShell` variable, tightened layout, date in `meta-text` style. `not-prose` wrapper around snippets avoids prose override.
+- workouts-snippet.njk, games-snippet.njk: Replaced `cardShell`+shadow cards with `feed-card-full` style. Hover colors use `var(--accent-color)`. Reduced padding.
+- tags-list.njk: Tag links now use `accent-link` class (respects theme switcher) instead of hardcoded `text-amber-600`.
+- search.njk: Result title hover and loading spinner use `var(--accent-color)` instead of hardcoded amber.
+- snippets.njk: Arrow link on list-view items uses `var(--accent-color)` on hover.
+- base.njk: Restored `prose-lg` for comfortable reading line height.
+
+
+### Changed
+- UI: Second-pass redesign - coherent design language built from the ground up.
+- feed-card.njk: New `list` variant for homepage (single-row grid layout: date · dot · type · title). `full` variant now uses `feed-card-full` (flat border card, no shadow) for the /feed page grid.
+- index.njk: Full homepage rewrite. Clean hero (avatar + name + bio + quick links inline). Featured post as minimal text block. QOTD as bare blockquote. Feed section replaced masonry grid with a scannable `feed-list` single-column chronological activity log.
+- archive.njk (blog): Full rewrite. Default list view (matches postslist.njk style: date left col, title+desc right). Grid view uses `feed-card-full` cards consistent with /feed. Search bar compact and inline with view toggle.
+- feed.njk: Cleaned up, removed duplicate inline JS (handled by masonry-script include).
+- postslist.njk: Refined layout - `md:w-36` fixed date column, tags below date on desktop, description `text-sm`, consistent with blog page.
+- tailwind.css: Added `.feed-list`, `.feed-list-row`, `.feed-list-dot`, `.feed-list-date`, `.feed-list-type`, `.feed-list-title` for homepage activity list. Added `.feed-card-full` for grid cards. Removed heavy `.card-hover` box-shadow - now border-color transition only.
+
+
+
+### Changed
+- UI: Full "Dense Editorial" redesign - higher text density, flat list rows, less visual noise.
+- base.njk: Reduced nav padding (`py-8` → `py-3`), smaller site title, border-bottom separator on nav.
+- base.njk: Switched `prose-lg` → `prose-base` for tighter body typography.
+- base.njk: Spotify now-playing rendered as compact inline text row instead of glassmorphism card.
+- base.njk: Footer nav stripped of Feather icons for cleaner density; compressed spacing.
+- base.njk: Footer bottom bar collapsed into single row (tagline + theme picker + copyright).
+- index.njk: Avatar shrunk (`w-32 h-32` → `w-16 h-16`), removed glowing border animation.
+- index.njk: Intro block condensed to two tight lines.
+- index.njk: QOTD rendered as left-border blockquote, no card shell.
+- index.njk: Featured post uses flat bordered box instead of glassmorphism card.
+- index.njk: Feed section header and grid tightened.
+- postslist.njk: Switched from `card-elevated` cards to flat `divide-y` list rows.
+- postslist.njk: Monospace date in left column, smaller title/description text, compact tags.
+- feed-card.njk: Removed card shell; now uses bottom-border flat row style.
+- feed-card.njk: Badge shrunk to small label (no pill), date inline monospace.
+- feed-card.njk: Padding reduced from `1.25rem` to `0.75rem 0`.
+- tailwind.css: Added `.meta-text` utility (monospace, small, tracked).
+- tailwind.css: Added `.row-item` utility for flat border-b list rows.
+- tailwind.css: Reduced `card-elevated` shadow depth significantly.
+- tailwind.css: Reduced `card-glass` blur/shadow intensity.
+
+## [1.4.7] - 2026-02-18
+
+### Fixed
+- post(2026-02-18-optimizing-qwen3-coder-next-local-inference): Remove `{#...}` Pandoc anchor from heading that was being parsed as an unclosed Nunjucks comment, causing a fatal build error.
+
+### Added
+- post(2026-02-18-optimizing-qwen3-coder-next-local-inference): HTML comment stub for a future GPT-OSS-120B vs Qwen3-Coder-Next head-to-head comparison post.
+- post(2026-02-18-optimizing-qwen3-coder-next-local-inference): Added `-ctk q8_0` and `-ctv q8_0` parameters to llama-server configuration for KV cache and token vector quantization.
+
+## [1.4.6] - 2026-02-09
+
+### Added
+- Guestbook: New sticky-notes design with pastel colors, random rotations, CSS tape decorations, and Caveat handwriting font.
+- Guestbook: Data-driven entries from `guestbook.yaml` with Netlify Forms submission and manual curation note.
+- Uses page: Neofetch-style ASCII art hardware info block with monospace specs display.
+- Uses page: "Retired" section with strikethrough styling and retirement dates for old tools.
+- Uses page: "Changelog" section with timestamped tool change history.
+- Skills page: New `/skills` page added to footer navigation.
+
+### Changed
+- Footer: Reorganized into 4-column categorized grid (Read, Explore, About Me, Meta) with Feather icons on every link.
+- Footer: Theme picker moved below navigation, made compact alongside copyright line.
+- Projects page: Redesigned cards - switched to `card card-hover` with fixed `h-40` image height, left-aligned text, GitHub icon next to title, `text-sm` descriptions, all tags shown, and image zoom on hover.
+- Uses page: Complete overhaul from grid cards to text-based multi-column layout with emoji icons per item.
+- More page: Fixed width shrinkage by switching from `layouts/base.njk` to `layouts/home.njk`.
+- More page: Removed manual breadcrumbs include (handled by `home.njk` layout).
+- Navigation: Replaced `more-horizontal` (•••) icon with `compass` for the More page link.
+
+### Fixed
+- More page: Content no longer narrower than other pages due to incorrect layout template.
+
+
+## [1.4.5] - 2026-02-09
+
+### Added
+- Blog page: Search filter (like snippets) with live filtering by title, tags, and description.
+- Footer: Social media icon links (LinkedIn, GitHub, Search, RSS, Newsletter) in centered row.
+
+### Changed
+- Card component: Updated background to white (`#fff`) in light mode and solid dark gray in dark mode for consistency with feed masonry cards.
+- Blog cards: Added data attributes for filtering (`data-title`, `data-tags`, `data-body`).
+- Footer navigation: Enhanced with all site links, separators, and "Made with ❤️" section.
+- UPDATED labels: Standardized to uppercase format (`text-xs uppercase tracking-wide`) across `/now`, `/bookmarks`, `/feed`, and blog posts.
+- Post tags: Now display in uppercase with improved tracking for consistency.
+- More page: Updated to 2x2 grid layout with increased spacing.
+- npm packages: Updated all dependencies (added 66, removed 73, changed 185 packages).
+
+### Fixed
+- Template error: Removed orphaned `{% endif %}` tag in base.njk footer.
+- Duplicate footer navigation: Removed duplicate nav section from extended footer, keeping only accent theme slider.
+
+## [1.4.4] - 2026-01-04
+
+### Added
+- Post layout: Author profile card in the left sidebar (XL screens) with photo, name, tagline, and social links.
+- Swirly arrow annotation CSS component (`.annotate`) for adding handwritten-style margin notes to text.
+- Annotation variants: `.annotate-left`, `.annotate-right`, `.annotate-up` for different arrow directions.
+- Handwritten note utilities: `.handnote` for inline styled text, `.margin-note` for sidebar notes.
+
+### Fixed
+- Navbar: vertical alignment of nav links, "more" dots icon, and dark mode toggle button now properly centered.
+- Navbar: replaced `<span>` elements with semantic `<li>` elements for better accessibility.
+
+### Changed
+- Comment pointer component: now uses `.card-elevated` styling with accent-colored CTA button.
+- Comment pointer component: updated icon from "message-circle" to "arrow-down" for better clarity.
+
+## [1.4.3] - 2026-01-03
+
+### Added
+- Visual polish: new `.card-elevated` component with layered shadows and smooth hover lift effect.
+- Visual polish: `.card-glass` glassmorphism variant with backdrop blur.
+- Visual polish: `.link-glow` animated underline effect for links.
+- Visual polish: `.gradient-border` animated gradient border on hover.
+- Visual polish: `.text-gradient` utility for accent-colored gradient text.
+- Visual polish: `.divider-gradient` refined horizontal rule with gradient fade.
+- Visual polish: staggered entrance animations (`.animate-enter`, `.stagger-1` through `.stagger-5`).
+- Visual polish: `.btn-shine` shimmer effect for buttons.
+- Visual polish: `.focus-ring` refined focus states with accent glow.
+- Visual polish: `.accent-glow` and `.accent-glow-hover` shadow effects.
+- Visual polish: custom scrollbar styling (light/dark mode aware).
+- Visual polish: `.animate-float` floating animation for decorative elements.
+- Visual polish: improved `::selection` highlighting using accent color.
+
+### Changed
+- Homepage intro: profile photo now has gradient glow halo on hover.
+- Homepage intro: name styled with gradient text effect.
+- Homepage: Quote of the Day uses glassmorphism card with left border accent.
+- Homepage: Feed section header uses gradient text.
+- Feed cards: upgraded to `.card-elevated` with refined shadows and hover states.
+- Navigation: site title has gradient text effect on hover.
+- Navigation: nav links use animated underline (`.link-glow`).
+- Navigation: dark mode toggle and "more" button have rounded hover backgrounds.
+- Footer: social icons have rounded hover backgrounds with scale effect.
+- Footer: Spotify widget uses glassmorphism card style.
+- Post layout: title uses gradient text effect.
+- Post layout: TOC sidebar uses `.card-elevated` styling.
+- Post layout: tags have hover scale animation.
+- Post layout: divider uses gradient fade.
+
+## [1.4.2] - 2026-01-03
+
+### Added
+- Netlify CMS: "Hidden (Draft)" toggle field for publishing/unpublishing blog posts.
+
+## [1.4.1] - 2026-01-03
+
+### Fixed
+- Dark mode toggle now works correctly (fixed syntax error in Prism theme switching).
+- Blog page tag filtering uses proper array-based includes check for reliable post visibility.
+- Dark mode background color changed from bluish (#0c0c0e) to warm charcoal (#111110) with no blue tint.
+
+## [1.4.0] - 2026-01-03
+
+### Added
+- Skip-to-content accessibility link for keyboard and screen reader navigation.
+- Service worker for offline reading with cache-first strategy for static assets.
+- `/uses` page listing hardware, software, and tools used for development.
+- Privacy-friendly view count tracking via Upstash Redis, displayed on blog posts.
+- Interactive tag filtering on `/blog/` page using Alpine.js (no page reload).
+- Search URL state persistence (`?q=`) with keyboard navigation (arrow keys + Enter).
+- Self-hosted Alpine.js, TypeIt, and Prism CSS themes (removed CDN dependencies).
+
+### Changed
+- Site background redesigned with softer slate/marble-white gradient and subtle paper grain texture.
+- Dark mode background updated to match the cleaner aesthetic.
+- RSS feed now includes all posts (removed 10-post limit).
+- All email references updated to carteakey.dev@gmail.com.
+
+### Fixed
+- Heading hierarchy issues in CV, Newsletter, and Post templates (h1→h3 skips).
+- Duplicate filter definitions removed from eleventy.config.mjs (head, uniq).
+- Prism theme switching now uses element ID selector for reliability.
+
 ## [1.3.20] - 2025-10-12
 
 ### Added
@@ -424,3 +959,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Sparkle trail mouse effect activated by triple-clicking footer
   - Secret click counter with achievements (activated by Shift+Click on theme slider)
   - Custom CSS animations for all easter egg effects (float, bounce, sparkle, slideIn/Out)
+
+## [1.8.2] - 2026-02-28
+
+### Added
+- `/notes/` list page: all notes sorted by date with inline content + permalink, listed in footer + more page
+- Keyboard shortcuts: changed from `g+key` to `Ctrl/Cmd+key` (Mac-aware); visible `? shortcuts` button in footer
+- Now archive: shows full entry content inline like changelog (not just link)
+- Changelog: extended with git history before first CHANGELOG.md entry, grouped by month, styled as "Commits" with gray dots
+- Reading shelf section added to `/now` page (currently-reading books with progress bars)
+- Footer Read category: Notes, TIL, Reading links added; Meta category: Changelog, Colophon added
+- More page: updated with all new pages (notes, til, reading, changelog, colophon)
+
+### Fixed
+- More page: removed duplicate breadcrumbs (home.njk already renders them for non-root pages)
+- Stats: posts this year / posts this month counts now correctly use `countInYearMonth` filter (previous `date("Y")`/`date("n")` calls failed silently)
+- Stats: Latest post now sorted by date (not pinned order) via `sortByDate` filter; font sized down to `text-xs`
+- Stats: Lighthouse section is now 2-column grid on sm+ screens
+- `date()` filter: extended to support `"Y"`, `"n"`, `"X"`, `"MMM d"`, `"h:mm a"`, `"YYYY"` format strings
+- New filters: `countInYearMonth`, `sortByDate`
+
+## [1.8.3] - 2026-02-26
+
+### Changed
+- Keyboard shortcuts: removed all Ctrl/Cmd combos (hijacked browser shortcuts); now bare letter keys (h/b/f/s/n/t/r/d/?/) - no modifier required
+- Added `/` shortcut for search navigation
+
+### Fixed
+- Changelog: removed 8-entry-per-month cap on git history commits (show all)
+- Now archive: images constrained to max-h-48 so they don't dominate the timeline

@@ -1,7 +1,8 @@
 ---
-title: How I Let AI Run Wild on My Blog (with Copilot & Codex)
+title: How I Let AI Run Wild on My Blog (with Copilot & Codex) (draft)
 description: A peek at the playbook that lets AI assistants plan, ship, and report on updates to carteakey.dev.
 date: 2025-10-05
+authored_by: ai-generated
 tags:
   - AI
   - Workflow
@@ -16,7 +17,7 @@ Because the backlog never ends. I keep a living TODO list in `docs/TODO.md`, a p
 
 ## The mission brief: `docs/prompt.md`
 
-Every session starts with a compact prompt. Today’s edition (the one powering this very post) literally tells Codex to “check off each item in my TODO list… in batches of five.” That clarity keeps the agent from freelancing. Whenever priorities change—new feature, bug hunt, content push—I rewrite `docs/prompt.md` before asking the assistant to do anything.
+Every session starts with a compact prompt. Today’s edition (the one powering this very post) literally tells Codex to “check off each item in my TODO list… in batches of five.” That clarity keeps the agent from freelancing. Whenever priorities change-new feature, bug hunt, content push-I rewrite `docs/prompt.md` before asking the assistant to do anything.
 
 ## The house rules: `docs/instructions.md`
 
@@ -27,7 +28,7 @@ The instructions file is the long form manual. It spells out the stack (Eleventy
 Whether I am drafting a post, restyling a layout, or wiring a Netlify function, the rhythm stays the same:
 
 1. **Clarify** the task and draft a lightweight plan. If something feels fuzzy, the plan flushes it out early.
-2. **Build** the change with the local toolchain. Everything lives under `src/`—never `_site/`.
+2. **Build** the change with the local toolchain. Everything lives under `src/`-never `_site/`.
 3. **Verify** with `npm run build` and a quick tour of `/`, `/feed/`, `/blog/`, `/now/`, and `/stats/`.
 4. **Ship** by updating `docs/CHANGELOG.md`, bumping `versions.json`, committing, and pushing `sonnet`.
 5. **Report back** with a summary and the option to continue the next batch.
@@ -36,7 +37,7 @@ Codex follows the same flow and I do not merge anything that skips a step.
 
 ## Humans still fly the plane
 
-The agent can draft prose, refactor layouts, even reason about data fallbacks—but I still read everything, run npm builds locally, and sanity check the UI. That combination lets me move faster without giving up craft. When Codex finishes a batch, I review the diff, tweak any phrasing that feels off, and decide whether to press on.
+The agent can draft prose, refactor layouts, even reason about data fallbacks-but I still read everything, run npm builds locally, and sanity check the UI. That combination lets me move faster without giving up craft. When Codex finishes a batch, I review the diff, tweak any phrasing that feels off, and decide whether to press on.
 
 ## Want to adopt the setup?
 

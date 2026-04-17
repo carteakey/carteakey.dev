@@ -2,12 +2,12 @@
 title: Exposing local llm's to the internet (draft)
 description: "Your very own AI-API "
 date: 2025-03-06T05:14:04.467Z
+authored_by: human
 updated: 2025-03-06T05:14:04.480Z
 tags:
-  - LLM
+  - AI
   - Self-Host
 ---
-**Note:** Inspired by [arch](https://architchandra.com/articles/the-perfectionists-guide-to-deploying-a-statamic-website-to-vercel), I have decided to publish drafts even if they are not complete, makes writing less stressful.
 
 My blog uses **\~\~AI\~\~**, no seriously! Head to my homepage and you will find that the "quote of the day" is (or used to be) powered by ChatGPT. This site refreshes daily which ended up very silently leaking my whole 5$ of OpenAI API credit, leaving my blog stuck with a fallback, ultra-generic quote. Sad times! 
 
@@ -20,7 +20,7 @@ Instead of throwing more money into the OpenAI pit, I decided to spin up my own 
 1. **Download & Install Ollama**: <https://ollama.com/download>
 2. **Allow all incoming requests:** Set OLLAMA_HOST variable to 0.0.0.0 to allow all incoming connections See <https://github.com/ollama/ollama/blob/main/docs/faq.md#how-do-i-configure-ollama-server>
 3. **Select a Model**: Just run `ollama pull llama3.1` (or pick another model you prefer).
-4. **Expose to the Web**: Safely route through a reverse proxy for secure access. The simplest option is Tailscale—install it and execute:
+4. **Expose to the Web**: Safely route through a reverse proxy for secure access. The simplest option is Tailscale-install it and execute:
 
    ```bash
    tailscale funnel 11434 # add -bg to run in the background

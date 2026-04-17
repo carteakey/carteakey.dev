@@ -1,0 +1,29 @@
+{# 
+  View Toggle Component
+  =====================
+  Toggle between grid and list views for collection pages.
+  
+  Usage:
+  {% include "components/view-toggle.njk" %}
+  
+  Requires Alpine.js and data-view-mode attribute on parent container.
+#}
+
+<div class="view-toggle" x-data>
+  <button 
+    type="button" 
+    title="Grid view"
+    :class="{ 'active': $root.querySelector('[data-view-mode]')?.dataset.viewMode !== 'list' }"
+    @click="$root.querySelector('[data-view-mode]')?.setAttribute('data-view-mode', 'grid')"
+  >
+    {% feather "grid", class="w-4 h-4" %}
+  </button>
+  <button 
+    type="button" 
+    title="List view"
+    :class="{ 'active': $root.querySelector('[data-view-mode]')?.dataset.viewMode === 'list' }"
+    @click="$root.querySelector('[data-view-mode]')?.setAttribute('data-view-mode', 'list')"
+  >
+    {% feather "list", class="w-4 h-4" %}
+  </button>
+</div>

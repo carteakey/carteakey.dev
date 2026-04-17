@@ -1,0 +1,429 @@
+{
+  "last_updated": "2026-04-16T23:34:02Z",
+  "photos_per_month": [
+    {
+      "month": "2011-01",
+      "count": 1
+    },
+    {
+      "month": "2016-04",
+      "count": 1
+    },
+    {
+      "month": "2016-06",
+      "count": 4
+    },
+    {
+      "month": "2019-02",
+      "count": 1
+    },
+    {
+      "month": "2019-06",
+      "count": 1
+    },
+    {
+      "month": "2020-03",
+      "count": 1
+    },
+    {
+      "month": "2020-08",
+      "count": 1
+    },
+    {
+      "month": "2020-12",
+      "count": 1
+    },
+    {
+      "month": "2021-07",
+      "count": 1
+    },
+    {
+      "month": "2021-10",
+      "count": 27
+    },
+    {
+      "month": "2021-11",
+      "count": 47
+    },
+    {
+      "month": "2021-12",
+      "count": 24
+    },
+    {
+      "month": "2022-01",
+      "count": 59
+    },
+    {
+      "month": "2022-02",
+      "count": 60
+    },
+    {
+      "month": "2022-03",
+      "count": 618
+    },
+    {
+      "month": "2022-04",
+      "count": 72
+    },
+    {
+      "month": "2022-05",
+      "count": 177
+    },
+    {
+      "month": "2022-06",
+      "count": 34
+    },
+    {
+      "month": "2022-07",
+      "count": 32
+    },
+    {
+      "month": "2022-08",
+      "count": 61
+    },
+    {
+      "month": "2022-09",
+      "count": 48
+    },
+    {
+      "month": "2022-10",
+      "count": 631
+    },
+    {
+      "month": "2022-11",
+      "count": 60
+    },
+    {
+      "month": "2022-12",
+      "count": 179
+    },
+    {
+      "month": "2023-01",
+      "count": 106
+    },
+    {
+      "month": "2023-02",
+      "count": 71
+    },
+    {
+      "month": "2023-03",
+      "count": 122
+    },
+    {
+      "month": "2023-04",
+      "count": 130
+    },
+    {
+      "month": "2023-05",
+      "count": 124
+    },
+    {
+      "month": "2023-06",
+      "count": 186
+    },
+    {
+      "month": "2023-07",
+      "count": 200
+    },
+    {
+      "month": "2023-08",
+      "count": 179
+    },
+    {
+      "month": "2023-09",
+      "count": 68
+    },
+    {
+      "month": "2023-10",
+      "count": 144
+    },
+    {
+      "month": "2023-11",
+      "count": 211
+    },
+    {
+      "month": "2023-12",
+      "count": 274
+    },
+    {
+      "month": "2024-01",
+      "count": 125
+    },
+    {
+      "month": "2024-02",
+      "count": 884
+    },
+    {
+      "month": "2024-03",
+      "count": 659
+    },
+    {
+      "month": "2024-04",
+      "count": 533
+    },
+    {
+      "month": "2024-05",
+      "count": 165
+    },
+    {
+      "month": "2024-06",
+      "count": 99
+    },
+    {
+      "month": "2024-07",
+      "count": 274
+    },
+    {
+      "month": "2024-08",
+      "count": 140
+    },
+    {
+      "month": "2024-09",
+      "count": 136
+    },
+    {
+      "month": "2024-10",
+      "count": 371
+    },
+    {
+      "month": "2024-11",
+      "count": 513
+    },
+    {
+      "month": "2024-12",
+      "count": 32
+    },
+    {
+      "month": "2025-01",
+      "count": 173
+    },
+    {
+      "month": "2025-02",
+      "count": 177
+    },
+    {
+      "month": "2025-03",
+      "count": 211
+    },
+    {
+      "month": "2025-04",
+      "count": 1086
+    },
+    {
+      "month": "2025-05",
+      "count": 684
+    },
+    {
+      "month": "2025-06",
+      "count": 1008
+    },
+    {
+      "month": "2025-07",
+      "count": 789
+    },
+    {
+      "month": "2025-08",
+      "count": 606
+    },
+    {
+      "month": "2025-09",
+      "count": 413
+    },
+    {
+      "month": "2025-10",
+      "count": 537
+    },
+    {
+      "month": "2025-11",
+      "count": 912
+    },
+    {
+      "month": "2025-12",
+      "count": 1187
+    },
+    {
+      "month": "2026-01",
+      "count": 386
+    },
+    {
+      "month": "2026-02",
+      "count": 260
+    },
+    {
+      "month": "2026-03",
+      "count": 259
+    },
+    {
+      "month": "2026-04",
+      "count": 161
+    }
+  ],
+  "top_labels": [
+    {
+      "label": "photos",
+      "count": 11138
+    },
+    {
+      "label": "ca",
+      "count": 8087
+    },
+    {
+      "label": "canada",
+      "count": 8082
+    },
+    {
+      "label": "on",
+      "count": 8068
+    },
+    {
+      "label": "ontario",
+      "count": 7861
+    },
+    {
+      "label": "interior plains",
+      "count": 7524
+    },
+    {
+      "label": "continental united states",
+      "count": 7022
+    },
+    {
+      "label": "people",
+      "count": 6977
+    },
+    {
+      "label": "original style",
+      "count": 5788
+    },
+    {
+      "label": "weekend",
+      "count": 5656
+    },
+    {
+      "label": "americas",
+      "count": 5621
+    },
+    {
+      "label": "apple iphone 16",
+      "count": 5507
+    },
+    {
+      "label": "weekday",
+      "count": 5483
+    },
+    {
+      "label": "2025",
+      "count": 5358
+    },
+    {
+      "label": "northern america",
+      "count": 5230
+    },
+    {
+      "label": "afternoon",
+      "count": 4833
+    },
+    {
+      "label": "toronto",
+      "count": 4646
+    },
+    {
+      "label": "outdoor",
+      "count": 4610
+    },
+    {
+      "label": "apple iphone 12 mini",
+      "count": 4528
+    },
+    {
+      "label": "amber style",
+      "count": 3952
+    },
+    {
+      "label": "clothing",
+      "count": 3643
+    },
+    {
+      "label": "sky",
+      "count": 3574
+    },
+    {
+      "label": "evening",
+      "count": 3256
+    },
+    {
+      "label": "home",
+      "count": 3142
+    },
+    {
+      "label": "winter",
+      "count": 3138
+    },
+    {
+      "label": "durham region",
+      "count": 2894
+    },
+    {
+      "label": "fall",
+      "count": 2850
+    },
+    {
+      "label": "eastern united states",
+      "count": 2826
+    },
+    {
+      "label": "land",
+      "count": 2820
+    },
+    {
+      "label": "noon",
+      "count": 2773
+    }
+  ],
+  "aesthetic_score_histogram": [
+    {
+      "bucket": 0,
+      "count": 578
+    },
+    {
+      "bucket": 1,
+      "count": 335
+    },
+    {
+      "bucket": 2,
+      "count": 729
+    },
+    {
+      "bucket": 3,
+      "count": 1908
+    },
+    {
+      "bucket": 4,
+      "count": 3688
+    },
+    {
+      "bucket": 5,
+      "count": 7603
+    },
+    {
+      "bucket": 6,
+      "count": 1600
+    },
+    {
+      "bucket": 7,
+      "count": 266
+    },
+    {
+      "bucket": 8,
+      "count": 22
+    },
+    {
+      "bucket": 9,
+      "count": 4
+    },
+    {
+      "bucket": 10,
+      "count": 3
+    }
+  ]
+}
