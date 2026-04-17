@@ -1896,6 +1896,260 @@ picture img {
   }
 }
 
+/* ═══════════════════════════════════════════════════════════════════════════
+   📰 Editorial Mode — minimal opt-in layer
+   `theme: editorial` frontmatter gives a post:
+     • drop cap on the first paragraph
+     • optional free-form sidebar (via `sidebar:` frontmatter)
+   Companion shortcodes (work anywhere):
+     {% analysis %}  boxed section with title + optional winner pill
+     {% statblock %} dense two-row bar-fill metric card
+     {% wide %}      full-bleed scrollable wrapper for wide tables
+     {% annotate %}  handwritten-note callout with squiggly arrow
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+:root {
+  --accent-a: var(--accent-color);
+  --accent-b: color-mix(in srgb, var(--accent-color) 55%, #e11d48);
+}
+
+[data-pair="teal-rose"]      { --accent-a: #14b8a6; --accent-b: #e11d48; }
+[data-pair="orange-purple"]  { --accent-a: #f97316; --accent-b: #8b5cf6; }
+[data-pair="blue-amber"]     { --accent-a: #2563eb; --accent-b: #f59e0b; }
+[data-pair="emerald-rose"]   { --accent-a: #10b981; --accent-b: #f43f5e; }
+[data-pair="indigo-coral"]   { --accent-a: #6366f1; --accent-b: #fb7185; }
+
+@layer components {
+  /* ── Editorial wrapper: drop cap only, inherits everything else ── */
+  .ed-prose > p:first-of-type::first-letter {
+    font-family: var(--font-serif);
+    font-size: 3.1rem;
+    float: left;
+    line-height: 0.85;
+    font-weight: 700;
+    padding: 0.3rem 0.55rem 0 0;
+    color: var(--accent-a);
+  }
+
+  /* ── Analysis card ── */
+  .analysis-card {
+    border-radius: 0.75rem;
+    border: 1px solid rgb(229 231 235);
+    background-color: #fff;
+    padding: 1rem 1.1rem;
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.04);
+    margin: 1.25em 0;
+  }
+
+  .dark .analysis-card {
+    border-color: rgb(39 39 42);
+    background-color: rgb(17 17 17);
+  }
+
+  @media (min-width: 640px) {
+    .analysis-card { padding: 1.25rem 1.5rem; }
+  }
+
+  .analysis-card[data-side="a"] { border-color: color-mix(in srgb, var(--accent-a) 30%, rgb(229 231 235)); }
+  .analysis-card[data-side="b"] { border-color: color-mix(in srgb, var(--accent-b) 30%, rgb(229 231 235)); }
+  .dark .analysis-card[data-side="a"] { border-color: color-mix(in srgb, var(--accent-a) 35%, rgb(39 39 42)); }
+  .dark .analysis-card[data-side="b"] { border-color: color-mix(in srgb, var(--accent-b) 35%, rgb(39 39 42)); }
+
+  .analysis-header {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .analysis-header .analysis-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: rgb(17 24 39);
+    letter-spacing: -0.005em;
+    margin: 0;
+  }
+
+  .dark .analysis-header .analysis-title { color: rgb(243 244 246); }
+
+  .analysis-header .winner-badge { margin-left: auto; }
+
+  .analysis-body { font-size: 0.95rem; line-height: 1.6; }
+  .analysis-body p { margin: 0 0 0.7em; }
+  .analysis-body p:last-child { margin-bottom: 0; }
+
+  /* ── Winner badge ── */
+  .winner-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    font-weight: 500;
+    padding: 0.2rem 0.55rem;
+    border-radius: 9999px;
+    border: 1px solid color-mix(in srgb, var(--accent-a) 40%, transparent);
+    background-color: color-mix(in srgb, var(--accent-a) 10%, transparent);
+    color: color-mix(in srgb, var(--accent-a) 80%, black);
+    white-space: nowrap;
+  }
+
+  .dark .winner-badge {
+    background-color: color-mix(in srgb, var(--accent-a) 20%, transparent);
+    color: color-mix(in srgb, var(--accent-a) 85%, white);
+  }
+
+  .winner-badge[data-side="b"] {
+    border-color: color-mix(in srgb, var(--accent-b) 40%, transparent);
+    background-color: color-mix(in srgb, var(--accent-b) 10%, transparent);
+    color: color-mix(in srgb, var(--accent-b) 80%, black);
+  }
+
+  .dark .winner-badge[data-side="b"] {
+    background-color: color-mix(in srgb, var(--accent-b) 20%, transparent);
+    color: color-mix(in srgb, var(--accent-b) 85%, white);
+  }
+
+  /* ── Sidebar (structure only — content flows from frontmatter) ── */
+  .ed-sidebar-section {
+    padding: 0.95rem 1rem;
+    border: 1px solid rgb(229 231 235);
+    border-radius: 0.5rem;
+    margin-bottom: 0.9rem;
+    font-size: 0.82rem;
+    line-height: 1.55;
+    background-color: color-mix(in srgb, var(--accent-a) 2%, #fff);
+  }
+
+  .dark .ed-sidebar-section {
+    border-color: rgb(39 39 42);
+    background-color: color-mix(in srgb, var(--accent-a) 4%, rgb(17 17 17));
+  }
+
+  .ed-sidebar-label {
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: rgb(107 114 128);
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  .dark .ed-sidebar-label { color: rgb(156 163 175); }
+
+  .ed-sidebar-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin: 0 0 0.4rem;
+    color: rgb(17 24 39);
+  }
+
+  .dark .ed-sidebar-title { color: rgb(243 244 246); }
+
+  .ed-sidebar-body { color: rgb(55 65 81); }
+  .dark .ed-sidebar-body { color: rgb(209 213 219); }
+  .ed-sidebar-body p { margin: 0 0 0.5rem; }
+  .ed-sidebar-body p:last-child { margin-bottom: 0; }
+  .ed-sidebar-body a { color: var(--accent-a); text-decoration: underline; text-underline-offset: 2px; }
+
+  /* ── Wide table wrapper — breaks out of article container, sizes to content ── */
+  .wide-wrap {
+    width: 100vw;
+    max-width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    padding: 0 clamp(1rem, 4vw, 3.5rem);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    box-sizing: border-box;
+  }
+
+  /* Table sizes to its content, capped at the scroll container's padding-box */
+  .wide-wrap table {
+    margin: 1em auto;
+    width: auto;
+    max-width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+  }
+
+  .wide-wrap table th,
+  .wide-wrap table td {
+    padding: 0.5em 0.9em;
+    vertical-align: top;
+    max-width: 22rem;           /* cap any single cell so long prose wraps */
+    overflow-wrap: break-word;
+  }
+
+  .wide-wrap table th {
+    font-weight: 600;
+    text-align: left;
+    border-bottom: 2px solid rgb(229 231 235);
+    white-space: nowrap;        /* headers stay on one line */
+  }
+
+  .dark .wide-wrap table th { border-bottom-color: rgb(55 65 81); }
+
+  .wide-wrap table td { border-bottom: 1px solid rgb(243 244 246); }
+  .dark .wide-wrap table td { border-bottom-color: rgb(31 41 55); }
+
+  .wide-wrap table tbody tr:nth-child(even) { background: rgb(249 250 251 / 0.6); }
+  .dark .wide-wrap table tbody tr:nth-child(even) { background: rgb(24 24 27 / 0.4); }
+
+  /* ── {% annotate %} — highlighted phrase + handwritten comment + squiggly arrow ── */
+  /* Default (all viewports, any post): comment flows inline right after the highlight. */
+  .note {
+    position: relative;
+    display: inline;
+  }
+
+  .note-target {
+    background: color-mix(in srgb, var(--accent-color) 28%, transparent);
+    padding: 0 0.2em;
+    border-radius: 2px;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
+
+  .note-comment {
+    display: inline-block;
+    margin-left: 1.6em;
+    font-family: 'Caveat', 'Kalam', 'Comic Sans MS', cursive;
+    font-size: 1.1rem;
+    font-weight: 500;
+    line-height: 1.15;
+    color: var(--accent-color);
+    transform: rotate(-2deg);
+    vertical-align: baseline;
+    position: relative;
+    white-space: normal;
+    max-width: 16rem;
+  }
+
+  .note-comment::before {
+    content: '';
+    position: absolute;
+    right: calc(100% + 0.2em);
+    top: 0.2em;
+    width: 1.3em;
+    height: 1em;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 30' fill='none'%3E%3Cpath d='M2 24 Q 10 6, 22 14 Q 34 22, 52 4' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' fill='none'/%3E%3Cpath d='M45 2 L54 4 L49 13' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+    transform: scaleX(-1);
+    opacity: 0.85;
+  }
+
+  /* TODO: on xl+ the right sidebar (Outline + comments) already occupies the    */
+  /* gutter, so annotations currently stay inline on every breakpoint.           */
+  /* Ideal future behaviour: absolute-position the comment into the right margin */
+  /* on wide screens, vertically tracking the highlighted line. Needs either a   */
+  /* per-post toggle for the sidebar, a JS measurer, or a layout rework.         */
+}
+
 /* ── Code block copy button ── */
 @layer components {
   .copy-code-btn {

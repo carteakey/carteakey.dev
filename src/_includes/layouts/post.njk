@@ -42,12 +42,17 @@ hasEthicalAds: false
 {% set tocHtml = (content | toc) | default('') %}
 {% set conversationPlacement = conversationPlacement or 'sidebar' %}
 {% set showAds = false %}
+{% set isEditorial = (theme == 'editorial') %}
+{% set edPair = pair or 'teal-rose' %}
 
-<div class="relative mx-auto w-full ">
-  {# Left Sidebar - Author Card #}
+<div class="relative mx-auto w-full"{% if isEditorial %} data-pair="{{ edPair }}"{% endif %}>
+  {# Left Sidebar - Author Card (or editorial meta-sidebar) #}
   {% if showSidebar %}
   <aside class="hidden xl:block absolute -left-[280px] top-0">
     <div class="sticky top-24 w-[240px] space-y-4">
+      {% if isEditorial and sidebar %}
+        {% include "components/editorial-sidebar.njk" %}
+      {% endif %}
       {# Author Card #}
       <section class="border border-gray-200 dark:border-gray-800 rounded-xl p-5 text-center not-prose">
         <a href="/about" class="block group">
@@ -172,7 +177,11 @@ hasEthicalAds: false
     </div>
     {% endif %}
 
+    {% if isEditorial %}
+    <div class="ed-prose">{{ content | safe }}</div>
+    {% else %}
     {{ content | safe }}
+    {% endif %}
 
     {% if updated %}
       <p class="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
