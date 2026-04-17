@@ -412,6 +412,11 @@ export default function (eleventyConfig) {
     return decimals === 0 ? Math.round(value) : Math.round(value * Math.pow(10, decimals)) / Math.pow(10, decimals);
   });
 
+  eleventyConfig.addFilter("localeNumber", function (value) {
+    const n = Number(value);
+    return Number.isFinite(n) ? n.toLocaleString("en-US") : value;
+  });
+
   eleventyConfig.addFilter("uniq", function (array) {
     return [...new Set(array)];
   });

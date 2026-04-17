@@ -1,0 +1,98 @@
+{
+  "last_updated": "2026-04-16T23:34:02Z",
+  "games_owned": 146,
+  "games_played": 75,
+  "total_hours": 1515.5,
+  "top_games": [
+    {
+      "name": "ELDEN RING",
+      "hours": 233.0,
+      "last_played": null,
+      "metascore": 94
+    },
+    {
+      "name": "Quantum Break",
+      "hours": 150.7,
+      "last_played": null,
+      "metascore": 66
+    },
+    {
+      "name": "Cyberpunk 2077",
+      "hours": 134.7,
+      "last_played": null,
+      "metascore": 86
+    },
+    {
+      "name": "Battlefield\u2122 2042",
+      "hours": 89.5,
+      "last_played": null,
+      "metascore": null
+    },
+    {
+      "name": "The Elder Scrolls V: Skyrim Special Edition",
+      "hours": 52.8,
+      "last_played": null,
+      "metascore": 74
+    },
+    {
+      "name": "Valheim",
+      "hours": 52.7,
+      "last_played": null,
+      "metascore": null
+    },
+    {
+      "name": "A Way Out",
+      "hours": 46.8,
+      "last_played": null,
+      "metascore": 78
+    },
+    {
+      "name": "Wallpaper Engine",
+      "hours": 43.6,
+      "last_played": null,
+      "metascore": null
+    },
+    {
+      "name": "South Park\u2122: The Stick of Truth\u2122",
+      "hours": 41.1,
+      "last_played": null,
+      "metascore": null
+    },
+    {
+      "name": "No Man's Sky",
+      "hours": 40.5,
+      "last_played": null,
+      "metascore": 61
+    },
+    {
+      "name": "Sifu",
+      "hours": 40.4,
+      "last_played": null,
+      "metascore": 81
+    },
+    {
+      "name": "Kingdom Come: Deliverance",
+      "hours": 40.3,
+      "last_played": null,
+      "metascore": 76
+    },
+    {
+      "name": "SKYBOX VR Video Player",
+      "hours": 37.6,
+      "last_played": null,
+      "metascore": null
+    },
+    {
+      "name": "Yakuza 0",
+      "hours": 37.3,
+      "last_played": null,
+      "metascore": 86
+    },
+    {
+      "name": "DARK SOULS\u2122: REMASTERED",
+      "hours": 36.6,
+      "last_played": null,
+      "metascore": 84
+    }
+  ]
+}
