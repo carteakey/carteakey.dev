@@ -44,7 +44,7 @@ Openclaw, and all its derivatives, primarily provide:
 - A relatively easy-to-run and configure agentic framework (with preloaded skills and config)
 - A clean structure of **gateway + cron + model** — all alternatives (nanoclaw, zeroclaw) are built on this
 
-But everyone just knows: it's a vibecoded **POS**. It's **bloated** beyond recognition. The CVEs are massive, and it is a security nightmare handed to the general public. I don't need to expand on this. 
+But everyone just knows: it's a vibecoded **mess**. It's **bloated** beyond recognition. The CVEs are massive, and it is a security nightmare handed to the general public. I don't need to expand on this. 
 
 The secure alternatives (nemoclaw, nanoclaw) don't make much sense either — they put unnecessary guardrails on something that is supposed to be inherently open. It's like putting wheel locks on a racing car. The car is meant to race. (And cause accidents, lol.)
 
@@ -75,11 +75,13 @@ These cases held up really well. They're fun to run.
 
 ## Claude Code as an Alternative
 
-When Anthropic announced that Claude Code will no longer run on other harnesses, I was skeptical but it made sense. They simply dont have the compute offerings that OpenAI have today. However, they've been quietly chipping away at each of the components through their own implementation of things. I find their implementations usually more focused towards developers and actual use cases. When we look at the current state of things (research preview) - it seems we already have most of the components implemented for us to have a clawd (see what I did there?) like experience (and dare I say, better, much better)
+When Anthropic announced that Claude Code will no longer run on other harnesses, I was skeptical but it made sense. They simply dont have the compute offerings that OpenAI have today. However, they've been quietly chipping away at each of the components through their own implementation of things. I find their implementations usually more focused towards developers and actual use cases. 
 
-Skills - Its their brainchild. 
-Model - well, they have claude. 
-Memory - you can have any basic memory implementation you want, its just SOUL.md, MEMORY.md etc.
-Gateway - They have a telegram plugin, and hooks. It takes less than few lines of code to get running. 
-Orchestration - They just introduced routines
-Webui - they already had /dispatch and claude web.
+With the recent announcemnt of routines (research preview) - it seems we already have most of the components implemented for us to have a clawd (see what I did there?) like experience (and dare I say, better, much better)
+
+- Skills - Its their brainchild. 
+- Model - well, they have claude. 
+- Memory - you can have any basic memory implementation you want, its just SOUL.md, MEMORY.md etc.
+- Gateway - They have a telegram plugin, and hooks. It takes less than few lines of code to get running. 
+- Orchestration - They just introduced routines
+- Webui - they already had /dispatch and claude web.
