@@ -129,6 +129,8 @@ Here's some notes after wandering in [r/LocalLLaMA](https://www.reddit.com/r/Loc
 
 ### Optimization checklist (in order of impact)
 
+> **Update (2026-04-04):** I've compiled all of these lessons (and much more) into a dedicated master reference: **[Local LLM Inference Optimization: The Complete Guide](/blog/local-llm-optimization/)**. That post covers everything below in full detail, plus OS choice, backend selection, KV cache, CUDA specifics, and diagnostics. The list here stays as a quick summary.
+
 1. **CHECK YOUR RAM SPEED** - Seriously. See [below](#check-your-ram-speed-seriously). This was a 3x improvement for me.
 2. **Run on Linux** - +~20% TPS (CUDA driver + scheduler).
 3. **Build llama.cpp from source with CUDA**. Keep it updated - MoE performance has improved significantly in recent builds.

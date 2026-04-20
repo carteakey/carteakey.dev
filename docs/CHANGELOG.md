@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.9.15] - 2026-04-19
+
+### Added
+- Added manual guestbook entries to the `guestbook.yaml` data file.
+
+### Changed
+- Grouped all local AI inference and benchmark posts under a new `local-inference` series folder. Added backward-compatible 301 redirects to `src/_redirects` to retain their original URLs.
+
 ## [1.9.14] - 2026-04-04
 
 ### Added
