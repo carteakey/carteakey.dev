@@ -3,6 +3,7 @@ title: Running Qwen3.6-35B-A3B locally with text + vision
 description: Practical Qwen3.6 setup on 12 GB VRAM using llama.cpp.
 date: 2026-04-17
 updated: 2026-04-17
+giscusTerm: "/blog/running-qwen3-6-35b-a3b-locally/"
 authored_by: ai-assisted
 draft: true
 tags:

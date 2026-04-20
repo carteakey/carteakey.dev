@@ -4,6 +4,7 @@ description: Squeezing every token per second - the sequel
 date: 2026-02-18
 authored_by: human
 updated: 2026-03-15
+giscusTerm: "/blog/optimizing-qwen3-coder-next-local-inference/"
 tags:
   - AI
 ---

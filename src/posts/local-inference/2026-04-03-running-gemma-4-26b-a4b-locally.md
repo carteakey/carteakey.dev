@@ -3,6 +3,7 @@ title: Running Gemma 4 26B-A4B locally on 12GB VRAM
 description: End-to-end Gemma 4 setup on mainline llama.cpp with text and vision throughput notes.
 date: 2026-04-03
 updated: 2026-04-03
+giscusTerm: "/blog/running-gemma-4-26b-a4b-locally/"
 authored_by: ai-assisted
 draft: true
 tags:
