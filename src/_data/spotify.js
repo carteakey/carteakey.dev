@@ -17,6 +17,15 @@ async function fetchAccessToken() {
   //Cache access token
   let accessTokenCache = new AssetCache("token");
 
+  if (!client_id || !client_secret || !refresh_token) {
+    console.warn("Spotify credentials missing, using cached token if available");
+    try {
+      return await accessTokenCache.getCachedValue();
+    } catch (e) {
+      return "";
+    }
+  }
+
   if (accessTokenCache.isCacheValid("1h")) {
     accessToken = await accessTokenCache.getCachedValue();
   } else {
@@ -34,13 +43,19 @@ async function fetchAccessToken() {
       }),
     });
 
-    if (response.status == 204 || response.status > 400) {
+    if (response.status == 204 || response.status >= 400) {
       console.warn("Unable to fetch Spotify access token, using cached token if available");
-      accessToken = await accessTokenCache.getCachedValue();
+      try {
+        accessToken = await accessTokenCache.getCachedValue();
+      } catch (e) {
+        accessToken = "";
+      }
     } else {
       const data = await response.json();
-      accessToken = data.access_token;
-      await accessTokenCache.save(accessToken, "string");
+      accessToken = data.access_token || "";
+      if (accessToken) {
+        await accessTokenCache.save(accessToken, "string");
+      }
     }
   }
   return accessToken;
@@ -60,7 +75,7 @@ export default async function () {
       },
     });
 
-    if (response.status == 204 || response.status > 400) {
+    if (response.status == 204 || response.status >= 400) {
       console.warn("Spotify now-playing unavailable, using cached value if available");
       try {
         nowPlaying = await nowPlayingCache.getCachedValue();
