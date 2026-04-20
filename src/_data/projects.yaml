@@ -81,6 +81,77 @@ projects:
       - next.js
       - firebase
 
+  - title: truthshield
+    description: "Real-time AI fact-checking Chrome extension. Highlights claims on any webpage and checks them against live sources."
+    github: https://github.com/carteakey/truthshield
+    tags:
+      - chrome-extension
+      - ai
+      - javascript
+
+  - title: nanoghibli
+    description: "Multimodal AI pipeline that transforms video clips into Studio Ghibli-style anime trailers using Gemini and Veo."
+    github: https://github.com/carteakey/nanoghibli
+    tags:
+      - python
+      - gemini
+      - ai
+
+  - title: chirptype
+    description: "On-device voice-to-text hotkey app for Apple Silicon. No cloud, no subscription — transcribes directly into any input field."
+    github: https://github.com/carteakey/chirptype
+    tags:
+      - python
+      - whisper
+      - macos
+
+  - title: muninn
+    description: "A personal AI copilot built in Swift. Named after Odin's raven of memory — ambient, contextual, local-first."
+    github: https://github.com/carteakey/muninn
+    tags:
+      - swift
+      - ai
+      - macos
+
+  - title: clawfin
+    description: "Canadian-first personal finance dashboard. Self-hosted, AI-native, built for people who want to own their money data."
+    github: https://github.com/carteakey/clawfin
+    tags:
+      - python
+      - react
+      - fastapi
+
+  - title: folderal
+    description: "Local-first PDF organizer that uses Ollama to classify and sort documents without touching the cloud."
+    github: https://github.com/carteakey/folderal
+    tags:
+      - python
+      - ollama
+      - ai
+
+  - title: cartebase
+    description: "Personal SQLite workspace — a single database for browsing history, bookmarks, music, games, and purchases. Your data, one place."
+    github: https://github.com/carteakey/cartebase
+    tags:
+      - python
+      - sqlite
+      - datasette
+
+  - title: notes.carteakey.dev
+    description: "A public digital garden. Evolving notes, half-formed ideas, and working thinking — built with Quartz."
+    url: https://notes.carteakey.dev
+    tags:
+      - quartz
+      - markdown
+
+  - title: cv.carteakey.dev
+    description: "A minimal, auto-generated CV rendered from YAML. Because keeping a PDF up to date is a solved problem."
+    url: https://cv.carteakey.dev
+    github: https://github.com/carteakey/cv.carteakey.dev
+    tags:
+      - next.js
+      - react
+
   - title: carteakey.github.io
     description: My old blog.
     image_path: "./src/static/img/projects/carteakey.github.png"
