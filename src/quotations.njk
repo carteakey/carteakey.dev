@@ -1,0 +1,109 @@
+---
+layout: layouts/base.njk
+title: Quotations
+description: Words worth saving.
+permalink: /quotations/
+eleventyNavigation:
+  key: Quotations
+  order: 9
+---
+
+{% include "components/breadcrumbs.njk" %}
+
+<div class="flex items-baseline justify-between mb-2">
+  <div class="flex items-baseline gap-3">
+    <h1 class="text-2xl font-semibold tracking-tight m-0">Quotations</h1>
+    <span class="meta-text text-xs text-gray-400 dark:text-gray-500">{{ collections.quotations | length }} entries</span>
+  </div>
+  <div class="flex items-center gap-2">
+    <div class="relative">
+      {% feather "search", class="w-3.5 h-3.5 text-gray-400 absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" %}
+      <input
+        type="text"
+        id="quotationSearch"
+        placeholder="Search..."
+        class="rounded-md border border-gray-200 dark:border-gray-700 bg-transparent py-1.5 pl-8 pr-3 text-sm accent-field focus:outline-none dark:text-gray-100 w-40 placeholder:text-gray-400"
+      >
+    </div>
+  </div>
+</div>
+
+<p class="text-sm text-gray-500 dark:text-gray-400 mt-0 mb-4">Words worth saving.</p>
+
+<div id="quotationList" class="mt-2 divide-y divide-gray-100 dark:divide-gray-800/80">
+  {%- for entry in collections.quotations | reverse -%}
+    {% set rawTags = entry.data.tags | default([]) %}
+    {% set filteredTags = rawTags | filterTagList %}
+    {% set searchExcerpt = entry.templateContent | striptags | replace('\n', ' ') | truncate(200, true, '') | lower %}
+    <article
+      class="py-6 group"
+      data-quotation-card
+      id="{{ entry.fileSlug }}"
+      data-tags="{{ filteredTags | join(' ') | lower }}"
+      data-body="{{ searchExcerpt }}"
+      data-author="{{ entry.data.author | lower }}"
+    >
+      <div class="flex flex-col md:flex-row md:gap-6">
+        <div class="shrink-0 md:w-28 flex flex-col gap-1 pt-0.5 mb-2 md:mb-0">
+          <time class="meta-text text-xs text-gray-400 dark:text-gray-500" datetime="{{ entry.date | htmlDateString }}">{{ entry.date | readableDate }}</time>
+          {% if filteredTags.length > 0 %}
+            <div class="hidden md:flex flex-wrap gap-1 mt-0.5">
+              {% for tag in filteredTags | slice(0, 3) %}
+                <span class="meta-text text-[0.62rem] px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400">{{ tag }}</span>
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
+        <div class="flex-1 min-w-0">
+          <div class="prose dark:prose-invert max-w-none text-base md:text-lg text-gray-800 dark:text-gray-200 leading-relaxed mb-3">
+            {% if entry.data.image %}
+              <div class="mb-4">
+                <img src="{{ entry.data.image | replace('./src/static/img', '/img') }}" alt="Quotation reference image" class="rounded-lg border border-gray-200 dark:border-gray-800 w-full max-w-2xl" loading="lazy" decoding="async" />
+              </div>
+            {% endif %}
+            <blockquote class="border-l-4 border-[color:var(--accent-color)] pl-4 italic m-0">
+              {{ entry.templateContent | safe }}
+            </blockquote>
+          </div>
+          
+          <div class="flex flex-col mt-2">
+            <span class="font-medium text-gray-900 dark:text-gray-100 text-sm">
+              - {% if entry.data.authorUrl %}<a href="{{ entry.data.authorUrl }}" target="_blank" rel="noopener" class="hover:underline">{{ entry.data.author }}</a>{% else %}{{ entry.data.author }}{% endif %}
+            </span>
+            {% if entry.data.source %}
+              <span class="text-xs text-gray-500 mt-0.5">
+                {% if entry.data.sourceUrl %}
+                  <a href="{{ entry.data.sourceUrl }}" target="_blank" rel="noopener" class="hover:underline">{{ entry.data.source }}</a>
+                {% else %}
+                  {{ entry.data.source }}
+                {% endif %}
+              </span>
+            {% endif %}
+          </div>
+          
+          <div class="md:hidden flex flex-wrap items-center gap-x-2 gap-y-1 mt-3">
+            {% for tag in filteredTags | slice(0, 3) %}
+              <span class="meta-text text-[0.62rem] px-1 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400">{{ tag }}</span>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </article>
+  {%- endfor -%}
+</div>
+
+<script>
+  const quotationSearch = document.getElementById('quotationSearch');
+  if (quotationSearch) {
+    quotationSearch.addEventListener('input', function() {
+      const q = this.value.toLowerCase().trim();
+      document.querySelectorAll('[data-quotation-card]').forEach(card => {
+        const match = !q ||
+          card.dataset.tags?.includes(q) ||
+          card.dataset.body?.includes(q) ||
+          card.dataset.author?.includes(q);
+        card.style.display = match ? '' : 'none';
+      });
+    });
+  }
+</script>
