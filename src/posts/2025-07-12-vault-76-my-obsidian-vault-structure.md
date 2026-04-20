@@ -74,20 +74,23 @@ The system uses a numbered hierarchy (0-8) that mirrors a natural workflow from 
 
 ```md
 vault-76/
-├── 0. inbox 📥                    # Quick capture, daily notes, temporary items
-├── 1. system 📊                   # Vault management, templates, scripts, attachments
-├── 2. knowledge 🧠                # All learning content (theory + domain)
-├── 3. projects 🚀                 # Active work, development, side projects
-├── 4. career 💼                   # Job hunting, interviews, experience
-├── 5. finance 💰                  # Money management, investments, taxes
-├── 6. personal 👤                 # Health, hobbies, home, media, self
-├── 7. archive 📦                  # Completed/inactive content
-└── 8. config ⚙️                   # Vault setup, plugin notes, obsidian config docs
+├── 0. inbox        # Quick capture, clippings, items to process
+├── 1. system       # Vault management, templates, scripts, attachments
+├── 2. knowledge    # All learning content (theory + domain)
+├── 3. projects     # Active work, development, side projects
+├── 4. career       # Job hunting, interviews, experience
+├── 5. finance      # Money management, investments, taxes
+├── 6. personal     # Health, hobbies, home, media, self
+├── 7. archive      # Completed/inactive content
+├── 8. config       # Vault setup, plugin notes, obsidian config docs
+└── 9. daily        # Daily notes (date-stamped, ephemeral)
 ```
+
+> **On folder icons:** Earlier versions of this vault used emojis directly in folder names (`0. inbox 📥`). I've since switched to the [Iconize](https://github.com/FlorianWoelki/obsidian-iconize) plugin, which attaches icons as metadata rather than baking them into the name. This keeps the filesystem and git history clean while preserving the visual hierarchy in Obsidian.
 
 The numbered system creates a natural flow:
 
-1. **Capture** (0. inbox) - Everything starts here via daily notes or quick capture
+1. **Capture** (0. inbox) - Quick capture, clippings, things to process
 2. **Process** (1. system) - Templates, scripts and mental models live here
 3. **Learn** (2. knowledge) - Reference material and learning notes live here
 4. **Create** (3. projects) - Active work and development happens here
@@ -96,10 +99,11 @@ The numbered system creates a natural flow:
 7. **Live** (6. personal) - Hobbies, health, media and personal interests
 8. **Archive** (7. archive) - Completed or outdated content
 9. **Configure** (8. config) - Vault setup, plugin documentation, obsidian config notes
+10. **Journal** (9. daily) - Ephemeral date-stamped daily notes
 
 ### Detailed Structure (Examples)
 
-#### 0. inbox 📥
+#### 0. inbox
 ```md
 0. inbox/
 ├── daily-notes/
@@ -108,13 +112,18 @@ The numbered system creates a natural flow:
 └── meeting-notes/
 ```
 
-#### 1. system 📊
+#### 1. system
 ```md
 1. system/
 ├── templates/
+│   ├── weekly-note.md
+│   ├── media-review.md
+│   ├── note.md
 │   ├── prompt.md
 │   ├── services.md
-│   ├── meeting-notes.md
+│   ├── jobs_template.md
+│   ├── chatgpt analysis.md
+│   └── model comparison.md
 ├── scripts/
 │   ├── rsync-to-git.sh
 │   ├── convert-inline-latex.sh
@@ -127,7 +136,7 @@ The numbered system creates a natural flow:
 
 I added a `mental-models/` folder to `1. system` for decisions about the system itself - which app to use for what, how to distinguish note types, etc. Meta-notes about how you think, not what you think about.
 
-#### 2. knowledge 🧠
+#### 2. knowledge
 ```md
 2. knowledge/
 ├── computer-science 💻/
@@ -145,7 +154,7 @@ I added a `mental-models/` folder to `1. system` for decisions about the system 
 
 Articles saved from the web live here once read and worth keeping - not in inbox clippings (that's the queue), but here as processed reference.
 
-#### 3. projects 🚀
+#### 3. projects
 ```md
 3. projects/
 ├── active/
@@ -163,7 +172,7 @@ Articles saved from the web live here once read and worth keeping - not in inbox
 └── learning-projects/
 ```
 
-#### 4. career 💼
+#### 4. career
 ```md
 4. career/
 ├── job-search/
@@ -187,7 +196,7 @@ Articles saved from the web live here once read and worth keeping - not in inbox
     └── professional-contacts/
 ```
 
-#### 5. finance 💰
+#### 5. finance
 ```md
 5. finance/
 ├── budgeting/
@@ -199,7 +208,7 @@ Articles saved from the web live here once read and worth keeping - not in inbox
     └── freelancing/
 ```
 
-#### 6. personal 👤
+#### 6. personal
 ```md
 6. personal/
 ├── health 🏥/
@@ -215,14 +224,14 @@ Articles saved from the web live here once read and worth keeping - not in inbox
 
 `self/` covers inner life - relationships, personal philosophy, ramblings. `media/` is for notes and reviews after watching - the watchlist itself lives in Reminders.
 
-#### 7. archive 📦
+#### 7. archive
 ```md
 7. archive/
-├── past-projects 🗄️/
-└── outbox 📤/
+├── past-projects/
+└── outbox/
 ```
 
-#### 8. config ⚙️
+#### 8. config
 
 Notes about the vault itself - plugin setup guides, CSS snippet explanations, sync configuration. Not system templates (those are in `1. system`) but documentation about how the vault is configured and why.
 
@@ -233,3 +242,14 @@ The beauty of this structure is that it grows with you - whether you add new dom
 A template for this vault is available on [GitHub](https://github.com/carteakey/vault-76-template).
 
 However, this is just my approach. The best system is the one you'll actually use consistently. Start simple, let it grow organically, and adjust as needed.
+
+---
+
+## Changelog
+
+### 2026-04-20
+
+- **Iconize over emojis**: Removed emoji suffixes from all folder names. The [Iconize](https://github.com/FlorianWoelki/obsidian-iconize) plugin now handles visual icons as metadata, keeping the actual folder names clean (`1. system` not `1. system 📊`). Better for scripts, terminal, and git diffs.
+- **Plugin update**: Added [Terminal](https://github.com/polyipseity/obsidian-terminal) — a shell terminal pane inside Obsidian. Removed Kanban and Notebook Navigator (not in active use).
+- **Templates expanded**: Added `weekly-note`, `media-review`, `note`, `jobs_template`, `chatgpt analysis`, and `model comparison` to `1. system/templates/`.
+- **Agent workflows**: Added `upgrade.md` and `lint.md` to `.agent/workflows/` for AI-assisted vault maintenance.
