@@ -377,7 +377,7 @@ export default function (eleventyConfig) {
 
   function filterTagList(tags) {
     return (tags || []).filter(
-      (tag) => ["all", "nav", "post", "posts", "snippets", "prompts"].indexOf(tag) === -1
+      (tag) => ["all", "nav", "post", "posts", "snippets", "prompts", "quotations"].indexOf(tag) === -1
     );
   }
 
@@ -781,6 +781,51 @@ export default function (eleventyConfig) {
       .sort((a, b) => b.date - a.date);
   });
 
+  // Quotations collection
+  eleventyConfig.addCollection("quotations", function (collectionApi) {
+    const now = new Date();
+    return collectionApi.getFilteredByGlob("src/quotations/**/*.md")
+      .filter((quote) => {
+        if (quote.data.hidden === true) return false;
+        if (quote.date && quote.date > now) return false;
+        return true;
+      })
+      .sort((a, b) => b.date - a.date);
+  });
+
+  // Quotation specific tags
+  eleventyConfig.addCollection("quotationTags", function (collection) {
+    const items = collection.getFilteredByGlob("src/quotations/**/*.md");
+    const tags = {};
+    items.forEach(item => {
+      (item.data.tags || []).forEach(tag => {
+        if (tag !== "quotations") {
+          tags[tag] = (tags[tag] || 0) + 1;
+        }
+      });
+    });
+    
+    return Object.entries(tags)
+      .map(([name, count]) => ({ name, count }))
+      .sort((a, b) => b.count - a.count);
+  });
+
+  // Group quotations by year for the sidebar
+  eleventyConfig.addCollection("quotationYears", function (collection) {
+    const items = collection.getFilteredByGlob("src/quotations/**/*.md");
+    const years = {};
+    items.forEach(item => {
+      if (item.date) {
+        const year = new Date(item.date).getFullYear();
+        years[year] = (years[year] || 0) + 1;
+      }
+    });
+    // Return sorted descending array of {year, count}
+    return Object.entries(years)
+      .map(([year, count]) => ({ year: parseInt(year), count }))
+      .sort((a, b) => b.year - a.year);
+  });
+
   // Notes collection
   eleventyConfig.addCollection("notes", function (collectionApi) {
     const now = new Date();
@@ -833,6 +878,7 @@ export default function (eleventyConfig) {
           tags: (post.data.tags || []).filter((tag) => tag !== "posts" && tag !== "post"),
           pinned: !!post.data.pinned,
           authored_by: post.data.authored_by ?? null,
+          original: post,
         };
       });
 
@@ -1003,6 +1049,26 @@ export default function (eleventyConfig) {
         };
       });
 
+    const quotationsList = collectionApi
+      .getFilteredByGlob("./src/quotations/**/*.md")
+      .filter((entry) => {
+        if (entry.data.hidden === true) return false;
+        if (entry.date && entry.date > now) return false;
+        return true;
+      })
+      .map((entry) => {
+        const summarySource = entry.data.description || entry.data.excerpt || "";
+        const summary = summarySource ? truncate(stripHtml(summarySource)) : null;
+        return {
+          type: "quotation",
+          title: `Quotation from ${entry.data.author}`,
+          date: entry.date,
+          url: `/quotations/#${entry.fileSlug}`,
+          summary,
+          original: entry,
+        };
+      });
+
     const folioEntries = collectionApi
       .getFilteredByGlob("./src/folio/**/index.html")
       .filter((entry) => {
@@ -1031,6 +1097,7 @@ export default function (eleventyConfig) {
       ...folioEntries,
       ...nowUpdates,
       ...photos,
+      ...quotationsList,
       // ...vibes,
     ].filter((item) => item.date instanceof Date && !Number.isNaN(item.date.valueOf()));
 

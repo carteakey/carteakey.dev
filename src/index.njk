@@ -74,11 +74,14 @@ htmlTemplateEngine: "webc"
 <hr class="mb-5 border-gray-200 dark:border-gray-800" />
 
 {# ── RECENT ACTIVITY ───────────────────────────────────── #}
-<div class="not-prose animate-enter stagger-3" x-data="{ hView: localStorage.getItem('h-feed-view') || 'grid' }" x-init="$watch('hView', v => localStorage.setItem('h-feed-view', v))">
+<div class="not-prose animate-enter stagger-3" x-data="{ hView: localStorage.getItem('h-feed-view') || 'stream' }" x-init="$watch('hView', v => localStorage.setItem('h-feed-view', v))">
   <div class="flex items-center justify-between mb-3">
     <span class="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">Recent</span>
     <div class="flex items-center gap-2">
       <div class="view-toggle">
+        <button type="button" @click="hView = 'stream'" :class="{ 'active': hView === 'stream' }" title="Stream view">
+          {% feather "activity", class="w-3.5 h-3.5" %}
+        </button>
         <button type="button" @click="hView = 'list'" :class="{ 'active': hView === 'list' }" title="List view">
           {% feather "list", class="w-3.5 h-3.5" %}
         </button>
@@ -92,6 +95,13 @@ htmlTemplateEngine: "webc"
 
   {% set feedItems = collections.feed | head(9) %}
 
+  {# Stream view #}
+  <div x-show="hView === 'stream'" x-cloak class="flex flex-col">
+    {% for item in feedItems %}
+      {{ feedCard(item, { variant: 'stream' }) }}
+    {% endfor %}
+  </div>
+
   {# List view #}
   <ul x-show="hView === 'list'" x-cloak class="feed-list m-0 p-0 list-none">
     {% for item in feedItems %}
@@ -100,7 +110,7 @@ htmlTemplateEngine: "webc"
   </ul>
 
   {# Grid view #}
-  <div x-show="hView === 'grid'"
+  <div x-show="hView === 'grid'" x-cloak
     class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 items-start"
     data-feed-masonry style="--feed-row-height: 16px;">
     {% for item in feedItems %}

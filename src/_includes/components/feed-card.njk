@@ -21,6 +21,7 @@
   {% set isNow = item.type == 'now' %}
   {% set isTil = item.type == 'til' %}
   {% set isFolio = item.type == 'folio' %}
+  {% set isQuotation = item.type == 'quotation' %}
 
   {# Type color dot classes #}
   {% set dotColor = "bg-gray-400" %}
@@ -49,10 +50,123 @@
   {% elif isFolio %}
     {% set dotColor = "bg-orange-400" %}
     {% set badgeLabel = "Folio" %}
+  {% elif isQuotation %}
+    {% set dotColor = "bg-stone-500" %}
+    {% set badgeLabel = "Quotation" %}
   {% endif %}
 
+  {# ── STREAM VARIANT (lifestream style) ── #}
+  {% if variant == 'stream' %}
+  <article class="feed-card-stream{% if extraClasses %} {{ extraClasses }}{% endif %} group py-1.5" {% if outerAttrs %}{{ outerAttrs | safe }}{% endif %}>
+    <div class="flex flex-col md:flex-row md:gap-8">
+      {# Left column: Date & Type #}
+      <div class="shrink-0 md:w-28 pt-1 flex flex-row md:flex-col gap-3 md:gap-1.5 items-center md:items-start mb-3 md:mb-0">
+        <time class="meta-text text-sm md:text-xs text-gray-500 dark:text-gray-400" datetime="{{ item.date | htmlDateString }}">{{ item.date | readableDate }}</time>
+        
+        <div class="flex items-center gap-1.5 md:mt-0.5">
+          <span class="feed-list-dot {{ dotColor }} shrink-0"></span>
+          <span class="meta-text text-[0.65rem] text-gray-400 dark:text-gray-500 uppercase tracking-widest">{{ badgeLabel }}</span>
+        </div>
+        
+        <a href="{{ item.url | url }}" class="hidden md:inline-block mt-2 text-xs text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors" style="text-decoration: none;">Permalink →</a>
+      </div>
+
+      {# Right column: Content #}
+      <div class="flex-1 min-w-0 border-b border-gray-100 dark:border-gray-800/80 pb-6 group-last:border-0 group-last:pb-0">
+        {# Title (for posts, tils, snippets, notes) #}
+        {% if not (isQuotation or isVibe or isPhoto or isNow) %}
+          <div class="leading-snug mb-1.5 flex items-center flex-wrap gap-2">
+            {% if item.pinned %}
+              <span class="meta-text text-[0.65rem] uppercase tracking-wider font-semibold" style="color: var(--accent-color);" title="Pinned" aria-label="Pinned">★ Featured</span>
+            {% endif %}
+            {% if item.authored_by is defined %}{{ authorshipBadge(item.authored_by, compact=true) }}{% endif %}
+            {% if item.title %}
+              {% if item.url %}
+                <a href="{{ item.url | url }}" class="font-semibold text-gray-900 dark:text-gray-100 title-hover" style="text-decoration: none;">
+                  {{ item.title }}
+                </a>
+              {% else %}
+                <span class="font-semibold text-gray-900 dark:text-gray-100">
+                  {{ item.title }}
+                </span>
+              {% endif %}
+            {% endif %}
+          </div>
+        {% else %}
+          {# For quotes/photos/vibes/now, show pinned/author above the content #}
+          {% if item.pinned or item.authored_by is defined %}
+          <div class="flex items-center gap-2 mb-1.5">
+            {% if item.pinned %}
+              <span class="meta-text text-[0.65rem] uppercase tracking-wider font-semibold" style="color: var(--accent-color);">★ Featured</span>
+            {% endif %}
+            {% if item.authored_by is defined %}{{ authorshipBadge(item.authored_by, compact=true) }}{% endif %}
+          </div>
+          {% endif %}
+        {% endif %}
+
+        {# Body Content #}
+        <div class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed site-content prose-sm max-w-none">
+          {% if isNote or isNow or isTil %}
+            <div x-data="{ expanded: false, isOverflowing: false }"
+                 x-init="setTimeout(() => { if ($refs.content) isOverflowing = $refs.content.scrollHeight > 360; }, 50)">
+              <div x-ref="content" :class="!expanded && isOverflowing ? 'max-h-[20rem] overflow-hidden relative' : ''">
+                {{ item.original.templateContent | safe }}
+                <div x-show="!expanded && isOverflowing" class="feed-card-note-fade absolute bottom-0 left-0 right-0 h-24 pointer-events-none"></div>
+              </div>
+              <div x-show="isOverflowing" class="mt-2" x-cloak>
+                <button type="button" @click="expanded = !expanded" class="text-xs font-medium transition-colors font-sans hover:underline focus:outline-none" style="color: var(--accent-color);">
+                  <span x-show="!expanded">Read full {% if isNote %}note{% elif isNow %}update{% else %}TIL{% endif %} &darr;</span>
+                  <span x-show="expanded">Show less &uarr;</span>
+                </button>
+              </div>
+            </div>
+          {% elif isQuotation %}
+            <div class="italic text-gray-700 dark:text-gray-300 border-l-2 pl-4 py-0.5 m-0 relative" style="border-color: var(--accent-color);">
+              <span class="absolute left-1.5 -top-2.5 text-4xl font-serif text-gray-400 opacity-40 leading-none">"</span>
+              <div class="relative z-10">{{ item.original.templateContent | safe }}</div>
+            </div>
+          {% elif isPhoto or isVibe or item.media %}
+            <figure class="m-0 overflow-hidden rounded border border-gray-200 dark:border-gray-700 not-prose">
+              <img src="{{ item.media.src }}" alt="{{ item.media.alt }}" loading="lazy" decoding="async" class="w-full h-auto block m-0">
+              {% if item.summary %}
+                <figcaption class="px-3 py-2 text-xs text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-800/50 border-t border-gray-200 dark:border-gray-700 m-0">{{ item.summary }}</figcaption>
+              {% endif %}
+            </figure>
+          {% elif item.type == 'post' or isSnippet %}
+            {% if item.summary %}
+              <p class="mt-0 mb-1.5 font-medium text-gray-800 dark:text-gray-200">{{ item.summary }}</p>
+            {% endif %}
+            {% if item.original.templateContent %}
+              {% set previewText = item.original.templateContent | striptags | truncate(300) %}
+              {% if previewText and previewText != item.summary %}
+                <p class="mt-0 text-sm leading-relaxed text-gray-500 dark:text-gray-400">{{ previewText | safe }}</p>
+              {% endif %}
+            {% endif %}
+            <div class="mt-1.5">
+              <a href="{{ item.url | url }}" class="text-xs font-medium transition-colors font-sans hover:underline" style="color: var(--accent-color); text-decoration: none;">{% if isSnippet %}View Snippet{% else %}Read Post{% endif %} &rarr;</a>
+            </div>
+          {% else %}
+            {% if item.summary %}
+              <p class="mt-0">{{ item.summary }}</p>
+            {% endif %}
+          {% endif %}
+        </div>
+
+        {# Tags #}
+        {% if showTags and item.tags %}
+          <div class="flex flex-wrap gap-1.5 mt-5 not-prose">
+            {% for tag in item.tags %}
+              {% set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
+              <a href="{{ tagUrl | url }}" class="text-[0.65rem] px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors font-sans" style="text-decoration: none;">#{{ tag }}</a>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </article>
+
   {# ── LIST VARIANT (homepage preview - single compact row) ── #}
-  {% if variant == 'list' %}
+  {% elif variant == 'list' %}
   <li class="feed-list-row{% if extraClasses %} {{ extraClasses }}{% endif %}" {% if outerAttrs %}{{ outerAttrs | safe }}{% endif %}>
     <span class="feed-list-date meta-text">{{ item.date | shortDate }}</span>
     <span class="feed-list-dot {{ dotColor }}" title="{{ badgeLabel }}"></span>
@@ -89,11 +203,11 @@
     </h3>
 
     {# Body content #}
-    {% if isNote or isNow %}
-      {% set noteContent = item.original.templateContent %}
-      {% if noteContent %}
+    {% if isNote or isNow or isQuotation %}
+      {% set contentToRender = item.original.templateContent %}
+      {% if contentToRender %}
         <div class="relative mt-2 max-h-40 overflow-hidden">
-          <div class="text-xs leading-relaxed text-gray-600 dark:text-gray-300 max-w-none not-prose">{{ noteContent | safe }}</div>
+          <div class="text-xs leading-relaxed text-gray-600 dark:text-gray-300 max-w-none not-prose">{{ contentToRender | safe }}</div>
           <div class="feed-card-note-fade absolute bottom-0 left-0 right-0 h-10 pointer-events-none"></div>
         </div>
       {% elif item.summary %}

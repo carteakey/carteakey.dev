@@ -29,6 +29,9 @@ permalink: /feed/
         >
       </div>
       <div class="view-toggle">
+        <button type="button" @click="view = 'stream'" :class="{ 'active': view === 'stream' }" title="Stream view">
+          {% feather "activity", class="w-4 h-4" %}
+        </button>
         <button type="button" @click="view = 'list'" :class="{ 'active': view === 'list' }" title="List view">
           {% feather "list", class="w-4 h-4" %}
         </button>
@@ -71,7 +74,24 @@ permalink: /feed/
       :style="typeFilter === 'photo' ? 'border-color: var(--accent-color); color: var(--accent-color)' : ''">
       Photos
     </button>
+    <button @click="typeFilter = 'quotation'"
+      :class="typeFilter === 'quotation' ? 'font-semibold' : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'"
+      class="px-2 py-0.5 rounded-full border border-gray-200 dark:border-gray-700 transition-colors"
+      :style="typeFilter === 'quotation' ? 'border-color: var(--accent-color); color: var(--accent-color)' : ''">
+      Quotations
+    </button>
   </div>
+
+  {# ── STREAM VIEW ── #}
+  <div x-show="view === 'stream'" x-cloak class="flex flex-col max-w-3xl mx-auto py-4">
+    {% for item in collections.feed %}
+      {{ feedCard(item, {
+        variant: 'stream',
+        outerAttrs: 'data-type="' ~ item.type ~ '" data-title="' ~ (item.title | lower | replace('"', '')) ~ '"'
+      }) }}
+    {% endfor %}
+  </div>
+  <p x-show="view === 'stream' && filteredCount === 0" x-cloak class="text-sm text-gray-400 py-8 text-center">No results.</p>
 
   {# ── LIST VIEW ── #}
   <ul class="feed-list" x-show="view === 'list'" x-cloak>
@@ -109,7 +129,7 @@ permalink: /feed/
 <script>
 function feedPage() {
   return {
-    view: localStorage.getItem('feed-view') || 'list',
+    view: localStorage.getItem('feed-view') || 'stream',
     query: '',
     typeFilter: '',
     filteredCount: 0,
