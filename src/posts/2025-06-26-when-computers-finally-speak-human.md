@@ -4,6 +4,7 @@ description: The end of programming as we know it
 date: 2025-06-26
 authored_by: ai-assisted
 updated: 2025-06-26
+giscusTerm: "/blog/tech/when-computers-finally-speak-human/"
 tags:
   - AI
   - Agents

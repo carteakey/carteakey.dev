@@ -4,6 +4,7 @@ description: I know that "all you need" is annoying but hear me out.
 date: 2026-04-15
 authored_by: human
 draft: true
+giscusTerm: "/blog/claude-code-is-all-you-need/"
 tags:
   - AI
   - Agents

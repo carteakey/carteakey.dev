@@ -3,6 +3,7 @@ title: Running Qwen 2.5 72B Locally
 description: CPU inference for a 72B open-weight model on a high-RAM Linux machine using llama.cpp - no GPU required.
 date: 2026-02-25
 updated: 2026-02-25
+giscusTerm: "/blog/tech/running-qwen-25-72b-locally/"
 tags:
   - AI
   - Self-Host

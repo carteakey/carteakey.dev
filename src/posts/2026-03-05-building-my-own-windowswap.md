@@ -3,6 +3,7 @@ title: Building My Own WindowSwap
 description: A Raspberry Pi 4B, a Pi camera, an HLS stream, and a Cloudflare tunnel - my take on the window-to-the-world idea.
 date: 2026-03-05
 updated: 2026-03-05
+giscusTerm: "/blog/tech/building-my-own-windowswap/"
 tags:
   - RPi
   - Self-Host

@@ -12,6 +12,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Grouped all local AI inference and benchmark posts under a new `local-inference` series folder. Added backward-compatible 301 redirects to `src/_redirects` to retain their original URLs.
+- Established `agents` and `homelab` series folders, grouping related posts. Added `giscusTerm` frontmatter overrides to retain original discussion threads.
+- Dismantled broad `tech` and `personal` folders into standalone tagged posts.
+- Added `docs/TAXONOMY.md` to formalize the difference between Series (folders) and Tags.
 
 ## [1.9.14] - 2026-04-04
 

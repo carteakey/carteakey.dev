@@ -4,6 +4,7 @@ description: and maybe why you should not...
 date: 2024-12-28T07:06:35.251Z
 authored_by: human
 updated: 2024-12-28T07:06:35.257Z
+giscusTerm: "/blog/why-one-should-self-host-in-2025/"
 tags:
   - Self-Host
   - Linux

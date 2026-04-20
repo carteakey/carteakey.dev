@@ -4,6 +4,7 @@ description: which side are you on?
 date: 2025-05-28
 authored_by: human
 updated: 2025-05-28
+giscusTerm: "/blog/personal/the-happiness-quotient/"
 tags:
   - Life
   - Philosophy
