@@ -15,6 +15,15 @@ featured: false
 You probably don't need >$100 plans for coding or toying with OpenClaw. My thoughts below.
 
 **Note:** Due to the mindbreaking speed this agent universe is moving at, this may be out of date within 2 days.
+*(Last verified on 2026-04-19)*
+
+## What Changed Since Feb 2026
+- **Qwen Code:** OAuth free tier was discontinued (2026-04-15). Use Alibaba Cloud Coding Plan, OpenRouter, Fireworks, or BYO API key instead.
+- **Claude:** Opus 4.7 released and replaces 4.6 as top tier. Anthropic calls this a step-change for agentic coding.
+- **Amp:** Amp Free admissions are still closed “for now” for new users. Existing free users may continue receiving grants (which became ad-free).
+- **Copilot:** Premium usage now follows request-based billing semantics. Plan allowances differ, and model choice can change request burn rate via multipliers. Also, **Copilot Free** is an excellent baseline budget option for autocomplete.
+- **OpenCode:** Provider-agnostic CLI tool. Note: OpenCode documentation mentions support for ChatGPT Plus via OAuth, though verify OpenAI's current policies on third-party integrations.
+
 
 ## The Case for Agent-Hopping
 
@@ -28,9 +37,9 @@ Most ICs are becoming AI agent managers instead, and a good manager would not st
 
 We can tier the availability of intelligence and think of it as a "runway - cost matrix":
 
-- **SS tier (the big boys):** Claude Opus 4.6 (65.4% Terminal-Bench), GPT 5.2 Codex High, GPT 5.3 Codex High, Gemini 3.1 Pro High (77.1% ARC-AGI-2). Runtime (low), Intelligence (high) -> Great for the best / most effective coding.
-- **S tier (almost equally good but cheaper):** Claude Sonnet 4.6 (preferred over Opus 4.5 59% of the time for coding, at a fraction of the cost), GLM-5 (#1 open-source quality index), Grok 3 -> Great for longer sessions of coding when needed at almost same quality.
-- **A tier (OSS big boys):** Kimi K2.5, DeepSeek V3.2, Qwen3-Coder-480B. Lesser known, almost equally effective, at a fraction of the cost, often with free providers as well.
+- **SS tier (frontier):** Claude Opus 4.7, GPT-5.x coding variants, and Gemini 3.1 Pro-class models.
+- **S/A tiers:** Sonnet-class and top open-weight coder models for lower-cost long sessions.
+*Model ranking changes quickly; verify current release docs before committing to one-stack workflows.*
 - **B tier (great for regular work, agents):** Gemini 3.0 Flash, GPT 5 mini (59.8% score at $0.04/task - insane value), Claude Haiku -> Great for boilerplate work.
 - **C tier (awesome for running OpenClaw and longer agents without racking up API costs):** DeepSeek V3.2 via API ($0.28/1M tokens input, $0.42/1M tokens output - 95% cheaper than GPT 5). The sweet spot for long agent sessions that make hundreds of calls.
 - **D tier (Sorry r/localllama):** GPT OSS 120b, Devstral 2.1 Small, Qwen3-Coder-Next, Codestral. SOTA models for running locally, great if you know what you're doing. Not so great compared to money makers. In other news, water is wet.
@@ -47,16 +56,29 @@ The single-plan approach:
 	- You don't get to try the latest and best models as these guys take turns releasing.
 	- Each model has a smell / strength - Gemini is great for UI, Claude is great at most types of coding, ChatGPT is the best reviewer and long context.
 
-## Best Single Value Today (Feb 2026)
+## Best Value Patterns Right Now
 
-**ChatGPT Plus** stands out right now:
-- Offers `codex` agent
-- Offers `gpt-5.3-codex-high`, head-to-head with Opus 4.6 for the best coding model today
-- Exorbitantly higher limits than any competitor, which may be introductory and WILL definitely go down.
+### 1. The Multi-Sub Stack (Recommended Default)
+- **Primary:** $20-ish IDE/chat plan for convenience (e.g., Claude Pro, Cursor, Windsurf).
+- **Secondary:** $10–$20 backup plan to avoid rate-limit stalls.
+- **Paygo:** Route heavy autonomous tasks through BYOK routers (OpenCode, OpenRouter) using price-first routing (`:floor`).
+
+### 2. Single Max-Tier (Only if Provably High Utilization)
+- Use a single $100+ max plan *only* if your observed weekly usage repeatedly saturates two or more mid-tier stacks. Otherwise, the multi-stack approach gives better resilience to model swings.
+
+### 3. Task-Class Routing Policy
+- **High-risk refactors / architecture:** Frontier tier (Opus 4.7, GPT-5.3).
+- **Boilerplate / lint / tests:** Cheaper or included models.
+- **Long agent loops:** Paygo model routing with explicit max-price controls.
+
+**ChatGPT Plus** is a strong candidate depending on current limits/model access:
+- Offers `codex` agent.
+- Offers `gpt-5.3-codex-high`, head-to-head with Opus 4.7 for the best coding model today.
+- Has high limits, but verify current constraints as they are dynamic.
 
 {% image "./src/static/img/coding-agents-chatgpt-limits.png", "ChatGPT Plus limits" %}
 
-## The Multi-Sub Stack (My Approach)
+## Notable Tools & Subscriptions
 
 Get a base sub (~$20/mo) as primary, then layer on free trials and cheap options. Here's what I rotate through:
 
@@ -64,8 +86,8 @@ Get a base sub (~$20/mo) as primary, then layer on free trials and cheap options
 
 - Claude is much more straightforward and Claude Code is probably the best CLI tool available today, all things considered.
 - Claude Sonnet 4.6 (Model of Choice) - use this for primary work where speed and accuracy are important.
-- Claude Opus 4.6 - for tasks that need more brain.
-- **Cons:** Much lower limits, but resets weekly.
+- Claude Opus 4.7 - for tasks that need more brain. Anthropic calls this a step-change for agentic coding.
+- **Cons:** Limits are dynamic and usage-policy driven.
 
 ### Google AI Pro (Free Trial)
 
@@ -94,7 +116,7 @@ Get a base sub (~$20/mo) as primary, then layer on free trials and cheap options
 ### Amp (by Sourcegraph)
 
 - **Update (Feb 10, 2026):** Amp Free is currently full for new users while they work on their next version.
-- *Normally* provides a $10 free daily grant that replenishes hourly (~$300/month of free credits). That's a lot of Opus 4.6 for free.
+- *Normally* provides a $10 free daily grant that replenishes hourly (~$300/month of free credits). ~~That's a lot of Opus 4.6 for free.~~
 - Available in terminal, VS Code, Cursor, Windsurf, JetBrains, and Neovim.
 - Funded by ads from dev/infra companies (Axiom, Baseten, PlanetScale, Prisma, Tailwind Labs, etc). Basically, you see a banner and get frontier models for free.
 - Can delegate complex coding tasks, refactors, reviews, and explorations to agents that work across entire codebases.
@@ -119,10 +141,11 @@ Get a base sub (~$20/mo) as primary, then layer on free trials and cheap options
 **Local options**
 - Qwen3-Coder-Next (your first "usable" <60GB coding model), GPT-OSS-120B (matches o4-mini on coding benchmarks), Devstral, Kimi-Dev-72B, Codestral
 
-### Qwen Code (Free)
+### Qwen Code
 
 - Open-source CLI coding agent by Alibaba/QwenLM, purpose-built for Qwen3-Coder. Claude Code-like terminal experience with Skills, SubAgents, and multi-session handling.
-- **1,000 free requests/day** via Qwen OAuth - just sign in with your qwen.ai account, no credit card.
+- ~~**1,000 free requests/day** via Qwen OAuth - just sign in with your qwen.ai account, no credit card.~~
+- **Qwen Code (updated):** Qwen OAuth free tier was discontinued (2026-04-15). Use Alibaba Cloud Coding Plan, OpenRouter, Fireworks, or BYO API key instead.
 - Supports OpenAI, Anthropic, and Gemini-compatible APIs. Point it at any provider or run it entirely local via llama.cpp - it speaks the same OpenAI-compatible protocol that llama-server exposes.
 - The framework and the Qwen3-Coder model are co-developed and released together, so it gets first-class support for new model quirks.
 - Worth pairing with your D-tier local setup: Qwen3-Coder-Next on llama-server + Qwen Code on top = a fully offline coding agent at zero recurring cost.

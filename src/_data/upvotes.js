@@ -1,9 +1,6 @@
 import { Redis } from '@upstash/redis'
 
-const redis = new Redis({
-  url: process.env.UPSTASH_REDIS_REST_URL,
-  token: process.env.UPSTASH_REDIS_REST_TOKEN,
-})
+
 
 const LEGACY_SLUG_ALIASES = {
   'optimizing-gpt-oss-120b-local-inference': ['optimizing gpt-oss-120b-local inference'],
@@ -46,6 +43,16 @@ function getCanonicalSlug(slug) {
 }
 
 export default async function() {
+  if (!process.env.UPSTASH_REDIS_REST_URL || !process.env.UPSTASH_REDIS_REST_TOKEN) {
+    console.warn('Upstash Redis credentials missing, returning empty upvotes');
+    return { posts: {} };
+  }
+
+  const redis = new Redis({
+    url: process.env.UPSTASH_REDIS_REST_URL,
+    token: process.env.UPSTASH_REDIS_REST_TOKEN,
+  });
+
   try {
     const posts = {};
     
