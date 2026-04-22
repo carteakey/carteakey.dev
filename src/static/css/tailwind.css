@@ -528,13 +528,13 @@ picture img {
   .card {
     border-radius: 0.75rem;
     border: 1px solid rgb(229 231 235 / 1);
-    background-color: #fff;
+    background-color: transparent;
     box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   }
 
   .dark .card {
     border-color: rgb(31 41 55 / 1);
-    background-color: rgb(17 24 39 / 1);
+    background-color: transparent;
   }
 
   /* Card with hover effect */
@@ -863,7 +863,7 @@ picture img {
 /* ── Feed card (full variant, used in /feed grid) ── */
 @layer components {
   .feed-card-full {
-    background: rgb(255 255 255);
+    background: transparent;
     border: 1px solid rgb(229 231 235);
     border-radius: 0.5rem;
     padding: 0.875rem 1rem;
@@ -875,7 +875,7 @@ picture img {
   }
 
   .dark .feed-card-full {
-    background: rgb(17 17 17);
+    background: transparent;
     border-color: rgb(39 39 42 / 0.8);
   }
 
@@ -885,11 +885,21 @@ picture img {
 
   /* Fade overlay for clipped note content in feed cards */
   .feed-card-note-fade {
-    background: linear-gradient(to top, rgb(255 255 255), transparent);
+    background: linear-gradient(
+      to top,
+      rgb(241 245 249 / 0.92),
+      rgb(241 245 249 / 0.5) 45%,
+      transparent
+    );
   }
 
   .dark .feed-card-note-fade {
-    background: linear-gradient(to top, rgb(17 17 17), transparent);
+    background: linear-gradient(
+      to top,
+      rgb(39 39 42 / 0.94),
+      rgb(39 39 42 / 0.5) 45%,
+      transparent
+    );
   }
 
   /* Links inside note/now content previews in feed cards */
@@ -2020,12 +2030,12 @@ picture img {
     margin-bottom: 0.9rem;
     font-size: 0.82rem;
     line-height: 1.55;
-    background-color: color-mix(in srgb, var(--accent-a) 2%, #fff);
+    background-color: transparent;
   }
 
   .dark .ed-sidebar-section {
     border-color: rgb(39 39 42);
-    background-color: color-mix(in srgb, var(--accent-a) 4%, rgb(17 17 17));
+    background-color: transparent;
   }
 
   .ed-sidebar-label {
@@ -2107,47 +2117,88 @@ picture img {
   }
 
   .note-target {
-    background: color-mix(in srgb, var(--accent-color) 28%, transparent);
-    padding: 0 0.2em;
-    border-radius: 2px;
+    background: color-mix(in srgb, var(--accent-color) 24%, transparent);
+    padding: 0 0.18em;
+    border-radius: 0.22em;
     box-decoration-break: clone;
     -webkit-box-decoration-break: clone;
   }
 
   .note-comment {
     display: inline-block;
-    margin-left: 1.6em;
+    margin-left: 0.7em;
+    padding-left: 1.4em;
     font-family: 'Caveat', 'Kalam', 'Comic Sans MS', cursive;
-    font-size: 1.1rem;
-    font-weight: 500;
-    line-height: 1.15;
-    color: var(--accent-color);
-    transform: rotate(-2deg);
+    font-size: 1.16rem;
+    font-weight: 600;
+    line-height: 1.05;
+    color: color-mix(in srgb, var(--accent-color) 88%, black 12%);
+    transform: translateY(0.04em) rotate(-2deg);
     vertical-align: baseline;
-    position: relative;
-    white-space: normal;
-    max-width: 16rem;
-  }
-
-  .note-comment::before {
-    content: '';
-    position: absolute;
-    right: calc(100% + 0.2em);
-    top: 0.2em;
-    width: 1.3em;
-    height: 1em;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 30' fill='none'%3E%3Cpath d='M2 24 Q 10 6, 22 14 Q 34 22, 52 4' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' fill='none'/%3E%3Cpath d='M45 2 L54 4 L49 13' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E");
-    background-size: contain;
+    white-space: nowrap;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 56 20' fill='none'%3E%3Cpath d='M2 14 C 8 6, 15 18, 22 10 C 28 4, 35 16, 42 9' stroke='currentColor' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-size: 0.85em auto;
     background-repeat: no-repeat;
-    transform: scaleX(-1);
-    opacity: 0.85;
+    background-position: left 55%;
   }
 
-  /* TODO: on xl+ the right sidebar (Outline + comments) already occupies the    */
-  /* gutter, so annotations currently stay inline on every breakpoint.           */
-  /* Ideal future behaviour: absolute-position the comment into the right margin */
-  /* on wide screens, vertically tracking the highlighted line. Needs either a   */
-  /* per-post toggle for the sidebar, a JS measurer, or a layout rework.         */
+  @media (max-width: 48rem) {
+    .note-comment {
+      display: none;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .tmpl-post .note-comment {
+      position: absolute;
+      top: 50%;
+      width: 10rem;
+      margin-left: 0;
+      background-image: none;
+      white-space: normal;
+      z-index: 2;
+    }
+
+    .tmpl-post .note-left .note-comment {
+      right: calc(100% + 2.75rem);
+      padding: 0 1.55rem 0 0;
+      text-align: right;
+      transform: translateY(-52%) rotate(-2deg);
+    }
+
+    .tmpl-post .note-right .note-comment {
+      left: calc(100% + 2.75rem);
+      padding: 0 0 0 1.55rem;
+      text-align: left;
+      transform: translateY(-52%) rotate(2deg);
+    }
+
+    .tmpl-post .note-left .note-comment::after,
+    .tmpl-post .note-right .note-comment::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 0.9rem;
+      height: 0.55rem;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 56 20' fill='none'%3E%3Cpath d='M2 14 C 8 6, 15 18, 22 10 C 28 4, 35 16, 42 9' stroke='currentColor' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-size: contain;
+      background-repeat: no-repeat;
+      transform: translateY(-50%);
+      opacity: 0.95;
+    }
+
+    .tmpl-post .note-left .note-comment::after {
+      right: 0;
+      transform: translateY(-50%) scaleX(-1);
+    }
+
+    .tmpl-post .note-right .note-comment::before {
+      left: 0;
+    }
+  }
+
+  /* TODO: this assumes available gutters on xl+ post layouts. Dense pages may   */
+  /* still need a dedicated annotation lane or JS measurement to avoid overlap.  */
 }
 
 /* ── Code block copy button ── */

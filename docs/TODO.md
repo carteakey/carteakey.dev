@@ -15,7 +15,7 @@
 ### SEO & Navigation
 
 ### Editorial Mode
-- [ ] Annotation comments should float into the right margin on xl+ screens but currently collide with the Outline / "Join the Conversation" sidebar. Today they stay inline on every breakpoint as a workaround. Options to explore: a per-post `marginalia: true` frontmatter that hides the right sidebar, a JS measurer that aligns comments to highlighted lines, or a layout that reserves a dedicated annotation gutter separate from the TOC. (2026-04-16)
+- [x] Annotation comments should float into the side gutters on xl+ screens without hiding the existing Outline / "Join the Conversation" sidebars. Today they stay inline as a fallback. Options to explore: a JS measurer that aligns comments to highlighted lines, or a layout that reserves a dedicated annotation gutter separate from the sidebars. (updated 2026-04-22)
 
 ### User Experience
 
@@ -33,6 +33,7 @@
 
 
 ### Content Features
+- [x] Blog post sketches now support an optional unique transparent image per post, rendered in the post header plus blog/feed thumbnails without adding boxed backgrounds. (2026-04-22)
 - [x] Agent Tick folio: audit meme captions/titles and fix mismatched descriptions on some cards (2026-03-24)
 - [x] Smaller fonts across the board. I find the site to be better at 90% zoom.
 - [x] Add a random facts about me in the about me section. It can be a random fact from a list of facts that I can update.
