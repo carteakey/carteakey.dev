@@ -279,6 +279,15 @@ export default function (eleventyConfig) {
     return DateTime.fromISO(dateObj).toFormat("MMM-yy");
   });
 
+  eleventyConfig.addFilter("absoluteUrl", (url, base) => {
+    if (!url) return base;
+    try {
+      return new URL(url, base).toString();
+    } catch (_) {
+      return `${base}${url}`;
+    }
+  });
+
   eleventyConfig.addFilter("readableDate", (dateObj) => {
     return DateTime.fromJSDate(dateObj).toFormat("MMM d, yyyy");
   });
@@ -878,6 +887,8 @@ export default function (eleventyConfig) {
           tags: (post.data.tags || []).filter((tag) => tag !== "posts" && tag !== "post"),
           pinned: !!post.data.pinned,
           authored_by: post.data.authored_by ?? null,
+          image: post.data.image ?? null,
+          imageAlt: post.data.imageAlt ?? post.data.title,
           original: post,
         };
       });
@@ -1063,7 +1074,7 @@ export default function (eleventyConfig) {
           type: "quotation",
           title: `Quotation from ${entry.data.author}`,
           date: entry.date,
-          url: `/quotations/#${entry.fileSlug}`,
+          url: `/quotes/#${entry.fileSlug}`,
           summary,
           original: entry,
         };
@@ -1201,9 +1212,11 @@ export default function (eleventyConfig) {
 
   // {% annotate "handwritten comment here" %}phrase to highlight{% endannotate %}
   // Renders highlighted text with a Caveat-font note and squiggly arrow.
-  eleventyConfig.addPairedShortcode("annotate", function (content, comment) {
+  eleventyConfig.addPairedShortcode("annotate", function (content, comment, side = "right") {
     const safeComment = escapeHtml(comment || "");
-    return `<span class="note"><span class="note-target">${content}</span><span class="note-comment" aria-label="Note">${safeComment}</span></span>`;
+    const normalizedSide = String(side || "right").trim().toLowerCase();
+    const sideClass = normalizedSide === "left" ? "note-left" : "note-right";
+    return `<span class="note ${sideClass}"><span class="note-target">${content}</span><span class="note-comment" aria-label="Note">${safeComment}</span></span>`;
   });
 
   // Render a string as markdown. Used by the sidebar partial so `sidebar.content:`
