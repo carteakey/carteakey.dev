@@ -16,14 +16,15 @@ eleventyNavigation:
 ### All Pages
 
 - [/about](/about/): who am I?
+- [/blog](/blog/): blog posts and articles
 - [/blogroll](/blogroll/): blogs and sites I follow
 - [/bookmarks](/bookmarks/): curated reading list
 - [/changelog](/changelog/): site changelog
 - [/colophon](/colophon/): how this site is built
 - [/cv](/cv/): my curriculum vitae
 - [/data](/data/): my life in data — a scrollable dashboard from cartebase
-- [/folio](/folio/): themed web pages for things I obsess over
 - [/feed](/feed/): all posts, snippets, and mini blogs
+- [/folio](/folio/): themed web pages for things I obsess over
 - [/gallery](/gallery/): photo gallery
 - [/games](/games/): games I'm currently playing
 - [/guestbook](/guestbook/): sign my guestbook
@@ -31,7 +32,8 @@ eleventyNavigation:
 - [/newsletter](/newsletter/): subscribe to updates
 - [/notes](/notes/): short notes and micro posts
 - [/now](/now/): what I'm up to, now
-- [/blog](/blog/): blog posts and articles
+- [/now/archive](/now/archive/): timeline of past /now updates
+- [/page-list](/page-list/): raw list of all URLs
 - [/projects](/projects/): things I've built
 - [/prompts](/prompts/): prompt library for testing language models
 - [/quotes](/quotes/): quotes I like
@@ -40,6 +42,7 @@ eleventyNavigation:
 - [/skills](/skills/): skills radar chart
 - [/snippets](/snippets/): code snippets and quick notes
 - [/stats](/stats/): site statistics and metrics
+- [/tags](/tags/): all tags used across the site
 - [/til](/til/): today I learned
 - [/uses](/uses/): tools, software, and hardware I use
 - [/vibes](/vibes/): random images/memes I like

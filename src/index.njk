@@ -42,12 +42,21 @@ htmlTemplateEngine: "webc"
       <span class="meta-text text-[0.65rem] uppercase tracking-wider font-semibold" style="color: var(--accent-color);">★ Featured</span>
     </div>
     <a href="{{ highlightedPost.url }}" class="block group" style="text-decoration: none;">
-      <h2 class="text-base font-semibold text-gray-900 dark:text-gray-100 leading-snug m-0 transition-colors" style="transition: color 0.15s;">
-        <span class="group-hover:underline" style="text-decoration-color: var(--accent-color);">{{ highlightedPost.data.title }}</span>
-      </h2>
-      {% if highlightedPost.data.description %}
-        <p class="text-sm text-gray-500 dark:text-gray-400 mt-1 m-0 leading-relaxed">{{ highlightedPost.data.description }}</p>
-      {% endif %}
+      <div class="{% if highlightedPost.data.image %}flex items-start gap-3{% endif %}">
+        <div class="min-w-0 flex-1">
+          <h2 class="text-base font-semibold text-gray-900 dark:text-gray-100 leading-snug m-0 transition-colors" style="transition: color 0.15s;">
+            <span class="group-hover:underline" style="text-decoration-color: var(--accent-color);">{{ highlightedPost.data.title }}</span>
+          </h2>
+          {% if highlightedPost.data.description %}
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1 m-0 leading-relaxed">{{ highlightedPost.data.description }}</p>
+          {% endif %}
+        </div>
+        {% if highlightedPost.data.image %}
+          <div class="hidden sm:block shrink-0">
+            <img src="{{ highlightedPost.data.image | url }}" alt="{{ highlightedPost.data.imageAlt or highlightedPost.data.title }}" loading="lazy" decoding="async" class="block h-24 w-24 object-contain dark:invert dark:brightness-125">
+          </div>
+        {% endif %}
+      </div>
       <div class="flex items-center gap-2 mt-1.5">
         <time class="meta-text text-[0.68rem] text-gray-400 dark:text-gray-500">{{ highlightedPost.date | readableDate }}</time>
         {% if highlightedPost.data.tags %}

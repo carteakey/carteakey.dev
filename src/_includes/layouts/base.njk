@@ -46,14 +46,14 @@
   
   {# Open Graph / Facebook Meta Tags #}
   <meta property="og:type" content="{% if templateClass == 'tmpl-post' %}article{% else %}website{% endif %}" />
-  <meta property="og:url" content="{{ metadata.url }}{{ page.url }}" />
+  <meta property="og:url" content="{{ page.url | absoluteUrl(metadata.url) }}" />
   <meta property="og:site_name" content="{{ metadata.title }}" />
   <meta property="og:title" content="{{ title or metadata.title }}" />
   <meta property="og:description" content="{{ description or metadata.description }}" />
   {% if image %}
-  <meta property="og:image" content="{{ metadata.url }}{{ image }}" />
+  <meta property="og:image" content="{{ image | absoluteUrl(metadata.url) }}" />
   {% else %}
-  <meta property="og:image" content="{{ metadata.url }}/img/avatar.png" />
+  <meta property="og:image" content="{{ '/img/avatar.png' | absoluteUrl(metadata.url) }}" />
   {% endif %}
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
@@ -73,20 +73,20 @@
   
   {# Twitter Card Meta Tags #}
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:url" content="{{ metadata.url }}{{ page.url }}" />
+  <meta name="twitter:url" content="{{ page.url | absoluteUrl(metadata.url) }}" />
   <meta name="twitter:title" content="{{ title or metadata.title }}" />
   <meta name="twitter:description" content="{{ description or metadata.description }}" />
   {% if image %}
-  <meta name="twitter:image" content="{{ metadata.url }}{{ image }}" />
+  <meta name="twitter:image" content="{{ image | absoluteUrl(metadata.url) }}" />
   {% else %}
-  <meta name="twitter:image" content="{{ metadata.url }}/img/avatar.png" />
+  <meta name="twitter:image" content="{{ '/img/avatar.png' | absoluteUrl(metadata.url) }}" />
   {% endif %}
   <meta name="twitter:creator" content="@carteakey" />
   <meta name="twitter:site" content="@carteakey" />
   
   {# Additional SEO Meta Tags #}
   <meta name="author" content="{{ metadata.author.name }}" />
-  <link rel="canonical" href="{{ metadata.url }}{{ page.url }}" />
+  <link rel="canonical" href="{{ page.url | absoluteUrl(metadata.url) }}" />
   
   <link rel="stylesheet" href="{{ '/css/tailwind.css' | url }}" />
 

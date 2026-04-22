@@ -14,6 +14,9 @@
     {% set showTags = opts.showTags %}
   {% endif %}
 
+  {% set itemImage = item.image %}
+  {% set itemImageAlt = item.imageAlt or item.title or '' %}
+
   {% set isNote = item.type == 'note' %}
   {% set isSnippet = item.type == 'snippet' %}
   {% set isPhoto = item.type == 'photo' %}
@@ -125,6 +128,20 @@
               <span class="absolute left-1.5 -top-2.5 text-4xl font-serif text-gray-400 opacity-40 leading-none">"</span>
               <div class="relative z-10">{{ item.original.templateContent | safe }}</div>
             </div>
+            <div class="mt-2.5 flex items-center justify-between text-xs">
+              <cite class="font-medium text-gray-600 dark:text-gray-400 not-italic">
+                — 
+                {% set quoteAuthor = item.original.data.author or (item.title | replace('Quotation from ', '')) %}
+                {% if item.original.data.author_url %}
+                  <a href="{{ item.original.data.author_url | url }}" target="_blank" rel="noopener noreferrer" class="hover:underline hover:text-gray-900 dark:hover:text-gray-200">{{ quoteAuthor }}</a>
+                {% elif item.original.data.source %}
+                  <a href="{{ item.original.data.source | url }}" target="_blank" rel="noopener noreferrer" class="hover:underline hover:text-gray-900 dark:hover:text-gray-200">{{ quoteAuthor }}</a>
+                {% else %}
+                  {{ quoteAuthor }}
+                {% endif %}
+              </cite>
+              <a href="{{ item.url | url }}" class="font-medium transition-colors hover:underline font-sans" style="color: var(--accent-color); text-decoration: none;">Quotations Page &rarr;</a>
+            </div>
           {% elif isPhoto or isVibe or item.media %}
             <figure class="m-0 overflow-hidden rounded border border-gray-200 dark:border-gray-700 not-prose">
               <img src="{{ item.media.src }}" alt="{{ item.media.alt }}" loading="lazy" decoding="async" class="w-full h-auto block m-0">
@@ -133,17 +150,26 @@
               {% endif %}
             </figure>
           {% elif item.type == 'post' or isSnippet %}
-            {% if item.summary %}
-              <p class="mt-0 mb-1.5 font-medium text-gray-800 dark:text-gray-200">{{ item.summary }}</p>
-            {% endif %}
-            {% if item.original.templateContent %}
-              {% set previewText = item.original.templateContent | striptags | truncate(300) %}
-              {% if previewText and previewText != item.summary %}
-                <p class="mt-0 text-sm leading-relaxed text-gray-500 dark:text-gray-400">{{ previewText | safe }}</p>
+            <div class="{% if itemImage and item.type == 'post' %}flex items-start gap-3{% endif %}">
+              <div class="min-w-0 flex-1">
+                {% if item.summary %}
+                  <p class="mt-0 mb-1.5 font-medium text-gray-800 dark:text-gray-200">{{ item.summary }}</p>
+                {% endif %}
+                {% if item.original.templateContent %}
+                  {% set previewText = item.original.templateContent | striptags | truncate(300) %}
+                  {% if previewText and previewText != item.summary %}
+                    <p class="mt-0 text-sm leading-relaxed text-gray-500 dark:text-gray-400">{{ previewText | safe }}</p>
+                  {% endif %}
+                {% endif %}
+                <div class="mt-1.5">
+                  <a href="{{ item.url | url }}" class="text-xs font-medium transition-colors font-sans hover:underline" style="color: var(--accent-color); text-decoration: none;">{% if isSnippet %}View Snippet{% else %}Read Post{% endif %} &rarr;</a>
+                </div>
+              </div>
+              {% if itemImage and item.type == 'post' %}
+                <a href="{{ item.url | url }}" class="hidden sm:block shrink-0" style="text-decoration: none;">
+                  <img src="{{ itemImage | url }}" alt="{{ itemImageAlt }}" loading="lazy" decoding="async" class="block h-20 w-20 object-contain dark:invert dark:brightness-125">
+                </a>
               {% endif %}
-            {% endif %}
-            <div class="mt-1.5">
-              <a href="{{ item.url | url }}" class="text-xs font-medium transition-colors font-sans hover:underline" style="color: var(--accent-color); text-decoration: none;">{% if isSnippet %}View Snippet{% else %}Read Post{% endif %} &rarr;</a>
             </div>
           {% else %}
             {% if item.summary %}
@@ -221,7 +247,16 @@
         {% endif %}
       </figure>
     {% elif item.summary and showSummary %}
-      <p class="mt-1.5 text-xs leading-relaxed text-gray-500 dark:text-gray-400 m-0">{{ item.summary }}</p>
+      {% if itemImage and item.type == 'post' %}
+        <div class="mt-2 flex items-start gap-3">
+          <p class="min-w-0 flex-1 text-xs leading-relaxed text-gray-500 dark:text-gray-400 m-0">{{ item.summary }}</p>
+          <a href="{{ item.url | url }}" class="shrink-0" style="text-decoration: none;">
+            <img src="{{ itemImage | url }}" alt="{{ itemImageAlt }}" loading="lazy" decoding="async" class="block h-24 w-24 object-contain dark:invert dark:brightness-125">
+          </a>
+        </div>
+      {% else %}
+        <p class="mt-1.5 text-xs leading-relaxed text-gray-500 dark:text-gray-400 m-0">{{ item.summary }}</p>
+      {% endif %}
     {% endif %}
 
     {# Tags #}
