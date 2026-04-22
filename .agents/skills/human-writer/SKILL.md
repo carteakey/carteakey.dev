@@ -1,3 +1,8 @@
+---
+name: human-writer
+description: The author's specific writing fingerprint learned from reading their blog posts. AI writing tropes to avoid patterns that make output feel generated rather than written.
+---
+
 # Human Writer Skill
 
 This file captures **two things**:

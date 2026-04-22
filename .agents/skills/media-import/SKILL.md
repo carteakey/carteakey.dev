@@ -2,10 +2,7 @@
 name: media-import
 description: >
   Unified inbox ingestion skill for carteakey.dev. Scans inbox/ subdirectories,
-  diffs against already-imported files, shows a preview of what will be imported,
-  and handles 4 distinct content targets: photography (photos.yaml), vibes
-  (src/static/img/vibes/), ai-memes folio (folio/ai-memes/index.html), and
-  loose root inbox files that need classification first.
+  diffs against already-imported files, shows a preview of what will be imported and handles 4 distinct content targets: photography (photos.yaml), vibes (src/static/img/vibes/), ai-memes folio (folio/ai-memes/index.html), and loose root inbox files that need classification first.
 ---
 
 # Media Import Skill
