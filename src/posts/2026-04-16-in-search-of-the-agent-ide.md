@@ -1,5 +1,5 @@
 ---
-title: "In Search of the Agent IDE"
+title: "In Search of the Agent IDE for Data"
 description: A data analyst's mostly futile quest for the perfect workflow.
 image: /img/blog-sketches/unique/agent-ide-stamp-trim.png
 imageAlt: Transparent monochrome sketch of an AI coding workspace
@@ -24,7 +24,7 @@ I thought this would take one evening.
 
 Open repo on the left. Agent on the right. Git somewhere visible. My own API key. Done.
 
-Instead I spent three weeks bouncing between editors, terminal apps, desktop wrappers, and a Perplexity thread that slowly turned into me assembling an IDE out of separate tools like it was 2009 again.
+Instead I spent a week bouncing between editors, terminal apps, desktop wrappers, that slowly turned into me assembling an IDE out of separate tools like it was 2009 again.
 
 ---
 
@@ -32,15 +32,33 @@ Instead I spent three weeks bouncing between editors, terminal apps, desktop wra
 
 I'm a data analyst, not a software dev, so my ideal setup is slightly cursed from a normal IDE point of view.
 
-I usually have multiple repos open at once. A pipeline in one place, a notebook or analysis repo in another, maybe a utility script somewhere else. There is always a terminal doing something stupid in the background. Usually `dbt run`, some Python, maybe a query I forgot I kicked off twenty minutes ago.
+I usually have multiple repos open at once. A pipeline in one place, a notebook or analysis repo in another, maybe a utility script somewhere else. There is always a terminal doing something stupid in the background. Usually databricks skills, some Python, maybe a query I forgot I kicked off twenty minutes ago.
 
-I also don't use AI here as fancy autocomplete. I want Claude to actually do work. Read files, edit code, run commands, help with Databricks, help with analysis. And because some of that touches real data, I want my own API key. That part is {% annotate "this kills a surprising number of products", "right" %}not negotiable{% endannotate %}.
+I also don't use AI here as fancy autocomplete. I want Claude to actually do work. Read files, edit code, run commands, help with Databricks, help with analysis. And because some of that touches real data, I want a private API key (company's AWS bedrock). That part is {% annotate "this kills a surprising number of products", "right" %}not negotiable{% endannotate %}.
 
 That sounds pretty reasonable until you start looking for a tool that gives you all of it at once.
 
 ---
 
 ## The options I kept circling back to
+
+Every tool in the table either made the list from my own use or came up in research when I was trying to escape whatever I'd just tried.
+
+{% wide %}
+| Tool | Prebuilt | Own API Key | Multi Sessions | File Browser | Git UI | Worktrees? | Why I moved on |
+|------|----------|-------------|----------------|--------------|--------|------------|----------------|
+| **VS Code** | ✅ | ✅ via extensions | ⚠️ multi-root is clunky | ✅ | ✅ | No | Too much window switching. Three workspaces and nothing is where I left it. |
+| **Warp** | ✅ | ⚠️ some AI | ✅ blocks + panes | ⚠️ basic | ❌ terminal only | No | Heavy. Requires login. No thanks. |
+| **Cursor / Windsurf** | ✅ | ✅ | ✅ | ✅ | ✅ | No | Great for devs. For my workflows it felt like wearing a suit to go for a walk. |
+| **Claude Code Desktop** | ✅ | ❌ account-only | ✅ | ✅ | ✅ diff review | Yes, automatic | No API-key support. Dead on arrival for me. |
+| **Superset** | ✅ | ✅ via CC CLI | ✅ parallel agents | ✅ | ✅ review/merge | Yes, core model | Built for ten agents in parallel. I want one workspace, not a factory. |
+| **Conductor** | ✅ | ⚠️ limited | ✅ | ✅ | ✅ strong PR flow | Yes, very | Same shape as Superset. Worktree-first, I'm worktree-last. |
+| **cmux** | ✅ | ⚠️ unclear | ✅ | terminal-centric | terminal | Optional | macOS-native, interesting — but the file/Git story wasn't there. |
+| **Wave Terminal** | ✅ | ✅ native | ✅ panes + blocks | ✅ preview + edit | ⚠️ add lazygit | No | Best prebuilt option I found. Still in the game. |
+| **Ghostty + CC CLI + Yazi + lazygit** | ❌ modular | ✅ | ✅ tabs + tmux | ✅ Yazi is excellent | ✅ lazygit is great | No | Still in the game. Assembled it myself, somewhat against my will. |
+| **Zed** | ✅ | ✅ | ⚠️ improving | ✅ | ✅ | No | Multi-workspace still evolving. Promising, not there. |
+| **JetBrains Fleet** | ✅ | ✅ | ✅ | ✅ | ✅ | No | Good workspace concept. Smaller ecosystem, felt heavy for me. |
+{% endwide %}
 
 The boring answer was always VS Code.
 
