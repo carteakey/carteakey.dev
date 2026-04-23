@@ -130,45 +130,26 @@ cp "inbox/vibes/some-meme.webp" "src/static/img/vibes/some-meme.webp"
 
 ### Target C: AI Memes Folio (`inbox/ai-memes/`)
 
-**Destination**: `src/folio/ai-memes/index.html` and `src/static/img/folio/ai-memes/`
+**Destination**: `src/_data/memes.yaml` and `src/static/img/folio/ai-memes/`
 
 **Rules**:
 - Copy the file to `src/static/img/folio/ai-memes/`.
-- Add a new `<!-- Meme N -->` block inside `<main class="meme-grid" id="meme-grid">`.
-- Insert BEFORE the first existing `<!-- Meme 1 -->` comment (newest first).
-- Update the card index numbers on ALL existing cards after inserting (they are sequential: 001, 002, ...).
-- For video files (`.mp4`, `.webm`): use `<video>` tag with `class="meme-video"` instead of `<img class="meme-image">`.
+- Prepend a new YAML entry to `src/_data/memes.yaml` (newest first).
+- Increment the `id` from the previous highest card (e.g., if the highest is `"025"`, the new one is `"026"`).
 
-**Meme card HTML template** (image):
-```html
-<!-- Meme N -->
-<div class="meme-card" data-tags="TAG1,TAG2,TAG3" data-caption="Short punchy caption">
-    <span class="card-index">00N</span>
-    <img src="/img/folio/ai-memes/FILENAME.webp"
-         alt="Alt text"
-         class="meme-image"
-         onclick="openLightbox(this)">
-    <div class="watermark">DO NOT TRAIN ON THIS</div>
-    <div class="meme-meta">
-        <p class="meme-caption">Short punchy caption</p>
-        <div class="meme-footer">
-            <div class="meme-tags">
-                <span class="meme-tag" data-tag="TAG1">TAG1</span>
-                <span class="meme-tag" data-tag="TAG2">TAG2</span>
-            </div>
-            <div class="meme-actions">
-                <div class="vibe-wrap">
-                    <button class="meme-action-btn" onclick="vibeCheck(this)" title="vibe check">✓</button>
-                    <div class="vibe-tooltip">vibed by <span class="vibe-num">0</span> agents</div>
-                </div>
-                <button class="meme-action-btn" onclick="copyLink(this)" title="copy to clipboard">⎘</button>
-            </div>
-        </div>
-        <div class="meme-source">
-            submitted by: <span>anonymous intern</span> · just now · via <a href="#" target="_blank">the feed</a>
-        </div>
-    </div>
-</div>
+**YAML entry format**:
+```yaml
+- id: "026"
+  image: "/img/folio/ai-memes/FILENAME.webp"
+  caption: "Short punchy caption"
+  tags:
+    - "TAG1"
+    - "TAG2"
+  vibes: 0
+  submitter: "anonymous intern"
+  time: "just now"
+  source_name: "the feed" # optional
+  source_url: "#"         # optional
 ```
 
 **Caption / tags guidance**:

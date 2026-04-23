@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.9.18] - 2026-04-22
+
+### Changed
+- Refactored `/folio/ai-memes` to be fully config-based, migrating hardcoded grid cards to a dynamic Eleventy loop driven by `src/_data/memes.yaml`.
+- Updated `media-import` skill to append AI meme configurations sequentially to YAML rather than directly injecting HTML blocks.
+
+## [1.9.17] - 2026-04-22
+
+### Changed
+- Introduced a shared `page-header` component and applied it across major archive, collection, utility, and project pages to unify section intros.
+- Standardized badge and metadata styling across blog, feed, snippets, TIL, quotations, workouts, and project listings with reusable badge primitives.
+- Consolidated card/surface styling around shared surface classes so featured modules, feed cards, side panels, and GitHub sections feel visually related.
+
 ## [1.9.16] - 2026-04-22
 
 ### Added
