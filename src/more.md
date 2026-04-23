@@ -36,6 +36,7 @@ eleventyNavigation:
 - [/page-list](/page-list/): raw list of all URLs
 - [/projects](/projects/): things I've built
 - [/prompts](/prompts/): prompt library for testing language models
+- [/quotations](/quotations/): words worth saving
 - [/quotes](/quotes/): quotes I like
 - [/reading](/reading/): my reading shelf
 - [/search](/search/): search posts and snippets
