@@ -20,32 +20,32 @@ eleventyNavigation:
     <!-- Quote of the Day Section -->
     <section class="surface surface-padding rounded-sm not-prose max-w-3xl mx-auto">
         <div class="flex flex-col gap-3">
-            <div class="flex items-center gap-2 editorial-title-compact uppercase tracking-wide" style="color: var(--accent-color);">
+            <div class="flex items-center gap-2 meta-text text-sm" style="color: var(--accent-color);">
                 {% feather "zap", class="w-4 h-4" %}
                 Quote of the Day
             </div>
-            <blockquote id="qotd" class="text-sm font-medium leading-relaxed text-gray-900 dark:text-gray-100">
+            <blockquote id="qotd" class="editorial-title text-sm leading-relaxed m-0">
                 {{ qotd.quote }}
             </blockquote>
-            <p class="text-right text-xs italic text-gray-500 dark:text-gray-400" id="who">
+            <p class="text-right editorial-support-compact italic mt-2 m-0" id="who">
                 Powered by {{ qotd.provider }}
             </p>
         </div>
     </section>
 
     <!-- Static Quotes Section -->
-    <section>
-        <h2 class="text-xs font-semibold uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-6">Saved Lines</h2>
+    <section class="not-prose">
+        <h2 class="editorial-kicker mb-6">Saved Lines</h2>
         <div
           class="grid gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-start feed-masonry"
           data-feed-masonry
           style="--feed-row-height: 16px;"
         >
             {% for quote in quotes %}
-            <article class="feed-surface rounded-sm surface surface-compact surface-hover rounded-sm">
-                <blockquote class="text-gray-800 dark:text-gray-100">
-                    <p class="text-sm leading-relaxed italic m-0">"{{ quote.quote | replace('\n', '<br>') | safe }}"</p>
-                    <cite class="block text-xs font-medium not-italic text-gray-500 dark:text-gray-400 mt-3">- {{ quote.author }}</cite>
+            <article class="feed-card surface surface-compact surface-hover rounded-sm">
+                <blockquote class="m-0">
+                    <p class="editorial-support-compact italic m-0">"{{ quote.quote | replace('\n', '<br>') | safe }}"</p>
+                    <cite class="block meta-text text-[0.65rem] mt-3">- {{ quote.author }}</cite>
                 </blockquote>
             </article>
             {% endfor %}

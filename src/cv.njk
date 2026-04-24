@@ -18,65 +18,65 @@ eleventyNavigation:
 {% include "components/page-header.njk" %}
 
 {# Contact Strip #}
-<div class="surface surface-compact not-prose mb-6 flex flex-wrap gap-x-5 gap-y-1.5 editorial-support-compact">
-  <a href="https://carteakey.dev" class="inline-flex items-center gap-1.5 hover:text-gray-900 dark:hover:text-white transition-colors" style="text-decoration:none;">
+<div class="surface surface-compact rounded-sm not-prose mb-6 flex flex-wrap gap-x-5 gap-y-2 text-sm">
+  <a href="https://carteakey.dev" class="editorial-meta-link inline-flex items-center gap-1.5" style="text-decoration:none;">
     {% feather "globe", class="w-3.5 h-3.5 shrink-0 opacity-60" %} carteakey.dev
   </a>
-  <a href="mailto:carteakey.dev@gmail.com" class="inline-flex items-center gap-1.5 hover:text-gray-900 dark:hover:text-white transition-colors" style="text-decoration:none;">
+  <a href="mailto:carteakey.dev@gmail.com" class="editorial-meta-link inline-flex items-center gap-1.5" style="text-decoration:none;">
     {% feather "mail", class="w-3.5 h-3.5 shrink-0 opacity-60" %} carteakey.dev@gmail.com
   </a>
-  <a href="https://github.com/carteakey" class="inline-flex items-center gap-1.5 hover:text-gray-900 dark:hover:text-white transition-colors" style="text-decoration:none;" target="_blank" rel="noopener">
+  <a href="https://github.com/carteakey" class="editorial-meta-link inline-flex items-center gap-1.5" style="text-decoration:none;" target="_blank" rel="noopener">
     {% feather "github", class="w-3.5 h-3.5 shrink-0 opacity-60" %} github/carteakey
   </a>
-  <a href="https://www.linkedin.com/in/kartikeychauhan/" class="inline-flex items-center gap-1.5 hover:text-gray-900 dark:hover:text-white transition-colors" style="text-decoration:none;" target="_blank" rel="noopener">
+  <a href="https://www.linkedin.com/in/kartikeychauhan/" class="editorial-meta-link inline-flex items-center gap-1.5" style="text-decoration:none;" target="_blank" rel="noopener">
     {% feather "linkedin", class="w-3.5 h-3.5 shrink-0 opacity-60" %} linkedin/kartikeychauhan
   </a>
 </div>
 
 {# Skills #}
-<section class="not-prose mb-6">
-  <h2 class="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-3 flex items-center gap-1.5">
+<section class="not-prose mb-8">
+  <h2 class="editorial-kicker mb-3 flex items-center gap-1.5">
     {% feather "zap", class="w-3.5 h-3.5 opacity-70" %} Skills
   </h2>
-  <div class="surface surface-compact space-y-2 text-sm text-gray-700 dark:text-gray-300">
+  <div class="surface surface-compact rounded-sm space-y-2">
     <div class="flex flex-wrap gap-x-2 gap-y-0.5">
-      <span class="editorial-title shrink-0">Programming:</span>
-      <span>Python (NumPy, Pandas, Polars, Scikit-learn) · SQL · PL/SQL</span>
+      <span class="editorial-title-compact shrink-0">Programming:</span>
+      <span class="editorial-support-compact">Python (NumPy, Pandas, Polars, Scikit-learn) · SQL · PL/SQL</span>
     </div>
     <div class="flex flex-wrap gap-x-2 gap-y-0.5">
-      <span class="editorial-title shrink-0">Data Processing:</span>
-      <span>ETL · Data Mining · Data Quality Analysis · Process Optimization</span>
+      <span class="editorial-title-compact shrink-0">Data Processing:</span>
+      <span class="editorial-support-compact">ETL · Data Mining · Data Quality Analysis · Process Optimization</span>
     </div>
     <div class="flex flex-wrap gap-x-2 gap-y-0.5">
-      <span class="editorial-title shrink-0">Big Data &amp; Cloud:</span>
-      <span>PySpark · Airflow · DBT · Azure ML · AWS Lambda · Oracle Cloud</span>
+      <span class="editorial-title-compact shrink-0">Big Data &amp; Cloud:</span>
+      <span class="editorial-support-compact">PySpark · Airflow · DBT · Azure ML · AWS Lambda · Oracle Cloud</span>
     </div>
     <div class="flex flex-wrap gap-x-2 gap-y-0.5">
-      <span class="editorial-title shrink-0">Visualization:</span>
-      <span>Power BI · Tableau · Plotly · Matplotlib · Seaborn</span>
+      <span class="editorial-title-compact shrink-0">Visualization:</span>
+      <span class="editorial-support-compact">Power BI · Tableau · Plotly · Matplotlib · Seaborn</span>
     </div>
     <div class="flex flex-wrap gap-x-2 gap-y-0.5">
-      <span class="editorial-title shrink-0">Additional:</span>
-      <span>Statistical Testing · Project Management · Stakeholder Communication</span>
+      <span class="editorial-title-compact shrink-0">Additional:</span>
+      <span class="editorial-support-compact">Statistical Testing · Project Management · Stakeholder Communication</span>
     </div>
   </div>
 </section>
 
 {# Experience #}
-<section class="not-prose mb-6">
-  <h2 class="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-3 flex items-center gap-1.5">
+<section class="not-prose mb-8">
+  <h2 class="editorial-kicker mb-3 flex items-center gap-1.5">
     {% feather "briefcase", class="w-3.5 h-3.5 opacity-70" %} Experience
   </h2>
 
-  <div class="space-y-3">
+  <div class="space-y-4">
 
-    <div class="surface surface-compact">
+    <div class="surface surface-compact rounded-sm">
       <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-0.5 mb-1">
-        <h3 class="text-sm editorial-title m-0">Senior Data Analyst</h3>
-        <span class="meta-text text-xs text-gray-400">Feb 2025 – Present</span>
+        <h3 class="editorial-title-compact m-0">Senior Data Analyst</h3>
+        <span class="meta-text text-xs">Feb 2025 – Present</span>
       </div>
-      <p class="text-xs text-gray-500 dark:text-gray-400 mt-0 mb-2 italic">McAfee · Toronto, Canada</p>
-      <ul class="space-y-1 text-sm text-gray-700 dark:text-gray-300 list-disc list-inside marker:text-gray-400">
+      <p class="editorial-support-compact mt-0 mb-2 italic">McAfee · Toronto, Canada</p>
+      <ul class="space-y-1.5 editorial-support-compact list-disc list-inside">
         <li>Led data analysis across multiple high-impact value creation projects spanning product analytics, retention, and revenue optimization.</li>
         <li>Performed root cause analysis to identify key causal factors behind product telemetry gaps and user churn, transitioning projects from analysis to execution.</li>
         <li>Created Random Forest models to estimate user churn and product issues based on customer feedback and usage data, improving retention strategies.</li>
@@ -95,13 +95,13 @@ eleventyNavigation:
       </div>
     </div>
 
-    <div class="surface surface-compact">
+    <div class="surface surface-compact rounded-sm">
       <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-0.5 mb-1">
-        <h3 class="text-sm editorial-title m-0">Senior Data Analyst</h3>
-        <span class="meta-text text-xs text-gray-400">Aug 2022 – Jan 2025</span>
+        <h3 class="editorial-title-compact m-0">Senior Data Analyst</h3>
+        <span class="meta-text text-xs">Aug 2022 – Jan 2025</span>
       </div>
-      <p class="text-xs text-gray-500 dark:text-gray-400 mt-0 mb-2 italic">Bank of Montreal, via TCS · Toronto, Canada</p>
-      <ul class="space-y-1 text-sm text-gray-700 dark:text-gray-300 list-disc list-inside marker:text-gray-400">
+      <p class="editorial-support-compact mt-0 mb-2 italic">Bank of Montreal, via TCS · Toronto, Canada</p>
+      <ul class="space-y-1.5 editorial-support-compact list-disc list-inside">
         <li>Developed a <strong>data quality framework</strong> for <strong>Enterprise Risk &amp; Basel reporting</strong> using Python (Polars, NumPy, Pandas) and SQL, reducing manual validation effort by <strong>90%</strong>.</li>
         <li>Engineered a <strong>synthetic data generation system</strong> to validate Basel reporting requirements, ensuring full regulatory coverage.</li>
         <li>Built an <strong>internal Python library</strong> automating data validation and reporting workflows, processing <strong>10,000+</strong> data points efficiently.</li>
@@ -118,13 +118,13 @@ eleventyNavigation:
       </div>
     </div>
 
-    <div class="surface surface-compact">
+    <div class="surface surface-compact rounded-sm">
       <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-0.5 mb-1">
-        <h3 class="text-sm editorial-title m-0">Technical Consultant</h3>
-        <span class="meta-text text-xs text-gray-400">Jul 2019 – Jul 2022</span>
+        <h3 class="editorial-title-compact m-0">Technical Consultant</h3>
+        <span class="meta-text text-xs">Jul 2019 – Jul 2022</span>
       </div>
-      <p class="text-xs text-gray-500 dark:text-gray-400 mt-0 mb-2 italic">Avery Dennison, via TCS · Mumbai, India</p>
-      <ul class="space-y-1 text-sm text-gray-700 dark:text-gray-300 list-disc list-inside marker:text-gray-400">
+      <p class="editorial-support-compact mt-0 mb-2 italic">Avery Dennison, via TCS · Mumbai, India</p>
+      <ul class="space-y-1.5 editorial-support-compact list-disc list-inside">
         <li>Developed an <strong>analytics tool</strong> using decision trees and pattern recognition to classify order anomalies, achieving <strong>85% accuracy</strong> in predicting order delays.</li>
         <li>Engineered an <strong>event-driven data processing system</strong>, improving order processing efficiency by <strong>5×</strong>.</li>
         <li>Created an <strong>automated data adjustment utility</strong>, reducing resolution time from <strong>4 hours to 15 minutes</strong>.</li>
@@ -144,20 +144,20 @@ eleventyNavigation:
 </section>
 
 {# Education #}
-<section class="not-prose mb-6">
-  <h2 class="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-3 flex items-center gap-1.5">
+<section class="not-prose mb-8">
+  <h2 class="editorial-kicker mb-3 flex items-center gap-1.5">
     {% feather "book", class="w-3.5 h-3.5 opacity-70" %} Education
   </h2>
 
-  <div class="space-y-3">
+  <div class="space-y-4">
 
-    <div class="surface surface-compact">
+    <div class="surface surface-compact rounded-sm">
       <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-0.5 mb-1">
-        <h3 class="text-sm editorial-title m-0">MSc – Data Science and Analytics</h3>
-        <span class="meta-text text-xs text-gray-400">Sep 2023 – Sep 2024</span>
+        <h3 class="editorial-title-compact m-0">MSc – Data Science and Analytics</h3>
+        <span class="meta-text text-xs">Sep 2023 – Sep 2024</span>
       </div>
-      <p class="text-xs text-gray-500 dark:text-gray-400 mt-0 mb-2 italic">Toronto Metropolitan University · Toronto, Canada</p>
-      <ul class="space-y-1 text-sm text-gray-700 dark:text-gray-300 list-disc list-inside marker:text-gray-400">
+      <p class="editorial-support-compact mt-0 mb-2 italic">Toronto Metropolitan University · Toronto, Canada</p>
+      <ul class="space-y-1.5 editorial-support-compact list-disc list-inside">
         <li><strong>GPA:</strong> 4.33 / 4.33</li>
         <li><strong>Coursework:</strong> Deep Learning · Big Data · NLP · Data Mining</li>
         <li><strong>Research:</strong> LLM-augmented recommendation system, improving prediction accuracy by 5–10%</li>
@@ -165,12 +165,12 @@ eleventyNavigation:
       </ul>
     </div>
 
-    <div class="surface surface-compact">
+    <div class="surface surface-compact rounded-sm">
       <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-0.5 mb-1">
-        <h3 class="text-sm editorial-title m-0">B.Tech – Electronics &amp; Communication</h3>
-        <span class="meta-text text-xs text-gray-400">2015 – 2019</span>
+        <h3 class="editorial-title-compact m-0">B.Tech – Electronics &amp; Communication</h3>
+        <span class="meta-text text-xs">2015 – 2019</span>
       </div>
-      <p class="text-xs text-gray-500 dark:text-gray-400 mt-0 mb-1 italic">JSS Academy of Technical Education · Noida, India</p>
+      <p class="editorial-support-compact mt-0 mb-1 italic">JSS Academy of Technical Education · Noida, India</p>
     </div>
 
   </div>
@@ -178,17 +178,17 @@ eleventyNavigation:
 
 {# Courses & Certificates #}
 <section class="not-prose mb-4">
-  <h2 class="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-3 flex items-center gap-1.5">
+  <h2 class="editorial-kicker mb-3 flex items-center gap-1.5">
     {% feather "award", class="w-3.5 h-3.5 opacity-70" %} Courses &amp; Certificates
   </h2>
-  <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
     {% for badge in badges.badges %}
       <a href="https://www.credly.com/badges/{{ badge.badge_id }}/public_url" target="_blank" rel="noopener"
-         class="surface surface-compact surface-hover flex items-center gap-3 group" style="text-decoration: none;">
+         class="surface surface-compact surface-hover rounded-sm flex items-center gap-3 group" style="text-decoration: none;">
         <div class="w-10 h-10 shrink-0 flex items-center justify-center">
           {% image badge.image_path, badge.title, "w-10 h-10 object-contain" %}
         </div>
-        <span class="text-sm text-gray-700 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white transition-colors leading-snug">{{ badge.title }}</span>
+        <span class="editorial-title-compact group-hover:text-gray-900 dark:group-hover:text-white transition-colors leading-snug">{{ badge.title }}</span>
         {% feather "external-link", class="w-3 h-3 shrink-0 ml-auto text-gray-300 dark:text-gray-600 group-hover:text-gray-500 dark:group-hover:text-gray-400 transition-colors" %}
       </a>
     {% endfor %}

@@ -5,6 +5,70 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0] - 2026-04-24
+
+### Added
+- `docs/MIGRATION_PROCESS.md`: Added a repeatable migration workflow for bringing older pages onto the new design language without one-off typography patching.
+
+### Changed
+- `colophon.njk`: Rewrote the colophon around the current archive/workbench design language, updated the stack/fonts notes, and added an explicit redesign history that tracks this release as major redesign #6.
+- Promoted the ongoing redesign line to `2.0.0` to mark the archive/workbench reset as a fresh visual baseline rather than another incremental polish pass.
+
+## [1.9.30] - 2026-04-24
+
+### Changed
+- Added reusable editorial typography primitives for section labels, titles, support copy, meta links, footer navigation, and `/now/` prose so broader cleanup passes stop depending on one-off utility stacks.
+- Carried the new type layer through `archive.njk`, the footer mega nav, and the `/now/` page plus its workout/game snippets so those sections no longer fall back to the older default UI text treatment.
+
+## [1.9.29] - 2026-04-24
+
+### Added
+- `docs/DESIGN_LANGUAGE.md`: Added a working design-language guide covering typography roles, density, surfaces, anti-patterns, and implementation rules for future redesign passes.
+
+## [1.9.28] - 2026-04-24
+
+### Changed
+- Promoted the homepage Recent Activity block from utilitarian feed rows to a denser editorial contents list by giving entries stronger display typography, better vertical rhythm, and less truncation.
+- Carried the same typography system into the notes index and note layout so `/notes/` and individual note pages no longer fall back to the older plain UI text treatment.
+
+## [1.9.27] - 2026-04-24
+
+### Changed
+- Applied the editorial type layer more broadly across post-page support chrome: breadcrumbs now use the mono uppercase header treatment, and draft/AI notices, sidebar copy, outline links, and conversation prompts now inherit the same serif support-copy styling as the rest of the redesign.
+
+## [1.9.26] - 2026-04-24
+
+### Changed
+- Carried the homepage editorial type system through the remaining support copy so selected-work notes, featured descriptions, and site-index descriptions no longer fall back to the plain UI sans.
+
+## [1.9.25] - 2026-04-24
+
+### Changed
+- Reworked the lower homepage into a cleaner four-block grid so featured writing, recent activity, quote of the day, and popular posts each get their own space.
+- Renamed the user-facing “Blog” section to “Writing” across homepage labels, navigation, breadcrumbs, footer links, and the archive page while keeping the `/blog/` URL stable.
+- Tightened the homepage site index to six more intentional sections and moved its labels onto the display type so it stops falling back to the older UI font.
+
+## [1.9.24] - 2026-04-24
+
+### Changed
+- Swapped the ruled notebook treatment for a lighter textured-paper background that feels closer to an archive page than a startup landing page.
+- Reworked the editorial typography stack so display headings use `et-book`, body copy uses `Crimson Pro`, and shared page headers/posts inherit the same print-like hierarchy.
+- Renamed the homepage featured/collection language from “Essay” to “Blog” and restored the shorter personal bio copy on the homepage.
+- Brought `post.njk` further into the new system with squarer author/media chrome, flatter comment and reaction controls, and cleaner next/previous navigation.
+
+## [1.9.23] - 2026-04-24
+
+### Added
+- `startHere.yaml`: Added a curated homepage canon used by the new Selected Work index section.
+
+### Changed
+- Reworked the shared site design language away from rounded glassy cards toward sharper, denser editorial surfaces with mono labels, flatter controls, and paper-like ruled backgrounds.
+- Rebuilt the homepage as an index of work and thinking: denser intro, at-a-glance counts, Selected Work, Site Index, Featured Blog, Recent Activity, and Signal/Popular sections.
+- Tightened navigation and footer chrome to match the new archive/workbench feel instead of app-style controls.
+
+### Fixed
+- `feed-card.njk`: Removed a duplicated macro tail that was breaking Nunjucks parsing for `/feed/` during Eleventy builds.
+
 ## [1.9.22] - 2026-04-24
 
 ### Fixed

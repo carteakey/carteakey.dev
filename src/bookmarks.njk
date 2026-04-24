@@ -23,12 +23,12 @@ permalink: /bookmarks/
 <div class="max-w-5xl mx-auto">
   {% include "components/page-header.njk" %}
 
-  <div class="mt-2 flex flex-wrap items-center gap-3 editorial-kicker">
+  <div class="mt-2 flex flex-wrap items-center gap-3 meta-text text-xs">
     <span>Updated {{ lastUpdated | readableDate }}</span>
     <span>·</span>
     <div class="flex flex-wrap gap-1">
       {% for category in categories %}
-        <a href="#{{ category | slugify }}" class="tag tag-interactive text-[0.65rem]">{{ category }}</a>
+        <a href="#{{ category | slugify }}" class="badge badge-tag badge-compact" style="text-decoration:none;">{{ category }}</a>
       {% endfor %}
     </div>
   </div>
@@ -36,26 +36,28 @@ permalink: /bookmarks/
   {% for category in categories %}
     {% set items = bookmarks.bookmarks | selectattr('category', 'equalto', category) | sort(attribute='date') | reverse %}
     {% set catCount = items | length %}
-    <section id="{{ category | slugify }}" class="mt-8">
-      <h2 class="editorial-title-compact flex items-center gap-2">
+    <section id="{{ category | slugify }}" class="mt-10">
+      <h2 class="editorial-kicker flex items-center gap-2 mb-4">
         {{ category }}
-        <span class="text-xs font-normal text-gray-500">{{ catCount }}</span>
+        <span class="opacity-50 ml-1">{{ catCount }}</span>
       </h2>
 
-      <div class="mt-3 grid gap-2 md:grid-cols-2 lg:grid-cols-3">
+      <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {% for bookmark in items %}
           {% set domain = bookmark.url | domainFromUrl %}
           {% set favicon = bookmark.url | faviconUrl %}
           {% set domainInitial = bookmark.url | domainInitial %}
-          <article class="surface surface-compact surface-hover rounded-sm">
-            <a href="{{ bookmark.url }}" target="_blank" rel="noopener noreferrer" class="editorial-title-compact text-gray-900 link-accent dark:text-white line-clamp-1">
-                {{ bookmark.title }}
-              </a>
+          <article class="surface surface-compact surface-hover rounded-sm flex flex-col h-full justify-between">
+            <div>
+              <a href="{{ bookmark.url }}" target="_blank" rel="noopener noreferrer" class="editorial-title-link-compact line-clamp-1" style="text-decoration:none;">
+                  {{ bookmark.title }}
+                </a>
+              {% if bookmark.description %}
+                <p class="mt-1.5 editorial-support-compact line-clamp-2 m-0">{{ bookmark.description }}</p>
+              {% endif %}
+            </div>
             {% if domain %}
-              <p class="text-[0.7rem] uppercase tracking-wide text-gray-400 dark:text-gray-500 mt-1">{{ domain }}</p>
-            {% endif %}
-            {% if bookmark.description %}
-              <p class="mt-1 text-xs text-gray-600 dark:text-gray-400 line-clamp-2">{{ bookmark.description }}</p>
+              <p class="meta-text text-[0.65rem] mt-3 m-0">{{ domain }}</p>
             {% endif %}
           </article>
         {% endfor %}
@@ -63,9 +65,9 @@ permalink: /bookmarks/
     </section>
   {% endfor %}
 
-  <div class="mt-10 surface surface-compact rounded-sm">
-    <p class="editorial-support-compact">
-      Have a suggestion? <a href="mailto:{{ metadata.author.email }}" class="font-semibold accent-link">Drop me a note</a>.
+  <div class="mt-12 surface surface-padding rounded-sm">
+    <p class="editorial-support m-0">
+      Have a suggestion? <a href="mailto:{{ metadata.author.email }}" class="editorial-meta-link">Drop me a note</a>.
     </p>
   </div>
 </div>

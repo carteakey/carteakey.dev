@@ -4,150 +4,216 @@ htmlTemplateEngine: "webc"
 ---
 {% from "components/feed-card.njk" import feedCard %}
 
-{# ── HERO ─────────────────────────────────────────────── #}
-<div class="flex flex-col sm:flex-row gap-5 items-center sm:items-start not-prose animate-enter py-2">
-  <div class="relative shrink-0 mt-0.5">
-    <div class="absolute -inset-1 rounded-full opacity-70" style="background: conic-gradient(from 180deg, var(--accent-color), #7c3aed, #0ea5e9, var(--accent-color));"></div>
-    <div class="relative z-10 w-20 h-20 rounded-full overflow-hidden">
-      {% image "./src/static/img/headshot.png" , "me", "w-full h-full object-cover" %}
-    </div>
-  </div>
-  <div class="space-y-2 hero-text">
-    <p class="text-base editorial-title m-0">
-      Hi 👋🏼, I'm <span style="color: var(--accent-color); font-weight: 700;">Kartikey</span> - welcome to my corner of the internet!
-    </p>
-    <p class="editorial-support-compact m-0 leading-relaxed">
-      I'm a data analyst from Toronto. Outside work I tinker with tech and build <a href="/portfolio" class="accent-link font-semibold" style="text-decoration: none;">side projects</a>.
-      Here I write about linux, AI, data science, and whatever else catches my eye - grab a coffee and look around.
-    </p>
-    <div class="hero-links flex flex-wrap gap-x-3 gap-y-1 pt-0.5 text-xs text-gray-400 dark:text-gray-500">
-      <a href="/about" class="hover:text-gray-700 dark:hover:text-gray-300 transition-colors" style="text-decoration: none;">About</a>
-      <span>·</span>
-      <a href="/now" class="hover:text-gray-700 dark:hover:text-gray-300 transition-colors" style="text-decoration: none;">Now</a>
-      <span>·</span>
-      <a href="/cv" class="hover:text-gray-700 dark:hover:text-gray-300 transition-colors" style="text-decoration: none;">CV</a>
-      <span>·</span>
-      <a href="https://github.com/carteakey" class="hover:text-gray-700 dark:hover:text-gray-300 transition-colors" style="text-decoration: none;" target="_blank" rel="noopener">GitHub ↗</a>
-    </div>
-  </div>
-</div>
-
-<hr class="my-5 border-gray-200 dark:border-gray-800" />
-
-{# ── FEATURED POST ─────────────────────────────────────── #}
 {% set highlightedPost = collections.featuredPost %}
-{% if highlightedPost %}
-  <div class="not-prose animate-enter stagger-1 mb-5">
-    <a href="{{ highlightedPost.url }}" class="surface surface-hover surface-padding block group" style="text-decoration: none;">
-      <div class="mb-3">
-        <span class="badge badge-featured badge-compact" title="Featured" aria-label="Featured">★ Featured</span>
-      </div>
-      <div class="{% if highlightedPost.data.image %}flex items-start gap-3{% endif %}">
-        <div class="min-w-0 flex-1">
-          <h2 class="text-base editorial-title leading-snug m-0 transition-colors" style="transition: color 0.15s;">
-            <span class="group-hover:underline" style="text-decoration-color: var(--accent-color);">{{ highlightedPost.data.title }}</span>
-          </h2>
-          {% if highlightedPost.data.description %}
-            <p class="editorial-support-compact mt-1 m-0 leading-relaxed">{{ highlightedPost.data.description }}</p>
-          {% endif %}
-        </div>
-        {% if highlightedPost.data.image %}
-          <div class="hidden sm:block shrink-0">
-            <img src="{{ highlightedPost.data.image | url }}" alt="{{ highlightedPost.data.imageAlt or highlightedPost.data.title }}" loading="lazy" decoding="async" class="block h-24 w-24 object-contain dark:invert dark:brightness-125">
-          </div>
-        {% endif %}
-      </div>
-      <div class="flex items-center gap-2 mt-1.5">
-        <time class="meta-text text-[0.68rem] text-gray-400 dark:text-gray-500">{{ highlightedPost.date | readableDate }}</time>
-        {% if highlightedPost.data.tags %}
-          {% for tag in highlightedPost.data.tags | filterTagList | head(2) %}
-            <span class="badge badge-tag badge-compact">#{{ tag }}</span>
-          {% endfor %}
-        {% endif %}
-        <span class="text-xs font-medium ml-auto transition-transform group-hover:translate-x-0.5" style="color: var(--accent-color);">Read →</span>
-      </div>
-    </a>
-  </div>
-  <hr class="mb-5 border-gray-200 dark:border-gray-800" />
-{% endif %}
-
-{# ── QUOTE OF THE DAY ──────────────────────────────────── #}
-<div class="not-prose animate-enter stagger-2 mb-5">
-  <blockquote id="qotd" class="border-l-2 pl-3 text-sm italic text-gray-700 dark:text-gray-300 leading-relaxed m-0" style="border-color: var(--accent-color);">{{ qotd.quote }}</blockquote>
-  <p class="text-xs text-gray-400 dark:text-gray-500 mt-1.5 text-right m-0 italic" id="who">- {{ qotd.provider }}</p>
-</div>
-
-<script src="/static/js/typeit.min.js"></script>
-<script>new TypeIt("#qotd", { speed: 25, waitUntilVisible: true }).go();</script>
-
-<hr class="mb-5 border-gray-200 dark:border-gray-800" />
-
-{# ── RECENT ACTIVITY ───────────────────────────────────── #}
-<div class="not-prose animate-enter stagger-3" x-data="{ hView: localStorage.getItem('h-feed-view') || 'stream' }" x-init="$watch('hView', v => localStorage.setItem('h-feed-view', v))">
-  <div class="flex items-center justify-between mb-3">
-    <span class="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">Recent</span>
-    <div class="flex items-center gap-2">
-      <div class="view-toggle">
-        <button type="button" @click="hView = 'stream'" :class="{ 'active': hView === 'stream' }" title="Stream view">
-          {% feather "activity", class="w-3.5 h-3.5" %}
-        </button>
-        <button type="button" @click="hView = 'list'" :class="{ 'active': hView === 'list' }" title="List view">
-          {% feather "list", class="w-3.5 h-3.5" %}
-        </button>
-        <button type="button" @click="hView = 'grid'" :class="{ 'active': hView === 'grid' }" title="Grid view">
-          {% feather "grid", class="w-3.5 h-3.5" %}
-        </button>
-      </div>
-      <a href="{{ '/feed/' | url }}" class="text-xs font-medium" style="text-decoration: none; color: var(--accent-color);">All →</a>
-    </div>
-  </div>
-
-  {% set feedItems = collections.feed | head(9) %}
-
-  {# Stream view #}
-  <div x-show="hView === 'stream'" x-cloak class="flex flex-col">
-    {% for item in feedItems %}
-      {{ feedCard(item, { variant: 'stream' }) }}
-    {% endfor %}
-  </div>
-
-  {# List view #}
-  <ul x-show="hView === 'list'" x-cloak class="feed-list m-0 p-0 list-none">
-    {% for item in feedItems %}
-      {{ feedCard(item, { variant: 'list' }) }}
-    {% endfor %}
-  </ul>
-
-  {# Grid view #}
-  <div x-show="hView === 'grid'" x-cloak
-    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 items-start"
-    data-feed-masonry style="--feed-row-height: 16px;">
-    {% for item in feedItems %}
-      {{ feedCard(item, { variant: 'full' }) }}
-    {% endfor %}
-  </div>
-</div>
-
-{% include "components/feed-masonry-script.njk" %}
-
+{% set feedItems = collections.feed | head(6) %}
 {% set popularPosts = (collections.popularPosts | default([])) | head(5) %}
-{% if popularPosts.length %}
-<hr class="my-5 border-gray-200 dark:border-gray-800" />
-<section class="not-prose animate-enter stagger-4">
-  <div class="flex items-center justify-between mb-3">
-    <h2 class="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 m-0">Popular posts</h2>
-    <span class="meta-text text-[0.65rem] text-gray-400 dark:text-gray-500">By upvotes</span>
-  </div>
+{% set homeIndexItems = [
+  {
+    url: "/blog/",
+    name: "Writing",
+    count: collections.posts | length,
+    note: "Long-form writing on data, local AI, self-hosting, systems, and the internet."
+  },
+  {
+    url: "/notes/",
+    name: "Notes",
+    count: collections.notes | length,
+    note: "Working thoughts, small logs, experiments, and ideas that are not done yet."
+  },
+  {
+    url: "/projects/",
+    name: "Projects",
+    count: projects.projects | length,
+    note: "Things I build, ship, abandon, and occasionally return to with better judgment."
+  },
+  {
+    url: "/reading/",
+    name: "Reading",
+    count: "Log",
+    note: "Books, papers, and articles worth remembering before they vanish into tab hell."
+  },
+  {
+    url: "/uses/",
+    name: "Uses",
+    count: "Page",
+    note: "Desk, software, hardware, and tools I keep reaching for when I want the work to flow."
+  },
+  {
+    url: "/quotations/",
+    name: "Quotations",
+    count: collections.quotations | length,
+    note: "Borrowed clarity. Lines worth keeping around because they continue to explain things."
+  }
+] %}
 
-  <ul class="space-y-2 m-0 p-0 list-none">
-    {% for entry in popularPosts %}
-      <li class="surface surface-hover surface-compact">
-        <div class="flex items-start gap-2">
-          <span class="badge badge-tag badge-compact shrink-0">{{ entry.count }}▲</span>
-          <a href="{{ entry.url }}" class="text-sm font-medium text-gray-900 dark:text-gray-100 title-hover leading-snug" style="text-decoration:none;">{{ entry.title }}</a>
+<div class="home-index-shell not-prose">
+  <section class="home-intro-grid animate-enter">
+    <div class="home-intro-main">
+      <div class="home-avatar-shell shrink-0">
+        {% image "./src/static/img/headshot.png" , "Kartikey Chauhan", "w-full h-full object-cover" %}
+      </div>
+
+      <div>
+        <p class="home-eyebrow">Toronto / data work / homelabs / local AI / internet archives</p>
+        <h1 class="home-title">Hi, I’m <span class="home-title-accent">Kartikey.</span></h1>
+        <p class="home-dek">
+          Data analyst in Toronto. I write about data work, local AI, homelabs, personal systems, and the internet after it got strange.
+        </p>
+        <p class="home-dek home-dek-muted">
+          Grab a coffee and look around.
+        </p>
+
+        <div class="home-link-row">
+          <a href="/about">About</a>
+          <a href="/now">Now</a>
+          <a href="/projects">Projects</a>
+          <a href="/cv">CV</a>
+          <a href="/feed/">Feed</a>
+          <a href="https://github.com/carteakey" target="_blank" rel="noopener">GitHub ↗</a>
         </div>
-      </li>
-    {% endfor %}
-  </ul>
-</section>
-{% endif %}
+      </div>
+    </div>
+
+    <aside class="home-glance">
+      <p class="home-glance-title">At A Glance</p>
+      <div class="home-glance-row">
+        <span class="home-glance-label">Posts</span>
+        <span class="home-glance-value">{{ collections.posts | length }}</span>
+      </div>
+      <div class="home-glance-row">
+        <span class="home-glance-label">Notes</span>
+        <span class="home-glance-value">{{ collections.notes | length }}</span>
+      </div>
+      <div class="home-glance-row">
+        <span class="home-glance-label">Projects</span>
+        <span class="home-glance-value">{{ projects.projects | length }}</span>
+      </div>
+      <div class="home-glance-row">
+        <span class="home-glance-label">TILs</span>
+        <span class="home-glance-value">{{ collections.til | length }}</span>
+      </div>
+      <div class="home-glance-row">
+        <span class="home-glance-label">Quotes Saved</span>
+        <span class="home-glance-value">{{ collections.quotations | length }}</span>
+      </div>
+    </aside>
+  </section>
+
+  <section class="home-grid-two animate-enter stagger-1">
+    {% if startHere and startHere.length %}
+      <div>
+        <div class="home-panel-head">
+          <p class="home-panel-kicker">Selected Work</p>
+          <a href="/blog/" class="home-panel-link">All writing →</a>
+        </div>
+
+        <ul class="home-selected-list">
+          {% for item in startHere %}
+            <li class="home-selected-item">
+              <a href="{{ item.url | url }}" class="home-selected-title">{{ item.title }}</a>
+              {% if item.note %}
+                <p class="home-selected-note">{{ item.note }}</p>
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+
+    <div>
+      <div class="home-panel-head">
+        <p class="home-panel-kicker">Site Index</p>
+        <a href="/more/" class="home-panel-link">Full map →</a>
+      </div>
+
+      <div class="home-directory-grid">
+        {% for item in homeIndexItems %}
+          <a href="{{ item.url }}" class="home-directory-item">
+            <span class="home-directory-name">{{ item.name }}</span>
+            <span class="home-directory-count">{{ item.count }}</span>
+            <span class="home-directory-note">{{ item.note }}</span>
+          </a>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <section class="home-grid-four animate-enter stagger-2">
+    <div>
+      <div class="home-panel-head">
+        <p class="home-panel-kicker">Featured Writing</p>
+        {% if highlightedPost %}
+          <a href="{{ highlightedPost.url }}" class="home-panel-link">Read →</a>
+        {% endif %}
+      </div>
+
+      {% if highlightedPost %}
+        <article class="home-featured">
+          <div>
+            <h2 class="home-featured-title">
+              <a href="{{ highlightedPost.url }}">{{ highlightedPost.data.title }}</a>
+            </h2>
+            {% if highlightedPost.data.description %}
+              <p class="home-featured-description">{{ highlightedPost.data.description }}</p>
+            {% endif %}
+
+            <div class="home-featured-meta">
+              <time class="badge badge-meta">{{ highlightedPost.date | readableDate }}</time>
+              {% for tag in highlightedPost.data.tags | filterTagList | head(2) %}
+                <span class="badge badge-tag">#{{ tag }}</span>
+              {% endfor %}
+            </div>
+          </div>
+
+          {% if highlightedPost.data.image %}
+            <a href="{{ highlightedPost.url }}" class="home-featured-image" aria-label="{{ highlightedPost.data.title }}">
+              <img src="{{ highlightedPost.data.image | url }}" alt="{{ highlightedPost.data.imageAlt or highlightedPost.data.title }}" loading="lazy" decoding="async" class="dark:invert dark:brightness-125">
+            </a>
+          {% endif %}
+        </article>
+      {% endif %}
+    </div>
+
+    <div>
+      <div class="home-panel-head">
+        <p class="home-panel-kicker">Recent Activity</p>
+        <a href="/feed/" class="home-panel-link">All updates →</a>
+      </div>
+
+      <ul class="feed-list m-0 p-0 list-none">
+        {% for item in feedItems %}
+          {{ feedCard(item, { variant: 'list' }) }}
+        {% endfor %}
+      </ul>
+    </div>
+
+    <div>
+      <div class="home-panel-head">
+        <p class="home-panel-kicker">Quote Of The Day</p>
+      </div>
+
+      <blockquote class="home-quote">{{ qotd.quote }}</blockquote>
+      <p class="home-quote-source">— {{ qotd.provider }}</p>
+    </div>
+
+    {% if popularPosts.length %}
+      <div>
+        <div class="home-panel-head">
+          <p class="home-panel-kicker">Popular Posts</p>
+          <a href="/feed/" class="home-panel-link">From readers →</a>
+        </div>
+
+        <ul class="home-popular-list">
+          {% for entry in popularPosts %}
+            <li class="home-popular-item">
+              <div class="flex items-start gap-2">
+                <span class="badge badge-tag">{{ entry.count }}▲</span>
+                <a href="{{ entry.url }}" class="home-selected-title">{{ entry.title }}</a>
+              </div>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+  </section>
+</div>

@@ -1,7 +1,7 @@
-<div class="inline-flex rounded-sm shadow-sm mb-4" role="group" x-data="{ copied: false, open: false }">
+<div class="inline-flex mb-4" role="group" x-data="{ copied: false, open: false }">
   <button 
     type="button" 
-    class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-gray-700 bg-white border border-gray-200 rounded-l-lg hover:bg-gray-100 hover:text-blue-600 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white transition-colors"
+    class="inline-flex items-center gap-1.5 px-3 py-1.5 text-[0.7rem] font-medium font-mono uppercase tracking-[0.04em] text-gray-700 bg-[rgb(251,249,244)] border border-[rgb(214,207,193)] hover:text-[var(--accent-color)] dark:bg-zinc-900 dark:border-zinc-700 dark:text-gray-300 transition-colors"
     @click="
       fetch('{{ page.url }}raw.txt')
         .then(res => res.text())
@@ -21,7 +21,7 @@
   <div class="relative">
     <button 
       type="button" 
-      class="inline-flex items-center px-2 py-1.5 text-xs font-medium text-gray-700 bg-white border border-l-0 border-gray-200 rounded-r-lg hover:bg-gray-100 hover:text-blue-600 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white transition-colors h-full"
+      class="inline-flex items-center px-2 py-1.5 text-[0.7rem] font-medium text-gray-700 bg-[rgb(251,249,244)] border border-l-0 border-[rgb(214,207,193)] hover:text-[var(--accent-color)] dark:bg-zinc-900 dark:border-zinc-700 dark:text-gray-300 transition-colors h-full"
       @click="open = !open"
       @click.outside="open = false"
     >
@@ -36,11 +36,11 @@
       x-transition:leave="transition ease-in duration-75"
       x-transition:leave-start="transform opacity-100 scale-100"
       x-transition:leave-end="transform opacity-0 scale-95"
-      class="absolute right-0 z-10 mt-2 w-32 origin-top-right rounded-sm bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-gray-800 dark:border dark:border-gray-700" 
+      class="absolute right-0 z-10 mt-2 w-32 origin-top-right bg-[rgb(251,249,244)] border border-[rgb(214,207,193)] focus:outline-none dark:bg-zinc-900 dark:border-zinc-700" 
       style="display: none;"
     >
       <div class="py-1" role="none">
-        <a href="{{ page.url }}raw.txt" target="_blank" class="flex items-center gap-2 px-4 py-2 text-xs text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white transition-colors" role="menuitem">
+        <a href="{{ page.url }}raw.txt" target="_blank" class="flex items-center gap-2 px-4 py-2 text-[0.7rem] font-mono uppercase tracking-[0.04em] text-gray-700 hover:text-[var(--accent-color)] dark:text-gray-300 transition-colors" role="menuitem">
           {% feather "external-link", class="w-3.5 h-3.5" %}
           View Raw (.txt)
         </a>

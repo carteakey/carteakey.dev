@@ -1,10 +1,10 @@
 ---
 layout: layouts/base.njk
-title: Blog
-description: Articles, tutorials, and thoughts on tech, life, and everything in between
+title: Writing
+description: Writing, tutorials, and thoughts on tech, life, and everything in between
 permalink: /blog/
 eleventyNavigation:
-  key: Blog
+  key: Writing
   order: 2
 ---
 
@@ -13,8 +13,8 @@ eleventyNavigation:
 {% set byYear = collections.posts | countByYear %}
 {% set archiveYears = byYear | keys | sort | reverse %}
 {% set pageEyebrow = "Long-form Writing" %}
-{% set pageTitle = "Blog" %}
-{% set pageDescription = "Articles, tutorials, and essays on tech, tools, and whatever else stays with me long enough to write down." %}
+{% set pageTitle = "Writing" %}
+{% set pageDescription = "Writing, tutorials, and thoughts on tech, tools, and whatever else stays with me long enough to write down." %}
 {% set itemCount = collections.posts | length %}
 {% set itemLabel = "posts" %}
 
@@ -29,7 +29,7 @@ eleventyNavigation:
           type="text"
           id="blogSearch"
           placeholder="Search..."
-          class="rounded-sm border border-gray-200 dark:border-gray-700 bg-transparent py-1.5 pl-8 pr-3 text-sm accent-field focus:outline-none dark:text-gray-100 w-40 placeholder:text-gray-400"
+          class="rounded-md border border-gray-200 dark:border-gray-700 bg-transparent py-1.5 pl-8 pr-3 text-sm accent-field focus:outline-none dark:text-gray-100 w-40 placeholder:text-gray-400"
         >
       </div>
       <div class="view-toggle" x-data="{ viewMode: 'list' }">
@@ -44,7 +44,7 @@ eleventyNavigation:
   </div>
 
   <div class="not-prose mb-3 flex flex-wrap items-center gap-1.5">
-    <span class="meta-text text-[0.65rem] uppercase tracking-wide text-gray-400 dark:text-gray-500">Jump to</span>
+    <span class="editorial-kicker">Jump to</span>
     {% for year in archiveYears %}
       <a href="#year-{{ year }}" class="badge badge-tag badge-compact badge-interactive" style="text-decoration: none;">
         {{ year }}
@@ -90,7 +90,7 @@ eleventyNavigation:
                       <span class="inline-flex items-center mr-1.5 align-middle" style="color: var(--accent-color);" title="Pinned" aria-label="Pinned">{% feather "bookmark", class="w-3.5 h-3.5 fill-current opacity-20" %}</span>
                     {% endif %}
                     {{ authorshipBadge(post.data.authored_by, compact=true) }}
-                    <a href="{{ post.url }}" class="editorial-title-link title-hover" style="text-decoration: none;">{{ post.data.title }}</a>
+                    <a href="{{ post.url }}" class="editorial-title-link title-hover">{{ post.data.title }}</a>
                   </div>
                   {% if post.data.description %}
                     <p class="editorial-support-compact mt-0.5 m-0">{{ post.data.description }}</p>
@@ -123,7 +123,7 @@ eleventyNavigation:
     {% set filteredTags = rawTags | filterTagList %}
     {% set searchDesc = post.data.description | default('') | lower %}
     <article
-      class="feed-surface surface-compact rounded-sm"
+      class="feed-card-full surface-compact"
       data-blog-card
       data-title="{{ post.data.title | lower }}"
       data-tags="{{ filteredTags | join(' ') | lower }}"
@@ -141,7 +141,7 @@ eleventyNavigation:
         {% endif %}
       </div>
       <h3 class="editorial-title-compact m-0">
-        <a href="{{ post.url }}" class="title-hover" style="color: inherit; text-decoration: none;">{{ post.data.title }}</a>
+        <a href="{{ post.url }}" class="editorial-title-link-compact title-hover">{{ post.data.title }}</a>
       </h3>
       {% if post.data.description %}
         {% if post.data.image %}

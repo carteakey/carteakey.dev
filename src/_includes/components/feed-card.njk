@@ -161,7 +161,7 @@
               </div>
             </div>
           {% elif isPhoto or isVibe or item.media %}
-            <figure class="m-0 overflow-hidden rounded border border-gray-200 dark:border-gray-700 not-prose">
+            <figure class="m-0 overflow-hidden border border-gray-200 dark:border-gray-700 not-prose">
               <img src="{{ item.media.src }}" alt="{{ item.media.alt }}" loading="lazy" decoding="async" class="w-full h-auto block m-0">
               {% if item.summary %}
                 <figcaption class="px-3 py-2 text-xs text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-800/50 border-t border-gray-200 dark:border-gray-700 m-0">{{ item.summary }}</figcaption>
@@ -285,7 +285,7 @@
         <p class="mt-1.5 editorial-support-compact m-0">{{ item.summary }}</p>
       {% endif %}
     {% elif item.media %}
-      <figure class="mt-2 overflow-hidden rounded border border-gray-200 dark:border-gray-700 m-0">
+      <figure class="mt-2 overflow-hidden border border-gray-200 dark:border-gray-700 m-0">
         <img src="{{ item.media.src }}" alt="{{ item.media.alt }}" loading="lazy" decoding="async" class="w-full h-auto block">
         {% if item.summary %}
           <figcaption class="px-2 py-1 text-xs text-gray-500 dark:text-gray-400">{{ item.summary }}</figcaption>
