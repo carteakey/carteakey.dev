@@ -76,5 +76,10 @@ export default [
     quote:
       "I like people, but I like them in short bursts. I don't like people for extended periods of time. I'm all right with them for a little while, but once you get up past around... a minute, minute and a half, I gotta get the fuck out of there.",
     author: "George Carlin",
+  },
+  {
+    quote:
+      "Never trust a thought that occurs to you indoors.",
+    author: "Friedrich Nietzsche",
   }
 ];
