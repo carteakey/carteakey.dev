@@ -14,9 +14,9 @@ title: Workouts
 
 <div class="not-prose grid gap-3 md:grid-cols-2">
     {% for activity in strava %}
-        <article class="card card-hover card-compact">
+        <article class="surface surface-compact surface-hover rounded-sm">
             <header class="flex flex-col gap-1.5">
-                <a href="{{ activity.url }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-sm font-semibold text-gray-900 dark:text-gray-100 accent-link" style="text-decoration:none;">
+                <a href="{{ activity.url }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-sm editorial-title accent-link" style="text-decoration:none;">
                     {{ activity.name }}
                     {% feather "external-link", class="w-3.5 h-3.5 opacity-60" %}
                 </a>

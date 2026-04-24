@@ -26,7 +26,7 @@ eleventyNavigation:
         type="text"
         id="tilSearch"
         placeholder="Search..."
-        class="rounded-md border border-gray-200 dark:border-gray-700 bg-transparent py-1.5 pl-8 pr-3 text-sm accent-field focus:outline-none dark:text-gray-100 w-40 placeholder:text-gray-400"
+        class="rounded-sm border border-gray-200 dark:border-gray-700 bg-transparent py-1.5 pl-8 pr-3 text-sm accent-field focus:outline-none dark:text-gray-100 w-40 placeholder:text-gray-400"
       >
     </div>
   </div>
@@ -39,7 +39,7 @@ eleventyNavigation:
     {% set searchExcerpt = entry.templateContent | striptags | replace('\n', ' ') | truncate(200, true, '') | lower %}
     <article
       class="py-3.5 group"
-      data-til-card
+      data-til-surface rounded-sm
       data-title="{{ entry.data.title | lower }}"
       data-tags="{{ filteredTags | join(' ') | lower }}"
       data-body="{{ searchExcerpt }}"
@@ -57,10 +57,10 @@ eleventyNavigation:
         </div>
         <div class="flex-1 min-w-0">
           <div class="leading-snug">
-            <a href="{{ entry.url }}" class="font-semibold text-gray-900 dark:text-gray-100 title-hover" style="text-decoration: none;">{{ entry.data.title }}</a>
+            <a href="{{ entry.url }}" class="editorial-title-link title-hover" style="text-decoration: none;">{{ entry.data.title }}</a>
           </div>
           {% if entry.data.source %}
-            <a href="{{ entry.data.source }}" target="_blank" rel="noopener" class="text-xs text-gray-400 dark:text-gray-500 hover:underline" style="text-decoration: none;">{{ entry.data.source | truncate(60, true, '…') }} ↗</a>
+            <a href="{{ entry.data.source }}" target="_blank" rel="noopener" class="editorial-meta-link" style="text-decoration: none;">{{ entry.data.source | truncate(60, true, '…') }} ↗</a>
           {% endif %}
           <div class="md:hidden flex flex-wrap items-center gap-x-2 gap-y-1 mt-1.5">
             <span class="meta-text text-[0.65rem] text-gray-400 dark:text-gray-500">{{ entry.date | readableDate }}</span>
@@ -79,12 +79,12 @@ eleventyNavigation:
   if (tilSearch) {
     tilSearch.addEventListener('input', function() {
       const q = this.value.toLowerCase().trim();
-      document.querySelectorAll('[data-til-card]').forEach(card => {
+      document.querySelectorAll('[data-til-surface rounded-sm]').forEach(surface rounded-sm => {
         const match = !q ||
-          card.dataset.title?.includes(q) ||
-          card.dataset.tags?.includes(q) ||
-          card.dataset.body?.includes(q);
-        card.style.display = match ? '' : 'none';
+          surface rounded-sm.dataset.title?.includes(q) ||
+          surface rounded-sm.dataset.tags?.includes(q) ||
+          surface rounded-sm.dataset.body?.includes(q);
+        surface rounded-sm.style.display = match ? '' : 'none';
       });
     });
   }

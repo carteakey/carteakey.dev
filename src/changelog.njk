@@ -27,7 +27,7 @@ eleventyNavigation:
 
       <div class="flex flex-wrap items-baseline gap-3 mb-2">
         {% if entry.fromGit %}
-          <span class="font-mono font-semibold text-sm text-gray-500 dark:text-gray-400">{{ entry.version }}</span>
+          <span class="font-mono font-semibold editorial-support-compact">{{ entry.version }}</span>
           <span class="meta-text text-xs text-gray-400 dark:text-gray-600">git history</span>
         {% else %}
           <span class="font-mono font-semibold text-sm text-gray-900 dark:text-gray-100" style="color: var(--accent-color);">v{{ entry.version }}</span>
@@ -82,10 +82,10 @@ eleventyNavigation:
 
         {% if entry.sections.Removed %}
         <div>
-          <span class="meta-text text-[0.65rem] font-semibold uppercase tracking-wider text-red-500 dark:text-red-400 mr-2">Removed</span>
+          <span class="editorial-kicker text-red-500 dark:text-red-400 mr-2">Removed</span>
           <ul class="mt-1 space-y-0.5 list-none m-0 p-0">
             {% for item in entry.sections.Removed %}
-            <li class="text-sm text-gray-700 dark:text-gray-300 flex gap-2">
+            <li class="editorial-support-compact flex gap-2">
               <span class="text-red-400 shrink-0 mt-0.5">−</span>
               <span>{{ item }}</span>
             </li>

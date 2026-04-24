@@ -61,18 +61,18 @@ hasEthicalAds: false
             {% image "./src/static/img/headshot.png", "{{ metadata.author.name }}", "relative w-20 h-20 rounded-full object-cover ring-2 ring-gray-200 dark:ring-gray-700 transition-all shadow-sm" %}
           </div>
         </a>
-        <a href="/about" class="font-semibold text-gray-900 dark:text-gray-100 hover:text-gradient transition-colors no-underline">
+        <a href="/about" class="editorial-title hover:text-gradient transition-colors no-underline">
           {{ metadata.author.name }}
         </a>
-        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 mb-3">Data Analyst & Tech Tinkerer</p>
+        <p class="editorial-support-compact mt-1 mb-3">Data Analyst & Tech Tinkerer</p>
         <div class="flex justify-center gap-1 mt-3">
-          <a href="https://github.com/carteakey" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100" title="GitHub" aria-label="GitHub">
+          <a href="https://github.com/carteakey" class="p-2 rounded-sm hover:bg-gray-100 dark:hover:bg-gray-800 transition-all text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100" title="GitHub" aria-label="GitHub">
             {% feather "github", class="w-4 h-4" %}
           </a>
-          <a href="https://www.linkedin.com/in/kartikeychauhan/" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100" title="LinkedIn" aria-label="LinkedIn">
+          <a href="https://www.linkedin.com/in/kartikeychauhan/" class="p-2 rounded-sm hover:bg-gray-100 dark:hover:bg-gray-800 transition-all text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100" title="LinkedIn" aria-label="LinkedIn">
             {% feather "linkedin", class="w-4 h-4" %}
           </a>
-          <a href="mailto:{{ metadata.author.email }}" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100" title="Email" aria-label="Email">
+          <a href="mailto:{{ metadata.author.email }}" class="p-2 rounded-sm hover:bg-gray-100 dark:hover:bg-gray-800 transition-all text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100" title="Email" aria-label="Email">
             {% feather "mail", class="w-4 h-4" %}
           </a>
         </div>
@@ -84,11 +84,11 @@ hasEthicalAds: false
   {# Right Sidebar - TOC & Comments #}
 
   {% if showSidebar %}
-  <aside class="hidden xl:block absolute -right-[300px] top-0 text-sm text-gray-600 dark:text-gray-300">
+  <aside class="hidden xl:block absolute -right-[300px] top-0 editorial-support-compact">
     <div class="sticky top-24 space-y-4 w-[260px]">
       {% if tocHtml | trim %}
       <section class="surface surface-padding">
-        <p class="text-sm font-semibold my-0 text-gray-800 dark:text-gray-100 flex items-center gap-2">
+        <p class="editorial-title-compact my-0 text-gray-800 dark:text-gray-100 flex items-center gap-2">
           {% feather "list", class="w-5 h-5 opacity-70" %}
           Outline
         </p>
@@ -136,12 +136,12 @@ hasEthicalAds: false
 
 
       {% if description %}
-        <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed mt-1">
+        <p class="editorial-support-compact leading-relaxed mt-1">
           {{ description }}
         </p>
       {% endif %}
 
-      <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between text-sm text-gray-600 dark:text-gray-400">
+      <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between editorial-support-compact">
         <div class="flex flex-wrap items-center gap-3">
           <time datetime="{{ page.date | htmlDateString }}" class="font-medium text-gray-700 dark:text-gray-200 flex items-center gap-1.5">
             {% feather "calendar", class="w-4 h-4 opacity-60" %}
@@ -198,7 +198,7 @@ hasEthicalAds: false
     {% endif %}
 
     {% if updated %}
-      <p class="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
+      <p class="editorial-kicker">
         Updated <time datetime="{{ updated | htmlDateString }}">{{ updated | readableDate }}</time>
       </p>
     {% endif %}
@@ -222,11 +222,11 @@ hasEthicalAds: false
           <div class="animate-spin rounded-full h-4 w-4 border-b-2" style="border-color: var(--accent-color);"></div>
         </span>
       </button>
-      <span id="upvoteMessage" class="ml-2 text-sm text-gray-500 dark:text-gray-400 hidden">Thanks for your upvote!</span>
+      <span id="upvoteMessage" class="ml-2 editorial-support-compact hidden">Thanks for your upvote!</span>
     </div>
 
     <div id="postReactions" class="hidden mt-6" data-slug="{{ page.fileSlug }}">
-      <h2 class="text-sm font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400 flex items-center gap-2">
+      <h2 class="editorial-title-compact uppercase tracking-wide text-gray-500 dark:text-gray-400 flex items-center gap-2">
         {% feather "smile", class="w-4 h-4" %}
         React to this post
       </h2>
@@ -234,18 +234,18 @@ hasEthicalAds: false
         {% for reaction in reactionOptions %}
           <button
             type="button"
-            class="reaction-button flex items-center gap-2 rounded-full border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 px-3 py-2 text-sm text-gray-600 dark:text-gray-300 hover:border-gray-400 dark:hover:border-gray-500 transition-colors"
+            class="reaction-button flex items-center gap-2 rounded-full border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 px-3 py-2 editorial-support-compact hover:border-gray-400 dark:hover:border-gray-500 transition-colors"
             data-reaction="{{ reaction.id }}"
             aria-label="{{ reaction.label }}"
             title="{{ reaction.label }}"
           >
             <span class="text-xl" aria-hidden="true">{{ reaction.emoji }}</span>
             <span class="sr-only">{{ reaction.label }}</span>
-            <span class="text-sm font-semibold text-gray-700 dark:text-gray-200" data-reaction-count="{{ reaction.id }}">0</span>
+            <span class="editorial-title-compact text-gray-700 dark:text-gray-200" data-reaction-count="{{ reaction.id }}">0</span>
           </button>
         {% endfor %}
       </div>
-      <p id="reactionMessage" class="mt-2 text-sm text-gray-500 dark:text-gray-400 hidden"></p>
+      <p id="reactionMessage" class="mt-2 editorial-support-compact hidden"></p>
     </div>
 
     <script>
@@ -531,7 +531,7 @@ hasEthicalAds: false
               {% feather "folder", class="w-5 h-5 shrink-0 opacity-70 text-gray-500" %}
               <span>This post is part of the <strong>{{ currentFolder.name }}</strong> series.</span>
             </div>
-            <a href="{{ currentFolder.url | url }}" class="inline-flex items-center justify-center gap-1.5 font-medium whitespace-nowrap px-3 py-1.5 rounded-md bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 shadow-sm hover:shadow transition-all text-gray-900 dark:text-gray-100 no-underline">
+            <a href="{{ currentFolder.url | url }}" class="inline-flex items-center justify-center gap-1.5 font-medium whitespace-nowrap px-3 py-1.5 rounded-sm bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 shadow-sm hover:shadow transition-all text-gray-900 dark:text-gray-100 no-underline">
               View all {{ currentFolder.posts.length }} posts {% feather "arrow-right", class="w-3.5 h-3.5" %}
             </a>
           </div>
@@ -543,7 +543,7 @@ hasEthicalAds: false
         <hr class="my-8" />
         {%- endif %}
         <section class="related-posts mt-8">
-          <h3 class="text-sm font-semibold mb-3 flex items-center gap-2">
+          <h3 class="editorial-title-compact mb-3 flex items-center gap-2">
             {% feather "link", class="w-4 h-4" %}
             Related Posts
           </h3>
@@ -567,13 +567,13 @@ hasEthicalAds: false
         <nav aria-label="Post navigation" class="flex flex-col gap-2 text-sm not-prose">
           {%- if nextPost %}
             <a class="block title-hover" href="{{ nextPost.url | url }}" style="text-decoration: none;">
-              <span class="text-xs uppercase tracking-wide font-semibold text-gray-400">Next →</span>
+              <span class="editorial-kicker">Next →</span>
               <span class="block">{{ nextPost.data.title }}</span>
             </a>
           {%- endif %}
           {%- if previousPost %}
             <a class="block title-hover" href="{{ previousPost.url | url }}" style="text-decoration: none;">
-              <span class="text-xs uppercase tracking-wide font-semibold text-gray-400">← Previous</span>
+              <span class="editorial-kicker">← Previous</span>
               <span class="block">{{ previousPost.data.title }}</span>
             </a>
           {%- endif %}
@@ -632,8 +632,8 @@ hasEthicalAds: false
 
   {% if tocHtml | trim %}
   <div class="xl:hidden mt-12">
-    <section class="surface surface-padding space-y-4 text-sm text-gray-600 dark:text-gray-300">
-      <p class="text-sm font-semibold my-0 text-gray-900 dark:text-gray-100">Outline</p>
+    <section class="surface surface-padding space-y-4 editorial-support-compact">
+      <p class="editorial-title-compact my-0 text-gray-900 dark:text-gray-100">Outline</p>
       <div class="max-h-[50vh] overflow-y-auto pr-1 space-y-2">
         {{ tocHtml | safe }}
       </div>

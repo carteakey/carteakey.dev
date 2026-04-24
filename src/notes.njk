@@ -27,14 +27,14 @@ eleventyNavigation:
       <div class="flex-1 min-w-0">
         {% if note.data.title %}
           <div class="leading-snug mb-1">
-            <a href="{{ note.url }}" class="font-semibold text-gray-900 dark:text-gray-100 title-hover" style="text-decoration: none;">{{ note.data.title }}</a>
+            <a href="{{ note.url }}" class="editorial-title-link title-hover" style="text-decoration: none;">{{ note.data.title }}</a>
           </div>
         {% endif %}
-        <div class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed site-content prose-sm">
+        <div class="editorial-support-compact leading-relaxed site-content prose-sm">
           {{ note.templateContent | safe }}
         </div>
         <div class="mt-1.5">
-          <a href="{{ note.url }}" class="text-xs text-gray-400 dark:text-gray-500 hover:underline" style="text-decoration:none;">Permalink →</a>
+          <a href="{{ note.url }}" class="editorial-meta-link" style="text-decoration:none;">Permalink →</a>
         </div>
       </div>
     </div>

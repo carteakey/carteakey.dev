@@ -23,7 +23,7 @@ permalink: /bookmarks/
 <div class="max-w-5xl mx-auto">
   {% include "components/page-header.njk" %}
 
-  <div class="mt-2 flex flex-wrap items-center gap-3 text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
+  <div class="mt-2 flex flex-wrap items-center gap-3 editorial-kicker">
     <span>Updated {{ lastUpdated | readableDate }}</span>
     <span>·</span>
     <div class="flex flex-wrap gap-1">
@@ -37,7 +37,7 @@ permalink: /bookmarks/
     {% set items = bookmarks.bookmarks | selectattr('category', 'equalto', category) | sort(attribute='date') | reverse %}
     {% set catCount = items | length %}
     <section id="{{ category | slugify }}" class="mt-8">
-      <h2 class="text-sm font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+      <h2 class="editorial-title-compact flex items-center gap-2">
         {{ category }}
         <span class="text-xs font-normal text-gray-500">{{ catCount }}</span>
       </h2>
@@ -47,8 +47,8 @@ permalink: /bookmarks/
           {% set domain = bookmark.url | domainFromUrl %}
           {% set favicon = bookmark.url | faviconUrl %}
           {% set domainInitial = bookmark.url | domainInitial %}
-          <article class="card card-hover card-compact">
-            <a href="{{ bookmark.url }}" target="_blank" rel="noopener noreferrer" class="text-sm font-semibold text-gray-900 link-accent dark:text-white line-clamp-1">
+          <article class="surface surface-compact surface-hover rounded-sm">
+            <a href="{{ bookmark.url }}" target="_blank" rel="noopener noreferrer" class="editorial-title-compact text-gray-900 link-accent dark:text-white line-clamp-1">
                 {{ bookmark.title }}
               </a>
             {% if domain %}
@@ -63,8 +63,8 @@ permalink: /bookmarks/
     </section>
   {% endfor %}
 
-  <div class="mt-10 card card-compact">
-    <p class="text-sm text-gray-600 dark:text-gray-300">
+  <div class="mt-10 surface surface-compact rounded-sm">
+    <p class="editorial-support-compact">
       Have a suggestion? <a href="mailto:{{ metadata.author.email }}" class="font-semibold accent-link">Drop me a note</a>.
     </p>
   </div>

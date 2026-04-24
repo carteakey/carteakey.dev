@@ -31,7 +31,7 @@ eleventyNavigation:
       {% else %}
       <div class="relative w-full h-full row-span-2">
       {% endif %}
-        <figure class="relative isolate overflow-hidden rounded-lg cursor-pointer group transition-all duration-300 h-full" 
+        <figure class="relative isolate overflow-hidden rounded-sm cursor-pointer group transition-all duration-300 h-full" 
             data-pswp-src="{{ photo.path }}"
             data-pswp-width="{{ photo.width }}"
             data-pswp-height="{{ photo.height }}"
@@ -40,7 +40,7 @@ eleventyNavigation:
       {% set thumbnail = "./src/static" + photo.path %}
       <img src="{% thumbnail thumbnail %}" 
            alt="{{ photo.title }}"
-           class="object-cover w-full h-full rounded-lg transition-transform duration-300 group-hover:scale-105 blur-[2px]"
+           class="object-cover w-full h-full rounded-sm transition-transform duration-300 group-hover:scale-105 blur-[2px]"
            onload="this.classList.remove('blur-[2px]')"
            loading="lazy">
         <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>

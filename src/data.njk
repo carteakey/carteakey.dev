@@ -47,12 +47,12 @@ eleventyExcludeFromCollections: true
 </div>
 
 <div class="not-prose mb-4">
-  <h3 class="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-2">Plays per month</h3>
+  <h3 class="editorial-kicker mb-2">Plays per month</h3>
   {{ cb.line_chart("chart_plays_per_month", cartebase.listening.plays_per_month | map('month'), cartebase.listening.plays_per_month | map('plays'), "Plays", height=180) }}
 </div>
 
 <div class="not-prose mb-4">
-  <h3 class="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-2">Artist share over time</h3>
+  <h3 class="editorial-kicker mb-2">Artist share over time</h3>
   <p class="text-xs text-gray-500 dark:text-gray-400 mb-2">
     The artists that cracked any year's top 10, as a percentage of that year's plays. "Other" is the long tail — even my most-played artists rarely account for more than a quarter of a year. Watch Radiohead climb after 2024.
   </p>
@@ -60,7 +60,7 @@ eleventyExcludeFromCollections: true
 </div>
 
 <div class="not-prose mb-4">
-  <h3 class="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-2">Listening rhythm (hour × weekday, UTC)</h3>
+  <h3 class="editorial-kicker mb-2">Listening rhythm (hour × weekday, UTC)</h3>
   {{ cb.heatmap(cartebase.listening.hour_weekday_heatmap) }}
 </div>
 
@@ -84,18 +84,18 @@ eleventyExcludeFromCollections: true
 </div>
 
 <div class="not-prose mb-4">
-  <h3 class="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-2">Visits per month</h3>
+  <h3 class="editorial-kicker mb-2">Visits per month</h3>
   {{ cb.line_chart("chart_visits_per_month", cartebase.browsing.visits_per_month | map('month'), cartebase.browsing.visits_per_month | map('visits'), "Visits", height=180) }}
 </div>
 
 <div class="not-prose mb-4">
-  <h3 class="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-2">Top domains — all time</h3>
+  <h3 class="editorial-kicker mb-2">Top domains — all time</h3>
   {{ cb.share_bars(cartebase.browsing.top_domains_all_time, "domain", "visits", cartebase.summary.browsing_visits_total, limit=10) }}
 </div>
 
 <div class="not-prose mt-6 pt-4 border-t border-gray-200 dark:border-zinc-800">
-  <h3 class="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-2">Bookmarks</h3>
-  <p class="text-sm text-gray-500 dark:text-gray-400 mb-3">
+  <h3 class="editorial-kicker mb-2">Bookmarks</h3>
+  <p class="editorial-support-compact mb-3">
     {{ cartebase.summary.bookmarks_total | localeNumber }} bookmarks canonicalised — of those,
     <strong>{{ cartebase.bookmarks.with_notes_count | localeNumber }}</strong>
     have notes attached, a hint at which ones might graduate to the blogmarks feed someday.
@@ -122,19 +122,19 @@ eleventyExcludeFromCollections: true
 </div>
 
 <div class="not-prose mb-4">
-  <h3 class="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-2">Top games by hours</h3>
+  <h3 class="editorial-kicker mb-2">Top games by hours</h3>
   {{ cb.share_bars(cartebase.gaming.top_games, "name", "hours", cartebase.gaming.total_hours, limit=10) }}
 </div>
 
 {{ cb.section_header("Photos", "Apple Photos library", "camera") }}
 
 <div class="not-prose mb-4">
-  <h3 class="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-2">Photos captured per month</h3>
+  <h3 class="editorial-kicker mb-2">Photos captured per month</h3>
   {{ cb.line_chart("chart_photos_per_month", cartebase.photos.photos_per_month | map('month'), cartebase.photos.photos_per_month | map('count'), "Photos", height=180) }}
 </div>
 
 <div class="mt-12 border-t border-gray-200 dark:border-zinc-800 pt-6 text-xs text-gray-500 dark:text-gray-400 not-prose">
-  <h3 class="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-2">About this page</h3>
+  <h3 class="editorial-kicker mb-2">About this page</h3>
   <p class="mb-2">
     Generated at build time from JSON snapshots exported out of
     <a href="https://github.com/carteakey/cartebase" class="accent-link">cartebase</a>,

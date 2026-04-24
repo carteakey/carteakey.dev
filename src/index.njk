@@ -13,10 +13,10 @@ htmlTemplateEngine: "webc"
     </div>
   </div>
   <div class="space-y-2 hero-text">
-    <p class="text-base font-semibold text-gray-900 dark:text-gray-100 m-0">
+    <p class="text-base editorial-title m-0">
       Hi 👋🏼, I'm <span style="color: var(--accent-color); font-weight: 700;">Kartikey</span> - welcome to my corner of the internet!
     </p>
-    <p class="text-sm text-gray-600 dark:text-gray-400 m-0 leading-relaxed">
+    <p class="editorial-support-compact m-0 leading-relaxed">
       I'm a data analyst from Toronto. Outside work I tinker with tech and build <a href="/portfolio" class="accent-link font-semibold" style="text-decoration: none;">side projects</a>.
       Here I write about linux, AI, data science, and whatever else catches my eye - grab a coffee and look around.
     </p>
@@ -44,11 +44,11 @@ htmlTemplateEngine: "webc"
       </div>
       <div class="{% if highlightedPost.data.image %}flex items-start gap-3{% endif %}">
         <div class="min-w-0 flex-1">
-          <h2 class="text-base font-semibold text-gray-900 dark:text-gray-100 leading-snug m-0 transition-colors" style="transition: color 0.15s;">
+          <h2 class="text-base editorial-title leading-snug m-0 transition-colors" style="transition: color 0.15s;">
             <span class="group-hover:underline" style="text-decoration-color: var(--accent-color);">{{ highlightedPost.data.title }}</span>
           </h2>
           {% if highlightedPost.data.description %}
-            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1 m-0 leading-relaxed">{{ highlightedPost.data.description }}</p>
+            <p class="editorial-support-compact mt-1 m-0 leading-relaxed">{{ highlightedPost.data.description }}</p>
           {% endif %}
         </div>
         {% if highlightedPost.data.image %}

@@ -26,7 +26,7 @@ eleventyNavigation:
         type="text"
         id="quotationSearch"
         placeholder="Search..."
-        class="rounded-md border border-gray-200 dark:border-gray-700 bg-transparent py-1.5 pl-8 pr-3 text-sm accent-field focus:outline-none dark:text-gray-100 w-40 placeholder:text-gray-400"
+        class="rounded-sm border border-gray-200 dark:border-gray-700 bg-transparent py-1.5 pl-8 pr-3 text-sm accent-field focus:outline-none dark:text-gray-100 w-40 placeholder:text-gray-400"
       >
     </div>
   </div>
@@ -60,7 +60,7 @@ eleventyNavigation:
           <div class="prose dark:prose-invert max-w-none text-base md:text-lg text-gray-800 dark:text-gray-200 leading-relaxed mb-3">
             {% if entry.data.image %}
               <div class="mb-4">
-                <img src="{{ entry.data.image | replace('./src/static/img', '/img') }}" alt="Quotation reference image" class="rounded-lg border border-gray-200 dark:border-gray-800 w-full max-w-2xl" loading="lazy" decoding="async" />
+                <img src="{{ entry.data.image | replace('./src/static/img', '/img') }}" alt="Quotation reference image" class="rounded-sm border border-gray-200 dark:border-gray-800 w-full max-w-2xl" loading="lazy" decoding="async" />
               </div>
             {% endif %}
             <blockquote class="border-l-4 border-[color:var(--accent-color)] pl-4 italic m-0">
