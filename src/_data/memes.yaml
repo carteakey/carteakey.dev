@@ -1,3 +1,129 @@
+- id: "040"
+  image: "/img/folio/ai-memes/what-the-heck-did-it-do-v0-seibk7er41gg1.webp"
+  caption: "What the heck did it even do."
+  tags:
+    - "agents"
+    - "hallucinated"
+  vibes: 0
+  submitter: "anonymous intern"
+  time: "just now"
+- id: "039"
+  image: "/img/folio/ai-memes/this-my-life-now-v0-8c0ekgsitmdg1.webp"
+  caption: "This is just my life now."
+  tags:
+    - "relatable"
+    - "existential"
+  vibes: 0
+  submitter: "anonymous intern"
+  time: "just now"
+- id: "038"
+  image: "/img/folio/ai-memes/some-of-you-mfs-v0-tltn7gxi8eug1.webp"
+  caption: "Some of you mfs."
+  tags:
+    - "xkcd-style"
+    - "relatable"
+  vibes: 0
+  submitter: "anonymous intern"
+  time: "just now"
+- id: "037"
+  image: "/img/folio/ai-memes/no-bad-claude-v0-qb9dzuqznevg1.webp"
+  caption: "No bad Claude."
+  tags:
+    - "vibe-coding"
+    - "agents"
+  vibes: 0
+  submitter: "anonymous intern"
+  time: "just now"
+- id: "036"
+  image: "/img/folio/ai-memes/n025oj8n13og1.webp"
+  caption: "Yet another day in the feed."
+  tags:
+    - "relatable"
+  vibes: 0
+  submitter: "anonymous intern"
+  time: "just now"
+- id: "035"
+  image: "/img/folio/ai-memes/i-study-whether-ais-can-be-conscious-today-one-emailed-me-v0-j4dj3euss2ng1.jpeg.webp"
+  caption: "I study whether AIs can be conscious today one emailed me."
+  tags:
+    - "existential"
+    - "agents"
+  vibes: 0
+  submitter: "anonymous intern"
+  time: "just now"
+- id: "034"
+  image: "/img/folio/ai-memes/how-to-properly-deal-with-a-file-v0-vlrvbxabpevg1.webp"
+  caption: "How to properly deal with a file."
+  tags:
+    - "vibe-coding"
+    - "prompt-engineering"
+  vibes: 0
+  submitter: "anonymous intern"
+  time: "just now"
+- id: "033"
+  image: "/img/folio/ai-memes/Screenshot 2026-04-11 at 7.09.39 PM.png"
+  caption: "A screenshot from the archives."
+  tags:
+    - "agents"
+  vibes: 0
+  submitter: "anonymous intern"
+  time: "just now"
+- id: "032"
+  image: "/img/folio/ai-memes/Screenshot 2026-04-04 at 7.08.26 PM.png"
+  caption: "More agentic chaos."
+  tags:
+    - "chaos"
+  vibes: 0
+  submitter: "anonymous intern"
+  time: "just now"
+- id: "031"
+  image: "/img/folio/ai-memes/Screenshot 2026-04-04 at 7.07.45 PM.png"
+  caption: "When the context window gets too small."
+  tags:
+    - "relatable"
+  vibes: 0
+  submitter: "anonymous intern"
+  time: "just now"
+- id: "030"
+  image: "/img/folio/ai-memes/Screenshot 2026-04-04 at 7.00.28 PM.png"
+  caption: "Ship it anyway."
+  tags:
+    - "shipped-to-prod"
+  vibes: 0
+  submitter: "anonymous intern"
+  time: "just now"
+- id: "029"
+  image: "/img/folio/ai-memes/Screenshot 2026-04-04 at 5.37.44 PM.png"
+  caption: "Debugging in 2026."
+  tags:
+    - "burnout"
+  vibes: 0
+  submitter: "anonymous intern"
+  time: "just now"
+- id: "028"
+  image: "/img/folio/ai-memes/Screenshot 2026-04-04 at 5.17.52 PM.png"
+  caption: "The agent did this."
+  tags:
+    - "my-agent-did-this"
+  vibes: 0
+  submitter: "anonymous intern"
+  time: "just now"
+- id: "027"
+  image: "/img/folio/ai-memes/Screenshot 2025-05-03 at 9.07.35 PM.png"
+  caption: "Classic moment."
+  tags:
+    - "relatable"
+  vibes: 0
+  submitter: "anonymous intern"
+  time: "just now"
+- id: "026"
+  image: "/img/folio/ai-memes/HF51mDfasAITudQ.jpeg"
+  caption: "Just out here vibing."
+  tags:
+    - "vibe-coding"
+  vibes: 0
+  submitter: "anonymous intern"
+  time: "just now"
 - id: "025"
   image: "/img/folio/ai-memes/IMG_0642.jpeg"
   caption: "POV: you shipped it to prod without testing."
