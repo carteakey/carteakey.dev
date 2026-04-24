@@ -7,28 +7,31 @@ eleventyNavigation:
   order: 5
 ---
 
-{% include "components/breadcrumbs.njk" %}
+<div class="max-w-[1400px] mx-auto space-y-8">
+  <div class="max-w-3xl mx-auto px-4 md:px-0">
+    {% include "components/breadcrumbs.njk" %}
 
-{% set pageEyebrow = "Visual Archive" %}
-{% set pageTitle = "Gallery" %}
-{% set pageDescription = "A personal collection of photos from both real life and virtual worlds." %}
-{% set itemCount = photos | length %}
-{% set itemLabel = "photos" %}
-{% set pageBadges = [
-  { label: "Real life" },
-  { label: "Virtual worlds" }
-] %}
-{% include "components/page-header.njk" %}
+    {% set pageEyebrow = "Visual Archive" %}
+    {% set pageTitle = "Gallery" %}
+    {% set pageDescription = "A personal collection of photos from both real life and virtual worlds." %}
+    {% set itemCount = photos | length %}
+    {% set itemLabel = "photos" %}
+    {% set pageBadges = [
+      { label: "Real life" },
+      { label: "Virtual worlds" }
+    ] %}
+    {% include "components/page-header.njk" %}
+  </div>
 
-<div class="flex flex-col min-h-screen">
-  <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] auto-rows-[90px] gap-1 w-full mb-6" id="gallery">
-    {% for photo in photos %}
-    {% if photo.height > photo.width %}
-    <div class="relative w-full h-full row-span-3">
-    {% else %}
-    <div class="relative w-full h-full row-span-2">
-    {% endif %}
-      <figure class="overflow-hidden rounded-lg shadow-lg cursor-pointer group hover:shadow-xl transition-all duration-300 h-full" 
+  <div class="flex flex-col min-h-screen">
+    <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] auto-rows-[90px] gap-1 w-full mb-6" id="gallery">
+      {% for photo in photos %}
+      {% if photo.height > photo.width %}
+      <div class="relative w-full h-full row-span-3">
+      {% else %}
+      <div class="relative w-full h-full row-span-2">
+      {% endif %}
+        <figure class="overflow-hidden rounded-lg cursor-pointer group transition-all duration-300 h-full" 
             data-pswp-src="{{ photo.path }}"
             data-pswp-width="{{ photo.width }}"
             data-pswp-height="{{ photo.height }}"
@@ -45,6 +48,7 @@ eleventyNavigation:
     </div>
     {% endfor %}
   </div>
+</div>
 </div>
 
 <!-- PhotoSwipe -->

@@ -71,5 +71,10 @@ export default [
     quote:
       "I've come up with a set of rules that describe our reactions to technologies:\n1. Anything that is in the world when you're born is normal and ordinary and is just a natural part of the way the world works.\n2. Anything that's invented between when you're fifteen and thirty-five is new and exciting and revolutionary and you can probably get a career in it.\n3. Anything invented after you're thirty-five is against the natural order of things.",
     author: "Douglas Adams",
+  },
+  {
+    quote:
+      "I like people, but I like them in short bursts. I don't like people for extended periods of time. I'm all right with them for a little while, but once you get up past around... a minute, minute and a half, I gotta get the fuck out of there.",
+    author: "George Carlin",
   }
 ];
