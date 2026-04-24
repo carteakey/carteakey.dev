@@ -3,7 +3,7 @@
    of the page). Each macro emits an IIFE so vars don't collide. #}
 
 {% macro stat_tile(label, value, sublabel="") %}
-<div class="bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 rounded-lg p-4">
+<div class="surface surface-compact">
   <div class="text-[0.65rem] uppercase tracking-widest text-gray-400 dark:text-gray-500">{{ label }}</div>
   <div class="text-2xl font-semibold mt-1 text-gray-900 dark:text-gray-100 leading-tight">{{ value }}</div>
   {% if sublabel %}<div class="text-xs text-gray-400 dark:text-gray-500 mt-0.5">{{ sublabel }}</div>{% endif %}
@@ -21,7 +21,7 @@
 {% endmacro %}
 
 {% macro line_chart(id, labels, data, label="", height=220) %}
-<div class="bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 rounded-lg p-3" style="height: {{ height }}px;">
+<div class="surface p-3" style="height: {{ height }}px;">
   <canvas id="{{ id }}"></canvas>
 </div>
 <script>
@@ -59,7 +59,7 @@
 {% endmacro %}
 
 {% macro bar_chart(id, labels, data, label="", horizontal=false, height=260) %}
-<div class="bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 rounded-lg p-3" style="height: {{ height }}px;">
+<div class="surface p-3" style="height: {{ height }}px;">
   <canvas id="{{ id }}"></canvas>
 </div>
 <script>
@@ -101,7 +101,7 @@
 {% set maxVal = 0 %}
 {% for row in matrix %}{% for v in row %}{% if v > maxVal %}{% set maxVal = v %}{% endif %}{% endfor %}{% endfor %}
 
-<div class="bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 rounded-lg p-3 overflow-x-auto">
+<div class="surface p-3 overflow-x-auto">
   <div style="display: grid; grid-template-columns: 2rem repeat({{ cols | length }}, minmax(14px, 1fr)); gap: 2px; min-width: 540px;">
     <div></div>
     {% for c in cols %}
@@ -120,7 +120,7 @@
 {% endmacro %}
 
 {% macro wrapped_card(label, title, subtitle="", stats=[], size="large", image="", image_alt="") %}
-<div class="relative overflow-hidden rounded-xl border border-gray-200 dark:border-zinc-800 bg-gradient-to-br from-gray-50 to-white dark:from-zinc-900 dark:to-black {% if size == 'large' %}p-6 md:p-10{% else %}p-5 md:p-6{% endif %}">
+<div class="relative overflow-hidden surface {% if size == 'large' %}p-6 md:p-10{% else %}p-5 md:p-6{% endif %}">
   <div class="absolute -top-10 -right-10 w-40 h-40 rounded-full opacity-10" style="background: var(--accent-color);"></div>
   <div class="relative {% if image %}grid md:grid-cols-[1fr_auto] gap-6 items-center{% endif %}">
     <div>
@@ -149,7 +149,7 @@
 {% endmacro %}
 
 {% macro stacked_area(id, labels, series, height=320) %}
-<div class="bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 rounded-lg p-3" style="height: {{ height }}px;">
+<div class="surface p-3" style="height: {{ height }}px;">
   <canvas id="{{ id }}"></canvas>
 </div>
 <script>
@@ -203,7 +203,7 @@
 
 {% macro now_playing_strip(track) %}
 {% if track %}
-<div class="flex items-center gap-3 p-3 rounded-lg border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 mb-4">
+<div class="flex items-center gap-3 p-3 surface mb-4">
   {% if track.albumImageUrl %}
     <img src="{{ track.albumImageUrl }}" alt="" class="w-10 h-10 rounded-md flex-shrink-0" width="40" height="40" loading="lazy">
   {% endif %}
@@ -237,7 +237,7 @@
 {% endmacro %}
 
 {% macro year_card(year, top_artist, top_track, plays, hours, new_artists) %}
-<div class="bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 rounded-lg p-4">
+<div class="surface surface-compact">
   <div class="flex items-baseline justify-between mb-2">
     <div class="text-xl font-semibold text-gray-900 dark:text-gray-100">{{ year }}</div>
     <div class="text-[0.65rem] uppercase tracking-widest text-gray-400">Year in review</div>
