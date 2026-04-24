@@ -2376,48 +2376,7 @@ picture img {
     color: color-mix(in srgb, var(--accent-b) 85%, white);
   }
 
-  /* ── Sidebar (structure only — content flows from frontmatter) ── */
-  .ed-sidebar-section {
-    padding: 0.95rem 1rem;
-    border: 1px solid rgb(229 231 235);
-    border-radius: 0.5rem;
-    margin-bottom: 0.9rem;
-    font-size: 0.82rem;
-    line-height: 1.55;
-    background-color: transparent;
-  }
 
-  .dark .ed-sidebar-section {
-    border-color: rgb(39 39 42);
-    background-color: transparent;
-  }
-
-  .ed-sidebar-label {
-    font-family: var(--font-mono);
-    font-size: 0.58rem;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: rgb(107 114 128);
-    margin-bottom: 0.5rem;
-    display: block;
-  }
-
-  .dark .ed-sidebar-label { color: rgb(156 163 175); }
-
-  .ed-sidebar-title {
-    font-size: 0.95rem;
-    font-weight: 600;
-    margin: 0 0 0.4rem;
-    color: rgb(17 24 39);
-  }
-
-  .dark .ed-sidebar-title { color: rgb(243 244 246); }
-
-  .ed-sidebar-body { color: rgb(55 65 81); }
-  .dark .ed-sidebar-body { color: rgb(209 213 219); }
-  .ed-sidebar-body p { margin: 0 0 0.5rem; }
-  .ed-sidebar-body p:last-child { margin-bottom: 0; }
-  .ed-sidebar-body a { color: var(--accent-a); text-decoration: underline; text-underline-offset: 2px; }
 
   /* ── Wide table wrapper — breaks out of article container, sizes to content ── */
   .wide-wrap {
