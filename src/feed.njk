@@ -83,6 +83,12 @@ permalink: /feed/
       type="button">
       Quotations
     </button>
+    <button @click="typeFilter = 'grandiloquent'"
+      :class="{ 'active': typeFilter === 'grandiloquent' }"
+      class="badge badge-filter badge-compact"
+      type="button">
+      Grandiloquent
+    </button>
   </div>
 
   {# ── STREAM VIEW ── #}

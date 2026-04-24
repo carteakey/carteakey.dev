@@ -1,0 +1,31 @@
+---
+layout: layouts/base.njk
+title: Grandiloquent
+description: A dictionary of elaborate developer terms, parables, and mental models.
+permalink: /grandiloquent/
+eleventyNavigation:
+  key: Grandiloquent
+  order: 9
+---
+
+{% include "components/breadcrumbs.njk" %}
+
+{% set pageEyebrow = "Lexicon" %}
+{% set pageTitle = "Grandiloquent" %}
+{% set pageDescription = "A dictionary of elaborate developer terms, parables, and mental models." %}
+{% set itemCount = collections.grandiloquent | length %}
+{% set itemLabel = "entries" %}
+{% include "components/page-header.njk" %}
+
+<div class="mt-8 space-y-6">
+  {% for item in collections.grandiloquent | reverse %}
+    <article class="card card-hover card-compact p-6">
+      <h2 class="text-xl font-bold tracking-tight text-gray-900 dark:text-white mb-2">
+        <a href="{{ item.url }}" class="no-underline hover:underline title-hover">{{ item.data.title }}</a>
+      </h2>
+      <div class="prose dark:prose-invert max-w-none text-sm text-gray-700 dark:text-gray-300">
+        {{ item.templateContent | safe }}
+      </div>
+    </article>
+  {% endfor %}
+</div>

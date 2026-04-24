@@ -25,6 +25,7 @@
   {% set isTil = item.type == 'til' %}
   {% set isFolio = item.type == 'folio' %}
   {% set isQuotation = item.type == 'quotation' %}
+  {% set isGrandiloquent = item.type == 'grandiloquent' %}
 
   {# Type color dot classes #}
   {% set dotColor = "bg-gray-400" %}
@@ -124,7 +125,7 @@
 
         {# Body Content #}
         <div class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed site-content prose-sm max-w-none">
-          {% if isNote or isNow or isTil %}
+          {% if isNote or isNow or isTil or isGrandiloquent %}
             <div x-data="{ expanded: false, isOverflowing: false }"
                  x-init="setTimeout(() => { if ($refs.content) isOverflowing = $refs.content.scrollHeight > 360; }, 50)">
               <div x-ref="content" :class="!expanded && isOverflowing ? 'max-h-[20rem] overflow-hidden relative' : ''">
@@ -133,7 +134,7 @@
               </div>
               <div x-show="isOverflowing" class="mt-2" x-cloak>
                 <button type="button" @click="expanded = !expanded" class="text-xs font-medium transition-colors font-sans hover:underline focus:outline-none" style="color: var(--accent-color);">
-                  <span x-show="!expanded">Read full {% if isNote %}note{% elif isNow %}update{% else %}TIL{% endif %} &darr;</span>
+                  <span x-show="!expanded">Read full {% if isNote %}note{% elif isNow %}update{% elif isTil %}TIL{% else %}entry{% endif %} &darr;</span>
                   <span x-show="expanded">Show less &uarr;</span>
                 </button>
               </div>
@@ -249,7 +250,7 @@
     {% endif %}
 
     {# Body content #}
-    {% if isNote or isNow or isQuotation %}
+    {% if isNote or isNow or isQuotation or isGrandiloquent %}
       {% set contentToRender = item.original.templateContent %}
       {% if contentToRender %}
         {% if isQuotation %}
@@ -309,6 +310,13 @@
         {% for tag in item.tags %}
           {% set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
           <a href="{{ tagUrl | url }}" class="badge badge-tag badge-compact badge-interactive" style="text-decoration: none;">#{{ tag }}</a>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </article>
+  {% endif %}
+{% endmacro %}
+"text-decoration: none;">#{{ tag }}</a>
         {% endfor %}
       </div>
     {% endif %}
