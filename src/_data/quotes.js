@@ -96,5 +96,10 @@ export default [
     quote:
       "I cannot remember the books I've read any more than the meals I have eaten; even so, they have made me.",
     author: "Ralph Waldo Emerson",
+  },
+  {
+    quote:
+      "We can do well in this country. We will have difficult times. We've had difficult times in the past -- and we will have difficult times in the future. It is not the end of violence; it is not the end of lawlessness; and it's not the end of disorder.\nBut the vast majority of [people] in this country want to live together, want to improve the quality of our life, and want justice for all human beings that abide in our land.\nAnd let's dedicate ourselves to what the Greeks wrote so many years ago: to tame the savageness of man and make gentle the life of this world. Let us dedicate ourselves to that, and say a prayer for our country and for our people.",
+    author: "Bobby Kennedy, 1968",
   }
 ];
