@@ -22,7 +22,7 @@ eleventyExcludeFromCollections: true
 {% set pageDescription = "A scrollable dashboard generated from <a href=\"https://github.com/carteakey/cartebase\" class=\"accent-link\">cartebase</a>, a Dogsheep-style SQLite warehouse of my personal data, spanning <strong>" ~ startYear ~ "–" ~ endYear ~ "</strong>. Inspired by <a href=\"https://howisfelix.today/\" class=\"accent-link\">howisFelix.today</a>. Finance, health, shopping, and private domains are deliberately excluded." %}
 {% include "components/page-header.njk" %}
 
-<div class="not-prose grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
+<div class="not-prose grid grid-cols-2 md:grid-cols-4 gap-3 mb-10">
   {{ cb.stat_tile("Spotify plays", cartebase.summary.plays_total | localeNumber, "since " + startYear) }}
   {{ cb.stat_tile("Minutes listened", totalMinutes | round(0) | localeNumber) }}
   {{ cb.stat_tile("Photos", cartebase.summary.photos_total | localeNumber) }}
@@ -31,7 +31,7 @@ eleventyExcludeFromCollections: true
 
 {{ cb.section_header("Music", "Spotify listening history", "music") }}
 
-<div class="not-prose mb-6">
+<div class="not-prose mb-10">
   {{ cb.wrapped_card(
     label="My top artist",
     title=topArtist.artist,
@@ -46,31 +46,31 @@ eleventyExcludeFromCollections: true
   ) }}
 </div>
 
-<div class="not-prose mb-4">
-  <h3 class="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-2">Plays per month</h3>
+<div class="not-prose mb-8">
+  <h3 class="editorial-kicker mb-4">Plays per month</h3>
   {{ cb.line_chart("chart_plays_per_month", cartebase.listening.plays_per_month | map('month'), cartebase.listening.plays_per_month | map('plays'), "Plays", height=180) }}
 </div>
 
-<div class="not-prose mb-4">
-  <h3 class="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-2">Artist share over time</h3>
-  <p class="text-xs text-gray-500 dark:text-gray-400 mb-2">
+<div class="not-prose mb-8">
+  <h3 class="editorial-kicker mb-3">Artist share over time</h3>
+  <p class="editorial-support-compact mb-4">
     The artists that cracked any year's top 10, as a percentage of that year's plays. "Other" is the long tail — even my most-played artists rarely account for more than a quarter of a year. Watch Radiohead climb after 2024.
   </p>
   {{ cb.stacked_area("chart_artist_share", cartebase.listening.artist_share_per_year.years, cartebase.listening.artist_share_per_year.series, height=360) }}
 </div>
 
-<div class="not-prose mb-4">
-  <h3 class="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-2">Listening rhythm (hour × weekday, UTC)</h3>
+<div class="not-prose mb-8">
+  <h3 class="editorial-kicker mb-4">Listening rhythm (hour × weekday, UTC)</h3>
   {{ cb.heatmap(cartebase.listening.hour_weekday_heatmap) }}
 </div>
 
-<p class="text-xs text-gray-500 dark:text-gray-400 mt-2 not-prose">
-  <a href="/listening/" class="accent-link">Top albums, tracks, year-in-review → /listening/</a>
+<p class="editorial-support mt-2 not-prose">
+  <a href="/listening/" class="editorial-meta-link">Top albums, tracks, year-in-review → /listening/</a>
 </p>
 
 {{ cb.section_header("Web", "Browsing history + bookmarks", "globe") }}
 
-<div class="not-prose mb-6">
+<div class="not-prose mb-8">
   {{ cb.wrapped_card(
     label="Most-visited domain",
     title=topDomain.domain,
@@ -83,26 +83,26 @@ eleventyExcludeFromCollections: true
   ) }}
 </div>
 
-<div class="not-prose mb-4">
-  <h3 class="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-2">Visits per month</h3>
+<div class="not-prose mb-8">
+  <h3 class="editorial-kicker mb-4">Visits per month</h3>
   {{ cb.line_chart("chart_visits_per_month", cartebase.browsing.visits_per_month | map('month'), cartebase.browsing.visits_per_month | map('visits'), "Visits", height=180) }}
 </div>
 
-<div class="not-prose mb-4">
-  <h3 class="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-2">Top domains — all time</h3>
+<div class="not-prose mb-10">
+  <h3 class="editorial-kicker mb-4">Top domains — all time</h3>
   {{ cb.share_bars(cartebase.browsing.top_domains_all_time, "domain", "visits", cartebase.summary.browsing_visits_total, limit=10) }}
 </div>
 
-<div class="not-prose mt-6 pt-4 border-t border-gray-200 dark:border-zinc-800">
-  <h3 class="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-2">Bookmarks</h3>
-  <p class="text-sm text-gray-500 dark:text-gray-400 mb-3">
+<div class="not-prose mt-10 pt-8 border-t border-gray-200 dark:border-zinc-800/80">
+  <h3 class="editorial-kicker mb-3">Bookmarks</h3>
+  <p class="editorial-support mb-4">
     {{ cartebase.summary.bookmarks_total | localeNumber }} bookmarks canonicalised — of those,
     <strong>{{ cartebase.bookmarks.with_notes_count | localeNumber }}</strong>
     have notes attached, a hint at which ones might graduate to the blogmarks feed someday.
   </p>
   <details class="text-xs">
     <summary class="cursor-pointer text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">Top bookmark domains</summary>
-    <div class="mt-2 grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-1">
+    <div class="mt-4 grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-1">
       {% for d in cartebase.bookmarks.top_domains | head(15) %}
         <div class="flex justify-between text-xs">
           <span class="text-gray-700 dark:text-gray-300 truncate">{{ d.domain }}</span>
@@ -115,39 +115,39 @@ eleventyExcludeFromCollections: true
 
 {{ cb.section_header("Gaming", "Steam library — " + cartebase.gaming.games_played | string + " of " + cartebase.gaming.games_owned | string + " games actually touched", "monitor") }}
 
-<div class="not-prose grid grid-cols-2 md:grid-cols-3 gap-3 mb-4">
+<div class="not-prose grid grid-cols-2 md:grid-cols-3 gap-3 mb-8">
   {{ cb.stat_tile("Hours logged", cartebase.gaming.total_hours | round(0) | localeNumber) }}
   {{ cb.stat_tile("Games played", cartebase.gaming.games_played | localeNumber, "of " + cartebase.gaming.games_owned | string + " owned") }}
   {{ cb.stat_tile("Avg / game played", (cartebase.gaming.total_hours / cartebase.gaming.games_played) | round(1) | string + " h") }}
 </div>
 
-<div class="not-prose mb-4">
-  <h3 class="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-2">Top games by hours</h3>
+<div class="not-prose mb-10">
+  <h3 class="editorial-kicker mb-4">Top games by hours</h3>
   {{ cb.share_bars(cartebase.gaming.top_games, "name", "hours", cartebase.gaming.total_hours, limit=10) }}
 </div>
 
 {{ cb.section_header("Photos", "Apple Photos library", "camera") }}
 
-<div class="not-prose mb-4">
-  <h3 class="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-2">Photos captured per month</h3>
+<div class="not-prose mb-10">
+  <h3 class="editorial-kicker mb-4">Photos captured per month</h3>
   {{ cb.line_chart("chart_photos_per_month", cartebase.photos.photos_per_month | map('month'), cartebase.photos.photos_per_month | map('count'), "Photos", height=180) }}
 </div>
 
-<div class="mt-12 border-t border-gray-200 dark:border-zinc-800 pt-6 text-xs text-gray-500 dark:text-gray-400 not-prose">
-  <h3 class="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-2">About this page</h3>
-  <p class="mb-2">
+<div class="mt-12 border-t border-gray-200 dark:border-zinc-800/80 pt-8 not-prose">
+  <h3 class="editorial-kicker mb-3">About this page</h3>
+  <p class="editorial-support mb-3">
     Generated at build time from JSON snapshots exported out of
     <a href="https://github.com/carteakey/cartebase" class="accent-link">cartebase</a>,
     a personal SQLite-for-life data warehouse inspired by
     <a href="https://dogsheep.github.io/" class="accent-link">Simon Willison's Dogsheep</a>
     and <a href="https://howisfelix.today/" class="accent-link">Felix Krause's howisFelix.today</a>.
   </p>
-  <p class="mb-2">
+  <p class="editorial-support mb-3">
     Aggregates only — no row-level personal data ships to the web. Portfolio, finance, health,
     and shopping data are deliberately excluded. Browsing history is filtered to drop
     localhost/internal domains and only aggregate counts appear.
   </p>
-  <p>
+  <p class="editorial-support">
     A public Datasette instance at <code>datasette.carteakey.dev</code> is a planned follow-up.
   </p>
 </div>

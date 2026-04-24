@@ -18,7 +18,7 @@
 - [x] Migrate `reading.njk` to the new shared primitive editorial type system. (2026-04-24)
 - [x] Migrate `projects.njk` to the new shared primitive editorial type system. (2026-04-24)
 - [x] Migrate `stats.njk` to the new shared primitive editorial type system. (2026-04-24)
-- [ ] Migrate remaining collection pages (e.g. `data.njk`, `cv.njk`, `workouts.njk`, `bookmarks.njk`, `quotes.njk`, `skills.njk`) off of utility stacks.
+- [x] Migrate remaining collection pages (e.g. `data.njk`, `cv.njk`, `workouts.njk`, `bookmarks.njk`, `quotes.njk`, `skills.njk`) off of utility stacks. (2026-04-24)
 - [x] Annotation comments should float into the side gutters on xl+ screens without hiding the existing Outline / "Join the Conversation" sidebars. Today they stay inline as a fallback. Options to explore: a JS measurer that aligns comments to highlighted lines, or a layout that reserves a dedicated annotation gutter separate from the sidebars. (updated 2026-04-22)
 
 ### User Experience
