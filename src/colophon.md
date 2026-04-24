@@ -38,9 +38,9 @@ This site is built with the **NEAT stack** - Netlify, Eleventy, Alpine, Tailwind
 
 ## Design
 
-The design is called **Dense Editorial** - built in February 2026 during a complete redesign away from card grids and glassmorphism toward flat list rows, monospace metadata, and tight vertical rhythm.
+The site uses a unified **Surface Component System**—an evolution of my previous "Dense Editorial" layout. It embraces glassmorphism, subtle elevation, and consistent rounded geometry (`.surface` classes) while retaining a focus on typographic hierarchy.
 
-Inspirations: Stratechery, Hacker News, Bear Blog, newsletter-style layouts.
+Inspirations: Modern OS interfaces, glassmorphism, and minimal but tactile digital environments.
 
 Key design decisions:
 - 15px base font, system sans-serif stack

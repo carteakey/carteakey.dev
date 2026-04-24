@@ -141,7 +141,7 @@
     </div>
     {% if image %}
     <div class="flex-shrink-0 mx-auto md:mx-0">
-      <img src="{{ image }}" alt="{{ image_alt or title }}" class="w-40 md:w-56 h-auto rounded-lg shadow-sm object-contain" loading="lazy" />
+      <img src="{{ image }}" alt="{{ image_alt or title }}" class="w-40 md:w-56 h-40 md:h-56 rounded-lg shadow-sm object-cover object-bottom" loading="lazy" />
     </div>
     {% endif %}
   </div>
