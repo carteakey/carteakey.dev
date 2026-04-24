@@ -1,0 +1,66 @@
+---
+layout: layouts/base.njk
+title: Colophon
+description: How this site is made, what it runs on, and the philosophy behind it.
+permalink: /colophon/
+eleventyNavigation:
+  key: Colophon
+  order: 99
+---
+
+{% include "components/breadcrumbs.njk" %}
+
+{% set pageTitle = "Colophon" %}
+{% set pageDescription = "How this site is made." %}
+{% include "components/page-header.njk" %}
+
+<div class="site-content">
+
+<h2>Stack</h2>
+
+<p>This site is built with the <strong>NEAT stack</strong> - Netlify, Eleventy, Alpine, Tailwind.</p>
+
+<table>
+  <thead><tr><th>Layer</th><th>Tool</th></tr></thead>
+  <tbody>
+    <tr><td>Static site generator</td><td><a href="https://www.11ty.dev/">Eleventy 3</a></td></tr>
+    <tr><td>CSS framework</td><td><a href="https://tailwindcss.com/">Tailwind CSS v4</a></td></tr>
+    <tr><td>JS sprinkles</td><td><a href="https://alpinejs.dev/">Alpine.js</a></td></tr>
+    <tr><td>Hosting</td><td><a href="https://netlify.com">Netlify</a></td></tr>
+    <tr><td>Comments</td><td><a href="https://giscus.app/">Giscus</a> (GitHub Discussions)</td></tr>
+    <tr><td>Upvotes</td><td><a href="https://upstash.com/">Upstash Redis</a> via Netlify Functions</td></tr>
+    <tr><td>Search</td><td>Client-side JS (no external service)</td></tr>
+    <tr><td>Analytics</td><td>None (privacy-first)</td></tr>
+    <tr><td>Fonts</td><td>Inter (sans), JetBrains Mono (code) - self-hosted</td></tr>
+    <tr><td>Icons</td><td><a href="https://feathericons.com/">Feather Icons</a></td></tr>
+    <tr><td>Syntax highlighting</td><td><a href="https://prismjs.com/">Prism.js</a> with custom themes</td></tr>
+    <tr><td>Images</td><td><a href="https://www.11ty.dev/docs/plugins/image/">eleventy-img</a> for responsive processing</td></tr>
+    <tr><td>Version</td><td>v{{ versions.version }}</td></tr>
+  </tbody>
+</table>
+
+<h2>Design</h2>
+
+<p>The site uses a unified <strong>Surface Component System</strong>—an evolution of my previous "Dense Editorial" layout. It embraces glassmorphism, subtle elevation, and consistent rounded geometry (<code>.surface</code> classes) while retaining a focus on typographic hierarchy.</p>
+
+<p>Inspirations: Modern OS interfaces, glassmorphism, and minimal but tactile digital environments.</p>
+
+<p>Key design decisions:</p>
+<ul>
+  <li>15px base font, system sans-serif stack</li>
+  <li><code>--accent-color</code> CSS variable driving all highlights - user-selectable from 22 colors</li>
+  <li>Flat <code>border-b</code> dividers instead of card shadows</li>
+  <li>List-first layouts with optional grid toggle</li>
+</ul>
+
+<h2>AI-Assisted Development</h2>
+
+<p>This site is actively developed with AI assistance - primarily GitHub Copilot (Claude Sonnet) and occasionally Codex. The AI helps with boilerplate, CSS wrangling, and feature implementation while I drive direction and make design decisions.</p>
+
+<p>Some posts are also AI-assisted and marked accordingly. I think transparency here matters.</p>
+
+<h2>Source</h2>
+
+<p>The source code is <a href="https://github.com/carteakey/carteakey.dev">on GitHub</a>. It's not a template - it's a mess - but feel free to poke around.</p>
+
+</div>

@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.9.22] - 2026-04-24
+
+### Fixed
+- Converted `about.md`, `more.md`, `colophon.md`, `now-archive.md`, and `folio/radiohead/links.md` to `.njk` — the markdown processor was wrapping Nunjucks-rendered `page-header` HTML in invalid `<p>` tags, causing horizontal indentation on the heading.
+- feed-card.njk: Loosened quotation clip threshold from `max-h-32` to `max-h-44` so more quote text is visible before the fade overlay.
+
 ## [1.9.21] - 2026-04-24
 
 ### Added

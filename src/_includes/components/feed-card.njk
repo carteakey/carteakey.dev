@@ -253,7 +253,7 @@
       {% set contentToRender = item.original.templateContent %}
       {% if contentToRender %}
         {% if isQuotation %}
-          <div class="relative mt-2 max-h-32 overflow-hidden">
+          <div class="relative mt-2 max-h-44 overflow-hidden">
             <div class="italic border-l-2 pl-3 py-0.5 relative text-xs leading-relaxed text-gray-600 dark:text-gray-300 max-w-none not-prose" style="border-color: var(--accent-color);">
               <span class="absolute left-1 -top-1.5 text-2xl font-serif text-gray-400 opacity-40 leading-none">"</span>
               <div class="relative z-10">{{ contentToRender | safe }}</div>

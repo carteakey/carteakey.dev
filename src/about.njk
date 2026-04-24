@@ -1,0 +1,76 @@
+---
+layout: layouts/home.njk
+title: About Me
+templateClass: tmpl-post
+eleventyNavigation:
+  key: About
+  order: 1
+---
+{% set fact = randomFacts | random %}
+{% set pageEyebrow = "Profile" %}
+{% set pageTitle = "About" %}
+{% set pageDescription = "Data analyst in Toronto. I spend my days with product and growth data, and my nights with self-hosted servers, local LLMs, and side projects." %}
+{% set pageMetaLabel = "Based in" %}
+{% set pageMeta = "Toronto, ON" %}
+{% set pageActions = [
+  { href: "https://www.linkedin.com/in/kartikeychauhan", label: "LinkedIn ↗", external: true, accent: true },
+  { href: "/guestbook/", label: "Guestbook →" }
+] %}
+{% include "components/page-header.njk" %}
+
+<div class="surface surface-compact not-prose mb-8">
+  <p class="m-0 text-sm text-gray-600 dark:text-gray-300">
+    <span class="font-semibold text-gray-900 dark:text-white">Random fact.</span>
+    <em>"{{ fact }}"</em>
+  </p>
+</div>
+
+<h2>Work</h2>
+
+<p>I'm currently a Senior Data Analyst at McAfee, working on product analytics, retention, and revenue optimization. Previously, I've worked in enterprise risk at a Big 5 bank and supply chain analytics at an F500 manufacturer. These days I'm also into AI/ML and experimenting with what's possible when you run models locally. Check out my <a href="https://github.com/carteakey">projects</a>.</p>
+
+<p>Here's a visual breakdown of <a href="/skills/">where my skills lie</a> across the data landscape.</p>
+
+<h2>Interests</h2>
+
+<p><strong>Gaming:</strong> Massive Soulsborne fan. Bloodborne's lore lives rent-free in my head. I also dabble in retro gaming and emulation when the nostalgia hits.</p>
+
+<p><strong>Movies:</strong> Big on horror and sci-fi. The Thing (1982) is peak cinema and I will die on that hill. I can (and will) rewatch the Dark Knight trilogy at any time.</p>
+
+<p><strong>Tech &amp; Self-hosting:</strong> I run a home server on a repurposed laptop and self-host everything I can. I believe in the indie web, RSS feeds, and ethical ads. This blog runs on the NEAT stack (Netlify, Eleventy, Alpine.js, Tailwind) and I've let AI agents loose on it - the commit history is wild.</p>
+
+<p><strong>Organization:</strong> I organize my life in Obsidian and call my vault "Vault 76" (yes, like Fallout). I've written about my <a href="/blog/vault-76-my-obsidian-vault-structure">vault structure</a> if you're into that sort of thing.</p>
+
+<h2>Hobbies</h2>
+
+<p><strong>Expert:</strong> Procrastination 🏆 · <strong>Pretty Good:</strong> Gaming, Movies · <strong>Okay-ish:</strong> Self-hosting · <strong>Meh:</strong> Fitness · <strong>Know a Little:</strong> Cycling, Audiophiling, Photography, Retro Gaming &amp; Emulation, Hiking · <strong>Barely Started:</strong> Rock Climbing, Cover Music</p>
+
+<p><strong>Wants to explore:</strong> Flight Sims (MSFS), Game Dev (Unreal), Content Creation, Remastering old games, DVD Commentaries, Travelling, Reading</p>
+
+<h2>Things I've Learned</h2>
+
+<ul>
+  <li>Never trust how you feel about your life past 9pm.</li>
+  <li>Don't get confined by titles, Arjuna. Your duty is to do karma (solve problems).</li>
+  <li>Will you do it if no one's watching?</li>
+  <li>Social skills atrophy. Use them.</li>
+  <li>We don't understand the truth, we just discover it.</li>
+</ul>
+
+<h2>Why I Write Here</h2>
+
+<p>I've always created personal sites as a form of expression - putting my learning out in public before anyone else gets to point it out. Exposing my stupidity and naivety on my own terms, basically.</p>
+
+<p>The philosophy I keep coming back to is this:</p>
+
+<blockquote>
+  <p>"[One] who works with the door open gets all kinds of interruptions, but [they] also occasionally gets clues as to what the world is and what might be important." - Richard Hamming</p>
+</blockquote>
+
+<p>Writing in public keeps me honest. Knowledge isn't a dump of everything you've seen or heard - it has to be relevant, distilled, worth saving. Not just something a Google search away. This site is my attempt at that.</p>
+
+<h2>Let's Connect</h2>
+
+<p>If any of this resonates with you, or if you just want to chat about Bloodborne lore, AI, or why self-hosting is both a blessing and a curse, hit me up at <strong>carteakey.dev[at]gmail[dot]com</strong>.</p>
+
+<p>You can also sign my <a href="/guestbook">guestbook</a> - yes, I have one in 2026. Retro is in.</p>
