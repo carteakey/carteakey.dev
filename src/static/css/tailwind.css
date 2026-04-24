@@ -516,7 +516,7 @@ picture img {
     grid-auto-flow: dense;
   }
 
-  .feed-card {
+  .feed-surface {
     break-inside: avoid;
   }
 
@@ -527,7 +527,7 @@ picture img {
   /* Shared surfaces */
   .surface,
   .card,
-  .feed-card-full {
+  .feed-surface-full {
     border-radius: 1rem;
     border: 1px solid rgb(229 231 235 / 0.72);
     background: color-mix(in srgb, white 78%, transparent);
@@ -537,7 +537,7 @@ picture img {
 
   .dark .surface,
   .dark .card,
-  .dark .feed-card-full {
+  .dark .feed-surface-full {
     border-color: rgb(55 65 81 / 0.68);
     background: color-mix(in srgb, rgb(17 24 39) 72%, transparent);
     box-shadow: 0 18px 40px -36px rgba(0, 0, 0, 0.65);
@@ -545,13 +545,13 @@ picture img {
 
   .surface-hover,
   .card-hover,
-  .feed-card-full {
+  .feed-surface-full {
     transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
   }
 
   .surface-hover:hover,
   .card-hover:hover,
-  .feed-card-full:hover {
+  .feed-surface-full:hover {
     transform: translateY(-1px);
     border-color: color-mix(in srgb, var(--accent-color) 24%, rgb(209 213 219));
     box-shadow: 0 24px 48px -36px color-mix(in srgb, var(--accent-color) 18%, rgba(15, 23, 42, 0.45));
@@ -559,7 +559,7 @@ picture img {
 
   .dark .surface-hover:hover,
   .dark .card-hover:hover,
-  .dark .feed-card-full:hover {
+  .dark .feed-surface-full:hover {
     border-color: color-mix(in srgb, var(--accent-color) 24%, rgb(75 85 99));
     box-shadow: 0 24px 48px -36px color-mix(in srgb, var(--accent-color) 12%, rgba(0, 0, 0, 0.7));
   }
@@ -1085,7 +1085,7 @@ picture img {
 
 /* ── Feed card (full variant, used in /feed grid) ── */
 @layer components {
-  .feed-card-full {
+  .feed-surface-full {
     background: transparent;
     border: 1px solid rgb(229 231 235);
     border-radius: 0.5rem;
@@ -1093,21 +1093,21 @@ picture img {
     transition: border-color 0.15s ease;
   }
 
-  .feed-card-full:hover {
+  .feed-surface-full:hover {
     border-color: rgb(209 213 219);
   }
 
-  .dark .feed-card-full {
+  .dark .feed-surface-full {
     background: transparent;
     border-color: rgb(39 39 42 / 0.8);
   }
 
-  .dark .feed-card-full:hover {
+  .dark .feed-surface-full:hover {
     border-color: rgb(63 63 70 / 0.8);
   }
 
   /* Fade overlay for clipped note content in feed cards */
-  .feed-card-note-fade {
+  .feed-surface-note-fade {
     background: linear-gradient(
       to top,
       rgb(241 245 249 / 0.92),
@@ -1116,7 +1116,7 @@ picture img {
     );
   }
 
-  .dark .feed-card-note-fade {
+  .dark .feed-surface-note-fade {
     background: linear-gradient(
       to top,
       rgb(39 39 42 / 0.94),
@@ -1126,7 +1126,7 @@ picture img {
   }
 
   /* Links inside note/now content previews in feed cards */
-  .feed-card-full .not-prose a {
+  .feed-surface-full .not-prose a {
     text-decoration: underline;
     text-underline-offset: 2px;
     text-decoration-color: currentColor;
@@ -1134,7 +1134,7 @@ picture img {
     transition: color 0.15s ease;
   }
 
-  .feed-card-full .not-prose a:hover {
+  .feed-surface-full .not-prose a:hover {
     color: var(--accent-color);
   }
 }
@@ -2158,7 +2158,7 @@ picture img {
   }
 
   /* Re-enable underlines for links inside feed card note/now previews */
-  .site-content .feed-card-full .not-prose a {
+  .site-content .feed-surface-full .not-prose a {
     text-decoration: underline;
     text-underline-offset: 2px;
     text-decoration-thickness: 1px;

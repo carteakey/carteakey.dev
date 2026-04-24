@@ -47,7 +47,7 @@ eleventyNavigation:
     {% set searchExcerpt = snippet.templateContent | striptags | replace('\n', ' ') | truncate(160, true, '') | lower %}
     <article
       class="py-3.5 group"
-      data-snippet-surface rounded-sm
+      data-snippet-card
       data-title="{{ snippet.data.title | lower }}"
       data-tags="{{ filteredTags | join(' ') | lower }}"
       data-language="{{ snippet.data.language | default('') | lower }}"
@@ -87,8 +87,8 @@ eleventyNavigation:
     {% set excerpt = snippet.templateContent | striptags | replace('\n', ' ') | truncate(100, true, '…') %}
     {% set searchExcerpt = snippet.templateContent | striptags | replace('\n', ' ') | truncate(160, true, '') | lower %}
     <article
-      class="feed-surface rounded-sm-full surface-compact"
-      data-snippet-surface rounded-sm
+      class="feed-surface surface-compact rounded-sm"
+      data-snippet-card
       data-title="{{ snippet.data.title | lower }}"
       data-tags="{{ filteredTags | join(' ') | lower }}"
       data-language="{{ snippet.data.language | default('') | lower }}"
@@ -129,13 +129,13 @@ eleventyNavigation:
 
 <script>
   const searchInput = document.getElementById('snippetSearch');
-  const snippetCards = Array.from(document.querySelectorAll('[data-snippet-surface rounded-sm]'));
+  const snippetCards = Array.from(document.querySelectorAll('[data-snippet-card]'));
 
   searchInput.addEventListener('input', (e) => {
     const term = e.target.value.trim().toLowerCase();
-    snippetCards.forEach((surface rounded-sm) => {
-      const matches = !term || ['title','tags','language','body'].some(k => (surface rounded-sm.dataset[k] || '').includes(term));
-      surface rounded-sm.closest('article').classList.toggle('hidden', !matches);
+    snippetCards.forEach((card) => {
+      const matches = !term || ['title','tags','language','body'].some(k => (card.dataset[k] || '').includes(term));
+      card.closest('article').classList.toggle('hidden', !matches);
     });
   });
 </script>

@@ -65,7 +65,7 @@ eleventyNavigation:
         {% set searchDesc = post.data.description | default('') | lower %}
         <article
           class="py-3.5 group"
-          data-blog-surface rounded-sm
+          data-blog-card
           data-title="{{ post.data.title | lower }}"
           data-tags="{{ filteredTags | join(' ') | lower }}"
           data-body="{{ searchDesc }}"
@@ -123,8 +123,8 @@ eleventyNavigation:
     {% set filteredTags = rawTags | filterTagList %}
     {% set searchDesc = post.data.description | default('') | lower %}
     <article
-      class="feed-surface rounded-sm-full surface-compact"
-      data-blog-surface rounded-sm
+      class="feed-surface surface-compact rounded-sm"
+      data-blog-card
       data-title="{{ post.data.title | lower }}"
       data-tags="{{ filteredTags | join(' ') | lower }}"
       data-body="{{ searchDesc }}"
@@ -169,13 +169,13 @@ eleventyNavigation:
 
 <script>
   const searchInput = document.getElementById('blogSearch');
-  const blogCards = Array.from(document.querySelectorAll('[data-blog-surface rounded-sm]'));
+  const blogCards = Array.from(document.querySelectorAll('[data-blog-card]'));
 
   searchInput.addEventListener('input', (e) => {
     const term = e.target.value.trim().toLowerCase();
-    blogCards.forEach((surface rounded-sm) => {
-      const matches = !term || ['title','tags','body'].some(k => (surface rounded-sm.dataset[k] || '').includes(term));
-      surface rounded-sm.closest('article').classList.toggle('hidden', !matches);
+    blogCards.forEach((card) => {
+      const matches = !term || ['title','tags','body'].some(k => (card.dataset[k] || '').includes(term));
+      card.closest('article').classList.toggle('hidden', !matches);
     });
   });
 </script>

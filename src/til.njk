@@ -39,7 +39,7 @@ eleventyNavigation:
     {% set searchExcerpt = entry.templateContent | striptags | replace('\n', ' ') | truncate(200, true, '') | lower %}
     <article
       class="py-3.5 group"
-      data-til-surface rounded-sm
+      data-til-card
       data-title="{{ entry.data.title | lower }}"
       data-tags="{{ filteredTags | join(' ') | lower }}"
       data-body="{{ searchExcerpt }}"
@@ -79,12 +79,12 @@ eleventyNavigation:
   if (tilSearch) {
     tilSearch.addEventListener('input', function() {
       const q = this.value.toLowerCase().trim();
-      document.querySelectorAll('[data-til-surface rounded-sm]').forEach(surface rounded-sm => {
+      document.querySelectorAll('[data-til-card]').forEach(card => {
         const match = !q ||
-          surface rounded-sm.dataset.title?.includes(q) ||
-          surface rounded-sm.dataset.tags?.includes(q) ||
-          surface rounded-sm.dataset.body?.includes(q);
-        surface rounded-sm.style.display = match ? '' : 'none';
+          card.dataset.title?.includes(q) ||
+          card.dataset.tags?.includes(q) ||
+          card.dataset.body?.includes(q);
+        card.style.display = match ? '' : 'none';
       });
     });
   }

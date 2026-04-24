@@ -71,7 +71,7 @@
 
   {# ── STREAM VARIANT (lifestream style) ── #}
   {% if variant == 'stream' %}
-  <article class="feed-surface rounded-sm-stream{% if extraClasses %} {{ extraClasses }}{% endif %} group py-1.5" {% if outerAttrs %}{{ outerAttrs | safe }}{% endif %}>
+  <article class="feed-surface-stream{% if extraClasses %} {{ extraClasses }}{% endif %} group py-1.5" {% if outerAttrs %}{{ outerAttrs | safe }}{% endif %}>
     <div class="flex flex-col md:flex-row md:gap-8">
       {# Left column: Date & Type #}
       <div class="shrink-0 md:w-28 pt-1 flex flex-row md:flex-col gap-3 md:gap-1.5 items-center md:items-start mb-3 md:mb-0">
@@ -130,7 +130,7 @@
                  x-init="setTimeout(() => { if ($refs.content) isOverflowing = $refs.content.scrollHeight > 360; }, 50)">
               <div x-ref="content" :class="!expanded && isOverflowing ? 'max-h-[20rem] overflow-hidden relative' : ''">
                 {{ item.original.templateContent | safe }}
-                <div x-show="!expanded && isOverflowing" class="feed-surface rounded-sm-note-fade absolute bottom-0 left-0 right-0 h-24 pointer-events-none"></div>
+                <div x-show="!expanded && isOverflowing" class="feed-surface-note-fade absolute bottom-0 left-0 right-0 h-24 pointer-events-none"></div>
               </div>
               <div x-show="isOverflowing" class="mt-2" x-cloak>
                 <button type="button" @click="expanded = !expanded" class="text-xs font-medium transition-colors  hover:underline focus:outline-none" style="color: var(--accent-color);">
@@ -224,7 +224,7 @@
 
   {# ── FULL VARIANT (feed page - clean surface rounded-sm in a grid) ── #}
   {% else %}
-  <article class="feed-surface rounded-sm feed-surface rounded-sm-full surface-compact{% if extraClasses %} {{ extraClasses }}{% endif %}" {% if outerAttrs %}{{ outerAttrs | safe }}{% endif %}>
+  <article class="surface surface-compact rounded-sm feed-surface-full{% if extraClasses %} {{ extraClasses }}{% endif %}" {% if outerAttrs %}{{ outerAttrs | safe }}{% endif %}>
     {# Header row: type dot + label + date #}
     <div class="flex items-center gap-2 mb-2.5">
       <span class="badge badge-type badge-compact {{ typeBadgeClass }}">{{ badgeLabel }}</span>
@@ -259,7 +259,7 @@
               <span class="absolute left-1 -top-1.5 text-2xl font-serif text-gray-400 opacity-40 leading-none">"</span>
               <div class="relative z-10">{{ contentToRender | safe }}</div>
             </div>
-            <div class="feed-surface rounded-sm-note-fade absolute bottom-0 left-0 right-0 h-8 pointer-events-none"></div>
+            <div class="feed-surface-note-fade absolute bottom-0 left-0 right-0 h-8 pointer-events-none"></div>
           </div>
           <div class="flex flex-col mt-2 shrink-0">
             <span class="font-medium text-gray-900 dark:text-gray-100 text-[0.7rem]">
@@ -278,7 +278,7 @@
         {% else %}
           <div class="relative mt-2 max-h-48 overflow-hidden">
             <div class="text-xs leading-relaxed text-gray-600 dark:text-gray-300 max-w-none not-prose">{{ contentToRender | safe }}</div>
-            <div class="feed-surface rounded-sm-note-fade absolute bottom-0 left-0 right-0 h-10 pointer-events-none"></div>
+            <div class="feed-surface-note-fade absolute bottom-0 left-0 right-0 h-10 pointer-events-none"></div>
           </div>
         {% endif %}
       {% elif item.summary %}
@@ -310,13 +310,6 @@
         {% for tag in item.tags %}
           {% set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
           <a href="{{ tagUrl | url }}" class="badge badge-tag badge-compact badge-interactive" style="text-decoration: none;">#{{ tag }}</a>
-        {% endfor %}
-      </div>
-    {% endif %}
-  </article>
-  {% endif %}
-{% endmacro %}
-"text-decoration: none;">#{{ tag }}</a>
         {% endfor %}
       </div>
     {% endif %}
