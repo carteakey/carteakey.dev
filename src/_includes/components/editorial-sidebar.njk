@@ -9,11 +9,13 @@
 {# `sidebar:` can also be a plain string — it gets rendered as markdown.    #}
 {% if sidebar %}
 {% set sidebarContent = sidebar.content if sidebar.content else (sidebar if sidebar is string else '') %}
-<section class="ed-sidebar-section not-prose">
-  {% if sidebar.label %}<span class="ed-sidebar-label">{{ sidebar.label }}</span>{% endif %}
-  {% if sidebar.title %}<h3 class="ed-sidebar-title">{{ sidebar.title }}</h3>{% endif %}
+<section class="surface surface-padding not-prose space-y-3">
+  <div class="space-y-1">
+    {% if sidebar.label %}<span class="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 block">{{ sidebar.label }}</span>{% endif %}
+    {% if sidebar.title %}<h3 class="text-sm font-semibold text-gray-800 dark:text-gray-100 m-0">{{ sidebar.title }}</h3>{% endif %}
+  </div>
   {% if sidebarContent %}
-  <div class="ed-sidebar-body">{{ sidebarContent | markdownify | safe }}</div>
+  <div class="text-sm leading-relaxed text-gray-600 dark:text-gray-300 space-y-2">{{ sidebarContent | markdownify | safe }}</div>
   {% endif %}
 </section>
 {% endif %}

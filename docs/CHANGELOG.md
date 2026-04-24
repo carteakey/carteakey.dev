@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.9.20] - 2026-04-24
+
+### Changed
+- Standardized the visual language of remaining legacy custom box containers (Newsletter form, Guestbook submission, Search results, 404 hints, EthicalAds wrappers, and Post sidebar boxes) to use the cohesive `.surface` component design system (glassmorphism backgrounds, standard rounded borders, and subtle box-shadows).
+
 ## [1.9.19] - 2026-04-24
 
 ### Added
