@@ -81,5 +81,15 @@ export default [
     quote:
       "Never trust a thought that occurs to you indoors.",
     author: "Friedrich Nietzsche",
+  },
+  {
+    quote:
+      "\"You miss 100% of the shots you don't take. - Wayne Gretzky\"",
+    author: "Michael Scott",
+  },
+  {
+    quote:
+      "The chains of habit are too light to be felt, until they are too heavy to be broken.",
+    author: "Warren Buffett",
   }
 ];
