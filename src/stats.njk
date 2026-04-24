@@ -68,22 +68,22 @@ permalink: /stats/
 
       <div class="py-2.5 flex items-baseline justify-between">
         <span class="editorial-support">Total words</span>
-        <span class="meta-text text-sm font-semibold text-gray-900 dark:text-gray-100">{{ totalWords | numberString }}</span>
+        <span class="editorial-title-compact">{{ totalWords | numberString }}</span>
       </div>
 
       <div class="py-2.5 flex items-baseline justify-between">
         <span class="editorial-support">Avg words / post</span>
-        <span class="meta-text text-sm font-semibold text-gray-900 dark:text-gray-100">{{ avgWords | numberString }}</span>
+        <span class="editorial-title-compact">{{ avgWords | numberString }}</span>
       </div>
 
       <div class="py-2.5 flex items-baseline justify-between">
         <span class="editorial-support">Posts this year</span>
-        <span class="meta-text text-sm font-semibold text-gray-900 dark:text-gray-100">{{ postsThisYear }}</span>
+        <span class="editorial-title-compact">{{ postsThisYear }}</span>
       </div>
 
       <div class="py-2.5 flex items-baseline justify-between">
         <span class="editorial-support">Posts this month</span>
-        <span class="meta-text text-sm font-semibold text-gray-900 dark:text-gray-100">{{ postsThisMonth }}</span>
+        <span class="editorial-title-compact">{{ postsThisMonth }}</span>
       </div>
 
       {% set latestPost = collections.posts | sortByDate | first %}
@@ -96,22 +96,22 @@ permalink: /stats/
 
       <div class="py-2.5 flex items-baseline justify-between">
         <span class="editorial-support">Post tags</span>
-        <span class="meta-text text-sm font-semibold text-gray-900 dark:text-gray-100">{{ collections.tagList.length }}</span>
+        <span class="editorial-title-compact">{{ collections.tagList.length }}</span>
       </div>
 
       <div class="py-2.5 flex items-baseline justify-between">
         <span class="editorial-support">Snippet languages</span>
-        <span class="meta-text text-sm font-semibold text-gray-900 dark:text-gray-100">{{ collections.snippets | map('data.language') | uniq | length }}</span>
+        <span class="editorial-title-compact">{{ collections.snippets | map('data.language') | uniq | length }}</span>
       </div>
 
       <div class="py-2.5 flex items-baseline justify-between">
         <span class="editorial-support">Total pages</span>
-        <span class="meta-text text-sm font-semibold text-gray-900 dark:text-gray-100">{{ collections.all.length }}</span>
+        <span class="editorial-title-compact">{{ collections.all.length }}</span>
       </div>
 
       <div class="py-2.5 flex items-baseline justify-between">
         <span class="editorial-support">Last build</span>
-        <span class="meta-text text-xs">{{ page.date | readableDate }} · {{ page.date | date('h:mm a') }}</span>
+        <span class="meta-text">{{ page.date | readableDate }} · {{ page.date | date('h:mm a') }}</span>
       </div>
 
     </div>
@@ -125,11 +125,11 @@ permalink: /stats/
       {% set count = byYear[yr] %}
       {% set pct = ((count / maxPerYear) * 100) | round %}
       <div class="flex items-center gap-3">
-        <span class="meta-text text-xs w-10 shrink-0 text-right">{{ yr }}</span>
+        <span class="meta-text w-10 shrink-0 text-right">{{ yr }}</span>
         <div class="flex-1 h-5 bg-gray-100 dark:bg-gray-800 rounded-sm overflow-hidden">
           <div class="h-full rounded-sm" style="width: {{ pct }}%; background: color-mix(in srgb, var(--accent-color) 75%, transparent);"></div>
         </div>
-        <span class="meta-text text-xs w-5 shrink-0 text-right">{{ count }}</span>
+        <span class="meta-text w-5 shrink-0 text-right">{{ count }}</span>
       </div>
       {% endfor %}
     </div>
@@ -146,28 +146,28 @@ permalink: /stats/
       <div class="flex-1 h-2 bg-gray-100 dark:bg-gray-800 rounded-sm overflow-hidden">
         <div class="h-full rounded-sm bg-emerald-500" style="width: {{ lighthouse.metrics.performance | default(0) }}%"></div>
       </div>
-      <span class="meta-text text-sm font-semibold text-gray-900 dark:text-gray-100 w-8 text-right">{{ lighthouse.metrics.performance | default(0) }}</span>
+      <span class="editorial-title-compact w-8 text-right">{{ lighthouse.metrics.performance | default(0) }}</span>
     </div>
     <div class="flex items-center gap-3 py-2.5 border-b border-gray-100 dark:border-gray-800/80">
       <span class="editorial-support w-28 shrink-0">Accessibility</span>
       <div class="flex-1 h-2 bg-gray-100 dark:bg-gray-800 rounded-sm overflow-hidden">
         <div class="h-full rounded-sm bg-blue-500" style="width: {{ lighthouse.metrics.accessibility | default(0) }}%"></div>
       </div>
-      <span class="meta-text text-sm font-semibold text-gray-900 dark:text-gray-100 w-8 text-right">{{ lighthouse.metrics.accessibility | default(0) }}</span>
+      <span class="editorial-title-compact w-8 text-right">{{ lighthouse.metrics.accessibility | default(0) }}</span>
     </div>
     <div class="flex items-center gap-3 py-2.5 border-b border-gray-100 dark:border-gray-800/80 sm:border-b-0">
       <span class="editorial-support w-28 shrink-0">Best Practices</span>
       <div class="flex-1 h-2 bg-gray-100 dark:bg-gray-800 rounded-sm overflow-hidden">
         <div class="h-full rounded-sm bg-purple-500" style="width: {{ lighthouse.metrics.bestPractices | default(0) }}%"></div>
       </div>
-      <span class="meta-text text-sm font-semibold text-gray-900 dark:text-gray-100 w-8 text-right">{{ lighthouse.metrics.bestPractices | default(0) }}</span>
+      <span class="editorial-title-compact w-8 text-right">{{ lighthouse.metrics.bestPractices | default(0) }}</span>
     </div>
     <div class="flex items-center gap-3 py-2.5">
       <span class="editorial-support w-28 shrink-0">SEO</span>
       <div class="flex-1 h-2 bg-gray-100 dark:bg-gray-800 rounded-sm overflow-hidden">
         <div class="h-full rounded-sm bg-amber-500" style="width: {{ lighthouse.metrics.seo | default(0) }}%"></div>
       </div>
-      <span class="meta-text text-sm font-semibold text-gray-900 dark:text-gray-100 w-8 text-right">{{ lighthouse.metrics.seo | default(0) }}</span>
+      <span class="editorial-title-compact w-8 text-right">{{ lighthouse.metrics.seo | default(0) }}</span>
     </div>
   </div>
   {% if lighthouse.updatedAt %}
@@ -193,11 +193,11 @@ permalink: /stats/
 <div class="not-prose mb-8">
   <h2 class="editorial-kicker mb-4">Stack</h2>
   <div class="divide-y divide-gray-100 dark:divide-gray-800/80">
-    <div class="py-2.5 flex justify-between"><span class="editorial-support">Generator</span><span class="meta-text text-sm">{{ eleventy.generator }}</span></div>
-    <div class="py-2.5 flex justify-between"><span class="editorial-support">CSS</span><span class="meta-text text-sm">Tailwind CSS v4</span></div>
-    <div class="py-2.5 flex justify-between"><span class="editorial-support">JS</span><span class="meta-text text-sm">Alpine.js</span></div>
-    <div class="py-2.5 flex justify-between"><span class="editorial-support">Hosting</span><span class="meta-text text-sm">Netlify</span></div>
-    <div class="py-2.5 flex justify-between"><span class="editorial-support">Comments</span><span class="meta-text text-sm">Giscus</span></div>
-    <div class="py-2.5 flex justify-between"><span class="editorial-support">Analytics</span><span class="meta-text text-sm">None (privacy-first)</span></div>
+    <div class="py-2.5 flex justify-between"><span class="editorial-support">Generator</span><span class="meta-text">{{ eleventy.generator }}</span></div>
+    <div class="py-2.5 flex justify-between"><span class="editorial-support">CSS</span><span class="meta-text">Tailwind CSS v4</span></div>
+    <div class="py-2.5 flex justify-between"><span class="editorial-support">JS</span><span class="meta-text">Alpine.js</span></div>
+    <div class="py-2.5 flex justify-between"><span class="editorial-support">Hosting</span><span class="meta-text">Netlify</span></div>
+    <div class="py-2.5 flex justify-between"><span class="editorial-support">Comments</span><span class="meta-text">Giscus</span></div>
+    <div class="py-2.5 flex justify-between"><span class="editorial-support">Analytics</span><span class="meta-text">None (privacy-first)</span></div>
   </div>
 </div>

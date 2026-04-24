@@ -16,49 +16,6 @@ eleventyNavigation:
 {% set pageActions = [{ href: "https://github.com/carteakey?tab=repositories", label: "Browse GitHub", external: true, accent: true }] %}
 
 {% include "components/page-header.njk" %}
-{# 
-<h2>Work</h2>
-<p>
-  A showcase of some of the key projects I've worked on in my professional life.
-</p>
-
-<div class="grid md:grid-cols-3 gap-3">
-  {% for project in projects_work.projects %}
-  <div class=" py-0 px-1 border-2 border-gray-200 shadow-xs dark:border-gray-600  flex flex-col">
-
-    {% image project.image_path, project.title ,"-mt-2 h-28 object-contain"%}
-
-    <div class="flex flex-col items-center">
-      <a href="{% if project.url %}{{ project.url }}{% endif %}" title="View Project">
-        <h3 class="items-center font-bold -mt-2">{{ project.title }}</h3>
-      </a>
-      <p class="text-center text-sm/6 -mt-2 text-gray-600 dark:text-gray-300 ">
-        {{ project.description }}
-      </p>
-    </div>
-    <div class="flex flex-row justify-between -mt-7">
-  
-    <ul class="flex flex-row list-none text-xs mx-0 px-0 my-0">
-      {% for tag in project.tags %}<li class="border p-1 mx-1 my-0">#{{ tag }}</li>{% endfor %}
-    </ul>
-    {% if project.github %}
-    <a class="self-center float-right" title="View Code" href="{{ project.github }}">
-      {% feather "code" %}
-    </a>
-    {% endif %}
-  </div>
-    <ul class="flex flex-col -mt-2">
-      {% for point in project.points %}<li class="text-xs mx-2">{{ point | safe }}</li>{% endfor %}
-    </ul>
-  </div>
-  {% endfor %}
-
-</div> #}
-{# <hr />
-<h2>Personal</h2>
-<p>
-  
-</p> #}
 
 <div class="mx-auto">
   <p class="editorial-support mb-6">Here are some of my personal projects.</p>
@@ -166,7 +123,7 @@ eleventyNavigation:
     Here are the rest of my projects on <a href="https://github.com/carteakey?tab=repositories" class="editorial-meta-link">GitHub</a>.
   </p>
   <div class="not-prose border border-gray-200 dark:border-gray-800 rounded-sm overflow-hidden">
-  <table class="w-full text-xs">
+  <table class="w-full">
     <thead>
       <tr class="bg-gray-50 dark:bg-gray-900/50">
         <th class="text-left px-3 py-2 meta-text">Updated</th>

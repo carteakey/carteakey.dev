@@ -25,7 +25,7 @@ eleventyNavigation:
           <span class="editorial-title">{{ book.title }}</span>
           <span class="editorial-support"> - {{ book.author }}</span>
         </div>
-        <span class="meta-text text-xs text-gray-500 dark:text-gray-400 shrink-0">{{ book.progress }}%</span>
+        <span class="meta-text shrink-0">{{ book.progress }}%</span>
       </div>
       {# Progress bar #}
       <div class="mt-2 h-1 bg-gray-100 dark:bg-gray-800 rounded-sm overflow-hidden w-full max-w-sm">
@@ -53,10 +53,10 @@ eleventyNavigation:
         </div>
         <div class="flex items-center gap-2 shrink-0 mt-0.5 sm:mt-0">
           {% if book.finished %}
-            <time class="meta-text text-xs text-gray-500 dark:text-gray-400">{{ book.finished | readableDate }}</time>
+            <time class="meta-text text-gray-500 dark:text-gray-400">{{ book.finished | readableDate }}</time>
           {% endif %}
           {% if book.rating %}
-            <span class="meta-text text-xs" style="color: var(--accent-color);">{{ "★" * book.rating }}{{ "☆" * (5 - book.rating) }}</span>
+            <span class="meta-text" style="color: var(--accent-color);">{{ "★" * book.rating }}{{ "☆" * (5 - book.rating) }}</span>
           {% endif %}
         </div>
       </div>
