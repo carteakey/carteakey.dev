@@ -6,135 +6,191 @@ eleventyNavigation:
   key: CV
   order: 5
 ---
-<h1>CV</h1>
+{% set pageEyebrow = "Professional" %}
+{% set pageTitle = "CV" %}
+{% set pageDescription = "Data professional with 5+ years of experience in strategic analytics and data-driven decision-making across cybersecurity, financial services, and manufacturing." %}
+{% set pageMetaLabel = "Location" %}
+{% set pageMeta = "Toronto, ON" %}
+{% set pageActions = [
+  { href: "https://www.linkedin.com/in/kartikeychauhan", label: "LinkedIn ↗", external: true, accent: true },
+  { href: "mailto:carteakey.dev@gmail.com", label: "Email →" }
+] %}
+{% include "components/page-header.njk" %}
 
-{# 
-<p>
-  Download my resume <a href="/static/Kartikey Chauhan - Resume.pdf">here</a>.
-</p> #}
-
-<style>
-.job-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  margin-top: 0rem;
-}
-</style>
-
-<div class="grid md:grid-cols-2">
-  <div class="p-0 my-2 bg-gray-200 dark:bg-gray-900 ">
-    <h2 class="mx-4 md:mt-0 text-lg">Summary</h2>
-    <p class="px-4">Data professional with 5+ years of experience in strategic analytics and data-driven decision-making. Strong background in statistical analysis, root cause identification, and transforming complex data into actionable insights across cybersecurity, financial services, and manufacturing sectors.</p>
-  </div>
-  <div class="p-1 my-2 justify-self-start flex flex-col">
-    <h2 class="mx-4 md:mt-0 text-lg">Contact</h2>
-    <ul class="list-outside">
-      <li><a href="https://carteakey.dev">👨🏻‍💻 carteakey.dev</a></li>
-      <li><a href="mailto:carteakey.dev@gmail.com">📧 carteakey.dev@gmail.com</a></li>
-      <li><a href="https://github.com/carteakey">👾 github/carteakey</a></li>
-      <li><a href="https://www.linkedin.com/in/kartikeychauhan/">🔗 linkedin/kartikeychauhan</a></li>
-    </ul>
-  </div>
+{# Contact Strip #}
+<div class="surface surface-compact not-prose mb-6 flex flex-wrap gap-x-5 gap-y-1.5 text-sm text-gray-600 dark:text-gray-400">
+  <a href="https://carteakey.dev" class="inline-flex items-center gap-1.5 hover:text-gray-900 dark:hover:text-white transition-colors" style="text-decoration:none;">
+    {% feather "globe", class="w-3.5 h-3.5 shrink-0 opacity-60" %} carteakey.dev
+  </a>
+  <a href="mailto:carteakey.dev@gmail.com" class="inline-flex items-center gap-1.5 hover:text-gray-900 dark:hover:text-white transition-colors" style="text-decoration:none;">
+    {% feather "mail", class="w-3.5 h-3.5 shrink-0 opacity-60" %} carteakey.dev@gmail.com
+  </a>
+  <a href="https://github.com/carteakey" class="inline-flex items-center gap-1.5 hover:text-gray-900 dark:hover:text-white transition-colors" style="text-decoration:none;" target="_blank" rel="noopener">
+    {% feather "github", class="w-3.5 h-3.5 shrink-0 opacity-60" %} github/carteakey
+  </a>
+  <a href="https://www.linkedin.com/in/kartikeychauhan/" class="inline-flex items-center gap-1.5 hover:text-gray-900 dark:hover:text-white transition-colors" style="text-decoration:none;" target="_blank" rel="noopener">
+    {% feather "linkedin", class="w-3.5 h-3.5 shrink-0 opacity-60" %} linkedin/kartikeychauhan
+  </a>
 </div>
 
-<h2 class="-mt-2">Skills</h2>
-<ul>
-  <li><strong>Programming:</strong> Python (NumPy, Pandas, Polars, Scikit-learn) · SQL · PL/SQL</li>
-  <li><strong>Data Processing:</strong> ETL · Data Mining · Data Quality Analysis · Process Optimization</li>
-  <li><strong>Big Data & Cloud:</strong> PySpark · Airflow · DBT · Azure ML · AWS Lambda · Oracle Cloud</li>
-  <li><strong>Visualization:</strong> Plotly · Matplotlib · Seaborn</li>
-  <li><strong>Additional:</strong> Statistical Testing · Project Management · Stakeholder Communication</li>
-</ul>
-
-<h2 class="-mt-2">Experience</h2>
-<div class="job-header -mt-2">
-  <h3>Senior Data Analyst</h3>
-  <em>Feb 2025 - Present</em>
-</div>
-<p class="-mt-2"><em>McAfee - Toronto, Canada</em></p>
-
-<ul>
-  <li>Led data analysis across multiple high-impact value creation projects spanning product analytics, retention, and revenue optimization.</li>
-  <li>Performed root cause analysis to identify key causal factors behind product telemetry gaps and user churn, transitioning projects from analysis to execution.</li>
-  <li>Created Random Forest models to estimate user churn and product issues based on customer feedback and usage data, improving retention strategies.</li>
-  <li>Developed 20+ dashboards and reports using Power BI and Tableau to visualize KPIs for marketing campaigns and customer behavior analysis.</li>
-  <li>Built data frameworks in Databricks to replace legacy spreadsheet-based models, automating reporting workflows with identical accuracy.</li>
-  <li>Regularly presented findings in executive reviews, defending data methodologies directly to senior leadership.</li>
-</ul>
-<p><strong>Technology:</strong> Databricks · Python · SQL · Power BI · Tableau</p>
-<p><strong>Domain:</strong> Product Analytics · Retention Analytics · Revenue Optimization · Financial Reporting</p>
-<hr  class="mt-1 -mb-1"/>
-
-<div class="job-header -mt-2">
-  <h3>Senior Data Analyst</h3>
-  <em>Aug 2022 - Jan 2025</em>
-</div>
-<p class="-mt-2"><em>Bank of Montreal, via TCS - Toronto, Canada</em></p>
-<ul>
-  <li>Developed a <strong>data quality framework</strong> for <strong>Enterprise Risk & Basel reporting</strong> using Python (<strong>Polars, NumPy, Pandas</strong>) and SQL, reducing manual validation effort by <strong>90%</strong>.</li>
-  <li>Engineered a <strong>synthetic data generation system</strong> to validate Basel reporting requirements, ensuring full regulatory coverage.</li>
-  <li>Built an <strong>internal Python library</strong> automating <strong>data validation and reporting workflows</strong>, processing <strong>10,000+</strong> data points efficiently.</li>
-  <li>Implemented an <strong>automated monitoring system</strong> to detect trends and anomalies in risk data.</li>
-  <li>Collaborated with business analysts to transform complex data patterns into actionable insights.</li>
-</ul>
-<p><strong>Technology:</strong> Python · Polars · Pandas · NumPy · SQL · Pyodbc</p>
-<p><strong>Domain:</strong> Enterprise Risk · Basel III · Financial Reporting · Data Quality · Data Governance</p>
-
-<hr  class="mt-1 -mb-1"/>
-
-<div class="job-header">
-  <h3>Technical Consultant</h3>
-  <em>Jul 2019 - Jul 2022</em>
-</div>
-<p class="-mt-2"><em>Avery Dennison, via TCS - Mumbai, India</em></p>
-<ul>
-  <li>Developed an <strong>analytics tool</strong> using <strong>decision trees and pattern recognition</strong> to classify order anomalies, achieving <strong>85% accuracy</strong> in predicting order delays.</li>
-  <li>Engineered an <strong>event-driven data processing system</strong>, improving order processing efficiency by <strong>5x</strong>.</li>
-  <li>Created an <strong>automated data adjustment utility</strong>, reducing resolution time from <strong>4 hours to 15 minutes</strong>.</li>
-  <li>Built a <strong>dynamic pricing and revenue optimization system</strong>, generating <strong>$100k+ annual savings</strong>.</li>
-</ul>
-<p><strong>Technology:</strong> PL/SQL · Oracle Database · Python · Oracle E-Business Suite · Java · Git</p>
-<p><strong>Domain:</strong> Supply Chain Analytics · ERP · Business Intelligence</p>
-
-
-<h2 class="-mt-2">Education</h2>
-
-<div class="job-header">
-  <h3>MSc - Data Science and Analytics</h3>
-  <em>Sep 2023 - Sep 2024</em>
-</div>
-<p class="-mt-2"><em>Toronto Metropolitan University, Toronto, Canada</em></p>
-<ul>
-  <li><strong>GPA:</strong> 4.33/4.33</li>
-  <li><strong>Coursework:</strong> Deep Learning, Big Data, NLP, Data Mining</li>
-  <li><strong>Research:</strong> Developed an <strong>LLM-augmented recommendation system</strong>, improving prediction accuracy by <strong>5-10%</strong></li>
-  <li>Conducted comparative analysis of classification algorithms for <strong>tabular data</strong></li>
-  <li>Analyzed world energy consumption trends using <strong>Hive and Spark</strong></li>
-  <li>Designed <strong>NLP models</strong> for text analysis</li>
-</ul>
-
-<div class="job-header">
-  <h3>B.Tech - Electronics & Communication</h3>
-  <em>2015 - 2019</em>
-</div>
-<p class="-mt-2"><em>JSS Academy of Technical Education, Noida, India</em></p>
-
-<h2 class="-mt-2">Courses & Certificates</h2>
-
-<div class="grid grid-cols-2 gap-2 -mx-2">
-  {% for badge in badges.badges %}
-    <div class="border border-gray-200 flex gap-2 content-center items-center px-2 my-0 py-0">
-      <div class="flex items-center">
-        <div class="w-10 h-16 items-center flex">
-          {% image badge.image_path, badge.title %}
-        </div>
-      </div>
-      <span class="text-sm">
-        <a href="https://www.credly.com/badges/{{badge.badge_id}}/public_url">
-          {{ badge.title }}
-        </a>
-      </span>
+{# Skills #}
+<section class="not-prose mb-6">
+  <h2 class="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-3 flex items-center gap-1.5">
+    {% feather "zap", class="w-3.5 h-3.5 opacity-70" %} Skills
+  </h2>
+  <div class="surface surface-compact space-y-2 text-sm text-gray-700 dark:text-gray-300">
+    <div class="flex flex-wrap gap-x-2 gap-y-0.5">
+      <span class="font-semibold text-gray-900 dark:text-gray-100 shrink-0">Programming:</span>
+      <span>Python (NumPy, Pandas, Polars, Scikit-learn) · SQL · PL/SQL</span>
     </div>
-  {% endfor %}
-</div>
+    <div class="flex flex-wrap gap-x-2 gap-y-0.5">
+      <span class="font-semibold text-gray-900 dark:text-gray-100 shrink-0">Data Processing:</span>
+      <span>ETL · Data Mining · Data Quality Analysis · Process Optimization</span>
+    </div>
+    <div class="flex flex-wrap gap-x-2 gap-y-0.5">
+      <span class="font-semibold text-gray-900 dark:text-gray-100 shrink-0">Big Data &amp; Cloud:</span>
+      <span>PySpark · Airflow · DBT · Azure ML · AWS Lambda · Oracle Cloud</span>
+    </div>
+    <div class="flex flex-wrap gap-x-2 gap-y-0.5">
+      <span class="font-semibold text-gray-900 dark:text-gray-100 shrink-0">Visualization:</span>
+      <span>Power BI · Tableau · Plotly · Matplotlib · Seaborn</span>
+    </div>
+    <div class="flex flex-wrap gap-x-2 gap-y-0.5">
+      <span class="font-semibold text-gray-900 dark:text-gray-100 shrink-0">Additional:</span>
+      <span>Statistical Testing · Project Management · Stakeholder Communication</span>
+    </div>
+  </div>
+</section>
+
+{# Experience #}
+<section class="not-prose mb-6">
+  <h2 class="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-3 flex items-center gap-1.5">
+    {% feather "briefcase", class="w-3.5 h-3.5 opacity-70" %} Experience
+  </h2>
+
+  <div class="space-y-3">
+
+    <div class="surface surface-compact">
+      <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-0.5 mb-1">
+        <h3 class="text-sm font-semibold text-gray-900 dark:text-gray-100 m-0">Senior Data Analyst</h3>
+        <span class="meta-text text-xs text-gray-400">Feb 2025 – Present</span>
+      </div>
+      <p class="text-xs text-gray-500 dark:text-gray-400 mt-0 mb-2 italic">McAfee · Toronto, Canada</p>
+      <ul class="space-y-1 text-sm text-gray-700 dark:text-gray-300 list-disc list-inside marker:text-gray-400">
+        <li>Led data analysis across multiple high-impact value creation projects spanning product analytics, retention, and revenue optimization.</li>
+        <li>Performed root cause analysis to identify key causal factors behind product telemetry gaps and user churn, transitioning projects from analysis to execution.</li>
+        <li>Created Random Forest models to estimate user churn and product issues based on customer feedback and usage data, improving retention strategies.</li>
+        <li>Developed 20+ dashboards and reports using Power BI and Tableau to visualize KPIs for marketing campaigns and customer behavior analysis.</li>
+        <li>Built data frameworks in Databricks to replace legacy spreadsheet-based models, automating reporting workflows.</li>
+        <li>Regularly presented findings in executive reviews, defending data methodologies directly to senior leadership.</li>
+      </ul>
+      <div class="flex flex-wrap gap-1 mt-3">
+        <span class="badge badge-tag badge-compact">Databricks</span>
+        <span class="badge badge-tag badge-compact">Python</span>
+        <span class="badge badge-tag badge-compact">SQL</span>
+        <span class="badge badge-tag badge-compact">Power BI</span>
+        <span class="badge badge-tag badge-compact">Tableau</span>
+        <span class="badge badge-compact" style="background: color-mix(in srgb, #3b82f6 12%, transparent); color: #3b82f6; border: 1px solid color-mix(in srgb, #3b82f6 30%, transparent);">Product Analytics</span>
+        <span class="badge badge-compact" style="background: color-mix(in srgb, #3b82f6 12%, transparent); color: #3b82f6; border: 1px solid color-mix(in srgb, #3b82f6 30%, transparent);">Retention</span>
+      </div>
+    </div>
+
+    <div class="surface surface-compact">
+      <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-0.5 mb-1">
+        <h3 class="text-sm font-semibold text-gray-900 dark:text-gray-100 m-0">Senior Data Analyst</h3>
+        <span class="meta-text text-xs text-gray-400">Aug 2022 – Jan 2025</span>
+      </div>
+      <p class="text-xs text-gray-500 dark:text-gray-400 mt-0 mb-2 italic">Bank of Montreal, via TCS · Toronto, Canada</p>
+      <ul class="space-y-1 text-sm text-gray-700 dark:text-gray-300 list-disc list-inside marker:text-gray-400">
+        <li>Developed a <strong>data quality framework</strong> for <strong>Enterprise Risk &amp; Basel reporting</strong> using Python (Polars, NumPy, Pandas) and SQL, reducing manual validation effort by <strong>90%</strong>.</li>
+        <li>Engineered a <strong>synthetic data generation system</strong> to validate Basel reporting requirements, ensuring full regulatory coverage.</li>
+        <li>Built an <strong>internal Python library</strong> automating data validation and reporting workflows, processing <strong>10,000+</strong> data points efficiently.</li>
+        <li>Implemented an <strong>automated monitoring system</strong> to detect trends and anomalies in risk data.</li>
+        <li>Collaborated with business analysts to transform complex data patterns into actionable insights.</li>
+      </ul>
+      <div class="flex flex-wrap gap-1 mt-3">
+        <span class="badge badge-tag badge-compact">Python</span>
+        <span class="badge badge-tag badge-compact">Polars</span>
+        <span class="badge badge-tag badge-compact">Pandas</span>
+        <span class="badge badge-tag badge-compact">SQL</span>
+        <span class="badge badge-compact" style="background: color-mix(in srgb, #7c3aed 12%, transparent); color: #7c3aed; border: 1px solid color-mix(in srgb, #7c3aed 30%, transparent);">Enterprise Risk</span>
+        <span class="badge badge-compact" style="background: color-mix(in srgb, #7c3aed 12%, transparent); color: #7c3aed; border: 1px solid color-mix(in srgb, #7c3aed 30%, transparent);">Basel III</span>
+      </div>
+    </div>
+
+    <div class="surface surface-compact">
+      <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-0.5 mb-1">
+        <h3 class="text-sm font-semibold text-gray-900 dark:text-gray-100 m-0">Technical Consultant</h3>
+        <span class="meta-text text-xs text-gray-400">Jul 2019 – Jul 2022</span>
+      </div>
+      <p class="text-xs text-gray-500 dark:text-gray-400 mt-0 mb-2 italic">Avery Dennison, via TCS · Mumbai, India</p>
+      <ul class="space-y-1 text-sm text-gray-700 dark:text-gray-300 list-disc list-inside marker:text-gray-400">
+        <li>Developed an <strong>analytics tool</strong> using decision trees and pattern recognition to classify order anomalies, achieving <strong>85% accuracy</strong> in predicting order delays.</li>
+        <li>Engineered an <strong>event-driven data processing system</strong>, improving order processing efficiency by <strong>5×</strong>.</li>
+        <li>Created an <strong>automated data adjustment utility</strong>, reducing resolution time from <strong>4 hours to 15 minutes</strong>.</li>
+        <li>Built a <strong>dynamic pricing and revenue optimization system</strong>, generating <strong>$100k+ annual savings</strong>.</li>
+      </ul>
+      <div class="flex flex-wrap gap-1 mt-3">
+        <span class="badge badge-tag badge-compact">PL/SQL</span>
+        <span class="badge badge-tag badge-compact">Oracle DB</span>
+        <span class="badge badge-tag badge-compact">Python</span>
+        <span class="badge badge-tag badge-compact">Java</span>
+        <span class="badge badge-compact" style="background: color-mix(in srgb, #10b981 12%, transparent); color: #10b981; border: 1px solid color-mix(in srgb, #10b981 30%, transparent);">Supply Chain</span>
+        <span class="badge badge-compact" style="background: color-mix(in srgb, #10b981 12%, transparent); color: #10b981; border: 1px solid color-mix(in srgb, #10b981 30%, transparent);">ERP</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+{# Education #}
+<section class="not-prose mb-6">
+  <h2 class="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-3 flex items-center gap-1.5">
+    {% feather "book", class="w-3.5 h-3.5 opacity-70" %} Education
+  </h2>
+
+  <div class="space-y-3">
+
+    <div class="surface surface-compact">
+      <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-0.5 mb-1">
+        <h3 class="text-sm font-semibold text-gray-900 dark:text-gray-100 m-0">MSc – Data Science and Analytics</h3>
+        <span class="meta-text text-xs text-gray-400">Sep 2023 – Sep 2024</span>
+      </div>
+      <p class="text-xs text-gray-500 dark:text-gray-400 mt-0 mb-2 italic">Toronto Metropolitan University · Toronto, Canada</p>
+      <ul class="space-y-1 text-sm text-gray-700 dark:text-gray-300 list-disc list-inside marker:text-gray-400">
+        <li><strong>GPA:</strong> 4.33 / 4.33</li>
+        <li><strong>Coursework:</strong> Deep Learning · Big Data · NLP · Data Mining</li>
+        <li><strong>Research:</strong> LLM-augmented recommendation system, improving prediction accuracy by 5–10%</li>
+        <li>Comparative analysis of classification algorithms for tabular data; NLP models for text analysis</li>
+      </ul>
+    </div>
+
+    <div class="surface surface-compact">
+      <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-0.5 mb-1">
+        <h3 class="text-sm font-semibold text-gray-900 dark:text-gray-100 m-0">B.Tech – Electronics &amp; Communication</h3>
+        <span class="meta-text text-xs text-gray-400">2015 – 2019</span>
+      </div>
+      <p class="text-xs text-gray-500 dark:text-gray-400 mt-0 mb-1 italic">JSS Academy of Technical Education · Noida, India</p>
+    </div>
+
+  </div>
+</section>
+
+{# Courses & Certificates #}
+<section class="not-prose mb-4">
+  <h2 class="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-3 flex items-center gap-1.5">
+    {% feather "award", class="w-3.5 h-3.5 opacity-70" %} Courses &amp; Certificates
+  </h2>
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+    {% for badge in badges.badges %}
+      <a href="https://www.credly.com/badges/{{ badge.badge_id }}/public_url" target="_blank" rel="noopener"
+         class="surface surface-compact surface-hover flex items-center gap-3 group" style="text-decoration: none;">
+        <div class="w-10 h-10 shrink-0 flex items-center justify-center">
+          {% image badge.image_path, badge.title, "w-10 h-10 object-contain" %}
+        </div>
+        <span class="text-sm text-gray-700 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white transition-colors leading-snug">{{ badge.title }}</span>
+        {% feather "external-link", class="w-3 h-3 shrink-0 ml-auto text-gray-300 dark:text-gray-600 group-hover:text-gray-500 dark:group-hover:text-gray-400 transition-colors" %}
+      </a>
+    {% endfor %}
+  </div>
+</section>

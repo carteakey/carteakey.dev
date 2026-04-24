@@ -252,31 +252,34 @@
     {% if isNote or isNow or isQuotation %}
       {% set contentToRender = item.original.templateContent %}
       {% if contentToRender %}
-        <div class="relative mt-2 max-h-48 overflow-hidden flex flex-col">
-          {% if isQuotation %}
-            <div class="italic border-l-2 pl-3 py-0.5 relative text-xs leading-relaxed text-gray-600 dark:text-gray-300 max-w-none not-prose mb-3" style="border-color: var(--accent-color);">
+        {% if isQuotation %}
+          <div class="relative mt-2 max-h-32 overflow-hidden">
+            <div class="italic border-l-2 pl-3 py-0.5 relative text-xs leading-relaxed text-gray-600 dark:text-gray-300 max-w-none not-prose" style="border-color: var(--accent-color);">
               <span class="absolute left-1 -top-1.5 text-2xl font-serif text-gray-400 opacity-40 leading-none">"</span>
               <div class="relative z-10">{{ contentToRender | safe }}</div>
             </div>
-            <div class="flex flex-col mb-1 shrink-0">
-              <span class="font-medium text-gray-900 dark:text-gray-100 text-[0.7rem]">
-                - {% if item.original.data.authorUrl %}<a href="{{ item.original.data.authorUrl }}" target="_blank" rel="noopener" class="hover:underline">{{ item.original.data.author }}</a>{% else %}{{ item.original.data.author }}{% endif %}
+            <div class="feed-card-note-fade absolute bottom-0 left-0 right-0 h-8 pointer-events-none"></div>
+          </div>
+          <div class="flex flex-col mt-2 shrink-0">
+            <span class="font-medium text-gray-900 dark:text-gray-100 text-[0.7rem]">
+              - {% if item.original.data.authorUrl %}<a href="{{ item.original.data.authorUrl }}" target="_blank" rel="noopener" class="hover:underline">{{ item.original.data.author }}</a>{% else %}{{ item.original.data.author }}{% endif %}
+            </span>
+            {% if item.original.data.source %}
+              <span class="text-[0.65rem] text-gray-500 mt-0.5 leading-snug">
+                {% if item.original.data.sourceUrl %}
+                  <a href="{{ item.original.data.sourceUrl }}" target="_blank" rel="noopener" class="hover:underline" style="color: inherit; text-decoration: none;">{{ item.original.data.source }}</a>
+                {% else %}
+                  {{ item.original.data.source }}
+                {% endif %}
               </span>
-              {% if item.original.data.source %}
-                <span class="text-[0.65rem] text-gray-500 mt-0.5 leading-snug">
-                  {% if item.original.data.sourceUrl %}
-                    <a href="{{ item.original.data.sourceUrl }}" target="_blank" rel="noopener" class="hover:underline" style="color: inherit; text-decoration: none;">{{ item.original.data.source }}</a>
-                  {% else %}
-                    {{ item.original.data.source }}
-                  {% endif %}
-                </span>
-              {% endif %}
-            </div>
-          {% else %}
+            {% endif %}
+          </div>
+        {% else %}
+          <div class="relative mt-2 max-h-48 overflow-hidden">
             <div class="text-xs leading-relaxed text-gray-600 dark:text-gray-300 max-w-none not-prose">{{ contentToRender | safe }}</div>
-          {% endif %}
-          <div class="feed-card-note-fade absolute bottom-0 left-0 right-0 h-10 pointer-events-none"></div>
-        </div>
+            <div class="feed-card-note-fade absolute bottom-0 left-0 right-0 h-10 pointer-events-none"></div>
+          </div>
+        {% endif %}
       {% elif item.summary %}
         <p class="mt-1.5 text-xs leading-relaxed text-gray-500 dark:text-gray-400 m-0">{{ item.summary }}</p>
       {% endif %}

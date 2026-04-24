@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.9.21] - 2026-04-24
+
+### Added
+- cv.njk: Full page redesign using site-consistent `.surface` cards, `page-header` component, feather icon section headings, tech/domain badge pills, and contact strip — replaces raw HTML tables and inline styles.
+
+### Changed
+- base.njk: Rebalanced footer mega-menu — moved Games, Workouts, Listening, and Life in data from the overloaded EXPLORE column into ABOUT ME for even distribution.
+- base.njk: Changed Vibes nav icon from `music` to `image` (visual/meme collection, not music).
+- post.njk: Moved AI Assisted / AI Generated notice banner from below the copy-markdown button to immediately after the Draft notice, grouping all post-status notices together at the top of the article header. Uses `.surface surface-compact` styling for visual consistency.
+
+### Fixed
+- feed-card.njk: Fixed quotation author/source attribution being clipped by `overflow-hidden` in grid view. Quote text now clips independently in its own `max-h-32` container while author name and source are always visible below it.
+
 ## [1.9.20] - 2026-04-24
 
 ### Changed
