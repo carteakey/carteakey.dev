@@ -21,7 +21,7 @@ lastUpdated: 2026-03-05
 {% include "components/page-header.njk" %}
 
 <section class="surface surface-padding not-prose mb-8">
-  <ul class="list-disc space-y-2 pl-4 m-0">
+  <ul class="now-log">
     <li>On a bit of a <strong>project building spree</strong> - Claude Code has become my pair programmer and the speed is genuinely startling. Shipped more in the past few weeks than the past few months (read: years). Claude tells me I've used ~4× more tokens than the word count of Dune. Checks out. And that's just one device - I've got Antigravity, Copilot, and 3 others to multiply by.</li>
   </ul>
 
@@ -30,7 +30,7 @@ lastUpdated: 2026-03-05
   </div>
 </section>
 
-<ul class="list-disc space-y-2 pl-4">
+<ul class="now-log">
   <li>Built <a href="/blog/aidar-tracking-ai-writing-drift/" class="accent-link">aidar</a> - a tool that scans websites and measures stylistic signals associated with AI-era writing. Still very early.</li>
   <li>Built <a href="https://window.carteakey.dev" class="accent-link">window.carteakey.dev</a> - a live window to a Toronto intersection. Raspberry Pi 4B, a Pi camera, an HLS stream, and a Cloudflare tunnel.</li>
   <li>Also been putting together the <a href="/folio/" class="accent-link">folio</a> - themed standalone pages for things I obsess over. First one is a Radiohead web archive. A Bloodborne one is next.</li>
@@ -49,14 +49,14 @@ lastUpdated: 2026-03-05
 {# ── Currently Reading ── #}
 {% if reading.currently_reading and reading.currently_reading.length > 0 %}
 <div class="not-prose mt-10">
-  <h2 class="text-xs font-semibold uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-3">Currently Reading</h2>
+  <h2 class="editorial-kicker mb-3">Currently Reading</h2>
   <div class="divide-y divide-gray-100 dark:divide-gray-800/80">
     {% for book in reading.currently_reading %}
     <div class="py-3">
       <div class="flex items-baseline justify-between gap-4">
         <div class="min-w-0">
-          <span class="font-medium text-sm text-gray-900 dark:text-gray-100">{{ book.title }}</span>
-          <span class="text-sm text-gray-400 dark:text-gray-500"> - {{ book.author }}</span>
+          <span class="editorial-title-compact">{{ book.title }}</span>
+          <span class="editorial-support-compact"> - {{ book.author }}</span>
         </div>
         <span class="meta-text text-xs text-gray-400 shrink-0">{{ book.progress }}%</span>
       </div>
@@ -66,10 +66,10 @@ lastUpdated: 2026-03-05
     </div>
     {% endfor %}
   </div>
-  <a href="/reading/" class="text-xs text-gray-400 hover:underline mt-2 inline-block" style="text-decoration:none;">Full reading shelf →</a>
+  <a href="/reading/" class="editorial-meta-link mt-2 inline-block">Full reading shelf →</a>
 </div>
 {% endif %}
 
-<p class="text-sm text-gray-500 dark:text-gray-400 mt-10">
+<p class="editorial-support mt-10">
   Want to see how this page has changed? <a href="/now/archive/" class="accent-link">Browse the archives →</a>
 </p>

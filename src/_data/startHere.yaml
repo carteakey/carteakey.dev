@@ -1,0 +1,22 @@
+# Manually curated canon — the posts that best represent this site.
+# Edit freely. Order matters (top = first shown).
+
+- title: "In Search of the Agent IDE for Data"
+  url: /blog/in-search-of-the-agent-ide/
+  note: "A data analyst's mostly futile quest for the perfect workflow."
+
+- title: "The Unforwarder: How I stopped backing up junk photos"
+  url: /blog/the-unforwarder-how-i-stopped-backing-up-junk-photos/
+  note: "A small script that changed how I handle memories."
+
+- title: "I built a tool to measure how AI-like a website writes"
+  url: /blog/aidar-tracking-ai-writing-drift/
+  note: "Then I scanned my own site. Uncomfortable."
+
+- title: "The NEAT Framework: How I Built This Site"
+  url: /blog/understanding-the-neat-framework/
+  note: "Eleventy, Alpine, and Tailwind — and why this stack."
+
+- title: "Why I self-host in 2025"
+  url: /why-one-should-self-host-in-2025/
+  note: "The case for owning your own stack."

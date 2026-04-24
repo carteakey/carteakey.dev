@@ -124,42 +124,42 @@
 {% set showReadingFrame = false %}
 <body class="bg-gray-100 dark:bg-black font-sans text-sm">
   {# Skip to main content link for accessibility #}
-  <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:rounded-md focus:font-semibold focus:text-black" style="background: var(--accent-color);">
+  <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:rounded-sm focus:font-semibold focus:text-black" style="background: var(--accent-color);">
     Skip to main content
   </a>
   
   <div
-   class="md:max-w-2xl lg:max-w-3xl xl:max-w-4xl mx-auto {% if showReadingFrame %} md:bg-gray-100/95  md:dark:bg-zinc-950/90 md:shadow-[0_20px_60px_-28px_rgba(15,23,42,0.45)] md:dark:shadow-[0_16px_50px_-26px_rgba(0,0,0,0.65)] md:ring-1 md:ring-amber-100/40 md:dark:ring-zinc-800/40 md:px-28 lg:px-32 md:py-10 md:rounded-none{% endif %}">
+   class="md:max-w-2xl lg:max-w-4xl xl:max-w-5xl 2xl:max-w-[86rem] mx-auto {% if showReadingFrame %} md:bg-gray-100/95  md:dark:bg-zinc-950/90 md:ring-1 md:ring-amber-100/40 md:dark:ring-zinc-800/40 md:px-28 lg:px-32 md:py-10 md:rounded-none{% endif %}">
     <div class="site-content px-4 md:px-0">
-      <nav class="not-prose flex w-full py-3.5 border-b border-gray-200 dark:border-gray-800 mb-4">
+      <nav class="not-prose flex w-full py-3 border-b border-gray-300/80 dark:border-gray-800 mb-4">
 
         {% set navPages = collections.all | eleventyNavigation %}
 
         <div class="flex flex-row w-full justify-between items-center gap-4">
 
           {# Site title - same on desktop and mobile, consistent font #}
-          <a class="no-underline hover:no-underline font-bold text-base tracking-tight group flex items-center shrink-0" href="{{ '/' | url }}" style="color: var(--accent-color)">
+          <a class="no-underline hover:no-underline font-mono font-bold text-[0.84rem] uppercase tracking-[0.08em] group flex items-center shrink-0" href="{{ '/' | url }}" style="color: var(--accent-color)">
             carteakey.dev
           </a>
 
           <ul class="list-none m-0 p-0 flex items-center gap-2">
             {# Main navigation items #}
             {%- for entry in navPages %}
-              {% if entry.title == "About" or entry.title == "Blog" or entry.title == "Now" %}
-                <li class="px-2 sm:px-2.5 py-1 transition-all hidden sm:flex items-center">
-                  <a class="font-medium no-underline link-glow text-base" href="{{ entry.url }}">{{ entry.title }}</a>
+              {% if entry.title == "About" or entry.title == "Writing" or entry.title == "Now" %}
+                <li class="px-1.5 sm:px-2 py-1 transition-all hidden sm:flex items-center">
+                  <a class="font-mono font-medium no-underline link-glow text-[0.74rem] uppercase tracking-[0.06em]" href="{{ entry.url }}">{{ entry.title }}</a>
                 </li>
               {% endif %}
             {%- endfor %}
 
             <li class="flex items-center">
-              <a class="font-medium no-underline inline-flex items-center justify-center p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" href="{{ '/search/' | url }}" title="Search" aria-label="Search" style="color: var(--accent-color)">
+              <a class="font-medium no-underline inline-flex items-center justify-center p-1.5 border border-transparent hover:border-gray-300 dark:hover:border-gray-700 transition-colors" href="{{ '/search/' | url }}" title="Search" aria-label="Search" style="color: var(--accent-color)">
                 {% feather "search", class="w-4 h-4" %}
               </a>
             </li>
 
             <li class="flex items-center">
-              <a class="font-medium no-underline inline-flex items-center justify-center p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" href="{{ '/more/' | url }}" title="More pages" aria-label="More pages" style="color: var(--accent-color)">
+              <a class="font-medium no-underline inline-flex items-center justify-center p-1.5 border border-transparent hover:border-gray-300 dark:hover:border-gray-700 transition-colors" href="{{ '/more/' | url }}" title="More pages" aria-label="More pages" style="color: var(--accent-color)">
                 {% feather "compass", class="w-4 h-4" %}
               </a>
             </li>
@@ -202,13 +202,13 @@
               }
             }" x-init="init()">
               {# Mobile: tap colored dot to cycle accent color #}
-              <button class="sm:hidden w-4 h-4 rounded-full border-2 border-white/60 shadow flex-shrink-0"
+              <button class="sm:hidden w-4 h-4 rounded-sm border flex-shrink-0"
                 :style="`background-color: ${themes[currentIndex].hex}; border-color: ${themes[currentIndex].hex}`"
                 @click="pick((currentIndex + 1) % themes.length)"
                 :title="`Accent: ${themes[currentIndex].name} (tap to cycle)`"></button>
               {# Desktop: gradient slider #}
-              <div class="hidden sm:block relative w-28 h-4 rounded-full overflow-hidden cursor-pointer" style="background: linear-gradient(to right, #6b7280,#64748b,#71717a,#737373,#78716c,#ef4444,#f97316,#f59e0b,#eab308,#84cc16,#22c55e,#10b981,#14b8a6,#06b6d4,#0ea5e9,#3b82f6,#6366f1,#8b5cf6,#a855f7,#d946ef,#ec4899,#f43f5e);">
-                <div class="absolute top-0 h-full w-0.5 -translate-x-1/2 bg-white/80 rounded pointer-events-none transition-all duration-150"
+              <div class="hidden sm:block relative w-28 h-4 overflow-hidden cursor-pointer border border-gray-300 dark:border-gray-700" style="background: linear-gradient(to right, #6b7280,#64748b,#71717a,#737373,#78716c,#ef4444,#f97316,#f59e0b,#eab308,#84cc16,#22c55e,#10b981,#14b8a6,#06b6d4,#0ea5e9,#3b82f6,#6366f1,#8b5cf6,#a855f7,#d946ef,#ec4899,#f43f5e);">
+                <div class="absolute top-0 h-full w-0.5 -translate-x-1/2 bg-white/80 pointer-events-none transition-all duration-150"
                      :style="`left: ${(currentIndex / (themes.length - 1)) * 100}%`"></div>
                 <input type="range" min="0" :max="themes.length - 1" :value="currentIndex"
                        @input="pick(parseInt($event.target.value))"
@@ -217,7 +217,7 @@
             </li>
 
             <li class="flex items-center">
-              <button id="toggleDarkMode" class="font-medium text-xs p-2 transition-all rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 focus-ring inline-flex items-center justify-center" aria-label="Toggle dark mode" style="color: var(--accent-color)">
+              <button id="toggleDarkMode" class="font-medium text-xs p-1.5 transition-all border border-transparent hover:border-gray-300 dark:hover:border-gray-700 focus-ring inline-flex items-center justify-center" aria-label="Toggle dark mode" style="color: var(--accent-color)">
                 {% feather "moon" , class="block dark:hidden w-4 h-4" %}
                 {% feather "sun" , class="hidden dark:block w-4 h-4"%}
               </button>
@@ -252,25 +252,25 @@
           </script>
       </main>
 
-      <footer class="not-prose flex w-full pt-4 pb-2 flex-col md:flex-row justify-between items-center gap-3 border-t border-gray-200 dark:border-gray-700 mt-8">
+      <footer class="not-prose flex w-full pt-4 pb-2 flex-col md:flex-row justify-between items-center gap-3 border-t border-gray-300/80 dark:border-gray-700 mt-8">
         {% if spotify.nowPlaying %}
-        <div class="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 not-prose">
-          <img id="track-image" class="w-5 h-5 rounded-full animate-spin-slow"
+        <div class="footer-track flex items-center gap-2 not-prose">
+          <img id="track-image" class="w-5 h-5 rounded-sm animate-spin-slow"
             src="{{ spotify.nowPlaying.albumImageUrl }}" alt="{{ spotify.nowPlaying.title }}" width="20" height="20" loading="lazy">
-          <span>Now playing:</span>
-          <a href={{ spotify.nowPlaying.songUrl }} target='_blank' class='hover:underline text-gray-700 dark:text-gray-300 font-medium'>{{ spotify.nowPlaying.title }}</a>
-          <span class="text-gray-400 dark:text-gray-600">- {{ spotify.nowPlaying.artist }}</span>
+          <span class="footer-track-label">Now playing</span>
+          <a href={{ spotify.nowPlaying.songUrl }} target='_blank' class='footer-track-link'>{{ spotify.nowPlaying.title }}</a>
+          <span> - {{ spotify.nowPlaying.artist }}</span>
         </div>
         {% else %}
         <div></div>
         {% endif %}
         <div class='flex items-center gap-1 not-prose'>
-          <a class="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all text-gray-500 dark:text-gray-400" href="https://www.linkedin.com/in/kartikeychauhan/" title="LinkedIn" aria-label="LinkedIn">{% feather "linkedin", class="w-4 h-4" %}</a>
-          <a class="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all text-gray-500 dark:text-gray-400" href="https://github.com/carteakey" title="GitHub" aria-label="GitHub">{% feather "github", class="w-4 h-4" %}</a>
+          <a class="p-1.5 border border-transparent hover:border-gray-300 dark:hover:border-gray-700 transition-all text-gray-500 dark:text-gray-400" href="https://www.linkedin.com/in/kartikeychauhan/" title="LinkedIn" aria-label="LinkedIn">{% feather "linkedin", class="w-4 h-4" %}</a>
+          <a class="p-1.5 border border-transparent hover:border-gray-300 dark:hover:border-gray-700 transition-all text-gray-500 dark:text-gray-400" href="https://github.com/carteakey" title="GitHub" aria-label="GitHub">{% feather "github", class="w-4 h-4" %}</a>
           <span class="text-gray-300 dark:text-gray-600">|</span>
-          <a class="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all text-gray-500 dark:text-gray-400" href="{{ '/search/' | url }}" title="Search" aria-label="Search">{% feather "search", class="w-4 h-4" %}</a>
-          <a class="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all text-gray-500 dark:text-gray-400" href="{{ '/feed.xml' | url }}" title="RSS" aria-label="RSS">{% feather "rss", class="w-4 h-4" %}</a>
-          <a class="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all text-gray-500 dark:text-gray-400" href="{{ '/newsletter/' | url }}" title="Newsletter" aria-label="Newsletter">{% feather "mail", class="w-4 h-4" %}</a>
+          <a class="p-1.5 border border-transparent hover:border-gray-300 dark:hover:border-gray-700 transition-all text-gray-500 dark:text-gray-400" href="{{ '/search/' | url }}" title="Search" aria-label="Search">{% feather "search", class="w-4 h-4" %}</a>
+          <a class="p-1.5 border border-transparent hover:border-gray-300 dark:hover:border-gray-700 transition-all text-gray-500 dark:text-gray-400" href="{{ '/feed.xml' | url }}" title="RSS" aria-label="RSS">{% feather "rss", class="w-4 h-4" %}</a>
+          <a class="p-1.5 border border-transparent hover:border-gray-300 dark:hover:border-gray-700 transition-all text-gray-500 dark:text-gray-400" href="{{ '/newsletter/' | url }}" title="Newsletter" aria-label="Newsletter">{% feather "mail", class="w-4 h-4" %}</a>
         </div>
       </footer>
 
@@ -283,28 +283,28 @@
         {# Mobile: 2-col compact grid with category headings + icons #}
         <div class="grid grid-cols-2 gap-x-4 gap-y-3 text-xs md:hidden">
           <div>
-            <h4 class="font-semibold text-gray-400 dark:text-gray-500 mb-1 text-[0.6rem] uppercase tracking-wider">Read</h4>
+            <h4 class="footer-nav-heading">Read</h4>
             <ul class="space-y-1 list-none m-0 p-0">
-              <li><a href="{{ '/now' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "clock", class="w-3 h-3 shrink-0" %} Now</a></li>
-              <li><a href="{{ '/feed' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "activity", class="w-3 h-3 shrink-0" %} Feed</a></li>
-              <li><a href="{{ '/blog' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "edit-3", class="w-3 h-3 shrink-0" %} Blog</a></li>
-              <li><a href="{{ '/snippets' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "code", class="w-3 h-3 shrink-0" %} Snippets</a></li>
-              <li><a href="{{ '/about' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "user", class="w-3 h-3 shrink-0" %} About</a></li>
-              <li><a href="{{ '/quotations' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "message-circle", class="w-3 h-3 shrink-0" %} Quotations</a></li>
+              <li><a href="{{ '/now' | url }}" class="footer-nav-link">{% feather "clock", class="w-3 h-3 shrink-0" %} Now</a></li>
+              <li><a href="{{ '/feed' | url }}" class="footer-nav-link">{% feather "activity", class="w-3 h-3 shrink-0" %} Feed</a></li>
+              <li><a href="{{ '/blog' | url }}" class="footer-nav-link">{% feather "edit-3", class="w-3 h-3 shrink-0" %} Writing</a></li>
+              <li><a href="{{ '/snippets' | url }}" class="footer-nav-link">{% feather "code", class="w-3 h-3 shrink-0" %} Snippets</a></li>
+              <li><a href="{{ '/about' | url }}" class="footer-nav-link">{% feather "user", class="w-3 h-3 shrink-0" %} About</a></li>
+              <li><a href="{{ '/quotations' | url }}" class="footer-nav-link">{% feather "message-circle", class="w-3 h-3 shrink-0" %} Quotations</a></li>
             </ul>
           </div>
           <div>
-            <h4 class="font-semibold text-gray-400 dark:text-gray-500 mb-1 text-[0.6rem] uppercase tracking-wider">Explore</h4>
+            <h4 class="footer-nav-heading">Explore</h4>
             <ul class="space-y-1 list-none m-0 p-0">
-              <li><a href="{{ '/projects' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "box", class="w-3 h-3 shrink-0" %} Projects</a></li>
-              <li><a href="{{ '/prompts' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "terminal", class="w-3 h-3 shrink-0" %} Prompts</a></li>
-              <li><a href="{{ '/gallery' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "image", class="w-3 h-3 shrink-0" %} Gallery</a></li>
-              <li><a href="{{ '/folio' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "layers", class="w-3 h-3 shrink-0" %} Folio</a></li>
-              <li><a href="{{ '/data' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "bar-chart-2", class="w-3 h-3 shrink-0" %} Data</a></li>
-              <li><a href="{{ '/listening' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "headphones", class="w-3 h-3 shrink-0" %} Listening</a></li>
-              <li><a href="{{ '/search' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "search", class="w-3 h-3 shrink-0" %} Search</a></li>
-              <li><a href="{{ '/stats' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "bar-chart", class="w-3 h-3 shrink-0" %} Stats</a></li>
-              <li><a href="{{ '/guestbook' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "message-square", class="w-3 h-3 shrink-0" %} Guestbook</a></li>
+              <li><a href="{{ '/projects' | url }}" class="footer-nav-link">{% feather "box", class="w-3 h-3 shrink-0" %} Projects</a></li>
+              <li><a href="{{ '/prompts' | url }}" class="footer-nav-link">{% feather "terminal", class="w-3 h-3 shrink-0" %} Prompts</a></li>
+              <li><a href="{{ '/gallery' | url }}" class="footer-nav-link">{% feather "image", class="w-3 h-3 shrink-0" %} Gallery</a></li>
+              <li><a href="{{ '/folio' | url }}" class="footer-nav-link">{% feather "layers", class="w-3 h-3 shrink-0" %} Folio</a></li>
+              <li><a href="{{ '/data' | url }}" class="footer-nav-link">{% feather "bar-chart-2", class="w-3 h-3 shrink-0" %} Data</a></li>
+              <li><a href="{{ '/listening' | url }}" class="footer-nav-link">{% feather "headphones", class="w-3 h-3 shrink-0" %} Listening</a></li>
+              <li><a href="{{ '/search' | url }}" class="footer-nav-link">{% feather "search", class="w-3 h-3 shrink-0" %} Search</a></li>
+              <li><a href="{{ '/stats' | url }}" class="footer-nav-link">{% feather "bar-chart", class="w-3 h-3 shrink-0" %} Stats</a></li>
+              <li><a href="{{ '/guestbook' | url }}" class="footer-nav-link">{% feather "message-square", class="w-3 h-3 shrink-0" %} Guestbook</a></li>
             </ul>
           </div>
         </div>
@@ -314,69 +314,69 @@
           
           {# Read - content for others #}
           <div>
-            <h4 class="font-semibold text-gray-500 dark:text-gray-500 mb-1 text-[0.65rem] uppercase tracking-wider">Read</h4>
+            <h4 class="footer-nav-heading">Read</h4>
             <ul class="space-y-0.5 list-none m-0 p-0">
-              <li><a href="{{ '/now' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "clock", class="w-3 h-3 shrink-0" %} Now</a></li>
-              <li><a href="{{ '/feed' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "activity", class="w-3 h-3 shrink-0" %} Feed</a></li>
-              <li><a href="{{ '/blog' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "edit-3", class="w-3 h-3 shrink-0" %} Blog</a></li>
-              <li><a href="{{ '/snippets' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "code", class="w-3 h-3 shrink-0" %} Snippets</a></li>
-              <li><a href="{{ '/notes' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "file-text", class="w-3 h-3 shrink-0" %} Notes</a></li>
-              <li><a href="{{ '/til' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "zap", class="w-3 h-3 shrink-0" %} TIL</a></li>
-              <li><a href="{{ '/reading' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "book-open", class="w-3 h-3 shrink-0" %} Reading</a></li>
-              <li><a href="{{ '/quotations' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "message-circle", class="w-3 h-3 shrink-0" %} Quotations</a></li>
+              <li><a href="{{ '/now' | url }}" class="footer-nav-link">{% feather "clock", class="w-3 h-3 shrink-0" %} Now</a></li>
+              <li><a href="{{ '/feed' | url }}" class="footer-nav-link">{% feather "activity", class="w-3 h-3 shrink-0" %} Feed</a></li>
+              <li><a href="{{ '/blog' | url }}" class="footer-nav-link">{% feather "edit-3", class="w-3 h-3 shrink-0" %} Writing</a></li>
+              <li><a href="{{ '/snippets' | url }}" class="footer-nav-link">{% feather "code", class="w-3 h-3 shrink-0" %} Snippets</a></li>
+              <li><a href="{{ '/notes' | url }}" class="footer-nav-link">{% feather "file-text", class="w-3 h-3 shrink-0" %} Notes</a></li>
+              <li><a href="{{ '/til' | url }}" class="footer-nav-link">{% feather "zap", class="w-3 h-3 shrink-0" %} TIL</a></li>
+              <li><a href="{{ '/reading' | url }}" class="footer-nav-link">{% feather "book-open", class="w-3 h-3 shrink-0" %} Reading</a></li>
+              <li><a href="{{ '/quotations' | url }}" class="footer-nav-link">{% feather "message-circle", class="w-3 h-3 shrink-0" %} Quotations</a></li>
             </ul>
           </div>
 
           {# Explore - creative & fun #}
           <div>
-            <h4 class="font-semibold text-gray-500 dark:text-gray-500 mb-1 text-[0.65rem] uppercase tracking-wider">Explore</h4>
+            <h4 class="footer-nav-heading">Explore</h4>
             <ul class="space-y-0.5 list-none m-0 p-0">
-              <li><a href="{{ '/projects' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "box", class="w-3 h-3 shrink-0" %} Projects</a></li>
-              <li><a href="{{ '/prompts' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "terminal", class="w-3 h-3 shrink-0" %} Prompts</a></li>
-              <li><a href="{{ '/gallery' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "image", class="w-3 h-3 shrink-0" %} Gallery</a></li>
-              <li><a href="{{ '/folio' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "layers", class="w-3 h-3 shrink-0" %} Folio</a></li>
-              <li><a href="{{ '/vibes' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "image", class="w-3 h-3 shrink-0" %} Vibes</a></li>
-              <li><a href="{{ '/quotes' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "book-open", class="w-3 h-3 shrink-0" %} Quotes</a></li>
-              <li><a href="{{ '/grandiloquent' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "book", class="w-3 h-3 shrink-0" %} Grandiloquent</a></li>
+              <li><a href="{{ '/projects' | url }}" class="footer-nav-link">{% feather "box", class="w-3 h-3 shrink-0" %} Projects</a></li>
+              <li><a href="{{ '/prompts' | url }}" class="footer-nav-link">{% feather "terminal", class="w-3 h-3 shrink-0" %} Prompts</a></li>
+              <li><a href="{{ '/gallery' | url }}" class="footer-nav-link">{% feather "image", class="w-3 h-3 shrink-0" %} Gallery</a></li>
+              <li><a href="{{ '/folio' | url }}" class="footer-nav-link">{% feather "layers", class="w-3 h-3 shrink-0" %} Folio</a></li>
+              <li><a href="{{ '/vibes' | url }}" class="footer-nav-link">{% feather "image", class="w-3 h-3 shrink-0" %} Vibes</a></li>
+              <li><a href="{{ '/quotes' | url }}" class="footer-nav-link">{% feather "book-open", class="w-3 h-3 shrink-0" %} Quotes</a></li>
+              <li><a href="{{ '/grandiloquent' | url }}" class="footer-nav-link">{% feather "book", class="w-3 h-3 shrink-0" %} Grandiloquent</a></li>
             </ul>
           </div>
 
           {# About Me - personal & professional #}
           <div>
-            <h4 class="font-semibold text-gray-500 dark:text-gray-500 mb-1 text-[0.65rem] uppercase tracking-wider">About Me</h4>
+            <h4 class="footer-nav-heading">About Me</h4>
             <ul class="space-y-0.5 list-none m-0 p-0">
-              <li><a href="{{ '/about' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "user", class="w-3 h-3 shrink-0" %} About</a></li>
-              <li><a href="{{ '/cv' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "briefcase", class="w-3 h-3 shrink-0" %} CV</a></li>
-              <li><a href="{{ '/skills' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "bar-chart-2", class="w-3 h-3 shrink-0" %} Skills</a></li>
-              <li><a href="{{ '/uses' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "cpu", class="w-3 h-3 shrink-0" %} Uses</a></li>
-              <li><a href="{{ '/games' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "monitor", class="w-3 h-3 shrink-0" %} Games</a></li>
-              <li><a href="{{ '/workouts' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "activity", class="w-3 h-3 shrink-0" %} Workouts</a></li>
-              <li><a href="{{ '/listening' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "headphones", class="w-3 h-3 shrink-0" %} Listening</a></li>
-              <li><a href="{{ '/data' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "bar-chart-2", class="w-3 h-3 shrink-0" %} Life in data</a></li>
+              <li><a href="{{ '/about' | url }}" class="footer-nav-link">{% feather "user", class="w-3 h-3 shrink-0" %} About</a></li>
+              <li><a href="{{ '/cv' | url }}" class="footer-nav-link">{% feather "briefcase", class="w-3 h-3 shrink-0" %} CV</a></li>
+              <li><a href="{{ '/skills' | url }}" class="footer-nav-link">{% feather "bar-chart-2", class="w-3 h-3 shrink-0" %} Skills</a></li>
+              <li><a href="{{ '/uses' | url }}" class="footer-nav-link">{% feather "cpu", class="w-3 h-3 shrink-0" %} Uses</a></li>
+              <li><a href="{{ '/games' | url }}" class="footer-nav-link">{% feather "monitor", class="w-3 h-3 shrink-0" %} Games</a></li>
+              <li><a href="{{ '/workouts' | url }}" class="footer-nav-link">{% feather "activity", class="w-3 h-3 shrink-0" %} Workouts</a></li>
+              <li><a href="{{ '/listening' | url }}" class="footer-nav-link">{% feather "headphones", class="w-3 h-3 shrink-0" %} Listening</a></li>
+              <li><a href="{{ '/data' | url }}" class="footer-nav-link">{% feather "bar-chart-2", class="w-3 h-3 shrink-0" %} Life in data</a></li>
             </ul>
           </div>
 
           {# Meta - site utilities & links #}
           <div>
-            <h4 class="font-semibold text-gray-500 dark:text-gray-500 mb-1 text-[0.65rem] uppercase tracking-wider">Meta</h4>
+            <h4 class="footer-nav-heading">Meta</h4>
             <ul class="space-y-0.5 list-none m-0 p-0">
-              <li><a href="{{ '/search' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "search", class="w-3 h-3 shrink-0" %} Search</a></li>
-              <li><a href="{{ '/stats' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "bar-chart", class="w-3 h-3 shrink-0" %} Stats</a></li>
-              <li><a href="{{ '/changelog' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "list", class="w-3 h-3 shrink-0" %} Changelog</a></li>
-              <li><a href="{{ '/colophon' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "info", class="w-3 h-3 shrink-0" %} Colophon</a></li>
-              <li><a href="{{ '/blogroll' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "link", class="w-3 h-3 shrink-0" %} Blogroll</a></li>
-              <li><a href="{{ '/bookmarks' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "bookmark", class="w-3 h-3 shrink-0" %} Bookmarks</a></li>
-              <li><a href="{{ '/newsletter' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "mail", class="w-3 h-3 shrink-0" %} Newsletter</a></li>
-              <li><a href="{{ '/guestbook' | url }}" class="inline-flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">{% feather "message-square", class="w-3 h-3 shrink-0" %} Guestbook</a></li>
+              <li><a href="{{ '/search' | url }}" class="footer-nav-link">{% feather "search", class="w-3 h-3 shrink-0" %} Search</a></li>
+              <li><a href="{{ '/stats' | url }}" class="footer-nav-link">{% feather "bar-chart", class="w-3 h-3 shrink-0" %} Stats</a></li>
+              <li><a href="{{ '/changelog' | url }}" class="footer-nav-link">{% feather "list", class="w-3 h-3 shrink-0" %} Changelog</a></li>
+              <li><a href="{{ '/colophon' | url }}" class="footer-nav-link">{% feather "info", class="w-3 h-3 shrink-0" %} Colophon</a></li>
+              <li><a href="{{ '/blogroll' | url }}" class="footer-nav-link">{% feather "link", class="w-3 h-3 shrink-0" %} Blogroll</a></li>
+              <li><a href="{{ '/bookmarks' | url }}" class="footer-nav-link">{% feather "bookmark", class="w-3 h-3 shrink-0" %} Bookmarks</a></li>
+              <li><a href="{{ '/newsletter' | url }}" class="footer-nav-link">{% feather "mail", class="w-3 h-3 shrink-0" %} Newsletter</a></li>
+              <li><a href="{{ '/guestbook' | url }}" class="footer-nav-link">{% feather "message-square", class="w-3 h-3 shrink-0" %} Guestbook</a></li>
             </ul>
           </div>
 
         </div>
         
         {# Made with love section #}
-        <div class="mt-4 text-xs text-gray-500 dark:text-gray-500 flex items-center justify-between flex-wrap gap-2">
-          <span>Made with ❤️ · <a href="https://www.11ty.dev/" class="hover:underline" target="_blank" rel="noopener">Eleventy</a> + <a href="https://tailwindcss.com/" class="hover:underline" target="_blank" rel="noopener">Tailwind</a> · <a href="/colophon/" class="hover:underline">Colophon</a> · © {{ metadata.author.name }} 2025</span>
-          <button onclick="document.getElementById('shortcuts-overlay').style.display='flex'" title="Keyboard shortcuts" style="background:none;border:1px solid #e5e7eb;border-radius:4px;padding:1px 6px;cursor:pointer;font-family:monospace;font-size:0.65rem;color:#9ca3af;line-height:1.4;" class="dark:border-zinc-700 hover:border-gray-400 dark:hover:border-zinc-500 transition-colors">? shortcuts</button>
+        <div class="mt-4 footer-smallprint flex items-center justify-between flex-wrap gap-2">
+          <span>Made with ❤️ · <a href="https://www.11ty.dev/" target="_blank" rel="noopener">Eleventy</a> + <a href="https://tailwindcss.com/" target="_blank" rel="noopener">Tailwind</a> · <a href="/colophon/">Colophon</a> · © {{ metadata.author.name }} 2025</span>
+          <button onclick="document.getElementById('shortcuts-overlay').style.display='flex'" title="Keyboard shortcuts" class="footer-shortcuts-button">? shortcuts</button>
         </div>
       </div>
     </div>
@@ -439,7 +439,7 @@
       <table style="width:100%;border-collapse:collapse;font-size:0.8rem;">
         <tr><td style="padding:0.25rem 0;color:#6b7280;" colspan="2">Navigation</td></tr>
         <tr><td style="padding:0.2rem 0;white-space:nowrap;"><kbd style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:3px;padding:1px 5px;font-size:0.7rem;font-family:monospace;">H</kbd></td><td style="padding:0.2rem 0 0.2rem 1rem;color:#374151;" class="dark:text-gray-300">Home</td></tr>
-        <tr><td style="padding:0.2rem 0;white-space:nowrap;"><kbd style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:3px;padding:1px 5px;font-size:0.7rem;font-family:monospace;">B</kbd></td><td style="padding:0.2rem 0 0.2rem 1rem;color:#374151;" class="dark:text-gray-300">Blog</td></tr>
+        <tr><td style="padding:0.2rem 0;white-space:nowrap;"><kbd style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:3px;padding:1px 5px;font-size:0.7rem;font-family:monospace;">B</kbd></td><td style="padding:0.2rem 0 0.2rem 1rem;color:#374151;" class="dark:text-gray-300">Writing</td></tr>
         <tr><td style="padding:0.2rem 0;white-space:nowrap;"><kbd style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:3px;padding:1px 5px;font-size:0.7rem;font-family:monospace;">F</kbd></td><td style="padding:0.2rem 0 0.2rem 1rem;color:#374151;" class="dark:text-gray-300">Feed</td></tr>
         <tr><td style="padding:0.2rem 0;white-space:nowrap;"><kbd style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:3px;padding:1px 5px;font-size:0.7rem;font-family:monospace;">S</kbd></td><td style="padding:0.2rem 0 0.2rem 1rem;color:#374151;" class="dark:text-gray-300">Snippets</td></tr>
         <tr><td style="padding:0.2rem 0;white-space:nowrap;"><kbd style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:3px;padding:1px 5px;font-size:0.7rem;font-family:monospace;">N</kbd></td><td style="padding:0.2rem 0 0.2rem 1rem;color:#374151;" class="dark:text-gray-300">Now</td></tr>

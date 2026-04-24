@@ -26,9 +26,9 @@
 
     {# Special handling for known sections #}
     {% if segment == "posts" %}
-      {% set label = "Blog" %}
+      {% set label = "Writing" %}
     {% elif segment == "blog" %}
-      {% set label = "Blog" %}
+      {% set label = "Writing" %}
     {% elif segment == "now" %}
       {% set label = "Now" %}
     {% elif segment == "snippets" %}
@@ -72,21 +72,21 @@
 
 {# Render breadcrumbs #}
 {% if breadcrumbItems.length > 1 %}
-<nav aria-label="Breadcrumb" class="not-prose mb-6 text-sm hidden md:block">
-  <ol class="flex items-center flex-wrap gap-2">
+<nav aria-label="Breadcrumb" class="not-prose mb-6 hidden md:block">
+  <ol class="breadcrumbs-list flex items-center flex-wrap gap-2">
     {% for item in breadcrumbItems %}
       <li class="flex items-center">
         {% if not item.isLast %}
-          <a href="{{ item.url | url }}" class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors flex items-center gap-1">
+          <a href="{{ item.url | url }}" class="breadcrumb-link flex items-center gap-1">
             {% if item.isHome %}
               {% feather "home", class="w-4 h-4" %}
             {% else %}
               {{ item.label }}
             {% endif %}
           </a>
-          <span class="mx-2 text-gray-400 dark:text-gray-500">{% feather "chevron-right", class="w-4 h-4" %}</span>
+          <span class="breadcrumb-separator mx-2">{% feather "chevron-right", class="w-4 h-4" %}</span>
         {% else %}
-          <span class="text-gray-900 dark:text-gray-100 font-medium">
+          <span class="breadcrumb-current">
             {{ item.label }}
           </span>
         {% endif %}
