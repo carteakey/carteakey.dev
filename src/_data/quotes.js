@@ -91,5 +91,10 @@ export default [
     quote:
       "The chains of habit are too light to be felt, until they are too heavy to be broken.",
     author: "Warren Buffett",
+  },
+  {
+    quote:
+      "I cannot remember the books I've read any more than the meals I have eaten; even so, they have made me.",
+    author: "Ralph Waldo Emerson",
   }
 ];
