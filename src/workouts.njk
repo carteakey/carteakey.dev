@@ -4,8 +4,13 @@ title: Workouts
 ---
 {% include "components/breadcrumbs.njk" %}
 
-<h1 class="text-2xl font-semibold tracking-tight m-0">Recent Workouts</h1>
-<p class="text-sm text-gray-500 dark:text-gray-400 mt-1 mb-6">Latest activities from Strava.</p>
+{% set pageEyebrow = "Movement Log" %}
+{% set pageTitle = "Recent Workouts" %}
+{% set pageDescription = "Latest activities from Strava." %}
+{% set itemCount = strava | length %}
+{% set itemLabel = "activities" %}
+
+{% include "components/page-header.njk" %}
 
 <div class="not-prose grid gap-3 md:grid-cols-2">
     {% for activity in strava %}
@@ -16,7 +21,7 @@ title: Workouts
                     {% feather "external-link", class="w-3.5 h-3.5 opacity-60" %}
                 </a>
                 <div class="flex flex-wrap items-center gap-2">
-                    <span class="meta-text text-[0.65rem] px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400">{{ activity.type }}</span>
+                    <span class="badge badge-tag badge-compact">{{ activity.type }}</span>
                     <time class="meta-text text-[0.65rem] text-gray-400 dark:text-gray-500" datetime="{{ activity.start_date | htmlDateString }}">{{ activity.start_date | readableDate }}</time>
                 </div>
             </header>

@@ -10,10 +10,9 @@ eleventyNavigation:
 
 {% include "components/breadcrumbs.njk" %}
 
-<div class="not-prose mb-4">
-  <h1 class="text-2xl font-semibold tracking-tight m-0">Colophon</h1>
-  <p class="text-sm text-gray-400 dark:text-gray-500 mt-1">How this site is made.</p>
-</div>
+{% set pageTitle = "Colophon" %}
+{% set pageDescription = "How this site is made." %}
+{% include "components/page-header.njk" %}
 
 <div class="site-content">
 

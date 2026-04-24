@@ -29,6 +29,7 @@
 - [x] Add a merge-check CLI for old/new slug engagement counters (views + upvotes) (2026-03-13)
 - [x] Agent Tick folio: added latest meme assets, switched canonical URL to `/folio/agent-tick/`, and preserved legacy `/folio/ai-memes/` via redirect (2026-03-18)
 - [x] GPT-OSS post: removed accidental merge conflict marker leak (`HEAD` / branch label) from published markdown (2026-03-18)
+- [x] Unify collection page headers, badges, and surface/card treatments so major sections feel like one design system instead of separate mini-sites. (2026-04-22)
 
 
 

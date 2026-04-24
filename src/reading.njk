@@ -10,10 +10,9 @@ eleventyNavigation:
 
 {% include "components/breadcrumbs.njk" %}
 
-<div class="not-prose mb-6">
-  <h1 class="text-2xl font-semibold tracking-tight m-0">Reading</h1>
-  <p class="text-sm text-gray-400 dark:text-gray-500 mt-1">Books I'm reading, have read, and want to read.</p>
-</div>
+{% set pageTitle = "Reading" %}
+{% set pageDescription = "Books I'm reading, have read, and want to read." %}
+{% include "components/page-header.njk" %}
 
 {% if reading.currently_reading and reading.currently_reading.length > 0 %}
 <section class="not-prose mb-8">

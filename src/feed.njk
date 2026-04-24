@@ -11,13 +11,16 @@ permalink: /feed/
 {% from "components/feed-card.njk" import feedCard %}
 {% include "components/breadcrumbs.njk" %}
 
+{% set pageEyebrow = "Unified Timeline" %}
+{% set pageTitle = "Feed" %}
+{% set pageDescription = "Posts, snippets, notes, photos, vibes, quotations, and /now updates in one stream." %}
+{% set itemCount = collections.feed.length %}
+{% set itemLabel = "items" %}
+
 <div class="not-prose" x-data="feedPage()">
+  {% include "components/page-header.njk" %}
 
   <div class="flex items-baseline justify-between mb-3 gap-3 flex-wrap">
-    <div class="flex items-baseline gap-3">
-      <h1 class="text-2xl font-semibold tracking-tight m-0">Feed</h1>
-      <span class="meta-text text-xs text-gray-400 dark:text-gray-500">{{ collections.feed.length }} items</span>
-    </div>
     <div class="flex items-center gap-2 shrink-0">
       <div class="relative">
         {% feather "search", class="w-3.5 h-3.5 text-gray-400 absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" %}
@@ -45,39 +48,39 @@ permalink: /feed/
   {# Type filter chips #}
   <div class="flex flex-wrap gap-1.5 mb-5 text-xs">
     <button @click="typeFilter = ''"
-      :class="typeFilter === '' ? 'font-semibold' : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'"
-      class="px-2 py-0.5 rounded-full border border-gray-200 dark:border-gray-700 transition-colors"
-      :style="typeFilter === '' ? 'border-color: var(--accent-color); color: var(--accent-color)' : ''">
+      :class="{ 'active': typeFilter === '' }"
+      class="badge badge-filter badge-compact"
+      type="button">
       All ({{ collections.feed.length }})
     </button>
     <button @click="typeFilter = 'post'"
-      :class="typeFilter === 'post' ? 'font-semibold' : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'"
-      class="px-2 py-0.5 rounded-full border border-gray-200 dark:border-gray-700 transition-colors"
-      :style="typeFilter === 'post' ? 'border-color: var(--accent-color); color: var(--accent-color)' : ''">
+      :class="{ 'active': typeFilter === 'post' }"
+      class="badge badge-filter badge-compact"
+      type="button">
       Posts
     </button>
     <button @click="typeFilter = 'snippet'"
-      :class="typeFilter === 'snippet' ? 'font-semibold' : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'"
-      class="px-2 py-0.5 rounded-full border border-gray-200 dark:border-gray-700 transition-colors"
-      :style="typeFilter === 'snippet' ? 'border-color: var(--accent-color); color: var(--accent-color)' : ''">
+      :class="{ 'active': typeFilter === 'snippet' }"
+      class="badge badge-filter badge-compact"
+      type="button">
       Snippets
     </button>
     <button @click="typeFilter = 'note'"
-      :class="typeFilter === 'note' ? 'font-semibold' : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'"
-      class="px-2 py-0.5 rounded-full border border-gray-200 dark:border-gray-700 transition-colors"
-      :style="typeFilter === 'note' ? 'border-color: var(--accent-color); color: var(--accent-color)' : ''">
+      :class="{ 'active': typeFilter === 'note' }"
+      class="badge badge-filter badge-compact"
+      type="button">
       Notes
     </button>
     <button @click="typeFilter = 'photo'"
-      :class="typeFilter === 'photo' ? 'font-semibold' : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'"
-      class="px-2 py-0.5 rounded-full border border-gray-200 dark:border-gray-700 transition-colors"
-      :style="typeFilter === 'photo' ? 'border-color: var(--accent-color); color: var(--accent-color)' : ''">
+      :class="{ 'active': typeFilter === 'photo' }"
+      class="badge badge-filter badge-compact"
+      type="button">
       Photos
     </button>
     <button @click="typeFilter = 'quotation'"
-      :class="typeFilter === 'quotation' ? 'font-semibold' : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'"
-      class="px-2 py-0.5 rounded-full border border-gray-200 dark:border-gray-700 transition-colors"
-      :style="typeFilter === 'quotation' ? 'border-color: var(--accent-color); color: var(--accent-color)' : ''">
+      :class="{ 'active': typeFilter === 'quotation' }"
+      class="badge badge-filter badge-compact"
+      type="button">
       Quotations
     </button>
   </div>

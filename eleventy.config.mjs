@@ -144,8 +144,7 @@ async function copyPostAssets(srcDir, destDir) {
 async function imageShortcode(src, alt, css) {
   // Preserve animation for GIFs by bypassing transformation
   if (/\.gif$/i.test(src)) {
-    const publicSrc = mapSrcToPublicUrl(src);
-    return `<img src="${publicSrc}" alt="${alt ?? ''}" class="${css ?? ''}" loading="lazy" decoding="async" />`;
+    return buildRemoteImageMarkup(mapSrcToPublicUrl(src), alt, css);
   }
   let metadata = await Image(src, {
     widths: [400, 800, 1200, "auto"],
@@ -170,9 +169,7 @@ async function imageShortcode(src, alt, css) {
 async function imageShortcodeWithCaptions(src, alt, css, caption) {
   // Preserve animation for GIFs by bypassing transformation
   if (/\.gif$/i.test(src)) {
-    const publicSrc = mapSrcToPublicUrl(src);
-    const imageMarkup = `<img src="${publicSrc}" alt="${alt ?? ''}" class="${css ?? ''}" loading="lazy" decoding="async" />`;
-    return `<figure>${imageMarkup}${caption ? `<figcaption class="font-thin italic">${caption}</figcaption>` : ""}</figure>`;
+    return wrapImageInFigure(buildRemoteImageMarkup(mapSrcToPublicUrl(src), alt, css), caption);
   }
   let metadata = await Image(src, {
     widths: [400, 800, 1200, "auto"],
@@ -193,6 +190,22 @@ async function imageShortcodeWithCaptions(src, alt, css, caption) {
     whitespaceMode: "inline",
   });
 
+  return wrapImageInFigure(imageMarkup, caption);
+}
+
+function remoteImageShortcode(src, alt, css) {
+  return buildRemoteImageMarkup(src, alt, css);
+}
+
+function remoteImageShortcodeWithCaptions(src, alt, css, caption) {
+  return wrapImageInFigure(buildRemoteImageMarkup(src, alt, css), caption);
+}
+
+function buildRemoteImageMarkup(src, alt, css) {
+  return `<img src="${src}" alt="${alt ?? ''}" class="${css ?? ''}" loading="lazy" decoding="async" data-zoomable />`;
+}
+
+function wrapImageInFigure(imageMarkup, caption) {
   return `<figure>${imageMarkup}${caption ? `<figcaption class="font-thin italic">${caption}</figcaption>` : ""}</figure>`;
 }
 
@@ -346,6 +359,8 @@ export default function (eleventyConfig) {
   //Image Plugin
   eleventyConfig.addAsyncShortcode("image", imageShortcode);
   eleventyConfig.addAsyncShortcode("image_cc", imageShortcodeWithCaptions);
+  eleventyConfig.addShortcode("remote_image", remoteImageShortcode);
+  eleventyConfig.addShortcode("remote_image_cc", remoteImageShortcodeWithCaptions);
 
   // Generate thumbnails for gallery images
   async function galleryImageShortcode(src) {
@@ -886,6 +901,7 @@ export default function (eleventyConfig) {
           readingTime: post.data.readingTime,
           tags: (post.data.tags || []).filter((tag) => tag !== "posts" && tag !== "post"),
           pinned: !!post.data.pinned,
+          featured: !!post.data.featured,
           authored_by: post.data.authored_by ?? null,
           image: post.data.image ?? null,
           imageAlt: post.data.imageAlt ?? post.data.title,

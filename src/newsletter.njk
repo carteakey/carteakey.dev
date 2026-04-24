@@ -11,11 +11,9 @@ eleventyNavigation:
 
 <div class=" mx-auto">
   {% set cardShell = "border border-gray-200 dark:border-gray-800 rounded-lg" %}
-  <h1 class="text-2xl font-semibold tracking-tight m-0">Newsletter</h1>
-  <p class="text-sm text-gray-500 dark:text-gray-400 mt-1 mb-8">
-    Get notified when I publish new posts about AI, data science, machine learning, self-hosting, and technology. 
-    No spam, unsubscribe anytime.
-  </p>
+  {% set pageTitle = "Newsletter" %}
+  {% set pageDescription = "Get notified when I publish new posts about AI, data science, machine learning, self-hosting, and technology. No spam, unsubscribe anytime." %}
+  {% include "components/page-header.njk" %}
 
   <div id="subscribeForm" class="{{ cardShell }} p-6 sm:p-8">
     <form name="newsletter" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="space-y-4">

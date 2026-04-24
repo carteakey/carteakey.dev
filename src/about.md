@@ -6,14 +6,24 @@ eleventyNavigation:
   key: About
   order: 1
 ---
-<h1>About</h1>
-
-Hi 👋🏼, I'm **Kartikey** (most people say _carteakey_ - hence the domain).
-
-Data Analyst in Toronto. I wrangle data by day and tinker with self-hosted servers, local LLMs, and side projects by night. The professional version of me is on [LinkedIn](https://www.linkedin.com/in/kartikeychauhan).
-
 {% set fact = randomFacts | random %}
-**Random fact:** _"{{ fact }}"_
+{% set pageEyebrow = "Profile" %}
+{% set pageTitle = "About" %}
+{% set pageDescription = "Data analyst in Toronto. I spend my days with product and growth data, and my nights with self-hosted servers, local LLMs, and side projects." %}
+{% set pageMetaLabel = "Based in" %}
+{% set pageMeta = "Toronto, ON" %}
+{% set pageActions = [
+  { href: "https://www.linkedin.com/in/kartikeychauhan", label: "LinkedIn ↗", external: true, accent: true },
+  { href: "/guestbook/", label: "Guestbook →" }
+] %}
+{% include "components/page-header.njk" %}
+
+<div class="surface surface-compact not-prose mb-8">
+  <p class="m-0 text-sm text-gray-600 dark:text-gray-300">
+    <span class="font-semibold text-gray-900 dark:text-white">Random fact.</span>
+    <em>"{{ fact }}"</em>
+  </p>
+</div>
 
 ## Work
 
@@ -61,5 +71,4 @@ Writing in public keeps me honest. Knowledge isn't a dump of everything you've s
 If any of this resonates with you, or if you just want to chat about Bloodborne lore, AI, or why self-hosting is both a blessing and a curse, hit me up at **carteakey.dev[at]gmail[dot]com**.
 
 You can also sign my [guestbook](/guestbook) - yes, I have one in 2026. Retro is in.
-
 

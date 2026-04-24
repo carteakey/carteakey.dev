@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.9.19] - 2026-04-24
+
+### Added
+- Added a distinct `.badge-featured` utility class utilizing an amber color palette to visually separate the "Featured" post from standard "Pinned" posts.
+
+### Changed
+- Replaced the text "Pinned" and the unicode star (★) with a `bookmark` Feather icon across all pinned badges to visually distinguish them from Featured items.
+
+### Fixed
+- Resolved an Eleventy data cascade collision where the global `featured.js` object erroneously shadowed boolean `featured` frontmatter flags, restoring correct Featured post selection and styling on the homepage.
+- Renamed the global `featured.js` data file to `featuredItems.js` to avoid namespace collisions with local post fields.
+
 ## [1.9.18] - 2026-04-22
 
 ### Changed

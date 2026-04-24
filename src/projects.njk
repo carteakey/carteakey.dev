@@ -8,7 +8,14 @@ eleventyNavigation:
   order: 4
 ---
 
-<h1>Projects</h1>
+{% set pageEyebrow = "Things I Build" %}
+{% set pageTitle = "Projects" %}
+{% set pageDescription = "A running list of personal projects, experiments, and the code that powers them." %}
+{% set itemCount = projects.projects | length %}
+{% set itemLabel = "projects" %}
+{% set pageActions = [{ href: "https://github.com/carteakey?tab=repositories", label: "Browse GitHub", external: true, accent: true }] %}
+
+{% include "components/page-header.njk" %}
 {# 
 <h2>Work</h2>
 <p>
@@ -66,7 +73,7 @@ eleventyNavigation:
               {% feather "arrow-up-right", class="w-3.5 h-3.5 opacity-40 group-hover:opacity-100 transition-opacity" %}
             </a>
             {% for tag in project.tags %}
-              <span class="tag text-[0.6rem]">#{{ tag }}</span>
+              <span class="badge badge-tag badge-compact">#{{ tag }}</span>
             {% endfor %}
           </div>
           <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
@@ -85,7 +92,7 @@ eleventyNavigation:
 <h2>GitHub Profile</h2>
 <div class="not-prose">
   <a href="https://github.com/carteakey" target="_blank" rel="noopener" class="block" style="text-decoration:none;">
-    <div class="card card-padding hover:border-gray-300 dark:hover:border-gray-600 transition-colors cursor-pointer">
+    <div class="surface surface-hover surface-padding cursor-pointer">
 
       {# Avatar + name #}
       <div class="flex items-center gap-3 mb-4">
@@ -127,7 +134,7 @@ eleventyNavigation:
           <p class="text-[0.65rem] text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-1.5 m-0 meta-text">Top Languages</p>
           <div class="flex flex-wrap gap-1.5">
             {% for lang in githubCard.topLanguages %}
-              <span class="text-[0.65rem] px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300">{{ lang.name }}</span>
+              <span class="badge badge-tag badge-compact">{{ lang.name }}</span>
             {% endfor %}
           </div>
         </div>
@@ -142,7 +149,7 @@ eleventyNavigation:
   <p class="text-gray-600 dark:text-gray-400 mb-4">
     My contribution activity on GitHub over the past year.
   </p>
-  <div class="card card-padding not-prose">
+  <div class="surface surface-padding not-prose">
     {% include "components/github-contributions.njk" %}
     <p class="text-xs text-gray-500 dark:text-gray-400 mt-2 text-center">
       Data sourced live from <a href="https://github.com/carteakey" class="hover:underline accent-link">GitHub activity</a>.

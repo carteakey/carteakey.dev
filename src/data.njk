@@ -17,18 +17,10 @@ eleventyExcludeFromCollections: true
 {% set topDomain = cartebase.browsing.top_domains_all_time[0] %}
 {% set totalMinutes = cartebase.listening.minutes_total %}
 
-<div class="flex items-baseline justify-between mb-1">
-  <h1 class="text-2xl font-semibold tracking-tight m-0">My life in data</h1>
-  <span class="meta-text text-xs text-gray-400 dark:text-gray-500">Updated {{ (cartebase.summary.last_updated | split('T'))[0] }}</span>
-</div>
-<p class="text-sm text-gray-500 dark:text-gray-400 mt-1 mb-6 not-prose">
-  A scrollable dashboard generated from
-  <a href="https://github.com/carteakey/cartebase" class="accent-link">cartebase</a>,
-  a Dogsheep-style SQLite warehouse of my personal data, spanning
-  <strong>{{ startYear }}–{{ endYear }}</strong>. Inspired by
-  <a href="https://howisfelix.today/" class="accent-link">howisFelix.today</a>.
-  Finance, health, shopping, and private domains are deliberately excluded.
-</p>
+{% set pageTitle = "My life in data" %}
+{% set pageMeta = "Updated " ~ (cartebase.summary.last_updated | split('T'))[0] %}
+{% set pageDescription = "A scrollable dashboard generated from <a href=\"https://github.com/carteakey/cartebase\" class=\"accent-link\">cartebase</a>, a Dogsheep-style SQLite warehouse of my personal data, spanning <strong>" ~ startYear ~ "–" ~ endYear ~ "</strong>. Inspired by <a href=\"https://howisfelix.today/\" class=\"accent-link\">howisFelix.today</a>. Finance, health, shopping, and private domains are deliberately excluded." %}
+{% include "components/page-header.njk" %}
 
 <div class="not-prose grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
   {{ cb.stat_tile("Spotify plays", cartebase.summary.plays_total | localeNumber, "since " + startYear) }}

@@ -1,28 +1,53 @@
-{# 
-  Page Header Component
-  =====================
-  A compact, consistent header for collection/listing pages.
-  
-  Usage:
-  {% set pageTitle = "Snippets" %}
-  {% set pageDescription = "A collection of useful code snippets" %}
-  {% set pageIcon = "code" %}
-  {% set itemCount = 42 %}
-  {% set itemLabel = "snippets" %}
-  {% include "components/page-header.njk" %}
+{#
+  Shared page header for collection, profile, and utility pages.
 #}
 
-<header class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-  <div class="flex-1">
-    <h1 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white flex items-center gap-2">
-      {% if pageIcon %}{% feather pageIcon, class="w-5 h-5" %}{% endif %}
-      {{ pageTitle }}
+{% set pageBadges = pageBadges or [] %}
+{% set pageActions = pageActions or [] %}
+
+<header class="page-header not-prose">
+  <div class="page-header-main">
+    {% if pageEyebrow %}
+      <p class="page-eyebrow">{{ pageEyebrow }}</p>
+    {% endif %}
+
+    <div class="page-header-title-row">
+      <h1 class="page-header-title">
+        {% if pageIcon %}{% feather pageIcon, class="w-5 h-5 opacity-80" %}{% endif %}
+        <span>{{ pageTitle }}</span>
+      </h1>
       {% if itemCount %}
-      <span class="badge-count ml-2">{{ itemCount }}</span>
+        <span class="badge-count" aria-label="{{ itemCount }} {{ itemLabel or 'items' }}">{{ itemCount }}</span>
       {% endif %}
-    </h1>
+    </div>
+
     {% if pageDescription %}
-    <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">{{ pageDescription }}</p>
+      <p class="page-header-description">{{ pageDescription | safe }}</p>
+    {% endif %}
+
+    {% if pageBadges.length or pageActions.length %}
+      <div class="page-header-supporting">
+        {% for badge in pageBadges %}
+          {% if badge.href %}
+            <a href="{{ badge.href }}" class="badge badge-tag badge-interactive no-underline">{{ badge.label }}</a>
+          {% else %}
+            <span class="badge badge-tag">{{ badge.label }}</span>
+          {% endif %}
+        {% endfor %}
+
+        {% for action in pageActions %}
+          <a href="{{ action.href }}" class="page-header-link{% if action.accent %} accent-link{% endif %}" {% if action.external %}target="_blank" rel="noopener"{% endif %}>{{ action.label }}</a>
+        {% endfor %}
+      </div>
     {% endif %}
   </div>
+
+  {% if pageMeta %}
+    <div class="page-header-aside">
+      {% if pageMetaLabel %}
+        <span class="page-header-meta-label">{{ pageMetaLabel }}</span>
+      {% endif %}
+      <span class="page-header-meta-value">{{ pageMeta | safe }}</span>
+    </div>
+  {% endif %}
 </header>

@@ -19,15 +19,10 @@ eleventyExcludeFromCollections: true
 {% set totalPlays = listening.plays_total %}
 {% set totalMinutes = listening.minutes_total %}
 
-<div class="flex items-baseline justify-between mb-1">
-  <h1 class="text-2xl font-semibold tracking-tight m-0">Listening, wrapped</h1>
-  <span class="meta-text text-xs text-gray-400 dark:text-gray-500">Updated {{ (listening.last_updated | split('T'))[0] }}</span>
-</div>
-<p class="text-sm text-gray-500 dark:text-gray-400 mt-1 mb-6 not-prose">
-  My whole Spotify listening history, all-time — not just the last year.
-  Pulled from <a href="https://github.com/carteakey/cartebase" class="accent-link">cartebase</a>.
-  <a href="/data/" class="accent-link">Back to /data/ →</a>
-</p>
+{% set pageTitle = "Listening, wrapped" %}
+{% set pageMeta = "Updated " ~ (listening.last_updated | split('T'))[0] %}
+{% set pageDescription = "My whole Spotify listening history, all-time — not just the last year. Pulled from <a href=\"https://github.com/carteakey/cartebase\" class=\"accent-link\">cartebase</a>. <a href=\"/data/\" class=\"accent-link\">Back to /data/ →</a>" %}
+{% include "components/page-header.njk" %}
 
 {{ cb.now_playing_strip(spotify.nowPlaying) }}
 

@@ -10,11 +10,15 @@ eleventyNavigation:
 
 {% include "components/breadcrumbs.njk" %}
 
-<div class="flex items-baseline justify-between mb-2">
-  <div class="flex items-baseline gap-3">
-    <h1 class="text-2xl font-semibold tracking-tight m-0">TIL</h1>
-    <span class="meta-text text-xs text-gray-400 dark:text-gray-500">{{ collections.til | length }} entries</span>
-  </div>
+{% set pageEyebrow = "Small Discoveries" %}
+{% set pageTitle = "TIL" %}
+{% set pageDescription = "Short notes on things I discover: CSS quirks, CLI tricks, API behavior, and random facts." %}
+{% set itemCount = collections.til | length %}
+{% set itemLabel = "entries" %}
+
+{% include "components/page-header.njk" %}
+
+<div class="flex items-baseline justify-end mb-2">
   <div class="flex items-center gap-2">
     <div class="relative">
       {% feather "search", class="w-3.5 h-3.5 text-gray-400 absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" %}
@@ -27,8 +31,6 @@ eleventyNavigation:
     </div>
   </div>
 </div>
-
-<p class="text-sm text-gray-500 dark:text-gray-400 mt-0 mb-4">Short notes on things I discover - CSS quirks, CLI tricks, API behaviour, random facts.</p>
 
 <div id="tilList" class="mt-2 divide-y divide-gray-100 dark:divide-gray-800/80">
   {%- for entry in collections.til | reverse -%}
@@ -48,7 +50,7 @@ eleventyNavigation:
           {% if filteredTags.length > 0 %}
             <div class="hidden md:flex flex-wrap gap-1 mt-0.5">
               {% for tag in filteredTags | slice(0, 2) %}
-                <span class="meta-text text-[0.62rem] px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400">{{ tag }}</span>
+                <span class="badge badge-tag badge-compact">{{ tag }}</span>
               {% endfor %}
             </div>
           {% endif %}
@@ -63,7 +65,7 @@ eleventyNavigation:
           <div class="md:hidden flex flex-wrap items-center gap-x-2 gap-y-1 mt-1.5">
             <span class="meta-text text-[0.65rem] text-gray-400 dark:text-gray-500">{{ entry.date | readableDate }}</span>
             {% for tag in filteredTags | slice(0, 2) %}
-              <span class="meta-text text-[0.62rem] px-1 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400">{{ tag }}</span>
+              <span class="badge badge-tag badge-compact">{{ tag }}</span>
             {% endfor %}
           </div>
         </div>

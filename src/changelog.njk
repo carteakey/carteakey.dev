@@ -10,13 +10,10 @@ eleventyNavigation:
 
 {% include "components/breadcrumbs.njk" %}
 
-<div class="not-prose mb-6 flex items-baseline justify-between">
-  <div>
-    <h1 class="text-2xl font-semibold tracking-tight m-0">Changelog</h1>
-    <p class="text-sm text-gray-400 dark:text-gray-500 mt-1">A running history of site changes.</p>
-  </div>
-  <a href="https://github.com/carteakey/carteakey.dev/blob/main/docs/CHANGELOG.md" target="_blank" rel="noopener" class="text-xs text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors" style="text-decoration:none;">Raw ↗</a>
-</div>
+{% set pageTitle = "Changelog" %}
+{% set pageDescription = "A running history of site changes." %}
+{% set pageActions = [ { label: "Raw ↗", href: "https://github.com/carteakey/carteakey.dev/blob/main/docs/CHANGELOG.md", external: true } ] %}
+{% include "components/page-header.njk" %}
 
 <div class="not-prose relative">
   {# vertical timeline line #}

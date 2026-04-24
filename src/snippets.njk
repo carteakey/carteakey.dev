@@ -9,11 +9,15 @@ eleventyNavigation:
 
 {% include "components/breadcrumbs.njk" %}
 
+{% set pageEyebrow = "Code Library" %}
+{% set pageTitle = "Snippets" %}
+{% set pageDescription = "Useful commands, setup notes, and small pieces of code worth keeping close." %}
+{% set itemCount = collections.snippets | length %}
+{% set itemLabel = "snippets" %}
+
+{% include "components/page-header.njk" %}
+
 <div class="flex items-baseline justify-between mb-2">
-  <div class="flex items-baseline gap-3">
-    <h1 class="text-2xl font-semibold tracking-tight m-0">Snippets</h1>
-    <span class="meta-text text-xs text-gray-400 dark:text-gray-500">{{ collections.snippets | length }} snippets</span>
-  </div>
   <div class="flex items-center gap-2">
     <div class="relative">
       {% feather "search", class="w-3.5 h-3.5 text-gray-400 absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" %}
@@ -53,7 +57,7 @@ eleventyNavigation:
         <div class="shrink-0 md:w-36 flex flex-col gap-1 pt-0.5">
           <time class="meta-text text-xs text-gray-400 dark:text-gray-500" datetime="{{ snippet.date | htmlDateString }}">{{ snippet.date | readableDate }}</time>
           {% if snippet.data.language %}
-            <span class="hidden md:inline-flex meta-text text-[0.62rem] px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 w-fit">{{ snippet.data.language }}</span>
+            <span class="hidden md:inline-flex badge badge-tag badge-compact w-fit">{{ snippet.data.language }}</span>
           {% endif %}
         </div>
         <div class="flex-1 min-w-0">
@@ -66,7 +70,7 @@ eleventyNavigation:
           <div class="md:hidden flex flex-wrap items-center gap-x-2 gap-y-1 mt-1.5">
             <span class="meta-text text-[0.65rem] text-gray-400 dark:text-gray-500">{{ snippet.date | readableDate }}</span>
             {% if snippet.data.language %}
-              <span class="meta-text text-[0.62rem] px-1 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400">{{ snippet.data.language }}</span>
+              <span class="badge badge-tag badge-compact">{{ snippet.data.language }}</span>
             {% endif %}
           </div>
         </div>
@@ -83,7 +87,7 @@ eleventyNavigation:
     {% set excerpt = snippet.templateContent | striptags | replace('\n', ' ') | truncate(100, true, '…') %}
     {% set searchExcerpt = snippet.templateContent | striptags | replace('\n', ' ') | truncate(160, true, '') | lower %}
     <article
-      class="feed-card-full"
+      class="feed-card-full surface-compact"
       data-snippet-card
       data-title="{{ snippet.data.title | lower }}"
       data-tags="{{ filteredTags | join(' ') | lower }}"
@@ -94,7 +98,7 @@ eleventyNavigation:
         <span class="feed-list-dot bg-purple-400 shrink-0"></span>
         <time class="meta-text text-[0.68rem] text-gray-400 dark:text-gray-500">{{ snippet.date | readableDate }}</time>
         {% if snippet.data.language %}
-          <span class="meta-text text-[0.62rem] px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 ml-auto">{{ snippet.data.language }}</span>
+          <span class="badge badge-tag badge-compact ml-auto">{{ snippet.data.language }}</span>
         {% endif %}
       </div>
       <h3 class="text-sm font-semibold leading-snug text-gray-900 dark:text-gray-100 m-0">
@@ -106,7 +110,7 @@ eleventyNavigation:
       {% if filteredTags | length %}
         <div class="flex flex-wrap gap-1 mt-2.5">
           {% for tag in filteredTags | head(3) %}
-            <a href="/snippets/tags/{{ tag | slugify }}/" class="text-[0.6rem] px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 title-hover" style="text-decoration: none;">#{{ tag }}</a>
+            <a href="/snippets/tags/{{ tag | slugify }}/" class="badge badge-tag badge-compact badge-interactive" style="text-decoration: none;">#{{ tag }}</a>
           {% endfor %}
         </div>
       {% endif %}
@@ -135,4 +139,3 @@ eleventyNavigation:
     });
   });
 </script>
-

@@ -12,7 +12,7 @@
           <div class="hidden md:flex flex-wrap gap-1 mt-0.5">
             {% for tag in post.data.tags | filterTagList %}
             {% set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
-            <a href="{{ tagUrl | url }}" class="meta-text text-[0.62rem] px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 title-hover" style="text-decoration: none;">#{{ tag }}</a>
+            <a href="{{ tagUrl | url }}" class="badge badge-tag badge-compact badge-interactive" style="text-decoration: none;">#{{ tag }}</a>
             {% endfor %}
           </div>
         </div>
@@ -21,7 +21,7 @@
         <div class="flex-1 min-w-0">
           <div class="leading-snug">
             {% if post.data.pinned %}
-              <span class="inline-flex items-center mr-1.5 text-sm align-middle" style="color: var(--accent-color);" title="Pinned" aria-label="Pinned">★</span>
+              <span class="inline-flex items-center mr-1.5 align-middle" style="color: var(--accent-color);" title="Pinned" aria-label="Pinned">{% feather "bookmark", class="w-3.5 h-3.5 fill-current opacity-20" %}</span>
             {% endif %}
             {{ authorshipBadge(post.data.authored_by, compact=true) }}
             <a href="{{ post.url | url }}" class="font-semibold text-gray-900 dark:text-gray-100 title-hover" style="text-decoration: none;">
@@ -38,7 +38,7 @@
             <span class="meta-text text-[0.65rem] text-gray-400 dark:text-gray-500">{{ post.date | postDate }}</span>
             {% for tag in post.data.tags | filterTagList %}
             {% set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
-            <a href="{{ tagUrl | url }}" class="meta-text text-[0.62rem] px-1 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400" style="text-decoration: none;">#{{ tag }}</a>
+            <a href="{{ tagUrl | url }}" class="badge badge-tag badge-compact badge-interactive" style="text-decoration: none;">#{{ tag }}</a>
             {% endfor %}
           </div>
         </div>

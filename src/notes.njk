@@ -10,17 +10,15 @@ eleventyNavigation:
 
 {% include "components/breadcrumbs.njk" %}
 
-<div class="flex items-baseline justify-between mb-2">
-  <div class="flex items-baseline gap-3">
-    <h1 class="text-2xl font-semibold tracking-tight m-0">Notes</h1>
-    <span class="meta-text text-xs text-gray-400 dark:text-gray-500">{{ collections.notes | length }} notes</span>
-  </div>
-</div>
-
-<p class="text-sm text-gray-500 dark:text-gray-400 mt-0 mb-4">Short observations, micro posts, and things that don't warrant a full blog post.</p>
+{% set pageEyebrow = "Short-form" %}
+{% set pageTitle = "Notes" %}
+{% set pageDescription = "Short observations, micro posts, and things that do not need a full blog post." %}
+{% set itemCount = collections.notes | length %}
+{% set itemLabel = "notes" %}
+{% include "components/page-header.njk" %}
 
 <div class="divide-y divide-gray-100 dark:divide-gray-800/80">
-  {%- for note in collections.notes | reverse -%}
+  {%- for note in collections.notes -%}
   <article class="py-3.5 group">
     <div class="flex flex-col md:flex-row md:gap-6">
       <div class="shrink-0 md:w-28 pt-0.5">

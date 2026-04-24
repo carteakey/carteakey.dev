@@ -38,10 +38,10 @@ htmlTemplateEngine: "webc"
 {% set highlightedPost = collections.featuredPost %}
 {% if highlightedPost %}
   <div class="not-prose animate-enter stagger-1 mb-5">
-    <div class="mb-2">
-      <span class="meta-text text-[0.65rem] uppercase tracking-wider font-semibold" style="color: var(--accent-color);">★ Featured</span>
-    </div>
-    <a href="{{ highlightedPost.url }}" class="block group" style="text-decoration: none;">
+    <a href="{{ highlightedPost.url }}" class="surface surface-hover surface-padding block group" style="text-decoration: none;">
+      <div class="mb-3">
+        <span class="badge badge-featured badge-compact" title="Featured" aria-label="Featured">★ Featured</span>
+      </div>
       <div class="{% if highlightedPost.data.image %}flex items-start gap-3{% endif %}">
         <div class="min-w-0 flex-1">
           <h2 class="text-base font-semibold text-gray-900 dark:text-gray-100 leading-snug m-0 transition-colors" style="transition: color 0.15s;">
@@ -61,7 +61,7 @@ htmlTemplateEngine: "webc"
         <time class="meta-text text-[0.68rem] text-gray-400 dark:text-gray-500">{{ highlightedPost.date | readableDate }}</time>
         {% if highlightedPost.data.tags %}
           {% for tag in highlightedPost.data.tags | filterTagList | head(2) %}
-            <span class="meta-text text-[0.65rem] px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400">#{{ tag }}</span>
+            <span class="badge badge-tag badge-compact">#{{ tag }}</span>
           {% endfor %}
         {% endif %}
         <span class="text-xs font-medium ml-auto transition-transform group-hover:translate-x-0.5" style="color: var(--accent-color);">Read →</span>
@@ -141,9 +141,9 @@ htmlTemplateEngine: "webc"
 
   <ul class="space-y-2 m-0 p-0 list-none">
     {% for entry in popularPosts %}
-      <li class="border border-gray-200 dark:border-gray-800 rounded-lg px-3 py-2">
+      <li class="surface surface-hover surface-compact">
         <div class="flex items-start gap-2">
-          <span class="meta-text text-[0.65rem] px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 shrink-0">{{ entry.count }}▲</span>
+          <span class="badge badge-tag badge-compact shrink-0">{{ entry.count }}▲</span>
           <a href="{{ entry.url }}" class="text-sm font-medium text-gray-900 dark:text-gray-100 title-hover leading-snug" style="text-decoration:none;">{{ entry.title }}</a>
         </div>
       </li>

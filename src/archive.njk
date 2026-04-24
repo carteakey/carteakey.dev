@@ -12,41 +12,45 @@ eleventyNavigation:
 {% include "components/breadcrumbs.njk" %}
 {% set byYear = collections.posts | countByYear %}
 {% set archiveYears = byYear | keys | sort | reverse %}
+{% set pageEyebrow = "Long-form Writing" %}
+{% set pageTitle = "Blog" %}
+{% set pageDescription = "Articles, tutorials, and essays on tech, tools, and whatever else stays with me long enough to write down." %}
+{% set itemCount = collections.posts | length %}
+{% set itemLabel = "posts" %}
 
-<div class="flex items-baseline justify-between mb-2" x-data="{ viewMode: 'list' }">
-  <div class="flex items-baseline gap-3">
-    <h1 class="text-2xl font-semibold tracking-tight m-0">Blog</h1>
-    <span class="meta-text text-xs text-gray-400 dark:text-gray-500">{{ collections.posts | length }} posts</span>
-  </div>
-  <div class="flex items-center gap-2">
-    <div class="relative">
-      {% feather "search", class="w-3.5 h-3.5 text-gray-400 absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" %}
-      <input
-        type="text"
-        id="blogSearch"
-        placeholder="Search..."
-        class="rounded-md border border-gray-200 dark:border-gray-700 bg-transparent py-1.5 pl-8 pr-3 text-sm accent-field focus:outline-none dark:text-gray-100 w-40 placeholder:text-gray-400"
-      >
-    </div>
-    <div class="view-toggle" x-data="{ viewMode: 'list' }">
-      <button type="button" title="List view" :class="{ 'active': viewMode === 'list' }" @click="viewMode = 'list'; document.getElementById('blogGrid').classList.add('hidden'); document.getElementById('blogList').classList.remove('hidden');">
-        {% feather "list", class="w-4 h-4" %}
-      </button>
-      <button type="button" title="Grid view" :class="{ 'active': viewMode === 'grid' }" @click="viewMode = 'grid'; document.getElementById('blogList').classList.add('hidden'); document.getElementById('blogGrid').classList.remove('hidden');">
-        {% feather "grid", class="w-4 h-4" %}
-      </button>
-    </div>
-  </div>
-</div>
+<div x-data="{ viewMode: 'list' }">
+  {% include "components/page-header.njk" %}
 
-<div class="not-prose mb-3 flex flex-wrap items-center gap-1.5">
-  <span class="meta-text text-[0.65rem] uppercase tracking-wide text-gray-400 dark:text-gray-500">Jump to</span>
-  {% for year in archiveYears %}
-    <a href="#year-{{ year }}" class="meta-text text-[0.65rem] px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 title-hover" style="text-decoration: none;">
-      {{ year }}
-    </a>
-  {% endfor %}
-</div>
+  <div class="flex items-baseline justify-between mb-2 gap-3 flex-wrap">
+    <div class="flex items-center gap-2">
+      <div class="relative">
+        {% feather "search", class="w-3.5 h-3.5 text-gray-400 absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" %}
+        <input
+          type="text"
+          id="blogSearch"
+          placeholder="Search..."
+          class="rounded-md border border-gray-200 dark:border-gray-700 bg-transparent py-1.5 pl-8 pr-3 text-sm accent-field focus:outline-none dark:text-gray-100 w-40 placeholder:text-gray-400"
+        >
+      </div>
+      <div class="view-toggle" x-data="{ viewMode: 'list' }">
+        <button type="button" title="List view" :class="{ 'active': viewMode === 'list' }" @click="viewMode = 'list'; document.getElementById('blogGrid').classList.add('hidden'); document.getElementById('blogList').classList.remove('hidden');">
+          {% feather "list", class="w-4 h-4" %}
+        </button>
+        <button type="button" title="Grid view" :class="{ 'active': viewMode === 'grid' }" @click="viewMode = 'grid'; document.getElementById('blogList').classList.add('hidden'); document.getElementById('blogGrid').classList.remove('hidden');">
+          {% feather "grid", class="w-4 h-4" %}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="not-prose mb-3 flex flex-wrap items-center gap-1.5">
+    <span class="meta-text text-[0.65rem] uppercase tracking-wide text-gray-400 dark:text-gray-500">Jump to</span>
+    {% for year in archiveYears %}
+      <a href="#year-{{ year }}" class="badge badge-tag badge-compact badge-interactive" style="text-decoration: none;">
+        {{ year }}
+      </a>
+    {% endfor %}
+  </div>
 
 {# ── LIST VIEW (default) ─────────────────────────────── #}
 <div id="blogList" class="mt-4 divide-y divide-gray-100 dark:divide-gray-800/80">
@@ -71,7 +75,7 @@ eleventyNavigation:
               <time class="meta-text text-xs text-gray-400 dark:text-gray-500" datetime="{{ post.date | htmlDateString }}">{{ post.date | readableDate }}</time>
               <div class="hidden md:flex flex-wrap gap-1 mt-0.5">
                 {% for tag in filteredTags %}
-                  <a href="/tags/{{ tag | slugify }}/" class="meta-text text-[0.62rem] px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 title-hover" style="text-decoration: none;">#{{ tag }}</a>
+                  <a href="/tags/{{ tag | slugify }}/" class="badge badge-tag badge-compact badge-interactive" style="text-decoration: none;">#{{ tag }}</a>
                 {% endfor %}
               </div>
             </div>
@@ -79,8 +83,11 @@ eleventyNavigation:
               <div class="{% if post.data.image %}flex items-start gap-4{% endif %}">
                 <div class="min-w-0 flex-1">
                   <div class="leading-snug">
+                    {% if post.data.featured %}
+                      <span class="inline-flex items-center mr-1.5 text-sm align-middle" style="color: rgb(245 158 11);" title="Featured" aria-label="Featured">★</span>
+                    {% endif %}
                     {% if post.data.pinned %}
-                      <span class="inline-flex items-center mr-1.5 text-sm align-middle" style="color: var(--accent-color);" title="Pinned" aria-label="Pinned">★</span>
+                      <span class="inline-flex items-center mr-1.5 align-middle" style="color: var(--accent-color);" title="Pinned" aria-label="Pinned">{% feather "bookmark", class="w-3.5 h-3.5 fill-current opacity-20" %}</span>
                     {% endif %}
                     {{ authorshipBadge(post.data.authored_by, compact=true) }}
                     <a href="{{ post.url }}" class="font-semibold text-gray-900 dark:text-gray-100 title-hover" style="text-decoration: none;">{{ post.data.title }}</a>
@@ -91,9 +98,9 @@ eleventyNavigation:
                   <div class="md:hidden flex flex-wrap items-center gap-x-2 gap-y-1 mt-1.5">
                     <span class="meta-text text-[0.65rem] text-gray-400 dark:text-gray-500">{{ post.date | readableDate }}</span>
                     {% for tag in filteredTags %}
-                      <a href="/tags/{{ tag | slugify }}/" class="meta-text text-[0.62rem] px-1 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400" style="text-decoration: none;">#{{ tag }}</a>
-                    {% endfor %}
-                  </div>
+                    <a href="/tags/{{ tag | slugify }}/" class="badge badge-tag badge-compact badge-interactive" style="text-decoration: none;">#{{ tag }}</a>
+                  {% endfor %}
+                </div>
                 </div>
                 {% if post.data.image %}
                   <a href="{{ post.url }}" class="hidden sm:block shrink-0 self-start" style="text-decoration: none;">
@@ -116,7 +123,7 @@ eleventyNavigation:
     {% set filteredTags = rawTags | filterTagList %}
     {% set searchDesc = post.data.description | default('') | lower %}
     <article
-      class="feed-card-full"
+      class="feed-card-full surface-compact"
       data-blog-card
       data-title="{{ post.data.title | lower }}"
       data-tags="{{ filteredTags | join(' ') | lower }}"
@@ -126,8 +133,11 @@ eleventyNavigation:
         <span class="feed-list-dot bg-blue-400 shrink-0"></span>
         <time class="meta-text text-[0.68rem] text-gray-400 dark:text-gray-500">{{ post.date | readableDate }}</time>
         {{ authorshipBadge(post.data.authored_by, compact=true) }}
+        {% if post.data.featured %}
+          <span class="badge badge-featured badge-compact ml-auto" title="Featured" aria-label="Featured">★ Featured</span>
+        {% endif %}
         {% if post.data.pinned %}
-          <span class="meta-text text-sm ml-auto" style="color: var(--accent-color);" title="Pinned" aria-label="Pinned">★</span>
+          <span class="badge badge-accent badge-compact {% if not post.data.featured %}ml-auto{% endif %} flex items-center gap-1" title="Pinned" aria-label="Pinned">{% feather "bookmark", class="w-3 h-3" %} Pinned</span>
         {% endif %}
       </div>
       <h3 class="text-sm font-semibold leading-snug text-gray-900 dark:text-gray-100 m-0">
@@ -148,12 +158,13 @@ eleventyNavigation:
       {% if filteredTags | length %}
         <div class="flex flex-wrap gap-1 mt-2.5">
           {% for tag in filteredTags | head(3) %}
-            <a href="/tags/{{ tag | slugify }}/" class="text-[0.6rem] px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 title-hover" style="text-decoration: none;">#{{ tag }}</a>
+            <a href="/tags/{{ tag | slugify }}/" class="badge badge-tag badge-compact badge-interactive" style="text-decoration: none;">#{{ tag }}</a>
           {% endfor %}
         </div>
       {% endif %}
     </article>
   {% endfor %}
+</div>
 </div>
 
 <script>

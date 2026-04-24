@@ -12,12 +12,9 @@ eleventyNavigation:
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&display=swap" rel="stylesheet">
 
 <div class="mx-auto space-y-10">
-  <div>
-    <h1 class="text-2xl font-semibold tracking-tight m-0">Guestbook</h1>
-    <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
-      Leave a note, share what brought you here, or drop a recommendation. 📌
-    </p>
-  </div>
+  {% set pageTitle = "Guestbook" %}
+  {% set pageDescription = "Leave a note, share what brought you here, or drop a recommendation. 📌" %}
+  {% include "components/page-header.njk" %}
 
   {# ── Sticky-notes wall ── #}
   {% if guestbook.entries | length %}

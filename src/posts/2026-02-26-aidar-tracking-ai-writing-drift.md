@@ -6,7 +6,7 @@ authored_by: ai-generated
 tags:
   - AI
   - Agents
-featured: true
+featured: false
 draft: false
 ---
 

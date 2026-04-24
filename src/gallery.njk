@@ -9,38 +9,41 @@ eleventyNavigation:
 
 {% include "components/breadcrumbs.njk" %}
 
-<h1>Gallery</h1>
+{% set pageEyebrow = "Visual Archive" %}
+{% set pageTitle = "Gallery" %}
+{% set pageDescription = "A personal collection of photos from both real life and virtual worlds." %}
+{% set itemCount = photos | length %}
+{% set itemLabel = "photos" %}
+{% set pageBadges = [
+  { label: "Real life" },
+  { label: "Virtual worlds" }
+] %}
+{% include "components/page-header.njk" %}
 
-<div>
-  <div class="flex flex-col min-h-screen">
-    <div class="md:max-w-xl mx-auto">
-      <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">A personal collection of photos from both real life and virtual worlds.</p>
+<div class="flex flex-col min-h-screen">
+  <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] auto-rows-[90px] gap-1 w-full mb-6" id="gallery">
+    {% for photo in photos %}
+    {% if photo.height > photo.width %}
+    <div class="relative w-full h-full row-span-3">
+    {% else %}
+    <div class="relative w-full h-full row-span-2">
+    {% endif %}
+      <figure class="overflow-hidden rounded-lg shadow-lg cursor-pointer group hover:shadow-xl transition-all duration-300 h-full" 
+            data-pswp-src="{{ photo.path }}"
+            data-pswp-width="{{ photo.width }}"
+            data-pswp-height="{{ photo.height }}"
+            data-pswp-title="{{ photo.title }}"
+            data-pswp-description="{% if photo.category == 'real' %}📍 {{ photo.location }}&#10;📱 {{ photo.device }}{% else %}🎮 {{ photo.game }}&#10;💻 {{ photo.platform }}{% endif %}&#10;📅 {{ photo.date }}">
+      {% set thumbnail = "./src/static" + photo.path %}
+      <img src="{% thumbnail thumbnail %}" 
+           alt="{{ photo.title }}"
+           class="object-cover w-full h-full rounded-lg transition-transform duration-300 group-hover:scale-105 blur-[2px]"
+           onload="this.classList.remove('blur-[2px]')"
+           loading="lazy">
+        <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+      </figure>
     </div>
-
-    <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] auto-rows-[90px] gap-1 w-full mb-6" id="gallery">
-      {% for photo in photos %}
-      {% if photo.height > photo.width %}
-      <div class="relative w-full h-full row-span-3">
-      {% else %}
-      <div class="relative w-full h-full row-span-2">
-      {% endif %}
-        <figure class="overflow-hidden rounded-lg shadow-lg cursor-pointer group hover:shadow-xl transition-all duration-300 h-full" 
-              data-pswp-src="{{ photo.path }}"
-              data-pswp-width="{{ photo.width }}"
-              data-pswp-height="{{ photo.height }}"
-              data-pswp-title="{{ photo.title }}"
-              data-pswp-description="{% if photo.category == 'real' %}📍 {{ photo.location }}&#10;📱 {{ photo.device }}{% else %}🎮 {{ photo.game }}&#10;💻 {{ photo.platform }}{% endif %}&#10;📅 {{ photo.date }}">
-        {% set thumbnail = "./src/static" + photo.path %}
-        <img src="{% thumbnail thumbnail %}" 
-             alt="{{ photo.title }}"
-             class="object-cover w-full h-full rounded-lg transition-transform duration-300 group-hover:scale-105 blur-[2px]"
-             onload="this.classList.remove('blur-[2px]')"
-             loading="lazy">
-          <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-        </figure>
-      </div>
-      {% endfor %}
-    </div>
+    {% endfor %}
   </div>
 </div>
 

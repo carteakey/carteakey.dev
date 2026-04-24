@@ -7,12 +7,9 @@ permalink: /now/archive/
 
 {% include "components/breadcrumbs.njk" %}
 
-<div class="not-prose mb-6 flex items-baseline justify-between">
-  <div>
-    <h1 class="text-2xl font-semibold tracking-tight m-0">Now Archive</h1>
-    <p class="text-sm text-gray-400 dark:text-gray-500 mt-1">Past snapshots of <a href="/now/" class="title-hover">what I was up to</a>.</p>
-  </div>
-</div>
+{% set pageTitle = "Now Archive" %}
+{% set pageDescription = "Past snapshots of <a href=\"/now/\" class=\"title-hover\">what I was up to</a>." %}
+{% include "components/page-header.njk" %}
 
 {% set archiveEntries = collections.nowArchive | reverse %}
 {% if archiveEntries %}

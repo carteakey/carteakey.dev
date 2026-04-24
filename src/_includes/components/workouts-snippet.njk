@@ -17,7 +17,7 @@
                 {{ activity.name }}
               </a>
               <div class="flex flex-wrap items-center gap-1.5">
-                <span class="meta-text text-[0.65rem] px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400">{{ activity.type }}</span>
+                <span class="badge badge-tag badge-compact">{{ activity.type }}</span>
                 <time class="meta-text text-[0.65rem] text-gray-400 dark:text-gray-500">{{ activity.start_date | readableDate }}</time>
               </div>
             </div>

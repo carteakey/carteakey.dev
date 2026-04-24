@@ -29,33 +29,43 @@
   {# Type color dot classes #}
   {% set dotColor = "bg-gray-400" %}
   {% set badgeLabel = "Update" %}
+  {% set typeBadgeClass = "badge-type-default" %}
   {% if item.type == 'post' %}
     {% set dotColor = "bg-blue-400" %}
     {% set badgeLabel = "Post" %}
+    {% set typeBadgeClass = "badge-type-post" %}
   {% elif isSnippet %}
     {% set dotColor = "bg-purple-400" %}
     {% set badgeLabel = "Snippet" %}
+    {% set typeBadgeClass = "badge-type-snippet" %}
   {% elif isNote %}
     {% set dotColor = "bg-amber-400" %}
     {% set badgeLabel = "Note" %}
+    {% set typeBadgeClass = "badge-type-note" %}
   {% elif isPhoto %}
     {% set dotColor = "bg-emerald-400" %}
     {% set badgeLabel = "Photo" %}
+    {% set typeBadgeClass = "badge-type-photo" %}
   {% elif isVibe %}
     {% set dotColor = "bg-pink-400" %}
     {% set badgeLabel = "Vibe" %}
+    {% set typeBadgeClass = "badge-type-vibe" %}
   {% elif isNow %}
     {% set dotColor = "bg-cyan-400" %}
     {% set badgeLabel = "Now" %}
+    {% set typeBadgeClass = "badge-type-now" %}
   {% elif isTil %}
     {% set dotColor = "bg-yellow-400" %}
     {% set badgeLabel = "TIL" %}
+    {% set typeBadgeClass = "badge-type-til" %}
   {% elif isFolio %}
     {% set dotColor = "bg-orange-400" %}
     {% set badgeLabel = "Folio" %}
+    {% set typeBadgeClass = "badge-type-folio" %}
   {% elif isQuotation %}
     {% set dotColor = "bg-stone-500" %}
     {% set badgeLabel = "Quotation" %}
+    {% set typeBadgeClass = "badge-type-quotation" %}
   {% endif %}
 
   {# ── STREAM VARIANT (lifestream style) ── #}
@@ -67,8 +77,7 @@
         <time class="meta-text text-sm md:text-xs text-gray-500 dark:text-gray-400" datetime="{{ item.date | htmlDateString }}">{{ item.date | readableDate }}</time>
         
         <div class="flex items-center gap-1.5 md:mt-0.5">
-          <span class="feed-list-dot {{ dotColor }} shrink-0"></span>
-          <span class="meta-text text-[0.65rem] text-gray-400 dark:text-gray-500 uppercase tracking-widest">{{ badgeLabel }}</span>
+          <span class="badge badge-type badge-compact {{ typeBadgeClass }}">{{ badgeLabel }}</span>
         </div>
         
         <a href="{{ item.url | url }}" class="hidden md:inline-block mt-2 text-xs text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors" style="text-decoration: none;">Permalink →</a>
@@ -80,7 +89,10 @@
         {% if not (isQuotation or isVibe or isPhoto or isNow) %}
           <div class="leading-snug mb-1.5 flex items-center flex-wrap gap-2">
             {% if item.pinned %}
-              <span class="meta-text text-[0.65rem] uppercase tracking-wider font-semibold" style="color: var(--accent-color);" title="Pinned" aria-label="Pinned">★ Featured</span>
+              <span class="badge badge-accent badge-compact flex items-center gap-1" title="Pinned" aria-label="Pinned">{% feather "bookmark", class="w-3 h-3" %} Pinned</span>
+            {% endif %}
+            {% if item.featured %}
+              <span class="badge badge-featured badge-compact" title="Featured" aria-label="Featured">★ Featured</span>
             {% endif %}
             {% if item.authored_by is defined %}{{ authorshipBadge(item.authored_by, compact=true) }}{% endif %}
             {% if item.title %}
@@ -97,10 +109,13 @@
           </div>
         {% else %}
           {# For quotes/photos/vibes/now, show pinned/author above the content #}
-          {% if item.pinned or item.authored_by is defined %}
+          {% if item.pinned or item.featured or item.authored_by is defined %}
           <div class="flex items-center gap-2 mb-1.5">
             {% if item.pinned %}
-              <span class="meta-text text-[0.65rem] uppercase tracking-wider font-semibold" style="color: var(--accent-color);">★ Featured</span>
+              <span class="badge badge-accent badge-compact flex items-center gap-1">{% feather "bookmark", class="w-3 h-3" %} Pinned</span>
+            {% endif %}
+            {% if item.featured %}
+              <span class="badge badge-featured badge-compact">★ Featured</span>
             {% endif %}
             {% if item.authored_by is defined %}{{ authorshipBadge(item.authored_by, compact=true) }}{% endif %}
           </div>
@@ -185,7 +200,7 @@
           <div class="flex flex-wrap gap-1.5 mt-5 not-prose">
             {% for tag in item.tags %}
               {% set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
-              <a href="{{ tagUrl | url }}" class="text-[0.65rem] px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors font-sans" style="text-decoration: none;">#{{ tag }}</a>
+              <a href="{{ tagUrl | url }}" class="badge badge-tag badge-compact badge-interactive font-sans" style="text-decoration: none;">#{{ tag }}</a>
             {% endfor %}
           </div>
         {% endif %}
@@ -197,25 +212,26 @@
   {% elif variant == 'list' %}
   <li class="feed-list-row{% if extraClasses %} {{ extraClasses }}{% endif %}" {% if outerAttrs %}{{ outerAttrs | safe }}{% endif %}>
     <span class="feed-list-date meta-text">{{ item.date | shortDate }}</span>
-    <span class="feed-list-dot {{ dotColor }}" title="{{ badgeLabel }}"></span>
-    <span class="feed-list-type meta-text text-gray-400 dark:text-gray-500">{{ badgeLabel }}</span>
+    <span class="badge badge-type badge-compact {{ typeBadgeClass }}">{{ badgeLabel }}</span>
     {% if item.authored_by is defined %}{{ authorshipBadge(item.authored_by, compact=true) }}{% else %}<span></span>{% endif %}
     {% if item.url %}
-      <a href="{{ item.url | url }}" class="feed-list-title title-hover">{% if item.pinned %}<span style="color: var(--accent-color); margin-right: 0.35rem;" title="Pinned" aria-label="Pinned">★</span>{% endif %}{{ item.title }}</a>
+      <a href="{{ item.url | url }}" class="feed-list-title title-hover">{% if item.featured %}<span style="color: rgb(245 158 11); margin-right: 0.35rem;" title="Featured" aria-label="Featured">★</span>{% endif %}{% if item.pinned %}<span class="inline-flex items-center" style="color: var(--accent-color); margin-right: 0.35rem; margin-top: -2px;" title="Pinned" aria-label="Pinned">{% feather "bookmark", class="w-3.5 h-3.5 fill-current opacity-20" %}</span>{% endif %}{{ item.title }}</a>
     {% else %}
-      <span class="feed-list-title">{% if item.pinned %}<span style="color: var(--accent-color); margin-right: 0.35rem;" title="Pinned" aria-label="Pinned">★</span>{% endif %}{{ item.title }}</span>
+      <span class="feed-list-title">{% if item.featured %}<span style="color: rgb(245 158 11); margin-right: 0.35rem;" title="Featured" aria-label="Featured">★</span>{% endif %}{% if item.pinned %}<span class="inline-flex items-center" style="color: var(--accent-color); margin-right: 0.35rem; margin-top: -2px;" title="Pinned" aria-label="Pinned">{% feather "bookmark", class="w-3.5 h-3.5 fill-current opacity-20" %}</span>{% endif %}{{ item.title }}</span>
     {% endif %}
   </li>
 
   {# ── FULL VARIANT (feed page - clean card in a grid) ── #}
   {% else %}
-  <article class="feed-card feed-card-full{% if extraClasses %} {{ extraClasses }}{% endif %}" {% if outerAttrs %}{{ outerAttrs | safe }}{% endif %}>
+  <article class="feed-card feed-card-full surface-compact{% if extraClasses %} {{ extraClasses }}{% endif %}" {% if outerAttrs %}{{ outerAttrs | safe }}{% endif %}>
     {# Header row: type dot + label + date #}
     <div class="flex items-center gap-2 mb-2.5">
-      <span class="feed-list-dot {{ dotColor }} shrink-0"></span>
-      <span class="meta-text text-gray-400 dark:text-gray-500 text-[0.68rem] uppercase tracking-wide">{{ badgeLabel }}</span>
+      <span class="badge badge-type badge-compact {{ typeBadgeClass }}">{{ badgeLabel }}</span>
+      {% if item.featured %}
+        <span class="badge badge-featured badge-compact" title="Featured" aria-label="Featured">★ Featured</span>
+      {% endif %}
       {% if item.pinned %}
-        <span class="meta-text text-sm ml-0.5" style="color: var(--accent-color);" title="Pinned" aria-label="Pinned">★</span>
+        <span class="badge badge-accent badge-compact flex items-center gap-1" title="Pinned" aria-label="Pinned">{% feather "bookmark", class="w-3 h-3" %} Pinned</span>
       {% endif %}
       {% if item.authored_by is defined %}{{ authorshipBadge(item.authored_by, compact=true) }}{% endif %}
       <time datetime="{{ item.date | htmlDateString }}" class="meta-text text-[0.68rem] text-gray-400 dark:text-gray-500 ml-auto">{{ item.date | readableDate }}</time>
@@ -289,7 +305,7 @@
       <div class="flex flex-wrap gap-1 mt-2.5">
         {% for tag in item.tags %}
           {% set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
-          <a href="{{ tagUrl | url }}" class="text-[0.6rem] px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 title-hover" style="text-decoration: none;">#{{ tag }}</a>
+          <a href="{{ tagUrl | url }}" class="badge badge-tag badge-compact badge-interactive" style="text-decoration: none;">#{{ tag }}</a>
         {% endfor %}
       </div>
     {% endif %}

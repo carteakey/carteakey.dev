@@ -5,9 +5,9 @@ description: Every Radiohead link worth knowing - official, archive, fan, live, 
 permalink: /folio/radiohead/links/
 ---
 
-<div class="not-prose mb-6">
-  <p class="text-sm text-gray-400 dark:text-gray-500 mt-1 m-0">Every Radiohead link worth knowing. Maintained alongside <a href="/folio/radiohead/" class="title-hover">the web archive folio</a>. Last updated March 2026.</p>
-</div>
+{% set pageTitle = title %}
+{% set pageDescription = "Every Radiohead link worth knowing. Maintained alongside <a href=\"/folio/radiohead/\" class=\"title-hover\">the web archive folio</a>. Last updated March 2026." %}
+{% include "components/page-header.njk" %}
 
 ## Official & Band-Connected
 

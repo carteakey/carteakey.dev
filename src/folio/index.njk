@@ -8,18 +8,21 @@ eleventyNavigation:
   order: 7
 ---
 
-<div class="not-prose mb-6">
-  <h1 class="text-2xl font-semibold tracking-tight m-0">Folio</h1>
-  <p class="text-sm text-gray-400 dark:text-gray-500 mt-1 m-0">Themed web pages for things I obsess over.</p>
-</div>
-
-<p class="text-sm text-gray-500 dark:text-gray-400 mb-8" style="line-height: 1.7;">
-  Part deep-dive, part visual essay, part obsessive reference guide. Think <a href="https://reddit.com/r/coolguides" target="_blank" class="title-hover">r/coolguides</a> meets a personal zine - each folio is a standalone page with its own design, fonts, palette, and layout, dedicated to one subject. They share a domain but nothing else. <a href="/blog/2026-03-03-new-entity-folio/" class="title-hover" style="white-space: nowrap;">See more →</a>
-</p>
+{% set pageEyebrow = "Standalone Projects" %}
+{% set pageTitle = "Folio" %}
+{% set pageDescription = 'Part deep-dive, part visual essay, part obsessive reference guide. Think <a href="https://reddit.com/r/coolguides" target="_blank" rel="noopener" class="accent-link">r/coolguides</a> meets a personal zine - each folio is a standalone page with its own design, fonts, palette, and layout, dedicated to one subject. They share a domain but nothing else.' %}
+{% set itemCount = 2 %}
+{% set itemLabel = "folios" %}
+{% set pageMetaLabel = "Mode" %}
+{% set pageMeta = "Standalone themed pages" %}
+{% set pageActions = [
+  { href: "/blog/2026-03-03-new-entity-folio/", label: "See more →", accent: true }
+] %}
+{% include "components/page-header.njk" %}
 
 <div class="grid gap-4">
 
-  <a href="/folio/radiohead/" class="group block no-underline rounded-xl border border-gray-200 dark:border-zinc-800 p-5 hover:border-amber-400/60 dark:hover:border-amber-500/40 transition-all hover:shadow-md">
+  <a href="/folio/radiohead/" class="surface surface-hover group block no-underline p-5 hover:border-amber-400/60 dark:hover:border-amber-500/40">
     <div class="flex items-start justify-between gap-4">
       <div>
         <h2 class="text-base font-semibold m-0 text-gray-900 dark:text-gray-100 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">Radiohead // Web Archive</h2>
@@ -28,13 +31,13 @@ eleventyNavigation:
       <span class="shrink-0 text-xs text-gray-300 dark:text-gray-600 font-mono tracking-wider mt-1">001</span>
     </div>
     <div class="flex gap-2 mt-3">
-      <span class="text-[0.6rem] uppercase tracking-widest px-1.5 py-0.5 rounded border border-gray-200 dark:border-zinc-700 text-gray-400 dark:text-gray-500">music</span>
-      <span class="text-[0.6rem] uppercase tracking-widest px-1.5 py-0.5 rounded border border-gray-200 dark:border-zinc-700 text-gray-400 dark:text-gray-500">archive</span>
-      <span class="text-[0.6rem] uppercase tracking-widest px-1.5 py-0.5 rounded border border-gray-200 dark:border-zinc-700 text-gray-400 dark:text-gray-500">web</span>
+      <span class="badge badge-tag badge-compact">music</span>
+      <span class="badge badge-tag badge-compact">archive</span>
+      <span class="badge badge-tag badge-compact">web</span>
     </div>
   </a>
 
-  <a href="/folio/agent-tick/" class="group block no-underline rounded-xl border border-gray-200 dark:border-zinc-800 p-5 hover:border-emerald-400/60 dark:hover:border-emerald-500/40 transition-all hover:shadow-md">
+  <a href="/folio/agent-tick/" class="surface surface-hover group block no-underline p-5 hover:border-emerald-400/60 dark:hover:border-emerald-500/40">
     <div class="flex items-start justify-between gap-4">
       <div>
         <h2 class="text-base font-semibold m-0 text-gray-900 dark:text-gray-100 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">Agent Tick <span class="text-emerald-500">✓</span></h2>
@@ -43,9 +46,9 @@ eleventyNavigation:
       <span class="shrink-0 text-xs text-gray-300 dark:text-gray-600 font-mono tracking-wider mt-1">002</span>
     </div>
     <div class="flex gap-2 mt-3">
-      <span class="text-[0.6rem] uppercase tracking-widest px-1.5 py-0.5 rounded border border-gray-200 dark:border-zinc-700 text-gray-400 dark:text-gray-500">ai</span>
-      <span class="text-[0.6rem] uppercase tracking-widest px-1.5 py-0.5 rounded border border-gray-200 dark:border-zinc-700 text-gray-400 dark:text-gray-500">memes</span>
-      <span class="text-[0.6rem] uppercase tracking-widest px-1.5 py-0.5 rounded border border-gray-200 dark:border-zinc-700 text-gray-400 dark:text-gray-500">culture</span>
+      <span class="badge badge-tag badge-compact">ai</span>
+      <span class="badge badge-tag badge-compact">memes</span>
+      <span class="badge badge-tag badge-compact">culture</span>
     </div>
   </a>
 

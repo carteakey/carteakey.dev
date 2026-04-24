@@ -10,21 +10,25 @@ lastUpdated: 2026-03-05
 
 {% include "components/breadcrumbs.njk" %}
 
-<div class="flex items-baseline justify-between mb-1">
-  <h1 class="text-2xl font-semibold tracking-tight m-0">Now</h1>
-  {% if lastUpdated %}
-    <span class="meta-text text-xs text-gray-400 dark:text-gray-500">Updated {{ lastUpdated | readableDate }}</span>
-  {% endif %}
-</div>
-<p class="text-sm text-gray-500 dark:text-gray-400 mt-1 mb-4">
-  A snapshot of what I'm up to, inspired by <a href="https://nownownow.com/about" class="accent-link">nownownow.com</a>. · <a href="{{ '/now/archive/' | url }}" class="title-hover" style="text-decoration:none;">Past updates →</a>
-</p>
+{% set pageEyebrow = "Right Now" %}
+{% set pageTitle = "Now" %}
+{% set pageDescription = 'A snapshot of what I\'m up to, inspired by <a href="https://nownownow.com/about" class="accent-link">nownownow.com</a>.' %}
+{% set pageMetaLabel = "Updated" %}
+{% set pageMeta = lastUpdated | readableDate %}
+{% set pageActions = [
+  { href: "/now/archive/", label: "Past updates →", accent: true }
+] %}
+{% include "components/page-header.njk" %}
 
-<ul class="list-disc space-y-2 pl-4">
-  <li>On a bit of a <strong>project building spree</strong> - Claude Code has become my pair programmer and the speed is genuinely startling. Shipped more in the past few weeks than the past few months (read: years). Claude tells me I've used ~4× more tokens than the word count of Dune. Checks out. And that's just one device - I've got Antigravity, Copilot, and 3 others to multiply by.</li>
-</ul>
+<section class="surface surface-padding not-prose mb-8">
+  <ul class="list-disc space-y-2 pl-4 m-0">
+    <li>On a bit of a <strong>project building spree</strong> - Claude Code has become my pair programmer and the speed is genuinely startling. Shipped more in the past few weeks than the past few months (read: years). Claude tells me I've used ~4× more tokens than the word count of Dune. Checks out. And that's just one device - I've got Antigravity, Copilot, and 3 others to multiply by.</li>
+  </ul>
 
-{% image_cc "./src/static/img/claude-code-stats.jpg", "Claude Code usage stats", "rounded-lg border border-gray-200 dark:border-gray-700 max-w-sm", "Rookie numbers. (This is just one device.)" %}
+  <div class="mt-6">
+    {% image_cc "./src/static/img/claude-code-stats.jpg", "Claude Code usage stats", "rounded-lg border border-gray-200 dark:border-gray-700 max-w-sm", "Rookie numbers. (This is just one device.)" %}
+  </div>
+</section>
 
 <ul class="list-disc space-y-2 pl-4">
   <li>Built <a href="/blog/aidar-tracking-ai-writing-drift/" class="accent-link">aidar</a> - a tool that scans websites and measures stylistic signals associated with AI-era writing. Still very early.</li>
