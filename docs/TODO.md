@@ -15,6 +15,10 @@
 ### SEO & Navigation
 
 ### Editorial Mode
+- [x] Migrate `reading.njk` to the new shared primitive editorial type system. (2026-04-24)
+- [x] Migrate `projects.njk` to the new shared primitive editorial type system. (2026-04-24)
+- [x] Migrate `stats.njk` to the new shared primitive editorial type system. (2026-04-24)
+- [x] Migrate remaining collection pages (e.g. `data.njk`, `cv.njk`, `workouts.njk`, `bookmarks.njk`, `quotes.njk`, `skills.njk`) off of utility stacks. (2026-04-24)
 - [x] Annotation comments should float into the side gutters on xl+ screens without hiding the existing Outline / "Join the Conversation" sidebars. Today they stay inline as a fallback. Options to explore: a JS measurer that aligns comments to highlighted lines, or a layout that reserves a dedicated annotation gutter separate from the sidebars. (updated 2026-04-22)
 
 ### User Experience
@@ -30,6 +34,15 @@
 - [x] Agent Tick folio: added latest meme assets, switched canonical URL to `/folio/agent-tick/`, and preserved legacy `/folio/ai-memes/` via redirect (2026-03-18)
 - [x] GPT-OSS post: removed accidental merge conflict marker leak (`HEAD` / branch label) from published markdown (2026-03-18)
 - [x] Unify collection page headers, badges, and surface/card treatments so major sections feel like one design system instead of separate mini-sites. (2026-04-22)
+- [x] Push the site away from rounded app-card UI into a denser editorial/archive language with squarer shared primitives and a homepage that feels like an index of work. (2026-04-24)
+- [x] Replace the ruled notebook background with textured paper, shift the typography toward a more print/editorial stack, and carry the new language through post pages. (2026-04-24)
+- [x] Rename the public-facing blog section to Writing and restructure the homepage lower grid so quote/popular/featured/recent blocks read cleanly. (2026-04-24)
+- [x] Finish carrying the homepage type system into the remaining support copy so the new font treatment is consistent. (2026-04-24)
+- [x] Carry the same typography treatment into post support chrome like breadcrumbs, notices, outline/sidebar copy, and comment prompts. (2026-04-24)
+- [x] Bring the Recent Activity block and notes pages into the same editorial type system so they stop reading like leftover UI surfaces. (2026-04-24)
+- [x] Write down the new design language as an explicit style guide so later passes stop depending on implied taste and one-off instructions. (2026-04-24)
+- [x] Introduce reusable editorial typography primitives and use them to clean up the archive, footer mega nav, and `/now/` page in one sweep. (2026-04-24)
+- [x] Rewrite the colophon around the new archive/workbench language, document the redesign history, and add a migration-process doc for future cleanup passes. (2026-04-24)
 
 
 

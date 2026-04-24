@@ -1,7 +1,7 @@
 ---
 layout: layouts/base.njk
 title: Colophon
-description: How this site is made, what it runs on, and the philosophy behind it.
+description: How this site is made, why it keeps changing, and what the current version is trying to be.
 permalink: /colophon/
 eleventyNavigation:
   key: Colophon
@@ -10,15 +10,18 @@ eleventyNavigation:
 
 {% include "components/breadcrumbs.njk" %}
 
+{% set pageEyebrow = "Build Notes" %}
 {% set pageTitle = "Colophon" %}
-{% set pageDescription = "How this site is made." %}
+{% set pageDescription = "How this site is made, why it keeps changing, and what the current design is trying to do." %}
 {% include "components/page-header.njk" %}
+
+{% set repoBase = "https://github.com/carteakey/carteakey.dev/blob/main" %}
 
 <div class="site-content">
 
 <h2>Stack</h2>
 
-<p>This site is built with the <strong>NEAT stack</strong> - Netlify, Eleventy, Alpine, Tailwind.</p>
+<p>This site still runs on the NEAT stack: Netlify, Eleventy, Alpine, Tailwind. That part has held up surprisingly well. The visual language has changed a lot more than the plumbing.</p>
 
 <table>
   <thead><tr><th>Layer</th><th>Tool</th></tr></thead>
@@ -27,40 +30,72 @@ eleventyNavigation:
     <tr><td>CSS framework</td><td><a href="https://tailwindcss.com/">Tailwind CSS v4</a></td></tr>
     <tr><td>JS sprinkles</td><td><a href="https://alpinejs.dev/">Alpine.js</a></td></tr>
     <tr><td>Hosting</td><td><a href="https://netlify.com">Netlify</a></td></tr>
-    <tr><td>Comments</td><td><a href="https://giscus.app/">Giscus</a> (GitHub Discussions)</td></tr>
+    <tr><td>Comments</td><td><a href="https://giscus.app/">Giscus</a> via GitHub Discussions</td></tr>
     <tr><td>Upvotes</td><td><a href="https://upstash.com/">Upstash Redis</a> via Netlify Functions</td></tr>
-    <tr><td>Search</td><td>Client-side JS (no external service)</td></tr>
-    <tr><td>Analytics</td><td>None (privacy-first)</td></tr>
-    <tr><td>Fonts</td><td>Inter (sans), JetBrains Mono (code) - self-hosted</td></tr>
+    <tr><td>Search</td><td>Client-side search, no external index</td></tr>
+    <tr><td>Analytics</td><td>None</td></tr>
+    <tr><td>Fonts</td><td>Arimo (UI), ET Book (display), Crimson Pro (body), JetBrains Mono (meta/code) - self-hosted</td></tr>
     <tr><td>Icons</td><td><a href="https://feathericons.com/">Feather Icons</a></td></tr>
     <tr><td>Syntax highlighting</td><td><a href="https://prismjs.com/">Prism.js</a> with custom themes</td></tr>
-    <tr><td>Images</td><td><a href="https://www.11ty.dev/docs/plugins/image/">eleventy-img</a> for responsive processing</td></tr>
+    <tr><td>Images</td><td><a href="https://www.11ty.dev/docs/plugins/image/">eleventy-img</a> plus a few remote image shortcuts</td></tr>
     <tr><td>Version</td><td>v{{ versions.version }}</td></tr>
   </tbody>
 </table>
 
-<h2>Design</h2>
+<h2>Version 2.0.0</h2>
 
-<p>The site uses a unified <strong>Surface Component System</strong>—an evolution of my previous "Dense Editorial" layout. It embraces glassmorphism, subtle elevation, and consistent rounded geometry (<code>.surface</code> classes) while retaining a focus on typographic hierarchy.</p>
+<p>I bumped this release to <strong>2.0.0</strong> because it does not feel like another incremental cleanup. It feels like a reset. The site is less interested in looking tidy and more interested in looking like mine.</p>
 
-<p>Inspirations: Modern OS interfaces, glassmorphism, and minimal but tactile digital environments.</p>
+<p>The current design is trying to be three things at once: a notebook, an archive, and a workbench. That pushed the site away from rounded app cards and startup-homepage habits. The new baseline is textured paper, squarer framing, denser indexes, stronger typography, and pages that feel like shelves instead of widgets.</p>
 
-<p>Key design decisions:</p>
+<h2>Design Language</h2>
+
+<p>The rule now is simple enough to remember:</p>
+
 <ul>
-  <li>15px base font, system sans-serif stack</li>
-  <li><code>--accent-color</code> CSS variable driving all highlights - user-selectable from 22 colors</li>
-  <li>Flat <code>border-b</code> dividers instead of card shadows</li>
-  <li>List-first layouts with optional grid toggle</li>
+  <li><strong>Display serif for titles</strong> - things worth reading should look like they were named on purpose.</li>
+  <li><strong>Serif body for support copy</strong> - blurbs, notes, and explanations should read like prose, not UI helper text.</li>
+  <li><strong>Monospace for metadata</strong> - dates, labels, counts, breadcrumbs, and small navigation bits should feel archival.</li>
+  <li><strong>Density as a signal</strong> - not clutter, just enough structure to suggest there is actually a body of work here.</li>
+  <li><strong>Squarish surfaces</strong> - flatter, sharper, less bubbly, less dashboard.</li>
 </ul>
+
+<p>The actual working rules now live in the repo as <a href="{{ repoBase }}/docs/DESIGN_LANGUAGE.md">DESIGN_LANGUAGE.md</a>. I finally wrote them down because I got tired of rediscovering the same typography problems one page at a time.</p>
+
+<h2>Redesigns</h2>
+
+<p>By my read of the changelog and commit history, this is <strong>major redesign #6</strong>. That count is a little fuzzy because some phases blur into each other, but these are the six visual eras that materially changed the site's grammar.</p>
+
+<table>
+  <thead><tr><th>#</th><th>Era</th><th>What changed</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>Initial NEAT site</td><td>The first clean Eleventy/Tailwind version. Straightforward personal site, simple blog, basic structure.</td></tr>
+    <tr><td>2</td><td>Feed and cards era</td><td>The site started growing sideways: unified activity feed, more sections, more cards, more surfaces, more UI.</td></tr>
+    <tr><td>3</td><td>Ground-up system reset</td><td>A proper design-system pass. Shared components, cleaner consistency, better page-level discipline.</td></tr>
+    <tr><td>4</td><td>Dense editorial phase</td><td>Less chrome, flatter rows, tighter spacing, stronger metadata, more text density, fewer decorative moves.</td></tr>
+    <tr><td>5</td><td>Surface/commonality pass</td><td>All the lagging pages got pulled into the same system. Less one-off styling, fewer weird holdouts.</td></tr>
+    <tr><td>6</td><td>Archive/workbench redesign</td><td>The current one. Textured paper, sharper edges, stronger type hierarchy, homepage as index, and a deliberate move away from startup energy.</td></tr>
+  </tbody>
+</table>
+
+<p>Every redesign has taught me a slightly different lesson. Early on I mostly learned how to add features without breaking the place. Then I learned that consistency matters more than novelty. This pass drove home something else: typography is not decoration. It is most of the interface.</p>
+
+<p>The homepage now works better because it reads like a table of contents. The archive works better because titles actually look like titles. The footer works better because it looks like a map instead of leftover small print. None of that came from adding more components. It came from finally making the structure and the type agree with each other.</p>
+
+<h2>Migration Process</h2>
+
+<p>I also wrote down the migration workflow in <a href="{{ repoBase }}/docs/MIGRATION_PROCESS.md">MIGRATION_PROCESS.md</a>. That doc is for the boring but important part: how to take an older page full of utility text classes and move it onto the current primitives without turning the whole thing into a rewrite.</p>
+
+<p>That is the part I used to skip. Now it is the part I trust the most.</p>
 
 <h2>AI-Assisted Development</h2>
 
-<p>This site is actively developed with AI assistance - primarily GitHub Copilot (Claude Sonnet) and occasionally Codex. The AI helps with boilerplate, CSS wrangling, and feature implementation while I drive direction and make design decisions.</p>
+<p>This site is built with AI help, but not on autopilot. Copilot, Codex, and the rest are useful for boilerplate, implementation, cleanup passes, and brute-force consistency work. They are much less useful at deciding what the site should feel like. That part is still mine.</p>
 
-<p>Some posts are also AI-assisted and marked accordingly. I think transparency here matters.</p>
+<p>Some posts are also AI-assisted and marked accordingly. I would rather over-disclose than pretend this stuff is not happening.</p>
 
 <h2>Source</h2>
 
-<p>The source code is <a href="https://github.com/carteakey/carteakey.dev">on GitHub</a>. It's not a template - it's a mess - but feel free to poke around.</p>
+<p>The source is <a href="https://github.com/carteakey/carteakey.dev">on GitHub</a>. It is not a starter template. It is a long-running personal site with too much history, which is exactly why I like it.</p>
 
 </div>

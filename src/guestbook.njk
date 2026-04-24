@@ -61,7 +61,7 @@ eleventyNavigation:
   {% set cardShell = "surface" %}
   
   <section class="{{ cardShell }} p-5 sm:p-6">
-    <h2 class="text-sm font-semibold text-gray-900 dark:text-white">Leave a note ✍️</h2>
+    <h2 class="editorial-title-compact">Leave a note ✍️</h2>
     <form
       name="guestbook"
       method="POST"
@@ -83,7 +83,7 @@ eleventyNavigation:
             type="text"
             name="name"
             required
-            class="rounded-lg border border-gray-300 bg-white/80 px-3 py-2 text-sm text-gray-900 accent-field focus:outline-none dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
+            class="rounded-sm border border-gray-300 bg-white/80 px-3 py-2 text-sm text-gray-900 accent-field focus:outline-none dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
             placeholder="How should I credit you?"
           >
         </label>
@@ -92,7 +92,7 @@ eleventyNavigation:
           <input
             type="url"
             name="website"
-            class="rounded-lg border border-gray-300 bg-white/80 px-3 py-2 text-sm text-gray-900 accent-field focus:outline-none dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
+            class="rounded-sm border border-gray-300 bg-white/80 px-3 py-2 text-sm text-gray-900 accent-field focus:outline-none dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
             placeholder="https://example.com"
           >
         </label>
@@ -104,7 +104,7 @@ eleventyNavigation:
           name="message"
           rows="4"
           required
-          class="rounded-lg border border-gray-300 bg-white/80 px-3 py-2 text-sm text-gray-900 accent-field focus:outline-none dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
+          class="rounded-sm border border-gray-300 bg-white/80 px-3 py-2 text-sm text-gray-900 accent-field focus:outline-none dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
           placeholder="Tell me something good."
         ></textarea>
       </label>
@@ -119,8 +119,8 @@ eleventyNavigation:
     </form>
   </section>
 
-  <section class="{{ cardShell }} p-5 sm:p-6 space-y-3 text-sm text-gray-600 dark:text-gray-300">
-    <h2 class="text-sm font-semibold text-gray-900 dark:text-white">Prefer another channel?</h2>
+  <section class="{{ cardShell }} p-5 sm:p-6 space-y-3 editorial-support-compact">
+    <h2 class="editorial-title-compact">Prefer another channel?</h2>
     <p>
       You can also <a href="mailto:{{ metadata.author.email }}" class="accent-link">email me</a> or <a href="https://github.com/carteakey/carteakey.dev/issues/new?title=Guestbook%20entry" target="_blank" rel="noopener" class="accent-link">open a GitHub issue</a> if you'd like your message to appear here.
     </p>

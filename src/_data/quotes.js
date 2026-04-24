@@ -71,5 +71,35 @@ export default [
     quote:
       "I've come up with a set of rules that describe our reactions to technologies:\n1. Anything that is in the world when you're born is normal and ordinary and is just a natural part of the way the world works.\n2. Anything that's invented between when you're fifteen and thirty-five is new and exciting and revolutionary and you can probably get a career in it.\n3. Anything invented after you're thirty-five is against the natural order of things.",
     author: "Douglas Adams",
+  },
+  {
+    quote:
+      "I like people, but I like them in short bursts. I don't like people for extended periods of time. I'm all right with them for a little while, but once you get up past around... a minute, minute and a half, I gotta get the fuck out of there.",
+    author: "George Carlin",
+  },
+  {
+    quote:
+      "Never trust a thought that occurs to you indoors.",
+    author: "Friedrich Nietzsche",
+  },
+  {
+    quote:
+      "\"You miss 100% of the shots you don't take. - Wayne Gretzky\"",
+    author: "Michael Scott",
+  },
+  {
+    quote:
+      "The chains of habit are too light to be felt, until they are too heavy to be broken.",
+    author: "Warren Buffett",
+  },
+  {
+    quote:
+      "I cannot remember the books I've read any more than the meals I have eaten; even so, they have made me.",
+    author: "Ralph Waldo Emerson",
+  },
+  {
+    quote:
+      "We can do well in this country. We will have difficult times. We've had difficult times in the past -- and we will have difficult times in the future. It is not the end of violence; it is not the end of lawlessness; and it's not the end of disorder.\nBut the vast majority of [people] in this country want to live together, want to improve the quality of our life, and want justice for all human beings that abide in our land.\nAnd let's dedicate ourselves to what the Greeks wrote so many years ago: to tame the savageness of man and make gentle the life of this world. Let us dedicate ourselves to that, and say a prayer for our country and for our people.",
+    author: "Bobby Kennedy, 1968",
   }
 ];

@@ -20,15 +20,15 @@ eleventyNavigation:
 
   <div class="mt-8 grid gap-4 md:grid-cols-3">
     {%- for blog in blogroll.blogroll %}
-      <article class="card card-hover h-full card-padding">
+      <article class="surface surface-hover h-full surface-padding rounded-sm">
         <div class="space-y-3">
-          <h2 class="text-sm font-semibold text-gray-900 dark:text-white">
+          <h2 class="editorial-title-compact">
             <a href="{{ blog.url }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 link-accent">
               <span>{{ blog.name }}</span>
               {% feather "external-link", class="w-4 h-4 opacity-70" %}
             </a>
           </h2>
-          <p class="text-sm leading-relaxed text-gray-600 dark:text-gray-300">{{ blog.description }}</p>
+          <p class="editorial-support">{{ blog.description }}</p>
         </div>
         {%- if blog.tags %}
           <div class="mt-4 flex flex-wrap gap-2">
@@ -41,12 +41,12 @@ eleventyNavigation:
     {%- endfor %}
   </div>
 
-    <div class="mt-16 card card-padding">
-       <h3 class="flex items-center gap-2 text-sm font-semibold text-gray-900 dark:text-white">
+    <div class="mt-16 surface surface-padding rounded-sm">
+       <h3 class="flex items-center gap-2 editorial-title-compact">
       {% feather "rss", class="w-5 h-5" %}
       Want to add your blog?
     </h3>
-     <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">
+     <p class="mt-2 editorial-support-compact">
       If you have a blog about web development, programming, or technology, feel free to 
       <a href="mailto:{{ metadata.author.email }}"  class="font-semibold hover:underline accent-link accent-focus">reach out</a> 
       and I'd be happy to check it out!

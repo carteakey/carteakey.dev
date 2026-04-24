@@ -14,31 +14,31 @@ title: Workouts
 
 <div class="not-prose grid gap-3 md:grid-cols-2">
     {% for activity in strava %}
-        <article class="card card-hover card-compact">
+        <article class="surface surface-compact surface-hover rounded-sm flex flex-col justify-between h-full">
             <header class="flex flex-col gap-1.5">
-                <a href="{{ activity.url }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-sm font-semibold text-gray-900 dark:text-gray-100 accent-link" style="text-decoration:none;">
+                <a href="{{ activity.url }}" target="_blank" rel="noopener noreferrer" class="editorial-title-link-compact inline-flex items-center gap-1.5" style="text-decoration:none;">
                     {{ activity.name }}
-                    {% feather "external-link", class="w-3.5 h-3.5 opacity-60" %}
+                    {% feather "external-link", class="w-3 h-3 opacity-60" %}
                 </a>
                 <div class="flex flex-wrap items-center gap-2">
                     <span class="badge badge-tag badge-compact">{{ activity.type }}</span>
-                    <time class="meta-text text-[0.65rem] text-gray-400 dark:text-gray-500" datetime="{{ activity.start_date | htmlDateString }}">{{ activity.start_date | readableDate }}</time>
+                    <time class="meta-text text-[0.65rem]" datetime="{{ activity.start_date | htmlDateString }}">{{ activity.start_date | readableDate }}</time>
                 </div>
             </header>
 
-            <dl class="mt-3 grid grid-cols-2 gap-2 text-xs">
+            <dl class="mt-3 mb-0 grid grid-cols-2 gap-2 text-xs">
                 <div>
-                    <dt class="meta-text text-[0.6rem] uppercase text-gray-400 dark:text-gray-500">Distance</dt>
-                    <dd class="font-semibold text-gray-800 dark:text-gray-200">{{ activity.distance }} mi</dd>
+                    <dt class="meta-text text-[0.6rem] uppercase">Distance</dt>
+                    <dd class="editorial-title-compact text-xs mt-0.5">{{ activity.distance }} mi</dd>
                 </div>
                 <div>
-                    <dt class="meta-text text-[0.6rem] uppercase text-gray-400 dark:text-gray-500">Moving Time</dt>
-                    <dd class="font-semibold text-gray-800 dark:text-gray-200">{{ activity.moving_time }} min</dd>
+                    <dt class="meta-text text-[0.6rem] uppercase">Moving Time</dt>
+                    <dd class="editorial-title-compact text-xs mt-0.5">{{ activity.moving_time }} min</dd>
                 </div>
             </dl>
 
             {% if activity.mapImageUrl %}
-                <div class="mt-3 overflow-hidden rounded border border-gray-200 dark:border-gray-800">
+                <div class="mt-3 overflow-hidden rounded-sm border border-gray-200 dark:border-gray-800">
                     <img src="{{ activity.mapImageUrl }}" alt="Map of {{ activity.name }}" loading="lazy" decoding="async" class="w-full object-cover" style="height: auto;">
                 </div>
             {% endif %}

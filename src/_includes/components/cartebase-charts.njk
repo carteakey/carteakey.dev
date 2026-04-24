@@ -14,7 +14,7 @@
 <div class="flex items-baseline justify-between mt-10 mb-4 not-prose">
   <div class="flex items-center gap-2">
     {% if icon %}<span class="text-gray-400 dark:text-gray-500">{% feather icon, class="w-4 h-4" %}</span>{% endif %}
-    <h2 class="text-lg font-semibold tracking-tight m-0 text-gray-900 dark:text-gray-100">{{ title }}</h2>
+    <h2 class="editorial-title m-0">{{ title }}</h2>
   </div>
   {% if sub %}<span class="text-xs text-gray-400 dark:text-gray-500">{{ sub }}</span>{% endif %}
 </div>
@@ -126,13 +126,13 @@
     <div>
       <div class="text-[0.65rem] uppercase tracking-[0.2em] text-gray-400 dark:text-gray-500 mb-3">{{ label }}</div>
       <div class="{% if size == 'large' %}text-4xl md:text-6xl{% else %}text-2xl md:text-4xl{% endif %} font-bold tracking-tight leading-[0.95] mb-3 break-words" style="color: var(--accent-color);">{{ title }}</div>
-      {% if subtitle %}<div class="text-sm text-gray-500 dark:text-gray-400 mb-4">{{ subtitle }}</div>{% endif %}
+      {% if subtitle %}<div class="editorial-support-compact mb-4">{{ subtitle }}</div>{% endif %}
       {% if stats | length > 0 %}
       <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mt-5 pt-4 border-t border-gray-200 dark:border-zinc-800">
         {% for s in stats %}
         <div>
           <div class="text-[0.6rem] uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-0.5">{{ s.label }}</div>
-          <div class="text-base md:text-lg font-semibold text-gray-900 dark:text-gray-100">{{ s.value }}</div>
+          <div class="text-base md:text-lg editorial-title">{{ s.value }}</div>
           {% if s.sub %}<div class="text-[0.65rem] text-gray-400 dark:text-gray-500 mt-0.5">{{ s.sub }}</div>{% endif %}
         </div>
         {% endfor %}
@@ -141,7 +141,7 @@
     </div>
     {% if image %}
     <div class="flex-shrink-0 mx-auto md:mx-0">
-      <img src="{{ image }}" alt="{{ image_alt or title }}" class="w-40 md:w-56 h-40 md:h-56 rounded-lg shadow-sm object-cover object-bottom" loading="lazy" />
+      <img src="{{ image }}" alt="{{ image_alt or title }}" class="w-40 md:w-56 h-40 md:h-56 rounded-sm shadow-sm object-cover object-bottom" loading="lazy" />
     </div>
     {% endif %}
   </div>
@@ -205,7 +205,7 @@
 {% if track %}
 <div class="flex items-center gap-3 p-3 surface mb-4">
   {% if track.albumImageUrl %}
-    <img src="{{ track.albumImageUrl }}" alt="" class="w-10 h-10 rounded-md flex-shrink-0" width="40" height="40" loading="lazy">
+    <img src="{{ track.albumImageUrl }}" alt="" class="w-10 h-10 rounded-sm flex-shrink-0" width="40" height="40" loading="lazy">
   {% endif %}
   <div class="min-w-0 flex-1">
     <div class="text-[0.6rem] uppercase tracking-widest" style="color: var(--accent-color);">Now playing</div>
@@ -213,7 +213,7 @@
     <div class="text-xs text-gray-500 dark:text-gray-400 truncate">{{ track.artist }}</div>
   </div>
   {% if track.songUrl %}
-    <a href="{{ track.songUrl }}" target="_blank" rel="noopener" class="text-xs text-gray-400 hover:underline flex-shrink-0" style="text-decoration:none;">Open →</a>
+    <a href="{{ track.songUrl }}" target="_blank" rel="noopener" class="editorial-meta-link flex-shrink-0" style="text-decoration:none;">Open →</a>
   {% endif %}
 </div>
 {% endif %}
@@ -239,7 +239,7 @@
 {% macro year_card(year, top_artist, top_track, plays, hours, new_artists) %}
 <div class="surface surface-compact">
   <div class="flex items-baseline justify-between mb-2">
-    <div class="text-xl font-semibold text-gray-900 dark:text-gray-100">{{ year }}</div>
+    <div class="text-xl editorial-title">{{ year }}</div>
     <div class="text-[0.65rem] uppercase tracking-widest text-gray-400">Year in review</div>
   </div>
   <div class="grid grid-cols-2 gap-2 text-xs mb-3">

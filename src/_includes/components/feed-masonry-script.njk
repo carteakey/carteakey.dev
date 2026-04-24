@@ -14,7 +14,7 @@
       const setRowSpan = (card) => {
         const { rowGap, base } = getMetrics();
         const total = card.getBoundingClientRect().height + rowGap;
-        const span = Math.max(1, Math.round(total / (base + rowGap)));
+        const span = Math.max(1, Math.ceil(total / (base + rowGap)));
         card.style.gridRowEnd = `span ${span}`;
       };
 

@@ -45,7 +45,7 @@ hasEthicalAds: false
 {% set isEditorial = (theme == 'editorial') %}
 {% set edPair = pair or 'teal-rose' %}
 
-<div class="relative mx-auto w-full"{% if isEditorial %} data-pair="{{ edPair }}"{% endif %}>
+<div class="post-wrap relative mx-auto w-full"{% if isEditorial %} data-pair="{{ edPair }}"{% endif %}>
   {# Left Sidebar - Author Card (or editorial meta-sidebar) #}
   {% if showSidebar %}
   <aside class="hidden xl:block absolute -left-[280px] top-0">
@@ -54,25 +54,25 @@ hasEthicalAds: false
         {% include "components/editorial-sidebar.njk" %}
       {% endif %}
       {# Author Card #}
-      <section class="surface surface-padding text-center not-prose">
+      <section class="surface surface-padding post-side-card not-prose">
         <a href="/about" class="block group">
-          <div class="relative w-20 h-20 mx-auto mb-3">
-            <div class="absolute -inset-1 rounded-full blur-sm opacity-0 group-hover:opacity-60 transition-opacity duration-300" style="background: linear-gradient(135deg, var(--accent-color), color-mix(in srgb, var(--accent-color) 70%, #ec4899));"></div>
-            {% image "./src/static/img/headshot.png", "{{ metadata.author.name }}", "relative w-20 h-20 rounded-full object-cover ring-2 ring-gray-200 dark:ring-gray-700 transition-all shadow-sm" %}
+          <div class="relative w-20 h-20 mb-3">
+            {% image "./src/static/img/headshot.png", "{{ metadata.author.name }}", "relative w-20 h-20 rounded-[0.18rem] object-cover border border-gray-200 dark:border-gray-700 transition-all shadow-sm" %}
           </div>
         </a>
-        <a href="/about" class="font-semibold text-gray-900 dark:text-gray-100 hover:text-gradient transition-colors no-underline">
+        <p class="post-side-kicker">About the author</p>
+        <a href="/about" class="post-side-name">
           {{ metadata.author.name }}
         </a>
-        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 mb-3">Data Analyst & Tech Tinkerer</p>
-        <div class="flex justify-center gap-1 mt-3">
-          <a href="https://github.com/carteakey" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100" title="GitHub" aria-label="GitHub">
+        <p class="post-side-copy">Data analyst from Toronto. I write about Linux, AI, data work, side projects, and whatever else catches my eye.</p>
+        <div class="post-side-links">
+          <a href="https://github.com/carteakey" title="GitHub" aria-label="GitHub">
             {% feather "github", class="w-4 h-4" %}
           </a>
-          <a href="https://www.linkedin.com/in/kartikeychauhan/" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100" title="LinkedIn" aria-label="LinkedIn">
+          <a href="https://www.linkedin.com/in/kartikeychauhan/" title="LinkedIn" aria-label="LinkedIn">
             {% feather "linkedin", class="w-4 h-4" %}
           </a>
-          <a href="mailto:{{ metadata.author.email }}" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100" title="Email" aria-label="Email">
+          <a href="mailto:{{ metadata.author.email }}" title="Email" aria-label="Email">
             {% feather "mail", class="w-4 h-4" %}
           </a>
         </div>
@@ -88,7 +88,7 @@ hasEthicalAds: false
     <div class="sticky top-24 space-y-4 w-[260px]">
       {% if tocHtml | trim %}
       <section class="surface surface-padding">
-        <p class="text-sm font-semibold my-0 text-gray-800 dark:text-gray-100 flex items-center gap-2">
+        <p class="post-panel-title flex items-center gap-2">
           {% feather "list", class="w-5 h-5 opacity-70" %}
           Outline
         </p>
@@ -104,18 +104,18 @@ hasEthicalAds: false
   </aside>
   {% endif %}
 
-  <article class="min-w-0 space-y-6 px-4 sm:px-6 xl:px-0 animate-enter">
-    <header class="space-y-3">
-      <h1 class="text-gradient">{{ title }}</h1>
+  <article class="post-shell min-w-0 space-y-6 px-4 sm:px-6 xl:px-0 animate-enter">
+    <header class="post-header space-y-3">
+      <h1 class="post-title">{{ title }}</h1>
 
       {% if isDraft %}
       <div class="surface surface-compact">
         <div class="flex items-start gap-2.5">
-          <div class="flex-1 text-sm text-gray-700 dark:text-gray-300">
+          <div class="post-status-copy flex-1">
             {% if hidden %}
-            <span class="font-medium text-gray-900 dark:text-gray-100">Draft:</span> You've wandered into a work-in-progress post. Content may be incomplete or contain errors. Come back later for the finished version!
+            <span class="post-status-label">Draft:</span> You've wandered into a work-in-progress post. Content may be incomplete or contain errors. Come back later for the finished version!
             {% else %}
-            <span class="font-medium text-gray-900 dark:text-gray-100">Draft:</span> This post is a work in progress - it may be incomplete or change. I publish drafts early because it's less stressful than waiting for perfect.
+            <span class="post-status-label">Draft:</span> This post is a work in progress - it may be incomplete or change. I publish drafts early because it's less stressful than waiting for perfect.
             {% endif %}
           </div>
         </div>
@@ -123,35 +123,35 @@ hasEthicalAds: false
       {% endif %}
 
       {% if authored_by == 'ai-assisted' %}
-      <div class="not-prose surface surface-compact flex items-start gap-2 text-sm text-blue-800 dark:text-blue-300" style="border-color: #bfdbfe; background: color-mix(in srgb, #3b82f6 8%, transparent);">
+      <div class="not-prose surface surface-compact flex items-start gap-2 text-blue-800 dark:text-blue-300" style="border-color: #bfdbfe; background: color-mix(in srgb, #3b82f6 8%, transparent);">
         {% feather "zap", class="w-4 h-4 shrink-0 mt-0.5 opacity-70" %}
-        <span><span class="font-semibold">AI Assisted</span> - Written with AI as a creative partner. Ideas, structure, and editorial direction are mine; AI helped with drafting and wording.</span>
+        <span class="post-status-copy"><span class="post-status-label">AI Assisted</span> - Written with AI as a creative partner. Ideas, structure, and editorial direction are mine; AI helped with drafting and wording.</span>
       </div>
       {% elif authored_by == 'ai-generated' %}
-      <div class="not-prose surface surface-compact flex items-start gap-2 text-sm text-purple-800 dark:text-purple-300" style="border-color: #ddd6fe; background: color-mix(in srgb, #7c3aed 8%, transparent);">
+      <div class="not-prose surface surface-compact flex items-start gap-2 text-purple-800 dark:text-purple-300" style="border-color: #ddd6fe; background: color-mix(in srgb, #7c3aed 8%, transparent);">
         {% feather "cpu", class="w-4 h-4 shrink-0 mt-0.5 opacity-70" %}
-        <span><span class="font-semibold">AI Generated</span> - AI wrote most of the words here. The ideas, research, and editorial direction are mine - I read and verify everything before it goes up.</span>
+        <span class="post-status-copy"><span class="post-status-label">AI Generated</span> - AI wrote most of the words here. The ideas, research, and editorial direction are mine - I read and verify everything before it goes up.</span>
       </div>
       {% endif %}
 
 
       {% if description %}
-        <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed mt-1">
+        <p class="post-dek">
           {{ description }}
         </p>
       {% endif %}
 
-      <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between text-sm text-gray-600 dark:text-gray-400">
-        <div class="flex flex-wrap items-center gap-3">
-          <time datetime="{{ page.date | htmlDateString }}" class="font-medium text-gray-700 dark:text-gray-200 flex items-center gap-1.5">
+      <div class="post-meta-row text-sm text-gray-600 dark:text-gray-400">
+        <div class="post-meta-primary">
+          <time datetime="{{ page.date | htmlDateString }}" class="post-meta-chip">
             {% feather "calendar", class="w-4 h-4 opacity-60" %}
             {{ page.date | readableDate }}
           </time>
-          <span class="flex items-center gap-1.5">
+          <span class="post-meta-chip">
             {% feather "clock", class="w-4 h-4 opacity-60" %}
             {{ content | readingTime }}
           </span>
-          <span id="viewCount" class="flex items-center gap-1.5 text-gray-500 dark:text-gray-400">
+          <span id="viewCount" class="post-meta-chip">
             {% feather "eye", class="w-4 h-4 opacity-60" %}
             <span id="viewCountNumber">-</span> views
           </span>
@@ -160,7 +160,7 @@ hasEthicalAds: false
 
         {% set visibleTags = tags | filterTagList %}
         {% if visibleTags.length %}
-          <div class="flex flex-wrap gap-2">
+          <div class="post-meta-secondary">
             {% for tag in visibleTags %}
               {% set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
               <a href="{{ tagUrl | url }}" class="badge badge-tag badge-interactive text-xs">
@@ -191,11 +191,9 @@ hasEthicalAds: false
     </div>
 
 
-    {% if isEditorial %}
-    <div class="ed-prose">{{ content | safe }}</div>
-    {% else %}
-    {{ content | safe }}
-    {% endif %}
+    <div class="post-body{% if isEditorial %} ed-prose{% endif %}">
+      {{ content | safe }}
+    </div>
 
     {% if updated %}
       <p class="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
@@ -213,20 +211,20 @@ hasEthicalAds: false
 
     <!-- Upvote Section -->
     <div class="upvote-section mt-8 mb-4 flex items-center">
-      <button id="upvoteButton" class="upvote-button p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors flex items-center" aria-label="Upvote this post">
-        {% feather "thumbs-up", class="w-6 h-6 text-gray-500 dark:text-gray-400" %}
-        <span id="upvoteCount" class="ml-2 text-sm font-medium text-gray-600 dark:text-gray-300">
+      <button id="upvoteButton" class="upvote-button post-action-button" aria-label="Upvote this post">
+        {% feather "thumbs-up", class="w-4 h-4 text-gray-500 dark:text-gray-400" %}
+        <span id="upvoteCount" class="text-[0.72rem] font-medium text-gray-600 dark:text-gray-300">
           {{ upvotes.posts[page.fileSlug] | default(0) }}
         </span>
-        <span id="upvoteLoading" class="ml-2 hidden">
-          <div class="animate-spin rounded-full h-4 w-4 border-b-2" style="border-color: var(--accent-color);"></div>
+        <span id="upvoteLoading" class="hidden">
+          <div class="animate-spin rounded-full h-3.5 w-3.5 border-b-2" style="border-color: var(--accent-color);"></div>
         </span>
       </button>
       <span id="upvoteMessage" class="ml-2 text-sm text-gray-500 dark:text-gray-400 hidden">Thanks for your upvote!</span>
     </div>
 
     <div id="postReactions" class="hidden mt-6" data-slug="{{ page.fileSlug }}">
-      <h2 class="text-sm font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400 flex items-center gap-2">
+      <h2 class="post-panel-title flex items-center gap-2">
         {% feather "smile", class="w-4 h-4" %}
         React to this post
       </h2>
@@ -234,7 +232,7 @@ hasEthicalAds: false
         {% for reaction in reactionOptions %}
           <button
             type="button"
-            class="reaction-button flex items-center gap-2 rounded-full border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 px-3 py-2 text-sm text-gray-600 dark:text-gray-300 hover:border-gray-400 dark:hover:border-gray-500 transition-colors"
+            class="reaction-button px-3 py-2 text-sm"
             data-reaction="{{ reaction.id }}"
             aria-label="{{ reaction.label }}"
             title="{{ reaction.label }}"
@@ -531,7 +529,7 @@ hasEthicalAds: false
               {% feather "folder", class="w-5 h-5 shrink-0 opacity-70 text-gray-500" %}
               <span>This post is part of the <strong>{{ currentFolder.name }}</strong> series.</span>
             </div>
-            <a href="{{ currentFolder.url | url }}" class="inline-flex items-center justify-center gap-1.5 font-medium whitespace-nowrap px-3 py-1.5 rounded-md bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 shadow-sm hover:shadow transition-all text-gray-900 dark:text-gray-100 no-underline">
+            <a href="{{ currentFolder.url | url }}" class="post-series-link">
               View all {{ currentFolder.posts.length }} posts {% feather "arrow-right", class="w-3.5 h-3.5" %}
             </a>
           </div>
@@ -543,7 +541,7 @@ hasEthicalAds: false
         <hr class="my-8" />
         {%- endif %}
         <section class="related-posts mt-8">
-          <h3 class="text-sm font-semibold mb-3 flex items-center gap-2">
+          <h3 class="post-panel-title mb-3 flex items-center gap-2">
             {% feather "link", class="w-4 h-4" %}
             Related Posts
           </h3>
@@ -564,17 +562,17 @@ hasEthicalAds: false
       {%- set nextPost = collections.posts | getNextCollectionItem(page) %}
       {%- set previousPost = collections.posts | getPreviousCollectionItem(page) %}
       {%- if nextPost or previousPost %}
-        <nav aria-label="Post navigation" class="flex flex-col gap-2 text-sm not-prose">
+        <nav aria-label="Post navigation" class="flex flex-col gap-0 text-sm not-prose">
           {%- if nextPost %}
-            <a class="block title-hover" href="{{ nextPost.url | url }}" style="text-decoration: none;">
-              <span class="text-xs uppercase tracking-wide font-semibold text-gray-400">Next →</span>
-              <span class="block">{{ nextPost.data.title }}</span>
+            <a class="post-nav-link title-hover" href="{{ nextPost.url | url }}">
+              <span class="post-nav-kicker">Next →</span>
+              <span class="post-nav-title">{{ nextPost.data.title }}</span>
             </a>
           {%- endif %}
           {%- if previousPost %}
-            <a class="block title-hover" href="{{ previousPost.url | url }}" style="text-decoration: none;">
-              <span class="text-xs uppercase tracking-wide font-semibold text-gray-400">← Previous</span>
-              <span class="block">{{ previousPost.data.title }}</span>
+            <a class="post-nav-link title-hover" href="{{ previousPost.url | url }}">
+              <span class="post-nav-kicker">← Previous</span>
+              <span class="post-nav-title">{{ previousPost.data.title }}</span>
             </a>
           {%- endif %}
         </nav>
@@ -633,7 +631,7 @@ hasEthicalAds: false
   {% if tocHtml | trim %}
   <div class="xl:hidden mt-12">
     <section class="surface surface-padding space-y-4 text-sm text-gray-600 dark:text-gray-300">
-      <p class="text-sm font-semibold my-0 text-gray-900 dark:text-gray-100">Outline</p>
+      <p class="post-panel-title my-0">Outline</p>
       <div class="max-h-[50vh] overflow-y-auto pr-1 space-y-2">
         {{ tocHtml | safe }}
       </div>

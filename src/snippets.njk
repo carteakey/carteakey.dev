@@ -25,7 +25,7 @@ eleventyNavigation:
         type="text"
         id="snippetSearch"
         placeholder="Search..."
-        class="rounded-md border border-gray-200 dark:border-gray-700 bg-transparent py-1.5 pl-8 pr-3 text-sm accent-field focus:outline-none dark:text-gray-100 w-40 placeholder:text-gray-400"
+        class="rounded-sm border border-gray-200 dark:border-gray-700 bg-transparent py-1.5 pl-8 pr-3 text-sm accent-field focus:outline-none dark:text-gray-100 w-40 placeholder:text-gray-400"
       >
     </div>
     <div class="view-toggle" x-data="{ viewMode: 'list' }">
@@ -62,10 +62,10 @@ eleventyNavigation:
         </div>
         <div class="flex-1 min-w-0">
           <div class="leading-snug">
-            <a href="{{ snippet.url }}" class="font-semibold text-gray-900 dark:text-gray-100 title-hover" style="text-decoration: none;">{{ snippet.data.title }}</a>
+            <a href="{{ snippet.url }}" class="editorial-title-link title-hover" style="text-decoration: none;">{{ snippet.data.title }}</a>
           </div>
           {% if snippet.data.description %}
-            <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5 m-0 leading-relaxed">{{ snippet.data.description }}</p>
+            <p class="editorial-support-compact mt-0.5 m-0">{{ snippet.data.description }}</p>
           {% endif %}
           <div class="md:hidden flex flex-wrap items-center gap-x-2 gap-y-1 mt-1.5">
             <span class="meta-text text-[0.65rem] text-gray-400 dark:text-gray-500">{{ snippet.date | readableDate }}</span>
@@ -87,7 +87,7 @@ eleventyNavigation:
     {% set excerpt = snippet.templateContent | striptags | replace('\n', ' ') | truncate(100, true, '…') %}
     {% set searchExcerpt = snippet.templateContent | striptags | replace('\n', ' ') | truncate(160, true, '') | lower %}
     <article
-      class="feed-card-full surface-compact"
+      class="feed-surface surface-compact rounded-sm"
       data-snippet-card
       data-title="{{ snippet.data.title | lower }}"
       data-tags="{{ filteredTags | join(' ') | lower }}"
@@ -101,11 +101,11 @@ eleventyNavigation:
           <span class="badge badge-tag badge-compact ml-auto">{{ snippet.data.language }}</span>
         {% endif %}
       </div>
-      <h3 class="text-sm font-semibold leading-snug text-gray-900 dark:text-gray-100 m-0">
+      <h3 class="editorial-title-compact m-0">
         <a href="{{ snippet.url }}" class="title-hover" style="color: inherit; text-decoration: none;">{{ snippet.data.title }}</a>
       </h3>
       {% if excerpt %}
-        <p class="text-xs leading-relaxed text-gray-500 dark:text-gray-400 mt-1.5 m-0 line-clamp-2">{{ excerpt }}</p>
+        <p class="editorial-support-compact mt-1.5 m-0 line-clamp-2">{{ excerpt }}</p>
       {% endif %}
       {% if filteredTags | length %}
         <div class="flex flex-wrap gap-1 mt-2.5">

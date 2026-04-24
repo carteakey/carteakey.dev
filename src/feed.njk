@@ -28,7 +28,7 @@ permalink: /feed/
           type="text"
           x-model="query"
           placeholder="Search..."
-          class="rounded-md border border-gray-200 dark:border-gray-700 bg-transparent py-1.5 pl-8 pr-3 text-sm accent-field focus:outline-none dark:text-gray-100 w-40 placeholder:text-gray-400"
+          class="rounded-sm border border-gray-200 dark:border-gray-700 bg-transparent py-1.5 pl-8 pr-3 text-sm accent-field focus:outline-none dark:text-gray-100 w-40 placeholder:text-gray-400"
         >
       </div>
       <div class="view-toggle">
@@ -83,6 +83,12 @@ permalink: /feed/
       type="button">
       Quotations
     </button>
+    <button @click="typeFilter = 'grandiloquent'"
+      :class="{ 'active': typeFilter === 'grandiloquent' }"
+      class="badge badge-filter badge-compact"
+      type="button">
+      Grandiloquent
+    </button>
   </div>
 
   {# ── STREAM VIEW ── #}
@@ -94,7 +100,7 @@ permalink: /feed/
       }) }}
     {% endfor %}
   </div>
-  <p x-show="view === 'stream' && filteredCount === 0" x-cloak class="text-sm text-gray-400 py-8 text-center">No results.</p>
+  <p x-show="view === 'stream' && filteredCount === 0" x-cloak class="editorial-support-compact py-8 text-center">No results.</p>
 
   {# ── LIST VIEW ── #}
   <ul class="feed-list" x-show="view === 'list'" x-cloak>
@@ -105,7 +111,7 @@ permalink: /feed/
       }) }}
     {% endfor %}
   </ul>
-  <p x-show="view === 'list' && filteredCount === 0" x-cloak class="text-sm text-gray-400 py-8 text-center">No results.</p>
+  <p x-show="view === 'list' && filteredCount === 0" x-cloak class="editorial-support-compact py-8 text-center">No results.</p>
 
   {# ── GRID VIEW ── #}
   <div x-show="view === 'grid'" x-cloak
@@ -121,9 +127,9 @@ permalink: /feed/
       }) }}
     {% endfor %}
   </div>
-  <p x-show="view === 'grid' && filteredCount === 0" x-cloak class="text-sm text-gray-400 py-8 text-center">No results.</p>
+  <p x-show="view === 'grid' && filteredCount === 0" x-cloak class="editorial-support-compact py-8 text-center">No results.</p>
 
-  <p class="mt-8 text-center text-xs text-gray-400 dark:text-gray-500">
+  <p class="mt-8 text-center meta-text">
     Updated {{ page.date | readableDate }}
   </p>
 

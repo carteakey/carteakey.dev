@@ -1116,6 +1116,26 @@ export default function (eleventyConfig) {
         };
       });
 
+    const grandiloquentList = collectionApi
+      .getFilteredByGlob("./src/grandiloquent/**/*.md")
+      .filter((entry) => {
+        if (entry.data.hidden === true) return false;
+        if (entry.date && entry.date > now) return false;
+        return true;
+      })
+      .map((entry) => {
+        const summarySource = entry.data.description || entry.data.excerpt || "";
+        const summary = summarySource ? truncate(stripHtml(summarySource)) : null;
+        return {
+          type: "grandiloquent",
+          title: entry.data.title,
+          date: entry.date,
+          url: entry.url,
+          summary,
+          original: entry,
+        };
+      });
+
     const combined = [
       ...posts,
       ...snippets,
@@ -1125,6 +1145,7 @@ export default function (eleventyConfig) {
       ...nowUpdates,
       ...photos,
       ...quotationsList,
+      ...grandiloquentList,
       // ...vibes,
     ].filter((item) => item.date instanceof Date && !Number.isNaN(item.date.valueOf()));
 
