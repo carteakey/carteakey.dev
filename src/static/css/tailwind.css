@@ -2650,7 +2650,7 @@ picture img {
   }
 
   .post-status-label {
-    font-family: var(--font-sans);
+    font-family: var(--font-display);
     font-size: 0.98em;
     font-weight: 700;
     color: rgb(17 24 39 / 1);
