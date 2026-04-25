@@ -50,10 +50,10 @@ eleventyNavigation:
     </div>
   </section>
   {% else %}
-  <section class="text-center py-12 text-gray-500 dark:text-gray-400">
+  <section class="text-center py-12 editorial-support">
     <p class="text-4xl mb-3">📝</p>
-    <p class="text-sm font-medium">No notes yet!</p>
-    <p class="text-sm">Be the first to sign the guestbook.</p>
+    <p class="editorial-title-compact">No notes yet!</p>
+    <p>Be the first to sign the guestbook.</p>
   </section>
   {% endif %}
 
@@ -77,7 +77,7 @@ eleventyNavigation:
       </p>
 
       <div class="grid gap-4 sm:grid-cols-2">
-        <label class="flex flex-col gap-1 text-sm font-medium text-gray-700 dark:text-gray-300">
+        <label class="flex flex-col gap-1 editorial-support-compact font-bold">
           Name
           <input
             type="text"
@@ -87,7 +87,7 @@ eleventyNavigation:
             placeholder="How should I credit you?"
           >
         </label>
-        <label class="flex flex-col gap-1 text-sm font-medium text-gray-700 dark:text-gray-300">
+        <label class="flex flex-col gap-1 editorial-support-compact font-bold">
           Website (optional)
           <input
             type="url"
@@ -98,7 +98,7 @@ eleventyNavigation:
         </label>
       </div>
 
-      <label class="flex flex-col gap-1 text-sm font-medium text-gray-700 dark:text-gray-300">
+      <label class="flex flex-col gap-1 editorial-support-compact font-bold">
         Message
         <textarea
           name="message"
@@ -124,7 +124,7 @@ eleventyNavigation:
     <p>
       You can also <a href="mailto:{{ metadata.author.email }}" class="accent-link">email me</a> or <a href="https://github.com/carteakey/carteakey.dev/issues/new?title=Guestbook%20entry" target="_blank" rel="noopener" class="accent-link">open a GitHub issue</a> if you'd like your message to appear here.
     </p>
-    <p class="text-xs text-gray-500 dark:text-gray-400">
+    <p class="meta-text text-gray-500 dark:text-gray-400">
       Guestbook submissions are manually curated before they appear on the site. This keeps spam away and the vibes friendly. ✨
     </p>
   </section>
@@ -248,7 +248,7 @@ eleventyNavigation:
   .sticky-date {
     font-size: 0.85rem;
     color: #9ca3af;
-    font-family: system-ui, sans-serif;
+    font-family: var(--font-mono);
   }
 
   .dark .sticky-date {

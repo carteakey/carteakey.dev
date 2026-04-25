@@ -2,7 +2,7 @@
 title: "Yak Shaving"
 date: 2026-04-24 16:20:00
 description: "The classic parable of how fixing a hose leads to shaving a yak."
-tags: ["Humor", "Software Engineering"]
+tags: ["Humor", "Engineering"]
 ---
 You start with the desire to wax your car.
 
