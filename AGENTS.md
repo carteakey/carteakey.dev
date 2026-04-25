@@ -13,11 +13,14 @@ The branch is `main`. This is where you should make all your changes.
 ## 🧭 Guiding Principles
 
 1. **Simplicity First**: Use a minimal approach. Avoid unnecessary complexity, libraries, or build tools.
+2. **Dense Editorial / Workbench UI**: The site is a personal workbench. Prioritize `.surface` containers, document-oriented typography, mono labels, and high-density layouts over generic "dashboard" cards with heavy shadows and padding.
+3. **Date Immutability**: All permanent content (posts, folios, snippets) must have an explicitly declared `date` (and optionally `updated`) in its frontmatter. Never rely on file system modification times.
 ---
 
 ## ⚠️ Prohibited Practices
 
 * ❌ **No Legacy Code**: Do not use `var`, jQuery, or write code for Internet Explorer compatibility.
+* ❌ **Hardcoded HTML for Data**: When building lists, folios, or attributions, use YAML data files or Markdown frontmatter. Do not hardcode HTML grids or `<div>` structures in templates.
 
 ---
 
