@@ -195,6 +195,25 @@ hasEthicalAds: false
       {{ content | safe }}
     </div>
 
+    {% if author or source %}
+    <div class="flex flex-col mt-6 not-prose">
+      {% if author %}
+      <span class="font-medium text-gray-900 dark:text-gray-100 text-sm">
+        - {% if authorUrl %}<a href="{{ authorUrl }}" target="_blank" rel="noopener" class="hover:text-[color:var(--accent-color)] transition-colors">{{ author }}</a>{% else %}{{ author }}{% endif %}
+      </span>
+      {% endif %}
+      {% if source %}
+      <span class="text-xs text-gray-500 mt-0.5">
+        {% if sourceUrl %}
+          <a href="{{ sourceUrl }}" target="_blank" rel="noopener" class="hover:text-[color:var(--accent-color)] transition-colors">{{ source }}</a>
+        {% else %}
+          {{ source }}
+        {% endif %}
+      </span>
+      {% endif %}
+    </div>
+    {% endif %}
+
     {% if updated %}
       <p class="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
         Updated <time datetime="{{ updated | htmlDateString }}">{{ updated | readableDate }}</time>

@@ -1146,7 +1146,7 @@ picture img {
 
   .feed-list-row {
     display: grid;
-    grid-template-columns: 4rem auto auto minmax(0, 1fr);
+    grid-template-columns: 4rem 6.5rem minmax(0, 1fr);
     align-items: start;
     gap: 0.3rem 0.55rem;
     padding: 0.72rem 0;

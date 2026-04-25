@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.1] - 2026-04-25
+
+### Changed
+- Standardized content attribution across the site by moving manual attribution HTML into frontmatter metadata (`author`, `source`) and natively rendering it in the post layout and feed cards (matching the Quotations style).
+- Refined the "Grandiloquent" list page by tightening whitespace and integrating the new dynamic attribution rendering.
+- Renamed the "Grandiloquent" filter pill to "Lexicon" in the feed UI to match the card badge text.
+- Filtered out the internal `grandiloquent` tag from rendering visibly in post metadata.
+
+### Fixed
+- Fixed an issue where `/now/` updates and notes were appearing as empty blocks in the stream feed by correcting how Eleventy passes their `templateContent` in the data cascade.
+
 ## [2.0.0] - 2026-04-24
 
 ### Added

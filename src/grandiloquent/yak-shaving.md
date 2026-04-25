@@ -3,6 +3,9 @@ title: "Yak Shaving"
 date: 2026-04-24 16:20:00
 description: "The classic parable of how fixing a hose leads to shaving a yak."
 tags: ["Humor", "Engineering"]
+author: "Carlin J. Vieri, a Ph.D. student"
+source: "Original MIT GSB Archive (2000)"
+sourceUrl: "https://projects.csail.mit.edu/gsb/old-archive/gsb-archive/gsb2000-02-11.html"
 ---
 You start with the desire to wax your car.
 

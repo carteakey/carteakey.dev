@@ -973,11 +973,7 @@ export default function (eleventyConfig) {
           url: note.url && note.url !== false ? note.url : null,
           summary,
           pinned: !!note.data.pinned,
-          original: {
-            get templateContent() {
-              try { return note.templateContent; } catch (_) { return ""; }
-            },
-          },
+          original: note,
           authored_by: note.data.authored_by ?? null,
         };
       });
@@ -995,11 +991,7 @@ export default function (eleventyConfig) {
           date: archiveDate,
           url: entry.url,
           summary: summarySource ? truncate(stripHtml(summarySource), 220) : null,
-          original: {
-            get templateContent() {
-              try { return entry.templateContent; } catch (_) { return ""; }
-            },
-          },
+          original: entry,
         };
       });
 

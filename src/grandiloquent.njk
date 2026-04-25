@@ -19,13 +19,31 @@ eleventyNavigation:
 
 <div class="mt-8 space-y-6">
   {% for item in collections.grandiloquent | reverse %}
-    <article class="surface surface-compact surface-hover rounded-sm p-6">
+    <article class="surface surface-compact surface-hover rounded-sm p-4 sm:p-5">
       <h2 class="text-xl font-bold tracking-tight text-gray-900 dark:text-white mb-2">
         <a href="{{ item.url }}" class="no-underline hover:underline title-hover">{{ item.data.title }}</a>
       </h2>
-      <div class="prose dark:prose-invert max-w-none text-sm text-gray-700 dark:text-gray-300">
+      <div class="prose prose-sm dark:prose-invert max-w-none text-gray-700 dark:text-gray-300">
         {{ item.templateContent | safe }}
       </div>
+      {% if item.data.author or item.data.source %}
+      <div class="flex flex-col mt-4 pt-4 border-t border-gray-100 dark:border-gray-800/80 not-prose">
+        {% if item.data.author %}
+        <span class="font-medium text-gray-900 dark:text-gray-100 text-sm">
+          - {% if item.data.authorUrl %}<a href="{{ item.data.authorUrl }}" target="_blank" rel="noopener" class="hover:text-[color:var(--accent-color)] transition-colors">{{ item.data.author }}</a>{% else %}{{ item.data.author }}{% endif %}
+        </span>
+        {% endif %}
+        {% if item.data.source %}
+        <span class="text-xs text-gray-500 mt-0.5">
+          {% if item.data.sourceUrl %}
+            <a href="{{ item.data.sourceUrl }}" target="_blank" rel="noopener" class="hover:text-[color:var(--accent-color)] transition-colors">{{ item.data.source }}</a>
+          {% else %}
+            {{ item.data.source }}
+          {% endif %}
+        </span>
+        {% endif %}
+      </div>
+      {% endif %}
     </article>
   {% endfor %}
 </div>
