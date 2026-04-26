@@ -87,7 +87,7 @@ permalink: /feed/
       :class="{ 'active': typeFilter === 'grandiloquent' }"
       class="badge badge-filter badge-compact"
       type="button">
-      Grandiloquent
+      Lexicon
     </button>
   </div>
 
@@ -115,7 +115,7 @@ permalink: /feed/
 
   {# ── GRID VIEW ── #}
   <div x-show="view === 'grid'" x-cloak
-    class="grid gap-3 md:grid-cols-2 lg:grid-cols-3 items-start"
+    class="grid gap-3 md:grid-cols-2 lg:grid-cols-3 items-start feed-masonry"
     data-feed-masonry
     data-feed-initial="24"
     data-feed-batch="12"
@@ -123,6 +123,7 @@ permalink: /feed/
   >
     {% for item in collections.feed %}
       {{ feedCard(item, {
+        extraClasses: 'feed-card',
         outerAttrs: 'data-type="' ~ item.type ~ '" data-title="' ~ (item.title | lower | replace('"', '')) ~ '"'
       }) }}
     {% endfor %}

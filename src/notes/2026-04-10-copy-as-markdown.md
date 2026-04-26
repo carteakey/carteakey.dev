@@ -1,10 +1,10 @@
 ---
 title: "Why Every Technical Blog Needs a 'Copy as Markdown' Feature"
-date: git Last Modified
 layout: layouts/note.njk
+date: 2026-04-10
+authored_by: human
 tags:
-  - notes
-  - webdev
+  - Webdev
   - PKM
 ---
 If you're reading a technical blog, there's a high chance you use some sort of personal knowledge management system-like Obsidian, Notion, or Logseq. And if you're anything like me, you frequently copy interesting snippets, setup guides, or entire articles into your own vault for future reference.
