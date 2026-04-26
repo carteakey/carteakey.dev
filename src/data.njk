@@ -1,7 +1,7 @@
 ---
 layout: layouts/base.njk
 title: My life in data
-description: A scrollable dashboard generated from cartebase — personal data from Spotify, Apple Photos, and browsing history.
+description: A scrollable dashboard generated from cartebase - personal data from Spotify, Apple Photos, and browsing history.
 permalink: /data/
 eleventyExcludeFromCollections: true
 ---
@@ -35,14 +35,14 @@ eleventyExcludeFromCollections: true
   {{ cb.wrapped_card(
     label="My top artist",
     title=topArtist.artist,
-    subtitle="I've played " + topArtist.artist + " more than any other artist — " + (topArtist.share_pct | string) + "% of every track I've streamed.",
+    subtitle="I've played " + topArtist.artist + " more than any other artist - " + (topArtist.share_pct | string) + "% of every track I've streamed.",
     stats=[
       {"label": "Plays", "value": topArtist.plays | localeNumber},
       {"label": "Minutes", "value": topArtist.minutes | round(0) | localeNumber},
       {"label": "Share of all plays", "value": (topArtist.share_pct | string) + "%"}
     ],
     image="/img/radiohead-hero.jpg",
-    image_alt="Spotify Wrapped 2025: My Top Artist — Radiohead"
+    image_alt="Spotify Wrapped 2025: My Top Artist - Radiohead"
   ) }}
 </div>
 
@@ -54,7 +54,7 @@ eleventyExcludeFromCollections: true
 <div class="not-prose mb-8">
   <h3 class="editorial-kicker mb-3">Artist share over time</h3>
   <p class="editorial-support-compact mb-4">
-    The artists that cracked any year's top 10, as a percentage of that year's plays. "Other" is the long tail — even my most-played artists rarely account for more than a quarter of a year. Watch Radiohead climb after 2024.
+    The artists that cracked any year's top 10, as a percentage of that year's plays. "Other" is the long tail - even my most-played artists rarely account for more than a quarter of a year. Watch Radiohead climb after 2024.
   </p>
   {{ cb.stacked_area("chart_artist_share", cartebase.listening.artist_share_per_year.years, cartebase.listening.artist_share_per_year.series, height=360) }}
 </div>
@@ -89,14 +89,14 @@ eleventyExcludeFromCollections: true
 </div>
 
 <div class="not-prose mb-10">
-  <h3 class="editorial-kicker mb-4">Top domains — all time</h3>
+  <h3 class="editorial-kicker mb-4">Top domains - all time</h3>
   {{ cb.share_bars(cartebase.browsing.top_domains_all_time, "domain", "visits", cartebase.summary.browsing_visits_total, limit=10) }}
 </div>
 
 <div class="not-prose mt-10 pt-8 border-t border-gray-200 dark:border-zinc-800/80">
   <h3 class="editorial-kicker mb-3">Bookmarks</h3>
   <p class="editorial-support mb-4">
-    {{ cartebase.summary.bookmarks_total | localeNumber }} bookmarks canonicalised — of those,
+    {{ cartebase.summary.bookmarks_total | localeNumber }} bookmarks canonicalised - of those,
     <strong>{{ cartebase.bookmarks.with_notes_count | localeNumber }}</strong>
     have notes attached, a hint at which ones might graduate to the blogmarks feed someday.
   </p>
@@ -113,7 +113,7 @@ eleventyExcludeFromCollections: true
   </details>
 </div>
 
-{{ cb.section_header("Gaming", "Steam library — " + cartebase.gaming.games_played | string + " of " + cartebase.gaming.games_owned | string + " games actually touched", "monitor") }}
+{{ cb.section_header("Gaming", "Steam library - " + cartebase.gaming.games_played | string + " of " + cartebase.gaming.games_owned | string + " games actually touched", "monitor") }}
 
 <div class="not-prose grid grid-cols-2 md:grid-cols-3 gap-3 mb-8">
   {{ cb.stat_tile("Hours logged", cartebase.gaming.total_hours | round(0) | localeNumber) }}
@@ -143,7 +143,7 @@ eleventyExcludeFromCollections: true
     and <a href="https://howisfelix.today/" class="accent-link">Felix Krause's howisFelix.today</a>.
   </p>
   <p class="editorial-support mb-3">
-    Aggregates only — no row-level personal data ships to the web. Portfolio, finance, health,
+    Aggregates only - no row-level personal data ships to the web. Portfolio, finance, health,
     and shopping data are deliberately excluded. Browsing history is filtered to drop
     localhost/internal domains and only aggregate counts appear.
   </p>

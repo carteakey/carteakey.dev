@@ -98,7 +98,7 @@ projects:
       - ai
 
   - title: chirptype
-    description: "On-device voice-to-text hotkey app for Apple Silicon. No cloud, no subscription — transcribes directly into any input field."
+    description: "On-device voice-to-text hotkey app for Apple Silicon. No cloud, no subscription - transcribes directly into any input field."
     github: https://github.com/carteakey/chirptype
     tags:
       - python
@@ -106,7 +106,7 @@ projects:
       - macos
 
   - title: muninn
-    description: "A personal AI copilot built in Swift. Named after Odin's raven of memory — ambient, contextual, local-first."
+    description: "A personal AI copilot built in Swift. Named after Odin's raven of memory - ambient, contextual, local-first."
     github: https://github.com/carteakey/muninn
     tags:
       - swift
@@ -130,7 +130,7 @@ projects:
       - ai
 
   - title: cartebase
-    description: "Personal SQLite workspace — a single database for browsing history, bookmarks, music, games, and purchases. Your data, one place."
+    description: "Personal SQLite workspace - a single database for browsing history, bookmarks, music, games, and purchases. Your data, one place."
     github: https://github.com/carteakey/cartebase
     tags:
       - python
@@ -138,7 +138,7 @@ projects:
       - datasette
 
   - title: notes.carteakey.dev
-    description: "A public digital garden. Evolving notes, half-formed ideas, and working thinking — built with Quartz."
+    description: "A public digital garden. Evolving notes, half-formed ideas, and working thinking - built with Quartz."
     url: https://notes.carteakey.dev
     tags:
       - quartz

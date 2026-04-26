@@ -1,4 +1,4 @@
-# Manually curated canon — the posts that best represent this site.
+# Manually curated canon - the posts that best represent this site.
 # Edit freely. Order matters (top = first shown).
 
 - title: "In Search of the Agent IDE for Data"
@@ -15,5 +15,5 @@
 
 - title: "The NEAT Framework: How I Built This Site"
   url: /blog/understanding-the-neat-framework/
-  note: "Eleventy, Alpine, and Tailwind — and why this stack."
+  note: "Eleventy, Alpine, and Tailwind - and why this stack."
 

@@ -556,7 +556,7 @@ picture img {
     outline-color: color-mix(in srgb, var(--accent-color) 55%, white);
   }
 
-  /* ── Start Here — document index style (intentionally naked: no card, no shadow) ── */
+  /* ── Start Here - document index style (intentionally naked: no card, no shadow) ── */
   .start-here-list {
     border-left: 1px solid color-mix(in srgb, var(--accent-color) 45%, rgb(209 213 219));
     padding-left: 0.9rem;
@@ -3622,7 +3622,7 @@ picture img {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   📰 Editorial Mode — minimal opt-in layer
+   📰 Editorial Mode - minimal opt-in layer
    `theme: editorial` frontmatter gives a post:
      • drop cap on the first paragraph
      • optional free-form sidebar (via `sidebar:` frontmatter)
@@ -3739,7 +3739,7 @@ picture img {
 
 
 
-  /* ── Wide table wrapper — breaks out of article container, sizes to content ── */
+  /* ── Wide table wrapper - breaks out of article container, sizes to content ── */
   .wide-wrap {
     width: 100vw;
     max-width: 100vw;
@@ -3783,7 +3783,7 @@ picture img {
   .wide-wrap table tbody tr:nth-child(even) { background: rgb(249 250 251 / 0.6); }
   .dark .wide-wrap table tbody tr:nth-child(even) { background: rgb(24 24 27 / 0.4); }
 
-  /* ── {% annotate %} — highlighted phrase + handwritten comment + squiggly arrow ── */
+  /* ── {% annotate %} - highlighted phrase + handwritten comment + squiggly arrow ── */
   /* Default (all viewports, any post): comment flows inline right after the highlight. */
   .note {
     position: relative;

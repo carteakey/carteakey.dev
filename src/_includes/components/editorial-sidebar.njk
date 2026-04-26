@@ -1,4 +1,4 @@
-{# Optional sidebar panel — enabled via `sidebar:` frontmatter on a post.  #}
+{# Optional sidebar panel - enabled via `sidebar:` frontmatter on a post.  #}
 {# Shape (all fields optional):                                             #}
 {#   sidebar:                                                               #}
 {#     label: "UPPER LABEL"                                                 #}
@@ -6,7 +6,7 @@
 {#     content: |                                                           #}
 {#       Markdown content. Links, **bold**, bullet lists all work.          #}
 {#                                                                          #}
-{# `sidebar:` can also be a plain string — it gets rendered as markdown.    #}
+{# `sidebar:` can also be a plain string - it gets rendered as markdown.    #}
 {% if sidebar %}
 {% set sidebarContent = sidebar.content if sidebar.content else (sidebar if sidebar is string else '') %}
 <section class="surface surface-padding not-prose space-y-3">

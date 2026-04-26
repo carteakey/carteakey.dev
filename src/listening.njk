@@ -1,7 +1,7 @@
 ---
 layout: layouts/base.njk
 title: Listening
-description: My Spotify listening wrapped — top artists, albums, tracks, year in review.
+description: My Spotify listening wrapped - top artists, albums, tracks, year in review.
 permalink: /listening/
 eleventyExcludeFromCollections: true
 ---
@@ -21,7 +21,7 @@ eleventyExcludeFromCollections: true
 
 {% set pageTitle = "Listening, wrapped" %}
 {% set pageMeta = "Updated " ~ (listening.last_updated | split('T'))[0] %}
-{% set pageDescription = "My whole Spotify listening history, all-time — not just the last year. Pulled from <a href=\"https://github.com/carteakey/cartebase\" class=\"accent-link\">cartebase</a>. <a href=\"/data/\" class=\"accent-link\">Back to /data/ →</a>" %}
+{% set pageDescription = "My whole Spotify listening history, all-time - not just the last year. Pulled from <a href=\"https://github.com/carteakey/cartebase\" class=\"accent-link\">cartebase</a>. <a href=\"/data/\" class=\"accent-link\">Back to /data/ →</a>" %}
 {% include "components/page-header.njk" %}
 
 {{ cb.now_playing_strip(spotify.nowPlaying) }}
@@ -30,7 +30,7 @@ eleventyExcludeFromCollections: true
   {{ cb.wrapped_card(
     label="My top artist, all time",
     title=topArtist.artist,
-    subtitle=topArtist.artist + " is " + (topArtist.share_pct | string) + "% of every play I've logged — more than any other artist.",
+    subtitle=topArtist.artist + " is " + (topArtist.share_pct | string) + "% of every play I've logged - more than any other artist.",
     stats=[
       {"label": "Plays", "value": topArtist.plays | localeNumber},
       {"label": "Minutes", "value": topArtist.minutes | round(0) | localeNumber},
@@ -139,10 +139,10 @@ eleventyExcludeFromCollections: true
     <code>ms_played</code>, so the minutes numbers lean recent.
   </p>
   <p class="mb-2">
-    "New artists" per month is the count of artists whose earliest play falls in that month —
+    "New artists" per month is the count of artists whose earliest play falls in that month -
     a crude proxy for discovery that biases toward the start of the dataset.
   </p>
   <p>
-    Heatmap hours are UTC — not adjusted for local time or DST.
+    Heatmap hours are UTC - not adjusted for local time or DST.
   </p>
 </div>

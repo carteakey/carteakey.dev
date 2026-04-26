@@ -37,7 +37,7 @@ Ultimately, every brain is different and a natural growth of a system is what wo
 
 The bottom line is "Can you find what you need when you need it?".
 
-So I wanted to share my own approach that has evolved over time. I call it "Vault 76" and it serves as a comprehensive knowledge management system for all my personal, professional, and academic content.
+So I wanted to share my own approach that has evolved over time. I call it "Vault 76" and at this point I think of it less as an everything bucket and more as a personal wiki for knowledge, projects, and reference material. One of the more important corrections I had to make later was this: personal records and admin details do not belong in the wiki just because they matter.
 
 ## The Tool Selection Problem
 
@@ -50,10 +50,14 @@ The answer was simpler than I thought:
 | App | Job |
 |---|---|
 | **Reminders** | Actionable tasks only. If it has a verb and needs to be *done*, it goes here. Siri + iPhone integration is unbeatable for quick capture. |
-| **Obsidian** | Everything else - lists, knowledge, reference, projects. Cross-platform (Mac, Windows, Linux, iOS). |
-| **Apple Notes** | iPad Pencil sketches only, then export to Obsidian. |
+| **Obsidian** | Notes for thinking, reference, synthesis, and projects. Cross-platform (Mac, Windows, Linux, iOS). |
+| **Apple Notes** | Personal records and admin material - health logs, account inventories, housing/car/travel details, and sketches when convenient. |
 
-The forcing question: *if you'd be upset if it disappeared tomorrow, it belongs in Obsidian. If you complete it and forget it, Reminders.*
+The forcing questions became simpler:
+
+- if it has a next action, it belongs in Reminders
+- if it helps me think, it belongs in Obsidian
+- if it exists so I can retrieve an exact detail later, it belongs in Apple Notes
 
 ### TODOs are not Bucket Lists
 
@@ -68,7 +72,7 @@ Mixing them creates guilt without progress. Seeing "learn Spanish" next to "buy 
 
 ## The Vault 76 System
 
-The system uses a numbered hierarchy (0-8) that mirrors a natural workflow from capture to archive.
+The system uses a numbered hierarchy (0-9) that mirrors a natural workflow from capture to archive.
 
 ### Top-Level Organization
 
@@ -79,10 +83,10 @@ vault-76/
 ├── 2. knowledge    # All learning content (theory + domain)
 ├── 3. projects     # Active work, development, side projects
 ├── 4. career       # Job hunting, interviews, experience
-├── 5. finance      # Money management, investments, taxes
-├── 6. personal     # Health, hobbies, home, media, self
+├── 5. finance      # Finance knowledge, planning, investments, tax notes
+├── 6. personal     # Personal knowledge, reflections, hobbies, life notes
 ├── 7. archive      # Completed/inactive content
-├── 8. config       # Vault setup, plugin notes, obsidian config docs
+├── 8. config       # Technical/system configuration only
 └── 9. daily        # Daily notes (date-stamped, ephemeral)
 ```
 
@@ -95,10 +99,10 @@ The numbered system creates a natural flow:
 3. **Learn** (2. knowledge) - Reference material and learning notes live here
 4. **Create** (3. projects) - Active work and development happens here
 5. **Grow** (4. career) - Professional development and job hunting
-6. **Manage** (5. finance) - Financial planning and tracking
-7. **Live** (6. personal) - Hobbies, health, media and personal interests
+6. **Manage** (5. finance) - Finance concepts, planning, and investing notes
+7. **Live** (6. personal) - Personal writing, hobbies, media, and reflections
 8. **Archive** (7. archive) - Completed or outdated content
-9. **Configure** (8. config) - Vault setup, plugin documentation, obsidian config notes
+9. **Configure** (8. config) - Vault setup, plugin documentation, and technical system notes
 10. **Journal** (9. daily) - Ephemeral date-stamped daily notes
 
 ### Detailed Structure (Examples)
@@ -106,9 +110,8 @@ The numbered system creates a natural flow:
 #### 0. inbox
 ```md
 0. inbox/
-├── daily-notes/
+├── clippings/
 ├── quick-capture/
-├── to-process/
 └── meeting-notes/
 ```
 
@@ -131,6 +134,7 @@ The numbered system creates a natural flow:
 │   └── rename-property.py
 └── mental-models/
     ├── app-tool-selection.md
+    ├── notes-vs-records.md
     └── todos-vs-bucket-list.md
 ```
 
@@ -208,6 +212,8 @@ Articles saved from the web live here once read and worth keeping - not in inbox
     └── freelancing/
 ```
 
+This section works best for finance knowledge and planning. Exact account details, balances, application references, and other admin records are better kept in Apple Notes.
+
 #### 6. personal
 ```md
 6. personal/
@@ -222,7 +228,7 @@ Articles saved from the web live here once read and worth keeping - not in inbox
 └── user-manuals 📖/
 ```
 
-`self/` covers inner life - relationships, personal philosophy, ramblings. `media/` is for notes and reviews after watching - the watchlist itself lives in Reminders.
+`self/` covers inner life - relationships, personal philosophy, ramblings. `media/` is for notes and reviews after watching - the watchlist itself lives in Reminders. Exact personal records such as health logs, account inventories, or car and housing admin notes no longer live here; those moved out to Apple Notes.
 
 #### 7. archive
 ```md
@@ -233,7 +239,7 @@ Articles saved from the web live here once read and worth keeping - not in inbox
 
 #### 8. config
 
-Notes about the vault itself - plugin setup guides, CSS snippet explanations, sync configuration. Not system templates (those are in `1. system`) but documentation about how the vault is configured and why.
+Notes about the vault itself - plugin setup guides, CSS snippet explanations, sync configuration, homelab and device setup. Not system templates (those are in `1. system`) and not personal account inventories or admin reference.
 
 ---
 
@@ -250,6 +256,6 @@ However, this is just my approach. The best system is the one you'll actually us
 ### 2026-04-20
 
 - **Iconize over emojis**: Removed emoji suffixes from all folder names. The [Iconize](https://github.com/FlorianWoelki/obsidian-iconize) plugin now handles visual icons as metadata, keeping the actual folder names clean (`1. system` not `1. system 📊`). Better for scripts, terminal, and git diffs.
-- **Plugin update**: Added [Terminal](https://github.com/polyipseity/obsidian-terminal) — a shell terminal pane inside Obsidian. Removed Kanban and Notebook Navigator (not in active use).
+- **Plugin update**: Added [Terminal](https://github.com/polyipseity/obsidian-terminal) - a shell terminal pane inside Obsidian. Removed Kanban and Notebook Navigator (not in active use).
 - **Templates expanded**: Added `weekly-note`, `media-review`, `note`, `jobs_template`, `chatgpt analysis`, and `model comparison` to `1. system/templates/`.
 - **Agent workflows**: Added `upgrade.md` and `lint.md` to `.agent/workflows/` for AI-assisted vault maintenance.

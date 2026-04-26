@@ -53,7 +53,7 @@ Every tool in the table either made the list from my own use or came up in resea
 | **Claude Code Desktop** | ✅ | ❌ account-only | ✅ | ✅ | ✅ diff review | Yes, automatic | No API-key support. Dead on arrival for me. |
 | **Superset** | ✅ | ✅ via CC CLI | ✅ parallel agents | ✅ | ✅ review/merge | Yes, core model | Built for ten agents in parallel. I want one workspace, not a factory. |
 | **Conductor** | ✅ | ⚠️ limited | ✅ | ✅ | ✅ strong PR flow | Yes, very | Same shape as Superset. Worktree-first, I'm worktree-last. |
-| **cmux** | ✅ | ⚠️ unclear | ✅ | terminal-centric | terminal | Optional | macOS-native, interesting — but the file/Git story wasn't there. |
+| **cmux** | ✅ | ⚠️ unclear | ✅ | terminal-centric | terminal | Optional | macOS-native, interesting - but the file/Git story wasn't there. |
 | **Wave Terminal** | ✅ | ✅ native | ✅ panes + blocks | ✅ preview + edit | ⚠️ add lazygit | No | Best prebuilt option I found. Still in the game. |
 | **Ghostty + CC CLI + Yazi + lazygit** | ❌ modular | ✅ | ✅ tabs + tmux | ✅ Yazi is excellent | ✅ lazygit is great | No | Still in the game. Assembled it myself, somewhat against my will. |
 | **Zed** | ✅ | ✅ | ⚠️ improving | ✅ | ✅ | No | Multi-workspace still evolving. Promising, not there. |
