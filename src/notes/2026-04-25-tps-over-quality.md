@@ -1,5 +1,7 @@
 ---
 title: TPS over Quality
+layout: layouts/note.njk
+permalink: /notes/{{ page.fileSlug }}/
 description: Thoughts on using Gemini 3 Flash when the big model quotas ran out.
 date: 2026-04-25
 authored_by: human

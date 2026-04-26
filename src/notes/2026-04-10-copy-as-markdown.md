@@ -2,6 +2,7 @@
 title: "Why Every Technical Blog Needs a 'Copy as Markdown' Feature"
 layout: layouts/note.njk
 date: 2026-04-10
+permalink: /notes/{{ page.fileSlug }}/
 authored_by: human
 tags:
   - Webdev

@@ -964,14 +964,15 @@ export default function (eleventyConfig) {
       })
       .map((note) => {
         note.data.feedType = "note";
-        const excerptSource = note.data.excerpt || "";
-        const summary = excerptSource ? truncate(stripHtml(excerptSource), 260) : null;
+        const summarySource = note.data.description || note.data.excerpt || "";
+        const summary = summarySource ? truncate(stripHtml(summarySource), 260) : null;
         return {
           type: "note",
           title: note.data.title || "Note",
           date: note.date,
           url: note.url && note.url !== false ? note.url : null,
           summary,
+          tags: (note.data.tags || []).filter((tag) => tag !== "notes" && tag !== "note"),
           pinned: !!note.data.pinned,
           original: note,
           authored_by: note.data.authored_by ?? null,

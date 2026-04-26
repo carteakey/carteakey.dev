@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.4] - 2026-04-25
+### Added
+- Created `src/notes/_template.md` for standardized note creation with `hidden: true` by default.
+
+### Changed
+- Standardized frontmatter across all existing notes (layout, authored_by, permalink, date format).
+- Updated `eleventy.config.mjs` to include `description` and `tags` in the note feed mapping for consistent card rendering.
+
 ## [2.0.3] - 2026-04-25
 ### Fixed
 - Fixed the masonry layout in the unified feed's grid view by restoring the missing `feed-masonry` class to the grid container and ensuring all items possess the `.feed-card` class required by the layout script.

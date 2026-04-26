@@ -2,7 +2,7 @@
 title: Every App Needs an AI Toggle
 date: 2026-03-05
 layout: layouts/note.njk
-permalink: /notes/every-app-needs-an-ai-toggle/
+permalink: /notes/{{ page.fileSlug }}/
 authored_by: human
 ---
 
