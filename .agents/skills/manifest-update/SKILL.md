@@ -5,7 +5,7 @@ description: Workflow for maintaining the inbox/manifest.yaml file. Use this to 
 
 # Manifest Update Skill
 
-This skill defines how to keep `inbox/manifest.yaml` up-to-date and how to handle the initial classification of files in the `inbox/` directory.
+This skill defines how to keep `inbox/manifest.yaml` up-to-date and how to handle the initial classification and approval of files in the `inbox/` directory.
 
 ## Workflow
 
@@ -17,16 +17,19 @@ This skill defines how to keep `inbox/manifest.yaml` up-to-date and how to handl
 3. **Classify and Describe:**
    - For each untracked file:
      - Use `view_file` (or appropriate tool) to understand its content.
-     - Determine a `suggested_target` (e.g., `posts`, `notes`, `photography`, `vibes`, `ai-memes`, or `ignore`).
+     - Determine a `suggested_target` (e.g., `posts`, `notes`, `photography`, `vibes`, `ai-memes`).
      - Write a concise `description`.
+     - Set `approved: false` by default.
 4. **Update Manifest or Ignore:**
-   - If `suggested_target` is `ignore`:
+   - If a file is clearly personal or irrelevant:
      - Move the file to `inbox/_ignore/`.
      - Do NOT add it to the manifest.
-   - For all other targets:
-     - Append the entry to `inbox/manifest.yaml`.
-5. **Batching:**
-   - If there are many files, process them in batches (e.g., 10 at a time) to ensure accuracy and avoid token limits.
+   - For all other potential content:
+     - Append the entry to `inbox/manifest.yaml` with `approved: false`.
+5. **Execution (Approval Workflow):**
+   - When the user sets `approved: true` for an entry in the manifest:
+     - The corresponding ingestion skill (`draft-ingestion` or `media-import`) should be triggered to move the file to its final destination and update the site data.
+     - Once moved, the entry should be removed from `manifest.yaml`.
 
 ## Manifest Schema
 
@@ -35,10 +38,11 @@ This skill defines how to keep `inbox/manifest.yaml` up-to-date and how to handl
   description: Concise description of the content.
   suggested_target: [posts|notes|photography|vibes|ai-memes]
   type: [text/markdown|image/png|image/jpeg|...]
+  approved: false
 ```
 
 ## Anti-Patterns
 
 - Do NOT track files in the `inbox/_ignore/` folder in the manifest.
 - Avoid verbose or generic AI-sounding descriptions.
-- Do NOT move files to their final destinations in this skill; this is for classification only.
+- Do NOT move files to their final destinations until `approved: true`.

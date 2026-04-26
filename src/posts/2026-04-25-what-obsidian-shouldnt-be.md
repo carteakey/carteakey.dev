@@ -26,7 +26,7 @@ The more I have used Obsidian, the less interesting the question "what can it do
 
 Because it can do a lot. That does not mean it should.
 
-### The question that matters more
+## The question that matters more
 
 The cleanest answer I have found is that Obsidian should be a wiki for notes.
 
@@ -42,7 +42,7 @@ Not the place where every important PDF goes to die in an aesthetically pleasing
 
 That distinction cleared up more for me than any vault reorg ever has.
 
-### The organizing trap
+## The organizing trap
 
 One of the best lines I have saved on this topic is that organizing is a black hole.
 
@@ -56,7 +56,7 @@ What makes this trap nasty is that it does not feel like procrastination. It fee
 
 If you (like me) already have an itch to organize the world, a tool like Obsidian can turn that itch into a hobby and call it a productivity system.
 
-### The graph view problem
+## The graph view problem
 
 I have also fallen into what I think of as the graph view trap.
 
@@ -74,7 +74,7 @@ Notes are useful when they help thought happen. They are much less useful when t
 
 You can end up with the cleanest notes in the world and still be weirdly underprepared for the thing you were allegedly preparing for.
 
-### Notes vs records
+## Notes vs records
 
 This is why I no longer like the old rule of "if you would be upset if it disappeared, put it in Obsidian."
 
@@ -105,7 +105,7 @@ Once I started using that rule, the app split got much simpler too:
 
 Apple Notes is not the point, really. You could swap it for something else. The important part is refusing to make the wiki carry jobs that belong to a different kind of system.
 
-### What to do with PDFs
+## What to do with PDFs
 
 This also changed how I think about PDFs.
 
@@ -144,7 +144,7 @@ It is:
 
 That little distilled note is the wiki object. The manual is just source material.
 
-### When the tool becomes the hobby
+## When the tool becomes the hobby
 
 I think a lot of Obsidian discourse misses this because it is still stuck in capability mode.
 
@@ -160,7 +160,7 @@ Both can be fine, to be clear. I am not morally opposed to nerding out over a no
 
 That is when you get systems that expand faster than the life they are supposed to support.
 
-### A Lot of Organization Is Anxiety in Better Typography
+## A Lot of Organization Is Anxiety in Better Typography
 
 The part that interests me most now is that over-organization is not always about neatness.
 
@@ -181,7 +181,7 @@ So I think the real test for a system is pretty brutal:
 
 Once the last one becomes the dominant payoff, the system has gone off the rails no matter how elegant it looks.
 
-### What Obsidian Should Be
+## What Obsidian Should Be
 
 Obsidian is still one of the most useful tools I use.
 
@@ -195,7 +195,7 @@ It is better when it stays a place where thinking happens.
 
 That is enough.
 
-### Unless it actually is the hobby
+## Unless it actually is the hobby
 
 Not everything that looks like procrastination is procrastination.
 
