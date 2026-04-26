@@ -4,9 +4,8 @@ description: Thoughts on using Gemini 3 Flash when the big model quotas ran out.
 date: 2026-04-25
 authored_by: human
 tags:
-  - ai
-  - workflow
-  - dev
+  - AI
+  - Agents
 ---
 
 Lost my Copilot quota today. Stopped using Claude when they started testing on "prosumers". Finished Codex Quota for the site redesign. Then finished Antigravity and Gemini CLI Pro models until I had nothing left.
