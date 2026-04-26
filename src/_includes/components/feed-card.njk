@@ -75,7 +75,7 @@
 
   {# ── STREAM VARIANT (lifestream style) ── #}
   {% if variant == 'stream' %}
-  <article class="feed-surface-stream{% if extraClasses %} {{ extraClasses }}{% endif %} group py-1.5" {% if outerAttrs %}{{ outerAttrs | safe }}{% endif %}>
+  <article class="feed-card-stream{% if extraClasses %} {{ extraClasses }}{% endif %} group py-1.5" {% if outerAttrs %}{{ outerAttrs | safe }}{% endif %}>
     <div class="flex flex-col md:flex-row md:gap-8">
       {# Left column: Date & Type #}
       <div class="shrink-0 md:w-28 pt-1 flex flex-row md:flex-col gap-3 md:gap-1.5 items-center md:items-start mb-3 md:mb-0">
@@ -248,7 +248,7 @@
 
   {# ── FULL VARIANT (feed page - clean surface rounded-sm in a grid) ── #}
   {% else %}
-  <article class="surface surface-compact rounded-sm feed-surface-full{% if extraClasses %} {{ extraClasses }}{% endif %}" {% if outerAttrs %}{{ outerAttrs | safe }}{% endif %}>
+  <article class="feed-card surface surface-compact rounded-sm feed-card-full{% if extraClasses %} {{ extraClasses }}{% endif %}" {% if outerAttrs %}{{ outerAttrs | safe }}{% endif %}>
     {# Header row: type dot + label + date #}
     <div class="flex items-center gap-2 mb-2.5">
       <span class="badge badge-type badge-compact {{ typeBadgeClass }}">{{ badgeLabel }}</span>
