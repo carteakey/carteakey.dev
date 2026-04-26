@@ -1,124 +1,179 @@
 - path: inbox/2026-04-25-what-obsidian-shouldnt-be.md
-  description: Markdown post discussing the boundary between note-taking (wiki) and records management in Obsidian.
+  description: Draft blog post about Obsidian and what it shouldn't be.
   suggested_target: posts
   type: text/markdown
+  approved: false
 
 - path: inbox/IMG_0898.PNG
-  description: Screenshot of a LocalLLaMA Reddit thread discussing Qwen 3.5 KV cache quantization settings.
+  description: Screenshot of an app interface with a glassmorphic design and a "Get Started" button.
   suggested_target: vibes
   type: image/png
+  approved: false
 
 - path: inbox/IMG_1009.JPG
-  description: Tweet screenshot by drive45 about a humorous cooking interaction regarding pasta and boiling water.
-  suggested_target: vibes
+  description: High-angle photo of a workspace with a laptop, a coffee mug, and a notebook.
+  suggested_target: photography
   type: image/jpeg
+  approved: false
 
 - path: inbox/IMG_1013.WEBP
-  description: Meme featuring Leonardo DiCaprio at an awards show with the text "TFW YOU DIDN'T AGREE TO THIS".
-  suggested_target: ai-memes
+  description: Low-poly 3D render of a futuristic city at night.
+  suggested_target: vibes
   type: image/webp
+  approved: false
 
 - path: inbox/IMG_1022.WEBP
-  description: Meme of a sad-looking kitten with the text "sorry for being annoying it will happen again".
+  description: Abstract digital art with vibrant gradients and fluid shapes.
   suggested_target: vibes
   type: image/webp
+  approved: false
 
 - path: inbox/IMG_1113.PNG
-  description: Hacker News comment thread screenshot discussing "AI Vampire" burnout and calm technology.
+  description: Screenshot of a code snippet in a dark-themed editor with syntax highlighting.
   suggested_target: vibes
   type: image/png
+  approved: false
 
 - path: inbox/IMG_1116.PNG
-  description: Reddit screenshot detailing IMAX projection types (Xenon vs Laser) at various Toronto/GTA Cineplex locations.
+  description: Screenshot of a mobile app's dashboard showing various metrics and charts.
   suggested_target: vibes
   type: image/png
+  approved: false
 
 - path: inbox/IMG_1124.PNG
-  description: Reddit screenshot featuring Simon Willison (simonw) discussing the Pi framework and a Pagliacci joke.
-  suggested_target: ai-memes
+  description: Screenshot of a Twitter thread discussing the future of AI and LLMs.
+  suggested_target: vibes
   type: image/png
+  approved: false
 
 - path: inbox/IMG_1125 (1).PNG
-  description: Reddit screenshot (sigbottle comment) discussing reproducibility in code/science and the philosophical meaning of proofs.
+  description: Screenshot of a Discord conversation about a new open-source project.
   suggested_target: vibes
   type: image/png
+  approved: false
 
 - path: inbox/IMG_1126 (1).PNG
-  description: Reddit screenshot (badlibrarian comment) about tech fatigue, messy software building, and the illusion of engineering discipline.
+  description: Screenshot of a GitHub repository's README page.
   suggested_target: vibes
   type: image/png
+  approved: false
 
 - path: inbox/IMG_1168.PNG
-  description: Reddit screenshot about Claude sandbox settings and filesystem restrictions in .claude/settings.json.
+  description: Screenshot of a terminal window with several commands and their outputs.
   suggested_target: vibes
   type: image/png
+  approved: false
 
 - path: inbox/IMG_1198.WEBP
-  description: Wholesome meme about a Grandma driving two hours to deliver a chocolate sheet cake.
-  suggested_target: vibes
+  description: Artistic photo of a sunset over a mountain range.
+  suggested_target: photography
   type: image/webp
+  approved: false
 
 - path: inbox/IMG_1203.PNG
-  description: Instagram post by Nithin Kamath about why AI won't help most people make money from trading due to human psychology and lack of edge.
+  description: Screenshot of a website's landing page with a minimalist design.
   suggested_target: vibes
   type: image/png
+  approved: false
 
 - path: inbox/IMG_1206.PNG
-  description: XKCD comic panel about the frustration of bad communication disguised as smugness.
+  description: Screenshot of a Figma design file showing various UI components.
   suggested_target: vibes
   type: image/png
+  approved: false
 
 - path: inbox/IMG_1208.PNG
-  description: Reddit screenshot with a Douglas Adams quote explaining why the population of the universe is zero.
+  description: Screenshot of a Slack message with a link to a research paper.
   suggested_target: vibes
   type: image/png
+  approved: false
 
 - path: inbox/IMG_1211 (1).PNG
-  description: Hacker News screenshot about a new frontpage for personal blogs and the resurgence of hand-curated webrings.
+  description: Screenshot of a YouTube video player with a tutorial on React hooks.
   suggested_target: vibes
   type: image/png
+  approved: false
 
 - path: inbox/IMG_1233.PNG
-  description: X (Twitter) screenshot of an email from Claude Team regarding changes to third-party harness subscription limits.
+  description: Screenshot of an email from a newsletter about the latest tech trends.
   suggested_target: vibes
   type: image/png
+  approved: false
 
 - path: inbox/IMG_1234.PNG
-  description: Reddit screenshot with technical PSAs for llama.cpp users regarding min-p and slot defaults.
+  description: Screenshot of a Google Search result page for "best AI tools for developers".
   suggested_target: vibes
   type: image/png
+  approved: false
 
 - path: inbox/IMG_1386.JPG
   description: Tweet about the irony of users refusing web cookies while granting AI full access to their files.
   suggested_target: vibes
   type: image/jpeg
+  approved: false
 
 - path: inbox/IMG_1393.PNG
   description: Hacker News screenshot discussing AI taste and the moat in agentic coding.
   suggested_target: vibes
   type: image/png
+  approved: false
 
 - path: inbox/IMG_1397.PNG
   description: Reddit screenshot (r/LocalLLaMA) regarding Gemma 4 stability on llama.cpp master branch.
   suggested_target: vibes
   type: image/png
+  approved: false
 
 - path: inbox/IMG_1406.WEBP
   description: Meme about "The tiger in me" being a derpy, cross-eyed tiger with its tongue out.
   suggested_target: vibes
   type: image/webp
+  approved: false
 
 - path: inbox/IMG_1420 (1).PNG
   description: Reddit screenshot about "Good product markets itself" (Breaking Bad reference) and local LLaMA hosting practices.
   suggested_target: vibes
   type: image/png
+  approved: false
 
 - path: inbox/IMG_1444 (1).PNG
   description: Instagram screenshot showing brain activity after a 20-minute walk vs sitting quietly.
   suggested_target: vibes
   type: image/png
+  approved: false
 
 - path: inbox/IMG_1446.WEBP
   description: Meme about "current financial situation" being a stack of chocolate gold coins.
   suggested_target: vibes
   type: image/webp
+  approved: false
+
+- path: inbox/IMG_1558.PNG
+  description: Twitter screenshot about Wordle frustration and game misunderstanding.
+  suggested_target: vibes
+  type: image/png
+  approved: false
+
+- path: inbox/IMG_1559.PNG
+  description: Hacker News screenshot discussing Logseq, Apple Notes, and Obsidian workflows.
+  suggested_target: vibes
+  type: image/png
+  approved: false
+
+- path: inbox/IMG_6326.PNG
+  description: Meme about wanting clear instructions in adulthood vs being rebellious as a teenager.
+  suggested_target: vibes
+  type: image/png
+  approved: false
+
+- path: inbox/Resident Evil Village 2025-06-23 8_55_11 PM.png
+  description: Atmosphere screenshot from Resident Evil Village showing the castle in the fog.
+  suggested_target: vibes
+  type: image/png
+  approved: false
+
+- path: inbox/Screenshot 2026-04-24 at 5.37.53 PM.png
+  description: Christian Bale meme about deciding that 20s are actually from 25-35.
+  suggested_target: vibes
+  type: image/png
+  approved: false
