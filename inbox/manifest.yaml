@@ -1,0 +1,124 @@
+- path: inbox/2026-04-25-what-obsidian-shouldnt-be.md
+  description: Markdown post discussing the boundary between note-taking (wiki) and records management in Obsidian.
+  suggested_target: posts
+  type: text/markdown
+
+- path: inbox/IMG_0898.PNG
+  description: Screenshot of a LocalLLaMA Reddit thread discussing Qwen 3.5 KV cache quantization settings.
+  suggested_target: vibes
+  type: image/png
+
+- path: inbox/IMG_1009.JPG
+  description: Tweet screenshot by drive45 about a humorous cooking interaction regarding pasta and boiling water.
+  suggested_target: vibes
+  type: image/jpeg
+
+- path: inbox/IMG_1013.WEBP
+  description: Meme featuring Leonardo DiCaprio at an awards show with the text "TFW YOU DIDN'T AGREE TO THIS".
+  suggested_target: ai-memes
+  type: image/webp
+
+- path: inbox/IMG_1022.WEBP
+  description: Meme of a sad-looking kitten with the text "sorry for being annoying it will happen again".
+  suggested_target: vibes
+  type: image/webp
+
+- path: inbox/IMG_1113.PNG
+  description: Hacker News comment thread screenshot discussing "AI Vampire" burnout and calm technology.
+  suggested_target: vibes
+  type: image/png
+
+- path: inbox/IMG_1116.PNG
+  description: Reddit screenshot detailing IMAX projection types (Xenon vs Laser) at various Toronto/GTA Cineplex locations.
+  suggested_target: vibes
+  type: image/png
+
+- path: inbox/IMG_1124.PNG
+  description: Reddit screenshot featuring Simon Willison (simonw) discussing the Pi framework and a Pagliacci joke.
+  suggested_target: ai-memes
+  type: image/png
+
+- path: inbox/IMG_1125 (1).PNG
+  description: Reddit screenshot (sigbottle comment) discussing reproducibility in code/science and the philosophical meaning of proofs.
+  suggested_target: vibes
+  type: image/png
+
+- path: inbox/IMG_1126 (1).PNG
+  description: Reddit screenshot (badlibrarian comment) about tech fatigue, messy software building, and the illusion of engineering discipline.
+  suggested_target: vibes
+  type: image/png
+
+- path: inbox/IMG_1168.PNG
+  description: Reddit screenshot about Claude sandbox settings and filesystem restrictions in .claude/settings.json.
+  suggested_target: vibes
+  type: image/png
+
+- path: inbox/IMG_1198.WEBP
+  description: Wholesome meme about a Grandma driving two hours to deliver a chocolate sheet cake.
+  suggested_target: vibes
+  type: image/webp
+
+- path: inbox/IMG_1203.PNG
+  description: Instagram post by Nithin Kamath about why AI won't help most people make money from trading due to human psychology and lack of edge.
+  suggested_target: vibes
+  type: image/png
+
+- path: inbox/IMG_1206.PNG
+  description: XKCD comic panel about the frustration of bad communication disguised as smugness.
+  suggested_target: vibes
+  type: image/png
+
+- path: inbox/IMG_1208.PNG
+  description: Reddit screenshot with a Douglas Adams quote explaining why the population of the universe is zero.
+  suggested_target: vibes
+  type: image/png
+
+- path: inbox/IMG_1211 (1).PNG
+  description: Hacker News screenshot about a new frontpage for personal blogs and the resurgence of hand-curated webrings.
+  suggested_target: vibes
+  type: image/png
+
+- path: inbox/IMG_1233.PNG
+  description: X (Twitter) screenshot of an email from Claude Team regarding changes to third-party harness subscription limits.
+  suggested_target: vibes
+  type: image/png
+
+- path: inbox/IMG_1234.PNG
+  description: Reddit screenshot with technical PSAs for llama.cpp users regarding min-p and slot defaults.
+  suggested_target: vibes
+  type: image/png
+
+- path: inbox/IMG_1386.JPG
+  description: Tweet about the irony of users refusing web cookies while granting AI full access to their files.
+  suggested_target: vibes
+  type: image/jpeg
+
+- path: inbox/IMG_1393.PNG
+  description: Hacker News screenshot discussing AI taste and the moat in agentic coding.
+  suggested_target: vibes
+  type: image/png
+
+- path: inbox/IMG_1397.PNG
+  description: Reddit screenshot (r/LocalLLaMA) regarding Gemma 4 stability on llama.cpp master branch.
+  suggested_target: vibes
+  type: image/png
+
+- path: inbox/IMG_1406.WEBP
+  description: Meme about "The tiger in me" being a derpy, cross-eyed tiger with its tongue out.
+  suggested_target: vibes
+  type: image/webp
+
+- path: inbox/IMG_1420 (1).PNG
+  description: Reddit screenshot about "Good product markets itself" (Breaking Bad reference) and local LLaMA hosting practices.
+  suggested_target: vibes
+  type: image/png
+
+- path: inbox/IMG_1444 (1).PNG
+  description: Instagram screenshot showing brain activity after a 20-minute walk vs sitting quietly.
+  suggested_target: vibes
+  type: image/png
+
+- path: inbox/IMG_1446.WEBP
+  description: Meme about "current financial situation" being a stack of chocolate gold coins.
+  suggested_target: vibes
+  type: image/webp

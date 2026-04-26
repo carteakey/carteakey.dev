@@ -11,7 +11,13 @@ You are helping import media from the `inbox/` staging area into the site.
 There are **4 distinct content targets**, each with its own ingestion pattern.
 Always diff first, confirm with the user, then execute.
 
----
+## Step 0 — Consult Manifest
+
+Before any import, check `inbox/manifest.yaml`. 
+- **Missing Entries**: If a file is not in the manifest, run the `manifest-update` skill to classify it.
+- **Ignores**: Files in `inbox/_ignore/` are ignored by all skills and not tracked in the manifest.
+- **Descriptions**: Use the `description` field from the manifest for all imported media (captions, alt text, etc.).
+- **Targets**: Respect the `suggested_target`.
 
 ## Step 1 — Scan and Diff
 
@@ -39,6 +45,9 @@ Build a table of unimported files per target:
 | ... | inbox/vibes/meme.webp | vibes | ⏳ pending |
 | ... | inbox/ai-memes/funny.webp | ai-memes folio | ⏳ pending |
 | ... | inbox/something.jpg | ❓ unclassified | needs routing |
+
+**Manifest Pre-check**:
+Always cross-reference the `find` output with `inbox/manifest.yaml`. If a file is not in the manifest, you must describe it and add it to the manifest first.
 
 **Hash-based dedup (required for photography)**:
 Do NOT rely on filename matching for photos — the same image may be deployed under a different name.
