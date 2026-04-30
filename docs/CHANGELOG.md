@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added manual guestbook entries to the `guestbook.yaml` data file.
 
 ### Changed
+- Updated `cost-effective-coding-agents` post with 2026 market changes (Opus 4.7, Qwen Code OAuth, Amp status) and added Stack Blueprints and Routing Rules.
 - Grouped all local AI inference and benchmark posts under a new `local-inference` series folder. Added backward-compatible 301 redirects to `src/_redirects` to retain their original URLs.
 - Established `agents` and `homelab` series folders, grouping related posts. Added `giscusTerm` frontmatter overrides to retain original discussion threads.
 - Dismantled broad `tech` and `personal` folders into standalone tagged posts.
