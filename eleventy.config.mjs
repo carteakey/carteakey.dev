@@ -21,6 +21,135 @@ import Image, { generateHTML } from "@11ty/eleventy-img";
 import 'dotenv/config';
 import upvotesData from "./src/_data/upvotes.js";
 
+const IS_PRODUCTION_BUILD =
+  process.env.ELEVENTY_ENV === "production" ||
+  process.env.CONTEXT === "production" ||
+  process.env.NODE_ENV === "production";
+
+const SHOW_HIDDEN_CONTENT = process.env.SHOW_HIDDEN === "true" || !IS_PRODUCTION_BUILD;
+
+function shouldHideContent(item) {
+  return item?.data?.hidden === true && !SHOW_HIDDEN_CONTENT;
+}
+
+function markdownItFootnotes(md) {
+  const normalizeLabel = (label) => String(label || "").trim().toLowerCase();
+  const safeId = (label, number) => {
+    const slug = normalizeLabel(label)
+      .replace(/[^a-z0-9_-]+/g, "-")
+      .replace(/^-+|-+$/g, "");
+    return slug || String(number);
+  };
+
+  const ensureStore = (env) => {
+    env.footnotes = env.footnotes || {
+      defs: {},
+      order: [],
+      refs: {},
+    };
+    return env.footnotes;
+  };
+
+  md.block.ruler.before("paragraph", "footnote_def", (state, startLine, endLine, silent) => {
+    const start = state.bMarks[startLine] + state.tShift[startLine];
+    const max = state.eMarks[startLine];
+    const line = state.src.slice(start, max);
+    const match = line.match(/^\[\^([^\]]+)\]:\s*(.*)$/);
+
+    if (!match) return false;
+    if (silent) return true;
+
+    const label = normalizeLabel(match[1]);
+    const lines = [match[2]];
+    let nextLine = startLine + 1;
+
+    while (nextLine < endLine) {
+      const lineStart = state.bMarks[nextLine] + state.tShift[nextLine];
+      const lineEnd = state.eMarks[nextLine];
+      const next = state.src.slice(lineStart, lineEnd);
+      const isContinuation = state.sCount[nextLine] - state.blkIndent >= 4;
+
+      if (!isContinuation) break;
+
+      lines.push(next.replace(/^ {0,4}/, ""));
+      nextLine += 1;
+    }
+
+    const store = ensureStore(state.env);
+    store.defs[label] = lines.join("\n").trim();
+    state.line = nextLine;
+    return true;
+  });
+
+  md.inline.ruler.after("image", "footnote_ref", (state, silent) => {
+    if (state.src.charCodeAt(state.pos) !== 0x5B || state.src.charCodeAt(state.pos + 1) !== 0x5E) {
+      return false;
+    }
+
+    const end = state.src.indexOf("]", state.pos + 2);
+    if (end < 0) return false;
+
+    const rawLabel = state.src.slice(state.pos + 2, end);
+    const label = normalizeLabel(rawLabel);
+    if (!label) return false;
+
+    if (!silent) {
+      const store = ensureStore(state.env);
+
+      if (!store.refs[label]) {
+        const number = store.order.length + 1;
+        store.refs[label] = {
+          label,
+          number,
+          id: safeId(label, number),
+        };
+        store.order.push(label);
+      }
+
+      const token = state.push("footnote_ref", "sup", 0);
+      token.meta = store.refs[label];
+    }
+
+    state.pos = end + 1;
+    return true;
+  });
+
+  md.core.ruler.after("inline", "footnote_tail", (state) => {
+    if (state.env.footnotesRendering) return;
+
+    const store = state.env.footnotes;
+    if (!store?.order?.length) return;
+
+    const items = store.order
+      .map((label) => store.refs[label])
+      .filter(Boolean)
+      .map((ref) => {
+        let body = md.utils.escapeHtml(ref.label);
+
+        if (store.defs[ref.label]) {
+          state.env.footnotesRendering = true;
+          try {
+            body = md.renderInline(store.defs[ref.label], state.env);
+          } finally {
+            state.env.footnotesRendering = false;
+          }
+        }
+
+        return `<li id="fn-${ref.id}">${body} <a class="footnote-backref" href="#fnref-${ref.id}" aria-label="Back to reference">back</a></li>`;
+      })
+      .join("\n");
+
+    const token = new state.Token("html_block", "", 0);
+    token.content = `<section class="footnotes" role="doc-endnotes" aria-labelledby="footnote-label">\n<p id="footnote-label" class="sr-only">Footnotes</p>\n<ol>\n${items}\n</ol>\n</section>\n`;
+    state.tokens.push(token);
+  });
+
+  md.renderer.rules.footnote_ref = (tokens, idx) => {
+    const ref = tokens[idx].meta;
+    return `<sup class="footnote-ref" id="fnref-${ref.id}"><a href="#fn-${ref.id}" role="doc-noteref">${ref.number}</a></sup>`;
+  };
+}
+
 function mapSrcToPublicUrl(src) {
   // If already an absolute URL or starts with site public path, return as-is
   if (/^https?:\/\//i.test(src) || src.startsWith("/")) {
@@ -229,6 +358,17 @@ export const config = {
 }
 
 export default function (eleventyConfig) {
+  eleventyConfig.addGlobalData("isDev", !IS_PRODUCTION_BUILD);
+  eleventyConfig.addGlobalData("showHiddenContent", SHOW_HIDDEN_CONTENT);
+  eleventyConfig.addGlobalData("eleventyComputed", {
+    permalink: (data = {}) => {
+      if (data.hidden === true && !SHOW_HIDDEN_CONTENT) {
+        return false;
+      }
+      return data.permalink;
+    },
+  });
+
   eleventyConfig.setTemplateFormats("md,njk,html,liquid");
   eleventyConfig.addPlugin(EleventyHtmlBasePlugin)
   eleventyConfig.addWatchTarget("./src/**/*/*.css");
@@ -411,7 +551,7 @@ export default function (eleventyConfig) {
   eleventyConfig.addFilter("sortTagsByCount", function (tagList, collections) {
     return tagList.map(tag => ({
       name: tag,
-      count: (collections[tag] || []).filter(post => !post.data.hidden).length
+      count: (collections[tag] || []).filter(post => !shouldHideContent(post)).length
     }))
       .filter(item => item.count > 0)
       .sort((a, b) => b.count - a.count);
@@ -631,11 +771,24 @@ export default function (eleventyConfig) {
     return [...tagSet];
   });
 
+  eleventyConfig.addCollection("snippets", function (collectionApi) {
+    const now = new Date();
+    return collectionApi
+      .getFilteredByGlob("./src/snippets/**/*.md")
+      .filter((snippet) => {
+        if (shouldHideContent(snippet)) return false;
+        if (snippet.date && snippet.date > now) return false;
+        return true;
+      })
+      .sort((a, b) => b.date - a.date);
+  });
+
   // Create an array of all tags (excluding snippet tags)
   eleventyConfig.addCollection("tagList", function (collection) {
     let tagSet = new Set();
     collection.getAll()
       .filter(item => !item.data.tags?.includes("snippets")) // Only include non-snippet content
+      .filter(item => !shouldHideContent(item))
       .forEach((item) => {
         (item.data.tags || []).forEach((tag) => tagSet.add(tag));
       });
@@ -643,14 +796,13 @@ export default function (eleventyConfig) {
     return filterTagList([...tagSet]);
   });
 
-  // Custom posts collection: hide posts with hidden: true or future date
+  // Custom posts collection: hide hidden posts in production, show them in dev.
   eleventyConfig.addCollection("posts", function (collectionApi) {
     const now = new Date();
     return collectionApi
       .getFilteredByGlob("./src/posts/**/*.md")
       .filter(post => {
-        // Hide if hidden: true in frontmatter
-        if (post.data.hidden === true) return false;
+        if (shouldHideContent(post)) return false;
         // Hide if date is in the future
         if (post.date && post.date > now) return false;
         return true;
@@ -669,7 +821,7 @@ export default function (eleventyConfig) {
     return collectionApi
       .getFilteredByTag("prompts")
       .filter(prompt => {
-        if (prompt.data.hidden === true) return false;
+        if (shouldHideContent(prompt)) return false;
         if (prompt.date && prompt.date > now) return false;
         return true;
       })
@@ -682,7 +834,7 @@ export default function (eleventyConfig) {
     const posts = collectionApi
       .getFilteredByGlob("./src/posts/**/*.md")
       .filter(post => {
-        if (post.data.hidden === true) return false;
+        if (shouldHideContent(post)) return false;
         if (post.data.draft === true) return false;
         if (post.date && post.date > now) return false;
         if (!post.data.featured) return false;
@@ -723,7 +875,7 @@ export default function (eleventyConfig) {
     collectionApi
       .getFilteredByGlob("./src/posts/**/*.md")
       .filter((post) => {
-        if (post.data.hidden === true) return false;
+        if (shouldHideContent(post)) return false;
         if (post.date && post.date > now) return false;
         return true;
       })
@@ -771,7 +923,7 @@ export default function (eleventyConfig) {
     return collectionApi.getAll().filter(page => {
       // Only filter posts, not all pages, for hidden/future
       if (page.inputPath && page.inputPath.includes("/posts/")) {
-        if (page.data.hidden === true) return false;
+        if (shouldHideContent(page)) return false;
         if (page.date && page.date > now) return false;
       }
       return true;
@@ -784,6 +936,7 @@ export default function (eleventyConfig) {
     return collectionApi.getAll().filter(item => {
       if (!item.data.tags) return false;
       if (!item.url) return false; // skip items without a URL
+      if (shouldHideContent(item)) return false;
       return types.some(t => item.data.tags.includes(t));
     });
   });
@@ -810,7 +963,7 @@ export default function (eleventyConfig) {
     const now = new Date();
     return collectionApi.getFilteredByGlob("src/quotations/**/*.md")
       .filter((quote) => {
-        if (quote.data.hidden === true) return false;
+        if (shouldHideContent(quote)) return false;
         if (quote.date && quote.date > now) return false;
         return true;
       })
@@ -855,7 +1008,7 @@ export default function (eleventyConfig) {
     const now = new Date();
     return collectionApi.getFilteredByGlob("./src/notes/**/*.md")
       .filter((note) => {
-        if (note.data.hidden === true) return false;
+        if (shouldHideContent(note)) return false;
         if (note.date && note.date > now) return false;
         return true;
       })
@@ -883,7 +1036,7 @@ export default function (eleventyConfig) {
     const posts = collectionApi
       .getFilteredByGlob("./src/posts/**/*.md")
       .filter((post) => {
-        if (post.data.hidden === true) return false;
+        if (shouldHideContent(post)) return false;
         if (post.date && post.date > now) return false;
         return true;
       })
@@ -902,6 +1055,7 @@ export default function (eleventyConfig) {
           tags: (post.data.tags || []).filter((tag) => tag !== "posts" && tag !== "post"),
           pinned: !!post.data.pinned,
           featured: !!post.data.featured,
+          hidden: !!post.data.hidden,
           authored_by: post.data.authored_by ?? null,
           image: post.data.image ?? null,
           imageAlt: post.data.imageAlt ?? post.data.title,
@@ -912,7 +1066,7 @@ export default function (eleventyConfig) {
     const snippets = collectionApi
       .getFilteredByTag("snippets")
       .filter((snippet) => {
-        if (snippet.data.hidden === true) return false;
+        if (shouldHideContent(snippet)) return false;
         if (snippet.date && snippet.date > now) return false;
         return true;
       })
@@ -928,6 +1082,7 @@ export default function (eleventyConfig) {
           summary,
           readingTime: snippet.data.readingTime,
           original: snippet,
+          hidden: !!snippet.data.hidden,
           authored_by: snippet.data.authored_by ?? null,
         };
       });
@@ -935,7 +1090,7 @@ export default function (eleventyConfig) {
     const prompts = collectionApi
       .getFilteredByTag("prompts")
       .filter((prompt) => {
-        if (prompt.data.hidden === true) return false;
+        if (shouldHideContent(prompt)) return false;
         if (prompt.date && prompt.date > now) return false;
         return true;
       })
@@ -951,6 +1106,7 @@ export default function (eleventyConfig) {
           summary,
           readingTime: prompt.data.readingTime,
           original: prompt,
+          hidden: !!prompt.data.hidden,
           authored_by: prompt.data.authored_by ?? null,
         };
       });
@@ -958,7 +1114,7 @@ export default function (eleventyConfig) {
     const notes = collectionApi
       .getFilteredByGlob("./src/notes/**/*.md")
       .filter((entry) => {
-        if (entry.data.hidden === true) return false;
+        if (shouldHideContent(entry)) return false;
         if (entry.date && entry.date > now) return false;
         return true;
       })
@@ -975,6 +1131,7 @@ export default function (eleventyConfig) {
           tags: (note.data.tags || []).filter((tag) => tag !== "notes" && tag !== "note"),
           pinned: !!note.data.pinned,
           original: note,
+          hidden: !!note.data.hidden,
           authored_by: note.data.authored_by ?? null,
         };
       });
@@ -993,6 +1150,7 @@ export default function (eleventyConfig) {
           url: entry.url,
           summary: summarySource ? truncate(stripHtml(summarySource), 220) : null,
           original: entry,
+          hidden: !!entry.data.hidden,
         };
       });
 
@@ -1052,7 +1210,7 @@ export default function (eleventyConfig) {
     const tilEntries = collectionApi
       .getFilteredByGlob("./src/til/**/*.md")
       .filter((entry) => {
-        if (entry.data.hidden === true) return false;
+        if (shouldHideContent(entry)) return false;
         if (entry.date && entry.date > now) return false;
         return true;
       })
@@ -1066,13 +1224,14 @@ export default function (eleventyConfig) {
           url: entry.url,
           summary,
           original: entry,
+          hidden: !!entry.data.hidden,
         };
       });
 
     const quotationsList = collectionApi
       .getFilteredByGlob("./src/quotations/**/*.md")
       .filter((entry) => {
-        if (entry.data.hidden === true) return false;
+        if (shouldHideContent(entry)) return false;
         if (entry.date && entry.date > now) return false;
         return true;
       })
@@ -1086,13 +1245,14 @@ export default function (eleventyConfig) {
           url: `/quotations/#${entry.fileSlug}`,
           summary,
           original: entry,
+          hidden: !!entry.data.hidden,
         };
       });
 
     const folioEntries = collectionApi
       .getFilteredByGlob("./src/folio/**/index.html")
       .filter((entry) => {
-        if (entry.data.hidden === true) return false;
+        if (shouldHideContent(entry)) return false;
         if (entry.date && entry.date > now) return false;
         return true;
       })
@@ -1106,13 +1266,14 @@ export default function (eleventyConfig) {
           url: entry.url,
           summary,
           original: entry,
+          hidden: !!entry.data.hidden,
         };
       });
 
     const grandiloquentList = collectionApi
       .getFilteredByGlob("./src/grandiloquent/**/*.md")
       .filter((entry) => {
-        if (entry.data.hidden === true) return false;
+        if (shouldHideContent(entry)) return false;
         if (entry.date && entry.date > now) return false;
         return true;
       })
@@ -1126,6 +1287,7 @@ export default function (eleventyConfig) {
           url: entry.url,
           summary,
           original: entry,
+          hidden: !!entry.data.hidden,
         };
       });
 
@@ -1158,7 +1320,7 @@ export default function (eleventyConfig) {
     return collectionApi
       .getFilteredByGlob("./src/posts/**/*.md")
       .filter((post) => {
-        if (post.data.hidden === true) return false;
+        if (shouldHideContent(post)) return false;
         if (post.date && post.date > now) return false;
         return true;
       })
@@ -1177,6 +1339,7 @@ export default function (eleventyConfig) {
     html: true,
     linkify: true,
   })
+    .use(markdownItFootnotes)
     .use(markdownItAnchor, {
       permalink: markdownItAnchor.permalink.ariaHidden({
         placement: "after",
@@ -1202,6 +1365,10 @@ export default function (eleventyConfig) {
   // 📰 Editorial shortcodes — minimal set
   //   {% analysis %}  boxed section with title + optional winner pill
   //   {% wide %}      full-bleed scrollable wrapper for wide tables
+  //   {% callout %}   compact semantic note/warning/example/todo blocks
+  //   {% update %}    dated inline update blocks
+  //   {% define %}    inline term definition popovers
+  //   {% sidenote %}  editorial sidenotes, distinct from handwritten annotates
   //   {% annotate %}  handwritten comment + squiggly arrow on highlighted text
   // ═══════════════════════════════════════════════════════════════════════════
 
@@ -1213,6 +1380,10 @@ export default function (eleventyConfig) {
     .replace(/'/g, "&#39;");
 
   const normalizeSide = (side) => (String(side || "").toLowerCase() === "b" ? "b" : "a");
+  const normalizeCalloutKind = (kind) => {
+    const normalized = String(kind || "note").trim().toLowerCase();
+    return ["note", "warning", "example", "todo", "aside"].includes(normalized) ? normalized : "note";
+  };
 
   const renderInnerMarkdown = (content) => {
     if (!content || typeof content !== "string") return "";
@@ -1238,6 +1409,37 @@ export default function (eleventyConfig) {
   eleventyConfig.addPairedShortcode("wide", function (content) {
     const body = renderInnerMarkdown(content);
     return `\n\n<div class="wide-wrap not-prose">\n${body}\n</div>\n\n`;
+  });
+
+  // {% callout "note", "Optional title" %} markdown {% endcallout %}
+  eleventyConfig.addPairedShortcode("callout", function (content, kind = "note", title = "") {
+    const normalizedKind = normalizeCalloutKind(kind);
+    const safeTitle = title ? escapeHtml(title) : normalizedKind;
+    const body = renderInnerMarkdown(content);
+    return `\n\n<aside class="editorial-callout" data-kind="${normalizedKind}">\n<p class="editorial-callout-label">${safeTitle}</p>\n<div class="editorial-callout-body">${body}</div>\n</aside>\n\n`;
+  });
+
+  // {% update "2026-04-30", "Optional title" %} markdown {% endupdate %}
+  eleventyConfig.addPairedShortcode("update", function (content, date = "", title = "Update") {
+    const safeDate = escapeHtml(date);
+    const safeTitle = escapeHtml(title || "Update");
+    const dateHtml = safeDate ? `<time datetime="${safeDate}">${safeDate}</time>` : "";
+    const body = renderInnerMarkdown(content);
+    return `\n\n<aside class="editorial-update">\n<p class="editorial-update-label"><span>${safeTitle}</span>${dateHtml}</p>\n<div class="editorial-update-body">${body}</div>\n</aside>\n\n`;
+  });
+
+  // {% define "term", "Short definition" %}
+  eleventyConfig.addShortcode("define", function (term = "", definition = "") {
+    const safeTerm = escapeHtml(term);
+    const safeDefinition = escapeHtml(definition);
+    return `<span class="definition-popover" tabindex="0"><span class="definition-term">${safeTerm}</span><span class="definition-body" role="tooltip">${safeDefinition}</span></span>`;
+  });
+
+  // {% sidenote "Short note" %}anchor text{% endsidenote %}
+  eleventyConfig.addPairedShortcode("sidenote", function (content, note = "", side = "right") {
+    const normalizedSide = String(side || "right").trim().toLowerCase() === "left" ? "left" : "right";
+    const safeNote = escapeHtml(note || "");
+    return `<span class="sidenote sidenote-${normalizedSide}"><span class="sidenote-anchor">${content}</span><span class="sidenote-body">${safeNote}</span></span>`;
   });
 
   // {% annotate "handwritten comment here" %}phrase to highlight{% endannotate %}

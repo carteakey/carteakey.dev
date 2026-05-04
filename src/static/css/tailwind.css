@@ -3018,176 +3018,6 @@ picture img {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   ✏️ Swirly Arrow Annotation Component
-   Usage: <span class="annotate" data-note="Your annotation text here">word</span>
-   Variants: annotate-left, annotate-right, annotate-up
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-@layer components {
-  .annotate {
-    position: relative;
-    display: inline;
-    cursor: help;
-    border-bottom: 2px dashed color-mix(in srgb, var(--accent-color) 50%, transparent);
-    transition: border-color 0.2s ease;
-  }
-
-  .annotate:hover {
-    border-bottom-color: var(--accent-color);
-  }
-
-  /* The annotation container */
-  .annotate::after {
-    content: attr(data-note);
-    position: absolute;
-    font-family: 'Caveat', 'Comic Sans MS', cursive;
-    font-size: 0.95rem;
-    line-height: 1.3;
-    color: var(--accent-color);
-    white-space: nowrap;
-    opacity: 0;
-    transform: translateY(5px) rotate(-2deg);
-    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    pointer-events: none;
-    z-index: 10;
-    max-width: 200px;
-    white-space: normal;
-    text-align: center;
-  }
-
-  /* Swirly arrow SVG */
-  .annotate::before {
-    content: '';
-    position: absolute;
-    width: 40px;
-    height: 30px;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 50 40' fill='none'%3E%3Cpath d='M5 35 C15 35, 20 20, 25 15 C30 10, 40 8, 45 5' stroke='%23f59e0b' stroke-width='2' stroke-linecap='round' fill='none' stroke-dasharray='0' /%3E%3Cpath d='M40 2 L46 5 L42 10' stroke='%23f59e0b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E");
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0;
-    transform: scaleX(-1) rotate(-10deg);
-    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    pointer-events: none;
-    z-index: 10;
-  }
-
-  /* Default: arrow points down-right, note below */
-  .annotate::before {
-    bottom: -25px;
-    left: 50%;
-    transform: translateX(-50%) rotate(180deg);
-  }
-
-  .annotate::after {
-    top: calc(100% + 35px);
-    left: 50%;
-    transform: translateX(-50%) translateY(5px) rotate(-1deg);
-  }
-
-  .annotate:hover::before,
-  .annotate:hover::after {
-    opacity: 1;
-  }
-
-  .annotate:hover::after {
-    transform: translateX(-50%) translateY(0) rotate(-1deg);
-  }
-
-  /* Variant: Left pointing annotation */
-  .annotate-left::before {
-    bottom: auto;
-    top: 50%;
-    left: auto;
-    right: calc(100% + 5px);
-    transform: translateY(-50%) rotate(90deg) scaleY(-1);
-  }
-
-  .annotate-left::after {
-    top: 50%;
-    left: auto;
-    right: calc(100% + 50px);
-    transform: translateY(-50%) translateX(5px) rotate(2deg);
-  }
-
-  .annotate-left:hover::after {
-    transform: translateY(-50%) translateX(0) rotate(2deg);
-  }
-
-  /* Variant: Right pointing annotation */
-  .annotate-right::before {
-    bottom: auto;
-    top: 50%;
-    left: calc(100% + 5px);
-    right: auto;
-    transform: translateY(-50%) rotate(-90deg);
-  }
-
-  .annotate-right::after {
-    top: 50%;
-    left: calc(100% + 50px);
-    right: auto;
-    transform: translateY(-50%) translateX(-5px) rotate(-2deg);
-  }
-
-  .annotate-right:hover::after {
-    transform: translateY(-50%) translateX(0) rotate(-2deg);
-  }
-
-  /* Variant: Up pointing annotation (note above) */
-  .annotate-up::before {
-    bottom: auto;
-    top: -25px;
-    left: 50%;
-    transform: translateX(-50%) rotate(0deg);
-  }
-
-  .annotate-up::after {
-    top: auto;
-    bottom: calc(100% + 35px);
-    left: 50%;
-    transform: translateX(-50%) translateY(-5px) rotate(1deg);
-  }
-
-  .annotate-up:hover::after {
-    transform: translateX(-50%) translateY(0) rotate(1deg);
-  }
-
-  /* Inline handwritten note style - no arrow, just styled text */
-  .handnote {
-    font-family: 'Caveat', 'Comic Sans MS', cursive;
-    font-size: 1.1em;
-    color: var(--accent-color);
-    display: inline-block;
-    transform: rotate(-1deg);
-    margin: 0 0.25em;
-  }
-
-  /* Margin note - sits in the margin on larger screens */
-  .margin-note {
-    font-family: 'Caveat', 'Comic Sans MS', cursive;
-    font-size: 0.9rem;
-    color: var(--accent-color);
-    display: block;
-    margin: 0.5em 0;
-    padding-left: 1em;
-    border-left: 2px solid color-mix(in srgb, var(--accent-color) 40%, transparent);
-  }
-
-  @media (min-width: 1280px) {
-    .margin-note {
-      position: absolute;
-      right: -220px;
-      width: 180px;
-      margin: 0;
-      padding-left: 0;
-      border-left: none;
-      text-align: left;
-      transform: rotate(-1deg);
-    }
-  }
-}
-
-/* ═══════════════════════════════════════════════════════════════════════════
    📝 Site Content Typography  (replaces Tailwind prose)
    ═══════════════════════════════════════════════════════════════════════════ */
 @layer components {
@@ -3487,6 +3317,93 @@ picture img {
     border-color: rgb(55 65 81);
   }
 
+  /* Footnotes */
+  .site-content .footnote-ref {
+    font-family: var(--font-mono);
+    font-size: 0.68em;
+    line-height: 1;
+    margin-left: 0.12em;
+    vertical-align: super;
+  }
+
+  .site-content .footnote-ref a,
+  .site-content .footnote-ref a:visited {
+    color: rgb(75 85 99);
+    text-decoration: none;
+    border-bottom: 1px solid rgb(156 163 175);
+  }
+
+  .site-content .footnote-ref a:hover {
+    color: var(--accent-color);
+    border-color: var(--accent-color);
+  }
+
+  .dark .site-content .footnote-ref a,
+  .dark .site-content .footnote-ref a:visited {
+    color: rgb(156 163 175);
+    border-color: rgb(75 85 99);
+  }
+
+  .dark .site-content .footnote-ref a:hover {
+    color: var(--accent-color);
+    border-color: var(--accent-color);
+  }
+
+  .site-content .footnotes {
+    margin-top: 2rem;
+    padding-top: 0.9rem;
+    border-top: 1px solid rgb(229 231 235);
+    font-size: 0.82rem;
+    line-height: 1.55;
+    color: rgb(75 85 99);
+  }
+
+  .dark .site-content .footnotes {
+    border-color: rgb(55 65 81);
+    color: rgb(156 163 175);
+  }
+
+  .site-content .footnotes ol {
+    padding-left: 1.25rem;
+    margin: 0;
+  }
+
+  .site-content .footnotes li {
+    margin: 0.35rem 0;
+    padding-left: 0.15rem;
+  }
+
+  .site-content .footnotes li::marker {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: rgb(107 114 128);
+  }
+
+  .dark .site-content .footnotes li::marker {
+    color: rgb(156 163 175);
+  }
+
+  .site-content .footnotes a,
+  .site-content .footnotes a:visited {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    text-decoration-color: rgb(156 163 175);
+  }
+
+  .site-content .footnotes a:hover {
+    color: var(--accent-color);
+    text-decoration-color: var(--accent-color);
+  }
+
+  .site-content .footnotes .footnote-backref {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    margin-left: 0.35rem;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+
   /* ── .not-prose escape hatch ── */
   /* Reset all typography on .not-prose children so components render unaffected */
   .site-content .not-prose {
@@ -3628,8 +3545,11 @@ picture img {
      • optional free-form sidebar (via `sidebar:` frontmatter)
    Companion shortcodes (work anywhere):
      {% analysis %}  boxed section with title + optional winner pill
-     {% statblock %} dense two-row bar-fill metric card
      {% wide %}      full-bleed scrollable wrapper for wide tables
+     {% callout %}   compact semantic note/warning/example/todo blocks
+     {% update %}    dated inline update blocks
+     {% define %}    inline term definition popovers
+     {% sidenote %}  editorial sidenotes, separate from handwritten annotate
      {% annotate %}  handwritten-note callout with squiggly arrow
    ═══════════════════════════════════════════════════════════════════════════ */
 
@@ -3702,6 +3622,234 @@ picture img {
   .analysis-body { font-size: 0.95rem; line-height: 1.6; }
   .analysis-body p { margin: 0 0 0.7em; }
   .analysis-body p:last-child { margin-bottom: 0; }
+
+  /* ── Editorial callouts ── */
+  .editorial-callout,
+  .editorial-update {
+    margin: 1.15em 0;
+    padding: 0.75rem 0.9rem;
+    border: 1px solid rgb(229 231 235);
+    border-left-width: 3px;
+    border-radius: 3px;
+    background: rgb(249 250 251 / 0.72);
+    color: rgb(31 41 55);
+  }
+
+  .dark .editorial-callout,
+  .dark .editorial-update {
+    border-color: rgb(55 65 81);
+    background: rgb(17 24 39 / 0.42);
+    color: rgb(209 213 219);
+  }
+
+  .editorial-callout[data-kind="note"],
+  .editorial-callout[data-kind="aside"] {
+    border-left-color: var(--accent-color);
+  }
+
+  .editorial-callout[data-kind="warning"] {
+    border-left-color: #d97706;
+  }
+
+  .editorial-callout[data-kind="example"] {
+    border-left-color: #059669;
+  }
+
+  .editorial-callout[data-kind="todo"] {
+    border-left-color: #7c3aed;
+  }
+
+  .editorial-callout-label,
+  .editorial-update-label {
+    display: flex;
+    align-items: baseline;
+    gap: 0.55rem;
+    margin: 0 0 0.35rem;
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    line-height: 1.3;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgb(75 85 99);
+  }
+
+  .dark .editorial-callout-label,
+  .dark .editorial-update-label {
+    color: rgb(156 163 175);
+  }
+
+  .editorial-callout-body,
+  .editorial-update-body {
+    font-size: 0.9rem;
+    line-height: 1.58;
+  }
+
+  .editorial-callout-body p,
+  .editorial-update-body p {
+    margin: 0 0 0.65em;
+  }
+
+  .editorial-callout-body p:last-child,
+  .editorial-update-body p:last-child {
+    margin-bottom: 0;
+  }
+
+  .editorial-callout-body ul,
+  .editorial-callout-body ol,
+  .editorial-update-body ul,
+  .editorial-update-body ol {
+    margin-bottom: 0;
+  }
+
+  .editorial-update {
+    border-left-color: rgb(75 85 99);
+    background: linear-gradient(90deg, rgb(249 250 251 / 0.95), rgb(249 250 251 / 0.45));
+  }
+
+  .dark .editorial-update {
+    border-left-color: rgb(156 163 175);
+    background: linear-gradient(90deg, rgb(24 24 27 / 0.74), rgb(24 24 27 / 0.34));
+  }
+
+  .editorial-update-label time {
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: rgb(107 114 128);
+  }
+
+  .dark .editorial-update-label time {
+    color: rgb(156 163 175);
+  }
+
+  /* ── Definition popovers ── */
+  .definition-popover {
+    position: relative;
+    display: inline;
+    outline: none;
+  }
+
+  .definition-term {
+    cursor: help;
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    text-underline-offset: 0.16em;
+    text-decoration-color: rgb(107 114 128);
+  }
+
+  .definition-popover:hover .definition-term,
+  .definition-popover:focus .definition-term,
+  .definition-popover:focus-within .definition-term {
+    color: var(--accent-color);
+    text-decoration-color: var(--accent-color);
+  }
+
+  .definition-body {
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 0.45rem);
+    width: min(18rem, calc(100vw - 2rem));
+    padding: 0.55rem 0.65rem;
+    border: 1px solid rgb(209 213 219);
+    border-radius: 3px;
+    background: rgb(255 255 255);
+    color: rgb(31 41 55);
+    box-shadow: 0 12px 24px rgb(15 23 42 / 0.12);
+    font-family: var(--font-serif);
+    font-size: 0.78rem;
+    line-height: 1.45;
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, 0.25rem);
+    transition: opacity 0.14s ease, transform 0.14s ease;
+    z-index: 20;
+  }
+
+  .dark .definition-body {
+    border-color: rgb(63 63 70);
+    background: rgb(24 24 27);
+    color: rgb(229 231 235);
+    box-shadow: 0 12px 24px rgb(0 0 0 / 0.34);
+  }
+
+  .definition-popover:hover .definition-body,
+  .definition-popover:focus .definition-body,
+  .definition-popover:focus-within .definition-body {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+
+  /* ── True sidenotes ── */
+  .sidenote {
+    position: relative;
+    display: inline;
+  }
+
+  .sidenote-anchor {
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    text-underline-offset: 0.16em;
+    text-decoration-color: color-mix(in srgb, var(--accent-color) 58%, rgb(156 163 175));
+  }
+
+  .sidenote-body {
+    display: block;
+    margin: 0.45rem 0 0.85rem;
+    padding: 0.5rem 0.65rem;
+    border-left: 2px solid var(--accent-color);
+    background: rgb(249 250 251 / 0.68);
+    font-family: var(--font-serif);
+    font-size: 0.82rem;
+    line-height: 1.48;
+    color: rgb(75 85 99);
+  }
+
+  .dark .sidenote-body {
+    background: rgb(24 24 27 / 0.52);
+    color: rgb(156 163 175);
+  }
+
+  @media (min-width: 1280px) {
+    .tmpl-post .sidenote-body {
+      position: absolute;
+      top: 0.15rem;
+      width: 11.5rem;
+      margin: 0;
+      padding: 0;
+      border-left: none;
+      background: transparent;
+      font-size: 0.75rem;
+      line-height: 1.42;
+      color: rgb(107 114 128);
+      z-index: 2;
+    }
+
+    .dark .tmpl-post .sidenote-body {
+      background: transparent;
+      color: rgb(156 163 175);
+    }
+
+    .tmpl-post .sidenote-right .sidenote-body {
+      left: calc(100% + 2.25rem);
+      padding-left: 0.75rem;
+      border-left: 1px solid rgb(209 213 219);
+    }
+
+    .tmpl-post .sidenote-left .sidenote-body {
+      right: calc(100% + 2.25rem);
+      padding-right: 0.75rem;
+      border-right: 1px solid rgb(209 213 219);
+      text-align: right;
+    }
+
+    .dark .tmpl-post .sidenote-right .sidenote-body {
+      border-left-color: rgb(63 63 70);
+    }
+
+    .dark .tmpl-post .sidenote-left .sidenote-body {
+      border-right-color: rgb(63 63 70);
+    }
+  }
 
   /* ── Winner badge ── */
   .winner-badge {

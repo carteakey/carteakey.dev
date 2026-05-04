@@ -150,6 +150,7 @@ eleventyNavigation:
           tags: {{ post.data.tags | filterTagList | dump | safe }},
           content: {{ post.templateContent | striptags | replace('\n', ' ') | replace('\r', ' ') | truncate(420) | dump | safe }},
           type: 'post',
+          hidden: {{ (post.data.hidden == true) | dump | safe }},
           date: {{ post.date | dump | safe }},
           year: {{ post.date | date("Y") | dump | safe }}
         }{% if not loop.last %},{% endif %}
@@ -167,6 +168,7 @@ eleventyNavigation:
           tags: {{ snippet.data.tags | filterTagList | dump | safe }},
           content: {{ snippet.templateContent | striptags | replace('\n', ' ') | replace('\r', ' ') | dump | safe }},
           type: 'snippet',
+          hidden: {{ (snippet.data.hidden == true) | dump | safe }},
           date: {{ snippet.date | dump | safe }},
           year: {{ snippet.date | date("Y") | dump | safe }}
         }{% if not loop.last %},{% endif %}
@@ -325,6 +327,9 @@ eleventyNavigation:
 
     const html = results.map((item) => {
       const typeBadge = item.type === 'post' ? 'Post' : 'Snippet';
+      const hiddenBadge = item.hidden
+        ? '<span class="ml-2 px-2 py-1 text-xs rounded-sm bg-amber-100 dark:bg-amber-900/30 text-amber-800 dark:text-amber-200">Hidden</span>'
+        : '';
       const safeTitle = escapeHtml(item.title);
       const safeDescription = escapeHtml(item.description || 'No description provided.');
       const safeUrl = escapeHtml(item.url);
@@ -338,6 +343,7 @@ eleventyNavigation:
             <span class="ml-2 px-2 py-1 text-xs rounded-sm bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400">
               ${typeBadge}
             </span>
+            ${hiddenBadge}
           </div>
           <p class="text-gray-600 dark:text-gray-300 mb-1.5">${escapeHtml(truncateText(item.description || item.content, 180))}</p>
           <p class="meta-text text-[0.65rem] text-gray-400 dark:text-gray-500 mb-2">${escapeHtml(item.year || '')}</p>

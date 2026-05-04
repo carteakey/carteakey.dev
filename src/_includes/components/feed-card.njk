@@ -83,6 +83,9 @@
         
         <div class="flex items-center gap-1.5 md:mt-0.5">
           <span class="badge badge-type badge-compact {{ typeBadgeClass }}">{{ badgeLabel }}</span>
+          {% if item.hidden %}
+            <span class="badge badge-accent badge-compact" title="Hidden local preview">Hidden</span>
+          {% endif %}
         </div>
         
         <a href="{{ item.url | url }}" class="hidden md:inline-block mt-2 editorial-meta-link" style="text-decoration: none;">Permalink →</a>
@@ -237,6 +240,9 @@
     <span class="feed-list-date meta-text">{{ item.date | shortDate }}</span>
     <div class="flex items-center gap-1.5 shrink-0">
       <span class="badge badge-type badge-compact {{ typeBadgeClass }}">{{ badgeLabel }}</span>
+      {% if item.hidden %}
+        <span class="badge badge-accent badge-compact" title="Hidden local preview">Hidden</span>
+      {% endif %}
       {% if item.authored_by is defined %}{{ authorshipBadge(item.authored_by, compact=true) }}{% endif %}
     </div>
     {% if item.url %}
@@ -252,6 +258,9 @@
     {# Header row: type dot + label + date #}
     <div class="flex items-center gap-2 mb-2.5">
       <span class="badge badge-type badge-compact {{ typeBadgeClass }}">{{ badgeLabel }}</span>
+      {% if item.hidden %}
+        <span class="badge badge-accent badge-compact" title="Hidden local preview">Hidden</span>
+      {% endif %}
       {% if item.featured %}
         <span class="badge badge-featured badge-compact" title="Featured" aria-label="Featured">★ Featured</span>
       {% endif %}

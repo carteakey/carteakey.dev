@@ -100,7 +100,9 @@ llama-server \
 
 Key differences for vision: the mmproj is included, `FIT_TARGET=2048` leaves more VRAM headroom, and batch size is reduced to 256 to avoid assertion errors when processing large images.
 
-> **Easier path**: [carteakey/l3ms](https://github.com/carteakey/l3ms) wraps all of the above as pre-configured shell scripts (`bench-models/run-llama-cpp-qwen3-6-35b-a3b.sh`, `bench-models/run-llama-cpp-qwen3-6-35b-a3b-vision.sh`) along with a build helper, a model downloader, and bench scripts. Everything is editable text, not a UI form.
+{% callout "example", "Easier path" %}
+[carteakey/l3ms](https://github.com/carteakey/l3ms) wraps all of the above as pre-configured shell scripts (`bench-models/run-llama-cpp-qwen3-6-35b-a3b.sh`, `bench-models/run-llama-cpp-qwen3-6-35b-a3b-vision.sh`) along with a build helper, a model downloader, and bench scripts. Everything is editable text, not a UI form.
+{% endcallout %}
 
 ## Text benchmark outcomes
 

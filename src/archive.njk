@@ -89,6 +89,9 @@ eleventyNavigation:
                     {% if post.data.pinned %}
                       <span class="inline-flex items-center mr-1.5 align-middle" style="color: var(--accent-color);" title="Pinned" aria-label="Pinned">{% feather "bookmark", class="w-3.5 h-3.5 fill-current opacity-20" %}</span>
                     {% endif %}
+                    {% if post.data.hidden %}
+                      <span class="badge badge-accent badge-compact mr-1.5 align-middle" title="Hidden local preview">Hidden</span>
+                    {% endif %}
                     {{ authorshipBadge(post.data.authored_by, compact=true) }}
                     <a href="{{ post.url }}" class="editorial-title-link title-hover">{{ post.data.title }}</a>
                   </div>
@@ -138,6 +141,9 @@ eleventyNavigation:
         {% endif %}
         {% if post.data.pinned %}
           <span class="badge badge-accent badge-compact {% if not post.data.featured %}ml-auto{% endif %} flex items-center gap-1" title="Pinned" aria-label="Pinned">{% feather "bookmark", class="w-3 h-3" %} Pinned</span>
+        {% endif %}
+        {% if post.data.hidden %}
+          <span class="badge badge-accent badge-compact {% if not post.data.featured and not post.data.pinned %}ml-auto{% endif %}" title="Hidden local preview">Hidden</span>
         {% endif %}
       </div>
       <h3 class="editorial-title-compact m-0">

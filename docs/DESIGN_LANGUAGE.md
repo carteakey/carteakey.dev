@@ -237,6 +237,19 @@ Every badge needs a job:
 
 If it is only there to make the UI feel busy, remove it.
 
+### Editorial Post Primitives
+
+Article-only helpers should feel like flat paper marks, not app widgets.
+
+- Use `{% callout %}` for authored notes, warnings, examples, todos, and asides.
+- Use `{% update %}` for dated inline changes inside posts.
+- Use `{% define %}` for short term explanations.
+- Use `{% sidenote %}` for quiet factual side context.
+- Use `{% annotate %}` only for handwritten commentary.
+- Keep blockquotes for quoted material, not generic callouts.
+
+See `docs/BLOG_POST_FEATURES.md` for the current inventory and syntax.
+
 ### Lists
 
 Lists are first-class.

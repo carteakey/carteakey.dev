@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.6] - 2026-04-30
+### Added
+- Added editorial post shortcodes for semantic callouts, dated inline updates, definition popovers, and true sidenotes.
+- Added `docs/BLOG_POST_FEATURES.md` as the canonical feature inventory for future post-authoring and agent cleanup work.
+
+### Changed
+- Migrated obvious legacy blockquote callouts in existing posts to the new editorial callout/update primitives.
+- Removed stale unused annotation/margin-note CSS utilities and the obsolete `statblock` documentation reference.
+- Updated the design language guide with the current post-level editorial primitives.
+
+## [2.0.5] - 2026-04-30
+### Added
+- Added Markdown footnote support for inline references (`[^id]`) and definitions (`[^id]: note`) with compact endnote styling in the site's editorial typography layer.
+
+### Changed
+- Hidden content now renders in local/dev builds with explicit "Hidden" labels in post pages, archive listings, feed cards, tag pages, and search.
+- Production builds continue to exclude `hidden: true` content from page output, collections, tags, search, and raw text exports.
+
 ## [2.0.4] - 2026-04-25
 ### Added
 - Created `src/notes/_template.md` for standardized note creation with `hidden: true` by default.

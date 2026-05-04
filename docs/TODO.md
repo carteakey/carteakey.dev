@@ -15,6 +15,7 @@
 ### SEO & Navigation
 
 ### Editorial Mode
+- [x] Add canonical post-level editorial primitives for callouts, inline updates, definition popovers, true sidenotes, and a feature inventory for future agents. (2026-04-30)
 - [x] Migrate `reading.njk` to the new shared primitive editorial type system. (2026-04-24)
 - [x] Migrate `projects.njk` to the new shared primitive editorial type system. (2026-04-24)
 - [x] Migrate `stats.njk` to the new shared primitive editorial type system. (2026-04-24)

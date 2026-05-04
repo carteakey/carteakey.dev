@@ -33,7 +33,9 @@ Delete *for me*. Which, it turns out, syncs across all your linked devices. Test
 
 The project split naturally into two repos along a single axis: **destroy vs preserve**.
 
-> **The Hindu mythology callout:** In the Trimurti, Shiva destroys, Vishnu preserves, and Brahma creates and orchestrates the whole thing. So: `unforwarder` is Shiva, `memento` is Vishnu, and `wa-suite` - the parent repo that runs the pipeline - is Brahma. This parallel was noticed mid-build and could not be ignored.
+{% callout "aside", "The Hindu mythology callout" %}
+In the Trimurti, Shiva destroys, Vishnu preserves, and Brahma creates and orchestrates the whole thing. So: `unforwarder` is Shiva, `memento` is Vishnu, and `wa-suite` - the parent repo that runs the pipeline - is Brahma. This parallel was noticed mid-build and could not be ignored.
+{% endcallout %}
 
 ### [unforwarder](https://github.com/carteakey/wa-suite/tree/main/unforwarder) - the destroyer
 
