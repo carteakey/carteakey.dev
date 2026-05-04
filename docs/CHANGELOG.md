@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.8] - 2026-05-04
+### Added
+- Added a unique transparent monochrome thumbnail sketch for the draft Wikibones post.
+
 ## [2.0.7] - 2026-05-04
 ### Changed
 - Humanized the draft Wikibones post by tightening generated-sounding phrasing and bumping its updated date.

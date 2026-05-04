@@ -4,6 +4,8 @@ description: A small scaffold for local, Git-backed, LLM-maintained wikis
 date: 2026-04-30
 updated: 2026-05-04
 authored_by: ai-assisted
+image: /img/blog-sketches/unique/wikibones-stamp-trim.png
+imageAlt: Transparent monochrome sketch of a bone-like file tree for a Git-backed wiki scaffold
 tags:
   - AI
   - Agents
