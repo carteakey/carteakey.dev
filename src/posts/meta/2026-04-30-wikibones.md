@@ -23,7 +23,7 @@ A `raw/` folder for source material.
 A `wiki/` folder for the cleaned-up pages.
 An agent instruction file that tells Claude Code, Codex, or whatever agent I am using what the rules are.
 
-That pattern is now a repo called [`wikibones`](https://github.com/carteakey/wikibones).[^demo]
+That pattern is now a repo called [`wikibones`](https://github.com/carteakey/wikibones).
 
 
 The name is not subtle. It is the bones of a wiki. Not the app. Not the theme. Not the publishing platform. Just the structure and workflows I want every agent-maintained wiki to inherit.
