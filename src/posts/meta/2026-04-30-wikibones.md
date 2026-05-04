@@ -1,8 +1,8 @@
 ---
 title: Wikibones, or How I Want My Agent-Maintained Wikis to Work
-description: A small scaffold for local, Git-backed, LLM-maintained wikis, and the surprisingly important question of how to publish them.
+description: A small scaffold for local, Git-backed, LLM-maintained wikis
 date: 2026-04-30
-updated: 2026-04-30
+updated: 2026-05-04
 authored_by: ai-assisted
 tags:
   - AI
@@ -15,17 +15,16 @@ pinned: false
 featured: false
 ---
 
-I have been slowly converging on a pattern for personal wikis that is boring in exactly the way I want infrastructure to be boring.
+I've been slowly converging on a pattern for personal wikis that is boring in exactly the way I want infrastructure to be boring.
 
 Markdown files.
 Git history.
 A `raw/` folder for source material.
 A `wiki/` folder for the cleaned-up pages.
-An agent instruction file that tells Claude Code, Codex, or whatever other coding agent what the rules are.
+An agent instruction file that tells Claude Code, Codex, or whatever agent I am using what the rules are.
 
 That pattern is now a repo called [`wikibones`](https://github.com/carteakey/wikibones).[^demo]
 
-[^demo]: Demo footnote: this renders as a numbered superscript inline and a compact endnote at the bottom of the post. The footnote body can include **Markdown** too.
 
 The name is not subtle. It is the bones of a wiki. Not the app. Not the theme. Not the publishing platform. Just the structure and workflows I want every agent-maintained wiki to inherit.
 
@@ -45,7 +44,7 @@ If I hand a folder of notes to an LLM and say "clean this up," I do not want it 
 - every page is woven into the graph
 - every ingest updates the index and log
 
-That is the part that needs to be standardized.
+That is the part I want pinned down.
 
 The renderer can change later.
 
@@ -69,7 +68,7 @@ my-wiki/
     └── skills/
 ```
 
-`raw/` is where source material goes. Articles, notes, transcripts, exported Obsidian pages, documentation, screenshots, whatever. The rule is that agents read from `raw/` but do not mutate it.
+`raw/` is where source material goes. Articles, notes, transcripts, exported Obsidian pages, documentation, screenshots, whatever. Agents can read from `raw/`, but they do not mutate it.
 
 `wiki/` is where the maintained wiki lives. This is the part humans read.
 
@@ -79,11 +78,11 @@ The point is not to be clever. The point is to remove decisions from every futur
 
 ## The homelab example
 
-My homelab wiki is basically a real instance of this pattern.
+My homelab wiki is the closest real version of this pattern.
 
 It has pages for machines, services, networking, BIOS incidents, local inference, Paperless, Immich, Tailscale, Cloudflare Tunnel, and the usual mess that accumulates when old laptops become servers.
 
-Recently I added a `wiki/services/` folder where every running service gets its own YAML-frontmatter-backed Markdown file:
+Recently I added a `wiki/services/` folder where every running service gets a Markdown file with YAML frontmatter:
 
 ```yaml
 ---
@@ -106,11 +105,11 @@ raw: raw/services/Immich.md
 
 That is the kind of thing I want a personal wiki to be good at.
 
-Not just essays. Not just notes. Operational memory.
+Essays are only part of it. Notes too. The useful bit is operational memory.
 
 What is running? Where? Why? How do I log in? What machine owns it? What source note did this come from? What breaks if I move it?
 
-This is where an LLM-maintained wiki starts to feel different from a normal note app. The agent is not just helping me write. It is maintaining the boring connective tissue I never want to maintain manually.
+This is where an LLM-maintained wiki starts to feel different from a normal note app. The agent helps with writing, sure, but the bigger win is the boring connective tissue I never want to maintain manually.
 
 ## The viewer problem
 
@@ -143,7 +142,7 @@ This is the right default for local reading and debugging. It keeps the system h
 
 ### Option 2: Quartz
 
-[Quartz](https://quartz.jzhao.xyz/) is probably the best fit when the wiki should become a proper static website.
+[Quartz](https://quartz.jzhao.xyz/) is probably the best fit when the wiki should become a real static site.
 
 It understands the Obsidian-ish world: wikilinks, backlinks, graph view, Markdown-first authoring, frontmatter. That maps cleanly to how `wikibones` wants pages to be written.
 
@@ -172,7 +171,7 @@ Quartz should be tooling around the wiki, not the owner of the wiki. The source 
 
 [MkDocs Material](https://squidfunk.github.io/mkdocs-material/) is the boring professional docs choice.
 
-If the wiki is really documentation, it may be the best choice. It has great search, navigation, deployment docs, and a huge user base.
+If the wiki is really documentation, it may be the best choice. It has solid search, navigation, deployment docs, and enough users that most problems already have an answer somewhere.
 
 The tradeoff is that the wiki has to become a little more docs-shaped. Wikilinks, backlinks, and graph-style browsing are not the native center of gravity. You can add plugins or conversion scripts, but that is already a sign that the tool wants a slightly different kind of content.
 
@@ -209,7 +208,7 @@ That wiki contains local URLs and credentials by design. It should not be on the
 
 ## The sync model
 
-The clean model is:
+The model I want is:
 
 1. edit Markdown in the wiki repo
 2. commit to Git
