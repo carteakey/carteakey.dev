@@ -1270,8 +1270,8 @@ export default function (eleventyConfig) {
         };
       });
 
-    const grandiloquentList = collectionApi
-      .getFilteredByGlob("./src/grandiloquent/**/*.md")
+    const lexiconList = collectionApi
+      .getFilteredByGlob("./src/lexicon/**/*.md")
       .filter((entry) => {
         if (shouldHideContent(entry)) return false;
         if (entry.date && entry.date > now) return false;
@@ -1281,7 +1281,7 @@ export default function (eleventyConfig) {
         const summarySource = entry.data.description || entry.data.excerpt || "";
         const summary = summarySource ? truncate(stripHtml(summarySource)) : null;
         return {
-          type: "grandiloquent",
+          type: "lexicon",
           title: entry.data.title,
           date: entry.date,
           url: entry.url,
@@ -1300,7 +1300,7 @@ export default function (eleventyConfig) {
       ...nowUpdates,
       ...photos,
       ...quotationsList,
-      ...grandiloquentList,
+      ...lexiconList,
       // ...vibes,
     ].filter((item) => item.date instanceof Date && !Number.isNaN(item.date.valueOf()));
 

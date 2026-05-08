@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.9] - 2026-05-07
+### Changed
+- Renamed the "Grandiloquent" section to "Lexicon" everywhere: directory (`src/grandiloquent/` → `src/lexicon/`), page (`/grandiloquent/` → `/lexicon/`), data file, feed collection variable, item type string, CSS badge class (`badge-type-grandiloquent` → `badge-type-lexicon`), feed filter button, footer nav link, and all template references.
+
 ## [2.0.8] - 2026-05-04
 ### Added
 - Added a unique transparent monochrome thumbnail sketch for the draft Wikibones post.

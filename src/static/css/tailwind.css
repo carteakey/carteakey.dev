@@ -866,13 +866,13 @@ picture img {
     color: rgb(231 229 228 / 1);
   }
 
-  .badge-type-grandiloquent {
+  .badge-type-lexicon {
     border-color: rgb(245 208 254 / 0.95);
     background-color: rgb(253 244 255 / 0.96);
     color: rgb(162 28 175 / 1);
   }
 
-  .dark .badge-type-grandiloquent {
+  .dark .badge-type-lexicon {
     border-color: rgb(217 70 239 / 0.55);
     background-color: rgb(134 25 143 / 0.26);
     color: rgb(245 208 254 / 1);

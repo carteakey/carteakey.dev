@@ -41,7 +41,7 @@ These flags control visibility, display, and listing behaviour for posts in `src
 | `description` | Subtitle shown below title; used as feed summary |
 | `excerpt` | Alternative summary fallback for feed cards |
 | `tags` | Array of tags; filtered through `filterTagList` to strip internal tags |
-| `author`, `source` | Minimal attribution data used for Quotations, Lexicon/Grandiloquent, and feed cards. Replaces hardcoded HTML callouts. |
+| `author`, `source` | Minimal attribution data used for Quotations, Lexicon, and feed cards. Replaces hardcoded HTML callouts. |
 | `authored_by` | Authorship badge: `human`, `ai-assisted`, `ai-generated`. Omit = shows **Unclassified** badge. |
 | `image` | OG image path for social sharing |
 | `fullWidth: true` | Disables the sidebar on the post layout |
@@ -60,5 +60,5 @@ These flags control visibility, display, and listing behaviour for posts in `src
 
 ## Eleventy Development Tips
 
-- **Tag Visibility**: Internal routing tags (like `grandiloquent`, `til`, `now`) must be excluded from UI display by adding them to `filterTagList` in `eleventy.config.mjs`.
+- **Tag Visibility**: Internal routing tags (like `lexicon`, `til`, `now`) must be excluded from UI display by adding them to `filterTagList` in `eleventy.config.mjs`.
 - **Feed Data Cascade**: When exposing Eleventy items to a feed collection that needs raw body HTML, pass the raw item (`original: entry`) rather than mapping a detached getter for `templateContent`. Detached getters break Nunjucks's ability to render the body for feed views.

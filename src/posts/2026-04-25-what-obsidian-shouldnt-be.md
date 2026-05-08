@@ -2,7 +2,7 @@
 title: What Obsidian Shouldn't Be
 description: A note-taking app becomes a weird place very quickly when you ask it to be your records system, admin dashboard, and substitute for thinking.
 date: 2026-04-25T00:00:00.000Z
-updated: 2026-04-25T00:00:00.000Z
+updated: 2026-05-07T00:00:00.000Z
 image: /img/blog-sketches/unique/what-obsidian-shouldnt-be-stamp-trim.png
 imageAlt: Monochrome sketch of a person at a laptop being overwhelmed by folders, PDFs, medical records, and receipts.
 tags:
@@ -102,8 +102,20 @@ Once I started using that rule, the app split got much simpler too:
 - Reminders for actionable tasks
 - Obsidian for notes
 - Apple Notes for personal records and admin material
+- a password manager for credentials and recovery codes
+- official apps and websites as the source of truth for money, insurance, government, and travel
 
 Apple Notes is not the point, really. You could swap it for something else. The important part is refusing to make the wiki carry jobs that belong to a different kind of system.
+
+The line is thin sometimes.
+
+An electronics inventory with exact prices, serial numbers, and purchase details is a record. A note called "Electronics Declutter Plan" is a note. A recipe is usually a note, because it is life practice. A doctor-prescribed diet plan is probably a record. Goals belong in the wiki because they are intentions, but the proof around them, certificates, statements, booking confirmations, belongs somewhere else.
+
+The useful question is not "is this important?"
+
+It is "what would future-me need from this?"
+
+If future-me needs context, judgment, a decision, a plan, or a next action, it belongs in Obsidian. If future-me needs exact retrieval or proof, it belongs in a record system.
 
 ## What to do with PDFs
 
@@ -180,6 +192,32 @@ So I think the real test for a system is pretty brutal:
 - or does it mostly satisfy the urge to arrange things?
 
 Once the last one becomes the dominant payoff, the system has gone off the rails no matter how elegant it looks.
+
+## The boring folder rule
+
+The structure I keep coming back to is embarrassingly plain.
+
+Folders should answer only one question: what broad domain of life is this?
+
+In my vault, that means things like personal, professional, wiki, projects, and interests. That is about as much folder structure as I can tolerate before the taxonomy starts asking for rent.
+
+The rest of the intelligence should live in links, tags, aliases, and note titles.
+
+That sounds like a small preference, but it changes the whole maintenance burden. A note about Betteridge's Law is not personal just because I saved it. It is a reusable concept, so it belongs in the wiki. A watchlist is not a knowledge atom; it is taste and curiosity, so it belongs with interests. Goals are not tasks; they are intentions, so they live as notes, while their next actions go into the task list.
+
+That is the split I like now:
+
+- personal is for life management
+- professional is for career and work positioning
+- wiki is for reusable concepts, vocabulary, mental models, and reference notes
+- projects is for active project context
+- interests is for taste, hobbies, media, games, reading, and curiosity
+
+The folders stay boring. The notes do the work.
+
+Tags get the same treatment. They should be lowercase and boring too: `#backlog`, `#finance`, `#watchlist`, `#mental-model`, `#goal/2025`. If a tag starts becoming a second folder system, it is probably too clever.
+
+The point is not minimalism for its own sake. It is reducing the number of future classification decisions. I want the vault to help me think, not to keep asking me where my thoughts belong.
 
 ## What Obsidian Should Be
 

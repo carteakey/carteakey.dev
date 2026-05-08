@@ -4,11 +4,14 @@ date: 2026-03-05
 layout: layouts/note.njk
 permalink: /notes/{{ page.fileSlug }}/
 authored_by: human
+tags:
+ - AI
+ - Tooling
 ---
 
 {% image_cc "./src/static/img/every-app-needs-this.png", "Zed AI settings toggle", "rounded border" %}
 
-*Zed's AI settings - a simple toggle to disable all AI features. Every app should have this. ([Zed Blog](https://zed.dev/blog/disable-ai-features))*
+*Zed's AI settings - a simple toggle to disable all AI features. Every app should have this. ([Zed Blog](https://zed.dev/blog/disable-ai-features))* 
 
 
 Honestly, everything on the web needs a toggle like this - a reader-controlled switch to filter by authorship. Your feed, your rules.
