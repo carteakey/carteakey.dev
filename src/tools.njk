@@ -1,0 +1,46 @@
+---
+templateClass: tmpl-post
+layout: layouts/home.njk
+title: Tools
+eleventyNavigation:
+  key: Tools
+  order: 5
+---
+
+{% set pageEyebrow = "Personal Software" %}
+{% set pageTitle = "Tools" %}
+{% set pageDescription = "A collection of personal software and tiny utilities I've built to serve niche uses." %}
+{% set itemCount = tools.tools | length %}
+{% set itemLabel = "tools" %}
+
+{% include "components/page-header.njk" %}
+
+<div class="mx-auto">
+  <p class="editorial-support mb-6">Here are personal tools I've published for the people.</p>
+
+  <ul class="not-prose divide-y divide-gray-200 dark:divide-gray-800/80">
+    {% for tool in tools.tools %}
+      <li class="group flex items-start gap-4 py-4">
+        <div class="flex-1 min-w-0">
+          <div class="flex flex-wrap items-center gap-2">
+            <a href="{% if tool.url %}{{ tool.url }}{% else %}{{ tool.github }}{% endif %}" title="View Tool" class="editorial-title-link inline-flex items-center gap-1">
+              {{ tool.title }}
+              {% feather "arrow-up-right", class="w-3.5 h-3.5 opacity-40 group-hover:opacity-100 transition-opacity" %}
+            </a>
+            {% for tag in tool.tags %}
+              <span class="badge badge-tag badge-compact">#{{ tag }}</span>
+            {% endfor %}
+          </div>
+          <p class="mt-1 editorial-support">
+            {{ tool.description }}
+          </p>
+        </div>
+        {% if tool.github %}
+          <a class="mt-1 shrink-0 text-gray-400 hover:text-gray-700 dark:text-gray-500 dark:hover:text-gray-300 transition-colors" title="View Code" href="{{ tool.github }}">
+            {% feather "github", class="w-4 h-4" %}
+          </a>
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+</div>

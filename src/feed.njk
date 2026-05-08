@@ -89,6 +89,12 @@ permalink: /feed/
       type="button">
       Lexicon
     </button>
+    <button @click="typeFilter = 'tool'"
+      :class="{ 'active': typeFilter === 'tool' }"
+      class="badge badge-filter badge-compact"
+      type="button">
+      Tools
+    </button>
   </div>
 
   {# ── STREAM VIEW ── #}

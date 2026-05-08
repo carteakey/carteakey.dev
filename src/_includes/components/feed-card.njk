@@ -26,6 +26,7 @@
   {% set isFolio = item.type == 'folio' %}
   {% set isQuotation = item.type == 'quotation' %}
   {% set isLexicon = item.type == 'lexicon' %}
+  {% set isTool = item.type == 'tool' %}
 
   {# Type color dot classes #}
   {% set dotColor = "bg-gray-400" %}
@@ -71,6 +72,10 @@
     {% set dotColor = "bg-fuchsia-400" %}
     {% set badgeLabel = "Lexicon" %}
     {% set typeBadgeClass = "badge-type-lexicon" %}
+  {% elif isTool %}
+    {% set dotColor = "bg-indigo-400" %}
+    {% set badgeLabel = "Tool" %}
+    {% set typeBadgeClass = "badge-type-tool" %}
   {% endif %}
 
   {# ── STREAM VARIANT (lifestream style) ── #}

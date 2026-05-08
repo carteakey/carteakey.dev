@@ -81,14 +81,6 @@ projects:
       - next.js
       - firebase
 
-  - title: truthshield
-    description: "Real-time AI fact-checking Chrome extension. Highlights claims on any webpage and checks them against live sources."
-    github: https://github.com/carteakey/truthshield
-    tags:
-      - chrome-extension
-      - ai
-      - javascript
-
   - title: nanoghibli
     description: "Multimodal AI pipeline that transforms video clips into Studio Ghibli-style anime trailers using Gemini and Veo."
     github: https://github.com/carteakey/nanoghibli
@@ -96,22 +88,6 @@ projects:
       - python
       - gemini
       - ai
-
-  - title: chirptype
-    description: "On-device voice-to-text hotkey app for Apple Silicon. No cloud, no subscription - transcribes directly into any input field."
-    github: https://github.com/carteakey/chirptype
-    tags:
-      - python
-      - whisper
-      - macos
-
-  - title: muninn
-    description: "A personal AI copilot built in Swift. Named after Odin's raven of memory - ambient, contextual, local-first."
-    github: https://github.com/carteakey/muninn
-    tags:
-      - swift
-      - ai
-      - macos
 
   - title: clawfin
     description: "Canadian-first personal finance dashboard. Self-hosted, AI-native, built for people who want to own their money data."

@@ -878,6 +878,18 @@ picture img {
     color: rgb(245 208 254 / 1);
   }
 
+  .badge-type-tool {
+    border-color: rgb(199 210 254 / 0.95);
+    background-color: rgb(238 242 255 / 0.96);
+    color: rgb(67 56 202 / 1);
+  }
+
+  .dark .badge-type-tool {
+    border-color: rgb(99 102 241 / 0.55);
+    background-color: rgb(55 48 163 / 0.26);
+    color: rgb(199 210 254 / 1);
+  }
+
   .badge-accent {
     border-color: color-mix(in srgb, var(--accent-color) 28%, transparent);
     background: color-mix(in srgb, var(--accent-color) 12%, white);

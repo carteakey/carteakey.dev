@@ -1291,6 +1291,28 @@ export default function (eleventyConfig) {
         };
       });
 
+    let toolsData = [];
+    try {
+      toolsData = load(readFileSync("src/_data/tools.yaml", "utf-8"));
+    } catch (_) {
+      toolsData = [];
+    }
+
+    const toolsList = (toolsData.tools || [])
+      .map((tool) => {
+        const toolDate = normalizeDate(tool.date);
+        if (!toolDate) return null;
+        return {
+          type: "tool",
+          title: tool.title,
+          date: toolDate,
+          url: tool.url || tool.github,
+          summary: truncate(tool.description || "", 200),
+          tags: tool.tags,
+        };
+      })
+      .filter(Boolean);
+
     const combined = [
       ...posts,
       ...snippets,
@@ -1301,6 +1323,7 @@ export default function (eleventyConfig) {
       ...photos,
       ...quotationsList,
       ...lexiconList,
+      ...toolsList,
       // ...vibes,
     ].filter((item) => item.date instanceof Date && !Number.isNaN(item.date.valueOf()));
 
