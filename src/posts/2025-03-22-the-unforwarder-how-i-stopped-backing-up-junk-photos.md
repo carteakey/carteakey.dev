@@ -1,6 +1,8 @@
 ---
 title: "The Unforwarder: How i stopped backing up junk photos"
 description: Taming the WhatsApp chaos
+image: /img/blog-sketches/unique/the-unforwarder-how-i-stopped-backing-up-junk-photos-stamp-trim.png
+imageAlt: "Transparent monochrome sketch of duplicate photos being filtered into a clean archive"
 date: 2025-03-22T22:20:08.060Z
 authored_by: human
 updated: 2025-03-22T22:20:08.064Z

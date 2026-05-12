@@ -1,6 +1,8 @@
 ---
 title: The happiness quotient (draft)
 description: which side are you on?
+image: /img/blog-sketches/unique/the-happiness-quotient-stamp-trim.png
+imageAlt: "Transparent monochrome sketch of a balance scale, checklist, and happiness chart"
 date: 2025-05-28
 authored_by: human
 updated: 2025-05-28

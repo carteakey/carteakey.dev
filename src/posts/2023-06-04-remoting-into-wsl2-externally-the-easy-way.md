@@ -1,6 +1,8 @@
 ---
 title: Remoting into WSL2 externally - the easy way.
 description: Simple is better than complex.
+image: /img/blog-sketches/unique/remoting-into-wsl2-externally-the-easy-way-stamp-trim.png
+imageAlt: "Transparent monochrome sketch of a remote connection into a WSL machine"
 date: 2023-06-04T19:07:39.634Z
 authored_by: human
 tags:

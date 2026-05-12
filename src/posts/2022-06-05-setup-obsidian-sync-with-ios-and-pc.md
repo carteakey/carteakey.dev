@@ -1,6 +1,8 @@
 ---
 title: Sync Obsidian notes between iOS and PC.
 description: Take your second brain everywhere with you.
+image: /img/blog-sketches/unique/setup-obsidian-sync-with-ios-and-pc-stamp-trim.png
+imageAlt: "Transparent monochrome sketch of Obsidian notes syncing between phone and desktop"
 date: 2022-06-05
 authored_by: human
 tags:

@@ -1,6 +1,8 @@
 ---
 title: "Four Phases of a Builder"
 description: "A retrospective on going from Kaggle notebooks to AI pipelines - and what changed along the way."
+image: /img/blog-sketches/unique/four-phases-of-a-builder-stamp-trim.png
+imageAlt: "Transparent monochrome sketch of four stages of building software around a laptop"
 date: 2026-04-17
 authored_by: ai-assisted
 hidden: true

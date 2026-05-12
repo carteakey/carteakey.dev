@@ -1,6 +1,8 @@
 ---
 title: "The NEAT Framework: How I Built This Site"
 description: "The tech stack powering this site - Netlify, Eleventy, Alpine, and Tailwind - and all the services that make it tick"
+image: /img/blog-sketches/unique/understanding-the-neat-framework-stamp-trim.png
+imageAlt: "Transparent monochrome sketch of a compact web stack feeding a browser"
 date: 2026-03-05
 authored_by: ai-assisted
 tags:

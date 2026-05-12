@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.11] - 2026-05-08
+### Added
+- Added generated transparent monochrome thumbnail sketches to 22 existing posts.
+
 ## [2.0.10] - 2026-05-07
 ### Fixed
 - Filtered out private repositories natively from `github-card.js` and `github.js` data fetches to prevent them from inflating GitHub Card statistics or appearing in the "Projects on GitHub" feed when built with an authenticated token.

@@ -1,6 +1,8 @@
 ---
 title: Moving my site from Jekyll to Eleventy.
 description: How I revamped my personal site.
+image: /img/blog-sketches/unique/moving-site-jekyll-to-eleventy-stamp-trim.png
+imageAlt: "Transparent monochrome sketch of a static site migration into a browser"
 date: 2022-10-10
 authored_by: human
 tags:

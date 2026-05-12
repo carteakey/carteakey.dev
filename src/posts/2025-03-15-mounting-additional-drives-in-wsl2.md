@@ -1,6 +1,8 @@
 ---
 title: Mounting additional drives in WSL2 (draft)
 description: Y'all got any more of that...storage
+image: /img/blog-sketches/unique/mounting-additional-drives-in-wsl2-stamp-trim.png
+imageAlt: "Transparent monochrome sketch of external drives being mounted in WSL2"
 date: 2025-03-15T19:59:51.454Z
 authored_by: human
 updated: 2025-03-15T19:59:51.459Z

@@ -1,6 +1,8 @@
 ---
 title: When Computers Finally Speak Human
 description: The end of programming as we know it
+image: /img/blog-sketches/unique/when-computers-finally-speak-human-stamp-trim.png
+imageAlt: "Transparent monochrome sketch of natural language turning into code"
 date: 2025-06-26
 authored_by: ai-assisted
 updated: 2025-06-26

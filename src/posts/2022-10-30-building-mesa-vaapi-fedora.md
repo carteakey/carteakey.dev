@@ -1,6 +1,8 @@
 ---
 title: Building Mesa (with VA-API) from Source on Fedora.
 description: Get back HW accelerated playback on Fedora.
+image: /img/blog-sketches/unique/building-mesa-vaapi-fedora-stamp-trim.png
+imageAlt: "Transparent monochrome sketch of a Linux graphics driver build workstation"
 date: 2022-10-30
 authored_by: human
 tags:

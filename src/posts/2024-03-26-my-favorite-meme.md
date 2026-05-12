@@ -1,6 +1,8 @@
 ---
 title: My favorite meme.
 description: I'm out of blog ideas.
+image: /img/blog-sketches/unique/my-favorite-meme-stamp-trim.png
+imageAlt: "Transparent monochrome sketch of an empty idea notebook and image placeholder"
 date: 2023-12-26T19:53:34.546Z
 authored_by: human
 updated: 2024-03-26T02:37:52.739Z

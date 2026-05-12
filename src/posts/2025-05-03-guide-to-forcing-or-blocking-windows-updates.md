@@ -1,6 +1,8 @@
 ---
 title: Guide to forcing (or blocking) Windows updates.. (draft)
 description: which side are you on?
+image: /img/blog-sketches/unique/guide-to-forcing-or-blocking-windows-updates-stamp-trim.png
+imageAlt: "Transparent monochrome sketch of operating system update controls"
 date: 2025-05-03T22:01:26.448Z
 authored_by: human
 updated: 2025-05-03T22:01:26.455Z

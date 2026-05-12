@@ -1,6 +1,8 @@
 ---
 title:  Vault 76 - My Obsidian Vault Structure
 description: How I organize my notes and resources.
+image: /img/blog-sketches/unique/vault-76-my-obsidian-vault-structure-stamp-trim.png
+imageAlt: "Transparent monochrome sketch of a structured note vault with linked cards"
 date: 2025-07-12
 authored_by: human
 tags:

@@ -1,6 +1,8 @@
 ---
 title: Fixing Wi-Fi Issues on Linux (draft)
 description: A practical, battle‑tested guide 
+image: /img/blog-sketches/unique/fixing-wifi-issues-linux-stamp-trim.png
+imageAlt: "Transparent monochrome sketch of a Linux laptop troubleshooting Wi-Fi"
 date: 2025-08-10T09:00:00.000Z
 authored_by: ai-assisted
 updated: 2025-08-10T09:00:00.000Z
