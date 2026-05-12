@@ -21,11 +21,24 @@ This post covers my setup running Qwen3.6-35B-A3B MTP on a 12GB VRAM RTX 4070 us
 - **Stack**: PR#22673 `llama.cpp` (requires MTP draft support branch).
 - **Best synthetic bench**: ~65-75 tok/s (MTP) vs ~51 tok/s (Baseline).
 - **Server-realistic throughput**: ~67 tok/s @ 128k context (MTP accepted rate ~98%).
-- **Key note**: You must use `--spec-type mtp --spec-draft-n-max 2` to leverage speculative decoding.
+- **Key note**: You must use `--spec-type mtp --spec-draft-n-max 2` to leverage speculative decoding optimally without tanking performance.
+
+## What is Speculative Decoding and MTP?
+
+Standard large language models generate text autoregressively, producing exactly one token at a time. To do so, every weight needs to be accessed once (for a dense model). The technical reality is that standard LLM inference is *memory-bandwidth bound*, creating a significant latency bottleneck. The processor spends the majority of its time moving billions of parameters from VRAM to the compute units just to generate a single token. This leads to under-utilized compute and high latency.
+
+Speculative decoding circumvents this by decoupling generation from verification. It guesses the next several tokens rapidly, then uses the large, target model to verify all of those guesses in parallel. If the target model agrees with the draft, it accepts the entire sequence in a single forward pass, granting you multiple tokens for the computational price of one. 
+
+There are several ways to generate these draft tokens:
+- **N-gram**: Uses and matches strings already in the context. Extremely fast but only good for repetitive text like code.
+- **Draft model**: Uses a tiny model (e.g. 0.8B) of the same family to quickly generate draft tokens for a larger model (e.g. 35B). Fairly easy to implement but acceptance rates vary wildly based on how well the models align.
+- **Eagle3**: SOTA speculative decoding bolted onto an existing model, though it requires expensive training of a custom draft head.
+- **DFlash**: Similar to Eagle3 but uses an experimental block diffusion model for prediction. 
+- **MTP (Multi-Token Prediction)**: The holy grail. The full model itself is pre-trained with auxiliary heads specifically to output draft tokens alongside its actual prediction. 
 
 ## Current MTP Landscape
 
-MTP is rapidly becoming table stakes for new local inference architectures. Here is a brief look at the current ecosystem:
+MTP is rapidly becoming table stakes for new local inference architectures. Here is a brief look at the current ecosystem of native MTP models:
 - DeepSeekv3 OG
 - DeepSeekv3.2/4
 - Qwen3.5+
@@ -33,8 +46,9 @@ MTP is rapidly becoming table stakes for new local inference architectures. Here
 - ~~MiniMax2.5+~~ (Reported to have it, but they clarified they do not)
 - Step3.5Flash
 - Mimo v2+
+- Gemma 4 (Pending official un-censored weights from Google, but the community is extracting them!)
 
-Until we get native MTP weights for all of these architectures, you may need to download HF weights and convert to GGUF manually. I think I am going to try either `qwen3.5-122b` or `glm4.5-air` next!
+Until we get native MTP weights for all of these architectures, you may need to download HF weights and convert to GGUF manually. I think I am going to try either `qwen3.5-122b` or `gemma-4-31B` next!
 
 ## End-to-end setup
 
@@ -100,20 +114,20 @@ MTP performance scales massively compared to non-MTP generation due to the built
 
 ### Synthetic bench results (MTP Bench)
 
-| Task | Baseline (tok/s) | MTP (tok/s) | Accept Rate | Speedup |
-| --- | ---: | ---: | ---: | ---: |
-| Code (Python) | 51.3 | 66.4 | 97.4% | **1.29x** |
-| Code (C++) | 51.2 | 75.1 | 100.0% | **1.46x** |
-| Factual QA | 51.8 | 65.4 | 98.2% | **1.26x** |
-| Long Code Review | 51.0 | 62.3 | 98.2% | **1.22x** |
-| Stepwise Math | 51.1 | 67.5 | 99.2% | **1.32x** |
+| Task | Baseline (tok/s) | MTP (n=2, tok/s) | Accept Rate (n=2) | MTP (n=3, tok/s) | Accept Rate (n=3) | MTP (n=5, tok/s) | Accept Rate (n=5) |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Code (Python) | 51.3 | 66.4 | 97.4% | 69.1 | 95.3% | 59.8 | 89.1% |
+| Code (C++) | 51.2 | 75.1 | 100.0% | 71.0 | 92.1% | 56.2 | 77.0% |
+| Factual QA | 51.8 | 65.4 | 98.2% | 57.3 | 84.5% | 54.6 | 75.8% |
+| Long Code Review | 51.0 | 62.3 | 98.2% | 55.5 | 81.3% | 49.5 | 72.3% |
+| Stepwise Math | 51.1 | 67.5 | 99.2% | 66.3 | 92.1% | 65.5 | 82.7% |
 
 *Tested on RTX 4070 12GB using the MTP Bench tool.*
 
 ## Notes & Tuning MTP Settings
 
-- **Draft Sizes (`--spec-draft-n-max`)**: A draft max of `2` provides an excellent balance between acceptance rate and speed. Pushing draft sizes higher (e.g. `3` or `4`) can occasionally result in diminishing returns due to computation overhead. Note that the MTP branch implements a hard upper limit but also an internal early-stop mechanism if the draft tokens are of low quality.
-- **Draft Confidence (`--spec-draft-p-min`)**: Since MTP stops early if draft tokens are poor, you can tune the `--spec-draft-p-min` flag. Lowering the minimum threshold may increase the draft count and total throughput, though potentially at the cost of a slightly lower overall acceptance rate.
+- **Draft Sizes (`--spec-draft-n-max`)**: A draft max of `2` provides an excellent balance between acceptance rate and speed. In my testing, pushing draft sizes to `3` or `5` (even with `--spec-draft-p-min 0.0`) dropped the overall acceptance rate to ~75-88% and actually *decreased* throughput down to ~50-60 tok/s due to the computational overhead of predicting more garbage tokens.
+- **Draft Confidence (`--spec-draft-p-min`)**: The MTP branch implements a hard upper limit but also an internal early-stop mechanism if the draft tokens are of low quality. Lowering this minimum threshold increases the draft count, but again, I've found a hard limit of `2` without messing with `p-min` is best on 12GB cards.
 - **Thinking Mode**: Retain thinking logic using `preserve_thinking: true` to enable long-term code continuity in agentic environments.
 - **Context Length**: The Qwen 3.6 architecture handles contexts up to 262k; running 131k context locally uses ~1.5GB of VRAM headroom when combined with Q8_0 KV quantization and the `--fit` flag logic.
 - **Vision/Images**: Note that currently, multimodal inputs (images) are not supported on MTP draft variants. You will need to fall back to the standard, non-MTP multimodal weights (with `--mmproj`) for image reasoning. A potential future workaround could involve setting `.n_max=0` automatically per-request when the prompt contains multimodal input.
