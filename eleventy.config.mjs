@@ -723,12 +723,33 @@ export default function (eleventyConfig) {
     return text.split(/\s+/).filter(word => word.length > 0).length;
   });
 
+  // Helper for safe content access in Eleventy 3.x to avoid PrematureUseError
+  const getSafeContent = (item) => {
+    if (!item) return "";
+    try {
+      return item.templateContent || "";
+    } catch (e) {
+      let content = item.rawInput || "";
+      if (content.startsWith("---")) {
+        const parts = content.split("---");
+        if (parts.length > 2) {
+          content = parts.slice(2).join("---");
+        }
+      }
+      return content;
+    }
+  };
+
+  // Safe content filter for use in templates
+  eleventyConfig.addFilter("safeContent", getSafeContent);
+
   // Sum word counts across a collection of posts (using templateContent)
   eleventyConfig.addFilter("sumWordCounts", function (posts) {
     if (!Array.isArray(posts)) return 0;
     return posts.reduce((total, post) => {
-      const text = (post.templateContent || '').replace(/<[^>]+>/g, '');
-      return total + text.split(/\s+/).filter(w => w.length > 0).length;
+      const content = getSafeContent(post);
+      const text = (content || "").replace(/<[^>]+>/g, "");
+      return total + text.split(/\s+/).filter((w) => w.length > 0).length;
     }, 0);
   });
 

@@ -44,7 +44,7 @@ eleventyNavigation:
   {%- for snippet in collections.snippets | reverse -%}
     {% set rawTags = snippet.data.tags | default([]) %}
     {% set filteredTags = rawTags | filterTagList %}
-    {% set searchExcerpt = snippet.templateContent | striptags | replace('\n', ' ') | truncate(160, true, '') | lower %}
+    {% set searchExcerpt = snippet | safeContent | striptags | replace('\n', ' ') | truncate(160, true, '') | lower %}
     <article
       class="py-3.5 group"
       data-snippet-card
@@ -84,8 +84,8 @@ eleventyNavigation:
   {%- for snippet in collections.snippets | reverse -%}
     {% set rawTags = snippet.data.tags | default([]) %}
     {% set filteredTags = rawTags | filterTagList %}
-    {% set excerpt = snippet.templateContent | striptags | replace('\n', ' ') | truncate(100, true, '…') %}
-    {% set searchExcerpt = snippet.templateContent | striptags | replace('\n', ' ') | truncate(160, true, '') | lower %}
+    {% set excerpt = snippet | safeContent | striptags | replace('\n', ' ') | truncate(100, true, '…') %}
+    {% set searchExcerpt = snippet | safeContent | striptags | replace('\n', ' ') | truncate(160, true, '') | lower %}
     <article
       class="feed-surface surface-compact rounded-sm"
       data-snippet-card

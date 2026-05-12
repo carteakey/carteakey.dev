@@ -36,7 +36,7 @@ eleventyNavigation:
   {%- for entry in collections.til | reverse -%}
     {% set rawTags = entry.data.tags | default([]) %}
     {% set filteredTags = rawTags | filterTagList %}
-    {% set searchExcerpt = entry.templateContent | striptags | replace('\n', ' ') | truncate(200, true, '') | lower %}
+    {% set searchExcerpt = entry | safeContent | striptags | replace('\n', ' ') | truncate(200, true, '') | lower %}
     <article
       class="py-3.5 group"
       data-til-card

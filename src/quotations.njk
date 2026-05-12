@@ -36,7 +36,7 @@ eleventyNavigation:
   {%- for entry in collections.quotations | reverse -%}
     {% set rawTags = entry.data.tags | default([]) %}
     {% set filteredTags = rawTags | filterTagList %}
-    {% set searchExcerpt = entry.templateContent | striptags | replace('\n', ' ') | truncate(200, true, '') | lower %}
+    {% set searchExcerpt = entry | safeContent | striptags | replace('\n', ' ') | truncate(200, true, '') | lower %}
     <article
       class="py-6 group"
       data-quotation-card
@@ -64,7 +64,7 @@ eleventyNavigation:
               </div>
             {% endif %}
             <blockquote class="border-l-4 border-[color:var(--accent-color)] pl-4 italic m-0">
-              {{ entry.templateContent | safe }}
+              {{ entry | safeContent | safe }}
             </blockquote>
           </div>
           

@@ -27,7 +27,7 @@ permalink: /now/archive/
         <a href="{{ entry.url }}" class="editorial-meta-link" style="text-decoration:none;">permalink →</a>
       </div>
       <div class="text-sm text-gray-700 dark:text-gray-300 site-content prose-sm [&_img]:max-h-48 [&_img]:w-auto [&_img]:rounded [&_img]:my-2">
-        {{ entry.templateContent | safe }}
+        {{ entry | safeContent | safe }}
       </div>
     </li>
     {% endfor %}
