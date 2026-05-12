@@ -7,12 +7,9 @@ permalink: /now/archive/
 
 {% include "components/breadcrumbs.njk" %}
 
-<div class="not-prose mb-6 flex items-baseline justify-between">
-  <div>
-    <h1 class="text-2xl font-semibold tracking-tight m-0">Now Archive</h1>
-    <p class="text-sm text-gray-400 dark:text-gray-500 mt-1">Past snapshots of <a href="/now/" class="title-hover">what I was up to</a>.</p>
-  </div>
-</div>
+{% set pageTitle = "Now Archive" %}
+{% set pageDescription = "Past snapshots of <a href=\"/now/\" class=\"title-hover\">what I was up to</a>." %}
+{% include "components/page-header.njk" %}
 
 {% set archiveEntries = collections.nowArchive | reverse %}
 {% if archiveEntries %}
@@ -27,7 +24,7 @@ permalink: /now/archive/
       <div class="absolute -left-7 top-1.5 w-3 h-3 rounded-full border-2 border-white dark:border-zinc-950" style="background: var(--accent-color);"></div>
       <div class="flex items-baseline gap-3 mb-2">
         <time class="meta-text text-xs text-gray-400 dark:text-gray-500 font-semibold">{{ entry.data.archiveDate | readableDate }}</time>
-        <a href="{{ entry.url }}" class="text-xs text-gray-400 dark:text-gray-500 hover:underline" style="text-decoration:none;">permalink →</a>
+        <a href="{{ entry.url }}" class="editorial-meta-link" style="text-decoration:none;">permalink →</a>
       </div>
       <div class="text-sm text-gray-700 dark:text-gray-300 site-content prose-sm [&_img]:max-h-48 [&_img]:w-auto [&_img]:rounded [&_img]:my-2">
         {{ entry.templateContent | safe }}
@@ -39,4 +36,3 @@ permalink: /now/archive/
 {% else %}
 <p class="text-sm text-gray-400">No archive entries yet.</p>
 {% endif %}
-

@@ -11,7 +11,7 @@ layout: layouts/home.njk
   {% set tagUrl %}/tags/{{ tagItem.name | slugify }}/{% endset %}
   <li class="flex items-center justify-between">
     <a href="{{ tagUrl | url }}" class="post-tag accent-link">{{ tagItem.name }}</a>
-    <span class="text-sm text-gray-500 dark:text-gray-400 ml-2">({{ tagItem.count }})</span>
+    <span class="editorial-support-compact ml-2">({{ tagItem.count }})</span>
   </li>
 {% endfor %}
 </ul>

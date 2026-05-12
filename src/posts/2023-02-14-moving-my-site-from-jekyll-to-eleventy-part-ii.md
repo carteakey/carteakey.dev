@@ -304,15 +304,19 @@ Github-flavored markdown offers an easy way to have tips/callouts in your articl
 
 {% image "./src/static/img/github_callouts.png", "Github Callouts", "50vw" %}
 
-There's no such thing here, and I have to rely on blockquote + emoji, or single row table + emoji instead e.g.
+There was no such thing here at the time, so I used to rely on blockquote + emoji or single-row table + emoji.
 
-* Blockquote + Emoji (I use the [markdown-it-emoji](https://github.com/markdown-it/markdown-it-emoji) plugin) 
+The site now has a proper editorial callout primitive:
 
-```markdown
-> :exclamation: This is important
+```liquid
+{% raw %}{% callout "warning", "Important" %}
+This is important.
+{% endcallout %}{% endraw %}
 ```
 
-> :exclamation: This is important
+{% callout "warning", "Important" %}
+This is important.
+{% endcallout %}
 
 * Single-row table + Emoji
 

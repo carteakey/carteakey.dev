@@ -49,7 +49,7 @@ export default async function () {
     const langCounts = {};
 
     for (const repo of repos) {
-      if (repo.fork) continue; // skip forks for cleaner stats
+      if (repo.fork || repo.private) continue; // skip forks and private repos for cleaner stats
       totalStars += repo.stargazers_count || 0;
       totalForks += repo.forks_count || 0;
       if (repo.language) {
@@ -63,7 +63,7 @@ export default async function () {
       .map(([name, count]) => ({ name, count }));
 
     const topRepos = repos
-      .filter((r) => !r.fork)
+      .filter((r) => !r.fork && !r.private)
       .sort((a, b) => b.stargazers_count - a.stargazers_count)
       .slice(0, 3)
       .map((r) => ({
@@ -84,7 +84,7 @@ export default async function () {
       publicRepos: user.public_repos,
       totalStars,
       totalForks,
-      repoCount: repos.filter((r) => !r.fork).length,
+      repoCount: repos.filter((r) => !r.fork && !r.private).length,
       topLanguages,
       topRepos,
     };

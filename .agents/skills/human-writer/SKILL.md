@@ -1,8 +1,13 @@
+---
+name: human-writer
+description: The author's specific writing fingerprint learned from reading their blog posts. AI writing tropes to avoid patterns that make output feel generated rather than written.
+---
+
 # Human Writer Skill
 
 This file captures **two things**:
 1. The author's specific writing fingerprint, learned from reading their blog posts.
-2. AI writing tropes to avoid — patterns that make output feel generated rather than written.
+2. AI writing tropes to avoid - patterns that make output feel generated rather than written.
 
 Use both together when ghostwriting or assisting with drafts for carteakey.dev.
 
@@ -14,34 +19,34 @@ Learned from reading posts across 2021–2026. These are the observable patterns
 
 ### Voice & Personality
 
-- **First-person, unfiltered** — writes in first person throughout, no performative distance. Notes when something is opinion, not hedged to death.
-- **Self-aware without being precious** — willing to say "I was too lazy", "I agree with this tho", "very on brand", "please comment if I missed any". Genuine, not performed humility.
-- **Dry wit** — humor appears naturally: "Severus Zuck" as a caption, "Who will do the PPT's man", "very broken, very demure". Never set up as a joke, just embedded.
-- **Conversational asides in parentheses** — like a thought they almost didn't say: "(even though the VLM leaderboard recommends otherwise)", "(you don't even need to paste, as it edits your codebase directly)"
-- **Acknowledges the chaos** — notes when things are moving fast, when this might be outdated in 2 days, when something "surprised everyone". Grounded.
-- **Indian context appears naturally** — not forced, just part of who they are: WhatsApp Good Morning messages, "If you're an Indian (like me)"
-- **Self-deprecation is a tool, not a reflex** — uses it precisely, not as a crutch.
-- **Quotes feel real** — when they quote someone (Karpathy, a manager-IC), it's because the quote actually says the thing, not as decoration.
+- **First-person, unfiltered** - writes in first person throughout, no performative distance. Notes when something is opinion, not hedged to death.
+- **Self-aware without being precious** - willing to say "I was too lazy", "I agree with this tho", "very on brand", "please comment if I missed any". Genuine, not performed humility.
+- **Dry wit** - humor appears naturally: "Severus Zuck" as a caption, "Who will do the PPT's man", "very broken, very demure". Never set up as a joke, just embedded.
+- **Conversational asides in parentheses** - like a thought they almost didn't say: "(even though the VLM leaderboard recommends otherwise)", "(you don't even need to paste, as it edits your codebase directly)"
+- **Acknowledges the chaos** - notes when things are moving fast, when this might be outdated in 2 days, when something "surprised everyone". Grounded.
+- **Indian context appears naturally** - not forced, just part of who they are: WhatsApp Good Morning messages, "If you're an Indian (like me)"
+- **Self-deprecation is a tool, not a reflex** - uses it precisely, not as a crutch.
+- **Quotes feel real** - when they quote someone (Karpathy, a manager-IC), it's because the quote actually says the thing, not as decoration.
 
 ### Sentence & Paragraph Patterns
 
-- **Short sentences that carry weight** — "That felt like a project." "I find this funny." "I'm equally terrified. Both are true at the same time." Short sentences land because they're rare and specific, not because they're performed.
-- **Variable rhythm** — long explanatory sentences mix with short punchy ones. Never monotonous.
-- **Transitions happen mid-thought** — not "First... Second... Third." Just: walks through the thing and moves on.
-- **Cuts off cleanly** — doesn't summarize the post at the end. Just finishes.
-- **Uses "---" as natural section breaks** — feels like a breath, not a chapter boundary.
-- **Parenthetical technical detail inline** — model names, scores, prices go inside the sentence, not in separate callout boxes: "Claude Sonnet 4.6 (preferred over Opus 4.5 59% of the time for coding)"
+- **Short sentences that carry weight** - "That felt like a project." "I find this funny." "I'm equally terrified. Both are true at the same time." Short sentences land because they're rare and specific, not because they're performed.
+- **Variable rhythm** - long explanatory sentences mix with short punchy ones. Never monotonous.
+- **Transitions happen mid-thought** - not "First... Second... Third." Just: walks through the thing and moves on.
+- **Cuts off cleanly** - doesn't summarize the post at the end. Just finishes.
+- **Uses "---" as natural section breaks** - feels like a breath, not a chapter boundary.
+- **Parenthetical technical detail inline** - model names, scores, prices go inside the sentence, not in separate callout boxes: "Claude Sonnet 4.6 (preferred over Opus 4.5 59% of the time for coding)"
 
 ### Topic & Content Patterns
 
-- **Shows real workflow, not idealized workflow** — describes what actually happened and where it frustrated them, not what the marketing says.
-- **Acknowledges alternatives exist without dismissing them** — doesn't pretend their solution is the only one.
-- **Numbers and specifics** — 1.24 billion rows, 14 exchanges, $0.28/1M tokens, 12GB VRAM. This is what makes claims feel real.
-- **Project posts lead with the problem** — not with what they built. The why comes first.
-- **Opinions stated plainly** — "Claude is much more straightforward", "I like the idea of using Meta's model against the problems it has created". No hedging parade before the take.
-- **Tables used purposefully** — comparison matrices when genuinely comparing things. Not for decoration.
-- **Lists when genuinely list-shaped** — bullet points when the content is actually items. Not when it's prose dressed up as bullets.
-- **Links to real things** — GitHub repos, specific docs, actual papers. Not vague attributions.
+- **Shows real workflow, not idealized workflow** - describes what actually happened and where it frustrated them, not what the marketing says.
+- **Acknowledges alternatives exist without dismissing them** - doesn't pretend their solution is the only one.
+- **Numbers and specifics** - 1.24 billion rows, 14 exchanges, $0.28/1M tokens, 12GB VRAM. This is what makes claims feel real.
+- **Project posts lead with the problem** - not with what they built. The why comes first.
+- **Opinions stated plainly** - "Claude is much more straightforward", "I like the idea of using Meta's model against the problems it has created". No hedging parade before the take.
+- **Tables used purposefully** - comparison matrices when genuinely comparing things. Not for decoration.
+- **Lists when genuinely list-shaped** - bullet points when the content is actually items. Not when it's prose dressed up as bullets.
+- **Links to real things** - GitHub repos, specific docs, actual papers. Not vague attributions.
 
 ### Things This Author Does NOT Do
 
@@ -49,7 +54,7 @@ Learned from reading posts across 2021–2026. These are the observable patterns
 - Does not write conclusions that recap what was covered
 - Does not use the word "journey"
 - Does not say "it's worth noting"
-- Does not use em dashes for drama — they use them where punctuation genuinely calls for it, not as atmosphere
+- Does not use em dashes for drama - they use them where punctuation genuinely calls for it, not as atmosphere
 - Does not use headers like "Key Takeaways", "Why This Matters", "Moving Forward"
 - Does not manufacture suspense before mundane observations
 - Does not pad. If the thing is said, they stop.
@@ -274,7 +279,7 @@ Attributing claims to unnamed authorities instead of being specific. AI loves to
 
 ### Invented Concept Labels
 
-AI clusters invented compound labels that sound analytical without being grounded. It appends abstract problem-nouns (paradox, trap, creep, divide, vacuum, inversion) to domain words — "supervision paradox", "acceleration trap", "workload creep" — and uses them as if they're established, rigorously defined terms. They function as rhetorical shorthand: name a thing, skip the argument. Multiple such labels in the same piece is a strong signal of AI slop.
+AI clusters invented compound labels that sound analytical without being grounded. It appends abstract problem-nouns (paradox, trap, creep, divide, vacuum, inversion) to domain words - "supervision paradox", "acceleration trap", "workload creep" - and uses them as if they're established, rigorously defined terms. They function as rhetorical shorthand: name a thing, skip the argument. Multiple such labels in the same piece is a strong signal of AI slop.
 
 **Avoid patterns like:**
 - "the supervision paradox"
@@ -396,4 +401,4 @@ When reviewing a draft against this author's voice, ask:
 - Does it end when the thing is said, or does it trail into a recap?
 - Would you be embarrassed to have written this? (the author occasionally asks this openly)
 
-If it passes those — you're close.
+If it passes those - you're close.

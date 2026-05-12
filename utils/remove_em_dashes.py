@@ -1,6 +1,6 @@
 import os
 
-repo_dir = '/home/kchauhan/repos/carteakey.dev/src'
+repo_dir = '/Users/kchauhan/repos/carteakey.dev/src'
 count = 0
 for root, dirs, files in os.walk(repo_dir):
     for f in files:

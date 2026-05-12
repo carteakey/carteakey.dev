@@ -15,7 +15,7 @@
 {% set contributions = contributions or githubContributions %}
 
 <div class="space-y-4">
-  <div class="flex flex-wrap gap-4 text-sm text-gray-600 dark:text-gray-300">
+  <div class="flex flex-wrap gap-4 editorial-support-compact">
     {% if contributions.weeks | length %}
       <p><span class="font-medium text-gray-900 dark:text-white">{{ contributions.totalCount }}</span> contributions in the past {{ contributions.weeks | length }} weeks.</p>
     {% else %}
@@ -65,7 +65,7 @@
     </div>
   </div>
   {% else %}
-    <p class="text-sm text-gray-500 dark:text-gray-400">Contribution data is unavailable right now. Try checking back later.</p>
+    <p class="editorial-support-compact">Contribution data is unavailable right now. Try checking back later.</p>
   {% endif %}
   <p class="text-xs text-gray-400 dark:text-gray-500">Data courtesy of the public GitHub contributions API.</p>
 </div>

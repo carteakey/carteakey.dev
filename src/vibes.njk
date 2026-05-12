@@ -7,35 +7,35 @@ eleventyNavigation:
   key: Vibes
   order: 6
 ---
-{% include "components/breadcrumbs.njk" %}
+<div class="max-w-[1400px] mx-auto space-y-8">
+  <div class="max-w-3xl mx-auto vibes-note">
+    {% include "components/breadcrumbs.njk" %}
 
-<style>
-  /* Container fills the viewport width; images absolutely positioned */
-  #vibes-container { position: relative; min-height: 80vh; }
-  #vibes-container img { box-shadow: 0 1px 4px rgba(0,0,0,0.12); border-radius: 4px; }
-  .vibes-note { position: sticky; top: 0; background: transparent; backdrop-filter: blur(3px); z-index: 5; }
-  .vibes-note a { text-decoration: underline; }
-  .vibes-actions { display: flex; gap: .5rem; align-items: center; }
-  .vibes-btn { display: inline-flex; align-items: center; gap: .5rem; padding: .25rem .5rem; border-radius: .375rem; border: 1px solid var(--border, rgba(0,0,0,.12)); background: var(--bg, rgba(0,0,0,0.03)); cursor: pointer; font-size: 0.75rem; }
-  .vibes-btn:hover { background: rgba(0,0,0,0.06); }
-  @media (prefers-color-scheme: dark) {
-    .vibes-btn { border-color: rgba(255,255,255,.16); background: rgba(255,255,255,.06); }
-    .vibes-btn:hover { background: rgba(255,255,255,.10); }
-  }
-</style>
+    {% set pageTitle = "Vibes" %}
+    {% set pageDescription = "A mood board. Images and memes laid out with chaotic client-side energy." %}
+    {% include "components/page-header.njk" %}
 
-<div class="vibes-note mb-6">
-  <h1 class="mt-0">Vibe Board</h1>
-  {# <p class="mt-1 text-sm opacity-80">Drop images and memes into <code>src/static/img/vibes/</code>. They’ll be shuffled and laid out without overlapping text. The page is client-rendered for a fun, chaotic feel.</p> #}
-  {% if (vibes.list | length) == 0 %}
-  <p class="mt-2 text-rose-600">No images found. Add some to <code>src/static/img/vibes/</code> and rebuild.</p>
-  {% endif %}
-  {# <a class="text-sm" href="https://guzey.com/vibes/" target="_blank" rel="noopener">Inspired by guzey</a> #}
-  {# <hr/>
-  <p class="text-xs opacity-70">Tip: This is sometimes called a "mood board" or "inspo wall". I’m calling it a "Vibes Board" here.</p>
-  <hr/> #}
-  <div class="vibes-actions mt-2">
-    <button id="shuffle-btn" class="vibes-btn" type="button" title="Shuffle">
+    <style>
+      /* Container fills the viewport width; images absolutely positioned */
+      #vibes-container { position: relative; min-height: 80vh; }
+      #vibes-container img { box-shadow: 0 1px 4px rgba(0,0,0,0.12); border-radius: 4px; }
+      .vibes-note { position: sticky; top: 0; background: transparent; backdrop-filter: blur(3px); z-index: 5; padding-bottom: 1rem; }
+      .vibes-note a { text-decoration: underline; }
+      .vibes-actions { display: flex; gap: .5rem; align-items: center; }
+      .vibes-btn { display: inline-flex; align-items: center; gap: .5rem; padding: .25rem .5rem; border-radius: .375rem; border: 1px solid var(--border, rgba(0,0,0,.12)); background: var(--bg, rgba(0,0,0,0.03)); cursor: pointer; font-size: 0.75rem; }
+      .vibes-btn:hover { background: rgba(0,0,0,0.06); }
+      @media (prefers-color-scheme: dark) {
+        .vibes-btn { border-color: rgba(255,255,255,.16); background: rgba(255,255,255,.06); }
+        .vibes-btn:hover { background: rgba(255,255,255,.10); }
+      }
+    </style>
+
+    {% if (vibes.list | length) == 0 %}
+    <p class="mt-2 text-rose-600">No images found. Add some to <code>src/static/img/vibes/</code> and rebuild.</p>
+    {% endif %}
+
+    <div class="vibes-actions mt-4">
+      <button id="shuffle-btn" class="vibes-btn" type="button" title="Shuffle">
       <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <polyline points="16 3 21 3 21 8"></polyline>
         <line x1="4" y1="20" x2="21" y2="3"></line>
@@ -260,3 +260,4 @@ eleventyNavigation:
     }, 200);
   }, { passive: true });
 </script>
+</div>

@@ -15,7 +15,7 @@ permalink: /tags/{{ tag | slugify }}/
 {% set rawPostsList = collections[ tag ] %}
 {% set postslist = [] %}
 {% for post in rawPostsList %}
-  {% if not post.data.hidden %}
+  {% if showHiddenContent or not post.data.hidden %}
     {% set postslist = (postslist.push(post), postslist) %}
   {% endif %}
 {% endfor %}

@@ -11,7 +11,7 @@ eleventyNavigation:
 
 <h1>Skills Radar</h1>
 
-<p class="text-gray-600 dark:text-gray-400">
+<p class="editorial-support mb-8">
   Where I stand across the data landscape. Each axis represents a core competency area - the overlays show typical skill profiles for different roles, and the highlighted area is where I fit in.
 </p>
 
@@ -21,13 +21,13 @@ eleventyNavigation:
     max-width: 700px;
     margin: 2rem auto;
     padding: 1.5rem;
-    background: #f9fafb;
-    border-radius: 1rem;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    background: var(--surface-bg, #f9fafb);
+    border: 1px solid var(--surface-border, #e5e7eb);
+    border-radius: 0.125rem;
   }
   .dark .skills-chart-container {
-    background: #111827;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    background: var(--surface-bg, #111827);
+    border: 1px solid var(--surface-border, #374151);
   }
   .skills-chart-canvas {
     width: 100% !important;
@@ -45,10 +45,13 @@ eleventyNavigation:
     align-items: center;
     gap: 0.4rem;
     font-size: 0.85rem;
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
     color: #4b5563;
     cursor: pointer;
     padding: 0.25rem 0.5rem;
-    border-radius: 0.375rem;
+    border-radius: 0.125rem;
     transition: background 0.15s;
   }
   .skills-legend-item:hover {
@@ -64,9 +67,8 @@ eleventyNavigation:
     opacity: 0.35;
   }
   .skills-legend-dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
+    width: 8px;
+    height: 8px;
     flex-shrink: 0;
   }
 
@@ -78,22 +80,23 @@ eleventyNavigation:
     margin-top: 1.5rem;
   }
   .skill-bar-container {
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
   }
   .skill-bar-label {
     display: flex;
     justify-content: space-between;
     font-size: 0.85rem;
+    font-family: var(--font-serif);
     color: #4b5563;
     margin-bottom: 0.2rem;
   }
   .dark .skill-bar-label {
-    color: #9ca3af;
+    color: #d1d5db;
   }
   .skill-bar {
-    height: 6px;
+    height: 4px;
     background: #e5e7eb;
-    border-radius: 3px;
+    border-radius: 2px;
     overflow: hidden;
   }
   .dark .skill-bar {
@@ -101,7 +104,7 @@ eleventyNavigation:
   }
   .skill-bar-fill {
     height: 100%;
-    border-radius: 3px;
+    border-radius: 2px;
     transition: width 0.6s ease;
   }
 </style>
@@ -113,8 +116,8 @@ eleventyNavigation:
   </div>
 
   <div class="skills-details">
-    <h3 class="text-sm font-semibold text-gray-900 dark:text-white">Breakdown</h3>
-    <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">How I'd rate myself across these dimensions, from my actual experience.</p>
+    <h3 class="editorial-kicker mb-3">Breakdown</h3>
+    <p class="editorial-support-compact mb-6">How I'd rate myself across these dimensions, from my actual experience.</p>
     <div id="skillBars"></div>
   </div>
 </div>

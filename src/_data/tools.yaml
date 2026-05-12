@@ -1,0 +1,10 @@
+---
+tools:
+  - title: chirptype
+    description: "On-device voice-to-text hotkey app for Apple Silicon. No cloud, no subscription - transcribes directly into any input field."
+    github: https://github.com/carteakey/chirptype
+    date: 2026-05-07
+    tags:
+      - python
+      - whisper
+      - macos

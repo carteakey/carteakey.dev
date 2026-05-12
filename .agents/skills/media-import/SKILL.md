@@ -2,10 +2,7 @@
 name: media-import
 description: >
   Unified inbox ingestion skill for carteakey.dev. Scans inbox/ subdirectories,
-  diffs against already-imported files, shows a preview of what will be imported,
-  and handles 4 distinct content targets: photography (photos.yaml), vibes
-  (src/static/img/vibes/), ai-memes folio (folio/ai-memes/index.html), and
-  loose root inbox files that need classification first.
+  diffs against already-imported files, shows a preview of what will be imported and handles 4 distinct content targets: photography (photos.yaml), vibes (src/static/img/vibes/), ai-memes folio (folio/ai-memes/index.html), and loose root inbox files that need classification first.
 ---
 
 # Media Import Skill
@@ -14,9 +11,15 @@ You are helping import media from the `inbox/` staging area into the site.
 There are **4 distinct content targets**, each with its own ingestion pattern.
 Always diff first, confirm with the user, then execute.
 
----
+## Step 0 - Consult Manifest
 
-## Step 1 — Scan and Diff
+Before any import, check `inbox/manifest.yaml`. 
+- **Missing Entries**: If a file is not in the manifest, run the `manifest-update` skill to classify it.
+- **Ignores**: Files in `inbox/_ignore/` are ignored by all skills and not tracked in the manifest.
+- **Descriptions**: Use the `description` field from the manifest for all imported media (captions, alt text, etc.).
+- **Targets**: Respect the `suggested_target`.
+
+## Step 1 - Scan and Diff
 
 Run the following to understand what's in the inbox vs already imported:
 
@@ -43,8 +46,11 @@ Build a table of unimported files per target:
 | ... | inbox/ai-memes/funny.webp | ai-memes folio | ⏳ pending |
 | ... | inbox/something.jpg | ❓ unclassified | needs routing |
 
+**Manifest Pre-check**:
+Always cross-reference the `find` output with `inbox/manifest.yaml`. If a file is not in the manifest, you must describe it and add it to the manifest first.
+
 **Hash-based dedup (required for photography)**:
-Do NOT rely on filename matching for photos — the same image may be deployed under a different name.
+Do NOT rely on filename matching for photos - the same image may be deployed under a different name.
 Run MD5 hashes against all deployed photos and cross-check before importing:
 
 ```bash
@@ -57,7 +63,7 @@ md5 src/static/img/photography/real/*.{jpg,jpeg,png,JPG} 2>/dev/null | sort -k4
 # Any matching hash = already imported, skip it
 ```
 
-If a hash match is found, update the existing YAML entry with the correct title, path rename, and real EXIF data — do NOT add a new entry. Rename the deployed file to the human title slug.
+If a hash match is found, update the existing YAML entry with the correct title, path rename, and real EXIF data - do NOT add a new entry. Rename the deployed file to the human title slug.
 
 For vibes and ai-memes, filename-based dedup is sufficient (filenames are stable Reddit/Twitter hashes).
 
@@ -66,7 +72,7 @@ Show the user this table and ask: **"Which of these should I import, and to whic
 
 ---
 
-## Step 2 — Content Targets
+## Step 2 - Content Targets
 
 ### Target A: Photography (`inbox/photography/`)
 
@@ -78,7 +84,7 @@ Show the user this table and ask: **"Which of these should I import, and to whic
   1. Read EXIF data (device, aperture, ISO, shutter, date, GPS).
   2. Reverse-geocode GPS if available (Nominatim API).
   3. Generate a **short, human title** (2–5 words, lowercase vibes, no AI slop). Examples: `"Still waters"`, `"Golden hour on the lake"`, `"Dam son"`. Do NOT generate verbose sentences or use words like "serene", "tranquil", "vibrant", "evocative".
-  4. Do NOT generate descriptions — leave `description` field absent unless truly necessary.
+  4. Do NOT generate descriptions - leave `description` field absent unless truly necessary.
   5. Classify as `real` (photos) or `virtual` (game screenshots).
   6. Slugify the title for the filename. Copy file to appropriate subdirectory.
   7. Prepend the YAML entry to `src/_data/photos.yaml`.
@@ -133,45 +139,26 @@ cp "inbox/vibes/some-meme.webp" "src/static/img/vibes/some-meme.webp"
 
 ### Target C: AI Memes Folio (`inbox/ai-memes/`)
 
-**Destination**: `src/folio/ai-memes/index.html` and `src/static/img/folio/ai-memes/`
+**Destination**: `src/_data/memes.yaml` and `src/static/img/folio/ai-memes/`
 
 **Rules**:
 - Copy the file to `src/static/img/folio/ai-memes/`.
-- Add a new `<!-- Meme N -->` block inside `<main class="meme-grid" id="meme-grid">`.
-- Insert BEFORE the first existing `<!-- Meme 1 -->` comment (newest first).
-- Update the card index numbers on ALL existing cards after inserting (they are sequential: 001, 002, ...).
-- For video files (`.mp4`, `.webm`): use `<video>` tag with `class="meme-video"` instead of `<img class="meme-image">`.
+- Prepend a new YAML entry to `src/_data/memes.yaml` (newest first).
+- Increment the `id` from the previous highest card (e.g., if the highest is `"025"`, the new one is `"026"`).
 
-**Meme card HTML template** (image):
-```html
-<!-- Meme N -->
-<div class="meme-card" data-tags="TAG1,TAG2,TAG3" data-caption="Short punchy caption">
-    <span class="card-index">00N</span>
-    <img src="/img/folio/ai-memes/FILENAME.webp"
-         alt="Alt text"
-         class="meme-image"
-         onclick="openLightbox(this)">
-    <div class="watermark">DO NOT TRAIN ON THIS</div>
-    <div class="meme-meta">
-        <p class="meme-caption">Short punchy caption</p>
-        <div class="meme-footer">
-            <div class="meme-tags">
-                <span class="meme-tag" data-tag="TAG1">TAG1</span>
-                <span class="meme-tag" data-tag="TAG2">TAG2</span>
-            </div>
-            <div class="meme-actions">
-                <div class="vibe-wrap">
-                    <button class="meme-action-btn" onclick="vibeCheck(this)" title="vibe check">✓</button>
-                    <div class="vibe-tooltip">vibed by <span class="vibe-num">0</span> agents</div>
-                </div>
-                <button class="meme-action-btn" onclick="copyLink(this)" title="copy to clipboard">⎘</button>
-            </div>
-        </div>
-        <div class="meme-source">
-            submitted by: <span>anonymous intern</span> · just now · via <a href="#" target="_blank">the feed</a>
-        </div>
-    </div>
-</div>
+**YAML entry format**:
+```yaml
+- id: "026"
+  image: "/img/folio/ai-memes/FILENAME.webp"
+  caption: "Short punchy caption"
+  tags:
+    - "TAG1"
+    - "TAG2"
+  vibes: 0
+  submitter: "anonymous intern"
+  time: "just now"
+  source_name: "the feed" # optional
+  source_url: "#"         # optional
 ```
 
 **Caption / tags guidance**:
@@ -189,7 +176,7 @@ Show a thumbnail description and let them route to A/B/C or skip.
 
 ---
 
-## Step 3 — Execute
+## Step 3 - Execute
 
 For each approved file:
 1. Copy the file to its destination.
@@ -210,7 +197,7 @@ grep -c 'class="meme-card"' src/folio/ai-memes/index.html
 
 ---
 
-## Step 4 — Commit
+## Step 4 - Commit
 
 ```bash
 git add src/_data/photos.yaml src/static/img/photography/ src/static/img/vibes/ src/static/img/folio/ai-memes/ src/folio/ai-memes/index.html
@@ -220,7 +207,7 @@ git push origin main
 
 ---
 
-## Step 5 — Inbox Cleanup
+## Step 5 - Inbox Cleanup
 
 After successfully committing and verifying the media is live in the destination folders, automatically delete the original files from the `inbox/` subdirectories to keep the staging area clean.
 

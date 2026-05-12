@@ -11,3 +11,11 @@ package-lock.json
 .vscode/tasks.json
 .vscode/settings.json
 inbox
+src/static/img/blog-sketches/agent-ide.png
+src/static/img/blog-sketches/homelab.png
+src/static/img/blog-sketches/local-inference.png
+src/static/img/blog-sketches/notes-vault.png
+src/static/img/blog-sketches/personal-reflection.png
+src/static/img/blog-sketches/photo-cleanup.png
+src/static/img/blog-sketches/platform-tinkering.png
+src/static/img/blog-sketches/site-stack.png

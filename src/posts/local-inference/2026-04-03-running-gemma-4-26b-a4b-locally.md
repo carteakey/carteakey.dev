@@ -119,7 +119,9 @@ Both profiles keep Gemma-recommended sampling defaults:
 - `top_p=0.95`
 - `top_k=64`
 
-> **Easier path**: [carteakey/l3ms](https://github.com/carteakey/l3ms) wraps all of the above as pre-configured shell scripts (`run-models/run-llama-cpp-gemma-4-26b-a4b.sh`, `run-models/run-llama-cpp-gemma-4-26b-a4b-vision.sh`) along with a build helper, a model downloader, and bench scripts. Everything is editable text, not a UI form.
+{% callout "example", "Easier path" %}
+[carteakey/l3ms](https://github.com/carteakey/l3ms) wraps all of the above as pre-configured shell scripts (`run-models/run-llama-cpp-gemma-4-26b-a4b.sh`, `run-models/run-llama-cpp-gemma-4-26b-a4b-vision.sh`) along with a build helper, a model downloader, and bench scripts. Everything is editable text, not a UI form.
+{% endcallout %}
 
 ## Benchmarks and observed results
 

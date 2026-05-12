@@ -1,13 +1,14 @@
 ---
 title: "Why Every Technical Blog Needs a 'Copy as Markdown' Feature"
-date: git Last Modified
 layout: layouts/note.njk
+date: 2026-04-10
+permalink: /notes/{{ page.fileSlug }}/
+authored_by: human
 tags:
-  - notes
-  - webdev
+  - Webdev
   - PKM
 ---
-If you're reading a technical blog, there's a high chance you use some sort of personal knowledge management system—like Obsidian, Notion, or Logseq. And if you're anything like me, you frequently copy interesting snippets, setup guides, or entire articles into your own vault for future reference.
+If you're reading a technical blog, there's a high chance you use some sort of personal knowledge management system-like Obsidian, Notion, or Logseq. And if you're anything like me, you frequently copy interesting snippets, setup guides, or entire articles into your own vault for future reference.
 
 The problem? Selecting text and hitting `Ctrl+C` often grabs the rendered HTML. When you paste it into your Markdown-native PKM, the formatting breaks: code blocks lose their syntax highlighting, links get mangled, and lists become a mess of weird indentation. 
 

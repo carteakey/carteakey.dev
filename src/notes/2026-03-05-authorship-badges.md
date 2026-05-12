@@ -2,7 +2,7 @@
 title: Authorship Transparency on carteakey.dev
 date: 2026-03-05
 layout: layouts/note.njk
-permalink: /notes/authorship-badges/
+permalink: /notes/{{ page.fileSlug }}/
 authored_by: ai-generated
 pinned: true
 excerpt: Every post now carries an authorship badge - Human, AI Assisted, or AI Generated - because transparency matters, especially as AI writing becomes indistinguishable from human writing.

@@ -5,6 +5,191 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.10] - 2026-05-07
+### Fixed
+- Filtered out private repositories natively from `github-card.js` and `github.js` data fetches to prevent them from inflating GitHub Card statistics or appearing in the "Projects on GitHub" feed when built with an authenticated token.
+- Removed manually curated private repositories (`truthshield` and `muninn`) from `projects.yaml` to prevent them from publishing to the Projects list.
+
+## [2.0.9] - 2026-05-07
+### Changed
+- Renamed the "Grandiloquent" section to "Lexicon" everywhere: directory (`src/grandiloquent/` → `src/lexicon/`), page (`/grandiloquent/` → `/lexicon/`), data file, feed collection variable, item type string, CSS badge class (`badge-type-grandiloquent` → `badge-type-lexicon`), feed filter button, footer nav link, and all template references.
+
+## [2.0.8] - 2026-05-04
+### Added
+- Added a unique transparent monochrome thumbnail sketch for the draft Wikibones post.
+
+## [2.0.7] - 2026-05-04
+### Changed
+- Humanized the draft Wikibones post by tightening generated-sounding phrasing and bumping its updated date.
+
+## [2.0.6] - 2026-04-30
+### Added
+- Added editorial post shortcodes for semantic callouts, dated inline updates, definition popovers, and true sidenotes.
+- Added `docs/BLOG_POST_FEATURES.md` as the canonical feature inventory for future post-authoring and agent cleanup work.
+
+### Changed
+- Migrated obvious legacy blockquote callouts in existing posts to the new editorial callout/update primitives.
+- Removed stale unused annotation/margin-note CSS utilities and the obsolete `statblock` documentation reference.
+- Updated the design language guide with the current post-level editorial primitives.
+
+## [2.0.5] - 2026-04-30
+### Added
+- Added Markdown footnote support for inline references (`[^id]`) and definitions (`[^id]: note`) with compact endnote styling in the site's editorial typography layer.
+
+### Changed
+- Hidden content now renders in local/dev builds with explicit "Hidden" labels in post pages, archive listings, feed cards, tag pages, and search.
+- Production builds continue to exclude `hidden: true` content from page output, collections, tags, search, and raw text exports.
+
+## [2.0.4] - 2026-04-25
+### Added
+- Created `src/notes/_template.md` for standardized note creation with `hidden: true` by default.
+
+### Changed
+- Standardized frontmatter across all existing notes (layout, authored_by, permalink, date format).
+- Updated `eleventy.config.mjs` to include `description` and `tags` in the note feed mapping for consistent card rendering.
+
+## [2.0.3] - 2026-04-25
+### Fixed
+- Fixed the masonry layout in the unified feed's grid view by restoring the missing `feed-masonry` class to the grid container and ensuring all items possess the `.feed-card` class required by the layout script.
+- Standardized `feed-card.njk` class names to match existing `tailwind.css` tokens (`feed-card-full`, `feed-card-stream`).
+
+## [2.0.2] - 2026-04-25
+### Added
+- Added a unique monochrome hero sketch for "What Obsidian Shouldn't Be" following the blog-sketch editorial workflow.
+
+## [2.0.1] - 2026-04-25
+
+### Changed
+- Standardized content attribution across the site by moving manual attribution HTML into frontmatter metadata (`author`, `source`) and natively rendering it in the post layout and feed cards (matching the Quotations style).
+- Refined the "Grandiloquent" list page by tightening whitespace and integrating the new dynamic attribution rendering.
+- Renamed the "Grandiloquent" filter pill to "Lexicon" in the feed UI to match the card badge text.
+- Filtered out the internal `grandiloquent` tag from rendering visibly in post metadata.
+
+### Fixed
+- Fixed an issue where `/now/` updates and notes were appearing as empty blocks in the stream feed by correcting how Eleventy passes their `templateContent` in the data cascade.
+
+## [2.0.0] - 2026-04-24
+
+### Added
+- `docs/MIGRATION_PROCESS.md`: Added a repeatable migration workflow for bringing older pages onto the new design language without one-off typography patching.
+
+### Changed
+- `colophon.njk`: Rewrote the colophon around the current archive/workbench design language, updated the stack/fonts notes, and added an explicit redesign history that tracks this release as major redesign #6.
+- Promoted the ongoing redesign line to `2.0.0` to mark the archive/workbench reset as a fresh visual baseline rather than another incremental polish pass.
+
+## [1.9.30] - 2026-04-24
+
+### Changed
+- Added reusable editorial typography primitives for section labels, titles, support copy, meta links, footer navigation, and `/now/` prose so broader cleanup passes stop depending on one-off utility stacks.
+- Carried the new type layer through `archive.njk`, the footer mega nav, and the `/now/` page plus its workout/game snippets so those sections no longer fall back to the older default UI text treatment.
+
+## [1.9.29] - 2026-04-24
+
+### Added
+- `docs/DESIGN_LANGUAGE.md`: Added a working design-language guide covering typography roles, density, surfaces, anti-patterns, and implementation rules for future redesign passes.
+
+## [1.9.28] - 2026-04-24
+
+### Changed
+- Promoted the homepage Recent Activity block from utilitarian feed rows to a denser editorial contents list by giving entries stronger display typography, better vertical rhythm, and less truncation.
+- Carried the same typography system into the notes index and note layout so `/notes/` and individual note pages no longer fall back to the older plain UI text treatment.
+
+## [1.9.27] - 2026-04-24
+
+### Changed
+- Applied the editorial type layer more broadly across post-page support chrome: breadcrumbs now use the mono uppercase header treatment, and draft/AI notices, sidebar copy, outline links, and conversation prompts now inherit the same serif support-copy styling as the rest of the redesign.
+
+## [1.9.26] - 2026-04-24
+
+### Changed
+- Carried the homepage editorial type system through the remaining support copy so selected-work notes, featured descriptions, and site-index descriptions no longer fall back to the plain UI sans.
+
+## [1.9.25] - 2026-04-24
+
+### Changed
+- Reworked the lower homepage into a cleaner four-block grid so featured writing, recent activity, quote of the day, and popular posts each get their own space.
+- Renamed the user-facing “Blog” section to “Writing” across homepage labels, navigation, breadcrumbs, footer links, and the archive page while keeping the `/blog/` URL stable.
+- Tightened the homepage site index to six more intentional sections and moved its labels onto the display type so it stops falling back to the older UI font.
+
+## [1.9.24] - 2026-04-24
+
+### Changed
+- Swapped the ruled notebook treatment for a lighter textured-paper background that feels closer to an archive page than a startup landing page.
+- Reworked the editorial typography stack so display headings use `et-book`, body copy uses `Crimson Pro`, and shared page headers/posts inherit the same print-like hierarchy.
+- Renamed the homepage featured/collection language from “Essay” to “Blog” and restored the shorter personal bio copy on the homepage.
+- Brought `post.njk` further into the new system with squarer author/media chrome, flatter comment and reaction controls, and cleaner next/previous navigation.
+
+## [1.9.23] - 2026-04-24
+
+### Added
+- `startHere.yaml`: Added a curated homepage canon used by the new Selected Work index section.
+
+### Changed
+- Reworked the shared site design language away from rounded glassy cards toward sharper, denser editorial surfaces with mono labels, flatter controls, and paper-like ruled backgrounds.
+- Rebuilt the homepage as an index of work and thinking: denser intro, at-a-glance counts, Selected Work, Site Index, Featured Blog, Recent Activity, and Signal/Popular sections.
+- Tightened navigation and footer chrome to match the new archive/workbench feel instead of app-style controls.
+
+### Fixed
+- `feed-card.njk`: Removed a duplicated macro tail that was breaking Nunjucks parsing for `/feed/` during Eleventy builds.
+
+## [1.9.22] - 2026-04-24
+
+### Fixed
+- Converted `about.md`, `more.md`, `colophon.md`, `now-archive.md`, and `folio/radiohead/links.md` to `.njk` - the markdown processor was wrapping Nunjucks-rendered `page-header` HTML in invalid `<p>` tags, causing horizontal indentation on the heading.
+- feed-card.njk: Loosened quotation clip threshold from `max-h-32` to `max-h-44` so more quote text is visible before the fade overlay.
+
+## [1.9.21] - 2026-04-24
+
+### Added
+- cv.njk: Full page redesign using site-consistent `.surface` cards, `page-header` component, feather icon section headings, tech/domain badge pills, and contact strip - replaces raw HTML tables and inline styles.
+
+### Changed
+- base.njk: Rebalanced footer mega-menu - moved Games, Workouts, Listening, and Life in data from the overloaded EXPLORE column into ABOUT ME for even distribution.
+- base.njk: Changed Vibes nav icon from `music` to `image` (visual/meme collection, not music).
+- post.njk: Moved AI Assisted / AI Generated notice banner from below the copy-markdown button to immediately after the Draft notice, grouping all post-status notices together at the top of the article header. Uses `.surface surface-compact` styling for visual consistency.
+
+### Fixed
+- feed-card.njk: Fixed quotation author/source attribution being clipped by `overflow-hidden` in grid view. Quote text now clips independently in its own `max-h-32` container while author name and source are always visible below it.
+
+## [1.9.20] - 2026-04-24
+
+### Changed
+- Standardized the visual language of remaining legacy custom box containers (Newsletter form, Guestbook submission, Search results, 404 hints, EthicalAds wrappers, and Post sidebar boxes) to use the cohesive `.surface` component design system (glassmorphism backgrounds, standard rounded borders, and subtle box-shadows).
+
+## [1.9.19] - 2026-04-24
+
+### Added
+- Added a distinct `.badge-featured` utility class utilizing an amber color palette to visually separate the "Featured" post from standard "Pinned" posts.
+
+### Changed
+- Replaced the text "Pinned" and the unicode star (★) with a `bookmark` Feather icon across all pinned badges to visually distinguish them from Featured items.
+
+### Fixed
+- Resolved an Eleventy data cascade collision where the global `featured.js` object erroneously shadowed boolean `featured` frontmatter flags, restoring correct Featured post selection and styling on the homepage.
+- Renamed the global `featured.js` data file to `featuredItems.js` to avoid namespace collisions with local post fields.
+
+## [1.9.18] - 2026-04-22
+
+### Changed
+- Refactored `/folio/ai-memes` to be fully config-based, migrating hardcoded grid cards to a dynamic Eleventy loop driven by `src/_data/memes.yaml`.
+- Updated `media-import` skill to append AI meme configurations sequentially to YAML rather than directly injecting HTML blocks.
+
+## [1.9.17] - 2026-04-22
+
+### Changed
+- Introduced a shared `page-header` component and applied it across major archive, collection, utility, and project pages to unify section intros.
+- Standardized badge and metadata styling across blog, feed, snippets, TIL, quotations, workouts, and project listings with reusable badge primitives.
+- Consolidated card/surface styling around shared surface classes so featured modules, feed cards, side panels, and GitHub sections feel visually related.
+
+## [1.9.16] - 2026-04-22
+
+### Added
+- Added a monochrome Notion-style blog sketch image pack under `src/static/img/blog-sketches/`.
+- Added `docs/BLOG_SKETCH_IMAGES.md` documenting a unique transparent per-post image workflow.
+- Added `.agents/skills/blog-sketches/` with a reusable style guide and transparent sketch prep helper.
+- Added optional post image rendering for article lead images, feed cards, featured posts, and blog archive thumbnails.
+
+
 ## [1.9.15] - 2026-04-19
 
 ### Added

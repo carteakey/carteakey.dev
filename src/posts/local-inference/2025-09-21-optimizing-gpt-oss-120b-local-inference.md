@@ -9,7 +9,9 @@ tags:
   - AI
 pinned: true
 ---
-> **Note:** Parts of this post were drafted/refined with the help of gpt‑oss‑120b itself. How meta!
+{% callout "note", "Authorship note" %}
+Parts of this post were drafted/refined with the help of gpt-oss-120b itself. How meta!
+{% endcallout %}
 
 ## TL;DR
 
@@ -111,7 +113,10 @@ With the magic of llama.cpp and some tinkering, I've managed to get it running o
 | Eval tokens           |       128 |     1023 |
 | Total tokens          |       640 |     2016 |
 
-> :information_source: PP and TG come from llama.cpp’s performance metrics.
+{% callout "note", "Metric note" %}
+PP and TG come from llama.cpp's performance metrics.
+{% endcallout %}
+
 - PP (tps): tokens per second during prompt evaluation (“ppNNN” tests in llama-bench).
 - TG (tps): tokens per second during generation (“tgNNN” tests in llama-bench).
 
@@ -124,12 +129,16 @@ Here's the famous bouncing balls prompt being one-shot by this model.
 
 Here's some notes after wandering in [r/LocalLLaMA](https://www.reddit.com/r/LocalLLaMA/) (some of which may not make sense) on how to get there if you're on a similar system - in the order of priority. Hugely YMMV based on your hardware.
 
-> :information_source: Always use the original [MXFP4 model files](https://huggingface.co/ggml-org/gpt-oss-120b-GGUF). The `gpt-oss` models are natively "quantized". I.e. they are trained in the MXFP4 format which is roughly equivalent to `ggml`'s `Q4_0`. The main difference with `Q4_0` is that the MXFP4 models get to keep their full quality. This means that no quantization in the usual sense is necessary.
+{% callout "note", "Model files" %}
+Always use the original [MXFP4 model files](https://huggingface.co/ggml-org/gpt-oss-120b-GGUF). The `gpt-oss` models are natively "quantized". I.e. they are trained in the MXFP4 format which is roughly equivalent to `ggml`'s `Q4_0`. The main difference with `Q4_0` is that the MXFP4 models get to keep their full quality. This means that no quantization in the usual sense is necessary.
+{% endcallout %}
 
 
 ### Optimization checklist (in order of impact)
 
-> **Update (2026-04-04):** I've compiled all of these lessons (and much more) into a dedicated master reference: **[Local LLM Inference Optimization: The Complete Guide](/blog/local-llm-optimization/)**. That post covers everything below in full detail, plus OS choice, backend selection, KV cache, CUDA specifics, and diagnostics. The list here stays as a quick summary.
+{% update "2026-04-04" %}
+I've compiled all of these lessons (and much more) into a dedicated master reference: **[Local LLM Inference Optimization: The Complete Guide](/blog/local-llm-optimization/)**. That post covers everything below in full detail, plus OS choice, backend selection, KV cache, CUDA specifics, and diagnostics. The list here stays as a quick summary.
+{% endupdate %}
 
 1. **CHECK YOUR RAM SPEED** - Seriously. See [below](#check-your-ram-speed-seriously). This was a 3x improvement for me.
 2. **Run on Linux** - +~20% TPS (CUDA driver + scheduler).
@@ -287,7 +296,9 @@ That output is also what you'd hardcode if you want a static placement (see opti
 
 Fine-grained per-layer, per-projection control. More complex but lets you pack the GPU tighter than `--n-cpu-moe` can.
 
-> ⚠️ **Critical gotcha for models with shared experts** (e.g. Qwen3.5-122B, some gpt-oss variants): these models have *two* expert tensor families - routed experts (`_exps`) and a shared expert (`_shexp`). Patterns like `.ffn_.*_exps.=CPU` only match routed experts. The shared expert stays on GPU and silently consumes VRAM, causing CUDA OOM. Use `(ch|)exps` to match both:
+{% callout "warning", "Critical gotcha for models with shared experts" %}
+Some models (e.g. Qwen3.5-122B, some gpt-oss variants) have *two* expert tensor families - routed experts (`_exps`) and a shared expert (`_shexp`). Patterns like `.ffn_.*_exps.=CPU` only match routed experts. The shared expert stays on GPU and silently consumes VRAM, causing CUDA OOM. Use `(ch|)exps` to match both:
+{% endcallout %}
 
 ```bash
 # Safe - matches both routed (_exps) and shared (_shexp) experts:
@@ -299,7 +310,9 @@ Fine-grained per-layer, per-projection control. More complex but lets you pack t
 
 The partial-CPU pattern (blk 5+ on CPU) was the bench winner for gpt-oss-120b: **pp=428 t/s, tg=28 t/s** confirmed in the server. It packs 9.7 GB of model weight into VRAM with only 12 MiB free - every available MiB goes to weights.
 
-> ⚠️ **RAM ceiling warning**: `--n-cpu-moe 36` (all experts on CPU) loads ~60 GB into RAM and will hard-crash a 64 GB system. Always use `llama-fit-params` or the partial-CPU `-ot` pattern to keep RAM under ~50 GB.
+{% callout "warning", "RAM ceiling warning" %}
+`--n-cpu-moe 36` (all experts on CPU) loads ~60 GB into RAM and will hard-crash a 64 GB system. Always use `llama-fit-params` or the partial-CPU `-ot` pattern to keep RAM under ~50 GB.
+{% endcallout %}
 
 ### iGPU utilization
 

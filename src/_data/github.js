@@ -20,7 +20,7 @@ export default async function () {
       throw new Error("GitHub API payload was not an array");
     }
 
-    const repos_list = repos_json.map((repo) => {
+    const repos_list = repos_json.filter((r) => !r.private).map((repo) => {
       return {
         repo_name: repo.name,
         repo_url: repo.html_url,
