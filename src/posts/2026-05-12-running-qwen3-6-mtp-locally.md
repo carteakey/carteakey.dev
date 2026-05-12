@@ -110,9 +110,10 @@ MTP performance scales massively compared to non-MTP generation due to the built
 
 *Tested on RTX 4070 12GB using the MTP Bench tool.*
 
-## Notes
+## Notes & Tuning MTP Settings
 
-- **MTP Settings**: `spec-draft-n-max 2` provides an excellent balance between acceptance rate and speed. Pushing draft sizes higher can occasionally result in diminishing returns due to computation overhead.
+- **Draft Sizes (`--spec-draft-n-max`)**: A draft max of `2` provides an excellent balance between acceptance rate and speed. Pushing draft sizes higher (e.g. `3` or `4`) can occasionally result in diminishing returns due to computation overhead. Note that the MTP branch implements a hard upper limit but also an internal early-stop mechanism if the draft tokens are of low quality.
+- **Draft Confidence (`--spec-draft-p-min`)**: Since MTP stops early if draft tokens are poor, you can tune the `--spec-draft-p-min` flag. Lowering the minimum threshold may increase the draft count and total throughput, though potentially at the cost of a slightly lower overall acceptance rate.
 - **Thinking Mode**: Retain thinking logic using `preserve_thinking: true` to enable long-term code continuity in agentic environments.
 - **Context Length**: The Qwen 3.6 architecture handles contexts up to 262k; running 131k context locally uses ~1.5GB of VRAM headroom when combined with Q8_0 KV quantization and the `--fit` flag logic.
-- **Vision/Images**: Note that currently, multimodal inputs (images) are not supported on MTP draft variants. You will need to fall back to the standard, non-MTP multimodal weights for image reasoning.
+- **Vision/Images**: Note that currently, multimodal inputs (images) are not supported on MTP draft variants. You will need to fall back to the standard, non-MTP multimodal weights (with `--mmproj`) for image reasoning. A potential future workaround could involve setting `.n_max=0` automatically per-request when the prompt contains multimodal input.
