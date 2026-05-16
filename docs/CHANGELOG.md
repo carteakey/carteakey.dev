@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.12] - 2026-05-16
+### Changed
+- Flattened the site background to a cleaner bone-white paper color and removed the light/dark gradient and noise overlays.
+- Shifted homepage, page headers, notes, post pages, navigation/footer spacing, and shared surfaces toward a denser Plus Jakarta Sans/JetBrains Mono editorial pass.
+- Updated the homepage eyebrow and bio copy around analytics, local AI, homelabs, and internet archives.
+- Simplified the homepage below the hero by removing duplicate featured and popular-post modules while keeping Featured Posts, Site Index, Recent Activity, and Quote of the Day.
+- Renamed the homepage Start Here section to Featured Posts, added unframed right-aligned thumbnails to those curated links, and restored Quote of the Day as the final homepage block.
+- Tightened the homepage Site Index two-column layout by keeping counts close to their labels.
+- Reused the existing feed grid card view for the capped homepage Recent Activity section.
+- Improved mobile table rendering with horizontal scroll, tighter cells, edge hints, and sticky first columns for comparison tables.
+- Replaced emoji status markers in the Agent IDE comparison table with inline Feather icons.
+- Updated the post template with the Feather status-icon pattern for future comparison tables.
+
 ## [2.0.11] - 2026-05-08
 ### Added
 - Added generated transparent monochrome thumbnail sketches to 22 existing posts.

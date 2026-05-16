@@ -54,10 +54,10 @@ htmlTemplateEngine: "webc"
       </div>
 
       <div>
-        <p class="home-eyebrow">Toronto / data work / homelabs / local AI / internet archives</p>
+        <p class="home-eyebrow">ANALYTICS / LOCAL AI / HOMELABS / INTERNET ARCHIVES</p>
         <h1 class="home-title">Hi, I’m <span class="home-title-accent">Kartikey.</span></h1>
         <p class="home-dek">
-          Data analyst in Toronto. I write about data work, local AI, homelabs, personal systems, and the internet after it got strange.
+          Data analyst in Toronto. I write about analytics, local AI, homelabs, personal systems, and internet archives.
         </p>
         <p class="home-dek home-dek-muted">
           Grab a coffee and look around.
@@ -103,17 +103,24 @@ htmlTemplateEngine: "webc"
     {% if startHere and startHere.length %}
       <div>
         <div class="home-panel-head">
-          <p class="home-panel-kicker">START HERE</p>
+          <p class="home-panel-kicker">Featured Posts</p>
           <a href="/blog/" class="home-panel-link">All writing →</a>
         </div>
 
         <ul class="home-selected-list">
           {% for item in startHere %}
             <li class="home-selected-item">
-              <a href="{{ item.url | url }}" class="home-selected-title">{{ item.title }}</a>
-              {% if item.note %}
-                <p class="home-selected-note">{{ item.note }}</p>
-              {% endif %}
+              <a href="{{ item.url | url }}" class="home-selected-link">
+                {% if item.image %}
+                  <img src="{{ item.image | url }}" alt="{{ item.imageAlt or item.title }}" loading="lazy" decoding="async" class="home-selected-image dark:invert dark:brightness-125">
+                {% endif %}
+                <span class="home-selected-copy">
+                  <span class="home-selected-title">{{ item.title }}</span>
+                  {% if item.note %}
+                    <span class="home-selected-note">{{ item.note }}</span>
+                  {% endif %}
+                </span>
+              </a>
             </li>
           {% endfor %}
         </ul>
@@ -129,8 +136,10 @@ htmlTemplateEngine: "webc"
       <div class="home-directory-grid">
         {% for item in homeIndexItems %}
           <a href="{{ item.url }}" class="home-directory-item">
-            <span class="home-directory-name">{{ item.name }}</span>
-            <span class="home-directory-count">{{ item.count }}</span>
+            <span class="home-directory-heading">
+              <span class="home-directory-name">{{ item.name }}</span>
+              <span class="home-directory-count">{{ item.count }}</span>
+            </span>
             <span class="home-directory-note">{{ item.note }}</span>
           </a>
         {% endfor %}
@@ -138,82 +147,32 @@ htmlTemplateEngine: "webc"
     </div>
   </section>
 
-  <section class="home-grid-four animate-enter stagger-2">
-    <div>
-      <div class="home-panel-head">
-        <p class="home-panel-kicker">Featured Writing</p>
-        {% if highlightedPost %}
-          <a href="{{ highlightedPost.url }}" class="home-panel-link">Read →</a>
-        {% endif %}
-      </div>
-
-      {% if highlightedPost %}
-        <article class="home-featured">
-          <div>
-            <h2 class="home-featured-title">
-              <a href="{{ highlightedPost.url }}">{{ highlightedPost.data.title }}</a>
-            </h2>
-            {% if highlightedPost.data.description %}
-              <p class="home-featured-description">{{ highlightedPost.data.description }}</p>
-            {% endif %}
-
-            <div class="home-featured-meta">
-              <time class="badge badge-meta">{{ highlightedPost.date | readableDate }}</time>
-              {% for tag in highlightedPost.data.tags | filterTagList | head(2) %}
-                <span class="badge badge-tag">#{{ tag }}</span>
-              {% endfor %}
-            </div>
-          </div>
-
-          {% if highlightedPost.data.image %}
-            <a href="{{ highlightedPost.url }}" class="home-featured-image" aria-label="{{ highlightedPost.data.title }}">
-              <img src="{{ highlightedPost.data.image | url }}" alt="{{ highlightedPost.data.imageAlt or highlightedPost.data.title }}" loading="lazy" decoding="async" class="dark:invert dark:brightness-125">
-            </a>
-          {% endif %}
-        </article>
-      {% endif %}
-    </div>
-
-    <div>
+  <section class="home-recent-panel animate-enter stagger-2">
       <div class="home-panel-head">
         <p class="home-panel-kicker">Recent Activity</p>
         <a href="/feed/" class="home-panel-link">All updates →</a>
       </div>
 
-      <ul class="feed-list m-0 p-0 list-none">
+      <div
+        class="home-feed-grid grid gap-3 md:grid-cols-2 lg:grid-cols-3 items-start feed-masonry"
+        data-feed-masonry
+        style="--feed-row-height: 16px;"
+      >
         {% for item in feedItems %}
-          {{ feedCard(item, { variant: 'list' }) }}
+          {{ feedCard(item, {
+            extraClasses: 'feed-card',
+            showTags: false
+          }) }}
         {% endfor %}
-      </ul>
+      </div>
+  </section>
+
+  <section class="home-quote-panel animate-enter stagger-3">
+    <div class="home-panel-head">
+      <p class="home-panel-kicker">Quote Of The Day</p>
     </div>
 
-    <div>
-      <div class="home-panel-head">
-        <p class="home-panel-kicker">Quote Of The Day</p>
-      </div>
-
-      <blockquote class="home-quote">{{ qotd.quote }}</blockquote>
-      <p class="home-quote-source">- {{ qotd.provider }}</p>
-    </div>
-
-    {% if popularPosts.length %}
-      <div>
-        <div class="home-panel-head">
-          <p class="home-panel-kicker">Popular Posts</p>
-          <a href="/feed/" class="home-panel-link">From readers →</a>
-        </div>
-
-        <ul class="home-popular-list">
-          {% for entry in popularPosts %}
-            <li class="home-popular-item">
-              <div class="flex items-start gap-2">
-                <span class="badge badge-tag">{{ entry.count }}▲</span>
-                <a href="{{ entry.url }}" class="home-selected-title">{{ entry.title }}</a>
-              </div>
-            </li>
-          {% endfor %}
-        </ul>
-      </div>
-    {% endif %}
+    <blockquote class="home-quote">{{ qotd.quote }}</blockquote>
   </section>
 </div>
+{% include "components/feed-masonry-script.njk" %}

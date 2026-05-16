@@ -4,16 +4,23 @@
 - title: "In Search of the Agent IDE for Data"
   url: /blog/in-search-of-the-agent-ide/
   note: "A data analyst's mostly futile quest for the perfect workflow."
+  image: /img/blog-sketches/unique/agent-ide-stamp-trim.png
+  imageAlt: Transparent monochrome sketch of an AI coding workspace
 
 - title: "What Obsidian Shouldn't Be"
   url: /blog/what-obsidian-shouldnt-be/
   note: "Obsidian can be anything but if it tries to be everything, it becomes nothing."
+  image: /img/blog-sketches/unique/what-obsidian-shouldnt-be-stamp-trim.png
+  imageAlt: Monochrome sketch of a person at a laptop being overwhelmed by folders, PDFs, medical records, and receipts.
 
 - title: "I built a tool to measure how AI-like a website writes"
   url: /blog/aidar-tracking-ai-writing-drift/
   note: "Then I scanned my own site. Uncomfortable."
+  image: /img/projects/aidar.png
+  imageAlt: aidar AI writing drift detector interface
 
 - title: "The NEAT Framework: How I Built This Site"
   url: /blog/understanding-the-neat-framework/
   note: "Eleventy, Alpine, and Tailwind - and why this stack."
-
+  image: /img/blog-sketches/unique/understanding-the-neat-framework-stamp-trim.png
+  imageAlt: Transparent monochrome sketch of a compact web stack feeding a browser

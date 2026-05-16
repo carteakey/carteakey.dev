@@ -44,6 +44,7 @@
 - [x] Write down the new design language as an explicit style guide so later passes stop depending on implied taste and one-off instructions. (2026-04-24)
 - [x] Introduce reusable editorial typography primitives and use them to clean up the archive, footer mega nav, and `/now/` page in one sweep. (2026-04-24)
 - [x] Rewrite the colophon around the new archive/workbench language, document the redesign history, and add a migration-process doc for future cleanup passes. (2026-04-24)
+- [x] Flatten the background to off-white and make a denser, simpler editorial pass inspired by Jeremy Maluf's sparse travel page. (2026-05-16)
 
 
 
