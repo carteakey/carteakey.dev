@@ -130,7 +130,7 @@ MTP performance scales massively compared to non-MTP generation due to the built
 - **Draft Confidence (`--spec-draft-p-min`)**: The MTP branch implements a hard upper limit but also an internal early-stop mechanism if the draft tokens are of low quality. Lowering this minimum threshold increases the draft count, but again, I've found a hard limit of `2` without messing with `p-min` is best on 12GB cards.
 - **Thinking Mode**: Retain thinking logic using `preserve_thinking: true` to enable long-term code continuity in agentic environments.
 - **Context Length**: The Qwen 3.6 architecture handles contexts up to 262k; running 131k context locally uses ~1.5GB of VRAM headroom when combined with Q8_0 KV quantization and the `--fit` flag logic.
-- **Vision/Images**: Note that while multimodal inputs (images) were originally not supported on the experimental MTP draft branches, they *are* now fully supported with MTP enabled in the mainline release! You can simply combine the MTP draft configuration with the standard `--mmproj` flag. The draft models seamlessly utilize the target model's activations, making this a massive win for agentic vision workflows.
+- **Vision/Images**: Note that while multimodal inputs (images) were originally not supported on the experimental MTP draft branches, they *are* now fully supported with MTP enabled in the mainline release! You can simply combine the MTP draft configuration with the standard `--mmproj` flag. The draft models seamlessly utilize the target model's activations, making this a massive win for agentic vision workflows. Benchmarking the model with the `--mmproj` flag loaded confirms no speed regression on standard text generation (maintaining ~74 tok/s).
 
 ## Changelog
 
