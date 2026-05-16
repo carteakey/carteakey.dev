@@ -2,7 +2,7 @@
 title: Running Qwen3.6-35B-A3B MTP locally on 12GB VRAM
 description: End-to-end Qwen3.6-35B-A3B MTP setup on llama.cpp with throughput notes and MTP speculative decoding speedups.
 date: 2026-05-12
-updated: 2026-05-12
+updated: 2026-05-16
 authored_by: ai-assisted
 draft: true
 tags:
@@ -11,21 +11,23 @@ tags:
 pinned: false
 ---
 
+**Update (May 16, 2026)**: The MTP support PR has officially been merged into the `llama.cpp` mainline master branch! You no longer need to check out a custom PR branch, and the flag has been officially renamed to `--spec-type draft-mtp`.
+
 Qwen 3.6 introduces Multi-Token Prediction (MTP) for speculative decoding natively integrated into the model, driving massive latency improvements in local setups.
 
-This post covers my setup running Qwen3.6-35B-A3B MTP on a 12GB VRAM RTX 4070 using a PR fork of llama.cpp, with real-world throughput numbers compared to its non-MTP baseline.
+This post covers my setup running Qwen3.6-35B-A3B MTP on a 12GB VRAM RTX 4070 using llama.cpp, with real-world throughput numbers compared to its non-MTP baseline.
 
 ## TL;DR
 
 - **Model**: `unsloth/Qwen3.6-35B-A3B-MTP-GGUF` (`UD-Q4_K_XL`).
-- **Stack**: PR#22673 `llama.cpp` (requires MTP draft support branch).
+- **Stack**: Mainline `llama.cpp` (MTP is now officially merged!).
 - **Best synthetic bench**: ~65-75 tok/s (MTP) vs ~51 tok/s (Baseline).
 - **Server-realistic throughput**: ~67 tok/s @ 128k context (MTP accepted rate ~98%).
-- **Key note**: You must use `--spec-type mtp --spec-draft-n-max 2` to leverage speculative decoding optimally without tanking performance.
+- **Key note**: You must use `--spec-type draft-mtp --spec-draft-n-max 2` to leverage speculative decoding optimally without tanking performance.
 
 ## What is Speculative Decoding and MTP?
 
-Standard large language models generate text autoregressively, producing exactly one token at a time. To do so, every weight needs to be accessed once (for a dense model). The technical reality is that standard LLM inference is *memory-bandwidth bound*, creating a significant latency bottleneck. The processor spends the majority of its time moving billions of parameters from VRAM to the compute units just to generate a single token. This leads to under-utilized compute and high latency.
+Standard large language models generate text autoregressively, producing exactly one token at a time. The technical reality is that standard LLM inference is *memory-bandwidth bound*, creating a significant latency bottleneck. The processor spends the majority of its time moving billions of parameters from VRAM to the compute units just to generate a single token. This leads to under-utilized compute and high latency.
 
 Speculative decoding circumvents this by decoupling generation from verification. It guesses the next several tokens rapidly, then uses the large, target model to verify all of those guesses in parallel. If the target model agrees with the draft, it accepts the entire sequence in a single forward pass, granting you multiple tokens for the computational price of one. 
 
@@ -52,15 +54,13 @@ Until we get native MTP weights for all of these architectures, you may need to 
 
 ## End-to-end setup
 
-### 1) Build mainline llama.cpp (with PR)
+### 1) Build mainline llama.cpp
 
-Since MTP support is currently in a pull request (PR #22673), you must build a custom branch.
+Since MTP support is now merged into `master`, you can just pull and build the standard repository.
 
 ```bash
 git clone https://github.com/ggml-org/llama.cpp
 cd llama.cpp
-git fetch origin pull/22673/head:pr-22673
-git checkout pr-22673
 mkdir build && cd build
 cmake .. \
   -DCMAKE_BUILD_TYPE=Release \
@@ -101,7 +101,7 @@ llama-server \
   --threads 10 --threads-batch 12 \
   --no-mmap --mlock \
   --parallel 1 --prio 2 --no-warmup \
-  --spec-type mtp --spec-draft-n-max 2 \
+  --spec-type draft-mtp --spec-draft-n-max 2 \
   --jinja \
   --chat-template-kwargs "{\"preserve_thinking\": true}"
 ```
@@ -110,7 +110,7 @@ llama-server \
 
 ## Benchmarks
 
-MTP performance scales massively compared to non-MTP generation due to the built-in speculative draft models. Below is a comparison between standard generation and generation with `--spec-type mtp --spec-draft-n-max 2`.
+MTP performance scales massively compared to non-MTP generation due to the built-in speculative draft models. Below is a comparison between standard generation and generation with `--spec-type draft-mtp --spec-draft-n-max 2`.
 
 ### Synthetic bench results (MTP Bench)
 
@@ -131,3 +131,10 @@ MTP performance scales massively compared to non-MTP generation due to the built
 - **Thinking Mode**: Retain thinking logic using `preserve_thinking: true` to enable long-term code continuity in agentic environments.
 - **Context Length**: The Qwen 3.6 architecture handles contexts up to 262k; running 131k context locally uses ~1.5GB of VRAM headroom when combined with Q8_0 KV quantization and the `--fit` flag logic.
 - **Vision/Images**: Note that currently, multimodal inputs (images) are not supported on MTP draft variants. You will need to fall back to the standard, non-MTP multimodal weights (with `--mmproj`) for image reasoning. A potential future workaround could involve setting `.n_max=0` automatically per-request when the prompt contains multimodal input.
+
+## Changelog
+
+| Date | Note |
+| --- | --- |
+| 2026-05-16 | MTP PR merged into mainline. Updated flags to `--spec-type draft-mtp`. |
+| 2026-05-12 | Initial post. |
