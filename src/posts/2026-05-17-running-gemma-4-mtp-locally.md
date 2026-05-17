@@ -82,7 +82,18 @@ While early results show promising gains, the overhead of the separate assistant
 
 ## Vision Support
 
-Vision (multimodal) inputs are fully supported with MTP enabled in mainline! You can simply combine the MTP draft configuration with the standard `--mmproj` flag. In our tests, standard text generation maintains its speed (~45+ tok/s) even with vision weights loaded.
+Note that while vision (multimodal) inputs were originally not supported on the initial MTP draft implementations, they **are** now fully supported in the mainline `llama.cpp` release! You can simply combine the MTP draft configuration with the standard `--mmproj` flag.
+
+### Vision Benchmarks (RTX 4070 12GB)
+
+Interestingly, on 12GB hardware, the overhead of the separate assistant model negates the speedup for vision tasks.
+
+| Model | Mode | Throughput (tok/s) |
+| --- | --- | ---: |
+| Gemma 4 26B | Baseline Vision | **6.23** |
+| Gemma 4 26B | MTP Vision | **6.03** |
+
+While MTP doesn't drive a vision speedup here, it remains fully functional and maintains standard text generation speeds (~45+ tok/s) while the vision weights are resident.
 
 ---
 
@@ -90,4 +101,5 @@ Vision (multimodal) inputs are fully supported with MTP enabled in mainline! You
 
 | Date | Note |
 | --- | --- |
+| 2026-05-17 | Verified Vision support and added benchmark results. |
 | 2026-05-17 | Initial post for Gemma 4 MTP setup. |
