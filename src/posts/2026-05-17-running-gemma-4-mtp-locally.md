@@ -98,7 +98,7 @@ Interestingly, on 12GB hardware, the overhead of the separate assistant model ne
 | Gemma 4 26B | Baseline Vision | **6.23** |
 | Gemma 4 26B | MTP Vision | **6.03** |
 
-While MTP doesn't drive a vision speedup here, it remains fully functional and maintains standard text generation speeds (~45+ tok/s) while the vision weights are resident.
+While MTP doesn't drive a vision speedup here, it remains fully functional. Note that on current builds, loading vision weights (`--mmproj`) causes the server to safely skip MTP drafting for all prompts (including text-only) to avoid potential tensor crashes. For the full 1.3x speedup on text tasks, you should use the dedicated text-only MTP profile.
 
 ---
 
@@ -106,6 +106,7 @@ While MTP doesn't drive a vision speedup here, it remains fully functional and m
 
 | Date | Note |
 | --- | --- |
+| 2026-05-17 | Noted that vision weights currently disable MTP drafting for stability. |
 | 2026-05-17 | Promoted `gemma-4-26b-mtp-vision` to the default model for the L3MS stack. |
 | 2026-05-17 | Switched to `atomic-llama-cpp-turboquant` fork for better MTP support and enabled TurboQuant KV-cache. |
 | 2026-05-17 | Verified Vision support and added benchmark results. |
