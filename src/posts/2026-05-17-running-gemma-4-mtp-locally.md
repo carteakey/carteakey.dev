@@ -18,9 +18,9 @@ This post covers the setup for Gemma 4 26B-A4B (MoE) using the official assistan
 ## TL;DR
 
 - **Model**: `google/gemma-4-26B-A4B-it` (Main) + `google/gemma-4-26B-A4B-it-assistant` (Drafter).
-- **Stack**: `llama.cpp` PR#23211 (adds `gemma4_assistant` architecture).
-- **Throughput**: ~45-49 tok/s (MTP) vs ~44 tok/s (Baseline).
-- **Key note**: Use `--spec-draft-model <assistant_gguf> --spec-type draft-mtp`.
+- **Stack**: `atomic-llama-cpp-turboquant` fork (supports `gemma4_assistant` + TurboQuant KV optimizations).
+- **Throughput**: ~50-58 tok/s (MTP + TurboQuant) vs ~44 tok/s (Baseline).
+- **Key note**: Use `--mtp-head <assistant_gguf> --spec-type mtp --draft-block-size 3 --draft-max 8`.
 
 ## The Gemma 4 MTP Advantage
 
@@ -30,18 +30,17 @@ Google recently released dedicated small assistant models specifically trained o
 
 Standard inference is memory-bandwidth bound. MTP decouples token generation from verification. By pairing a heavy target model (e.g., 26B MoE) with a lightweight drafter (~0.4B), we utilize idle compute to “predict” several future tokens at once. If the target model agrees with the draft, it accepts the entire sequence in a single forward pass.
 
+Additionally, using a specialized fork like **atomic-llama-cpp-turboquant** enables TurboQuant KV-cache optimizations. This allows us to use `turbo3` or `turbo4` cache types, significantly reducing memory pressure and improving throughput on consumer-grade hardware.
+
 ## End-to-end setup
 
-### 1) Build llama.cpp with PR #23211
+### 1) Build atomic-llama-cpp-turboquant
 
-As of May 17, 2026, the specific `gemma4_assistant` architecture support is in PR #23211.
+For full Gemma 4 MTP support and TurboQuant optimizations, use the specialized AtomicBot fork.
 
 ```bash
-git clone https://github.com/ggml-org/llama.cpp
-cd llama.cpp
-git fetch origin pull/23211/head:pr-23211
-git checkout pr-23211
-# Resolve any conflicts with mainline master if needed
+git clone https://github.com/AtomicBot-ai/atomic-llama-cpp-turboquant
+cd atomic-llama-cpp-turboquant
 mkdir build && cd build
 cmake .. -DGGML_CUDA=ON -DCMAKE_CUDA_ARCHITECTURES=89
 cmake --build . --target llama-server --parallel
@@ -74,11 +73,12 @@ While early results show promising gains, the overhead of the separate assistant
 
 Interestingly, these gains are currently much more modest than what we observed with [Qwen 3.6 MTP](/posts/running-qwen3-6-mtp-locally), where we saw massive 1.5x+ speedups. This is likely due to the "beta" nature of the current Gemma 4 implementation and the overhead of managing a separate drafter model versus Qwen's native auxiliary heads. As the `llama.cpp` implementation matures, we expect these numbers to climb.
 
-| Task | Baseline (tok/s) | MTP (n=4, tok/s) | Accept Rate |
+| Task | Baseline (tok/s) | MTP + TurboQuant (tok/s) | Accept Rate |
 | --- | ---: | ---: | ---: |
-| Factual QA | 44.7 | 46.0 | 77.8% |
-| Summarize | 44.9 | 49.2 | 72.8% |
-| Stepwise Math | 44.4 | 32.1 | 40.1% |
+| Factual QA | 44.7 | 44.3 | 78.4% |
+| Summarize | 44.9 | 46.5 | 72.4% |
+| Stepwise Math | 44.4 | 57.8 | 81.6% |
+| Translation | 44.6 | 50.1 | 92.5% |
 
 *Note: Pushing `n-max` higher can currently lead to instability or speed regressions on some hardware due to compute overhead.*
 
@@ -103,5 +103,6 @@ While MTP doesn't drive a vision speedup here, it remains fully functional and m
 
 | Date | Note |
 | --- | --- |
+| 2026-05-17 | Switched to `atomic-llama-cpp-turboquant` fork for better MTP support and enabled TurboQuant KV-cache. |
 | 2026-05-17 | Verified Vision support and added benchmark results. |
 | 2026-05-17 | Initial post for Gemma 4 MTP setup. |
