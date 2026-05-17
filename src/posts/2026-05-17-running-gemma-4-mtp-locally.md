@@ -24,7 +24,7 @@ This post covers the setup for Gemma 4 26B-A4B (MoE) using the official assistan
 
 ## The Gemma 4 MTP Advantage
 
-Google released dedicated small assistant models specifically trained on Gemma 4's distribution to act as high-accuracy drafters. Unlike Qwen 3.6 which integrates MTP heads into the main weight file, Gemma 4 uses a separate, lightweight drafter model that shares activations with the target model.
+Google recently released dedicated small assistant models specifically trained on Gemma 4's distribution to act as high-accuracy drafters. Unlike Qwen 3.6 which integrates MTP heads into the main weight file, Gemma 4 uses a separate, lightweight drafter model that shares activations with the target model.
 
 ### How it works
 
@@ -70,7 +70,9 @@ llama-server \
 
 ## Benchmarks (RTX 4070 12GB)
 
-While early results show promising gains, the overhead of the separate assistant model is more noticeable on lower-VRAM cards compared to integrated MTP heads.
+While early results show promising gains, the overhead of the separate assistant model is more noticeable on lower-VRAM cards compared to integrated MTP heads. 
+
+Interestingly, these gains are currently much more modest than what we observed with [Qwen 3.6 MTP](/posts/running-qwen3-6-mtp-locally), where we saw massive 1.5x+ speedups. This is likely due to the "beta" nature of the current Gemma 4 implementation and the overhead of managing a separate drafter model versus Qwen's native auxiliary heads. As the `llama.cpp` implementation matures, we expect these numbers to climb.
 
 | Task | Baseline (tok/s) | MTP (n=4, tok/s) | Accept Rate |
 | --- | ---: | ---: | ---: |
