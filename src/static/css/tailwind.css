@@ -398,8 +398,8 @@ blockquote p:after {
 figure {
   text-align: center;
   display: table;
-  margin: 2.5rem auto;
-  max-width: min(100%, 46rem);
+  margin: 0.75rem auto;
+  max-width: min(100%, 44rem);
 }
 
 picture {
@@ -407,33 +407,31 @@ picture {
   text-align: center;
 }
 
+/* Unlayered so it beats any @layer rule */
+.prose figure > img,
+.prose > img,
+.prose picture > img,
+.post-body figure > img,
+.post-body > img,
+.post-body picture > img {
+  display: block;
+  width: auto;
+  max-width: min(100%, 44rem);
+  max-height: 20rem;
+  height: auto;
+  object-fit: contain;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 0.15rem;
+  border: none;
+  box-shadow: none;
+}
+
+/* Global picture img fallback */
 picture img {
   max-width: 100%;
   height: auto;
   display: inline-block;
-}
-
-@layer components {
-
-  .prose figure>img,
-  .prose>img,
-  .prose picture>img {
-    display: block;
-    width: 100%;
-    max-width: min(100%, 44rem);
-    margin-left: auto;
-    margin-right: auto;
-    border-radius: 0.15rem;
-    border: 1px solid rgb(215 207 190 / 1);
-    box-shadow: none;
-  }
-
-  .dark .prose figure>img,
-  .dark .prose>img,
-  .dark .prose picture>img {
-    border-color: rgb(63 63 70 / 0.95);
-    box-shadow: none;
-  }
 }
 
 /* Title hover - MUST be unlayered to beat @layer utilities (Tailwind text-* classes).

@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.14] - 2026-05-17
+### Added
+- Added generated transparent monochrome thumbnail sketches to the remaining non-template blog posts.
+- Added posts for the image-generator comparison and Loganime still-frame trailer experiment.
+
+### Changed
+- post.njk: Reduced hero/sketch image max-height from `30rem` to `18rem`; switched to `w-auto` so images scale to content rather than stretching full-width; tightened top margin from `mt-4` to `mt-2`.
+- tailwind.css: Prose body image constraints moved out of `@layer components` so they win the CSS cascade; `max-height: 20rem` caps tall images while wide/landscape images can fill up to `44rem`; removed border from prose images to eliminate the double-line caused by image border + `hr.divider-gradient` stacking; cut `figure` vertical margin from `2.5rem` to `0.75rem`.
+
 ## [2.0.13] - 2026-05-16
 ### Removed
 - Deleted stale one-off refactor, scratch migration, and GitHub probe scripts.

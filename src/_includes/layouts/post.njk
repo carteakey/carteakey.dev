@@ -172,13 +172,13 @@ hasEthicalAds: false
       </div>
 
       {% if image %}
-        <figure class="not-prose mt-4 flex justify-center">
+        <figure class="not-prose mt-2 flex justify-center">
           <img
             src="{{ image | url }}"
             alt="{{ imageAlt or title }}"
             loading="eager"
             decoding="async"
-            class="block h-auto max-h-[30rem] w-full max-w-4xl object-contain dark:invert dark:brightness-125"
+            class="block h-auto max-h-[18rem] w-auto max-w-full object-contain dark:invert dark:brightness-125"
           >
         </figure>
       {% endif %}
