@@ -2492,11 +2492,9 @@ picture img {
 
   .post-header {
     padding-bottom: 0.75rem;
-    border-bottom: 1px solid rgb(214 207 193 / 0.95);
   }
 
   .dark .post-header {
-    border-bottom-color: rgb(63 63 70 / 0.95);
   }
 
   .post-title {
