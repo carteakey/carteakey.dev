@@ -21,6 +21,7 @@ This post covers the setup for Gemma 4 26B-A4B (MoE) using the official assistan
 - **Stack**: `atomic-llama-cpp-turboquant` fork (supports `gemma4_assistant` + TurboQuant KV optimizations).
 - **Throughput**: ~50-58 tok/s (MTP + TurboQuant) vs ~44 tok/s (Baseline).
 - **Key note**: Use `--mtp-head <assistant_gguf> --spec-type mtp --draft-block-size 3 --draft-max 8`.
+- **Default Stack**: This optimized setup is now the default model for my L3MS stack.
 
 ## The Gemma 4 MTP Advantage
 
@@ -73,6 +74,8 @@ While early results show promising gains, the overhead of the separate assistant
 
 Interestingly, these gains are currently much more modest than what we observed with [Qwen 3.6 MTP](/posts/running-qwen3-6-mtp-locally), where we saw massive 1.5x+ speedups. This is likely due to the "beta" nature of the current Gemma 4 implementation and the overhead of managing a separate drafter model versus Qwen's native auxiliary heads. As the `llama.cpp` implementation matures, we expect these numbers to climb.
 
+Due to the significant speedup and reliable vision support on the RTX 4070, **`gemma-4-26b-mtp-vision`** has been promoted to the default production model for the L3MS stack, preloading on startup for near-instant latency.
+
 | Task | Baseline (tok/s) | MTP + TurboQuant (tok/s) | Accept Rate |
 | --- | ---: | ---: | ---: |
 | Factual QA | 44.7 | 44.3 | 78.4% |
@@ -103,6 +106,7 @@ While MTP doesn't drive a vision speedup here, it remains fully functional and m
 
 | Date | Note |
 | --- | --- |
+| 2026-05-17 | Promoted `gemma-4-26b-mtp-vision` to the default model for the L3MS stack. |
 | 2026-05-17 | Switched to `atomic-llama-cpp-turboquant` fork for better MTP support and enabled TurboQuant KV-cache. |
 | 2026-05-17 | Verified Vision support and added benchmark results. |
 | 2026-05-17 | Initial post for Gemma 4 MTP setup. |
