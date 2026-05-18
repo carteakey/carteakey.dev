@@ -1,6 +1,8 @@
 ---
 title: Working with Copilot & Codex on carteakey.dev (draft)
 description: The workflow behind using AI agents effectively
+image: /img/blog-sketches/unique/working-with-copilot-codex-stamp-trim.png
+imageAlt: "Transparent monochrome sketch of AI coding agents editing an Eleventy blog"
 date: 2025-10-04
 authored_by: ai-generated
 giscusTerm: "/blog/meta/working-with-copilot-codex/"

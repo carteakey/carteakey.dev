@@ -1,6 +1,8 @@
 ---
 title: Running Qwen3.6-35B-A3B MTP locally on 12GB VRAM
 description: End-to-end Qwen3.6-35B-A3B MTP setup on llama.cpp with throughput notes and MTP speculative decoding speedups.
+image: /img/blog-sketches/unique/running-qwen3-6-mtp-locally-stamp-trim.png
+imageAlt: "Transparent monochrome sketch of a local GPU workstation with multi-token prediction arrows"
 date: 2026-05-12
 updated: 2026-05-16
 authored_by: ai-assisted

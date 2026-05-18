@@ -1,6 +1,8 @@
 ---
 title: Exposing local llm's to the internet (draft)
 description: "Your very own AI-API "
+image: /img/blog-sketches/unique/exposing-local-llms-to-the-internet-stamp-trim.png
+imageAlt: "Transparent monochrome sketch of a local LLM workstation connected to the internet through a secure tunnel"
 date: 2025-03-06T05:14:04.467Z
 authored_by: human
 updated: 2025-03-06T05:14:04.480Z

@@ -1,6 +1,8 @@
 ---
 title: "Skills Radar: Mapping Where I Stand in the Data Landscape (draft)"
 description: "How I built an interactive radar chart to visualize my skills across different data roles - and what it revealed."
+image: /img/blog-sketches/unique/skills-radar-mapping-where-i-stand-stamp-trim.png
+imageAlt: "Transparent monochrome sketch of a laptop showing a data skills radar chart"
 date: 2026-02-09
 authored_by: ai-assisted
 tags:

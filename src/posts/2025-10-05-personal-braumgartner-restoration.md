@@ -1,6 +1,8 @@
 ---
 title: Personal Braumgartner Restoration
 description: Bringing old photos back to life.
+image: /img/blog-sketches/unique/personal-braumgartner-restoration-stamp-trim.png
+imageAlt: "Transparent monochrome sketch of old family photos being restored on a desk"
 date: 2025-10-05T00:00:00.000Z
 authored_by: human
 updated: 2025-10-05T00:00:00.000Z

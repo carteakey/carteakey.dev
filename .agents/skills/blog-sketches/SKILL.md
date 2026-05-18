@@ -71,12 +71,19 @@ imageAlt: Transparent monochrome sketch of an AI coding workspace
 
 1. Read the target post and decide whether an image is worth adding.
 2. Generate one post-specific sketch with the raster image workflow/tooling.
-3. If the generated asset has a paper-colored background, run the helper:
+3. If the generated asset has a removable flat chroma-key background, use the
+   installed imagegen helper:
 
 ```bash
-node .agents/skills/blog-sketches/scripts/prepare-sketch.mjs \
-  src/static/img/blog-sketches/agent-ide.png \
-  src/static/img/blog-sketches/unique/agent-ide-stamp-trim.png
+python3 "${CODEX_HOME:-$HOME/.codex}/skills/.system/imagegen/scripts/remove_chroma_key.py" \
+  --input tmp/imagegen/agent-ide-keyed.png \
+  --out src/static/img/blog-sketches/unique/agent-ide-stamp-trim.png \
+  --auto-key border \
+  --soft-matte \
+  --transparent-threshold 12 \
+  --opaque-threshold 220 \
+  --despill \
+  --force
 ```
 
 4. Add `image` and `imageAlt` to exactly one post.
@@ -85,6 +92,90 @@ node .agents/skills/blog-sketches/scripts/prepare-sketch.mjs \
    - `/feed/`
    - the post page
 6. Run `npm run build`.
+
+## Batch Workflow
+
+Use a batch pass when many posts lack thumbnails, but still treat every image as
+unique. The safest pattern is:
+
+1. List posts missing `image` front matter, excluding the template:
+
+```bash
+for f in src/posts/**/*.md src/posts/*.md; do
+  [ -f "$f" ] || continue
+  [ "${f##*/}" = "1990-01-01-template.md" ] && continue
+  if ! sed -n '1,/^---$/p' "$f" | rg -q '^image:'; then
+    printf '%s\n' "$f"
+  fi
+done
+```
+
+2. Read each post's front matter and opening section before prompting.
+3. Generate one image per post with the built-in `image_gen` tool. Use one
+   prompt per post, not one generic prompt for the set.
+4. Preserve a stable ordered mapping from generated source file to post slug.
+   The built-in tool saves under `$CODEX_HOME/generated_images/...`; sort by
+   modification time when generation order matters.
+5. Copy or process the selected source into the repo. Never reference an image
+   directly from `$CODEX_HOME/generated_images`.
+6. Remove the chroma key and trim transparent edges into
+   `src/static/img/blog-sketches/unique/{slug}-stamp-trim.png`.
+7. Normalize any residual keyed tint to neutral grayscale. This matters because
+   faint green or magenta wash can survive inside antialiased pencil shading and
+   looks wrong after dark-mode inversion.
+8. Validate each final PNG:
+   - has an alpha channel
+   - transparent corners are `0`
+   - the subject has plausible coverage, roughly `0.12-0.60`
+   - the contact sheet reads clearly at thumbnail size
+9. Add `image` and `imageAlt` only to the matching post. Do not touch posts that
+   already have a thumbnail unless replacing one intentionally.
+10. Remove temporary keyed sources and contact sheets after final assets are in
+    `src/static/img/blog-sketches/unique/`.
+11. Run `npm run build`.
+12. Serve `_site` locally and spot-check `/blog/`, `/feed/`, and representative
+    updated post pages. If Browser/Playwright is unavailable, at minimum fetch
+    the pages and `HEAD` the sketch image URLs.
+
+Useful batch post-processing shape:
+
+```python
+from pathlib import Path
+from PIL import Image
+
+def trim_to_square_alpha(path: Path, out: Path, pad: int = 28) -> None:
+    im = Image.open(path).convert("RGBA")
+    bbox = im.getchannel("A").getbbox()
+    if not bbox:
+        raise ValueError(f"no visible subject: {path}")
+    left, top, right, bottom = bbox
+    left = max(0, left - pad)
+    top = max(0, top - pad)
+    right = min(im.width, right + pad)
+    bottom = min(im.height, bottom + pad)
+    cropped = im.crop((left, top, right, bottom))
+    size = max(cropped.width, cropped.height)
+    canvas = Image.new("RGBA", (size, size), (0, 0, 0, 0))
+    canvas.paste(cropped, ((size - cropped.width) // 2, (size - cropped.height) // 2), cropped)
+    canvas.save(out, optimize=True)
+
+def neutralize_to_grayscale(path: Path) -> None:
+    im = Image.open(path).convert("RGBA")
+    pixels = im.load()
+    for y in range(im.height):
+        for x in range(im.width):
+            r, g, b, a = pixels[x, y]
+            if a == 0:
+                pixels[x, y] = (0, 0, 0, 0)
+                continue
+            lum = int(0.299 * r + 0.587 * g + 0.114 * b)
+            pixels[x, y] = (lum, lum, lum, a)
+    im.save(path, optimize=True)
+```
+
+For front-matter edits in a batch, prefer a path-keyed script over a broad text
+replacement. Insert `image` / `imageAlt` after `description` when present, and
+skip files that already contain `image:`.
 
 ## Prompting Guidance
 
@@ -96,6 +187,8 @@ Keep prompts concrete and post-specific. Ask for:
 - strong silhouette for thumbnail use
 - no colored fills
 - no paper card or white border
+- no readable text, labels, letters, or numbers unless the post specifically
+  needs them
 
 Bad prompt shape:
 
@@ -108,16 +201,33 @@ Good prompt shape:
   app cards, notebook with flowchart, coffee mug, clean black-ink lines, no
   background card, square composition, readable as a small blog thumbnail."
 
+For chroma-key batch generation, add a strict removable-background block:
+
+```text
+Scene/backdrop: perfectly flat solid #00ff00 chroma-key background for
+background removal.
+
+Constraints: uniform #00ff00 background only, no shadows, no gradients, no
+texture, no reflections, no floor plane, no readable text, no watermark, no
+border, no card, no white paper backplate, and no #00ff00 inside the subject.
+```
+
+If the subject is green-heavy, use `#ff00ff` instead. Avoid blue keys for local
+inference, hardware, and UI sketches because screens, charts, and technical
+objects often pick up blue-toned shading.
+
 ## Editing Existing Assets
 
-Use `scripts/prepare-sketch.mjs` when a generated image is close but still has:
+If a generated image is close but still has:
 
 - off-white paper background
 - too much transparent padding
 - weak separation from the site background
 
-The script keys out the near-paper background, preserves darker strokes, then
-trims the transparent edges.
+then key out the background, trim the transparent edges, and desaturate the
+remaining visible pixels to grayscale. The skill currently has no project-local
+`scripts/prepare-sketch.mjs`; use the installed imagegen chroma-key helper or
+add a local helper intentionally before referencing one.
 
 ## Integration Notes
 
@@ -126,3 +236,7 @@ trims the transparent edges.
 - Keep archive/feed density intact; do not add large framed thumbnails to lists.
 - If you need to place the image inside post content manually, use the existing
   Eleventy image shortcode rather than Markdown image syntax.
+- Permanent thumbnail batches should update `docs/CHANGELOG.md` and
+  `versions.json` according to the repo playbook.
+- Treat unrelated worktree changes as user-owned. Do not clean or revert
+  existing deleted temp/source files unless explicitly asked.

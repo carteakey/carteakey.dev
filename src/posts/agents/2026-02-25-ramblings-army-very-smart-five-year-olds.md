@@ -1,6 +1,8 @@
 ---
 title: Ramblings on Running an Army of Very Smart Five-Year-Olds
 description: truly the year of the agents
+image: /img/blog-sketches/unique/ramblings-army-very-smart-five-year-olds-stamp-trim.png
+imageAlt: "Transparent monochrome sketch of many small agent terminals being supervised from a command desk"
 date: 2026-02-25
 authored_by: human
 giscusTerm: "/blog/ramblings-army-very-smart-five-year-olds/"

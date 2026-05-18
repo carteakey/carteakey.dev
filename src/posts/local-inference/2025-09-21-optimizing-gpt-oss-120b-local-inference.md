@@ -1,6 +1,8 @@
 ---
 title: Optimizing gpt-oss-120b speed on consumer hardware
 description: Squeezing every token per second
+image: /img/blog-sketches/unique/optimizing-gpt-oss-120b-local-inference-stamp-trim.png
+imageAlt: "Transparent monochrome sketch of a GPU workstation tuned for local model inference speed"
 date: 2025-09-21
 authored_by: human
 updated: 2026-03-12

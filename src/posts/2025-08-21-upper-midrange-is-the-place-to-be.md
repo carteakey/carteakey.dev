@@ -1,6 +1,8 @@
 ---
 title: Upper Midrange is the Place to Be (draft)
 description: A practical, battle‑tested guide
+image: /img/blog-sketches/unique/upper-midrange-is-the-place-to-be-stamp-trim.png
+imageAlt: "Transparent monochrome sketch of practical upper-midrange PC parts on a workbench"
 date: 2025-08-21T09:00:00.000Z
 authored_by: human
 updated:   2025-08-21T09:00:00.000Z

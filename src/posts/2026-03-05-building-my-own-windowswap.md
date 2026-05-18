@@ -1,6 +1,8 @@
 ---
 title: Building My Own WindowSwap
 description: A Raspberry Pi 4B, a Pi camera, an HLS stream, and a Cloudflare tunnel - my take on the window-to-the-world idea.
+image: /img/blog-sketches/unique/building-my-own-windowswap-stamp-trim.png
+imageAlt: "Transparent monochrome sketch of shuffled browser window views and webcam thumbnails"
 date: 2026-03-05
 updated: 2026-03-05
 giscusTerm: "/blog/tech/building-my-own-windowswap/"

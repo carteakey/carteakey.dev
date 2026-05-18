@@ -1,6 +1,8 @@
 ---
 title: Agent-Hopping - A Cost-Effective Way to Access Coding Agents 
 description: You probably don't need >$100 plans for coding nowadays. 
+image: /img/blog-sketches/unique/cost-effective-coding-agents-stamp-trim.png
+imageAlt: "Transparent monochrome sketch of coding agent windows connected by cost-aware arrows"
 date: 2026-02-23
 authored_by: human
 giscusTerm: "/blog/cost-effective-coding-agents/"

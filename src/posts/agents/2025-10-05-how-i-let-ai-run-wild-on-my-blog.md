@@ -1,6 +1,8 @@
 ---
 title: How I Let AI Run Wild on My Blog (with Copilot & Codex) (draft)
 description: A peek at the playbook that lets AI assistants plan, ship, and report on updates to carteakey.dev.
+image: /img/blog-sketches/unique/how-i-let-ai-run-wild-on-my-blog-stamp-trim.png
+imageAlt: "Transparent monochrome sketch of many blog files flowing through agent cursors"
 date: 2025-10-05
 authored_by: ai-generated
 giscusTerm: "/blog/meta/how-i-let-ai-run-wild-on-my-blog/"

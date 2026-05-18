@@ -1,6 +1,8 @@
 ---
 title: Running Qwen3-Coder-Next at 40 t/s on consumer hardware (draft)
 description: Squeezing every token per second - the sequel
+image: /img/blog-sketches/unique/optimizing-qwen3-coder-next-local-inference-stamp-trim.png
+imageAlt: "Transparent monochrome sketch of Qwen3-Coder-Next local inference tuning with KV cache blocks"
 date: 2026-02-18
 authored_by: human
 updated: 2026-03-15

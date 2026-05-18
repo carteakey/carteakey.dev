@@ -1,6 +1,8 @@
 ---
 title: "Unforwarder v2: Kill the Noise, Save the Memories"
 description: From one script to a two-tool WhatsApp hygiene system - destroy the junk, preserve what matters.
+image: /img/blog-sketches/unique/unforwarder-v2-kill-the-noise-save-the-memories-stamp-trim.png
+imageAlt: "Transparent monochrome sketch of a photo stream being filtered into trash and memories"
 date: 2026-03-08T00:00:00.000Z
 authored_by: ai-assisted
 updated: 2026-03-08T00:00:00.000Z

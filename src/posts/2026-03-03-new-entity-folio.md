@@ -1,6 +1,8 @@
 ---
 title: "New Entity: Folio"
 description: "Introducing /folio/ - themed, standalone web pages for things I obsess over. Part deep-dive, part visual essay, part personal reference guide."
+image: /img/blog-sketches/unique/new-entity-folio-stamp-trim.png
+imageAlt: "Transparent monochrome sketch of a folded folio becoming a curated browser page"
 date: 2026-03-03
 authored_by: ai-assisted
 hidden: false

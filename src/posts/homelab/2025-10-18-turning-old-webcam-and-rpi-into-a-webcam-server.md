@@ -1,6 +1,8 @@
 ---
 title: Turning an old webcam + RPi into a camera server
 description:  Fun little weekend project
+image: /img/blog-sketches/unique/turning-old-webcam-and-rpi-into-a-webcam-server-stamp-trim.png
+imageAlt: "Transparent monochrome sketch of a webcam and Raspberry Pi camera server with timelapse frames"
 date: 2025-10-18T00:00:00.000Z
 authored_by: human
 updated: 2025-10-18T00:00:00.000Z

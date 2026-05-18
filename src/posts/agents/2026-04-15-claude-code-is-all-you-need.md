@@ -1,6 +1,8 @@
 ---
 title: Claude Code is all you need?
 description: I know that "all you need" is annoying but hear me out.
+image: /img/blog-sketches/unique/claude-code-is-all-you-need-stamp-trim.png
+imageAlt: "Transparent monochrome sketch of a terminal-centered laptop applying code patches"
 date: 2026-04-15
 authored_by: human
 draft: true
