@@ -1,6 +1,6 @@
 [build]
   publish = "_site"
-  command = "npm run build"
+  command = "pnpm run build"
   functions = "netlify/functions"
 
 # Force redirect for blog post URLs with spaces (percent-encoded)
