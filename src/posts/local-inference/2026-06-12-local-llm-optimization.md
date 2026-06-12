@@ -3,7 +3,7 @@ title: "Local LLM Inference Optimization: The Complete Guide"
 description: A living deep-dive into every layer of local LLM inference - hardware, OS, backend choice, and every llama.cpp flag worth tuning - synthesized from months of running large models on consumer hardware.
 date: 2026-06-12
 updated: 2026-06-12
-authored_by: ai-generated
+authored_by: ai-assisted
 draft: false
 tags:
   - AI
