@@ -3,7 +3,7 @@ title: "Ultrafast Gemma 4 12B QAT + MTP: 120 tok/s Local Inference"
 description: "Setup and benchmark results running Gemma 4 12B QAT with Multi-Token Prediction on a single RTX 4070 GPU."
 date: 2026-06-12
 authored_by: ai-generated
-draft: false
+draft: true
 tags:
   - AI
   - Self-Host
