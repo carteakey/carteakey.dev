@@ -37,6 +37,14 @@ Here is a performance breakdown comparing various configurations on a consumer R
 3. **Draft Settings**:
    For the MoE 26B variant, pushing `--spec-draft-n-max` beyond `2` introduces compute overhead that degrades throughput on 12GB cards. Sticking to `n-max 2` provides the optimal acceptance-rate-to-overhead ratio.
 
+## Why QAT Changes the Game: Q4 QAT vs. Q8
+
+Normally, dropping down to a 4-bit model from 8-bit or full 16-bit precision introduces a noticeable penalty in perplexity, reasoning, and coding accuracy. However, Quantization-Aware Training (QAT) bypasses this penalty:
+
+- **VRAM Reduction**: A 4-bit QAT model (`UD-Q4_K_XL` at ~14.2 GB) offers a **~70% memory reduction** compared to FP16 and **~40% memory reduction** compared to Q8, fitting within consumer 12GB VRAM cards with space to spare.
+- **Accuracy Recovery**: Unlike standard Post-Training Quantization (PTQ) which quantizes weights *after* the model is fully trained, QAT introduces quantization rounding noise directly *during* the training/fine-tuning phase. This allows the neural network to adapt its remaining parameters to the low-bit constraints, routing around the reduced resolution.
+- **Intelligence-Per-Byte**: By training the model to expect low-bit rounding, the resulting 4-bit QAT model achieves benchmark performance and accuracy that is virtually indistinguishable from a standard 8-bit (`Q8_0`) quantization, giving you 8-bit intelligence at a 4-bit VRAM footprint.
+
 ## End-to-End Setup in llama.cpp
 
 Ensure you are using a mainline llama.cpp build with Gemma 4 MTP support. 
