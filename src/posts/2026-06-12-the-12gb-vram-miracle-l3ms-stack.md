@@ -17,7 +17,7 @@ But by designing an optimized local inference stack around **L3MS** and **llama-
 
 We are currently serving a **120B MoE**, an **80B MoE**, and getting **over 100 tokens/second** on a 26B MoE-all locally, all on the same 12GB RTX 4070. To track these active configurations, benchmarks, and performance ranges in real time, we deployed a new high-density cyber-brutalist dashboard at [l3ms.carteakey.dev](https://l3ms.carteakey.dev).
 
-Here is a breakdown of how the stack works and the three core techniques making it possible.
+Here is a breakdown of how the stack is orchestrated, followed by the complete inventory of active configurations on the leaderboard.
 
 ---
 
@@ -39,53 +39,29 @@ To catalog active configurations and benchmark results, we use a separate static
 
 ---
 
-## Core Optimization Techniques
+## Active Served Models & Leaderboard Inventory
 
-To run these massive models with usable speeds on 12GB VRAM, we leverage three advanced quantization and execution techniques:
+Here is the full inventory of active served configurations on the CachyOS node, including their VRAM footprints (quants), context sizes, and maximum recorded throughput (TPS) as tracked on the leaderboard:
 
-### Technique 1: Quantization-Aware Training (QAT) + Speculative Drafting (MTP)
-For models like **Gemma 4 12B** and **Gemma 4 26B**, we combine low-bit QAT quants with Multi-Token Prediction (MTP) drafting:
-* **Quantization-Aware Training (QAT)**: Normally, standard 4-bit quants degrade intelligence. QAT introduces quantization noise *during* training, allowing the model to adapt. The resulting `UD-Q4_K_XL` quant (~14.2 GB for 26B) gives 8-bit intelligence at a 4-bit memory footprint, fitting entirely in VRAM.
-* **MTP Speculative Decoding**: We run the QAT base model along with a lightweight 460MB MTP assistant model (`mtp-gemma-4-26B-A4B-it.gguf`). The assistant drafts multiple tokens in parallel, and the base model verifies them in a single GPU pass. 
+### 1. Blazing Fast Speculative Models (QAT + MTP)
+These models combine training-optimized Quantization-Aware Training (QAT) with Multi-Token Prediction (MTP) drafting to achieve triple-digit generation speeds:
+* **gemma-4-12B QAT + MTP** (`UD-Q4_K_XL` base, 131k context) - **120.80 tok/s**. Ultrafast dense model utilizing native speculative drafting.
+* **gemma-4-26B QAT + MTP** (`UD-Q4_K_XL` base, 131k context) - **100.60 tok/s**. Our startup preload default, delivering MoE intelligence at a single-GPU VRAM footprint.
+* **Qwen3.6-35B-A3B MTP** (`UD-Q4_K_XL` base, 131k context) - **73.97 tok/s**. Middle-weight MoE running MTP drafting.
 
-By offloading the entire model to VRAM and using MTP, we achieve:
-* **Gemma 4 12B QAT + MTP**: **120.80 tok/s**
-* **Gemma 4 26B MoE QAT + MTP**: **100.60 tok/s**
+### 2. High-Precision & Multimodal Variations
+Standard baseline configurations and vision-capable profiles utilizing visual projection layers:
+* **gemma-4-26B QAT** (`UD-Q4_K_XL` base, 131k context) - **69.00 tok/s**. Text-only base model without speculative drafting enabled.
+* **Qwen3.6-35B-A3B MTP (Vision)** (`UD-Q4_K_XL` base, 131k context) - **65.00 tok/s**. MoE visual assistant using a F16 CLIP projection layer.
+* **gemma-4-12B QAT** (`UD-Q4_K_XL` base, 131k context) - **59.90 tok/s**. Text-only base 12B without speculative drafting.
+* **Qwen3.6-35B-A3B MTP Q6** (`UD-Q6_K` precision, 131k context) - **50.00 tok/s**. Higher-precision MoE using 6-bit weights.
+* **gemma-4-26B QAT + MTP (Vision)** (`UD-Q4_K_XL` base, 131k context) - **39.00 tok/s**. Speculative drafting MoE with BF16 visual projection.
+* **gemma-4-12B QAT + MTP (Vision)** (`UD-Q4_K_XL` base, 131k context) - **35.00 tok/s**. Speculative drafting dense model with BF16 visual projection.
 
-### Technique 2: Static Expert-Offloading (CPU/GPU Hybrid routing)
-For models that cannot possibly fit in VRAM, like **gpt-oss-120b** or **Qwen3-Coder-Next 80B.A3B**, we bypass standard automatic split layers. Instead, we write a static offloading matrix inside `llama-swap.yaml`:
-* **The Non-Expert Layer Split**: We offload all non-expert attention and normalization layers (which are small but compute-heavy) to the GPU using llama.cpp's `-ngl` flag.
-* **CPU Routing for MoE Experts**: We lock the model's massive MoE (Mixture of Experts) feed-forward blocks to the CPU using tensor overrides:
-  ```bash
-  --override-tensor "blk\.(5|[6-9]|[0-9][0-9]|[0-9][0-9][0-9])\.ffn_(up|down|gate)_(ch|)exps=CPU"
-  ```
-* **Thread Optimization**: We lock CPU inference to a specific thread affinity map using `taskset -c 0-11` on our Intel i5-12600K to prevent scheduler thrashing.
+### 3. CPU/GPU Split Giants
+Heavyweight MoE models that exceed VRAM limits but are routed through static expert offloading to maximize CPU/GPU throughput:
+* **Qwen3-Coder-Next 80B.A3B** (`UD-Q4_K_XL` base, 65k context) - **39.60 tok/s**. Our primary coding model, running via static bench-derived expert splitting.
+* **gpt-oss 120B** (`MXFP4` base, 32k context) - **23.40 tok/s**. High-reasoning production giant, utilizing optimized CPU/GPU expert routing.
+* **sarvam-30B** (`Q6_K` precision, 4k context) - **15.00 tok/s**. Specialized configuration.
 
-Because MoE models only activate a tiny subset of experts per token (e.g., 2 out of 64), we don't need to read all 120 billion parameters from system RAM for every token. Squeezing the active layers into the GPU while pinning the expert parameters in system RAM gives us highly usable speeds:
-* **Qwen3-Coder-Next 80B**: **39.6 tok/s** (at a massive 64k context size!)
-* **gpt-oss-120b**: **23.4 tok/s**
-
-### Technique 3: Mainline llama.cpp Fit Offloading
-For models like **Qwen 3.6 35B**, we use llama.cpp's dynamic memory fitting parameters:
-```bash
---fit on --fit-ctx 131072 --fit-target 1536
-```
-This flag tells the runtime to dynamically fit as many layers as possible into the available VRAM while ensuring we have exactly 1536 MiB of headroom left over to hold the large 131k context KV caches.
-
----
-
-## Active Served Models Catalog
-
-Here is the inventory of active models configured in our homelab stack right now:
-
-* **`gpt-oss-120b`**: Optimized MXFP4 quant. Serves as our master reasoning engine. Uses static split (blk 0–4 on GPU, blk 5+ experts on CPU).
-* **`qwen3-coder-next`**: Qwen 3 Coder 80B MoE. Deployed in UD-Q4_K_XL. Serves as our primary programming assistant with 64k context window.
-* **`qwen3-6-mtp`**: Qwen 3.6 35B MoE at UD-Q4_K_XL with MTP drafting. Excellent middle-weight reasoning.
-* **`qwen3-6-mtp-vision`**: The 35B model with visual capabilities enabled via a `mmproj-F16.gguf` projection layer.
-* **`gemma-4-26b-qat-mtp`**: Gemma 4 26B MoE. Standard startup default. Runs at 100.6 tok/s.
-* **`gemma-4-26b-qat-mtp-vision`**: Gemma 4 26B MoE with vision support using a `mmproj-BF16` projector.
-* **`gemma-4-12b-qat-mtp`**: Gemma 4 12B dense. Blazing fast at 120.8 tok/s.
-* **`gemma-4-12b-qat-mtp-vision`**: Gemma 4 12B with vision support.
-* **`sarvam-30b`**: Sarvam 30B (Q6_K precision) for specialized tasks.
-
-By combining dynamic swapping (`llama-swap`), hybrid MoE offloading (`--override-tensor`), and speculative parallel decoding (`MTP`), a consumer 12GB GPU ceases to be a limitation. It becomes an incredibly powerful, versatile local AI host.
+By using the `llama-swap` gateway for dynamic memory swapping, we can access any model in this extensive inventory on-demand, getting top performance and high-density tracking without needing a massive server rack.
