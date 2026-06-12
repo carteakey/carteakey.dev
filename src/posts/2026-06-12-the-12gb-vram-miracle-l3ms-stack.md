@@ -23,15 +23,19 @@ Here is a breakdown of how the stack works and the three core techniques making 
 
 ## The L3MS Stack Architecture
 
-To make this setup ergonomic, we don't try to run all these models simultaneously. Instead, we use a two-part orchestration layer:
+To make this setup ergonomic, we don't try to run all these models simultaneously. Instead, we rely on the stateful model-swapping capabilities of **`llama-swap`**:
 
-1. **`llama-swap` Gateway**: A stateful model-swapping daemon that acts as the single entry point. It exposes a standard OpenAI-compatible API and intercepts requests. When a request targets a model that isn't loaded, `llama-swap` automatically swaps out the active model and loads the requested one. It uses a global TTL (Time-To-Live) of 10 minutes to auto-unload idle models, reclaiming VRAM.
-2. **Cyber-Brutalist Dashboard ([l3ms.carteakey.dev](https://l3ms.carteakey.dev))**: A zero-dependency, high-density dashboard used for tracking our LLM inference capabilities:
-   * <span style="color: #00ff66">🏆 Active TPS Leaderboard</span>: Interactive leaderboard of serving configurations on the CachyOS RTX 4070 node. Includes live sorting (Speed, Context, Size), search, and tags (MTP, Vision, MoE).
-   * <span style="color: #00e5ff">📊 Performance Ranges</span>: Visual task-specific performance bar charts comparing baseline speeds against MTP drafting speeds.
-   * <span style="color: #ff007f">📦 Archived Catalog</span>: Structured breakdown of retired configurations showing parameters, retirement date, and replacement suggestions.
+* **`llama-swap` Gateway**: This is a stateful model-swapping daemon that acts as our single entry point. It exposes a standard OpenAI-compatible API and intercepts all incoming client requests. When a request targets a model that isn't currently loaded, `llama-swap` automatically unloads the active model, loads the requested one, and resumes. It uses a global TTL (Time-To-Live) of 10 minutes to auto-unload idle models, freeing up VRAM.
 
 By letting `llama-swap` manage memory swapping dynamically, it feels like we have unlimited VRAM. We can write code with our 80B coder, swap to a 12B model for high-speed chat, and query the 120B giant for complex reasoning, with only a 10–20 second load delay between switches.
+
+## Performance Tracking & Visualization
+
+To catalog active configurations and benchmark results, we use a separate static dashboard deployed at [l3ms.carteakey.dev](https://l3ms.carteakey.dev). This is purely a visualization layer for tracking our performance leaderboards, not an active part of the serving stack:
+
+* <span style="color: #00ff66">🏆 Active TPS Leaderboard</span>: Interactive leaderboard of serving configurations on the CachyOS RTX 4070 node. Includes live sorting (Speed, Context, Size), search, and tags (MTP, Vision, MoE).
+* <span style="color: #00e5ff">📊 Performance Ranges</span>: Visual task-specific performance bar charts comparing baseline speeds against MTP drafting speeds.
+* <span style="color: #ff007f">📦 Archived Catalog</span>: Structured breakdown of retired configurations showing parameters, retirement date, and replacement suggestions.
 
 ---
 
