@@ -2,7 +2,7 @@
 title: "The 12GB VRAM Miracle: Running 120B, 80B, and 100+ TPS MoEs on a Single RTX 4070"
 description: "How we configured the L3MS local LLM stack to squeeze massive models and speculative drafting out of consumer hardware."
 date: 2026-06-12
-authored_by: ai-assisted
+authored_by: ai-generated
 draft: false
 tags:
   - AI
@@ -26,7 +26,10 @@ Here is a breakdown of how the stack works and the three core techniques making 
 To make this setup ergonomic, we don't try to run all these models simultaneously. Instead, we use a two-part orchestration layer:
 
 1. **`llama-swap` Gateway**: A stateful model-swapping daemon that acts as the single entry point. It exposes a standard OpenAI-compatible API and intercepts requests. When a request targets a model that isn't loaded, `llama-swap` automatically swaps out the active model and loads the requested one. It uses a global TTL (Time-To-Live) of 10 minutes to auto-unload idle models, reclaiming VRAM.
-2. **Cyber-Brutalist Dashboard**: Deployed at [l3ms.carteakey.dev](https://l3ms.carteakey.dev), this is a zero-dependency, high-density homepage showing our live served configurations, active model specs, task-specific performance ranges, and retired configs.
+2. **Cyber-Brutalist Dashboard ([l3ms.carteakey.dev](https://l3ms.carteakey.dev))**: A zero-dependency, high-density dashboard used for tracking our LLM inference capabilities:
+   * <span style="color: #00ff66">🏆 Active TPS Leaderboard</span>: Interactive leaderboard of serving configurations on the CachyOS RTX 4070 node. Includes live sorting (Speed, Context, Size), search, and tags (MTP, Vision, MoE).
+   * <span style="color: #00e5ff">📊 Performance Ranges</span>: Visual task-specific performance bar charts comparing baseline speeds against MTP drafting speeds.
+   * <span style="color: #ff007f">📦 Archived Catalog</span>: Structured breakdown of retired configurations showing parameters, retirement date, and replacement suggestions.
 
 By letting `llama-swap` manage memory swapping dynamically, it feels like we have unlimited VRAM. We can write code with our 80B coder, swap to a 12B model for high-speed chat, and query the 120B giant for complex reasoning, with only a 10–20 second load delay between switches.
 

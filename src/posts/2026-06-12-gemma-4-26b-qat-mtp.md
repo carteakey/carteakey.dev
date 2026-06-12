@@ -2,7 +2,7 @@
 title: "Gemma 4 26B QAT + MTP: 100 tok/s Local MoE on 12GB VRAM"
 description: "Local benchmarks comparing Gemma 4 26B under standard, QAT, MTP, and combined QAT+MTP configurations on an RTX 4070."
 date: 2026-06-12
-authored_by: ai-assisted
+authored_by: ai-generated
 draft: false
 tags:
   - AI
@@ -44,6 +44,18 @@ Normally, dropping down to a 4-bit model from 8-bit or full 16-bit precision int
 - **VRAM Reduction**: A 4-bit QAT model (`UD-Q4_K_XL` at ~14.2 GB) offers a **~70% memory reduction** compared to FP16 and **~40% memory reduction** compared to Q8, fitting within consumer 12GB VRAM cards with space to spare.
 - **Accuracy Recovery**: Unlike standard Post-Training Quantization (PTQ) which quantizes weights *after* the model is fully trained, QAT introduces quantization rounding noise directly *during* the training/fine-tuning phase. This allows the neural network to adapt its remaining parameters to the low-bit constraints, routing around the reduced resolution.
 - **Intelligence-Per-Byte**: By training the model to expect low-bit rounding, the resulting 4-bit QAT model achieves benchmark performance and accuracy that is virtually indistinguishable from a standard 8-bit (`Q8_0`) quantization, giving you 8-bit intelligence at a 4-bit VRAM footprint.
+
+## Testing the QAT Compromise: Upcoming Benchmarks
+
+While the performance gains of QAT are massive, throughput numbers only tell half the story. Several reports in the local LLM community (such as discussions on r/LocalLLaMA) suggest that flat QAT models might exhibit subtle reasoning and constraint-following regressions when compared to standard dynamic/mixed-precision quantizations (like `Q4_K_M` or Unsloth's `UD-Q4_K_XL`). This is particularly noticeable on highly precise, multi-constraint tasks like complex programming, structured SVG generation, or creative writing under strict formatting rules.
+
+To evaluate whether this blazing throughput comes with a qualitative penalty, I will be running comparative accuracy benchmarks between:
+1. Standard dynamic/mixed-precision quants (`UD-Q5_K_XL` and `Q4_K_M`).
+2. The flat QAT variants (`UD-Q4_K_XL`).
+
+For these evaluations, I'll be using our newly added [acrostic-june-sonnet.md](file:///home/kchauhan/repos/carteakey.dev/src/prompts/acrostic-june-sonnet.md) test-which requires a model to satisfy line counts, rhyme schemes, and a 14-letter acrostic constraint simultaneously-alongside chessboard SVG generation tests.
+
+I'll update this post with the qualitative evaluation results and success rates once benchmarking is complete.
 
 ## End-to-End Setup in llama.cpp
 
