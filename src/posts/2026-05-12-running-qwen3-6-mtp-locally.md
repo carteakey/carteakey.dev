@@ -13,6 +13,10 @@ tags:
 pinned: false
 ---
 
+**Update (May 19, 2026)**: Updated `llama.cpp` to pull in the latest MTP improvements from [PR #23269](https://github.com/ggml-org/llama.cpp/pull/23269) for better inference speed and efficiency.
+
+**Update (May 21, 2026)**: Benchmarked the new Q6_K variant for Qwen 3.6 MTP. While the increased precision is welcome, it comes with a ~30% performance penalty (~50 tok/s vs ~71 tok/s on Q4_K_XL). For now, Q4_K_XL remains the default recommendation for 12GB VRAM setups. Verified that PR #23269 provides a massive speedup over mainline master for MTP drafting.
+
 **Update (May 16, 2026)**: The MTP support PR has officially been merged into the `llama.cpp` mainline master branch! You no longer need to check out a custom PR branch, and the flag has been officially renamed to `--spec-type draft-mtp`.
 
 Qwen 3.6 introduces Multi-Token Prediction (MTP) for speculative decoding natively integrated into the model, driving massive latency improvements in local setups.
@@ -139,5 +143,6 @@ MTP performance scales massively compared to non-MTP generation due to the built
 | Date | Note |
 | --- | --- |
 | 2026-05-16 | Verified and updated post to reflect that Vision (multimodal) inputs are supported with MTP! |
+| 2026-05-21 | Added Q6_K benchmark results and verified PR #23269 performance gains. |
 | 2026-05-16 | MTP PR merged into mainline. Updated flags to `--spec-type draft-mtp`. |
 | 2026-05-12 | Initial post. |
