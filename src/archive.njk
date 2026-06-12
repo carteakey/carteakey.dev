@@ -82,18 +82,20 @@ eleventyNavigation:
             <div class="flex-1 min-w-0">
               <div class="{% if post.data.image %}flex items-start gap-4{% endif %}">
                 <div class="min-w-0 flex-1">
-                  <div class="leading-snug">
-                    {% if post.data.featured %}
-                      <span class="inline-flex items-center mr-1.5 text-sm align-middle" style="color: rgb(245 158 11);" title="Featured" aria-label="Featured">★</span>
-                    {% endif %}
-                    {% if post.data.pinned %}
-                      <span class="inline-flex items-center mr-1.5 align-middle" style="color: var(--accent-color);" title="Pinned" aria-label="Pinned">{% feather "bookmark", class="w-3.5 h-3.5 fill-current opacity-20" %}</span>
-                    {% endif %}
-                    {% if post.data.hidden %}
-                      <span class="badge badge-accent badge-compact mr-1.5 align-middle" title="Hidden local preview">Hidden</span>
-                    {% endif %}
-                    {{ authorshipBadge(post.data.authored_by, compact=true) }}
-                    <a href="{{ post.url }}" class="editorial-title-link title-hover">{{ post.data.title }}</a>
+                  <div class="flex items-baseline gap-2 leading-snug">
+                    <a href="{{ post.url }}" class="editorial-title-link title-hover min-w-0">{{ post.data.title }}</a>
+                    <div class="flex items-center gap-1.5 shrink-0 ml-auto">
+                      {% if post.data.featured %}
+                        <span class="inline-flex items-center text-sm" style="color: rgb(245 158 11);" title="Featured" aria-label="Featured">★</span>
+                      {% endif %}
+                      {% if post.data.pinned %}
+                        <span class="inline-flex items-center" style="color: var(--accent-color);" title="Pinned" aria-label="Pinned">{% feather "bookmark", class="w-3.5 h-3.5 fill-current opacity-20" %}</span>
+                      {% endif %}
+                      {% if post.data.hidden %}
+                        <span class="badge badge-accent badge-compact" title="Hidden local preview">Hidden</span>
+                      {% endif %}
+                      {{ authorshipBadge(post.data.authored_by, compact=true) }}
+                    </div>
                   </div>
                   {% if post.data.description %}
                     <p class="editorial-support-compact mt-0.5 m-0">{{ post.data.description }}</p>
