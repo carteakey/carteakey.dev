@@ -12,12 +12,18 @@ export default async function() {
     let gameCache = new AssetCache("steam_games");
 
     if (gameCache.isCacheValid("15m")) {
-        return gameCache.getCachedValue();
+        try {
+            return await gameCache.getCachedValue();
+        } catch (e) {}
     }
 
     if (!apiKey || !userId) {
-        console.warn("Steam API key or user ID not configured");
-        return [];
+        console.warn("Steam API key or user ID not configured, trying cache fallback");
+        try {
+            return await gameCache.getCachedValue();
+        } catch (e) {
+            return [];
+        }
     }
 
     try {
@@ -25,7 +31,11 @@ export default async function() {
 
         if (!response.ok) {
             console.error("Failed to fetch Steam games:", await response.text());
-            return [];
+            try {
+                return await gameCache.getCachedValue();
+            } catch (e) {
+                return [];
+            }
         }
 
         const data = await response.json();
@@ -53,6 +63,10 @@ export default async function() {
         return filteredGames;
     } catch (error) {
         console.error("Error fetching Steam games:", error);
-        return [];
+        try {
+            return await gameCache.getCachedValue();
+        } catch (cacheError) {
+            return [];
+        }
     }
 }

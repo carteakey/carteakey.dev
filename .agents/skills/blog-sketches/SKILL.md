@@ -35,6 +35,8 @@ small stamped sketch that belongs to the post, not a reusable category badge.
 - Clear central silhouette with 1 main subject and 2-5 supporting objects
 - Square-ish composition preferred
 - Moderate detail, not noisy crosshatching everywhere
+- Bold line weight: Avoid flimsy, hairline digital strokes. Outlines must be strong, thick, and well-defined (similar to a 4B pencil or felt ink pen) to ensure legibility at 80px feed sizes.
+- Organic sketch texture: Favor charcoal, pencil, or ink textures over clean, flat vector blocks or clipart shapes.
 - Technical or personal scene tied to the specific post, not the tag
 - No color accents, gradients, or textured paper slabs
 - No border frame, caption card, or fake printed card baked into the image
@@ -182,9 +184,11 @@ skip files that already contain `image:`.
 Keep prompts concrete and post-specific. Ask for:
 
 - transparent background when possible
-- monochrome pencil / ink sketch
-- centered composition
-- strong silhouette for thumbnail use
+- monochrome textured charcoal pencil / ink sketch
+- bold hand-drawn outlines, thick pencil strokes, and strong shaded contours
+- no clean vector lines, no flat digital clipart, no hairlines
+- centered composition with a strong silhouette readable as a small blog thumbnail
+- tangible real-world metaphors (e.g. massive open tome with tiny companion notepad for model offloading, or a hand stamping a checkmark on blocks for token verification) rather than generic abstract network circles
 - no colored fills
 - no paper card or white border
 - no readable text, labels, letters, or numbers unless the post specifically

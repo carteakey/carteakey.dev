@@ -16,11 +16,11 @@
 - title: "I built a tool to measure how AI-like a website writes"
   url: /blog/aidar-tracking-ai-writing-drift/
   note: "Then I scanned my own site. Uncomfortable."
-  image: /img/projects/aidar.png
-  imageAlt: aidar AI writing drift detector interface
+  image: /img/blog-sketches/unique/aidar-tracking-ai-writing-drift-stamp-trim.png
+  imageAlt: "Transparent monochrome sketch of a web page under a scanner for AI writing signals"
 
-- title: "The NEAT Framework: How I Built This Site"
-  url: /blog/understanding-the-neat-framework/
-  note: "Eleventy, Alpine, and Tailwind - and why this stack."
-  image: /img/blog-sketches/unique/understanding-the-neat-framework-stamp-trim.png
-  imageAlt: Transparent monochrome sketch of a compact web stack feeding a browser
+- title: "Local LLM Inference Optimization: The Complete Guide"
+  url: /blog/local-inference/local-llm-optimization/
+  note: "A living deep-dive into every layer of local LLM inference on consumer hardware."
+  image: /img/blog-sketches/unique/local-llm-optimization-stamp-trim.png
+  imageAlt: "Transparent monochrome sketch of a workstation PC tower with exposed GPU fans, monitor displaying tuning parameters, and dials measuring tokens-per-second performance"

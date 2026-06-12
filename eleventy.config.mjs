@@ -779,6 +779,48 @@ export default function (eleventyConfig) {
     return [...posts].sort((a, b) => new Date(b.date) - new Date(a.date));
   });
 
+  // Compute authorship statistics across collections
+  eleventyConfig.addFilter("computeAuthorship", function(posts, snippets, notes) {
+    const items = [...(posts || []), ...(snippets || []), ...(notes || [])];
+    let human = 0, assisted = 0, generated = 0, unclassified = 0;
+    items.forEach(item => {
+      const auth = item.data?.authored_by || item.authored_by;
+      if (auth === 'human') human++;
+      else if (auth === 'ai-assisted') assisted++;
+      else if (auth === 'ai-generated') generated++;
+      else unclassified++;
+    });
+    const total = human + assisted + generated + unclassified;
+    return {
+      human, assisted, generated, unclassified, total,
+      pctHuman: total ? Math.round((human / total) * 100) : 0,
+      pctAssisted: total ? Math.round((assisted / total) * 100) : 0,
+      pctGenerated: total ? Math.round((generated / total) * 100) : 0,
+      pctUnclassified: total ? Math.round((unclassified / total) * 100) : 0,
+    };
+  });
+
+  // Generate a chronological timeline array of recent writings
+  eleventyConfig.addFilter("writingsTimeline", function(posts, snippets, notes, limit = 15) {
+    const items = [];
+    const addItems = (arr, typeName) => {
+      (arr || []).forEach(item => {
+        items.push({
+          title: item.data?.title || item.title || "Untitled",
+          date: item.date,
+          url: item.url,
+          type: typeName,
+          authored_by: item.data?.authored_by || item.authored_by || null
+        });
+      });
+    };
+    addItems(posts, 'post');
+    addItems(snippets, 'snippet');
+    addItems(notes, 'note');
+    return items.sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, limit);
+  });
+
+
   // Add snippet tags collection
   eleventyConfig.addCollection("snippetTags", function (collection) {
     let tagSet = new Set();

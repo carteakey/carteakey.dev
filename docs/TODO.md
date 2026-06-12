@@ -156,7 +156,7 @@ Buy me a coffee
 - [ ] Comment threading - Enhanced Giscus comments
 - [ ] Live typing effect - Animate text on homepage
 - [x] Popular posts widget - Most upvoted content (2026-03-23)
-- [ ] Blog series navigation - Group related posts with prev/next
+- [x] Blog series navigation - Group related posts with prev/next (2026-06-12)
 - [ ] Custom fonts optimization
 - [x] Progressive web app features (service worker added 2026-01-03)
 - [x] Advanced search with filters (2026-03-23)

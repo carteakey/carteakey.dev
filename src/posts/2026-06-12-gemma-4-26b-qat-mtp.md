@@ -1,13 +1,14 @@
 ---
 title: "Gemma 4 26B QAT + MTP: 100 tok/s Local MoE on 12GB VRAM"
 description: "Local benchmarks comparing Gemma 4 26B under standard, QAT, MTP, and combined QAT+MTP configurations on an RTX 4070."
+image: /img/blog-sketches/unique/gemma-4-26b-qat-mtp-stamp-trim.png
+imageAlt: Transparent monochrome sketch of a speedometer showing a high rate of speed next to a dual-fan graphics card
 date: 2026-06-12
 authored_by: ai-generated
 draft: false
 tags:
   - AI
   - Self-Host
-  - Benchmarks
 pinned: false
 ---
 

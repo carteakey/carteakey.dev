@@ -202,17 +202,21 @@
               }
             }" x-init="init()">
               {# Mobile: tap colored dot to cycle accent color #}
-              <button class="sm:hidden w-4 h-4 rounded-sm border flex-shrink-0"
+              <button class="sm:hidden w-4 h-4 rounded-sm border flex-shrink-0 focus:outline-none focus:ring-2 focus:ring-[var(--accent-color)] focus:ring-offset-2 dark:focus:ring-offset-zinc-900"
                 :style="`background-color: ${themes[currentIndex].hex}; border-color: ${themes[currentIndex].hex}`"
                 @click="pick((currentIndex + 1) % themes.length)"
-                :title="`Accent: ${themes[currentIndex].name} (tap to cycle)`"></button>
+                :title="`Accent: ${themes[currentIndex].name} (tap to cycle)`"
+                :aria-label="`Accent color: ${themes[currentIndex].name}. Tap to cycle theme.`"></button>
               {# Desktop: gradient slider #}
-              <div class="hidden sm:block relative w-28 h-4 overflow-hidden cursor-pointer border border-gray-300 dark:border-gray-700" style="background: linear-gradient(to right, #6b7280,#64748b,#71717a,#737373,#78716c,#ef4444,#f97316,#f59e0b,#eab308,#84cc16,#22c55e,#10b981,#14b8a6,#06b6d4,#0ea5e9,#3b82f6,#6366f1,#8b5cf6,#a855f7,#d946ef,#ec4899,#f43f5e);">
+              <div class="hidden sm:block relative w-28 h-4 overflow-hidden cursor-pointer border border-gray-300 dark:border-gray-700 focus-within:ring-2 focus-within:ring-[var(--accent-color)] focus-within:ring-offset-2 dark:focus-within:ring-offset-zinc-900 rounded-sm" style="background: linear-gradient(to right, #6b7280,#64748b,#71717a,#737373,#78716c,#ef4444,#f97316,#f59e0b,#eab308,#84cc16,#22c55e,#10b981,#14b8a6,#06b6d4,#0ea5e9,#3b82f6,#6366f1,#8b5cf6,#a855f7,#d946ef,#ec4899,#f43f5e);">
                 <div class="absolute top-0 h-full w-0.5 -translate-x-1/2 bg-white/80 pointer-events-none transition-all duration-150"
                      :style="`left: ${(currentIndex / (themes.length - 1)) * 100}%`"></div>
                 <input type="range" min="0" :max="themes.length - 1" :value="currentIndex"
                        @input="pick(parseInt($event.target.value))"
-                       class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+                       @keydown.left.prevent="pick(currentIndex > 0 ? currentIndex - 1 : themes.length - 1)"
+                       @keydown.right.prevent="pick(currentIndex < themes.length - 1 ? currentIndex + 1 : 0)"
+                       aria-label="Accent color theme selector"
+                       class="absolute inset-0 w-full h-full opacity-0 cursor-pointer focus:outline-none">
               </div>
             </li>
 

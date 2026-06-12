@@ -72,10 +72,19 @@
 
 {# Render breadcrumbs #}
 {% if breadcrumbItems.length > 1 %}
-<nav aria-label="Breadcrumb" class="not-prose mb-6 hidden md:block">
+<nav aria-label="Breadcrumb" class="not-prose mb-6">
   <ol class="breadcrumbs-list flex items-center flex-wrap gap-2">
+    {# Mobile ellipsis indicator if we have 3 or more breadcrumbs #}
+    {% if breadcrumbItems.length > 2 %}
+      <li class="flex items-center md:hidden">
+        <span class="breadcrumb-link opacity-60">...</span>
+        <span class="breadcrumb-separator mx-2">{% feather "chevron-right", class="w-4 h-4" %}</span>
+      </li>
+    {% endif %}
+
     {% for item in breadcrumbItems %}
-      <li class="flex items-center">
+      {% set isEarlier = loop.index0 < (breadcrumbItems.length - 2) %}
+      <li class="{% if isEarlier %}hidden md:flex{% else %}flex{% endif %} items-center">
         {% if not item.isLast %}
           <a href="{{ item.url | url }}" class="breadcrumb-link flex items-center gap-1">
             {% if item.isHome %}
@@ -86,7 +95,7 @@
           </a>
           <span class="breadcrumb-separator mx-2">{% feather "chevron-right", class="w-4 h-4" %}</span>
         {% else %}
-          <span class="breadcrumb-current">
+          <span class="breadcrumb-current truncate max-w-[150px] sm:max-w-none inline-block align-bottom">
             {{ item.label }}
           </span>
         {% endif %}

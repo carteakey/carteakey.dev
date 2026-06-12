@@ -5,6 +5,79 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.25] - 2026-06-12
+### Fixed
+- postslist.njk: Restored post thumbnails (sketches) in folder and tag views.
+
+## [2.0.24] - 2026-06-12
+### Added
+- battle-of-the-image-generators-stamp-trim.png: Generated and normalized transparent monochrome sketch thumbnail for the "Battle of the Image Generators" post.
+- loganime-test-v1-stamp-trim.png: Generated and normalized transparent monochrome sketch thumbnail for the "I Tried to Ghiblify a Trailer - Loganime" post.
+
+### Changed
+- 2026-05-17-battle-of-the-image-generators.md: Wired the new scoreboard sketch.
+- 2026-05-17-loganime-test-v1.md: Wired the new Ghibli film strip sketch.
+
+## [2.0.23] - 2026-06-12
+### Added
+- running-gemma-4-mtp-locally-stamp-trim.png: Generated and normalized transparent monochrome sketch thumbnail for the "Running Gemma 4 MTP locally on 12GB VRAM" post.
+- gemma-4-26b-qat-mtp-stamp-trim.png: Generated and normalized transparent monochrome sketch thumbnail for the "Gemma 4 26B QAT + MTP" post.
+- the-12gb-vram-miracle-l3ms-stack-stamp-trim.png: Generated and normalized transparent monochrome sketch thumbnail for "The 12GB VRAM Miracle" post.
+- ultrafast-gemma-4-12b-stamp-trim.png: Generated and normalized transparent monochrome sketch thumbnail for the "Ultrafast Gemma 4 12B QAT + MTP" post.
+
+### Changed
+- 2026-06-12-local-llm-optimization.md: Linked the existing `local-llm-optimization-stamp-trim.png` thumbnail sketch.
+- 2026-05-17-running-gemma-4-mtp-locally.md: Wired the new MTP network nodes sketch.
+- 2026-06-12-gemma-4-26b-qat-mtp.md: Wired the new speedometer and GPU card sketch.
+- 2026-06-12-the-12gb-vram-miracle-l3ms-stack.md: Wired the new warped server rack sketch.
+- 2026-06-12-ultrafast-gemma-4-12b.md: Wired the new lightning microchip sketch.
+
+## [2.0.22] - 2026-06-12
+### Changed
+- the-12gb-vram-miracle-l3ms-stack.md: Hidden the post from public collections and feed by setting `hidden: true` in the front matter.
+
+## [2.0.21] - 2026-06-12
+### Added
+- local-llm-optimization-stamp-trim.png: Generated and normalized transparent monochrome sketch thumbnail for the "Local LLM Inference Optimization: The Complete Guide" post.
+
+### Changed
+- startHere.yaml: Swapped "The NEAT Framework" featured post on the homepage with the new "Local LLM Inference Optimization: The Complete Guide" post.
+- local-llm-optimization.md: Wired the newly generated sketch image and alt description into the post front matter.
+
+## [2.0.20] - 2026-06-12
+### Fixed
+- startHere.yaml: Fixed featured post thumbnail for the AI writing tool post to display the sketched monochrome stamp instead of the page screenshot.
+
+## [2.0.19] - 2026-06-12
+### Added
+- robots.txt.njk: Created dynamic robots.txt template to prevent crawler indexing waste on utility/archive pages.
+- Frontmatter descriptions: Added unique description metadata to top-level pages (index, projects, gallery, cv, vibes, quotes, now, games, workouts, tools).
+
+### Fixed
+- versions.json: Fixed version mismatch by aligning JSON version metadata with the latest release.
+- newsletter.njk: Fixed trailing stray markup fragment (pt>) at the end of the template file.
+- steam.js, strava.js: Implemented resilient cache-fallbacks in case API tokens are missing or remote requests fail.
+
+## [2.0.18] - 2026-06-12
+### Added
+- fetchWithFallback.js: Created a centralized API fetching utility under `src/_utils/` that enforces timeouts and gracefully recovers expired cache or fallback data.
+- stats.njk: Introduced an authorship statistics block and a chronological timeline of recent writings to show the breakdown of human vs. AI-assisted vs. AI-generated contents.
+
+### Changed
+- eleventy.config.mjs: Registered the new `computeAuthorship` and `writingsTimeline` Nunjucks filters.
+- spotify.js, steam.js, strava.js, github.js: Refactored remote data modules to fetch through the centralized `fetchWithFallback` utility.
+- post.njk: Enhanced next/previous navigation to be series-aware, navigating within the current series collection (e.g. `agents`) when applicable.
+- breadcrumbs.njk: Restored breadcrumbs on mobile views with smart ellipsis truncation (`... > Parent > Current`) and title overflow safety.
+- base.njk: Added keyboard navigation (left/right arrows) and visible focus outlines to the desktop theme picker slider, and added tap-to-cycle labels to the mobile picker.
+
+## [2.0.17] - 2026-06-12
+### Changed
+- gemma-4-26b-qat-mtp.md: Added "Testing the QAT Compromise: Upcoming Benchmarks" section to outline plans for comparing the QAT model's accuracy/constraint-following against standard quants using the new acrostic sonnet and chessboard SVG tests.
+
+## [2.0.16] - 2026-06-12
+### Added
+- Created `src/prompts/acrostic-june-sonnet.md` to document the Shakespearean June Sonnet test prompt (evaluating AI reasoning and creativity under acrostic, rhyme scheme, and line count constraints).
+
 ## [2.0.15] - 2026-06-12
 ### Changed
 - feed-card.njk: Moved type/hidden/authorship badges to the trailing (right) column in the `list` variant so they no longer interrupt the title; updated the grid to `[date] [title] [badges]` order.

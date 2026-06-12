@@ -15,6 +15,7 @@ The branch is `main`. This is where you should make all your changes.
 1. **Simplicity First**: Use a minimal approach. Avoid unnecessary complexity, libraries, or build tools.
 2. **Dense Editorial / Workbench UI**: The site is a personal workbench. Prioritize `.surface` containers, document-oriented typography, mono labels, and high-density layouts over generic "dashboard" cards with heavy shadows and padding.
 3. **Date Immutability**: All permanent content (posts, folios, snippets) must have an explicitly declared `date` (and optionally `updated`) in its frontmatter. Never rely on file system modification times.
+4. **2-Tag Maximum**: Every post must have **exactly 1–2 tags**. Use Title Case (e.g., `AI`, `Self-Host`, `Agents`). Never add a third tag - use a series folder for finer grouping instead.
 ---
 
 ## ⚠️ Prohibited Practices
@@ -69,7 +70,7 @@ This project uses a manual versioning process. It is your responsibility to keep
 
 - Local-only Eleventy re-run exists via `npm run build:11ty`; VS Code task “Build Eleventy site” wraps that command if you prefer the task runner.
 
-- Collections: blog posts in `src/posts/*.md` (front matter `title`, `description`, `date`, optional `updated`, `hidden`, `tags`); snippets in `src/snippets`; pages like `now/` and `gallery.njk` expect matching data in `_data`.
+- Collections: blog posts in `src/posts/*.md` (front matter `title`, `description`, `date`, optional `updated`, `hidden`, `tags`); snippets in `src/snippets`; pages like `now/` and `gallery.njk` expect matching data in `_data`. Tags must be **1–2 max**, Title Case (e.g. `AI`, `Self-Host`).
 
 - The post layout (`src/_includes/layouts/post.njk`) wires in upvotes, TOC, and Giscus. Keep `page.fileSlug` stable or update `upvotes.posts[slug]` in `src/_data/upvotes.js`.
 

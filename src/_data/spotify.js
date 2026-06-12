@@ -1,6 +1,7 @@
-import { AssetCache } from "@11ty/eleventy-fetch";
 import querystring from "querystring";
 import fetch from "node-fetch";
+import { AssetCache } from "@11ty/eleventy-fetch";
+import { fetchWithFallback } from "../_utils/fetchWithFallback.js";
 
 const {
   SPOTIFY_CLIENT_ID: client_id,
@@ -62,80 +63,70 @@ async function fetchAccessToken() {
 }
 
 export default async function () {
-  let nowPlaying = "";
-  let accessToken = await fetchAccessToken();
-  let nowPlayingCache = new AssetCache("now-playing");
+  const fallback = {
+    nowPlaying: {
+      album: "Meteora (Bonus Edition)",
+      albumImageUrl:
+        "https://i.scdn.co/image/ab67616d0000b27389a8fab8bf8cd2b77da1fd17",
+      artist: "Linkin Park",
+      isPlaying: true,
+      songUrl: "https://open.spotify.com/track/3fjmSxt0PskST13CSdBUFx",
+      title: "Somewhere I Belong",
+    },
+  };
 
-  if (nowPlayingCache.isCacheValid("1m")) {
-    nowPlaying = await nowPlayingCache.getCachedValue();
-  } else {
-    let response = await fetch(api_endpoint, {
-      headers: {
-        Authorization: "Bearer " + accessToken,
-      },
-    });
-
-    if (response.status == 204 || response.status >= 400) {
-      console.warn("Spotify now-playing unavailable, using cached value if available");
-      try {
-        nowPlaying = await nowPlayingCache.getCachedValue();
-      } catch (e) {
-        return {
-          nowPlaying: {
-            album: "Meteora (Bonus Edition)",
-            albumImageUrl:
-              "https://i.scdn.co/image/ab67616d0000b27389a8fab8bf8cd2b77da1fd17",
-            artist: "Linkin Park",
-            isPlaying: true,
-            songUrl: "https://open.spotify.com/track/3fjmSxt0PskST13CSdBUFx",
-            title: "Somewhere I Belong",
-          },
-        };
+  return fetchWithFallback({
+    cacheKey: "now-playing",
+    cacheDuration: "1m",
+    timeoutMs: 5000,
+    fallbackData: fallback,
+    fetchFn: async () => {
+      let accessToken = await fetchAccessToken();
+      if (!accessToken) {
+        throw new Error("Unable to obtain Spotify access token");
       }
-    } else {
+
+      let response = await fetch(api_endpoint, {
+        headers: {
+          Authorization: "Bearer " + accessToken,
+        },
+      });
+
+      if (response.status === 204) {
+        throw new Error("Spotify player is idle (204 No Content)");
+      }
+
+      if (response.status >= 400) {
+        throw new Error(`Spotify API returned error status ${response.status}`);
+      }
+
       const song = await response.json();
       
       // Handle case when item is null (e.g., podcast episodes)
       if (!song.item) {
-        console.warn("Spotify item has no track data, using cached value if available");
-        try {
-          nowPlaying = await nowPlayingCache.getCachedValue();
-        } catch (e) {
-          return {
-            nowPlaying: {
-              album: "Meteora (Bonus Edition)",
-              albumImageUrl:
-                "https://i.scdn.co/image/ab67616d0000b27389a8fab8bf8cd2b77da1fd17",
-              artist: "Linkin Park",
-              isPlaying: true,
-              songUrl: "https://open.spotify.com/track/3fjmSxt0PskST13CSdBUFx",
-              title: "Somewhere I Belong",
-            },
-          };
-        }
-      } else {
-        const isPlaying = song.is_playing;
-        const title = song.item.name;
-        const artist = song.item.artists
-          .map((_artist) => _artist.name)
-          .join(", ");
-        const album = song.item.album.name;
-        const albumImageUrl = song.item.album.images[0].url;
-        const songUrl = song.item.external_urls.spotify;
-
-        nowPlaying = {
-          nowPlaying: {
-            album,
-            albumImageUrl,
-            artist,
-            isPlaying,
-            songUrl,
-            title,
-          },
-        };
-        await nowPlayingCache.save(nowPlaying, "json");
+        throw new Error("Spotify item has no track data");
       }
+
+      const isPlaying = song.is_playing;
+      const title = song.item.name;
+      const artist = song.item.artists
+        .map((_artist) => _artist.name)
+        .join(", ");
+      const album = song.item.album.name;
+      const albumImageUrl = song.item.album.images[0].url;
+      const songUrl = song.item.external_urls.spotify;
+
+      return {
+        nowPlaying: {
+          album,
+          albumImageUrl,
+          artist,
+          isPlaying,
+          songUrl,
+          title,
+        },
+      };
     }
-  }
-  return nowPlaying;
+  });
 }
+

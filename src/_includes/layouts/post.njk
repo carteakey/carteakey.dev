@@ -578,19 +578,24 @@ hasEthicalAds: false
         <hr class="my-8" />
       {%- endif %}
 
-      {%- set nextPost = collections.posts | getNextCollectionItem(page) %}
-      {%- set previousPost = collections.posts | getPreviousCollectionItem(page) %}
+      {%- if currentFolder %}
+        {%- set nextPost = currentFolder.posts | getNextCollectionItem(page) %}
+        {%- set previousPost = currentFolder.posts | getPreviousCollectionItem(page) %}
+      {%- else %}
+        {%- set nextPost = collections.posts | getNextCollectionItem(page) %}
+        {%- set previousPost = collections.posts | getPreviousCollectionItem(page) %}
+      {%- endif %}
       {%- if nextPost or previousPost %}
         <nav aria-label="Post navigation" class="flex flex-col gap-0 text-sm not-prose">
           {%- if nextPost %}
             <a class="post-nav-link title-hover" href="{{ nextPost.url | url }}">
-              <span class="post-nav-kicker">Next →</span>
+              <span class="post-nav-kicker">{% if currentFolder %}Next in Series{% else %}Next{% endif %} →</span>
               <span class="post-nav-title">{{ nextPost.data.title }}</span>
             </a>
           {%- endif %}
           {%- if previousPost %}
             <a class="post-nav-link title-hover" href="{{ previousPost.url | url }}">
-              <span class="post-nav-kicker">← Previous</span>
+              <span class="post-nav-kicker">← {% if currentFolder %}Previous in Series{% else %}Previous{% endif %}</span>
               <span class="post-nav-title">{{ previousPost.data.title }}</span>
             </a>
           {%- endif %}

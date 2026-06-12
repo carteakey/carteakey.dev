@@ -19,32 +19,41 @@
 
         {# Right: title + description #}
         <div class="flex-1 min-w-0">
-          <div class="flex items-baseline gap-2 leading-snug">
-            <a href="{{ post.url | url }}" class="font-semibold text-gray-900 dark:text-gray-100 title-hover min-w-0" style="text-decoration: none;">
-              {% if post.data.title %}{{ post.data.title }}{% else %}<code>{{ post.url }}</code>{% endif %}
-            </a>
-            <div class="flex items-center gap-1.5 shrink-0">
-              {% if post.data.pinned %}
-                <span class="inline-flex items-center" style="color: var(--accent-color);" title="Pinned" aria-label="Pinned">{% feather "bookmark", class="w-3.5 h-3.5 fill-current opacity-20" %}</span>
+          <div class="{% if post.data.image %}flex items-start gap-4{% endif %}">
+            <div class="min-w-0 flex-1">
+              <div class="flex items-baseline gap-2 leading-snug">
+                <a href="{{ post.url | url }}" class="font-semibold text-gray-900 dark:text-gray-100 title-hover min-w-0" style="text-decoration: none;">
+                  {% if post.data.title %}{{ post.data.title }}{% else %}<code>{{ post.url }}</code>{% endif %}
+                </a>
+                <div class="flex items-center gap-1.5 shrink-0">
+                  {% if post.data.pinned %}
+                    <span class="inline-flex items-center" style="color: var(--accent-color);" title="Pinned" aria-label="Pinned">{% feather "bookmark", class="w-3.5 h-3.5 fill-current opacity-20" %}</span>
+                  {% endif %}
+                  {% if post.data.hidden %}
+                    <span class="badge badge-accent badge-compact" title="Hidden local preview">Hidden</span>
+                  {% endif %}
+                  {{ authorshipBadge(post.data.authored_by, compact=true) }}
+                </div>
+              </div>
+
+              {% if post.data.description %}
+              <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5 m-0 leading-relaxed">{{ post.data.description }}</p>
               {% endif %}
-              {% if post.data.hidden %}
-                <span class="badge badge-accent badge-compact" title="Hidden local preview">Hidden</span>
-              {% endif %}
-              {{ authorshipBadge(post.data.authored_by, compact=true) }}
+
+              {# Mobile: date + tags #}
+              <div class="md:hidden flex flex-wrap items-center gap-x-2 gap-y-1 mt-1.5">
+                <span class="meta-text text-[0.65rem] text-gray-400 dark:text-gray-500">{{ post.date | postDate }}</span>
+                {% for tag in post.data.tags | filterTagList %}
+                {% set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
+                <a href="{{ tagUrl | url }}" class="badge badge-tag badge-compact badge-interactive" style="text-decoration: none;">#{{ tag }}</a>
+                {% endfor %}
+              </div>
             </div>
-          </div>
-
-          {% if post.data.description %}
-          <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5 m-0 leading-relaxed">{{ post.data.description }}</p>
-          {% endif %}
-
-          {# Mobile: date + tags #}
-          <div class="md:hidden flex flex-wrap items-center gap-x-2 gap-y-1 mt-1.5">
-            <span class="meta-text text-[0.65rem] text-gray-400 dark:text-gray-500">{{ post.date | postDate }}</span>
-            {% for tag in post.data.tags | filterTagList %}
-            {% set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
-            <a href="{{ tagUrl | url }}" class="badge badge-tag badge-compact badge-interactive" style="text-decoration: none;">#{{ tag }}</a>
-            {% endfor %}
+            {% if post.data.image %}
+              <a href="{{ post.url | url }}" class="hidden sm:block shrink-0 self-start" style="text-decoration: none;">
+                <img src="{{ post.data.image | url }}" alt="{{ post.data.imageAlt or post.data.title }}" loading="lazy" decoding="async" class="block h-20 w-20 object-contain dark:invert dark:brightness-125">
+              </a>
+            {% endif %}
           </div>
         </div>
 

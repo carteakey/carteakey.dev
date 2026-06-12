@@ -1,8 +1,8 @@
 ---
 title: Battle of the Image Generators
 description: I burned API credits comparing ChatGPT Images 2.0, Nano Banana, and Imagen on prompts designed to be annoying.
-image: /img/image-generator-battle/scoreboard.png
-imageAlt: Scoreboard ranking ChatGPT Images 2.0, Nano Banana, and Imagen image generation models
+image: /img/blog-sketches/unique/battle-of-the-image-generators-stamp-trim.png
+imageAlt: Transparent monochrome sketch of a scoreboard chart comparing different image models with checkmarks and cross marks
 date: 2026-05-17
 updated: 2026-05-17
 authored_by: ai-assisted

@@ -1,8 +1,8 @@
 ---
 title: I Tried to Ghiblify a Trailer - Loganime
 description: A messy still-frame trailer experiment, and the weirdly practical lessons hiding inside it.
-image: /img/loganime-test/loganime-final-contact.jpg
-imageAlt: "Contact sheet from a 12fps generated-stills trailer experiment"
+image: /img/blog-sketches/unique/loganime-test-v1-stamp-trim.png
+imageAlt: Transparent monochrome sketch of a classic film strip containing individual anime/Ghibli-style landscape frames
 date: 2026-05-17
 updated: 2026-05-17
 authored_by: ai-assisted

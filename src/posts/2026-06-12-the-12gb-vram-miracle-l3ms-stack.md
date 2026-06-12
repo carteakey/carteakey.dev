@@ -1,13 +1,15 @@
 ---
 title: "The 12GB VRAM Miracle: Running 120B, 80B, and 100+ TPS MoEs on a Single RTX 4070"
 description: "How we configured the L3MS local LLM stack to squeeze massive models and speculative drafting out of consumer hardware."
+image: /img/blog-sketches/unique/the-12gb-vram-miracle-l3ms-stack-stamp-trim.png
+imageAlt: Transparent monochrome sketch of a massive server rack warping and shrinking to plug directly into a small desktop computer tower
 date: 2026-06-12
 authored_by: ai-generated
 draft: false
+hidden: true
 tags:
   - AI
   - Self-Host
-  - Benchmarks
 pinned: false
 ---
 

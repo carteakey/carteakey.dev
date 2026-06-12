@@ -1,6 +1,8 @@
 ---
 title: "Local LLM Inference Optimization: The Complete Guide"
 description: A living deep-dive into every layer of local LLM inference - hardware, OS, backend choice, and every llama.cpp flag worth tuning - synthesized from months of running large models on consumer hardware.
+image: /img/blog-sketches/unique/local-llm-optimization-stamp-trim.png
+imageAlt: "Transparent monochrome sketch of a workstation PC tower with exposed GPU fans, monitor displaying tuning parameters, and dials measuring tokens-per-second performance"
 date: 2026-06-12
 updated: 2026-06-12
 authored_by: ai-assisted
@@ -8,7 +10,6 @@ draft: false
 tags:
   - AI
   - Self-Host
-  - llama.cpp
 pinned: true
 ---
 

@@ -29,28 +29,53 @@ async function getAccessToken() {
         }
     }
 
-    const response = await fetch(auth_endpoint, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/x-www-form-urlencoded"
-        },
-        body: querystring.stringify({
-            client_id,
-            client_secret,
-            refresh_token,
-            grant_type: "refresh_token",
-        }),
-    });
-
-    if (!response.ok) {
-        console.error("Failed to fetch Strava access token:", await response.text());
+    if (!client_id || !client_secret || !refresh_token) {
+        console.warn("Strava credentials missing, cannot fetch new access token");
         return null;
     }
 
-    const data = await response.json();
-    const accessToken = data.access_token;
-    await tokenCache.save(accessToken, "string");
-    return accessToken;
+    try {
+        const response = await fetch(auth_endpoint, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: querystring.stringify({
+                client_id,
+                client_secret,
+                refresh_token,
+                grant_type: "refresh_token",
+            }),
+        });
+
+        if (!response.ok) {
+            console.error("Failed to fetch Strava access token:", await response.text());
+            return null;
+        }
+
+        const data = await response.json();
+        const accessToken = data.access_token;
+        await tokenCache.save(accessToken, "string");
+        return accessToken;
+    } catch (e) {
+        console.error("Error fetching Strava access token:", e);
+        return null;
+    }
+}
+
+async function getCachedFallback(activityCache) {
+    try {
+        const cachedData = await activityCache.getCachedValue();
+        if (Array.isArray(cachedData) && cachedData.length >= 0) {
+            return cachedData.map(activity => ({
+                ...activity,
+                start_date: new Date(activity.start_date)
+            }));
+        }
+    } catch (e) {
+        console.warn("No cached Strava activities available");
+    }
+    return [];
 }
 
 export default async function() {
@@ -75,43 +100,49 @@ export default async function() {
         }
     }
 
-    const accessToken = await getAccessToken();
-    if (!accessToken) {
-        return [];
+    try {
+        const accessToken = await getAccessToken();
+        if (!accessToken) {
+            console.warn("Strava access token not available, trying cache fallback");
+            return await getCachedFallback(activityCache);
+        }
+
+        const response = await fetch(`${api_endpoint}?per_page=10`, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+        });
+
+        if (!response.ok) {
+            console.error("Failed to fetch Strava activities:", await response.text());
+            return await getCachedFallback(activityCache);
+        }
+
+        const activities = await response.json();
+        const filteredActivities = activities.map(a => {
+            const polyline = a.map?.summary_polyline;
+            const mapImageUrl = polyline && mapboxApiKey
+                ? `https://api.mapbox.com/styles/v1/mapbox/dark-v10/static/path-5+f44-0.7(${encodeURIComponent(polyline)})/auto/600x400@2x?access_token=${mapboxApiKey}`
+                : null;
+
+            // Parse the date - Strava returns ISO string format
+            const startDate = new Date(a.start_date_local);
+
+            return {
+                name: a.name,
+                type: a.type,
+                distance: (a.distance / 1609.34).toFixed(2), // meters to miles
+                moving_time: Math.round(a.moving_time / 60), // seconds to minutes
+                url: `https://www.strava.com/activities/${a.id}`,
+                start_date: startDate,
+                mapImageUrl,
+            };
+        });
+
+        await activityCache.save(filteredActivities, "json");
+        return filteredActivities;
+    } catch (error) {
+        console.error("Error fetching Strava activities:", error);
+        return await getCachedFallback(activityCache);
     }
-
-    const response = await fetch(`${api_endpoint}?per_page=10`, {
-        headers: {
-            Authorization: `Bearer ${accessToken}`,
-        },
-    });
-
-    if (!response.ok) {
-        console.error("Failed to fetch Strava activities:", await response.text());
-        return [];
-    }
-
-    const activities = await response.json();
-    const filteredActivities = activities.map(a => {
-        const polyline = a.map.summary_polyline;
-        const mapImageUrl = polyline && mapboxApiKey
-            ? `https://api.mapbox.com/styles/v1/mapbox/dark-v10/static/path-5+f44-0.7(${encodeURIComponent(polyline)})/auto/600x400@2x?access_token=${mapboxApiKey}`
-            : null;
-
-        // Parse the date - Strava returns ISO string format
-        const startDate = new Date(a.start_date_local);
-
-        return {
-            name: a.name,
-            type: a.type,
-            distance: (a.distance / 1609.34).toFixed(2), // meters to miles
-            moving_time: Math.round(a.moving_time / 60), // seconds to minutes
-            url: `https://www.strava.com/activities/${a.id}`,
-            start_date: startDate,
-            mapImageUrl,
-        };
-    });
-
-    await activityCache.save(filteredActivities, "json");
-    return filteredActivities;
-};
+}

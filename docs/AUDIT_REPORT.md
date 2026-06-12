@@ -182,10 +182,10 @@
 ## 🔄 Suggested Implementation Order (Phased)
 
 ### Phase 1: Foundation (Week 1-Stabilization)
-- [ ] Fix silent data failures: add error boundaries, fallback UI
-- [ ] Add missing meta descriptions (5 top-level pages)
+- [x] Fix silent data failures: add error boundaries, fallback UI
+- [x] Add missing meta descriptions (5 top-level pages)
 - [ ] Optimize hero image (lazy load + AVIF)
-- [ ] Create robots.txt with SEO rules
+- [x] Create robots.txt with SEO rules
 - [ ] Add `aria-busy` to upvote button
 
 **Expected result:** Site more stable, SEO improved, better UX during API outages.
@@ -194,15 +194,15 @@
 - [ ] Run full a11y audit (axe + manual)
 - [ ] Fix dark mode contrast issues
 - [ ] Add focus-visible states to all interactive elements
-- [ ] Make theme picker keyboard-navigable
+- [x] Make theme picker keyboard-navigable
 - [ ] Redesign /feed/ with persistent filter sidebar
 - [ ] Add reading time to posts
 
 **Expected result:** WCAG AA compliance, clearer content pathways, improved mobile experience.
 
 ### Phase 3: Conversion & Reliability (Week 3–4-Growth)
-- [ ] Implement fetchWithFallback utility
-- [ ] Update all data files to use wrapper
+- [x] Implement fetchWithFallback utility
+- [x] Update all data files to use wrapper
 - [ ] Add /status page for integration health
 - [ ] Create newsletter funnel (sticky button + homepage micro-form)
 - [ ] Unify card styling across content types

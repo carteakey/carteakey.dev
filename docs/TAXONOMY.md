@@ -15,6 +15,7 @@ This document outlines the organizing philosophy for `carteakey.dev`'s markdown 
 **Benefits:**
 - **Dedicated URL Path:** They get a dedicated slug prefix (e.g., `/blog/homelab/`).
 - **Visual Callouts:** The site layout automatically detects when a post is part of a folder and renders a visual callout at the bottom of the article linking to the rest of the series.
+- **Chronological Navigation:** The next/previous post links at the bottom of the article dynamically adjust to navigate sequentially within the series folder rather than the global chronological list.
 - **Structured Reading:** It provides a "deep dive" experience.
 
 **Current Series:**
@@ -33,6 +34,11 @@ This document outlines the organizing philosophy for `carteakey.dev`'s markdown 
 - You want a post to belong to multiple categories at once.
 - **Rule of Thumb:** If a post is just "about" a topic but isn't explicitly tied to another post's storyline, use a tag.
 
+**Tag Rules:**
+- **1–2 tags maximum** per post. Never add a third tag.
+- Use **Title Case** (e.g., `AI`, `Self-Host`, `Agents`, `Linux`). Never lowercase.
+- If you need more specificity than 2 tags can express, use a series folder instead.
+
 **Benefits:**
 - **Flexibility:** A single post can be cross-referenced across multiple disciplines (e.g., a post tagged both `Linux` and `AI`).
 - **Flattened Hierarchy:** Avoids the trap of having to decide whether a post belongs in a "Tech" folder or a "Personal" folder.
@@ -41,3 +47,5 @@ This document outlines the organizing philosophy for `carteakey.dev`'s markdown 
 **Anti-Patterns to Avoid:**
 - ❌ **Broad Folders:** Do not create folders named `tech/`, `personal/`, or `rants/`. These are broad, conceptual buckets and should strictly be tags. Folders must remain tight and scoped.
 - ❌ **Overlapping Series:** If a series becomes too broad, it should be dismantled into the root `/posts/` directory and connected via tags.
+- ❌ **More than 2 tags:** Never assign 3+ tags to a post. Pick the 1–2 most relevant. Use a series folder if finer grouping is needed.
+- ❌ **Lowercase tags:** Always Title Case - `AI` not `ai`, `Self-Host` not `self-host`.
