@@ -23,7 +23,7 @@
             <a href="{{ post.url | url }}" class="font-semibold text-gray-900 dark:text-gray-100 title-hover min-w-0" style="text-decoration: none;">
               {% if post.data.title %}{{ post.data.title }}{% else %}<code>{{ post.url }}</code>{% endif %}
             </a>
-            <div class="flex items-center gap-1.5 shrink-0 ml-auto">
+            <div class="flex items-center gap-1.5 shrink-0">
               {% if post.data.pinned %}
                 <span class="inline-flex items-center" style="color: var(--accent-color);" title="Pinned" aria-label="Pinned">{% feather "bookmark", class="w-3.5 h-3.5 fill-current opacity-20" %}</span>
               {% endif %}
