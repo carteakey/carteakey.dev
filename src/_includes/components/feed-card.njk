@@ -243,18 +243,18 @@
   {% elif variant == 'list' %}
   <li class="feed-list-row{% if extraClasses %} {{ extraClasses }}{% endif %}" {% if outerAttrs %}{{ outerAttrs | safe }}{% endif %}>
     <span class="feed-list-date meta-text">{{ item.date | shortDate }}</span>
-    <div class="flex items-center gap-1.5 shrink-0">
+    {% if item.url %}
+      <a href="{{ item.url | url }}" class="feed-list-title title-hover">{% if item.featured %}<span style="color: rgb(245 158 11); margin-right: 0.35rem;" title="Featured" aria-label="Featured">★</span>{% endif %}{% if item.pinned %}<span class="inline-flex items-center" style="color: var(--accent-color); margin-right: 0.35rem; margin-top: -2px;" title="Pinned" aria-label="Pinned">{% feather "bookmark", class="w-3.5 h-3.5 fill-current opacity-20" %}</span>{% endif %}{{ item.title }}</a>
+    {% else %}
+      <span class="feed-list-title">{% if item.featured %}<span style="color: rgb(245 158 11); margin-right: 0.35rem;" title="Featured" aria-label="Featured">★</span>{% endif %}{% if item.pinned %}<span class="inline-flex items-center" style="color: var(--accent-color); margin-right: 0.35rem; margin-top: -2px;" title="Pinned" aria-label="Pinned">{% feather "bookmark", class="w-3.5 h-3.5 fill-current opacity-20" %}</span>{% endif %}{{ item.title }}</span>
+    {% endif %}
+    <div class="flex items-center gap-1.5 shrink-0 justify-end">
       <span class="badge badge-type badge-compact {{ typeBadgeClass }}">{{ badgeLabel }}</span>
       {% if item.hidden %}
         <span class="badge badge-accent badge-compact" title="Hidden local preview">Hidden</span>
       {% endif %}
       {% if item.authored_by is defined %}{{ authorshipBadge(item.authored_by, compact=true) }}{% endif %}
     </div>
-    {% if item.url %}
-      <a href="{{ item.url | url }}" class="feed-list-title title-hover">{% if item.featured %}<span style="color: rgb(245 158 11); margin-right: 0.35rem;" title="Featured" aria-label="Featured">★</span>{% endif %}{% if item.pinned %}<span class="inline-flex items-center" style="color: var(--accent-color); margin-right: 0.35rem; margin-top: -2px;" title="Pinned" aria-label="Pinned">{% feather "bookmark", class="w-3.5 h-3.5 fill-current opacity-20" %}</span>{% endif %}{{ item.title }}</a>
-    {% else %}
-      <span class="feed-list-title">{% if item.featured %}<span style="color: rgb(245 158 11); margin-right: 0.35rem;" title="Featured" aria-label="Featured">★</span>{% endif %}{% if item.pinned %}<span class="inline-flex items-center" style="color: var(--accent-color); margin-right: 0.35rem; margin-top: -2px;" title="Pinned" aria-label="Pinned">{% feather "bookmark", class="w-3.5 h-3.5 fill-current opacity-20" %}</span>{% endif %}{{ item.title }}</span>
-    {% endif %}
   </li>
 
   {# ── FULL VARIANT (feed page - clean surface rounded-sm in a grid) ── #}

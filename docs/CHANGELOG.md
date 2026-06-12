@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.15] - 2026-06-12
+### Changed
+- feed-card.njk: Moved type/hidden/authorship badges to the trailing (right) column in the `list` variant so they no longer interrupt the title; updated the grid to `[date] [title] [badges]` order.
+- tailwind.css: Changed `.feed-list-row` grid columns from `4rem 8.75rem 1fr` to `4rem 1fr auto` and set `align-items: center` to vertically center the badge column alongside the title.
+
 ## [2.0.14] - 2026-05-17
 ### Added
 - Added generated transparent monochrome thumbnail sketches to the remaining non-template blog posts.
