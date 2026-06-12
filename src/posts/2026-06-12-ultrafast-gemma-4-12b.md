@@ -90,16 +90,16 @@ cmake --build . --config Release -j$(nproc)
 ```
 
 ### 2) Download the Models
-You need both the main model and the assistant draft model:
-- **Main model**: [unsloth/gemma-4-12B-it-qat-GGUF](https://huggingface.co/unsloth/gemma-4-12B-it-qat-GGUF) (Grab the `gemma-4-12B-it-qat-UD-Q4_K_XL.gguf`)
-- **Assistant model**: [Janvitos/gemma-4-12B-it-qat-assistant-MTP-Q8_0-GGUF](https://huggingface.co/Janvitos/gemma-4-12B-it-qat-assistant-MTP-Q8_0-GGUF) (Grab the `gemma-4-12B-it-qat-assistant-MTP-Q8_0.gguf` converted from Google's official QAT assistant)
+You need both the main model and the assistant draft model directly from the same repository:
+- **Main model**: [unsloth/gemma-4-12B-it-qat-GGUF](https://huggingface.co/unsloth/gemma-4-12B-it-qat-GGUF) (Grab `gemma-4-12B-it-qat-UD-Q4_K_XL.gguf`)
+- **Assistant model**: Download `mtp-gemma-4-12B-it.gguf` from the same [unsloth/gemma-4-12B-it-qat-GGUF](https://huggingface.co/unsloth/gemma-4-12B-it-qat-GGUF) repository (this is a smart Q4_0 drafter that is near-lossless and half the size).
 
 ### 3) Run llama-server with MTP
 
 ```bash
 llama-server \
   -m gemma-4-12B-it-qat-UD-Q4_K_XL.gguf \
-  --model-draft gemma-4-12B-it-qat-assistant-MTP-Q8_0.gguf \
+  --model-draft mtp-gemma-4-12B-it.gguf \
   --spec-type draft-mtp \
   --spec-draft-n-max 4 \
   --parallel 1 \
