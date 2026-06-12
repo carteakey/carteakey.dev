@@ -1,6 +1,6 @@
 ---
-title: Gemma 4 26B QAT + MTP: 100 tok/s Local MoE on 12GB VRAM
-description: Local benchmarks comparing Gemma 4 26B under standard, QAT, MTP, and combined QAT+MTP configurations on an RTX 4070.
+title: "Gemma 4 26B QAT + MTP: 100 tok/s Local MoE on 12GB VRAM"
+description: "Local benchmarks comparing Gemma 4 26B under standard, QAT, MTP, and combined QAT+MTP configurations on an RTX 4070."
 date: 2026-06-12
 authored_by: ai-assisted
 draft: false
@@ -13,6 +13,8 @@ pinned: false
 
 Google's release of the QAT (Quantization-Aware Training) variants of Gemma 4 has changed the game for local inference on consumer hardware. By combining **QAT** with **MTP (Multi-Token Prediction)**, we can now run the heavy Gemma 4 26B MoE model at over **100 tokens/second** on a single 12GB GPU.
 
+![](/img/speed.gif)
+
 Here is a performance breakdown comparing various configurations on a consumer RTX 4070 setup.
 
 ## Performance Table (Gemma 4 26B-A4B-it)
@@ -24,7 +26,7 @@ Here is a performance breakdown comparing various configurations on a consumer R
 | **QAT Only (MTP Disabled)** | UD-Q4_K_XL (QAT) | None | **69.00** | 1.79x |
 | **Both Enabled (QAT + MTP)** | UD-Q4_K_XL (QAT) | Q8_0 MTP | **100.60** | **2.61x** |
 
-*Tested on CachyOS, RTX 4070 (iGPU as main display output for 100% free VRAM), Ryzen 7 9700X, 32GB DDR5-6000 RAM. Benchmarks run using llama.cpp mainline (with Gemma 4 MTP support).*
+*Tested on CachyOS, RTX 4070 (iGPU as main display output for 100% free VRAM), Intel Core i5-12600K, 32GB DDR5-6000 RAM. Benchmarks run using llama.cpp mainline (with Gemma 4 MTP support).*
 
 ## Key Observations
 

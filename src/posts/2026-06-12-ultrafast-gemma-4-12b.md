@@ -1,6 +1,6 @@
 ---
-title: Ultrafast Gemma 4 12B QAT + MTP: 120 tok/s Local Inference
-description: Setup and benchmark results running Gemma 4 12B QAT with Multi-Token Prediction on a single RTX 4070 GPU.
+title: "Ultrafast Gemma 4 12B QAT + MTP: 120 tok/s Local Inference"
+description: "Setup and benchmark results running Gemma 4 12B QAT with Multi-Token Prediction on a single RTX 4070 GPU."
 date: 2026-06-12
 authored_by: ai-assisted
 draft: false
@@ -15,11 +15,13 @@ Google recently released the QAT (Quantization-Aware Training) variant of their 
 
 By pairing Unsloth's QAT quantized model with a converted Q8_0 assistant/draft model and running mainline llama.cpp with native Gemma 4 MTP support, we can achieve an incredible **120.8 tokens/second** locally!
 
+![](/img/speed.gif)
+
 ## System Specifications
 
 - **OS**: CachyOS
 - **GPU**: NVIDIA GeForce RTX 4070 Super 12GB (display driven by iGPU, leaving 100% VRAM free for inference)
-- **CPU**: AMD Ryzen 7 9700X
+- **CPU**: Intel Core i5-12600K
 - **RAM**: 32GB DDR5-6000
 
 ## Performance Comparison (Gemma 4 12B-it)
