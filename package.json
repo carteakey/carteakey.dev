@@ -6,15 +6,15 @@
   "packageManager": "pnpm@11.5.0",
   "scripts": {
     "build": "npm-run-all -s build:*",
-    "build:11ty": "pnpm exec eleventy",
-    "build:css": "pnpm exec tailwindcss -i ./src/static/css/tailwind.css -o ./_site/css/tailwind.css --minify --postcss",
-    "bench": "DEBUG=Eleventy:Benchmark* pnpm exec eleventy",
-    "watch": "pnpm exec eleventy --watch",
-    "serve": "pnpm exec eleventy --serve",
+    "build:11ty": "eleventy",
+    "build:css": "tailwindcss -i ./src/static/css/tailwind.css -o ./_site/css/tailwind.css --minify --postcss",
+    "bench": "DEBUG=Eleventy:Benchmark* eleventy",
+    "watch": "eleventy --watch",
+    "serve": "eleventy --serve",
     "start": "npm-run-all -p start:*",
-    "start:11ty": "pnpm exec eleventy --serve",
-    "start:css": "pnpm exec tailwindcss -i ./src/static/css/tailwind.css -o ./_site/css/tailwind.css --watch --postcss",
-    "debug": "DEBUG=* pnpm exec eleventy",
+    "start:11ty": "eleventy --serve",
+    "start:css": "tailwindcss -i ./src/static/css/tailwind.css -o ./_site/css/tailwind.css --watch --postcss",
+    "debug": "DEBUG=* eleventy",
     "metrics:merge-check": "node ./utils/check-engagement-merge.mjs"
   },
   "repository": {

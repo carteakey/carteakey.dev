@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.29] - 2026-06-21
+### Fixed
+- package.json: Remove redundant `pnpm exec` from scripts, referencing binaries like `eleventy` and `tailwindcss` directly. This prevents `npm-run-all` from attempting to spawn nested `pnpm` processes that trigger EACCES permissions issues with the Corepack cache on Netlify.
+
 ## [2.0.28] - 2026-06-21
 ### Fixed
 - netlify.toml: Enable corepack and prepare/activate pnpm@11.5.0 in the build command to prevent permission denied errors during Netlify build.
