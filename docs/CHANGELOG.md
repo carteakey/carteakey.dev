@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.30] - 2026-06-21
+### Changed
+- netlify.toml: Switched build command to `npm run build`. This completely bypasses the Corepack `pnpm` EACCES permission issue, while still using the dependencies installed by `pnpm` during Netlify's initial setup phase.
+
 ## [2.0.29] - 2026-06-21
 ### Fixed
 - package.json: Remove redundant `pnpm exec` from scripts, referencing binaries like `eleventy` and `tailwindcss` directly. This prevents `npm-run-all` from attempting to spawn nested `pnpm` processes that trigger EACCES permissions issues with the Corepack cache on Netlify.
