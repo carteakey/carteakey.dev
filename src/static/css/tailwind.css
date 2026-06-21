@@ -3336,6 +3336,8 @@ picture img {
     border-bottom: 1px solid rgb(214 207 193 / 0.95);
     color: rgb(82 82 91);
     background: rgb(251 250 246 / 0.94);
+    white-space: nowrap;
+    overflow-wrap: normal;
   }
 
   .dark .site-content thead th {
@@ -3359,6 +3361,8 @@ picture img {
   .site-content tbody td:first-child {
     font-weight: 700;
     color: rgb(17 24 39);
+    width: 1%;
+    white-space: nowrap;
   }
 
   .dark .site-content tbody td:first-child {
@@ -3431,10 +3435,14 @@ picture img {
 
     .site-content th,
     .site-content td {
-      min-width: 8.5rem;
       max-width: 18rem;
       white-space: normal;
       vertical-align: top;
+    }
+
+    .site-content th,
+    .site-content td:first-child {
+      white-space: nowrap;
     }
 
     .site-content th:first-child,
@@ -3442,7 +3450,6 @@ picture img {
       position: sticky;
       left: 0;
       z-index: 1;
-      min-width: 8rem;
       background: rgb(251 250 246);
       box-shadow: 1px 0 0 rgb(229 223 211 / 0.95);
     }
@@ -4094,6 +4101,8 @@ picture img {
   .wide-wrap table tbody td:first-child {
     font-weight: 700;
     color: rgb(17 24 39);
+    width: 1%;
+    white-space: nowrap;
   }
 
   .dark .wide-wrap table tbody td:first-child {
@@ -4138,7 +4147,6 @@ picture img {
 
     .wide-wrap table th,
     .wide-wrap table td {
-      min-width: 8.5rem;
       max-width: 18rem;
       padding: 0.48em 0.7em;
     }
@@ -4148,7 +4156,6 @@ picture img {
       position: sticky;
       left: 0;
       z-index: 1;
-      min-width: 7.5rem;
       background: rgb(251 250 246);
       box-shadow: 1px 0 0 rgb(229 223 211 / 0.95);
     }
