@@ -4,7 +4,7 @@ description: A living deep-dive into every layer of local LLM inference - hardwa
 image: /img/blog-sketches/unique/local-llm-optimization-stamp-trim.png
 imageAlt: "Transparent monochrome sketch of a workstation PC tower with exposed GPU fans, monitor displaying tuning parameters, and dials measuring tokens-per-second performance"
 date: 2026-06-12
-updated: 2026-06-12
+updated: 2026-06-21
 authored_by: ai-assisted
 draft: false
 tags:
@@ -35,6 +35,29 @@ The scope is intentionally wide. We start from "should I even run locally?" and 
 - **If you hit VRAM limits:** reduce context, quantize KV cache, lower `--parallel`, then tune layer placement.
 - **If you use MTP speculative decoding:** benchmark draft acceptance and KV cache precision together; raw TPS is not enough.
 - **If you are running a single-user homelab:** prefer `--parallel 1`, explicit context sizing, and static placement once you have a stable config.
+
+### 1.1 Where to Jump In
+
+This is a reference, not a linear tutorial. Start with the part that matches the problem:
+
+- **MoE generation is slow:** check [RAM speed](#6-1-the-memory-hierarchy-the-most-important-mental-model), then [layer placement](#10-layer-placement-the-core-optimization-for-moe) and [P-core pinning](#14-3-taskset-p-core-pinning-linux).
+- **The model does not fit or dies later in a session:** start with [`--fit`](#10-4-fit-on-recommended-starting-point), [context and KV cache](#11-context-and-kv-cache), then the [known OOM causes](#known-tg-variability-root-causes).
+- **Vision fails at load or on the first image:** go to [Vision / Multimodal](#19-vision-multimodal). The projector and image batch need their own headroom.
+- **MTP is no faster than normal decoding:** check [draft acceptance and KV precision](#18-2-the-kv-cache-constraint-ctk-f16-ctv-f16), not just reported TG.
+- **You use LM Studio or Ollama:** the [hardware](#6-hardware), [OS](#7-os-choice), and [security](#21-security-notes) sections still apply. Most llama.cpp flags do not.
+
+### 1.2 Safe Starting Profiles
+
+These are conservative baselines for a single-user server. They are starting points, not universal optimums; model architecture still changes the memory math.
+
+| Workload | `--fit-target` | Context | KV cache | `--parallel` | Batch |
+| --- | ---: | ---: | --- | ---: | ---: |
+| Text, 12 GB VRAM | 512 MiB | 64k | `q8_0` / `q8_0` | 1 | 1024 |
+| Text, 24 GB VRAM | 512–768 MiB | 128k | `q8_0` / `q8_0` | 1–2 | 1024 |
+| Vision, 12 GB VRAM | 2048 MiB | 64k | `q8_0` / `q8_0` | 1 | 256 |
+| MTP speculative decoding | 512+ MiB | 64k | `f16` / `f16` | 1 | 1024 |
+
+> **Avoid the exciting failure modes:** do not squeeze vision below `--fit-target 2048` on a 12 GB card; do not enable `GGML_CUDA_GRAPH_OPT=1` with less than 512 MiB headroom; do not include E-cores in a hybrid Intel CPU's thread range; and do not copy `q8_0` KV settings into an MTP config without measuring draft acceptance. All four can look fine in a short benchmark and fail in a real session.
 
 ## 2. Optimization Priority Checklist
 
@@ -402,7 +425,7 @@ Quantization-Aware Training (QAT) bypasses this degradation by modeling low-prec
 
 ## 10. Layer Placement - The Core Optimization for MoE
 
-> For dense models fully in VRAM: use `-ngl 99` and skip to §10.
+> For dense models fully in VRAM: use `-ngl 99` and skip to §11.
 
 For MoE hybrid setups, layer placement is where most performance lives. The goal: keep as many blocks as possible on GPU (especially early layers and attention), while offloading expert weights to RAM.
 
@@ -931,6 +954,7 @@ sudo tuned-adm active
 
 | Date | Note |
 | --- | --- |
+| 2026-06-21 | Added a problem-based reading map, centralized safe starting profiles, and consolidated the easy-to-miss vision, CUDA graph, hybrid CPU, and MTP guardrails. |
 | 2026-06-17 | Reworked opening structure with a TL;DR, moved priority checklist, added measurement and security sections, updated llama.cpp/LM Studio guidance, tightened QAT/MTP wording, and fixed stale internal links. |
 | 2026-06-12 | Updated optimization priority checklist, renumbered sections, and added dedicated guides for QAT quantization and MTP speculative decoding. |
 | 2026-04-04 | Initial post - synthesized from l3ms scripts, bench-runbook, and model posts. |

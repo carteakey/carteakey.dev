@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.31] - 2026-06-21
+### Changed
+- 2026-06-12-local-llm-optimization.md: Added a problem-based reading map, centralized safe starting profiles, and a consolidated warning for vision headroom, CUDA graphs, Intel E-cores, and MTP KV precision.
+
+### Fixed
+- 2026-06-12-local-llm-optimization.md: Corrected the dense-model jump from section 10 to section 11.
+
 ## [2.0.30] - 2026-06-21
 ### Changed
 - netlify.toml: Switched build command to `npm run build`. This completely bypasses the Corepack `pnpm` EACCES permission issue, while still using the dependencies installed by `pnpm` during Netlify's initial setup phase.
