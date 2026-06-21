@@ -109,7 +109,7 @@ eleventyNavigation:
                 </div>
                 {% if post.data.image %}
                   <a href="{{ post.url }}" class="hidden sm:block shrink-0 self-start" style="text-decoration: none;">
-                    <img src="{{ post.data.image | url }}" alt="{{ post.data.imageAlt or post.data.title }}" loading="lazy" decoding="async" class="block h-20 w-20 object-contain dark:invert dark:brightness-125">
+                    {% post_thumbnail post.data.image, post.data.imageAlt or post.data.title, "block h-20 w-20 object-contain dark:invert dark:brightness-125", 80 %}
                   </a>
                 {% endif %}
               </div>
@@ -156,7 +156,7 @@ eleventyNavigation:
           <div class="mt-2 flex items-start gap-3">
             <p class="min-w-0 flex-1 editorial-support-compact m-0">{{ post.data.description }}</p>
             <a href="{{ post.url }}" class="shrink-0" style="text-decoration: none;">
-              <img src="{{ post.data.image | url }}" alt="{{ post.data.imageAlt or post.data.title }}" loading="lazy" decoding="async" class="block h-24 w-24 object-contain dark:invert dark:brightness-125">
+              {% post_thumbnail post.data.image, post.data.imageAlt or post.data.title, "block h-24 w-24 object-contain dark:invert dark:brightness-125", 96 %}
             </a>
           </div>
         {% else %}

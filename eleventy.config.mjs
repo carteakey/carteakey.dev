@@ -322,6 +322,32 @@ async function imageShortcodeWithCaptions(src, alt, css, caption) {
   return wrapImageInFigure(imageMarkup, caption);
 }
 
+async function postThumbnailShortcode(src, alt, css, displayWidth = 96) {
+  const sourcePath = src.startsWith("/img/")
+    ? `./src/static${src}`
+    : src;
+  const width = Number(displayWidth) || 96;
+
+  const metadata = await Image(sourcePath, {
+    // One shared set covers 64px homepage images and 80/96px post cards,
+    // including their high-density display sizes.
+    widths: [64, 96, 128, 192],
+    formats: ["avif", "webp", "auto"],
+    outputDir: "./_site/img/thumbnails/posts/",
+    urlPath: "/img/thumbnails/posts/",
+  });
+
+  return generateHTML(metadata, {
+    class: css,
+    alt,
+    sizes: `${width}px`,
+    loading: "lazy",
+    decoding: "async",
+  }, {
+    whitespaceMode: "inline",
+  });
+}
+
 function remoteImageShortcode(src, alt, css) {
   return buildRemoteImageMarkup(src, alt, css);
 }
@@ -499,6 +525,7 @@ export default function (eleventyConfig) {
   //Image Plugin
   eleventyConfig.addAsyncShortcode("image", imageShortcode);
   eleventyConfig.addAsyncShortcode("image_cc", imageShortcodeWithCaptions);
+  eleventyConfig.addAsyncShortcode("post_thumbnail", postThumbnailShortcode);
   eleventyConfig.addShortcode("remote_image", remoteImageShortcode);
   eleventyConfig.addShortcode("remote_image_cc", remoteImageShortcodeWithCaptions);
 

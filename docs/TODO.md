@@ -24,6 +24,7 @@
 
 ### User Experience
 
+- [x] Optimize blog post thumbnails into responsive AVIF/WebP variants instead of serving full-resolution source images. (2026-06-21)
 - [x] change all email references to carteakey.dev@gmail.com (2026-01-03)
 - [x] Standardize UPDATED labels to uppercase across all pages (2026-02-09)
 - [x] Add search filter to blog page like snippets (2026-02-09)

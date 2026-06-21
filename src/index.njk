@@ -113,7 +113,7 @@ description: Personal workbench and writing index of Kartikey Chauhan. Senior Da
             <li class="home-selected-item">
               <a href="{{ item.url | url }}" class="home-selected-link">
                 {% if item.image %}
-                  <img src="{{ item.image | url }}" alt="{{ item.imageAlt or item.title }}" loading="lazy" decoding="async" class="home-selected-image dark:invert dark:brightness-125">
+                  {% post_thumbnail item.image, item.imageAlt or item.title, "home-selected-image dark:invert dark:brightness-125", 64 %}
                 {% endif %}
                 <span class="home-selected-copy">
                   <span class="home-selected-title">{{ item.title }}</span>

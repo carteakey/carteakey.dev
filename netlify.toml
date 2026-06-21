@@ -1,6 +1,6 @@
 [build]
   publish = "_site"
-  command = "pnpm run build"
+  command = "corepack enable && corepack prepare pnpm@11.5.0 --activate && pnpm run build"
   functions = "netlify/functions"
 
 # Force redirect for blog post URLs with spaces (percent-encoded)
