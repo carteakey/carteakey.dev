@@ -83,7 +83,7 @@ Ordered by typical impact. Each item links to the section with the full explanat
 | 16 | **iGPU for display** (motherboard HDMI) | Frees 500-1000 MB VRAM | §6.2 |
 | 17 | **Set `LLAMA_SET_ROWS=1`** | Cache locality for MoE expert access | §17.1 |
 | 18 | **Set `GGML_CUDA_GRAPH_OPT=1`** only with enough headroom | Reduces CUDA dispatch overhead | §17.1 |
-| 19 | **Evaluate ik_llama.cpp** for generation-heavy workloads | Possible TG win at cost of PP | §20 |
+| 19 | **Consider ik_llama.cpp** (MoE optimizations) | Specialized/niche; not covered here | §20 |
 
 ## 3. What to Measure Before Tuning
 
@@ -847,33 +847,11 @@ Separate text and vision servers on different ports if running both workloads fr
 
 ## 20. ik_llama.cpp Fork [Advanced]
 
-[ikawrakow/ik_llama.cpp](https://github.com/ikawrakow/ik_llama.cpp) is a fork with MoE-specific kernel optimizations not yet upstream. Worth evaluating once you've hit the ceiling on stock llama.cpp.
+For highly specialized environments, the [ikawrakow/ik_llama.cpp](https://github.com/ikawrakow/ik_llama.cpp) fork exists. It focuses on MoE-specific kernel optimizations (such as fused MoE kernels).
 
-### 20.1 Key Flags
-
-| Flag | Effect | Cost |
-| --- | --- | --- |
-| `-fmoe` (fused-moe; **default on**) | Fused MoE expert kernel: significant TG uplift | PP drops ~50% |
-| `-muge` (merge-up-gate) | Repacks up+gate projections; better read locality | +25–30 GB RAM; slow startup |
-| `-mqkv` (merge-qkv) | Merges Q, K, V projections | Small TG gain; no RAM cost |
-| `-ger` (grouped-expert-routing) | Groups token-expert assignments for cache locality | Variable; sweep to confirm |
-
-### 20.2 Real Numbers (Qwen3-Coder-Next, RTX 4070 12 GB)
-
-| Config | pp512 (t/s) | tg128 (t/s) | Notes |
-| --- | ---: | ---: | --- |
-| Upstream baseline (N_CPU_MOE=40) | **453** | 40.6 | Reference |
-| ik fused-moe (default on) | 215 | 40.5 | PP halves; TG same as upstream |
-| ik fused-moe + merge-qkv | 217 | 40.9 | Marginal gain over fused alone |
-| ik fused-moe + merge-up-gate | 215 | **41.1** | Best TG; +27 GB RAM overhead |
-| ik fused-moe + gcr + merge-up-gate | 215 | 41.2 | Diminishing returns |
-
-On gpt-oss-120b, ik_llama was also tested: CUDA graph compilation overhead dominated; PP collapsed to ~98 t/s (vs 428 upstream) and TG dropped to 20 t/s (vs 28 upstream). Not competitive for that model. Performance is model-architecture-dependent.
-
-### 20.3 When to Use
-
-- **Use ik_llama** if TG is your sole bottleneck, you have RAM headroom, and PP regression is acceptable (generation-heavy agent loops)
-- **Stay on upstream** for RAG, long-prompt workloads, or when PP matters. Upstream also has better startup predictability and no extra RAM cost.
+However, it is not covered in detail in this guide because:
+- **No Upstreaming**: Nothing developed in `ik_llama.cpp` is expected to make it upstream officially or directly.
+- **Specialized Tuning**: It serves as a specialized option for custom, architecture-specific tuning once you have maximized standard configurations.
 
 ---
 
@@ -954,6 +932,7 @@ sudo tuned-adm active
 
 | Date | Note |
 | --- | --- |
+| 2026-06-21 | Condensed ik_llama.cpp section to a brief advanced reference based on feedback. |
 | 2026-06-21 | Added a problem-based reading map, centralized safe starting profiles, and consolidated the easy-to-miss vision, CUDA graph, hybrid CPU, and MTP guardrails. |
 | 2026-06-17 | Reworked opening structure with a TL;DR, moved priority checklist, added measurement and security sections, updated llama.cpp/LM Studio guidance, tightened QAT/MTP wording, and fixed stale internal links. |
 | 2026-06-12 | Updated optimization priority checklist, renumbered sections, and added dedicated guides for QAT quantization and MTP speculative decoding. |

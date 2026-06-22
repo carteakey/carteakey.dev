@@ -133,8 +133,8 @@ Buy me a coffee
 - [x] Add RSS feed enhancements (full content) (2026-01-03)
 
 ### Interactive Features
-- [x] Tag filtering - Interactive tag-based post filtering (2026-01-03)
 - [ ] Code snippet favorites - Let visitors save useful snippets
+- [x] Tag filtering - Interactive tag-based post filtering (2026-01-03)
 
 ### Analytics & Insights
 
@@ -152,16 +152,17 @@ Buy me a coffee
 
 ## Maybe Later
 
-- [x] Add print styles - Better printing experience (2026-03-23)
-- [x] Add JSON-LD structured data for blog posts (2026-03-23)
 - [ ] Comment threading - Enhanced Giscus comments
 - [ ] Live typing effect - Animate text on homepage
+- [ ] Custom fonts optimization
+- [ ] Multi-language support
+- [x] Add print styles - Better printing experience (2026-03-23)
+- [x] Add JSON-LD structured data for blog posts (2026-03-23)
 - [x] Popular posts widget - Most upvoted content (2026-03-23)
 - [x] Blog series navigation - Group related posts with prev/next (2026-06-12)
-- [ ] Custom fonts optimization
 - [x] Progressive web app features (service worker added 2026-01-03)
 - [x] Advanced search with filters (2026-03-23)
-- [ ] Multi-language support
+
 
 ## Completed TODOs
 ### 2025-10-11

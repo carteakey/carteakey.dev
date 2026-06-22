@@ -182,11 +182,11 @@
 ## 🔄 Suggested Implementation Order (Phased)
 
 ### Phase 1: Foundation (Week 1-Stabilization)
+- [ ] Add `aria-busy` to upvote button
 - [x] Fix silent data failures: add error boundaries, fallback UI
 - [x] Add missing meta descriptions (5 top-level pages)
-- [ ] Optimize hero image (lazy load + AVIF)
+- [x] Optimize hero image (lazy load + AVIF)
 - [x] Create robots.txt with SEO rules
-- [ ] Add `aria-busy` to upvote button
 
 **Expected result:** Site more stable, SEO improved, better UX during API outages.
 
@@ -194,27 +194,27 @@
 - [ ] Run full a11y audit (axe + manual)
 - [ ] Fix dark mode contrast issues
 - [ ] Add focus-visible states to all interactive elements
-- [x] Make theme picker keyboard-navigable
 - [ ] Redesign /feed/ with persistent filter sidebar
-- [ ] Add reading time to posts
+- [x] Make theme picker keyboard-navigable
+- [x] Add reading time to posts
 
 **Expected result:** WCAG AA compliance, clearer content pathways, improved mobile experience.
 
 ### Phase 3: Conversion & Reliability (Week 3–4-Growth)
-- [x] Implement fetchWithFallback utility
-- [x] Update all data files to use wrapper
 - [ ] Add /status page for integration health
 - [ ] Create newsletter funnel (sticky button + homepage micro-form)
 - [ ] Unify card styling across content types
+- [x] Implement fetchWithFallback utility
+- [x] Update all data files to use wrapper
 
 **Expected result:** 99.9% availability, higher newsletter conversions, visual consistency.
 
 ### Phase 4: Strategic Growth (Month 2-SEO & Content)
 - [ ] Expand JSON-LD schema (BlogPosting, FAQPage, BreadcrumbList)
-- [ ] Add sticky TOC to long posts
-- [ ] Implement "Read next" section
 - [ ] Internal link audit & strategy
 - [ ] Set up Core Web Vitals monitoring
+- [x] Add sticky TOC to long posts
+- [x] Implement "Read next" section
 
 **Expected result:** 30–50% organic growth, better search visibility, improved readership.
 

@@ -13,6 +13,11 @@ tags:
 pinned: false
 ---
 
+**Update (June 16, 2026)**: Ran a comprehensive benchmark sweep on the latest mainline build of `llama.cpp` using a custom local benchmark harness comparing `Q4_K_XL` vs. `Q6_K` quant variants, and Thinking vs. NoThink modes. Key findings:
+- **Q4_K_XL MTP (n-max=2)** is the speed champ at **60.3 tok/s** (vs **52.1 tok/s** baseline).
+- **Q6_K MTP (n-max=2)** achieves **43.1 tok/s** (vs **40.3 tok/s** baseline).
+- Disabling thinking mode (`enable_thinking: false`) actually *reduces* token-per-second generation rates slightly (**58.0 tok/s** on Q4; **40.9 tok/s** on Q6). The structured nature of reasoning paths in thinking mode raises the speculative draft acceptance rate, allowing the MTP heads to validate more tokens per forward pass.
+
 **Update (May 19, 2026)**: Updated `llama.cpp` to pull in the latest MTP improvements from [PR #23269](https://github.com/ggml-org/llama.cpp/pull/23269) for better inference speed and efficiency.
 
 **Update (May 21, 2026)**: Benchmarked the new Q6_K variant for Qwen 3.6 MTP. While the increased precision is welcome, it comes with a ~30% performance penalty (~50 tok/s vs ~71 tok/s on Q4_K_XL). For now, Q4_K_XL remains the default recommendation for 12GB VRAM setups. Verified that PR #23269 provides a massive speedup over mainline master for MTP drafting.
@@ -142,6 +147,7 @@ MTP performance scales massively compared to non-MTP generation due to the built
 
 | Date | Note |
 | --- | --- |
+| 2026-06-16 | Updated with latest comprehensive benchmark sweep results (Q4 vs Q6, Thinking vs NoThink). |
 | 2026-05-16 | Verified and updated post to reflect that Vision (multimodal) inputs are supported with MTP! |
 | 2026-05-21 | Added Q6_K benchmark results and verified PR #23269 performance gains. |
 | 2026-05-16 | MTP PR merged into mainline. Updated flags to `--spec-type draft-mtp`. |

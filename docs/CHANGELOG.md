@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.32] - 2026-06-21
+### Changed
+- posts: Condensed ik_llama.cpp section in the local LLM reference guide to a brief advanced disclaimer.
+- docs: Checked off all completed tasks across audit files and organized lists to bring unchecked items to the top.
+
 ## [2.0.31] - 2026-06-21
 ### Changed
 - 2026-06-12-local-llm-optimization.md: Added a problem-based reading map, centralized safe starting profiles, and a consolidated warning for vision headroom, CUDA graphs, Intel E-cores, and MTP KV precision.
@@ -31,6 +36,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [2.0.26] - 2026-06-21
 ### Fixed
 - tailwind.css: Let table columns size to their content while keeping headers and first-column labels or dates on one line, preventing clipped headings and wrapped changelog dates.
+
 
 ## [2.0.25] - 2026-06-12
 ### Fixed

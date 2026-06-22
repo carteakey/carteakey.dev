@@ -4,29 +4,29 @@
 
 ### Day 1: API Reliability (2h)
 ```
-[ ] src/_data/spotify.js → wrap in try-catch, export fallback
-[ ] src/_data/strava.js → wrap in try-catch, export fallback
-[ ] src/_data/steam.js → wrap in try-catch, export fallback
-[ ] src/_data/upvotes.js → wrap in try-catch, export fallback
-[ ] src/_includes/layouts/base.njk → add error state UI
+[x] src/_data/spotify.js → wrap in try-catch, export fallback
+[x] src/_data/strava.js → wrap in try-catch, export fallback
+[x] src/_data/steam.js → wrap in try-catch, export fallback
+[x] src/_data/upvotes.js → wrap in try-catch, export fallback
+[x] src/_includes/layouts/base.njk → add error state UI
 ```
 
 ### Day 2: SEO & Metadata (1h)
 ```
-[ ] src/index.njk → add description: "..."
-[ ] src/projects.njk → add description: "..."
-[ ] src/archive.njk → add description: "..."
-[ ] src/stats.njk → add description: "..."
-[ ] src/robots.txt.njk → create file, disallow /stats, /changelog, /now/archive
+[x] src/index.njk → add description: "..."
+[x] src/projects.njk → add description: "..."
+[x] src/archive.njk → add description: "..."
+[x] src/stats.njk → add description: "..."
+[x] src/robots.txt.njk → create file, disallow /stats, /changelog, /now/archive
 ```
 
 ### Day 3: Performance & A11y (2h)
 ```
-[ ] src/index.njk line 12 → add loading="lazy" decoding="async" to hero image
-[ ] Convert headshot PNG to AVIF with PNG fallback
 [ ] src/_includes/layouts/post.njk → add aria-busy to upvote button
 [ ] src/archive.njk, src/feed.njk, src/snippets.njk → add focus-ring to inputs
-[ ] src/_includes/components/breadcrumbs.njk → show on mobile (truncate last 2)
+[x] src/index.njk line 12 → add loading="lazy" decoding="async" to hero image
+[x] Convert headshot PNG to AVIF with PNG fallback
+[x] src/_includes/components/breadcrumbs.njk → show on mobile (truncate last 2)
 ```
 
 ### Day 4: Forms & Styling (1.5h)
@@ -45,32 +45,32 @@
 [ ] Run axe-core audit on all pages
 [ ] Fix dark mode contrast (target 4.5:1 on all text)
 [ ] Add focus-visible: outline to all interactive elements
-[ ] Theme picker: add @keydown.left @keydown.right support
-[ ] Add aria-label to theme picker buttons
 [ ] Add aria-describedby to form errors
 [ ] Audit & fix missing alt text on 50+ feed images
+[x] Theme picker: add @keydown.left @keydown.right support
+[x] Add aria-label to theme picker buttons
 ```
 
 ### Week 2–3: Content Discoverability (2–3 days)
 ```
 [ ] src/feed.njk → add persistent filter sidebar (mobile-collapsible)
-[ ] eleventy.config.mjs → add readingTime filter (reading-time npm pkg)
 [ ] Feed type chips → show count: "Posts (42)", "Snippets (18)", etc
 [ ] Add full-text search to /feed/ (native input + client-side filter or Lunr.js)
 [ ] Link all content types from nav: /blog, /snippets, /til, /reading, /photos
+[x] eleventy.config.mjs → add readingTime filter (reading-time npm pkg)
 ```
 
 ### Week 3–4: Reliability & Conversion (2–3 days)
 ```
-[ ] src/_utils/fetchWithFallback.js → create centralized API wrapper
+[ ] Create /status page (show last-fetch time per integration)
+[ ] src/index.njk → add sticky "Subscribe" button + email micro-form
+[ ] Create /newsletter/success page with social share CTA
+[x] src/_utils/fetchWithFallback.js → create centralized API wrapper
   - 5-second timeout per call
   - Auto-fallback to cache
   - Error logging (Sentry optional)
   - "Stale data" badge
-[ ] All _data/*.js → refactor to use fetchWithFallback
-[ ] Create /status page (show last-fetch time per integration)
-[ ] src/index.njk → add sticky "Subscribe" button + email micro-form
-[ ] Create /newsletter/success page with social share CTA
+[x] All _data/*.js → refactor to use fetchWithFallback
 ```
 
 ---
@@ -81,12 +81,12 @@
 ```
 [ ] Expand JSON-LD BlogPosting schema (add articleBody, wordCount, readingTime)
 [ ] Create generateTOC filter for posts > 1500 words
-[ ] Add sticky TOC sidebar to post layout
 [ ] Audit & rewrite meta descriptions (120–160 chars on 20+ posts)
-[ ] Add "Read next" section to post.njk (related by tags)
 [ ] Internal link audit: blog ↔ projects ↔ snippets cross-linking
 [ ] Create /sitemap-index.xml (separate sitemaps for posts, snippets, static)
 [ ] Add canonical tag logic for duplicate content
+[x] Add sticky TOC sidebar to post layout
+[x] Add "Read next" section to post.njk (related by tags)
 ```
 
 ### Month 2: Monitoring & Polish (2–3 days)

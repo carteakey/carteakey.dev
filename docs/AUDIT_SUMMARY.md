@@ -82,35 +82,35 @@
 ## 🚦 Phased Rollout Plan
 
 ### **Week 1: Foundation (Stabilize)**
-- [ ] Fix data fetch errors
-- [ ] Add meta descriptions
-- [ ] Hero image optimization
-- [ ] robots.txt creation
 - [ ] aria-busy on upvote
+- [x] Fix data fetch errors
+- [x] Add meta descriptions
+- [x] Hero image optimization
+- [x] robots.txt creation
 **Result:** Stable site, improved SEO, better API fallback
 
 ### **Week 2–3: Accessibility & Discoverability (Comply)**
 - [ ] Full a11y audit
 - [ ] Fix dark mode contrast
 - [ ] Focus-visible states
-- [ ] Theme picker keyboard nav
 - [ ] Redesign /feed/ with filters
-- [ ] Add reading time
+- [x] Theme picker keyboard nav
+- [x] Add reading time
 **Result:** WCAG AA compliance, clearer content pathways
 
 ### **Week 3–4: Reliability & Conversion (Grow)**
-- [ ] fetchWithFallback utility
 - [ ] /status health page
 - [ ] Newsletter funnel (sticky button + homepage micro-form)
 - [ ] Unify card styling
+- [x] fetchWithFallback utility
 **Result:** 99.9% uptime, higher conversions, visual consistency
 
 ### **Month 2: SEO & Content (Scale)**
 - [ ] Expand JSON-LD schema
-- [ ] Sticky TOC for long posts
-- [ ] "Read next" section
 - [ ] Internal link strategy
 - [ ] Core Web Vitals monitoring
+- [x] Sticky TOC for long posts
+- [x] "Read next" section
 **Result:** 30–50% organic growth, better search visibility
 
 ---
