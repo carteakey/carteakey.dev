@@ -2,17 +2,18 @@
 <ul reversed class="postlist w-full list-none m-0 p-0 divide-y divide-gray-100 dark:divide-gray-800/80"
   style="counter-reset: start-from {{ (postslistCounter or postslist.length) + 1 }}">
   {% for post in postslist | reverse %}
+  {% set rawTags = post.data.tags | default([]) %}
+  {% set filteredTags = rawTags | filterTagList %}
   <li class="postlist-item{% if post.url == url %} postlist-item-active{% endif %}">
     <article class="py-3.5 group">
-      <div class="flex flex-col md:flex-row md:gap-6">
+      <div class="flex flex-col sm:flex-row md:gap-6 sm:gap-4">
 
         {# Left: date + tags (desktop) #}
         <div class="shrink-0 md:w-36 flex flex-col gap-1 pt-0.5">
-          <time class="meta-text text-xs text-gray-400 dark:text-gray-500" datetime="{{ post.date | postDate }}">{{ post.date | postDate }}</time>
+          <time class="meta-text text-xs text-gray-400 dark:text-gray-500" datetime="{{ post.date | htmlDateString }}">{{ post.date | readableDate }}</time>
           <div class="hidden md:flex flex-wrap gap-1 mt-0.5">
-            {% for tag in post.data.tags | filterTagList %}
-            {% set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
-            <a href="{{ tagUrl | url }}" class="badge badge-tag badge-compact badge-interactive" style="text-decoration: none;">#{{ tag }}</a>
+            {% for tag in filteredTags %}
+            <a href="/tags/{{ tag | slugify }}/" class="badge badge-tag badge-compact badge-interactive" style="text-decoration: none;">#{{ tag }}</a>
             {% endfor %}
           </div>
         </div>
@@ -22,10 +23,13 @@
           <div class="{% if post.data.image %}flex items-start gap-4{% endif %}">
             <div class="min-w-0 flex-1">
               <div class="flex items-baseline gap-2 leading-snug">
-                <a href="{{ post.url | url }}" class="font-semibold text-gray-900 dark:text-gray-100 title-hover min-w-0" style="text-decoration: none;">
+                <a href="{{ post.url }}" class="editorial-title-link title-hover min-w-0" style="text-decoration: none;">
                   {% if post.data.title %}{{ post.data.title }}{% else %}<code>{{ post.url }}</code>{% endif %}
                 </a>
                 <div class="flex items-center gap-1.5 shrink-0">
+                  {% if post.data.featured %}
+                    <span class="inline-flex items-center text-sm" style="color: rgb(245 158 11);" title="Featured" aria-label="Featured">★</span>
+                  {% endif %}
                   {% if post.data.pinned %}
                     <span class="inline-flex items-center" style="color: var(--accent-color);" title="Pinned" aria-label="Pinned">{% feather "bookmark", class="w-3.5 h-3.5 fill-current opacity-20" %}</span>
                   {% endif %}
@@ -37,20 +41,19 @@
               </div>
 
               {% if post.data.description %}
-              <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5 m-0 leading-relaxed">{{ post.data.description }}</p>
+              <p class="editorial-support-compact mt-0.5 m-0">{{ post.data.description }}</p>
               {% endif %}
 
               {# Mobile: date + tags #}
               <div class="md:hidden flex flex-wrap items-center gap-x-2 gap-y-1 mt-1.5">
-                <span class="meta-text text-[0.65rem] text-gray-400 dark:text-gray-500">{{ post.date | postDate }}</span>
-                {% for tag in post.data.tags | filterTagList %}
-                {% set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
-                <a href="{{ tagUrl | url }}" class="badge badge-tag badge-compact badge-interactive" style="text-decoration: none;">#{{ tag }}</a>
+                <span class="meta-text text-[0.65rem] text-gray-400 dark:text-gray-500">{{ post.date | readableDate }}</span>
+                {% for tag in filteredTags %}
+                <a href="/tags/{{ tag | slugify }}/" class="badge badge-tag badge-compact badge-interactive" style="text-decoration: none;">#{{ tag }}</a>
                 {% endfor %}
               </div>
             </div>
             {% if post.data.image %}
-              <a href="{{ post.url | url }}" class="hidden sm:block shrink-0 self-start" style="text-decoration: none;">
+              <a href="{{ post.url }}" class="hidden sm:block shrink-0 self-start" style="text-decoration: none;">
                 {% post_thumbnail post.data.image, post.data.imageAlt or post.data.title, "block h-20 w-20 object-contain dark:invert dark:brightness-125", 80 %}
               </a>
             {% endif %}

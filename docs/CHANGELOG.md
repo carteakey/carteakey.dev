@@ -5,10 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.34] - 2026-06-22
+### Fixed
+- eleventy.config.mjs, feed-card.njk: Generate optimized feed thumbnail assets asynchronously in the feed collection, then render their metadata through a synchronous shortcode so Nunjucks macros cannot corrupt surrounding card markup.
+
+## [2.0.33] - 2026-06-21
+### Fixed
+- tailwind.css: Narrowed the picture centering CSS rule to match only post-body or site-content article containers (such as TILs and Notes), resolving unintended 1.5em margins on thumbnails in blog post lists.
+
+### Changed
+- 2026-06-12-gemma-4-26b-qat-mtp.md: Moved the Gemma 4 QAT + MTP post to the `local-inference/` series directory.
+- src/_redirects: Configured 301 redirects to map visitors from the old blog post URL `/blog/gemma-4-26b-qat-mtp/` to the new series folder URL `/blog/local-inference/gemma-4-26b-qat-mtp/`.
+
 ## [2.0.32] - 2026-06-21
 ### Changed
+- folder.njk, tags.njk: Migrated from raw styling headers to the shared page-header component to standardize eyebrow text, title sizes, description styles, and item count badges.
 - posts: Condensed ik_llama.cpp section in the local LLM reference guide to a brief advanced disclaimer.
 - docs: Checked off all completed tasks across audit files and organized lists to bring unchecked items to the top.
+
+### Fixed
+- postslist.njk: Aligned the folder and tag list views with the main archive list layout. Updated list items to use standard typography classes (`editorial-title-link`, `editorial-support-compact`), correct date formatting filters (`readableDate`, `htmlDateString`), correct responsive grid breakpoints, and featured badges.
 
 ## [2.0.31] - 2026-06-21
 ### Changed

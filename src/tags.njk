@@ -11,7 +11,9 @@ permalink: /tags/{{ tag | slugify }}/
 ---
 
 
-<h1>Tagged “{{ tag }}”</h1>
+{% set pageEyebrow = "Tagged Content" %}
+{% set pageTitle = "Tagged “" ~ tag ~ "”" %}
+{% set pageDescription = "All posts tagged with <strong>#" ~ tag ~ "</strong>." %}
 {% set rawPostsList = collections[ tag ] %}
 {% set postslist = [] %}
 {% for post in rawPostsList %}
@@ -19,6 +21,12 @@ permalink: /tags/{{ tag | slugify }}/
     {% set postslist = (postslist.push(post), postslist) %}
   {% endif %}
 {% endfor %}
+{% set itemCount = postslist | length %}
+{% set itemLabel = "posts" %}
+{% include "components/page-header.njk" %}
+
 {% include "postslist.njk" %}
-<p>See
-  <a href="{{ '/tags/' | url }}">all tags</a>.</p>
+
+<p class="mt-6">
+  See <a href="{{ '/tags/' | url }}" class="editorial-meta-link">all tags</a>.
+</p>

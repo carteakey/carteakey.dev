@@ -3302,12 +3302,14 @@ picture img {
   }
 
   /* Center images in post article body */
-  .site-content article picture {
+  .post-body picture,
+  article.site-content picture {
     margin: 1.5em auto;
     text-align: center;
   }
 
-  .site-content article picture img {
+  .post-body picture img,
+  article.site-content picture img {
     margin: 0 auto;
   }
 

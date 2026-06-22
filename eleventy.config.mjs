@@ -322,13 +322,12 @@ async function imageShortcodeWithCaptions(src, alt, css, caption) {
   return wrapImageInFigure(imageMarkup, caption);
 }
 
-async function postThumbnailShortcode(src, alt, css, displayWidth = 96) {
+async function generatePostThumbnailMetadata(src) {
   const sourcePath = src.startsWith("/img/")
     ? `./src/static${src}`
     : src;
-  const width = Number(displayWidth) || 96;
 
-  const metadata = await Image(sourcePath, {
+  return Image(sourcePath, {
     // One shared set covers 64px homepage images and 80/96px post cards,
     // including their high-density display sizes.
     widths: [64, 96, 128, 192],
@@ -336,6 +335,10 @@ async function postThumbnailShortcode(src, alt, css, displayWidth = 96) {
     outputDir: "./_site/img/thumbnails/posts/",
     urlPath: "/img/thumbnails/posts/",
   });
+}
+
+function postThumbnailMarkup(metadata, alt, css, displayWidth = 96) {
+  const width = Number(displayWidth) || 96;
 
   return generateHTML(metadata, {
     class: css,
@@ -346,6 +349,11 @@ async function postThumbnailShortcode(src, alt, css, displayWidth = 96) {
   }, {
     whitespaceMode: "inline",
   });
+}
+
+async function postThumbnailShortcode(src, alt, css, displayWidth = 96) {
+  const metadata = await generatePostThumbnailMetadata(src);
+  return postThumbnailMarkup(metadata, alt, css, displayWidth);
 }
 
 function remoteImageShortcode(src, alt, css) {
@@ -526,6 +534,7 @@ export default function (eleventyConfig) {
   eleventyConfig.addAsyncShortcode("image", imageShortcode);
   eleventyConfig.addAsyncShortcode("image_cc", imageShortcodeWithCaptions);
   eleventyConfig.addAsyncShortcode("post_thumbnail", postThumbnailShortcode);
+  eleventyConfig.addShortcode("post_thumbnail_markup", postThumbnailMarkup);
   eleventyConfig.addShortcode("remote_image", remoteImageShortcode);
   eleventyConfig.addShortcode("remote_image_cc", remoteImageShortcodeWithCaptions);
 
@@ -1123,35 +1132,39 @@ export default function (eleventyConfig) {
       return Number.isNaN(parsed.valueOf()) ? null : parsed;
     };
 
-    const posts = collectionApi
-      .getFilteredByGlob("./src/posts/**/*.md")
-      .filter((post) => {
-        if (shouldHideContent(post)) return false;
-        if (post.date && post.date > now) return false;
-        return true;
-      })
-      .map((post) => {
-        post.data.feedType = "post";
-        const postDate = normalizeDate(post.data.updated) || post.date;
-        const summarySource = post.data.description || post.data.excerpt || "";
-        const summary = summarySource ? truncate(stripHtml(summarySource)) : null;
-        return {
-          type: "post",
-          title: post.data.title,
-          date: postDate,
-          url: post.url,
-          summary,
-          readingTime: post.data.readingTime,
-          tags: (post.data.tags || []).filter((tag) => tag !== "posts" && tag !== "post"),
-          pinned: !!post.data.pinned,
-          featured: !!post.data.featured,
-          hidden: !!post.data.hidden,
-          authored_by: post.data.authored_by ?? null,
-          image: post.data.image ?? null,
-          imageAlt: post.data.imageAlt ?? post.data.title,
-          original: post,
-        };
-      });
+    const posts = await Promise.all(
+      collectionApi
+        .getFilteredByGlob("./src/posts/**/*.md")
+        .filter((post) => {
+          if (shouldHideContent(post)) return false;
+          if (post.date && post.date > now) return false;
+          return true;
+        })
+        .map(async (post) => {
+          post.data.feedType = "post";
+          const postDate = normalizeDate(post.data.updated) || post.date;
+          const summarySource = post.data.description || post.data.excerpt || "";
+          const summary = summarySource ? truncate(stripHtml(summarySource)) : null;
+          const image = post.data.image ?? null;
+          return {
+            type: "post",
+            title: post.data.title,
+            date: postDate,
+            url: post.url,
+            summary,
+            readingTime: post.data.readingTime,
+            tags: (post.data.tags || []).filter((tag) => tag !== "posts" && tag !== "post"),
+            pinned: !!post.data.pinned,
+            featured: !!post.data.featured,
+            hidden: !!post.data.hidden,
+            authored_by: post.data.authored_by ?? null,
+            image,
+            imageAlt: post.data.imageAlt ?? post.data.title,
+            imageMetadata: image ? await generatePostThumbnailMetadata(image) : null,
+            original: post,
+          };
+        })
+    );
 
     const snippets = collectionApi
       .getFilteredByTag("snippets")
