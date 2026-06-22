@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.35] - 2026-06-22
+### Fixed
+- eleventy.config.mjs, tailwind.css: Keep Markdown tables using native table layout on mobile and move horizontal scrolling to an accessible wrapper, preventing columns from collapsing into unreadable slivers.
+
 ## [2.0.34] - 2026-06-22
 ### Fixed
 - eleventy.config.mjs, feed-card.njk: Generate optimized feed thumbnail assets asynchronously in the feed collection, then render their metadata through a synchronous shortcode so Nunjucks macros cannot corrupt surrounding card markup.

@@ -1476,6 +1476,17 @@ export default function (eleventyConfig) {
       slugify: eleventyConfig.getFilter("slugify"),
     })
     .use(emoji);
+
+  markdownLibrary.renderer.rules.table_open = (tokens, idx, options, env, self) => {
+    const table = self.renderToken(tokens, idx, options);
+    if (env?.wideTable) return table;
+    return `<div class="table-scroll" role="region" aria-label="Scrollable table" tabindex="0">${table}`;
+  };
+  markdownLibrary.renderer.rules.table_close = (tokens, idx, options, env, self) => {
+    const table = self.renderToken(tokens, idx, options);
+    return env?.wideTable ? table : `${table}</div>`;
+  };
+
   eleventyConfig.setLibrary("md", markdownLibrary);
   //Table of Contents
   eleventyConfig.addPlugin(pluginTOC, {
@@ -1511,10 +1522,10 @@ export default function (eleventyConfig) {
     return ["note", "warning", "example", "todo", "aside"].includes(normalized) ? normalized : "note";
   };
 
-  const renderInnerMarkdown = (content) => {
+  const renderInnerMarkdown = (content, env = {}) => {
     if (!content || typeof content !== "string") return "";
     const trimmed = content.replace(/^\s*\n/, "").replace(/\n\s*$/, "");
-    return markdownLibrary.render(trimmed);
+    return markdownLibrary.render(trimmed, env);
   };
 
   // {% analysis title="Risk Comparison", winner="AAPL Lower Risk", side="a" %} markdown {% endanalysis %}
@@ -1533,7 +1544,7 @@ export default function (eleventyConfig) {
   // {% wide %} markdown table (or anything wide) {% endwide %}
   // Breaks out of article container; horizontally scrollable on mobile.
   eleventyConfig.addPairedShortcode("wide", function (content) {
-    const body = renderInnerMarkdown(content);
+    const body = renderInnerMarkdown(content, { wideTable: true });
     return `\n\n<div class="wide-wrap not-prose">\n${body}\n</div>\n\n`;
   });
 
