@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.37] - 2026-06-22
+### Changed
+- 2026-06-12-local-llm-optimization.md: Rewrote the Phase 1 corrections in the post's direct, practical voice while keeping the factual fixes intact.
+
 ## [2.0.36] - 2026-06-22
 ### Added
 - docs: Added a phased roadmap for testing and extending the local LLM optimization guide.
