@@ -21,7 +21,7 @@ Over the past year I've written posts on running [gpt-oss-120b](/blog/local-infe
 
 This is my attempt at a master reference. Instead of re-discovering flags in every new model post, I want one doc to link back to. If you're hitting a performance wall, starting from scratch, or just want to understand what each knob actually does - start here.
 
-The numbers in this guide come from one machine: an RTX 4070 12 GB, i5-12600K, 32 GB of DDR5-6000, Linux, CUDA, and recent llama.cpp builds. The Apple Silicon, AMD, multi-GPU, and server sections are useful starting points, but I haven't tested those setups myself.
+The scope is intentionally wide. The numbers in this guide come from one machine: an RTX 4070 12 GB, i5-12600K, 32 GB of DDR5-6000, Linux, CUDA, and recent llama.cpp builds. The Apple Silicon, AMD, multi-GPU, and server sections are useful starting points, but I haven't tested those setups myself.
 
 When I give a number, it came from this box. Things I still need to test are called out as such.
 
