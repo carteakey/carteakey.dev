@@ -1,10 +1,10 @@
 ---
 title: "Local LLM Inference Optimization: The Complete Guide"
-description: A living deep-dive into every layer of local LLM inference - hardware, OS, backend choice, and every llama.cpp flag worth tuning - synthesized from months of running large models on consumer hardware.
+description: A practical guide to hardware, OS, and llama.cpp tuning, built from a year of experiments on a single consumer CUDA workstation.
 image: /img/blog-sketches/unique/local-llm-optimization-stamp-trim.png
 imageAlt: "Transparent monochrome sketch of a workstation PC tower with exposed GPU fans, monitor displaying tuning parameters, and dials measuring tokens-per-second performance"
 date: 2026-06-12
-updated: 2026-06-21
+updated: 2026-06-22
 authored_by: ai-assisted
 draft: false
 tags:
@@ -21,7 +21,9 @@ Over the past year I've written posts on running [gpt-oss-120b](/blog/local-infe
 
 This is my attempt at a master reference. Instead of re-discovering flags in every new model post, I want one doc to link back to. If you're hitting a performance wall, starting from scratch, or just want to understand what each knob actually does - start here.
 
-The scope is intentionally wide. We start from "should I even run locally?" and drill all the way down to CUDA environment variables and specific failure modes. Skip to wherever you're stuck.
+The scope is intentionally wide, but the test bed is specific: an RTX 4070 12 GB, i5-12600K, 32 GB of DDR5-6000, Linux, CUDA, and recent llama.cpp builds. Advice for Apple Silicon, AMD GPUs, multi-GPU systems, and server hardware is included for orientation, not presented as tested fact. Skip to wherever you're stuck.
+
+I use three evidence levels throughout: results stated in the first person were **tested here**; runtime behavior linked to llama.cpp is **upstream behavior**; and anything explicitly marked **needs testing** is a hypothesis or experiment, not a recommendation yet.
 
 ---
 
@@ -31,7 +33,7 @@ The scope is intentionally wide. We start from "should I even run locally?" and 
 - **If you want desktop UX, model browsing, and a good local OpenAI-compatible endpoint:** LM Studio is perfectly reasonable.
 - **If you want multi-user serving, batching, and production throughput:** evaluate `vLLM`.
 - **If you are on Apple Silicon:** compare `llama.cpp` Metal with `mlx`; unified memory changes the sizing math.
-- **If TG is bad on MoE models:** check RAM speed before touching flags. XMP/EXPO being off can cost 2-3x.
+- **If TG is bad on MoE models:** check RAM speed before touching flags. My largest recovery came from fixing an accidental ~2000 MHz fallback, not from the normal uplift between JEDEC and XMP.
 - **If you hit VRAM limits:** reduce context, quantize KV cache, lower `--parallel`, then tune layer placement.
 - **If you use MTP speculative decoding:** benchmark draft acceptance and KV cache precision together; raw TPS is not enough.
 - **If you are running a single-user homelab:** prefer `--parallel 1`, explicit context sizing, and static placement once you have a stable config.
@@ -54,10 +56,10 @@ These are conservative baselines for a single-user server. They are starting poi
 | --- | ---: | ---: | --- | ---: | ---: |
 | Text, 12 GB VRAM | 512 MiB | 64k | `q8_0` / `q8_0` | 1 | 1024 |
 | Text, 24 GB VRAM | 512–768 MiB | 128k | `q8_0` / `q8_0` | 1–2 | 1024 |
-| Vision, 12 GB VRAM | 2048 MiB | 64k | `q8_0` / `q8_0` | 1 | 256 |
-| MTP speculative decoding | 512+ MiB | 64k | `f16` / `f16` | 1 | 1024 |
+| Vision, 12 GB VRAM | 512+ MiB | 64k | `q8_0` / `q8_0` | 1 | 256 |
+| MTP speculative decoding | 512+ MiB | 64k | Benchmark per model | 1 | 1024 |
 
-> **Avoid the exciting failure modes:** do not squeeze vision below `--fit-target 2048` on a 12 GB card; do not enable `GGML_CUDA_GRAPH_OPT=1` with less than 512 MiB headroom; do not include E-cores in a hybrid Intel CPU's thread range; and do not copy `q8_0` KV settings into an MTP config without measuring draft acceptance. All four can look fine in a short benchmark and fail in a real session.
+> **Avoid the exciting failure modes:** leave at least 512 MiB of fit headroom; A/B test `GGML_CUDA_GRAPH_OPT` over long contexts; do not include E-cores in a hybrid Intel CPU's thread range; and do not assume one model's MTP KV-cache result applies to another. All four can look fine in a short benchmark and fail in a real session.
 
 ## 2. Optimization Priority Checklist
 
@@ -65,15 +67,15 @@ Ordered by typical impact. Each item links to the section with the full explanat
 
 | # | Action | Impact | Section |
 | --- | --- | --- | --- |
-| 1 | **Enable XMP/EXPO in BIOS** | 2-3x TG on MoE | §6.1 |
+| 1 | **Verify RAM is running at its rated speed** | Can restore a large unexplained MoE TG loss | §6.1 |
 | 2 | **Use MTP speculative drafting** | 2.0x-2.6x TG speedup | §18.1 |
 | 3 | **Use QAT low-bit models** (e.g. Q4 QAT) | Recovers much of the lost low-bit quality | §9.3 |
 | 4 | **Run Linux** or tune Windows power plan | ~15-20% TPS | §7 |
 | 5 | **Replace `power-profiles-daemon` with `tuned-ppd`** | Eliminates intermittent 20-30% TG drop | §7.4 |
 | 6 | **Build llama.cpp from source; keep updated** | MoE kernel improvements per release | §8.2 |
 | 7 | **Use `--fit on`** for VRAM-optimal layer placement | Major TG; no manual tuning | §10.4 |
-| 8 | **Use `-ctk q8_0 -ctv q8_0`** when not using MTP | Frees KV VRAM for extra GPU layers | §11.2 |
-| 9 | **Keep KV cache at `f16` for MTP unless tested otherwise** | Preserves draft acceptance on tested Gemma 4 MTP configs | §18.2 |
+| 8 | **Use `-ctk q8_0 -ctv q8_0`** as a text-server baseline | Frees KV VRAM for extra GPU layers | §11.2 |
+| 9 | **Benchmark target and draft KV precision for MTP** | Gemma 4 was sensitive; other models may not be | §18.2 |
 | 10 | **Set `--parallel 1`** for single-user homelab | Reclaims KV VRAM for weights | §11.3 |
 | 11 | **Pin to P-cores** with `taskset -c` | +20-30% TG on Intel hybrid | §14.3 |
 | 12 | **Enable `--flash-attn on`** | Required for large-context stability | §11.4 |
@@ -81,9 +83,8 @@ Ordered by typical impact. Each item links to the section with the full explanat
 | 14 | **Enable `--mlock`** | Prevents mid-session swap degradation | §15.2 |
 | 15 | **Go headless** (`systemctl isolate multi-user.target`) | Frees 200-400 MB RAM + compositor VRAM | §7.4 |
 | 16 | **iGPU for display** (motherboard HDMI) | Frees 500-1000 MB VRAM | §6.2 |
-| 17 | **Set `LLAMA_SET_ROWS=1`** | Cache locality for MoE expert access | §17.1 |
-| 18 | **Set `GGML_CUDA_GRAPH_OPT=1`** only with enough headroom | Reduces CUDA dispatch overhead | §17.1 |
-| 19 | **Consider ik_llama.cpp** (MoE optimizations) | Specialized/niche; not covered here | §20 |
+| 17 | **A/B test `GGML_CUDA_GRAPH_OPT`** with enough headroom | Can reduce dispatch overhead, but can also regress | §17.1 |
+| 18 | **Consider ik_llama.cpp** (MoE optimizations) | Specialized/niche; not covered here | §20 |
 
 ## 3. What to Measure Before Tuning
 
@@ -134,7 +135,7 @@ Do not optimize from a single short prompt. Short prompts hide KV cache costs, l
 ### 5.1 Why Run Locally?
 
 - **Privacy**: prompts never leave your machine.
-- **Cost**: zero marginal cost after hardware. Amortizes quickly under heavy use.
+- **Cost**: no per-token bill after hardware, but electricity and hardware depreciation still count.
 - **Control**: any model, any quant, any parameters. No deprecations, no rate limits, no pricing changes.
 - **Offline**: works without internet.
 - **Experimentation**: swap models, tune parameters, run evals without API contracts.
@@ -145,7 +146,7 @@ Do not optimize from a single short prompt. Short prompts hide KV cache costs, l
 | --- | --- | --- | --- |
 | Setup | Minutes | Hours | Hours–days |
 | Model quality ceiling | Frontier | Your choice | Your choice |
-| Per-token cost | $1–15/M | $0.10–0.50/GPU-hr | Zero (marginal) |
+| Per-token cost | $1–15/M | $0.10–0.50/GPU-hr | Electricity + hardware depreciation |
 | Privacy | Provider sees data | You control | Full |
 | Hardware investment | None | None | $500–$3000+ |
 
@@ -194,7 +195,7 @@ SATA SSD / HDD                    ~0.5–3 GB/s
 
 **Dense models**: every token reads all active weights. Model must fit in VRAM for full-speed inference. Any spill to system RAM causes a large TG drop.
 
-**MoE models**: only a fraction of expert weights is needed per token, but those weights must still be streamed - often from system RAM. TG ∝ RAM bandwidth. This means a RAM kit running at rated speed vs JEDEC base can deliver 2–3× the bandwidth, translating almost linearly to TG throughput on MoE models.
+**MoE models**: only a fraction of expert weights is needed per token, but those weights must still be streamed - often from system RAM. TG is sensitive to RAM bandwidth, so a badly misconfigured memory profile can become the dominant bottleneck. On this machine, an accidental fallback to roughly 2000 MHz produced a 2–3× TG loss. That was a fault condition, not a typical XMP uplift.
 
 **Check that your RAM is running at its rated speed:**
 ```bash
@@ -203,7 +204,7 @@ sudo dmidecode -t memory | grep -E "Speed|Configured"
 # If it doesn't, enable XMP/EXPO in BIOS.
 ```
 
-This is consistently one of the largest single wins available for MoE inference. "Auto" BIOS settings commonly default to JEDEC base speed regardless of the kit's rating.
+This is one of the first checks worth making when MoE performance is far below expectation. Do not assume every system will reproduce the same multiplier.
 
 ### 6.2 GPU / VRAM
 
@@ -486,7 +487,7 @@ llama-server \
   ...
 ```
 
-**`--fit-target` note**: CUDA's VMM pool grows in ~1 GiB chunks as context depth increases during a session. Using `--fit-target 128` produces great bench numbers but can OOM mid-session when the pool needs to grow. Use `≥512 MiB` for production text servers. Use `2048` for vision models where the mmproj allocation is large.
+**`--fit-target` note**: CUDA's VMM pool grows as context depth increases during a session. Using `--fit-target 128` can produce great bench numbers but OOM later when the pool needs to grow. Use `≥512 MiB` for production servers. Current llama.cpp builds account for mmproj weights and compute buffers during `--fit`; `2048` remains a conservative profile for this 12 GB vision setup, not a universal requirement. Builds from before [llama.cpp PR #21489](https://github.com/ggml-org/llama.cpp/pull/21489) need manual mmproj headroom.
 
 **Dry run without starting a server:**
 ```bash
@@ -750,11 +751,12 @@ Skips initial kernel warmup pass at startup (compiles CUDA kernels on first real
 ### 17.1 Environment Variables
 
 ```bash
-export LLAMA_SET_ROWS=1         # Improves CPU cache locality for MoE expert row access
-export GGML_CUDA_GRAPH_OPT=1    # Batches CUDA kernel launches; reduces dispatch overhead
+export GGML_CUDA_GRAPH_OPT=0    # Baseline; compare against 1 on your real workload
 ```
 
-**`GGML_CUDA_GRAPH_OPT` caveat**: CUDA graph optimization captures the kernel graph at a specific context depth. When depth increases significantly (long agentic sessions), CUDA triggers a re-capture, growing the VMM pool. On tight-fit configs (< 512 MiB headroom), this causes mid-session OOM. If you observe intermittent CUDA OOM on long sessions, set `GGML_CUDA_GRAPH_OPT=0`.
+`LLAMA_SET_ROWS` does not appear in current upstream runtime configuration and is therefore not recommended here. It was present in older local scripts, but setting it on a current build is a no-op.
+
+**`GGML_CUDA_GRAPH_OPT` caveat**: this remains an active upstream setting, but it is not a free win. CUDA graph capture and re-capture can change memory use as context grows, and some workloads regress with it enabled. Benchmark `0` against `1` using the same prompt, context growth, fit headroom, and repeated runs. Keep it off unless the full-session result wins.
 
 ### 17.2 Notable Build Flags
 
@@ -789,11 +791,23 @@ Instead of pairing the base model with an unrelated draft model, mainline `llama
   * For larger models (e.g., Gemma 4 26B), set to `2`. Higher values introduce computational overhead that hurts TG.
   * For lighter models (e.g., Gemma 4 12B), set to `4` to capture longer draft runs.
 
-### 18.2 The KV Cache constraint (`-ctk f16 -ctv f16`)
+### 18.2 Target and Draft KV Cache Precision
 
-MTP draft verification relies on high-fidelity attention metrics to validate proposed tokens. In my Gemma 4 MTP tests, quantizing the KV cache (`-ctk q8_0 -ctv q8_0`) introduced enough noise to drive draft acceptance close to zero.
-* **MTP Speculative Rule**: For the Gemma 4 MTP configs tested here, leave the KV cache at full precision (`-ctk f16 -ctv f16`) unless you have benchmarked acceptance rate and throughput on your exact build.
-* Switching to `f16` KV cache increases VRAM usage but maintained draft acceptance rates of 70%+ in these tests, resulting in a massive net speedup.
+MTP has two distinct caches. `-ctk` and `-ctv` set the **target model** cache; `-ctkd` and `-ctvd` set the **draft model** cache. Treat them as separate tuning decisions.
+
+In my Gemma 4 MTP tests, quantizing the target cache with `-ctk q8_0 -ctv q8_0` introduced enough noise to drive draft acceptance close to zero. Switching the target cache to `f16` increased VRAM use but maintained acceptance above 70%, producing a large net speedup. That is a tested Gemma result, not a universal MTP rule.
+
+A sensible experiment is to begin with a full-precision draft cache, then compare `q8_0` and `f16` for the target cache on the exact model and build:
+
+```bash
+# Memory-saving target cache; full-precision draft cache
+-ctk q8_0 -ctv q8_0 -ctkd f16 -ctvd f16
+
+# Gemma baseline that preserved acceptance in my tests
+-ctk f16 -ctv f16 -ctkd f16 -ctvd f16
+```
+
+Record acceptance rate, effective TG, VRAM at load, and behavior after context growth. A smaller cache is only an optimization if end-to-end throughput still improves.
 
 ### 18.3 Speculative Performance Gains
 
@@ -818,15 +832,17 @@ Typically 1–3 GB. Allocates in VRAM at startup alongside the model.
 
 ### 19.2 OOM Failure Modes on Constrained VRAM
 
-**Failure 1 - mmproj allocation**: the projector needs contiguous VRAM at load time. If `--fit-target` left only a small margin, the allocation fails. Symptom: crash at model load (not during inference).
+**Failure 1 - mmproj allocation**: current llama.cpp `--fit` includes projector weights and compute buffers in its memory estimate. If a current build still fails at load, check for competing VRAM use, an older build, or a manually hardcoded placement derived without the projector.
 
-Fix: use `--fit-target 2048` for vision models.
+Fix: update llama.cpp, run `--fit` with the projector supplied, and increase `--fit-target` only if the real workload still needs more safety margin. `2048` is the conservative value tested on this machine.
 
 **Failure 2 - batch assertion**: image token count exceeds `--ubatch-size`. An image can tokenize to several hundred tokens; if the batch is too small, llama.cpp asserts.
 
 Fix: use `--ubatch-size 512` or higher.
 
 ### 19.3 Safe Vision Profile (12 GB VRAM)
+
+This is the conservative profile tested here. Modern `--fit` may safely choose a smaller margin because it now accounts for mmproj memory.
 
 ```bash
 llama-server \
@@ -919,12 +935,12 @@ sudo tuned-adm active
 | Root cause | Symptom | Fix |
 | --- | --- | --- |
 | `power-profiles-daemon` degrading HWP | TG varies 20–30% between boots; all sysfs checks look fine | Replace with `tuned-ppd` + `throughput-performance` |
-| RAM not at rated speed (XMP/EXPO off) | TG 2–3× below expected; stable but low | Enable XMP/EXPO in BIOS |
+| RAM badly below its rated speed | TG far below expected; stable but low | Verify configured speed; enable the correct XMP/EXPO profile if needed |
 | E-cores included in thread range | TG lower than P-core-only baseline | `taskset -c <p-cores-only>` |
 | `vm.swappiness` + model too large for RAM | TG stalls mid-session | `--mlock`; reduce model or add RAM |
 | `GGML_CUDA_GRAPH_OPT=1` with varying context | Intermittent OOM at long prompts | Set `GGML_CUDA_GRAPH_OPT=0` |
 | `--fit-target` too small | OOM mid-session (not at startup) | Increase `--fit-target` to ≥512 MiB |
-| Vision `--fit-target` too small | Crash at model load with mmproj | Use `--fit-target 2048` for vision |
+| Vision load fails with mmproj | Crash at model load | Update llama.cpp; run `--fit` with mmproj supplied; then increase headroom if needed |
 
 ---
 
@@ -932,6 +948,7 @@ sudo tuned-adm active
 
 | Date | Note |
 | --- | --- |
+| 2026-06-22 | Kept the existing title while narrowing the tested scope; corrected current mmproj fitting behavior, separated target and draft KV caches, removed the stale `LLAMA_SET_ROWS` recommendation, and turned CUDA graphs into an A/B test. |
 | 2026-06-21 | Condensed ik_llama.cpp section to a brief advanced reference based on feedback. |
 | 2026-06-21 | Added a problem-based reading map, centralized safe starting profiles, and consolidated the easy-to-miss vision, CUDA graph, hybrid CPU, and MTP guardrails. |
 | 2026-06-17 | Reworked opening structure with a TL;DR, moved priority checklist, added measurement and security sections, updated llama.cpp/LM Studio guidance, tightened QAT/MTP wording, and fixed stale internal links. |

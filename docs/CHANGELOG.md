@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.36] - 2026-06-22
+### Added
+- docs: Added a phased roadmap for testing and extending the local LLM optimization guide.
+
+### Changed
+- 2026-06-12-local-llm-optimization.md: Preserved the existing title while narrowing the tested scope, corrected modern mmproj fitting behavior, separated target and draft KV-cache guidance, removed the stale `LLAMA_SET_ROWS` recommendation, and made CUDA graph optimization an explicit A/B test.
+
 ## [2.0.35] - 2026-06-22
 ### Fixed
 - eleventy.config.mjs, tailwind.css: Keep Markdown tables using native table layout on mobile and move horizontal scrolling to an accessible wrapper, preventing columns from collapsing into unreadable slivers.
