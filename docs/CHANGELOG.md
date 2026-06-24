@@ -5,6 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.3.0] - 2026-06-24
+### Added
+- Watching: Added a cached Letterboxd film diary at `/watching/`, plus recent films and ratings on `/now/` with optional manual entries and overrides.
+
+## [2.2.1] - 2026-06-24
+### Changed
+- L3MS post: Reframed the 12GB benchmark story around the complete download, build, benchmark, serving, TUI/CLI, and dashboard workflow behind the results.
+
+## [2.2.0] - 2026-06-24
+### Added
+- Reading: Synced public Goodreads shelves into `/reading/` and `/now/` with cached build-time fallbacks and manual additions or overrides.
+- Now: Added `nowPage.yaml` as a fill-in-ready source for highlights and updates, and archived the previous page snapshot.
+
+### Changed
+- Reading: Made Kindle progress optional so Goodreads books without a manual percentage render cleanly.
+- Upper Midrange Is the Place to Be: Corrected the Ars forum attribution and reframed the essay around the RTX 4070, base PS5, Logitech M720, MacBook Air, thrifted Blu-ray player, and cheap-bike learning path.
+
+## [2.1.1] - 2026-06-24
+### Fixed
+- loganime-test-v1-stamp-trim.png: Replaced the narrow horizontal film strip thumbnail with a square-ish 2x2 contact sheet sketch to prevent it from rendering too small in archive lists.
+
 ## [2.1.0] - 2026-06-24
 ### Added
 - Reviews: Added a dedicated `/reviews/` collection and editorial index for product reviews and buying articles.
