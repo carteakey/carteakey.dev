@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.0] - 2026-06-24
+### Added
+- Reviews: Added a dedicated `/reviews/` collection and editorial index for product reviews and buying articles.
+- Upper Midrange Is the Place to Be: Revived the hidden 2025 draft as the section's opening essay on learning hobbies through cheaper gear and shopping below the flagship tier.
+- Netlify CMS: Added review fields for entry type, product, category, price paid, rating, verdict, authorship, and a maximum of two tags.
+
+### Changed
+- Navigation: Added Reviews to the site directory and footer, with redirects from the draft's former `/blog/` URL.
+
 ## [2.0.38] - 2026-06-22
 ### Changed
 - 2026-06-12-local-llm-optimization.md: Restored the opening statement that the guide's scope is intentionally wide.

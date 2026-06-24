@@ -915,6 +915,19 @@ export default function (eleventyConfig) {
       });
   });
 
+  // Product reviews and buying essays live outside the main writing archive.
+  eleventyConfig.addCollection("reviews", function (collectionApi) {
+    const now = new Date();
+    return collectionApi
+      .getFilteredByGlob("./src/reviews/**/*.md")
+      .filter((review) => {
+        if (shouldHideContent(review)) return false;
+        if (review.date && review.date > now) return false;
+        return true;
+      })
+      .sort((a, b) => b.date - a.date);
+  });
+
   eleventyConfig.addCollection("prompts", function (collectionApi) {
     const now = new Date();
     return collectionApi

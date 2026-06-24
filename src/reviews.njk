@@ -1,0 +1,54 @@
+---
+layout: layouts/base.njk
+title: Reviews
+description: Product reviews, buying notes, and the compromises that matter after the spec sheet.
+date: 2026-06-24
+permalink: /reviews/
+eleventyNavigation:
+  key: Reviews
+  order: 3
+---
+
+{% include "components/breadcrumbs.njk" %}
+
+{% set pageEyebrow = "Things Considered" %}
+{% set pageTitle = "Reviews" %}
+{% set pageDescription = "Product reviews, buying notes, and the compromises that matter after the spec sheet. I usually shop a few rungs below the flagship, where choosing is still part of the fun." %}
+{% set itemCount = collections.reviews | length %}
+{% set itemLabel = "entries" %}
+{% include "components/page-header.njk" %}
+
+<section class="surface surface-compact mb-5 not-prose">
+  <p class="editorial-kicker mb-1">The house philosophy</p>
+  <p class="editorial-support-compact m-0">Start cheap enough to learn what you care about. Upgrade when you can name the problem the extra money will solve.</p>
+</section>
+
+<div class="divide-y divide-gray-100 dark:divide-gray-800/80">
+  {% for entry in collections.reviews %}
+    <article class="py-4 group">
+      <div class="flex flex-col sm:flex-row sm:gap-5">
+        <div class="shrink-0 sm:w-32 pt-0.5">
+          <time class="meta-text text-xs text-gray-400 dark:text-gray-500" datetime="{{ entry.date | htmlDateString }}">{{ entry.date | readableDate }}</time>
+          <div class="mt-1.5 flex flex-wrap gap-1">
+            <span class="badge badge-accent badge-compact">{{ entry.data.kind | default("Review") }}</span>
+            {% if entry.data.category %}<span class="badge badge-tag badge-compact">{{ entry.data.category }}</span>{% endif %}
+          </div>
+        </div>
+        <div class="min-w-0 flex-1">
+          <a href="{{ entry.url }}" class="editorial-title-link title-hover">{{ entry.data.title }}</a>
+          {% if entry.data.product %}<p class="editorial-kicker mt-1 mb-0">{{ entry.data.product }}</p>{% endif %}
+          {% if entry.data.description %}<p class="editorial-support-compact mt-1 mb-0">{{ entry.data.description }}</p>{% endif %}
+          {% if entry.data.verdict %}<p class="mt-2 mb-0 text-sm"><strong>Verdict:</strong> {{ entry.data.verdict }}</p>{% endif %}
+          {% if entry.data.pricePaid or entry.data.rating %}
+            <div class="meta-text mt-2 flex flex-wrap gap-x-4 gap-y-1 text-[0.68rem]">
+              {% if entry.data.pricePaid %}<span>Paid {{ entry.data.pricePaid }}</span>{% endif %}
+              {% if entry.data.rating %}<span>{{ entry.data.rating }}/10</span>{% endif %}
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </article>
+  {% else %}
+    <p class="editorial-support-compact py-6">No reviews yet.</p>
+  {% endfor %}
+</div>

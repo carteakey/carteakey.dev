@@ -1,6 +1,7 @@
 # Site Improvement TODO List
 
 ## Creative Features (2026-02-27)
+- [x] Add a reviews section for product reviews and buying articles, prefaced by an essay on the upper-midrange buying philosophy. (2026-06-24)
 - [x] `/colophon` - How this site is built (stack, philosophy, AI-assisted dev) ✅ 2026-02-28
 - [x] `/now` archive timeline - reverse-chron list of past /now updates ✅ 2026-02-28
 - [x] Accent color → browser URL bar (`theme-color` meta tag tracks accent) ✅ 2026-02-27

@@ -28,4 +28,32 @@ collections:
         allow_add: true
         max: 4
         min: 1
+
+  - label: "Reviews"
+    name: "reviews"
+    folder: "src/reviews"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    editor:
+      preview: true
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Description", name: "description", widget: "string" }
+      - { label: "Publish Date", name: "date", widget: "datetime" }
+      - { label: "Update Date", name: "updated", widget: "datetime", required: false }
+      - { label: "Entry Type", name: "kind", widget: "select", options: ["Review", "Article"], default: "Review" }
+      - { label: "Product", name: "product", widget: "string", required: false }
+      - { label: "Category", name: "category", widget: "string", required: false }
+      - { label: "Price Paid", name: "pricePaid", widget: "string", required: false }
+      - { label: "Rating (out of 10)", name: "rating", widget: "number", value_type: "float", min: 0, max: 10, required: false }
+      - { label: "Verdict", name: "verdict", widget: "string", required: false }
+      - { label: "Authorship", name: "authored_by", widget: "select", options: ["human", "ai-assisted", "ai-generated"], default: "human" }
+      - { label: "Hidden (Draft)", name: "hidden", widget: "boolean", default: false, required: false }
+      - widget: list
+        label: "Tags"
+        name: "tags"
+        allow_add: true
+        max: 2
+        min: 1
+      - { label: "Body", name: "body", widget: "markdown" }
   
