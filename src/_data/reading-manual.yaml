@@ -1,4 +1,6 @@
----
+# Manual books are merged with Goodreads. To add notes or Kindle progress to a
+# Goodreads book, copy its goodreadsId here; manual values override synced ones.
+# Set hidden: true to omit a synced book from the site.
 currently_reading:
   - title: "Dune"
     author: "Frank Herbert"
@@ -6,6 +8,8 @@ currently_reading:
     started: 2026-03-01
     notes: "Just started. The world-building is immediately overwhelming in the best way."
     cover: ""
+
+read: []
 
 want_to_read:
   - title: "A Game of Thrones"

@@ -9,7 +9,8 @@
 - [x] Stats page - denser layout, word count, avg post length, posts-per-year chart (2026-03-23)
 - [x] `/changelog` - render CHANGELOG.md as visual timeline with Netlify deploy preview URLs ✅ 2026-02-28
 - [x] `/til` - Today I Learned collection (new type, integrated into feed) ✅ 2026-02-28
-- [x] `/reading` - reading shelf with progress bars (YAML data source) ✅ 2026-02-28
+- [x] `/reading` - Goodreads-backed reading shelf with progress bars, cover thumbnails, and manual physical-book overrides. ✅ 2026-06-25
+- [x] `/watching` - Letterboxd-synced film diary with ratings, poster thumbnails, and recent entries on `/now`. (2026-06-25)
 
 ## High Priority Features
 
@@ -265,3 +266,4 @@ Buy me a coffee
 ---
 
 **Next Up: Content Polish & New Pages** 🎨
+- [x] Sync Goodreads shelves into `/reading` and `/now` while preserving manual books, notes, and Kindle progress overrides; archive the outgoing `/now` page before every refresh. (2026-06-24)

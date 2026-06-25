@@ -6,7 +6,6 @@ permalink: /now/
 eleventyNavigation:
   key: Now
   order: 3
-lastUpdated: 2026-04-24
 ---
 
 {% include "components/breadcrumbs.njk" %}
@@ -15,26 +14,32 @@ lastUpdated: 2026-04-24
 {% set pageTitle = "Now" %}
 {% set pageDescription = 'A snapshot of what I\'m up to, inspired by <a href="https://nownownow.com/about" class="accent-link">nownownow.com</a>.' %}
 {% set pageMetaLabel = "Updated" %}
-{% set pageMeta = lastUpdated | readableDate %}
+{% set pageMeta = nowPage.lastUpdated | readableDate %}
 {% set pageActions = [
   { href: "/now/archive/", label: "Past updates →", accent: true }
 ] %}
 {% include "components/page-header.njk" %}
 
+{% if nowPage.highlights and nowPage.highlights.length > 0 %}
 <section class="surface surface-padding not-prose mb-8">
   <ul class="now-log">
-    <li>Just shipped the <strong>v2 redesign</strong> of this site. It's a move toward a denser, "workbench" aesthetic - more semantic typography, sharper edges, and a layout that feels more like an authored archive than a generic app.</li>
-    <li>Claude Code has been driving the refactor, and the speed of iteration is still blowing my mind.</li>
+    {% for item in nowPage.highlights %}
+    <li>{{ item | safe }}</li>
+    {% endfor %}
   </ul>
 </section>
+{% endif %}
 
+{% if nowPage.updates and nowPage.updates.length > 0 %}
 <ul class="now-log">
-  <li>Working on the next <a href="/folio/" class="accent-link">folio</a> entry - diving deep into the world of <em>Bloodborne</em>. Trying to capture that Gothic cosmic horror vibe on a webpage.</li>
-  <li>Continuing the <em>Dune</em> journey. The world-building is as dense as my new CSS.</li>
-  <li>Listening: <em>Decks Dark</em> on repeat.</li>
+  {% for item in nowPage.updates %}
+  <li>{{ item | safe }}</li>
+  {% endfor %}
 </ul>
+{% endif %}
 
 <div class="mt-10 space-y-8 not-prose">
+  {% include "components/watching-snippet.njk" %}
   {% include "components/workouts-snippet.njk" %}
   {% include "components/games-snippet.njk" %}
 </div>
@@ -45,16 +50,31 @@ lastUpdated: 2026-04-24
   <h2 class="editorial-kicker mb-3">Currently Reading</h2>
   <div class="divide-y divide-gray-100 dark:divide-gray-800/80">
     {% for book in reading.currently_reading %}
-    <div class="py-3">
-      <div class="flex items-baseline justify-between gap-4">
-        <div class="min-w-0">
-          <span class="editorial-title-compact">{{ book.title }}</span>
-          <span class="editorial-support-compact"> - {{ book.author }}</span>
-        </div>
-        <span class="meta-text text-xs text-gray-400 shrink-0">{{ book.progress }}%</span>
+    <div class="py-3 flex gap-3">
+      {% if book.cover %}
+      <a href="{{ book.url or reading.profileUrl }}" class="media-thumb media-thumb-book media-thumb-mini shrink-0" aria-label="{{ book.title }} cover">
+        <img src="{{ book.cover }}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" class="media-thumb-image">
+      </a>
+      {% else %}
+      <div class="media-thumb media-thumb-book media-thumb-mini media-thumb-placeholder shrink-0" aria-hidden="true">
+        <span>{{ book.title | first }}</span>
       </div>
-      <div class="mt-1.5 h-1 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden max-w-xs">
-        <div class="h-full rounded-full" style="width: {{ book.progress }}%; background: var(--accent-color);"></div>
+      {% endif %}
+      <div class="min-w-0 flex-1">
+        <div class="flex items-baseline justify-between gap-4">
+          <div class="min-w-0">
+            {% if book.url %}<a href="{{ book.url }}" class="editorial-title-link">{{ book.title }}</a>{% else %}<span class="editorial-title-compact">{{ book.title }}</span>{% endif %}
+            <span class="editorial-support-compact"> - {{ book.author }}</span>
+          </div>
+          {% if book.progress !== undefined %}
+          <span class="meta-text text-xs text-gray-400 shrink-0">{{ book.progress }}%</span>
+          {% endif %}
+        </div>
+        {% if book.progress !== undefined %}
+        <div class="mt-1.5 h-1 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden max-w-xs">
+          <div class="h-full rounded-full" style="width: {{ book.progress }}%; background: var(--accent-color);"></div>
+        </div>
+        {% endif %}
       </div>
     </div>
     {% endfor %}

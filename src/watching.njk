@@ -1,0 +1,54 @@
+---
+layout: layouts/base.njk
+title: Watching
+description: Films I've recently watched and rated.
+date: 2026-06-24
+permalink: /watching/
+eleventyNavigation:
+  key: Watching
+  order: 9
+---
+
+{% include "components/breadcrumbs.njk" %}
+
+{% set pageEyebrow = "Film Diary" %}
+{% set pageTitle = "Watching" %}
+{% set pageDescription = 'Recent films, ratings, and notes synced from <a href="' ~ watching.profileUrl ~ '" class="accent-link">Letterboxd</a>.' %}
+{% include "components/page-header.njk" %}
+
+{% if watching.entries and watching.entries.length > 0 %}
+<div class="not-prose divide-y divide-gray-100 dark:divide-gray-800/80">
+  {% for film in watching.entries %}
+  <article class="py-4">
+    <div class="flex gap-3.5 sm:gap-4">
+      {% if film.poster %}
+      <a href="{{ film.url or watching.profileUrl }}" class="media-thumb media-thumb-poster shrink-0" aria-label="{{ film.title }} poster">
+        <img src="{{ film.poster }}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" class="media-thumb-image">
+      </a>
+      {% else %}
+      <div class="media-thumb media-thumb-poster media-thumb-placeholder shrink-0" aria-hidden="true">
+        <span>{{ film.title | first }}</span>
+      </div>
+      {% endif %}
+      <div class="min-w-0 flex-1">
+        <div class="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-4">
+          <div class="min-w-0 flex-1">
+            {% if film.url %}<a href="{{ film.url }}" class="editorial-title-link">{{ film.title }}</a>{% else %}<span class="editorial-title">{{ film.title }}</span>{% endif %}
+            {% if film.year %}<span class="editorial-support"> ({{ film.year }})</span>{% endif %}
+            {% if film.rewatch %}<span class="meta-text ml-2">Rewatch</span>{% endif %}
+          </div>
+          <div class="meta-text shrink-0 flex items-center gap-2">
+            {% if film.watched %}<time datetime="{{ film.watched | htmlDateString }}">{{ film.watched | readableDate }}</time>{% endif %}
+            {% if film.rating %}<span style="color: var(--accent-color);">{{ film.rating }}/5</span>{% endif %}
+            {% if film.liked %}<span aria-label="Liked">♥</span>{% endif %}
+          </div>
+        </div>
+        {% if film.review %}<p class="editorial-support-compact mt-1.5 mb-0">{{ film.review }}</p>{% endif %}
+      </div>
+    </div>
+  </article>
+  {% endfor %}
+</div>
+{% else %}
+<p class="editorial-support">No diary entries yet.</p>
+{% endif %}

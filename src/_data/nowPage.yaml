@@ -1,0 +1,11 @@
+# Before editing this file for a new /now/ update, copy the outgoing page into
+# src/now/archive/YYYY-MM-DD.md. Every refresh must preserve the previous /now/
+# page as an archive entry.
+#
+# The reading section is populated separately from Goodreads plus
+# src/_data/reading-manual.yaml.
+lastUpdated: 2026-06-24T12:00:00-04:00
+
+highlights: []
+
+updates: []

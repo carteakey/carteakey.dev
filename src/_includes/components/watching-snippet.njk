@@ -1,0 +1,29 @@
+{% if watching.entries and watching.entries.length > 0 %}
+<section>
+  <h2 class="editorial-kicker mb-3">Recently Watched</h2>
+  <div class="divide-y divide-gray-100 dark:divide-gray-800/80">
+    {% for film in watching.entries | head(3) %}
+    <div class="py-3 flex gap-3">
+      {% if film.poster %}
+      <a href="{{ film.url or watching.profileUrl }}" class="media-thumb media-thumb-poster media-thumb-mini shrink-0" aria-label="{{ film.title }} poster">
+        <img src="{{ film.poster }}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" class="media-thumb-image">
+      </a>
+      {% else %}
+      <div class="media-thumb media-thumb-poster media-thumb-mini media-thumb-placeholder shrink-0" aria-hidden="true">
+        <span>{{ film.title | first }}</span>
+      </div>
+      {% endif %}
+      <div class="min-w-0 flex-1">
+        {% if film.url %}<a href="{{ film.url }}" class="editorial-title-link">{{ film.title }}</a>{% else %}<span class="editorial-title-compact">{{ film.title }}</span>{% endif %}
+        {% if film.year %}<span class="editorial-support-compact"> ({{ film.year }})</span>{% endif %}
+      </div>
+      <div class="meta-text shrink-0 flex items-center gap-2">
+        {% if film.rating %}<span style="color: var(--accent-color);">{{ film.rating }}/5</span>{% endif %}
+        {% if film.liked %}<span aria-label="Liked">♥</span>{% endif %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  <a href="/watching/" class="editorial-meta-link mt-2 inline-block">Full film diary →</a>
+</section>
+{% endif %}

@@ -22,13 +22,15 @@ These notes codify the rules I follow when pairing with Copilot/Codex on the blo
 - Content lives in `src/` (posts, snippets, data files). Build output is `_site/`; never edit it manually.
 
 ## Folio page dates
-- Folio pages (like `now.njk`) use a permanent `lastUpdated` field in the frontmatter.
-- This date should be manually updated when the content is meaningfully changed.
+- The `/now/` page stores its permanent `lastUpdated` value in `src/_data/nowPage.yaml`.
+- Before meaningfully replacing `/now/` content, copy the outgoing snapshot to `src/now/archive/YYYY-MM-DD.md`, then update `lastUpdated` manually.
 - Some pages (like `bookmarks.njk`) compute dates dynamically from their data sources.
 - The dates are **not** automatically updated—they remain fixed until manually changed.
 
 ## Data and integrations
 - Dynamic data modules (`_data/*.js`) cache responses via `@11ty/eleventy-fetch`.
+- Goodreads public shelves feed `/reading/` and `/now/`; use `_data/reading-manual.yaml` for physical books, cover URLs, notes, progress, and overrides.
+- Letterboxd RSS feeds `/watching/` and `/now/`. Only films logged with a watched date become RSS diary entries; poster artwork is parsed from the feed when available. Use `_data/watching-manual.yaml` for optional additions, poster URLs, and overrides.
 - Spotify, Steam, Upstash, OpenAI/OpenRouter, and Ollama credentials must be provided via `.env`.
 - The Netlify Function `netlify/functions/upvote.js` serves GET/POST upvote requests.
 - Images are processed through `eleventy-img`; helper scripts in the repo add new photography records.

@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.3.1] - 2026-06-25
+### Added
+- Reading and Watching: Added compact book-cover and film-poster thumbnails on `/reading/`, `/watching/`, and the relevant `/now/` snippets, with styled placeholders for manual entries without artwork.
+
+### Changed
+- Letterboxd: Parse poster artwork from RSS descriptions so dated diary entries render with visual context.
+- Goodreads: Fall back from large cover URLs to standard cover URLs when needed.
+
 ## [2.3.0] - 2026-06-24
 ### Added
 - Watching: Added a cached Letterboxd film diary at `/watching/`, plus recent films and ratings on `/now/` with optional manual entries and overrides.

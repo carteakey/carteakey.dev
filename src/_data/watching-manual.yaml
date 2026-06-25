@@ -1,0 +1,4 @@
+# Manual entries are merged with Letterboxd. Use the RSS guid as `id` to add
+# private notes or override a synced entry. Entries without an id are appended.
+# Set hidden: true on a matching id to omit it from the site.
+entries: []

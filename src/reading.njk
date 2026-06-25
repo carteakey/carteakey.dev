@@ -11,7 +11,7 @@ eleventyNavigation:
 {% include "components/breadcrumbs.njk" %}
 
 {% set pageTitle = "Reading" %}
-{% set pageDescription = "Books I'm reading, have read, and want to read." %}
+{% set pageDescription = 'Books I\'m reading, have read, and want to read. Synced from <a href="' ~ reading.profileUrl ~ '" class="accent-link">Goodreads</a>, with a few manual additions.' %}
 {% include "components/page-header.njk" %}
 
 {% if reading.currently_reading and reading.currently_reading.length > 0 %}
@@ -20,20 +20,35 @@ eleventyNavigation:
   <div class="divide-y divide-gray-100 dark:divide-gray-800/80">
     {% for book in reading.currently_reading %}
     <div class="py-3.5">
-      <div class="flex flex-col sm:flex-row sm:items-baseline sm:gap-4">
-        <div class="flex-1 min-w-0">
-          <span class="editorial-title">{{ book.title }}</span>
-          <span class="editorial-support"> - {{ book.author }}</span>
+      <div class="flex gap-3.5 sm:gap-4">
+        {% if book.cover %}
+        <a href="{{ book.url or reading.profileUrl }}" class="media-thumb media-thumb-book shrink-0" aria-label="{{ book.title }} cover">
+          <img src="{{ book.cover }}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" class="media-thumb-image">
+        </a>
+        {% else %}
+        <div class="media-thumb media-thumb-book media-thumb-placeholder shrink-0" aria-hidden="true">
+          <span>{{ book.title | first }}</span>
         </div>
-        <span class="meta-text shrink-0">{{ book.progress }}%</span>
+        {% endif %}
+        <div class="flex-1 min-w-0">
+          <div class="flex flex-col sm:flex-row sm:items-baseline sm:gap-4">
+            <div class="flex-1 min-w-0">
+              {% if book.url %}<a href="{{ book.url }}" class="editorial-title-link">{{ book.title }}</a>{% else %}<span class="editorial-title">{{ book.title }}</span>{% endif %}
+              <span class="editorial-support"> - {{ book.author }}</span>
+            </div>
+            {% if book.progress !== undefined %}<span class="meta-text shrink-0">{{ book.progress }}%</span>{% endif %}
+          </div>
+          {% if book.progress !== undefined %}
+          {# Progress bar #}
+          <div class="mt-2 h-1 bg-gray-100 dark:bg-gray-800 rounded-sm overflow-hidden w-full max-w-sm">
+            <div class="h-full rounded-sm" style="width: {{ book.progress }}%; background: var(--accent-color); transition: width 0.3s;"></div>
+          </div>
+          {% endif %}
+          {% if book.notes %}
+            <p class="editorial-support-compact mt-1.5 mb-0">{{ book.notes }}</p>
+          {% endif %}
+        </div>
       </div>
-      {# Progress bar #}
-      <div class="mt-2 h-1 bg-gray-100 dark:bg-gray-800 rounded-sm overflow-hidden w-full max-w-sm">
-        <div class="h-full rounded-sm" style="width: {{ book.progress }}%; background: var(--accent-color); transition: width 0.3s;"></div>
-      </div>
-      {% if book.notes %}
-        <p class="editorial-support-compact mt-1.5 mb-0">{{ book.notes }}</p>
-      {% endif %}
     </div>
     {% endfor %}
   </div>
@@ -46,23 +61,36 @@ eleventyNavigation:
   <div class="divide-y divide-gray-100 dark:divide-gray-800/80">
     {% for book in reading.read %}
     <article class="py-3.5">
-      <div class="flex flex-col sm:flex-row sm:items-baseline sm:gap-4">
-        <div class="flex-1 min-w-0">
-          <span class="editorial-title">{{ book.title }}</span>
-          <span class="editorial-support"> - {{ book.author }}</span>
+      <div class="flex gap-3.5 sm:gap-4">
+        {% if book.cover %}
+        <a href="{{ book.url or reading.profileUrl }}" class="media-thumb media-thumb-book shrink-0" aria-label="{{ book.title }} cover">
+          <img src="{{ book.cover }}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" class="media-thumb-image">
+        </a>
+        {% else %}
+        <div class="media-thumb media-thumb-book media-thumb-placeholder shrink-0" aria-hidden="true">
+          <span>{{ book.title | first }}</span>
         </div>
-        <div class="flex items-center gap-2 shrink-0 mt-0.5 sm:mt-0">
-          {% if book.finished %}
-            <time class="meta-text text-gray-500 dark:text-gray-400">{{ book.finished | readableDate }}</time>
-          {% endif %}
-          {% if book.rating %}
-            <span class="meta-text" style="color: var(--accent-color);">{{ "★" * book.rating }}{{ "☆" * (5 - book.rating) }}</span>
+        {% endif %}
+        <div class="flex-1 min-w-0">
+          <div class="flex flex-col sm:flex-row sm:items-baseline sm:gap-4">
+            <div class="flex-1 min-w-0">
+              {% if book.url %}<a href="{{ book.url }}" class="editorial-title-link">{{ book.title }}</a>{% else %}<span class="editorial-title">{{ book.title }}</span>{% endif %}
+              <span class="editorial-support"> - {{ book.author }}</span>
+            </div>
+            <div class="flex items-center gap-2 shrink-0 mt-0.5 sm:mt-0">
+              {% if book.finished %}
+                <time class="meta-text text-gray-500 dark:text-gray-400">{{ book.finished | readableDate }}</time>
+              {% endif %}
+              {% if book.rating %}
+                <span class="meta-text" style="color: var(--accent-color);">{{ "★" * book.rating }}{{ "☆" * (5 - book.rating) }}</span>
+              {% endif %}
+            </div>
+          </div>
+          {% if book.notes %}
+            <p class="editorial-support-compact mt-1 mb-0">{{ book.notes }}</p>
           {% endif %}
         </div>
       </div>
-      {% if book.notes %}
-        <p class="editorial-support-compact mt-1 mb-0">{{ book.notes }}</p>
-      {% endif %}
     </article>
     {% endfor %}
   </div>
@@ -74,10 +102,18 @@ eleventyNavigation:
   <h2 class="editorial-kicker mb-3">Want to Read</h2>
   <ul class="divide-y divide-gray-100 dark:divide-gray-800/80 list-none m-0 p-0">
     {% for book in reading.want_to_read %}
-    <li class="py-2.5 flex items-baseline gap-2">
-      <span class="w-1.5 h-1.5 rounded-sm bg-gray-300 dark:bg-gray-600 shrink-0 mt-1.5"></span>
-      <div>
-        <span class="editorial-title">{{ book.title }}</span>
+    <li class="py-2.5 flex gap-3">
+      {% if book.cover %}
+      <a href="{{ book.url or reading.profileUrl }}" class="media-thumb media-thumb-book media-thumb-mini shrink-0" aria-label="{{ book.title }} cover">
+        <img src="{{ book.cover }}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" class="media-thumb-image">
+      </a>
+      {% else %}
+      <div class="media-thumb media-thumb-book media-thumb-mini media-thumb-placeholder shrink-0" aria-hidden="true">
+        <span>{{ book.title | first }}</span>
+      </div>
+      {% endif %}
+      <div class="pt-0.5">
+        {% if book.url %}<a href="{{ book.url }}" class="editorial-title-link">{{ book.title }}</a>{% else %}<span class="editorial-title">{{ book.title }}</span>{% endif %}
         <span class="editorial-support"> - {{ book.author }}</span>
       </div>
     </li>

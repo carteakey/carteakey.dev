@@ -32,6 +32,8 @@ This site is where I write about stuff, and share projects, code snippets, and t
 - 💬 **Comments** via Giscus (GitHub Issues)
 - 📈 **Upvotes** and dynamic counters (via Netlify Functions + Redis)
 - 🎵 **Now playing** integration with Spotify
+- 📚 **Reading shelf** synced from Goodreads with manual physical-book/progress overrides and cover thumbnails
+- 🎬 **Film diary** synced from dated Letterboxd entries with poster thumbnails
 - ⚡ **Fast, accessible, and mobile-friendly** by default
 
 ## Local Development

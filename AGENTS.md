@@ -80,6 +80,10 @@ This project uses a manual versioning process. It is your responsibility to keep
 
 - Dynamic data modules rely on `@11ty/eleventy-fetch` `AssetCache`: e.g., Spotify (`_data/spotify.js`), Steam (`_data/steam.js`), quotes (`_data/qotd.js`), GitHub (`_data/github.js`). They cache into `.cache/`; keep cacheable fallbacks and guard for missing env vars.
 
+- Public activity feeds: Goodreads (`_data/reading.js`) populates `/reading/` and `/now/` with cover thumbnails; manual books, hardcover entries, cover URLs, notes, and Kindle progress overrides live in `_data/reading-manual.yaml`. Letterboxd (`_data/watching.js`) populates `/watching/` and `/now/` with poster thumbnails parsed from RSS descriptions; its RSS feed includes only films logged as dated diary entries, while optional additions, poster URLs, and overrides live in `_data/watching-manual.yaml`. Both integrations cache for six hours and require no credentials.
+
+- Before replacing the editable `/now/` content in `_data/nowPage.yaml`, preserve the outgoing snapshot in `src/now/archive/YYYY-MM-DD.md`. Dynamic Goodreads and Letterboxd sections do not require a new archive snapshot on each feed refresh.
+
 - Data helpers like `src/_data/stats.js` expect Eleventy collections (`data.collections.posts`, `tagList`, etc.); when creating new computed data, follow the pattern of exporting plain objects with functions.
 
 - Required env secrets: Spotify (`SPOTIFY_CLIENT_ID/SECRET/REFRESH_TOKEN`), Steam (`STEAM_API_KEY/STEAM_USER_ID`), Upstash (`UPSTASH_REDIS_REST_URL/TOKEN`), OpenAI (`OPENAI_API_KEY`), OpenRouter (`OPENROUTER_API_KEY`, optional model/site vars), Ollama (`OLLAMA_API_URL`). Load them locally via `.env` before running data-dependent builds.
