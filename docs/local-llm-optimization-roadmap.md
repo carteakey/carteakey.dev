@@ -27,13 +27,13 @@ New and revised guidance should make its evidence level obvious:
 
 ## Phase 2: high-value additions
 
-- [ ] Add n-gram speculative decoding after it is benchmarked through L3MS, including MTP + n-gram combinations.
-- [ ] Add a real coding-workload section covering TTFT, PP, TG, prompt-cache hits, draft acceptance, tool calls, and long-session stability.
-- [ ] Add a controlled `--ubatch-size` sweep instead of a universal value.
-- [ ] Add a multi-GPU primer covering layer, row, and experimental tensor splitting without presenting one tensor ratio as universal.
-- [ ] Add ROCm/HIP and `GGML_BACKEND_DL` to the backend/build sections.
-- [ ] Extend CUDA architecture guidance and link upstream rather than relying on a permanently complete card table.
-- [ ] Add imatrix/IQ quant guidance, including the quality/context cost of fitting dense 27B-class models into 12GB.
+- [x] Add n-gram speculative decoding testing recipes, including MTP + n-gram combinations, without publishing speedup claims before L3MS benchmarks exist.
+- [x] Add a real coding-workload section covering TTFT, PP, TG, prompt-cache hits, draft acceptance, tool calls, and long-session stability.
+- [x] Add a controlled `--ubatch-size` sweep instead of a universal value.
+- [x] Add a multi-GPU primer covering layer, deprecated row, and experimental tensor splitting without presenting one tensor ratio as universal.
+- [x] Add ROCm/HIP and `GGML_BACKEND_DL` to the backend/build sections.
+- [x] Extend CUDA architecture guidance and link upstream rather than relying on a permanently complete card table.
+- [x] Add imatrix/IQ quant guidance, including the quality/context cost of fitting dense 27B-class models into 12GB.
 
 ## Phase 3: editorial pass
 

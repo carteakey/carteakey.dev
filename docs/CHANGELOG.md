@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.3.2] - 2026-06-25
+### Changed
+- 2026-06-12-local-llm-optimization.md: Implemented Phase 2 additions covering coding-workload metrics, n-gram speculative decoding test recipes, controlled ubatch sweeps, ROCm/HIP and dynamic backend builds, CUDA architecture guidance, iMatrix/IQ quant notes, and a multi-GPU primer.
+- docs/local-llm-optimization-roadmap.md: Marked Phase 2 guide work complete while keeping unbenchmarked n-gram speedups as pending L3MS evidence.
+
 ## [2.3.1] - 2026-06-25
 ### Added
 - Reading and Watching: Added compact book-cover and film-poster thumbnails on `/reading/`, `/watching/`, and the relevant `/now/` snippets, with styled placeholders for manual entries without artwork.

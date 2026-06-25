@@ -4,7 +4,7 @@ description: A practical guide to hardware, OS, and llama.cpp tuning, built from
 image: /img/blog-sketches/unique/local-llm-optimization-stamp-trim.png
 imageAlt: "Transparent monochrome sketch of a workstation PC tower with exposed GPU fans, monitor displaying tuning parameters, and dials measuring tokens-per-second performance"
 date: 2026-06-12
-updated: 2026-06-22
+updated: 2026-06-25
 authored_by: ai-assisted
 draft: false
 tags:
@@ -36,6 +36,7 @@ When I give a number, it came from this box. Things I still need to test are cal
 - **If TG is bad on MoE models:** check RAM speed before touching flags. Enabling XMP took my machine from roughly one-third speed back to normal.
 - **If you hit VRAM limits:** reduce context, quantize KV cache, lower `--parallel`, then tune layer placement.
 - **If you use MTP speculative decoding:** benchmark draft acceptance and KV cache precision together; raw TPS is not enough.
+- **If your workload is coding agents:** measure TTFT, PP, TG, prompt-cache reuse, tool-call latency, and long-session stability together.
 - **If you are running a single-user homelab:** prefer `--parallel 1`, explicit context sizing, and static placement once you have a stable config.
 
 ### 1.1 Where to Jump In
@@ -44,9 +45,11 @@ This is a reference, not a linear tutorial. Start with the part that matches the
 
 - **MoE generation is slow:** check [RAM speed](#6-1-the-memory-hierarchy-the-most-important-mental-model), then [layer placement](#10-layer-placement-the-core-optimization-for-moe) and [P-core pinning](#14-3-taskset-p-core-pinning-linux).
 - **The model does not fit or dies later in a session:** start with [`--fit`](#10-4-fit-on-recommended-starting-point), [context and KV cache](#11-context-and-kv-cache), then the [known OOM causes](#known-tg-variability-root-causes).
-- **Vision fails at load or on the first image:** go to [Vision / Multimodal](#19-vision-multimodal). The projector and image batch need their own headroom.
-- **MTP is no faster than normal decoding:** check [draft acceptance and KV precision](#18-2-the-kv-cache-constraint-ctk-f16-ctv-f16), not just reported TG.
-- **You use LM Studio or Ollama:** the [hardware](#6-hardware), [OS](#7-os-choice), and [security](#21-security-notes) sections still apply. Most llama.cpp flags do not.
+- **Vision fails at load or on the first image:** go to [Vision / Multimodal](#20-vision-multimodal). The projector and image batch need their own headroom.
+- **MTP is no faster than normal decoding:** check [draft acceptance and KV precision](#19-2-target-and-draft-kv-cache-precision), not just reported TG.
+- **Coding feels slow even with good TG:** measure the whole agent loop in [Coding Workloads](#18-coding-workloads-what-to-measure).
+- **You have more than one GPU:** start with [Multi-GPU](#21-multi-gpu-primer) before guessing tensor split ratios.
+- **You use LM Studio or Ollama:** the [hardware](#6-hardware), [OS](#7-os-choice), and [security](#23-security-notes) sections still apply. Most llama.cpp flags do not.
 
 ### 1.2 Safe Starting Profiles
 
@@ -68,14 +71,14 @@ Ordered by typical impact. Each item links to the section with the full explanat
 | # | Action | Impact | Section |
 | --- | --- | --- | --- |
 | 1 | **Enable XMP/EXPO in BIOS** | Up to 2–3× TG if RAM is running far below its rated speed | §6.1 |
-| 2 | **Use MTP speculative drafting** | 2.0x-2.6x TG speedup | §18.1 |
+| 2 | **Use MTP speculative drafting** | 2.0x-2.6x TG speedup | §19.1 |
 | 3 | **Use QAT low-bit models** (e.g. Q4 QAT) | Recovers much of the lost low-bit quality | §9.3 |
 | 4 | **Run Linux** or tune Windows power plan | ~15-20% TPS | §7 |
 | 5 | **Replace `power-profiles-daemon` with `tuned-ppd`** | Eliminates intermittent 20-30% TG drop | §7.4 |
 | 6 | **Build llama.cpp from source; keep updated** | MoE kernel improvements per release | §8.2 |
 | 7 | **Use `--fit on`** for VRAM-optimal layer placement | Major TG; no manual tuning | §10.4 |
 | 8 | **Use `-ctk q8_0 -ctv q8_0`** as a text-server baseline | Frees KV VRAM for extra GPU layers | §11.2 |
-| 9 | **Benchmark target and draft KV precision for MTP** | Gemma 4 was sensitive; other models may not be | §18.2 |
+| 9 | **Benchmark target and draft KV precision for MTP** | Gemma 4 was sensitive; other models may not be | §19.2 |
 | 10 | **Set `--parallel 1`** for single-user homelab | Reclaims KV VRAM for weights | §11.3 |
 | 11 | **Pin to P-cores** with `taskset -c` | +20-30% TG on Intel hybrid | §14.3 |
 | 12 | **Enable `--flash-attn on`** | Required for large-context stability | §11.4 |
@@ -83,8 +86,10 @@ Ordered by typical impact. Each item links to the section with the full explanat
 | 14 | **Enable `--mlock`** | Prevents mid-session swap degradation | §15.2 |
 | 15 | **Go headless** (`systemctl isolate multi-user.target`) | Frees 200-400 MB RAM + compositor VRAM | §7.4 |
 | 16 | **iGPU for display** (motherboard HDMI) | Frees 500-1000 MB VRAM | §6.2 |
-| 17 | **A/B test `GGML_CUDA_GRAPH_OPT`** with enough headroom | Can reduce dispatch overhead, but can also regress | §17.1 |
-| 18 | **Consider ik_llama.cpp** (MoE optimizations) | Specialized/niche; not covered here | §20 |
+| 17 | **Sweep `--ubatch-size`** on your real prompt shape | PP/VRAM tradeoff; no universal value | §12.2 |
+| 18 | **Try n-gram speculative decoding** for repetitive code sessions | Needs local benchmark before I publish numbers | §19.4 |
+| 19 | **A/B test `GGML_CUDA_GRAPH_OPT`** with enough headroom | Can reduce dispatch overhead, but can also regress | §17.1 |
+| 20 | **Consider ik_llama.cpp** (MoE optimizations) | Specialized/niche; not covered here | §22 |
 
 ## 3. What to Measure Before Tuning
 
@@ -99,6 +104,8 @@ Optimization only makes sense if you know which phase is slow.
 | **VRAM after long sessions** | Whether memory grows into OOM territory | CUDA graphs, VMM pool growth, fit headroom |
 | **RAM bandwidth / swap** | Whether hybrid MoE weights are bottlenecked | XMP/EXPO, channels, `--mlock`, swappiness |
 | **Draft acceptance rate** | Whether speculative decoding is helping | draft quality, KV precision, spec length |
+| **Prompt-cache hit rate** | Whether repeated agent context is being reused | cache key, prompt shape, server restarts |
+| **Tool-call loop time** | User-visible agent latency | TTFT + tool runtime + repeated prefill |
 
 Do not optimize from a single short prompt. Short prompts hide KV cache costs, long-context VMM growth, and parallel-slot allocation. Benchmark at the context length you actually serve.
 
@@ -170,12 +177,16 @@ Most serious users end up with both: cloud APIs for frontier tasks, local for ev
 | Backend | Build flag | Best for |
 | --- | --- | --- |
 | **CUDA** | `-DGGML_CUDA=ON` | NVIDIA GPUs; highest performance and most tested |
+| **HIP / ROCm** | `-DGGML_HIP=ON` | AMD GPUs through ROCm/HIP |
 | **Vulkan** | `-DGGML_VULKAN=ON` | AMD and Intel GPUs; cross-platform; works on NVIDIA too |
 | **Metal** | (auto on macOS) | Apple Silicon; unified memory |
+| **SYCL** | See llama.cpp SYCL docs | Intel Arc, Max, Flex, and some integrated GPUs |
 | **CPU-only** | (no GPU flag) | Reference; small models or debugging |
 | **RPC** | `-DGGML_RPC=ON` | Experimental distributed inference |
 
 > **This document assumes CUDA.** Where behavior differs on Vulkan or CPU-only, it's marked `[Vulkan]` or `[CPU]`. If you're on AMD/Intel GPU, most flag logic is the same but CUDA-specific env vars don't apply.
+
+You can build multiple backends into one tree, and current llama.cpp also supports dynamically loaded backends with `-DGGML_BACKEND_DL=ON`. That is useful if you move binaries between machines with different GPUs. For a single NVIDIA box, I still prefer a plain CUDA build because there are fewer moving parts when benchmarking.
 
 ---
 
@@ -355,10 +366,20 @@ cmake .. \
   -DGGML_CUDA_FA=ON \
   -DGGML_CUDA_FA_ALL_QUANTS=ON \
   -DCMAKE_CUDA_ARCHITECTURES=89
-#  89 = RTX 40-series | 86 = RTX 30-series | 75 = RTX 20-series | 61 = GTX 10-series
+# 89 = Ada / RTX 40-series. Check NVIDIA's compute capability table for your card.
 
 cmake --build . --config Release \
   --target llama-server llama-bench llama-fit-params llama-cli --parallel
+```
+
+`CMAKE_CUDA_ARCHITECTURES=89` is right for my RTX 4070. Don't cargo-cult the number; check NVIDIA's [compute capability table](https://developer.nvidia.com/cuda/gpus). If you have mixed cards, pass a semicolon list like `"86;89"`. If you're building a portable binary, turn `GGML_NATIVE` off and let the build cover more devices.
+
+```bash
+# Portable-ish CUDA build: larger binary, less tuned to one exact box
+cmake .. \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DGGML_CUDA=ON \
+  -DGGML_NATIVE=OFF
 ```
 
 **Vulkan build** (AMD, Intel GPU):
@@ -370,6 +391,29 @@ cmake .. \
   -DGGML_NATIVE=ON
 # CUDA-specific build flags do not apply here
 ```
+
+**ROCm / HIP build** (AMD GPU):
+```bash
+HIPCXX="$(hipconfig -l)/clang" HIP_PATH="$(hipconfig -R)" \
+cmake .. \
+  -DGGML_HIP=ON \
+  -DCMAKE_BUILD_TYPE=Release
+
+cmake --build . --config Release --parallel
+```
+
+Set `GPU_TARGETS` if the build system guesses wrong or you are compiling for a different AMD GPU. For example, `gfx1100` is RDNA3-class desktop hardware.
+
+**Dynamic backend build**:
+```bash
+cmake .. \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DGGML_BACKEND_DL=ON \
+  -DGGML_CUDA=ON \
+  -DGGML_VULKAN=ON
+```
+
+This lets backends load as shared libraries at runtime. Useful for packaged builds or mixed machines; less interesting for a locked-down homelab node.
 
 Keep your build updated. Pull and rebuild regularly - especially before benchmarking a new model.
 
@@ -402,6 +446,7 @@ Keep your build updated. Pull and rebuild regularly - especially before benchmar
 | Quant | Size vs FP16 | Quality | Notes |
 | --- | --- | --- | --- |
 | Q2_K | ~25% | Noticeable degradation | Use only under extreme size constraints |
+| IQ3 / IQ4 | ~25–35% | Better than older same-size quants when calibrated well | Often generated with imatrix; test for your workload |
 | Q4_K_M | ~35% | Good | Best size/quality balance for most situations |
 | Q4_K_XL / UD-Q4_K_XL | ~35% | Better than Q4_K_M | Unsloth Dynamic: layer-importance-aware allocation |
 | Q5_K_M / Q5_K_XL | ~40% | Very close to FP16 | Strong default when VRAM allows |
@@ -421,6 +466,26 @@ Standard Post-Training Quantization (PTQ) quantizes weights *after* the model is
 Quantization-Aware Training (QAT) bypasses this degradation by modeling low-precision rounding noise *during* the training or fine-tuning process. This enables the model weights to adapt to the low-bit limits.
 * **Accuracy Recovery**: In the Gemma 4 QAT builds I tested, 4-bit QAT behaved much closer to Q8 than ordinary post-training 4-bit quantization.
 * **VRAM Savings**: A 26B MoE model in standard Q8_0 or dynamic Q5 consumes ~18 GB, spilling heavily to system RAM on a 12GB card. The QAT Q4 model size drops to ~14.2 GB, allowing the vast majority of the model layers to load directly into VRAM for full GPU speed.
+
+### 9.4 iMatrix and IQ Quants
+
+Importance-matrix quantization (`imatrix`) calibrates the quantizer against representative text instead of treating every tensor equally. The resulting IQ quants can be much better than older low-bit quants at the same file size, especially when you are trying to squeeze a dense model into 12 GB.
+
+The tradeoff is simple: fitting is not the same as being good. A dense 27B-class model in a tiny IQ quant may load on a 12 GB card with q8 KV and modest context, but you are spending quality budget on two fronts:
+
+- lower weight precision,
+- lower effective context or fewer KV options because VRAM is still tight.
+
+Use IQ quants when the alternative is "doesn't fit at all" or when a trusted maintainer provides an imatrix-built quant for the model. For coding, I would rather run a slightly smaller model at a comfortable Q4/Q5 than a larger model at the edge of collapse unless benchmarks prove otherwise.
+
+Things to record when comparing IQ / imatrix builds:
+
+| Question | Why it matters |
+| --- | --- |
+| Was the imatrix generated from code-like data? | Calibration data can bias what precision gets preserved. |
+| Does the model survive your real context length? | A 4k chat test says very little about a 64k coding session. |
+| Did q8 KV still fit? | Weight savings that force q4 KV may be a wash. |
+| Is PP slower because the GPU is packed to the roof? | Fit is not the same as usable latency. |
 
 ---
 
@@ -596,6 +661,24 @@ Physical sub-batch within a logical batch. Must be ≤ `--batch-size`.
 ```bash
 --ubatch-size 512   # typical default
 ```
+
+Do not treat `512` as magic. It is a safe default, not a law. `--batch-size` controls the logical prefill batch; `--ubatch-size` controls how that work is physically split. Larger `ubatch` can improve PP, but it also raises peak VRAM during prefill.
+
+Run a tiny sweep on the model and context shape you actually serve:
+
+```bash
+for ub in 128 256 512 1024; do
+  ./build/bin/llama-bench \
+    -m /models/model.gguf \
+    -p 2048 -n 128 \
+    -b 1024 -ub "$ub" \
+    -ngl 99 \
+    -ctk q8_0 -ctv q8_0 \
+    -fa on
+done
+```
+
+Then repeat the winning two values inside `llama-server`, because server memory layout, `--parallel`, and prompt cache can change the result.
 
 **Vision/multimodal critical**: an image tokenizes to several hundred tokens. If `--ubatch-size` < image token count, llama.cpp throws an assertion during vision inference. Use `--ubatch-size 512` or higher and test with your actual image sizes. On 12 GB VRAM, `--batch-size 256 --ubatch-size 512` is a stable vision baseline.
 
@@ -776,13 +859,61 @@ Tested on mxfp4 and Q4 models: **slower** than default. GGML MMQ has native mxfp
 
 ---
 
-## 18. Speculative Decoding & MTP (Multi-Token Prediction)
+## 18. Coding Workloads - What to Measure
 
-Autoregressive token generation (TG) is memory-bandwidth bound: the GPU must read all active model weights from memory for every single token it generates. Speculative decoding bypasses this bottleneck by utilizing a lightweight "draft" model to guess upcoming tokens, which the base model verifies in a single forward pass.
+Coding agents are not just "chat, but with code." They repeat long prompts, make tool calls, read files, patch files, and keep sessions alive long enough to expose memory creep. A model can have great TG and still feel bad if TTFT is high or every tool call triggers another expensive prefill.
+
+For a coding setup, record these separately:
+
+| Metric | What I look for |
+| --- | --- |
+| TTFT | Does output start quickly after a tool call or file read? |
+| PP | Can the server ingest 8k–64k of code/context without a huge pause? |
+| TG | Does generation feel interactive after prefill? |
+| Prompt-cache hits | Does repeated agent context actually reuse cache? |
+| Draft acceptance | If using MTP or n-gram speculation, are accepted tokens high enough to matter? |
+| Tool-call loop time | End-to-end latency: model → tool → model, not just model tokens. |
+| Long-session stability | Does VRAM/RAM stay flat after 30–60 minutes? |
+
+My preferred test shape:
+
+1. Cold ask: one clean prompt after server start.
+2. Warm ask: same project, similar prompt, prompt cache should help.
+3. Tool loop: ask the agent to inspect, edit, and explain one small file.
+4. Long context: paste or load 16k–64k tokens and ask for a targeted change.
+5. Stability run: leave the server active and repeat a few prompts after context grows.
+
+Minimum data to save with any published profile:
+
+```text
+model:
+quant:
+llama.cpp commit:
+command:
+context:
+parallel:
+batch / ubatch:
+KV cache:
+PP:
+TG:
+TTFT:
+draft acceptance:
+VRAM at load:
+VRAM after long session:
+notes:
+```
+
+This is the piece I want L3MS to make boring: one command, one profile, enough metadata that the result is not just a vibes-based "feels fast".
+
+---
+
+## 19. Speculative Decoding & MTP (Multi-Token Prediction)
+
+Autoregressive token generation (TG) is memory-bandwidth bound: the GPU must read all active model weights from memory for every single token it generates. Speculative decoding works around this by using a lightweight draft model to guess upcoming tokens, which the base model verifies in one forward pass.
 
 On models trained with Multi-Token Prediction (MTP) heads (like Gemma 4 or Qwen 3.6), we use native MTP speculative drafting to achieve massive speedups.
 
-### 18.1 MTP Drafting Configuration Flags
+### 19.1 MTP Drafting Configuration Flags
 
 Instead of pairing the base model with an unrelated draft model, mainline `llama.cpp` supports native companion MTP draft models:
 * `--spec-draft-model`: Path to the companion MTP GGUF file (e.g. `mtp-gemma-4-26B-A4B-it.gguf` ~460MB).
@@ -791,7 +922,7 @@ Instead of pairing the base model with an unrelated draft model, mainline `llama
   * For larger models (e.g., Gemma 4 26B), set to `2`. Higher values introduce computational overhead that hurts TG.
   * For lighter models (e.g., Gemma 4 12B), set to `4` to capture longer draft runs.
 
-### 18.2 Target and Draft KV Cache Precision
+### 19.2 Target and Draft KV Cache Precision
 
 MTP has two distinct caches. `-ctk` and `-ctv` set the **target model** cache; `-ctkd` and `-ctvd` set the **draft model** cache. Treat them as separate tuning decisions.
 
@@ -809,18 +940,73 @@ Start with a full-precision draft cache, then compare `q8_0` and `f16` for the t
 
 Record acceptance rate, TG, and VRAM. Saving memory is pointless if the draft model stops landing tokens.
 
-### 18.3 Speculative Performance Gains
+### 19.3 Speculative Performance Gains
 
 Tested on a single RTX 4070 12GB:
 * Gemma 4 26B Baseline: 38.5 tok/s
 * Gemma 4 26B QAT + MTP: **100.60 tok/s** (2.6x speedup)
 * Gemma 4 12B QAT + MTP: **120.80 tok/s** (2.0x speedup)
 
+### 19.4 n-gram Speculative Decoding
+
+llama.cpp also has draftless speculative modes. They do not need a separate draft model. Instead, they look for repeated token patterns in the current context or in a small n-gram table.
+
+This is promising for coding because code sessions repeat paths, function names, imports, boilerplate, and edit patterns. It may do nothing on free-form chat. I have not published speedup numbers yet because this needs to be tested through L3MS on the actual 4070 node.
+
+Start with `ngram-mod`, which is the most interesting current option for persistent server use:
+
+```bash
+llama-server \
+  -m model.gguf \
+  --spec-type ngram-mod \
+  --spec-ngram-mod-n-match 24 \
+  --spec-ngram-mod-n-min 48 \
+  --spec-ngram-mod-n-max 64 \
+  --spec-draft-n-max 64 \
+  ...
+```
+
+For simpler single-session repetition tests:
+
+```bash
+llama-server \
+  -m model.gguf \
+  --spec-type ngram-simple \
+  --spec-draft-n-max 64 \
+  ...
+```
+
+MTP and n-gram can be combined because llama.cpp accepts comma-separated speculative types:
+
+```bash
+llama-server \
+  -m model.gguf \
+  --spec-draft-model mtp-model.gguf \
+  --spec-type draft-mtp,ngram-mod \
+  --spec-draft-n-max 64 \
+  --spec-ngram-mod-n-match 24 \
+  --spec-ngram-mod-n-min 48 \
+  --spec-ngram-mod-n-max 64 \
+  ...
+```
+
+Do not assume the combined setup wins. Draftless decoding can have precedence over draft-model decoding in current llama.cpp, and long drafts can waste work if acceptance is poor. Measure acceptance, TG, and tool-loop time.
+
+Suggested L3MS sweep:
+
+| Variant | What to compare |
+| --- | --- |
+| baseline | no speculation |
+| MTP only | current Gemma/Qwen MTP profile |
+| `ngram-simple` | repetitive code prompt, no draft model |
+| `ngram-mod` | persistent server / repeated file-edit session |
+| `draft-mtp,ngram-mod` | combined mode; only keep if end-to-end loop wins |
+
 ---
 
-## 19. Vision / Multimodal
+## 20. Vision / Multimodal
 
-### 19.1 `--mmproj`
+### 20.1 `--mmproj`
 
 Path to the multimodal projector file:
 
@@ -830,7 +1016,7 @@ Path to the multimodal projector file:
 
 Typically 1–3 GB. Allocates in VRAM at startup alongside the model.
 
-### 19.2 OOM Failure Modes on Constrained VRAM
+### 20.2 OOM Failure Modes on Constrained VRAM
 
 **Failure 1 - mmproj allocation**: current llama.cpp includes projector weights and compute buffers in `--fit`. If it still fails at load, check for an older build, other processes using VRAM, or a hardcoded placement created without the projector.
 
@@ -840,7 +1026,7 @@ Fix: update llama.cpp and run `--fit` with the projector supplied. My 12 GB prof
 
 Fix: use `--ubatch-size 512` or higher.
 
-### 19.3 Safe Vision Profile (12 GB VRAM)
+### 20.3 Safe Vision Profile (12 GB VRAM)
 
 This is the profile I actually use. You may be able to lower the 2048 MiB margin on a current build, but I prefer the headroom.
 
@@ -861,7 +1047,58 @@ Separate text and vision servers on different ports if running both workloads fr
 
 ---
 
-## 20. ik_llama.cpp Fork [Advanced]
+## 21. Multi-GPU Primer
+
+I do not run a multi-GPU L3MS node right now, so treat this as orientation, not a tuned recipe.
+
+llama.cpp has three split modes:
+
+| Mode | What it does | Use when |
+| --- | --- | --- |
+| `layer` | Puts contiguous groups of layers on different GPUs | Default. Best first try, most compatible. |
+| `row` | Older row-split path for dense weights | Deprecated upstream; avoid for new setups. |
+| `tensor` | Experimental tensor parallelism across GPUs | Try for TG latency on supported dense models with fast interconnect. |
+
+Default pipeline mode:
+
+```bash
+llama-server \
+  -m model.gguf \
+  --split-mode layer \
+  --n-gpu-layers all
+```
+
+Custom split for mismatched GPUs:
+
+```bash
+# Example: GPU 0 gets 75%, GPU 1 gets 25%
+llama-server -m model.gguf --split-mode layer --tensor-split 3,1
+```
+
+Tensor parallel mode:
+
+```bash
+llama-server \
+  -m model.gguf \
+  --split-mode tensor \
+  -ctk f16 -ctv f16 \
+  --flash-attn on
+```
+
+Important constraints:
+
+- `layer` is the boring default. Start there.
+- `row` exists mostly for older setups; I would not build new guidance around it.
+- `tensor` is experimental and does not support every architecture. Many MoE / hybrid architectures fail with an explicit "not implemented" error.
+- `tensor` does not support quantized KV cache right now. Use `f16`, `bf16`, or `f32` KV.
+- `--fit` is not supported with `tensor`, so you need to manage context, parallel slots, and GPU layers yourself.
+- `GGML_CUDA_P2P=1` can help peer transfers when the driver and motherboard support it, but it can also crash or corrupt output on some systems. Test before keeping it.
+
+If multi-GPU is slower than one GPU, the interconnect is probably the bottleneck. Try `layer` before `tensor`, check whether NCCL is available on CUDA builds, and don't assume a `--tensor-split` ratio from someone else's hardware means anything on yours.
+
+---
+
+## 22. ik_llama.cpp Fork [Advanced]
 
 For highly specialized environments, the [ikawrakow/ik_llama.cpp](https://github.com/ikawrakow/ik_llama.cpp) fork exists. It focuses on MoE-specific kernel optimizations (such as fused MoE kernels).
 
@@ -871,7 +1108,7 @@ However, it is not covered in detail in this guide because:
 
 ---
 
-## 21. Security Notes
+## 23. Security Notes
 
 Local inference servers are still HTTP services. Do not expose `llama-server`, LM Studio, or any model gateway directly to the public internet without authentication, firewalling, and rate limits.
 
@@ -887,7 +1124,7 @@ If you need remote access, prefer a private VPN, Tailscale, WireGuard, or a lock
 
 ---
 
-## 22. Diagnostic Checklist
+## 24. Diagnostic Checklist
 
 Run before benchmarking or when TG is unexpectedly low.
 
@@ -948,6 +1185,7 @@ sudo tuned-adm active
 
 | Date | Note |
 | --- | --- |
+| 2026-06-25 | Added Phase 2 material: coding-workload metrics, n-gram speculation recipes, ubatch sweep guidance, ROCm/HIP and dynamic backend notes, iMatrix/IQ quant guidance, and a multi-GPU primer. |
 | 2026-06-22 | Tightened the tested scope, corrected mmproj fitting, separated target and draft KV caches, removed `LLAMA_SET_ROWS`, and turned CUDA graphs into an A/B test. |
 | 2026-06-21 | Condensed ik_llama.cpp section to a brief advanced reference based on feedback. |
 | 2026-06-21 | Added a problem-based reading map, centralized safe starting profiles, and consolidated the easy-to-miss vision, CUDA graph, hybrid CPU, and MTP guardrails. |
@@ -960,6 +1198,9 @@ sudo tuned-adm active
 - [l3ms - homelab LLM toolkit (scripts, bench runbook, run scripts)](https://github.com/carteakey/l3ms)
 - [llama.cpp](https://github.com/ggml-org/llama.cpp)
 - [ik_llama.cpp fork](https://github.com/ikawrakow/ik_llama.cpp)
+- [llama.cpp build guide](https://github.com/ggml-org/llama.cpp/blob/master/docs/build.md)
+- [llama.cpp speculative decoding guide](https://github.com/ggml-org/llama.cpp/blob/master/docs/speculative.md)
+- [llama.cpp multi-GPU guide](https://github.com/ggml-org/llama.cpp/blob/master/docs/multi-gpu.md)
 - [llama.cpp server README](https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md)
 - [gpt-oss-120b optimization post](/blog/local-inference/optimizing-gpt-oss-120b-local-inference/)
 - [Qwen3-Coder-Next 40 t/s post](/blog/local-inference/optimizing-qwen3-coder-next-local-inference/)
