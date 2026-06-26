@@ -20,4 +20,6 @@ The funny thing is that the post that did it was exactly the kind of thing I lik
 
 So yeah. Small milestone. Big enough for a note.
 
+PS: Sorry for using Google Analytics lol. I will move this to Simple Analytics soon.
+
 {% image "./src/static/img/notes/llm-post-analytics-spike.png", "Google Analytics card showing 6.6k active users, 20k views, and 6.6k new users over the last 7 days", "w-full rounded-lg shadow-md border border-surface-border" %}

@@ -3372,6 +3372,10 @@ picture img {
     display: block;
   }
 
+  .note-content picture {
+    max-width: min(100%, 34rem);
+  }
+
   /* Center images in post article body */
   .post-body picture,
   article.site-content picture {
