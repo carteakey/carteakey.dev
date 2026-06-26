@@ -1345,7 +1345,7 @@ picture img {
     color: rgb(161 161 170 / 1);
   }
 
-  .note-entry-title {
+  .site-content .note-entry-title {
     margin: 0.25rem 0 0;
     font-family: var(--font-sans);
     font-size: clamp(1.75rem, 3vw, 2.3rem);
@@ -1355,7 +1355,7 @@ picture img {
     color: rgb(17 24 39 / 1);
   }
 
-  .dark .note-entry-title {
+  .dark .site-content .note-entry-title {
     color: rgb(250 250 250 / 1);
   }
 }
@@ -2088,6 +2088,25 @@ picture img {
 
   .home-title-accent {
     color: var(--accent-color);
+  }
+
+  .home-typing-line {
+    margin: 0.45rem 0 0;
+    max-width: 44rem;
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.35;
+    font-weight: 700;
+    color: rgb(39 39 42 / 1);
+  }
+
+  .home-typed-topic {
+    display: inline-block;
+    color: var(--accent-color);
+  }
+
+  .dark .home-typing-line {
+    color: rgb(244 244 245 / 1);
   }
 
   .home-dek {

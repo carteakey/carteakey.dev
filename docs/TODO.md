@@ -155,8 +155,8 @@ Buy me a coffee
 
 ## Maybe Later
 
-- [ ] Comment threading - Enhanced Giscus comments
-- [ ] Live typing effect - Animate text on homepage
+- [x] Comment threading - Enhanced Giscus comments via Giscus/GitHub Discussions with stable thread terms. (2026-06-25)
+- [x] Live typing effect - Animate the homepage topic line under the intro headline. (2026-06-25)
 - [ ] Custom fonts optimization
 - [ ] Multi-language support
 - [x] Add print styles - Better printing experience (2026-03-23)

@@ -57,6 +57,9 @@ description: Personal workbench and writing index of Kartikey Chauhan. Senior Da
       <div>
         <p class="home-eyebrow">ANALYTICS / LOCAL AI / HOMELABS / INTERNET ARCHIVES</p>
         <h1 class="home-title">Hi, I’m <span class="home-title-accent">Kartikey.</span></h1>
+        <p class="home-typing-line" aria-live="polite">
+          I write about <span id="homeTypedTopic" class="home-typed-topic">local AI.</span>
+        </p>
         <p class="home-dek">
           Data analyst in Toronto. I write about analytics, local AI, homelabs, personal systems, and internet archives.
         </p>
@@ -176,4 +179,27 @@ description: Personal workbench and writing index of Kartikey Chauhan. Senior Da
     <blockquote class="home-quote">{{ qotd.quote }}</blockquote>
   </section>
 </div>
+
+<script src="/static/js/typeit.min.js"></script>
+<script>
+  (() => {
+    const topic = document.getElementById('homeTypedTopic');
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (!topic || reduceMotion || typeof TypeIt === 'undefined') return;
+
+    topic.textContent = '';
+
+    new TypeIt(topic, {
+      strings: ['local AI.', 'analytics.', 'homelabs.', 'personal systems.', 'internet archives.'],
+      breakLines: false,
+      speed: 54,
+      deleteSpeed: 28,
+      nextStringDelay: [1350, 450],
+      loop: true,
+      cursorChar: '▌',
+      waitUntilVisible: true
+    }).go();
+  })();
+</script>
 {% include "components/feed-masonry-script.njk" %}

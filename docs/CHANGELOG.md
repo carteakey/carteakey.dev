@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.3.5] - 2026-06-26
+### Added
+- Homepage: Added a restrained live-typing topic line under the intro headline, with reduced-motion and no-JS fallbacks.
+- notes: Added a short milestone note about the local LLM post reaching roughly 14k views and the site crossing 5k users.
+
+## [2.3.4] - 2026-06-26
+### Fixed
+- note.njk, tailwind.css: Restored full-size note entry headings by preventing the generic site-content heading rule from overriding the note title style.
+
 ## [2.3.3] - 2026-06-25
 ### Added
 - quant-eval-stack.svg: Added a compact visual for reading quantization metrics from fit checks through workload validation.
