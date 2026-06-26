@@ -117,7 +117,7 @@ Do not optimize from a single short prompt. Short prompts hide KV cache costs, l
 | --- | --- |
 | **GGUF** | File format for quantized LLM weights used by llama.cpp. Stores weights, metadata, and tokenizer in a single binary. |
 | **Quantization** | Reducing weight numerical precision (FP16 → Q4, etc.) to shrink model size and accelerate compute. More bits = higher quality, larger file. |
-| **QAT (Quantization-Aware Training)** | Training/fine-tuning a model with quantization noise injected. Allows near-lossless 8-bit intelligence at a 4-bit memory size. |
+| **QAT (Quantization-Aware Training)** | Training/fine-tuning a model with quantization noise injected. Often preserves more quality than post-training quantization at the same bit depth. |
 | **MTP (Multi-Token Prediction)** | Speculative decoding method native to MTP-trained models (e.g. Gemma 4). Uses a companion draft model to generate multiple candidate tokens in parallel, which the base model validates in one GPU step. |
 | **PP / Prompt Processing** | Tokens per second during the prefill phase - how fast the model reads your input. GPU-bound. |
 | **TG / Token Generation** | Tokens per second during autoregressive decode - how fast you see output stream. Memory-bandwidth-bound. **This is what the user feels.** |
@@ -127,7 +127,8 @@ Do not optimize from a single short prompt. Short prompts hide KV cache costs, l
 | **MoE / Mixture of Experts** | Architecture where each token activates only a small subset of "expert" networks. Enables very large total parameters with low per-token compute. Expert weights that don't fit in VRAM can spill to system RAM. |
 | **Active Parameters** | For MoE: the subset of params computed per token. gpt-oss-120b: ~5B active of 120B total. Qwen3-Coder-Next: ~3B active of 80B total. TG speed tracks active count, not total. |
 | **VRAM** | Video RAM - on-die GPU memory. Lowest latency, highest bandwidth storage for inference. |
-| **Perplexity** | Statistical measure of model surprise on a test corpus. Lower = better. Standard proxy for comparing quantization quality levels. |
+| **Perplexity** | Statistical measure of model surprise on a test corpus. Useful smoke test, but not the same as matching the original model's behavior. |
+| **KLD / KL Divergence** | Distance between the baseline model's next-token distribution and the quantized model's distribution on the same prompts. Lower drift usually means a better reconstruction. |
 | **llama-bench** | CLI tool for synthetic PP and TG benchmarking, included in llama.cpp. |
 | **llama-fit-params** | CLI tool that probes free VRAM and outputs optimal `-ngl` and `--override-tensor` flags without starting a server. |
 | **`-ngl` / n-gpu-layers** | Number of transformer blocks to load onto GPU VRAM. |
@@ -446,18 +447,18 @@ Keep your build updated. Pull and rebuild regularly - especially before benchmar
 | Quant | Size vs FP16 | Quality | Notes |
 | --- | --- | --- | --- |
 | Q2_K | ~25% | Noticeable degradation | Use only under extreme size constraints |
-| IQ3 / IQ4 | ~25–35% | Better than older same-size quants when calibrated well | Often generated with imatrix; test for your workload |
+| IQ3 / IQ4 | ~25–35% | Often better than older same-size quants | Calibration and runtime support matter; test speed too |
 | Q4_K_M | ~35% | Good | Best size/quality balance for most situations |
-| Q4_K_XL / UD-Q4_K_XL | ~35% | Better than Q4_K_M | Unsloth Dynamic: layer-importance-aware allocation |
+| Q4_K_XL / UD-Q4_K_XL | ~35% | Often better than plain Q4 | Dynamic/tensor-sensitive allocation when available |
 | Q5_K_M / Q5_K_XL | ~40% | Very close to FP16 | Strong default when VRAM allows |
 | Q6_K | ~50% | Near-lossless | High-VRAM setups |
 | Q8_0 | ~65% | Effectively lossless | If storage/RAM permits |
 | FP16 | 100% | Reference | Maximum quality; maximum size |
 | MXFP4 (native) | ~35% | Better than Q4_K_M | gpt-oss models: trained in MXFP4, not post-quantized |
 
-**UD (Unsloth Dynamic) quants**: allocate higher bits to attention-sensitive layers and lower bits to robust layers. Better perplexity than uniform quants at the same average bit width. Generally the best choice when available.
+**UD (Unsloth Dynamic) quants**: keep sensitive tensors at higher precision and push easier tensors lower. They can beat uniform quants at the same average size, but the calibration data and target workload still matter.
 
-**Rule of thumb**: use the highest quant that fits your VRAM + RAM budget. Q5_K_XL or UD-Q5_K_XL is a strong default. Drop to Q4 only when necessary.
+**Rule of thumb**: use the highest quant that fits your VRAM + RAM budget. Q5_K_XL or UD-Q5_K_XL is a strong default. Drop to Q4 when needed, then check PPL/KLD and your actual workload.
 
 ### 9.3 Quantization-Aware Training (QAT)
 
@@ -467,25 +468,70 @@ Quantization-Aware Training (QAT) bypasses this degradation by modeling low-prec
 * **Accuracy Recovery**: In the Gemma 4 QAT builds I tested, 4-bit QAT behaved much closer to Q8 than ordinary post-training 4-bit quantization.
 * **VRAM Savings**: A 26B MoE model in standard Q8_0 or dynamic Q5 consumes ~18 GB, spilling heavily to system RAM on a 12GB card. The QAT Q4 model size drops to ~14.2 GB, allowing the vast majority of the model layers to load directly into VRAM for full GPU speed.
 
+Still test it. QAT, Dynamic GGUF, and imatrix quants are different ways of spending a quality budget; none of them magically make low-bit files immune to workload-specific regressions.
+
 ### 9.4 iMatrix and IQ Quants
 
-Importance-matrix quantization (`imatrix`) calibrates the quantizer against representative text instead of treating every tensor equally. The resulting IQ quants can be much better than older low-bit quants at the same file size, especially when you are trying to squeeze a dense model into 12 GB.
+Importance-matrix quantization (`imatrix`) calibrates the quantizer against representative text instead of treating every tensor equally. In rough terms: if a weight matters more for the calibration activations, the quantizer tries harder not to damage it. This is why calibration data matters. A WikiText-ish imatrix and a code/chat imatrix are not protecting exactly the same behavior.
 
-The tradeoff is simple: fitting is not the same as being good. A dense 27B-class model in a tiny IQ quant may load on a 12 GB card with q8 KV and modest context, but you are spending quality budget on two fronts:
+IQ quants are worth paying attention to when you are trying to push below the normal Q4/Q5 comfort zone without wrecking the model. The useful split:
 
-- lower weight precision,
-- lower effective context or fewer KV options because VRAM is still tight.
+- **mainline llama.cpp IQ quants**: easiest to run everywhere.
+- **ik_llama.cpp / IK quants**: often where frontier IQ/K quant work appears first, especially for CPU or hybrid MoE runs.
+- **Unsloth Dynamic GGUFs**: practical packaged quants that keep sensitive tensors at higher precision and push easier tensors lower.
 
-Use IQ quants when the alternative is "doesn't fit at all" or when a trusted maintainer provides an imatrix-built quant for the model. For coding, I would rather run a slightly smaller model at a comfortable Q4/Q5 than a larger model at the edge of collapse unless benchmarks prove otherwise.
+Kawrakow's comparisons are useful because they explain the families, not just the filenames. Formats like `IQ4_XS`, `IQ4_K`, and `IQ3_K` use more careful/non-linear schemes than plain older low-bit quants, and can beat simple K-quant baselines at similar bits-per-weight. Unsloth's Qwen3.5 notes make the same point from the packaging side: expert tensors, attention tensors, and hybrid/state-space tensors do not all tolerate the same compression. "Q4" can mean very different files.
 
-Things to record when comparing IQ / imatrix builds:
+So my practical rule is:
+
+| Situation | What I would try first |
+| --- | --- |
+| Trusted Unsloth Dynamic GGUF exists | Try `UD-Q4_K_XL` / `UD-Q5_K_XL` before a generic community Q4/Q5. |
+| You need a dense 27B-ish model to squeeze into 12 GB | Try IQ/UD only if it still leaves room for q8 KV and real context. |
+| CPU or hybrid CPU/GPU MoE | Check ik_llama.cpp results; this is one of its strongest lanes. |
+| Maximum TG matters more than size | Compare against K-quants; IQ can be slower. |
+| The model is already QAT or native low-bit | Test the native/QAT path first. Do not stack cleverness for sport. |
+
+The trap: a quant that wins perplexity can still lose on real coding or long-context use. Wiki-style PPL/KLD, Aider/LiveCodeBench, and "does it stay coherent at my context length?" are not the same test. For this guide, a quant only "wins" if it survives the workload I actually run.
+
+Things to record when comparing IQ / Unsloth Dynamic / IK / imatrix builds:
 
 | Question | Why it matters |
 | --- | --- |
-| Was the imatrix generated from code-like data? | Calibration data can bias what precision gets preserved. |
+| What calibration data was used? | Chat/code calibration and Wiki calibration preserve different behavior. |
+| Is it dynamic per-layer/per-tensor, uniform, or fork-specific? | Same nominal "Q4" can mean very different files. |
+| Is the quant mainline llama.cpp or ik_llama.cpp-only? | Runtime compatibility matters. |
 | Does the model survive your real context length? | A 4k chat test says very little about a 64k coding session. |
 | Did q8 KV still fit? | Weight savings that force q4 KV may be a wash. |
-| Is PP slower because the GPU is packed to the roof? | Fit is not the same as usable latency. |
+| Did TG drop vs K-quant? | IQ can trade speed for quality/size. |
+
+### 9.5 Perplexity, KLD, and Actually Choosing a Quant
+
+This is the part that gets muddy fast. File size and TG are easy to measure. Quality is not.
+
+Perplexity is still useful as a smoke test. If a quant has much worse PPL than another quant of the same model and roughly the same size, something probably went wrong. But PPL can hide answer flips because better and worse token probabilities can average out.
+
+KLD is a better compression metric because it compares the quantized model's output distribution against the original model. Unsloth leans on this in their Dynamic GGUF writeups, citing *Accuracy is Not All You Need*: two compressed models can have similar benchmark accuracy while changing different answers underneath. KLD tends to catch that drift better than raw accuracy or PPL.
+
+Unsloth's GLM-5.2 results are a useful example because they separate "smaller" from "dumber." Their dynamic 4-bit and 5-bit GGUFs are mostly lossless by KLD, and even 1-bit / 2-bit keep high top-1 agreement with Q8.
+
+But top-1 here is argmax-token match, not factual accuracy. 76% top-1 does not mean "wrong 24% of the time"; it means the quant picked the same next token as the reference 76% of the time. Many misses are wording, formatting, or high-entropy positions where the baseline was not that committed either.
+
+{% image_cc "./src/static/img/local-inference/quant-eval-stack.svg", "Diagram showing file size, perplexity, KL divergence, task evals, and workload tests as a quantization evaluation stack", "w-full", "My read: PPL catches obviously damaged quants, KLD catches distribution drift, and the workload still gets the final vote." %}
+
+My reading order:
+
+| Metric | Good for | Failure mode |
+| --- | --- | --- |
+| File size / BPW | Fit planning | Says nothing about quality. |
+| PPL | Quick regression check | Can miss answer flips and calibration overfit. |
+| KLD | Distribution drift vs the original model | Depends heavily on eval/calibration data. |
+| Task evals | Aider, LiveCodeBench, MMLU, tool calling | Slow and sometimes brittle to templates. |
+| My workload | The real serving profile | Annoying to run, but this is the one that matters. |
+
+Unsloth's warning about calibration overfit is the important bit for local users. If the imatrix and the evaluation both look like WikiText, a quant can look great on PPL/KLD and still be worse for chat, code, or tool use. Instruct models also have chat templates, so plain text calibration can under-test the actual path you use.
+
+So I would not rank quants by one number. I would shortlist by size, PPL/KLD, and maintainer trust, then run the model on my actual context length with the sampling and KV settings I plan to serve.
 
 ---
 
@@ -861,9 +907,9 @@ Tested on mxfp4 and Q4 models: **slower** than default. GGML MMQ has native mxfp
 
 ## 18. Coding Workloads - What to Measure
 
-Coding agents are not just "chat, but with code." They repeat long prompts, make tool calls, read files, patch files, and keep sessions alive long enough to expose memory creep. A model can have great TG and still feel bad if TTFT is high or every tool call triggers another expensive prefill.
+For coding, TG is only part of the feel. Long prompts and repeated file context make PP and TTFT matter a lot.
 
-For a coding setup, record these separately:
+Record these when testing a model:
 
 | Metric | What I look for |
 | --- | --- |
@@ -872,16 +918,14 @@ For a coding setup, record these separately:
 | TG | Does generation feel interactive after prefill? |
 | Prompt-cache hits | Does repeated agent context actually reuse cache? |
 | Draft acceptance | If using MTP or n-gram speculation, are accepted tokens high enough to matter? |
-| Tool-call loop time | End-to-end latency: model → tool → model, not just model tokens. |
 | Long-session stability | Does VRAM/RAM stay flat after 30–60 minutes? |
 
-My preferred test shape:
+My preferred quick test:
 
-1. Cold ask: one clean prompt after server start.
-2. Warm ask: same project, similar prompt, prompt cache should help.
-3. Tool loop: ask the agent to inspect, edit, and explain one small file.
-4. Long context: paste or load 16k–64k tokens and ask for a targeted change.
-5. Stability run: leave the server active and repeat a few prompts after context grows.
+1. Cold prompt after server start.
+2. Same project, similar prompt, warm cache.
+3. One small inspect/edit/explain loop.
+4. One long-context prompt near the context size I actually use.
 
 Minimum data to save with any published profile:
 
@@ -903,7 +947,7 @@ VRAM after long session:
 notes:
 ```
 
-This is the piece I want L3MS to make boring: one command, one profile, enough metadata that the result is not just a vibes-based "feels fast".
+This is the part I want L3MS to make boring: one command, one profile, enough metadata that the result is not just "feels fast."
 
 ---
 
@@ -1185,6 +1229,7 @@ sudo tuned-adm active
 
 | Date | Note |
 | --- | --- |
+| 2026-06-25 | Trimmed the coding-workload section, tightened quant/QAT/iMatrix/IQ guidance with Unsloth Dynamic and ikawrakow notes, and added a compressed GLM-5.2 PPL/KLD quant-eval section. |
 | 2026-06-25 | Added Phase 2 material: coding-workload metrics, n-gram speculation recipes, ubatch sweep guidance, ROCm/HIP and dynamic backend notes, iMatrix/IQ quant guidance, and a multi-GPU primer. |
 | 2026-06-22 | Tightened the tested scope, corrected mmproj fitting, separated target and draft KV caches, removed `LLAMA_SET_ROWS`, and turned CUDA graphs into an A/B test. |
 | 2026-06-21 | Condensed ik_llama.cpp section to a brief advanced reference based on feedback. |
@@ -1201,6 +1246,15 @@ sudo tuned-adm active
 - [llama.cpp build guide](https://github.com/ggml-org/llama.cpp/blob/master/docs/build.md)
 - [llama.cpp speculative decoding guide](https://github.com/ggml-org/llama.cpp/blob/master/docs/speculative.md)
 - [llama.cpp multi-GPU guide](https://github.com/ggml-org/llama.cpp/blob/master/docs/multi-gpu.md)
+- [llama.cpp quantize README](https://github.com/ggml-org/llama.cpp/blob/master/tools/quantize/README.md)
+- [Accuracy is Not All You Need](https://arxiv.org/abs/2407.09141)
+- [ik_llama.cpp](https://github.com/ikawrakow/ik_llama.cpp)
+- [FOSDEM 2025: History and advances of quantization in llama.cpp](https://archive.fosdem.org/2025/schedule/event/fosdem-2025-5991-history-and-advances-of-quantization-in-llama-cpp/)
+- [ik_llama.cpp discussion: Will LQER improve k- and i-quants?](https://github.com/ikawrakow/ik_llama.cpp/discussions/15)
+- [Unsloth Dynamic 2.0 GGUFs](https://unsloth.ai/docs/basics/unsloth-dynamic-2.0-ggufs)
+- [Unsloth Dynamic GGUFs on Aider Polyglot](https://unsloth.ai/docs/basics/unsloth-dynamic-2.0-ggufs/unsloth-dynamic-ggufs-on-aider-polyglot)
+- [Unsloth GLM-5.2-GGUF KLD discussion](https://huggingface.co/unsloth/GLM-5.2-GGUF/discussions/3)
+- [Unsloth Qwen3.5 GGUF benchmarks](https://unsloth.ai/docs/models/qwen3.5/gguf-benchmarks)
 - [llama.cpp server README](https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md)
 - [gpt-oss-120b optimization post](/blog/local-inference/optimizing-gpt-oss-120b-local-inference/)
 - [Qwen3-Coder-Next 40 t/s post](/blog/local-inference/optimizing-qwen3-coder-next-local-inference/)

@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.3.3] - 2026-06-25
+### Added
+- quant-eval-stack.svg: Added a compact visual for reading quantization metrics from fit checks through workload validation.
+
+### Changed
+- 2026-06-12-local-llm-optimization.md: Trimmed the coding-workload section, tightened quant/QAT/iMatrix/IQ guidance with Unsloth Dynamic and ikawrakow notes, and added compressed GLM-5.2 PPL/KLD guidance for quant selection.
+- docs/local-llm-optimization-roadmap.md: Added a section-by-section research/image prompt loop to reconcile sources and visuals against the guide before the final brevity pass.
+
 ## [2.3.2] - 2026-06-25
 ### Changed
 - 2026-06-12-local-llm-optimization.md: Implemented Phase 2 additions covering coding-workload metrics, n-gram speculative decoding test recipes, controlled ubatch sweeps, ROCm/HIP and dynamic backend builds, CUDA architecture guidance, iMatrix/IQ quant notes, and a multi-GPU primer.

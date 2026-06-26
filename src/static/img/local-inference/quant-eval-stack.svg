@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 820" role="img" aria-labelledby="title desc">
+  <title id="title">Quant evaluation stack</title>
+  <desc id="desc">A monochrome diagram showing size, perplexity, KL divergence, task evaluations, and real workload checks as successive filters for choosing a quantized model.</desc>
+  <rect width="1400" height="820" fill="#ffffff"/>
+  <g fill="none" stroke="#111111" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="70" y="90" width="1260" height="650" rx="10"/>
+    <path d="M110 170h1180"/>
+    <path d="M110 280h1180"/>
+    <path d="M110 390h1180"/>
+    <path d="M110 500h1180"/>
+    <path d="M110 610h1180"/>
+    <path d="M320 170v550"/>
+    <path d="M660 170v550"/>
+    <path d="M990 170v550"/>
+  </g>
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" fill="#111111">
+    <text x="110" y="58" font-size="36" font-weight="700">Quant eval stack</text>
+
+    <text x="110" y="140" font-size="24" font-weight="700">filter</text>
+    <text x="350" y="140" font-size="24" font-weight="700">catches</text>
+    <text x="690" y="140" font-size="24" font-weight="700">misses</text>
+    <text x="1020" y="140" font-size="24" font-weight="700">use it for</text>
+
+    <text x="110" y="225" font-size="28" font-weight="700">size / BPW</text>
+    <text x="350" y="214" font-size="23">fit planning</text>
+    <text x="350" y="246" font-size="19">VRAM, RAM, context</text>
+    <text x="690" y="214" font-size="23">quality</text>
+    <text x="690" y="246" font-size="19">small can still be bad</text>
+    <text x="1020" y="225" font-size="23">shortlist</text>
+
+    <text x="110" y="335" font-size="28" font-weight="700">PPL</text>
+    <text x="350" y="324" font-size="23">obvious damage</text>
+    <text x="350" y="356" font-size="19">quick regression check</text>
+    <text x="690" y="324" font-size="23">answer flips</text>
+    <text x="690" y="356" font-size="19">averages can lie</text>
+    <text x="1020" y="335" font-size="23">reject bad runs</text>
+
+    <text x="110" y="445" font-size="28" font-weight="700">KLD</text>
+    <text x="350" y="434" font-size="23">distribution drift</text>
+    <text x="350" y="466" font-size="19">closer to original logits</text>
+    <text x="690" y="434" font-size="23">dataset bias</text>
+    <text x="690" y="466" font-size="19">calibration can overfit</text>
+    <text x="1020" y="445" font-size="23">compare drift</text>
+
+    <text x="110" y="555" font-size="28" font-weight="700">task evals</text>
+    <text x="350" y="544" font-size="23">code + instruction use</text>
+    <text x="350" y="576" font-size="19">Aider, LCB, MMLU</text>
+    <text x="690" y="544" font-size="23">template quirks</text>
+    <text x="690" y="576" font-size="19">slow, brittle, useful</text>
+    <text x="1020" y="555" font-size="23">confirm</text>
+
+    <text x="110" y="665" font-size="28" font-weight="700">my workload</text>
+    <text x="350" y="654" font-size="23">serving behavior</text>
+    <text x="350" y="686" font-size="19">context, KV, speed, taste</text>
+    <text x="690" y="654" font-size="23">synthetic mismatch</text>
+    <text x="690" y="686" font-size="19">annoying, but final</text>
+    <text x="1020" y="665" font-size="26" font-weight="700">ship it</text>
+
+    <text x="110" y="792" font-size="20">Rule: PPL and KLD decide what to test. The workload decides what to run.</text>
+  </g>
+  <g fill="#111111">
+    <path d="M1226 224h45l-22 26z"/>
+    <path d="M1226 334h45l-22 26z"/>
+    <path d="M1226 444h45l-22 26z"/>
+    <path d="M1226 554h45l-22 26z"/>
+    <circle cx="1249" cy="665" r="11"/>
+  </g>
+</svg>

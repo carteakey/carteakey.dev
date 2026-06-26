@@ -37,6 +37,7 @@ New and revised guidance should make its evidence level obvious:
 
 ## Phase 3: editorial pass
 
+- [ ] Run the research/image prompt loop section by section: gather primary sources, source charts, licensing notes, and useful visual ideas; reconcile each section against the current guide; then optimize for brevity and accessibility.
 - [ ] Trim generic cloud/local and glossary material that repeats common knowledge.
 - [ ] Add a shorter human reading path for OOM, slow PP, slow TG, speculative decoding, and multi-GPU.
 - [ ] Replace universal prescriptions with evidence labels and exact tested configurations.
