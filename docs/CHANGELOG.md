@@ -6,8 +6,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [2.3.8] - 2026-06-28
+### Added
+- Status: Added a build-time `/status/` page for external service health, cache cadence, and fallback visibility.
+- Newsletter: Added a dedicated `/newsletter/success/` confirmation page.
+
+### Changed
+- Newsletter: Redirect successful Netlify form submissions to the confirmation page.
+- TODO: Converted the loose Buy Me a Coffee note into a deferred checklist item.
+
 ### Fixed
 - notes: Capped images on the notes index so inline media stays compact in the archive view.
+- post.njk: Exposed upvote loading state with `aria-busy` and disabled duplicate clicks while requests are in flight.
+- archive.njk, feed.njk, snippets.njk: Added the shared accent focus affordance to search inputs.
 
 ## [2.3.7] - 2026-06-26
 ### Fixed

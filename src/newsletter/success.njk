@@ -1,0 +1,29 @@
+---
+layout: layouts/base.njk
+title: Newsletter Success
+description: Confirmation page for newsletter subscriptions.
+permalink: /newsletter/success/
+eleventyExcludeFromCollections: true
+---
+{% include "components/breadcrumbs.njk" %}
+
+{% set pageEyebrow = "Newsletter" %}
+{% set pageTitle = "Subscribed" %}
+{% set pageDescription = "Thanks for subscribing. The next post update should land in your inbox when it ships." %}
+{% set pageActions = [
+  { href: "/blog/", label: "Read writing →", accent: true },
+  { href: "/feed.xml", label: "RSS feed →" }
+] %}
+{% include "components/page-header.njk" %}
+
+<section class="surface surface-padding not-prose">
+  <div class="flex items-start gap-3">
+    {% feather "check-circle", class="w-5 h-5 text-green-600 dark:text-green-400 mt-0.5 shrink-0" %}
+    <div>
+      <h2 class="editorial-title-compact">You are on the list.</h2>
+      <p class="editorial-support mt-2">
+        Check your spam folder if the first email does not show up. You can also follow along through RSS.
+      </p>
+    </div>
+  </div>
+</section>

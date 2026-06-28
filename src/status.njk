@@ -1,0 +1,151 @@
+---
+layout: layouts/base.njk
+title: Status
+description: Build-time health checks for the external services and cached data that power carteakey.dev.
+permalink: /status/
+eleventyNavigation:
+  key: Status
+  order: 20
+---
+{% include "components/breadcrumbs.njk" %}
+
+{% set pageEyebrow = "Operations" %}
+{% set pageTitle = "Status" %}
+{% set pageDescription = "A build-time snapshot of external services, cached data, and local fallbacks used around the site." %}
+{% set pageMetaLabel = "Checked" %}
+{% set pageMeta = status.checkedAt | readableDate %}
+{% include "components/page-header.njk" %}
+
+{% set readingCount = reading.currently_reading.length + reading.read.length + reading.want_to_read.length %}
+{% set readingState = "warn" %}
+{% if readingCount > 0 %}{% set readingState = "ok" %}{% endif %}
+{% set letterboxdState = "warn" %}
+{% if watching.entries.length > 0 %}{% set letterboxdState = "ok" %}{% endif %}
+{% set letterboxdDetail = watching.entries.length ~ " diary entries" %}
+{% if watching.entries[0] and watching.entries[0].watched %}
+  {% set letterboxdDetail = letterboxdDetail ~ "; latest watched " ~ (watching.entries[0].watched | readableDate) %}
+{% endif %}
+{% set githubState = "warn" %}
+{% if github.repos.length > 0 %}{% set githubState = "ok" %}{% endif %}
+{% set githubDetail = github.repos.length ~ " public repos" %}
+{% if github.repos[0] and github.repos[0].repo_updated %}
+  {% set githubDetail = githubDetail ~ "; latest updated " ~ (github.repos[0].repo_updated | formatDate) %}
+{% endif %}
+{% set contributionsState = "warn" %}
+{% if githubContributions.weeks.length > 0 %}{% set contributionsState = "ok" %}{% endif %}
+{% set spotifyState = "warn" %}
+{% if status.env.spotify %}{% set spotifyState = "ok" %}{% endif %}
+{% set steamState = "warn" %}
+{% if status.env.steam and steam.length > 0 %}{% set steamState = "ok" %}{% endif %}
+{% set stravaState = "warn" %}
+{% if status.env.strava and strava.length > 0 %}{% set stravaState = "ok" %}{% endif %}
+{% set stravaDetail = strava.length ~ " recent activities" %}
+{% if strava[0] and strava[0].start_date %}
+  {% set stravaDetail = stravaDetail ~ "; latest " ~ (strava[0].start_date | readableDate) %}
+{% endif %}
+{% set upstashState = "warn" %}
+{% if status.env.upstash %}{% set upstashState = "ok" %}{% endif %}
+
+{% macro statusBadge(state) %}
+  {% if state == "ok" %}
+    <span class="meta-text text-green-700 dark:text-green-300">OK</span>
+  {% elif state == "warn" %}
+    <span class="meta-text text-amber-700 dark:text-amber-300">Fallback</span>
+  {% else %}
+    <span class="meta-text text-red-700 dark:text-red-300">Needs config</span>
+  {% endif %}
+{% endmacro %}
+
+{% macro serviceRow(name, state, detail, cadence, href) %}
+  <tr class="border-b border-gray-200/70 last:border-0 dark:border-gray-800/80">
+    <th scope="row" class="py-3 pr-4 text-left align-top font-semibold text-gray-900 dark:text-gray-100">
+      {% if href %}<a href="{{ href }}" class="accent-link">{{ name }}</a>{% else %}{{ name }}{% endif %}
+    </th>
+    <td class="py-3 pr-4 align-top">{{ statusBadge(state) }}</td>
+    <td class="py-3 pr-4 align-top editorial-support-compact">{{ detail }}</td>
+    <td class="py-3 align-top meta-text">{{ cadence }}</td>
+  </tr>
+{% endmacro %}
+
+<section class="surface surface-padding not-prose">
+  <div class="overflow-x-auto">
+    <table class="w-full text-sm">
+      <caption class="sr-only">External service status</caption>
+      <thead>
+        <tr class="border-b border-gray-300/80 text-left meta-text dark:border-gray-700">
+          <th scope="col" class="pb-2 pr-4">Service</th>
+          <th scope="col" class="pb-2 pr-4">State</th>
+          <th scope="col" class="pb-2 pr-4">Current data</th>
+          <th scope="col" class="pb-2">Refresh</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{ serviceRow(
+          "Goodreads",
+          readingState,
+          reading.currently_reading.length ~ " current, " ~ reading.read.length ~ " read, " ~ reading.want_to_read.length ~ " queued",
+          "Cached for 6h",
+          "/reading/"
+        ) }}
+        {{ serviceRow(
+          "Letterboxd",
+          letterboxdState,
+          letterboxdDetail,
+          "Cached for 6h",
+          "/watching/"
+        ) }}
+        {{ serviceRow(
+          "GitHub repos",
+          githubState,
+          githubDetail,
+          "Cached for 1d",
+          "/projects/"
+        ) }}
+        {{ serviceRow(
+          "GitHub contributions",
+          contributionsState,
+          githubContributions.totalCount ~ " contributions tracked",
+          "Cached for 1d",
+          "/projects/"
+        ) }}
+        {{ serviceRow(
+          "Spotify",
+          spotifyState,
+          spotify.nowPlaying.title ~ " by " ~ spotify.nowPlaying.artist,
+          "Cached for 1m",
+          "/listening/"
+        ) }}
+        {{ serviceRow(
+          "Steam",
+          steamState,
+          steam.length ~ " recent games",
+          "Cached for 15m",
+          "/games/"
+        ) }}
+        {{ serviceRow(
+          "Strava",
+          stravaState,
+          stravaDetail,
+          "Cached for 15m",
+          "/workouts/"
+        ) }}
+        {{ serviceRow(
+          "Upstash Redis",
+          upstashState,
+          (upvotes.posts | length) ~ " post upvote counters; " ~ visitors.total ~ " visitors",
+          "Fetched at build time",
+          "/stats/"
+        ) }}
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="mt-6 surface surface-padding not-prose">
+  <h2 class="editorial-kicker mb-3">Runtime Notes</h2>
+  <ul class="now-log">
+    <li>This page reflects the last Eleventy build, not live request health.</li>
+    <li>Fallback means the site should still render using cached, manual, or empty data.</li>
+    <li>Secrets are checked only as present/missing booleans and are never rendered.</li>
+  </ul>
+</section>

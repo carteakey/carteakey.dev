@@ -128,12 +128,13 @@ After: https://carteakey.dev
 
 
 
-Buy me a coffee
+- [ ] Add a Buy Me a Coffee link or equivalent support link, saved for later.
 
 ### Performance & Technical
 - [x] Add service worker for offline reading (2026-01-03)
 - [x] Implement lazy loading for images (if not already present) (2026-03-23)
 - [x] Add RSS feed enhancements (full content) (2026-01-03)
+- [x] Add a build-time `/status/` page for integration health and fallback visibility. (2026-06-28)
 
 ### Interactive Features
 - [ ] Code snippet favorites - Let visitors save useful snippets

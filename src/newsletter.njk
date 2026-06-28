@@ -16,7 +16,7 @@ eleventyNavigation:
   {% include "components/page-header.njk" %}
 
   <div id="subscribeForm" class="{{ cardShell }} p-6 sm:p-8">
-    <form name="newsletter" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="space-y-4">
+    <form name="newsletter" method="POST" action="/newsletter/success/" data-netlify="true" netlify-honeypot="bot-field" class="space-y-4">
       <input type="hidden" name="form-name" value="newsletter" />
       
       <!-- Honeypot field for spam protection -->
@@ -161,9 +161,7 @@ eleventyNavigation:
         });
 
         if (response.ok) {
-          // Show success message and hide form
-          subscribeForm.classList.add('hidden');
-          successMessage.classList.remove('hidden');
+          window.location.href = form.getAttribute('action') || '/newsletter/success/';
         } else {
           throw new Error('Form submission failed');
         }

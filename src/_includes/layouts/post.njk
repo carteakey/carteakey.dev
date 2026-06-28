@@ -230,7 +230,7 @@ hasEthicalAds: false
 
     <!-- Upvote Section -->
     <div class="upvote-section mt-8 mb-4 flex items-center">
-      <button id="upvoteButton" class="upvote-button post-action-button" aria-label="Upvote this post">
+      <button id="upvoteButton" class="upvote-button post-action-button" aria-label="Upvote this post" aria-busy="false">
         {% feather "thumbs-up", class="w-4 h-4 text-gray-500 dark:text-gray-400" %}
         <span id="upvoteCount" class="text-[0.72rem] font-medium text-gray-600 dark:text-gray-300">
           {{ upvotes.posts[page.fileSlug] | default(0) }}
@@ -282,6 +282,7 @@ hasEthicalAds: false
         // Function to fetch current counts and optionally track view
         async function fetchCounts(trackView = false) {
           try {
+            upvoteButton.setAttribute('aria-busy', 'true');
             upvoteLoading.classList.remove('hidden');
             upvoteCount.classList.add('opacity-50');
             
@@ -307,6 +308,7 @@ hasEthicalAds: false
           } finally {
             upvoteLoading.classList.add('hidden');
             upvoteCount.classList.remove('opacity-50');
+            upvoteButton.setAttribute('aria-busy', 'false');
           }
         }
 
@@ -336,6 +338,10 @@ hasEthicalAds: false
           }
 
           try {
+            upvoteButton.setAttribute('aria-busy', 'true');
+            upvoteButton.disabled = true;
+            upvoteLoading.classList.remove('hidden');
+            upvoteCount.classList.add('opacity-50');
             const response = await fetch('/.netlify/functions/upvote', {
               method: 'POST',
               headers: {
@@ -381,6 +387,11 @@ hasEthicalAds: false
               upvoteMessage.classList.add('hidden');
               upvoteMessage.textContent = 'Thanks for your upvote!';
             }, 3000);
+          } finally {
+            upvoteLoading.classList.add('hidden');
+            upvoteCount.classList.remove('opacity-50');
+            upvoteButton.setAttribute('aria-busy', 'false');
+            upvoteButton.disabled = false;
           }
         });
 
