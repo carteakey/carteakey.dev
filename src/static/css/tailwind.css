@@ -1321,6 +1321,21 @@ picture img {
     text-underline-offset: 2px;
   }
 
+  .note-index-body picture,
+  .note-index-body figure {
+    max-width: min(100%, 22rem) !important;
+    margin: 0.85em 0;
+  }
+
+  .note-index-body picture img,
+  .note-index-body figure img,
+  .note-index-body > img {
+    width: auto !important;
+    max-width: min(100%, 22rem) !important;
+    max-height: 14rem;
+    object-fit: contain;
+  }
+
   .dark .note-index-body {
     color: rgb(212 212 216 / 1);
   }

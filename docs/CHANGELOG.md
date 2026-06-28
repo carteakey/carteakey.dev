@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.3.8] - 2026-06-28
+### Fixed
+- notes: Capped images on the notes index so inline media stays compact in the archive view.
+
 ## [2.3.7] - 2026-06-26
 ### Fixed
 - notes: Restored the single-note page title scale by overriding the not-prose heading reset for note entry headings.
