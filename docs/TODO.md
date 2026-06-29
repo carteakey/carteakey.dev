@@ -12,6 +12,68 @@
 - [x] `/reading` - Goodreads-backed reading shelf with progress bars, cover thumbnails, and manual physical-book overrides. ✅ 2026-06-25
 - [x] `/watching` - Letterboxd-synced film diary with ratings, poster thumbnails, and recent entries on `/now`. (2026-06-25)
 
+## Consolidated Backlog (2026-06-29)
+
+This is the canonical working backlog merged from `docs/TODO.md`, audit docs, testing notes, and the local LLM guide roadmap. Older sections below are retained for history and context.
+
+### Immediate / Low-Hanging
+- [x] Add `aria-busy` to the post upvote button and prevent duplicate in-flight clicks. (2026-06-28)
+- [x] Add visible focus affordances to archive, feed, and snippets search inputs. (2026-06-28)
+- [x] Add a newsletter success redirect and `/newsletter/success/` confirmation page. (2026-06-28)
+- [ ] Add a Buy Me a Coffee link or equivalent support link, saved for later.
+- [ ] Run the quick verification checklist after major UI changes: easter eggs, responsive post list, JSON-LD, Open Graph tags, Twitter cards, absolute meta URLs, and OG image existence.
+
+### Accessibility
+- [ ] Run a full axe and manual accessibility audit.
+- [ ] Fix dark mode contrast issues.
+- [ ] Add consistent `focus-visible` states to interactive elements.
+- [ ] Add `aria-describedby` to form errors.
+- [ ] Audit and fix missing alt text on feed images.
+
+### Content Discovery
+- [ ] Redesign `/feed/` with persistent filters and a mobile-collapsible filter surface.
+- [ ] Add feed type chips with counts.
+- [ ] Add full-text search to `/feed/`.
+- [ ] Link all major content types from navigation or `/more/`: writing, snippets, TIL, reading, photos, watching, and reviews.
+
+### Reliability / Status
+- [x] Add a build-time `/status/` page for integration health and fallback visibility. (2026-06-28)
+- [ ] Extend `/status/` into a richer dashboard with API health, build success rate, and performance metrics.
+- [ ] Add lightweight error logging for data fetch and runtime failures.
+
+### Newsletter / Support
+- [ ] Add a sticky Subscribe button and homepage email micro-form.
+- [ ] Add newsletter tracking through Netlify Analytics or a custom Redis counter.
+- [ ] Add a support link flow once the Buy Me a Coffee or equivalent URL is chosen.
+
+### SEO / Metadata
+- [ ] Expand BlogPosting JSON-LD with `articleBody`, `wordCount`, and `readingTime`.
+- [ ] Audit and rewrite meta descriptions for 20+ posts.
+- [ ] Do an internal link audit across writing, projects, and snippets.
+- [ ] Create `/sitemap-index.xml` with separate sitemaps.
+- [ ] Add canonical tag logic for duplicate content.
+
+### Performance / Monitoring
+- [ ] Set up Core Web Vitals monitoring.
+- [ ] Add a monthly Lighthouse check to GitHub Actions.
+- [ ] Decide whether CSS/JS cache busting is still needed before adding timestamped asset URLs.
+- [ ] Optimize custom fonts.
+
+### Feature Backlog
+- [ ] Code snippet favorites - let visitors save useful snippets.
+- [ ] Learning progress tracker.
+- [ ] Multi-language support.
+
+### Local LLM Guide Roadmap
+- [ ] Run the section-by-section research/image prompt loop.
+- [ ] Trim generic cloud/local and glossary material.
+- [ ] Add a shorter human reading path for OOM, slow PP, slow TG, speculative decoding, and multi-GPU.
+- [ ] Replace universal prescriptions with evidence labels and exact tested configurations.
+- [ ] Cut repeated explanations and prose that reads like generated connective tissue.
+- [ ] Add PP, TG, tested context, cache state, draft acceptance, llama.cpp commit, and benchmark command to each profile.
+- [ ] Add a community-runs schema.
+- [ ] Keep community results separate from the local RTX 4070 ranking unless clearly labeled.
+
 ## High Priority Features
 
 ### SEO & Navigation
