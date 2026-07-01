@@ -1,6 +1,7 @@
 ---
 title: The happiness quotient (draft)
 description: which side are you on?
+seoDescription: "A rough personal draft about fitness, health anxiety, progress metrics, and the strange urge to quantify happiness."
 image: /img/blog-sketches/unique/the-happiness-quotient-stamp-trim.png
 imageAlt: "Transparent monochrome sketch of a balance scale, checklist, and happiness chart"
 date: 2025-05-28

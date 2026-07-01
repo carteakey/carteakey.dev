@@ -1,6 +1,7 @@
 ---
 title: Fixing Wi-Fi Issues on Linux (draft)
-description: A practical, battle‑tested guide 
+description: A practical, battle-tested guide
+seoDescription: "A practical Linux Wi-Fi troubleshooting guide covering adapters, drivers, power saving, DNS, and NetworkManager recovery."
 image: /img/blog-sketches/unique/fixing-wifi-issues-linux-stamp-trim.png
 imageAlt: "Transparent monochrome sketch of a Linux laptop troubleshooting Wi-Fi"
 date: 2025-08-10T09:00:00.000Z
@@ -247,4 +248,3 @@ Red flags to search for: “disassociated”, “authentication timeout”, “T
 	•	Let Wi‑Fi Guardian do the 2 am babysitting.
 
 If you want a copy‑paste wifi-fix-settings.sh that applies most hardening in one go (IPv6 off, power‑save off, no MAC randomization, no USB autosuspend, NetworkManager restart), drop it in your dotfiles and run it whenever you set up a new machine.
-

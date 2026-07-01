@@ -1,6 +1,7 @@
 ---
 title: Ramblings on Running an Army of Very Smart Five-Year-Olds
 description: truly the year of the agents
+seoDescription: "Notes from an intense day managing multiple coding agents, what they shipped, and why orchestration still matters."
 image: /img/blog-sketches/unique/ramblings-army-very-smart-five-year-olds-stamp-trim.png
 imageAlt: "Transparent monochrome sketch of many small agent terminals being supervised from a command desk"
 date: 2026-02-25

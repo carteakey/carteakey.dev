@@ -1,6 +1,7 @@
 ---
 title: Guide to forcing (or blocking) Windows updates.. (draft)
 description: which side are you on?
+seoDescription: "A draft guide to taking back control of Windows updates, from forcing new releases to blocking changes when stability matters."
 image: /img/blog-sketches/unique/guide-to-forcing-or-blocking-windows-updates-stamp-trim.png
 imageAlt: "Transparent monochrome sketch of operating system update controls"
 date: 2025-05-03T22:01:26.448Z
@@ -32,4 +33,3 @@ To force updates,
 
 ### Blocking Updates
 To block updates, we use a similar approach.  
-

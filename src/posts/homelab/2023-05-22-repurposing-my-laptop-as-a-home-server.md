@@ -1,6 +1,7 @@
 ---
 title: "Repurposing my laptop as a Home Server - Part I"
 description: Putting old hardware to good use.
+seoDescription: "How I turned an old ASUS laptop into a Linux home server for self-hosting, remote development, media, and Docker services."
 image: /img/blog-sketches/unique/repurposing-my-laptop-as-a-home-server-stamp-trim.png
 imageAlt: "Transparent monochrome sketch of an old laptop connected to home server gear"
 date: 2023-05-22T16:38:56.031Z

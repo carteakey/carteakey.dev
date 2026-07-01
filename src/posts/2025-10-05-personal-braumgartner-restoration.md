@@ -1,6 +1,7 @@
 ---
 title: Personal Braumgartner Restoration
 description: Bringing old photos back to life.
+seoDescription: "Using Gemini image generation to restore old family photos while trying to preserve the people and details that matter."
 image: /img/blog-sketches/unique/personal-braumgartner-restoration-stamp-trim.png
 imageAlt: "Transparent monochrome sketch of old family photos being restored on a desk"
 date: 2025-10-05T00:00:00.000Z
@@ -44,4 +45,3 @@ And here is the result after using Nano-banana:
 {%image_cc "./src/static/img/family_after.png"  , "", "w-3/4","Restored photo of my family"  %}
 
 The uncanny effect is still there, but it looks incredible nonetheless.
-

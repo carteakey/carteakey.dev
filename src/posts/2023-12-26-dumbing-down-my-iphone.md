@@ -1,6 +1,7 @@
 ---
 title: Dumbing down my iPhone.
 description: Trying to stay away from distractions.
+seoDescription: "The iPhone setup changes I use to reduce distraction without turning screen time into another productivity obsession."
 image: /img/blog-sketches/unique/dumbing-down-my-iphone-stamp-trim.png
 imageAlt: "Transparent monochrome sketch of a simplified phone setup for fewer distractions"
 date: 2023-09-04T16:39:26.330Z

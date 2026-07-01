@@ -5,11 +5,18 @@ eleventyExcludeFromCollections: true
 <?xml version="1.0" encoding="utf-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   {%- for page in collections.all %}
-  {# Fix This {% set absoluteUrl %}{{ page.url | url | absoluteUrl(metadata.url) }}{% endset %} #}
-  {% set absoluteUrl %}{{ page.url | url }}{% endset %}
+  {% set pageTags = page.data.tags or [] %}
+  {% set isHidden = page.data.hidden == true %}
+  {% set isDraft = page.data.draft == true %}
+  {% set isPost = "posts" in pageTags %}
+  {% set isSnippet = "snippets" in pageTags %}
+  {% if page.url and page.url != false and not isHidden and not isDraft %}
   <url>
-    <loc>{{ absoluteUrl }}</loc>
+    <loc>{{ page.url | absoluteUrl(metadata.url) }}</loc>
     <lastmod>{{ page.date | htmlDateString }}</lastmod>
+    <changefreq>{% if isPost or isSnippet %}weekly{% else %}monthly{% endif %}</changefreq>
+    <priority>{% if page.url == "/" %}1.0{% elif isPost %}0.8{% elif isSnippet %}0.6{% else %}0.5{% endif %}</priority>
   </url>
+  {% endif %}
   {%- endfor %}
 </urlset>

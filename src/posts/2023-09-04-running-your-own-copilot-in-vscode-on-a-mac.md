@@ -1,6 +1,7 @@
 ---
 title: Running your own Copilot in VSCode on a Mac.
 description: With Codellama, Ollama and Continue.
+seoDescription: "How to run Code Llama locally on a Mac with Ollama and connect it to VS Code through Continue as a Copilot alternative."
 image: /img/blog-sketches/unique/running-your-own-copilot-in-vscode-on-a-mac-stamp-trim.png
 imageAlt: "Transparent monochrome sketch of a local coding assistant running on a laptop"
 date: 2023-09-04T16:39:26.330Z

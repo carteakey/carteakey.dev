@@ -1,6 +1,7 @@
 ---
 title: My favorite meme.
 description: I'm out of blog ideas.
+seoDescription: "A small love letter to the IQ bell curve meme, why it works, and why simplicity keeps winning after the overthinking phase."
 image: /img/blog-sketches/unique/my-favorite-meme-stamp-trim.png
 imageAlt: "Transparent monochrome sketch of an empty idea notebook and image placeholder"
 date: 2023-12-26T19:53:34.546Z

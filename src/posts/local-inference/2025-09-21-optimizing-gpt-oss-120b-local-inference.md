@@ -1,6 +1,7 @@
 ---
 title: Optimizing gpt-oss-120b speed on consumer hardware
 description: Squeezing every token per second
+seoDescription: "How I tuned gpt-oss-120b on an RTX 4070 for faster local inference with llama.cpp, VRAM fitting, CPU pinning, and XMP."
 image: /img/blog-sketches/unique/optimizing-gpt-oss-120b-local-inference-stamp-trim.png
 imageAlt: "Transparent monochrome sketch of a GPU workstation tuned for local model inference speed"
 date: 2025-09-21

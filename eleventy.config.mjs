@@ -32,6 +32,21 @@ function shouldHideContent(item) {
   return item?.data?.hidden === true && !SHOW_HIDDEN_CONTENT;
 }
 
+function stripHtmlToText(content = "") {
+  return String(content)
+    .replace(/<script[\s\S]*?<\/script>/gi, " ")
+    .replace(/<style[\s\S]*?<\/style>/gi, " ")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/&nbsp;/g, " ")
+    .replace(/&amp;/g, "&")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 function markdownItFootnotes(md) {
   const normalizeLabel = (label) => String(label || "").trim().toLowerCase();
   const safeId = (label, number) => {
@@ -738,8 +753,7 @@ export default function (eleventyConfig) {
   eleventyConfig.addFilter("readingTime", function (content) {
     if (!content) return "1 min read";
 
-    // Strip HTML tags and count words
-    const text = content.replace(/<[^>]+>/g, '');
+    const text = stripHtmlToText(content);
     const wordCount = text.split(/\s+/).filter(word => word.length > 0).length;
 
     // Average reading speed: 200 words per minute
@@ -755,8 +769,23 @@ export default function (eleventyConfig) {
   // Word count filter (returns raw number)
   eleventyConfig.addFilter("wordCount", function (content) {
     if (!content) return 0;
-    const text = content.replace(/<[^>]+>/g, '');
+    const text = stripHtmlToText(content);
     return text.split(/\s+/).filter(word => word.length > 0).length;
+  });
+
+  eleventyConfig.addFilter("plainText", function (content) {
+    return stripHtmlToText(content);
+  });
+
+  eleventyConfig.addFilter("excerptWords", function (content, limit = 300) {
+    const words = stripHtmlToText(content).split(/\s+/).filter(Boolean);
+    const excerpt = words.slice(0, limit).join(" ");
+    return words.length > limit ? `${excerpt}...` : excerpt;
+  });
+
+  eleventyConfig.addFilter("isoReadingDuration", function (content) {
+    const words = stripHtmlToText(content).split(/\s+/).filter(Boolean).length;
+    return `PT${Math.max(1, Math.ceil(words / 200))}M`;
   });
 
   // Helper for safe content access in Eleventy 3.x to avoid PrematureUseError
@@ -1044,12 +1073,14 @@ export default function (eleventyConfig) {
 
   // Collection for raw.txt generation
   eleventyConfig.addCollection("rawPages", function (collectionApi) {
-    const types = ["posts", "snippets", "prompts", "notes", "til"];
+    const types = ["posts", "snippets", "prompts", "notes", "til", "lexicon"];
+    const sourceDirs = ["/posts/", "/snippets/", "/prompts/", "/notes/", "/til/", "/lexicon/", "/reviews/"];
     return collectionApi.getAll().filter(item => {
-      if (!item.data.tags) return false;
       if (!item.url) return false; // skip items without a URL
       if (shouldHideContent(item)) return false;
-      return types.some(t => item.data.tags.includes(t));
+      const tags = item.data.tags || [];
+      const inputPath = item.inputPath || "";
+      return types.some(t => tags.includes(t)) || sourceDirs.some(dir => inputPath.includes(dir));
     });
   });
 

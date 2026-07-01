@@ -1,6 +1,7 @@
 ---
 title: Sync Obsidian notes between iOS and PC.
 description: Take your second brain everywhere with you.
+seoDescription: "A practical guide to syncing Obsidian notes across Windows, Linux, iPhone, and iPad using iCloud Drive or Git."
 image: /img/blog-sketches/unique/setup-obsidian-sync-with-ios-and-pc-stamp-trim.png
 imageAlt: "Transparent monochrome sketch of Obsidian notes syncing between phone and desktop"
 date: 2022-06-05

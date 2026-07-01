@@ -1,6 +1,7 @@
 ---
 title: Mounting additional drives in WSL2 (draft)
 description: Y'all got any more of that...storage
+seoDescription: "Notes on mounting an additional physical drive in WSL2 as ext4 storage, including backup, formatting, and boot-mount tips."
 image: /img/blog-sketches/unique/mounting-additional-drives-in-wsl2-stamp-trim.png
 imageAlt: "Transparent monochrome sketch of external drives being mounted in WSL2"
 date: 2025-03-15T19:59:51.454Z

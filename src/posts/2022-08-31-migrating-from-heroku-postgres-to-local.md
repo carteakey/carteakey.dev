@@ -1,6 +1,7 @@
 ---
 title: Migrating Heroku Postgres Database to a Cloud VM.
 description: How to jump ship your hobby projects.
+seoDescription: "How to export a Heroku Postgres database and restore it on a cloud VM before the free tier disappears."
 image: /img/blog-sketches/unique/migrating-from-heroku-postgres-to-local-stamp-trim.png
 imageAlt: "Transparent monochrome sketch of a database migrating from cloud to server"
 date: 2022-08-31

@@ -1,0 +1,17 @@
+---
+permalink: /sitemap-snippets.xml
+eleventyExcludeFromCollections: true
+---
+<?xml version="1.0" encoding="utf-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  {%- for snippet in collections.snippets %}
+  {% if snippet.url and snippet.url != false and snippet.data.hidden != true and snippet.data.draft != true %}
+  <url>
+    <loc>{{ snippet.url | absoluteUrl(metadata.url) }}</loc>
+    <lastmod>{{ (snippet.data.updated or snippet.date) | htmlDateString }}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  {% endif %}
+  {%- endfor %}
+</urlset>

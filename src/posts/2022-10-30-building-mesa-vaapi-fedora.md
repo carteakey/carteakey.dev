@@ -1,6 +1,7 @@
 ---
 title: Building Mesa (with VA-API) from Source on Fedora.
 description: Get back HW accelerated playback on Fedora.
+seoDescription: "How to rebuild Mesa on Fedora with VA-API video codec support to restore hardware-accelerated playback on AMD GPUs."
 image: /img/blog-sketches/unique/building-mesa-vaapi-fedora-stamp-trim.png
 imageAlt: "Transparent monochrome sketch of a Linux graphics driver build workstation"
 date: 2022-10-30

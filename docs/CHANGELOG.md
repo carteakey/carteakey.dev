@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.4.1] - 2026-07-01
+### Added
+- SEO: Added sitemap index output plus separate post, snippet, and page sitemaps with absolute URLs.
+- SEO: Expanded BlogPosting JSON-LD with article body excerpts, word counts, and ISO reading durations.
+- Docs: Added an internal link audit note for the SEO cleanup pass.
+
+### Changed
+- SEO: Added `seoDescription` frontmatter for richer metadata while preserving brief on-page post descriptions, plus canonical/robots handling for draft, hidden, and redirect pages.
+- Feed: Render external tool labels as non-link badges so they do not point to missing taxonomy pages.
+- Raw exports: Included notes, reviews, and lexicon pages in `raw.txt` generation when they expose the copy-as-markdown control.
+
+### Fixed
+- Links: Cleaned up stale internal links and missing image requests found during the generated-site audit.
+
 ## [2.3.9] - 2026-06-29
 ### Changed
 - TODO: Added a consolidated canonical backlog merged from the TODO, audit docs, testing notes, and local LLM guide roadmap.

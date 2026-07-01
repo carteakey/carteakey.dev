@@ -26,7 +26,7 @@
 <html lang="en-US">
   <meta charset="utf-8" />
   <title>Redirecting&hellip;</title>
-  <link rel="canonical" href="{{ redirect.to | url }}" />
+  <link rel="canonical" href="{{ redirect.to | absoluteUrl(metadata.url) }}" />
   <script>
     location = '{{ redirect.to | url }}';
   </script>

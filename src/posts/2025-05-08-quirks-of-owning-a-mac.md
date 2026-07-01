@@ -1,6 +1,7 @@
 ---
 title: Quirks of Owning a Mac (draft)
 description: which side are you on?
+seoDescription: "A draft rant about the small macOS quirks that still manage to annoy me despite the brilliance of Apple Silicon hardware."
 image: /img/blog-sketches/unique/quirks-of-owning-a-mac-stamp-trim.png
 imageAlt: "Transparent monochrome sketch of a laptop with adapter dongles and system quirks"
 date: 2025-05-03T22:01:26.448Z
@@ -16,8 +17,6 @@ I try to avoid any negativity in my posts (or my life). But boy there are some m
 However, i never realized that the supposedly amazing Mac OS, could have such incredibly annoying quirks, that are borderline ragebaits and are very surprising as to how they still can have such impossibly stupid things..
 
 ### In your face privacy...
-
-![](/img/privacy-freakout.png "one day?!?")
 
 Is asking for location for every google search a privacy design feature? When i'm looking for burritos near me, should i really have to allow google access to location every single time, as a default setting? Where does privacy seep over what are sensible defaults? The second best option is to allow it every single day.  
 

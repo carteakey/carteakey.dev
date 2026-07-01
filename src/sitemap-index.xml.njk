@@ -1,0 +1,16 @@
+---
+permalink: /sitemap-index.xml
+eleventyExcludeFromCollections: true
+---
+<?xml version="1.0" encoding="utf-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <sitemap>
+    <loc>{{ "/sitemap-posts.xml" | absoluteUrl(metadata.url) }}</loc>
+  </sitemap>
+  <sitemap>
+    <loc>{{ "/sitemap-snippets.xml" | absoluteUrl(metadata.url) }}</loc>
+  </sitemap>
+  <sitemap>
+    <loc>{{ "/sitemap-pages.xml" | absoluteUrl(metadata.url) }}</loc>
+  </sitemap>
+</sitemapindex>

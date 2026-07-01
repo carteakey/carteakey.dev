@@ -40,16 +40,21 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#14b8a6" id="theme-color-meta">
+  {% set resolvedCanonicalUrl = canonicalUrl or (page.url | absoluteUrl(metadata.url)) %}
+  {% set resolvedDescription = seoDescription or description or metadata.description %}
   <title>{{ title or metadata.title }}</title>
-  <meta name="description" content="{{ description or metadata.description }}" />
+  <meta name="description" content="{{ resolvedDescription }}" />
   <meta name="generator" content="{{ eleventy.generator }}" />
+  {% if hidden or draft %}
+  <meta name="robots" content="noindex, nofollow" />
+  {% endif %}
   
   {# Open Graph / Facebook Meta Tags #}
   <meta property="og:type" content="{% if templateClass == 'tmpl-post' %}article{% else %}website{% endif %}" />
-  <meta property="og:url" content="{{ page.url | absoluteUrl(metadata.url) }}" />
+  <meta property="og:url" content="{{ resolvedCanonicalUrl }}" />
   <meta property="og:site_name" content="{{ metadata.title }}" />
   <meta property="og:title" content="{{ title or metadata.title }}" />
-  <meta property="og:description" content="{{ description or metadata.description }}" />
+  <meta property="og:description" content="{{ resolvedDescription }}" />
   {% if image %}
   <meta property="og:image" content="{{ image | absoluteUrl(metadata.url) }}" />
   {% else %}
@@ -73,9 +78,9 @@
   
   {# Twitter Card Meta Tags #}
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:url" content="{{ page.url | absoluteUrl(metadata.url) }}" />
+  <meta name="twitter:url" content="{{ resolvedCanonicalUrl }}" />
   <meta name="twitter:title" content="{{ title or metadata.title }}" />
-  <meta name="twitter:description" content="{{ description or metadata.description }}" />
+  <meta name="twitter:description" content="{{ resolvedDescription }}" />
   {% if image %}
   <meta name="twitter:image" content="{{ image | absoluteUrl(metadata.url) }}" />
   {% else %}
@@ -86,7 +91,7 @@
   
   {# Additional SEO Meta Tags #}
   <meta name="author" content="{{ metadata.author.name }}" />
-  <link rel="canonical" href="{{ page.url | absoluteUrl(metadata.url) }}" />
+  <link rel="canonical" href="{{ resolvedCanonicalUrl }}" />
   
   <link rel="stylesheet" href="{{ '/css/tailwind.css' | url }}" />
 

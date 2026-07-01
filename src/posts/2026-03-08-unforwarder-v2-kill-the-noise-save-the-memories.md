@@ -13,7 +13,7 @@ tags:
   - WhatsApp
 ---
 
-About a year ago I wrote about [The Unforwarder](./2025-03-22-the-unforwarder-how-i-stopped-backing-up-junk-photos.md) - a 60-line Python script that used a local vision model to sort WhatsApp images into "real photos worth keeping" and "junk to delete". It worked. I was happy.
+About a year ago I wrote about [The Unforwarder](/blog/the-unforwarder-how-i-stopped-backing-up-junk-photos/) - a 60-line Python script that used a local vision model to sort WhatsApp images into "real photos worth keeping" and "junk to delete". It worked. I was happy.
 
 Then I kept using WhatsApp.
 

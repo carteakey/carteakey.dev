@@ -1,6 +1,7 @@
 ---
 title: Moving my site from Jekyll to Eleventy - Part II.
 description: What I learned along the way..
+seoDescription: "A follow-up on rebuilding carteakey.dev with Eleventy, Tailwind CSS, dark mode, and the lessons from the migration."
 image: /img/blog-sketches/unique/moving-my-site-from-jekyll-to-eleventy-part-ii-stamp-trim.png
 imageAlt: "Transparent monochrome sketch of a second static site migration pass"
 date: 2023-02-14T21:47:18.818Z

@@ -1,0 +1,21 @@
+---
+permalink: /sitemap-pages.xml
+eleventyExcludeFromCollections: true
+---
+<?xml version="1.0" encoding="utf-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  {%- for page in collections.all %}
+  {% set pageTags = page.data.tags or [] %}
+  {% set isPost = "posts" in pageTags %}
+  {% set isSnippet = "snippets" in pageTags %}
+  {% set isSitemap = page.url == "/sitemap.xml" or page.url == "/sitemap-index.xml" or page.url == "/sitemap-posts.xml" or page.url == "/sitemap-snippets.xml" or page.url == "/sitemap-pages.xml" %}
+  {% if page.url and page.url != false and not isPost and not isSnippet and not isSitemap and page.data.hidden != true and page.data.draft != true %}
+  <url>
+    <loc>{{ page.url | absoluteUrl(metadata.url) }}</loc>
+    <lastmod>{{ page.date | htmlDateString }}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>{% if page.url == "/" %}1.0{% else %}0.5{% endif %}</priority>
+  </url>
+  {% endif %}
+  {%- endfor %}
+</urlset>

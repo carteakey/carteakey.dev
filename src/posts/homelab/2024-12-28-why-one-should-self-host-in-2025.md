@@ -1,6 +1,7 @@
 ---
 title: Why one should self-host in 2025 (draft)
 description: and maybe why you should not...
+seoDescription: "A draft argument for and against self-hosting in 2025, from data ownership and subscriptions to the cost of hobby ops."
 image: /img/blog-sketches/unique/why-one-should-self-host-in-2025-stamp-trim.png
 imageAlt: "Transparent monochrome sketch of cloud services being pulled into a home server"
 date: 2024-12-28T07:06:35.251Z

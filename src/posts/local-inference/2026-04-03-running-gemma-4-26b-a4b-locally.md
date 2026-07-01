@@ -135,7 +135,7 @@ Here's it one-shotting the bouncing balls prompt (easy version).
 
 {% image_cc "./src/static/img/bouncing-balls-gemma-html.gif", "Bouncing balls easy version", "", "Here's it one-shotting the bouncing balls prompt (easy version)." %}
 
-With a minimal harness (pi) - it also does the [hard version](/prompts/bouncing-balls-spinning-heptagon/) pretty well
+With a minimal harness (pi) - it also does the [hard version](/prompts/bouncing-balls-in-spinning-heptagon/) pretty well
 
 {% image "./src/static/img/bouncing-balls-gemma.gif", "Bouncing balls hard version" %}
 

@@ -1,0 +1,17 @@
+---
+permalink: /sitemap-posts.xml
+eleventyExcludeFromCollections: true
+---
+<?xml version="1.0" encoding="utf-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  {%- for post in collections.posts %}
+  {% if post.url and post.url != false and post.data.hidden != true and post.data.draft != true %}
+  <url>
+    <loc>{{ post.url | absoluteUrl(metadata.url) }}</loc>
+    <lastmod>{{ (post.data.updated or post.date) | htmlDateString }}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  {% endif %}
+  {%- endfor %}
+</urlset>

@@ -47,11 +47,11 @@ This is the canonical working backlog merged from `docs/TODO.md`, audit docs, te
 - [ ] Add a support link flow once the Buy Me a Coffee or equivalent URL is chosen.
 
 ### SEO / Metadata
-- [ ] Expand BlogPosting JSON-LD with `articleBody`, `wordCount`, and `readingTime`.
-- [ ] Audit and rewrite meta descriptions for 20+ posts.
-- [ ] Do an internal link audit across writing, projects, and snippets.
-- [ ] Create `/sitemap-index.xml` with separate sitemaps.
-- [ ] Add canonical tag logic for duplicate content.
+- [x] Expand BlogPosting JSON-LD with `articleBody`, `wordCount`, and `readingTime`. (2026-07-01)
+- [x] Audit and rewrite meta descriptions for 20+ posts. (2026-07-01)
+- [x] Do an internal link audit across writing, projects, and snippets. (2026-07-01)
+- [x] Create `/sitemap-index.xml` with separate sitemaps. (2026-07-01)
+- [x] Add canonical tag logic for duplicate content. (2026-07-01)
 
 ### Performance / Monitoring
 - [ ] Set up Core Web Vitals monitoring.

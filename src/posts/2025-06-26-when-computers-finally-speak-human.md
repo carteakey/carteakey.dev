@@ -1,6 +1,7 @@
 ---
 title: When Computers Finally Speak Human
 description: The end of programming as we know it
+seoDescription: "How coding agents shifted my website work from writing syntax to steering systems through natural-language conversations."
 image: /img/blog-sketches/unique/when-computers-finally-speak-human-stamp-trim.png
 imageAlt: "Transparent monochrome sketch of natural language turning into code"
 date: 2025-06-26

@@ -9,8 +9,8 @@ hasEthicalAds: false
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": "{{ title }}",
-  "description": "{{ description }}",
+  "headline": {{ title | dump | safe }},
+  "description": {{ (seoDescription or description) | dump | safe }},
   "image": {% if image %}"{{ image | absoluteUrl(metadata.url) }}"{% else %}"{{ '/img/avatar.png' | absoluteUrl(metadata.url) }}"{% endif %},
   "datePublished": "{{ page.date | htmlDateString }}",
   {% if updated %}"dateModified": "{{ updated | htmlDateString }}",{% endif %}
@@ -28,7 +28,10 @@ hasEthicalAds: false
     "@type": "WebPage",
     "@id": "{{ page.url | absoluteUrl(metadata.url) }}"
   },
-  "keywords": "{{ tags | filterTagList | join(', ') }}"
+  "keywords": {{ tags | filterTagList | join(', ') | dump | safe }},
+  "wordCount": {{ content | wordCount }},
+  "timeRequired": "{{ content | isoReadingDuration }}",
+  "articleBody": {{ content | excerptWords(300) | dump | safe }}
 }
 </script>
 

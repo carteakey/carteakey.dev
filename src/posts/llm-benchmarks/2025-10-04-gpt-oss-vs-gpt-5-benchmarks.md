@@ -1,6 +1,7 @@
 ---
 title: GPT‑OSS vs GPT‑5 on GPT‑5’s example prompts
-description: A side‑by‑side benchmark on web dev tasks
+description: A side-by-side benchmark on web dev tasks
+seoDescription: "A side-by-side benchmark comparing GPT-OSS 120B and GPT-5 on three single-file web app generation prompts."
 image: /img/blog-sketches/unique/gpt-oss-vs-gpt-5-benchmarks-stamp-trim.png
 imageAlt: "Transparent monochrome sketch of side-by-side GPT-OSS and GPT-5 web app benchmark panes"
 date: 2025-10-04T00:00:00.000Z 

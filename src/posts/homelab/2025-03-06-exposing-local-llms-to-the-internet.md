@@ -1,6 +1,7 @@
 ---
 title: Exposing local llm's to the internet (draft)
 description: "Your very own AI-API "
+seoDescription: "How I exposed a local Ollama server through Tailscale Funnel to power my site's quote generator without API credits."
 image: /img/blog-sketches/unique/exposing-local-llms-to-the-internet-stamp-trim.png
 imageAlt: "Transparent monochrome sketch of a local LLM workstation connected to the internet through a secure tunnel"
 date: 2025-03-06T05:14:04.467Z

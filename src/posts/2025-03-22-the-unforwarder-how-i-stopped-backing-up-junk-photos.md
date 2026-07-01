@@ -1,6 +1,7 @@
 ---
 title: "The Unforwarder: How i stopped backing up junk photos"
 description: Taming the WhatsApp chaos
+seoDescription: "How I used a local vision model to sort WhatsApp forwards from real photos before backing them up to Immich."
 image: /img/blog-sketches/unique/the-unforwarder-how-i-stopped-backing-up-junk-photos-stamp-trim.png
 imageAlt: "Transparent monochrome sketch of duplicate photos being filtered into a clean archive"
 date: 2025-03-22T22:20:08.060Z
@@ -167,4 +168,3 @@ The script is a good start, but there's a lot of room for improvement. Some idea
 - An n8n workflow to automate the process of even moving the images to Immich.
 
 Once done, I can finally rest and watch the sun rise on a grateful phone storage. 
-

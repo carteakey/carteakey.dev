@@ -231,7 +231,11 @@
           <div class="flex flex-wrap gap-1.5 mt-5 not-prose">
             {% for tag in item.tags %}
               {% set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
-              <a href="{{ tagUrl | url }}" class="badge badge-tag badge-compact badge-interactive " style="text-decoration: none;">#{{ tag }}</a>
+              {% if item.type == 'tool' %}
+                <span class="badge badge-tag badge-compact">#{{ tag }}</span>
+              {% else %}
+                <a href="{{ tagUrl | url }}" class="badge badge-tag badge-compact badge-interactive " style="text-decoration: none;">#{{ tag }}</a>
+              {% endif %}
             {% endfor %}
           </div>
         {% endif %}
@@ -365,7 +369,11 @@
       <div class="flex flex-wrap gap-1 mt-2.5">
         {% for tag in item.tags %}
           {% set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
-          <a href="{{ tagUrl | url }}" class="badge badge-tag badge-compact badge-interactive" style="text-decoration: none;">#{{ tag }}</a>
+          {% if item.type == 'tool' %}
+            <span class="badge badge-tag badge-compact">#{{ tag }}</span>
+          {% else %}
+            <a href="{{ tagUrl | url }}" class="badge badge-tag badge-compact badge-interactive" style="text-decoration: none;">#{{ tag }}</a>
+          {% endif %}
         {% endfor %}
       </div>
     {% endif %}
