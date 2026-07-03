@@ -5,6 +5,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.4.4] - 2026-07-03
+### Changed
+- More: Updated the site inventory with Lexicon, Tools, Watching, and the More self-reference while leaving folio subpages and redirect/success routes out.
+
+## [2.4.3] - 2026-07-03
+### Changed
+- Status: Clarified local secret coverage, fallback-free build wording, full service freshness dates, and added an attention queue for active fallback events.
+
+### Fixed
+- Status: Hid the footer now-playing strip on `/status/` so Spotify fallback details are not duplicated below the operations report.
+
+## [2.4.2] - 2026-07-03
+### Changed
+- Colophon: Refreshed the stack notes with a NEAT Framework post link, current-version copy, moving-parts summary, and removed the internal migration-process reference.
+- Now: Split the page into written updates and pulled activity, with Reading and Watching sharing a two-column view capped at three items each.
+- About: Reworked the Hobbies text into a scannable bullet list.
+- Home: Swapped the At A Glance TIL counter for Snippets and renamed Quotes Saved to Quotations.
+
+### Fixed
+- Reading: Matched the manual Dune progress override to its Goodreads ID so current-reading progress renders on `/now/`.
+- Now: Keep Workouts and Games visible with compact unavailable states when local API credentials or caches are missing.
+
 ## [2.4.1] - 2026-07-01
 ### Added
 - SEO: Added sitemap index output plus separate post, snippet, and page sitemaps with absolute URLs.
@@ -15,9 +37,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - SEO: Added `seoDescription` frontmatter for richer metadata while preserving brief on-page post descriptions, plus canonical/robots handling for draft, hidden, and redirect pages.
 - Feed: Render external tool labels as non-link badges so they do not point to missing taxonomy pages.
 - Raw exports: Included notes, reviews, and lexicon pages in `raw.txt` generation when they expose the copy-as-markdown control.
+- AGENTS.md, CLAUDE.md: Documented the 5-10 commit batch-push cadence to conserve Netlify build minutes.
 
 ### Fixed
 - Links: Cleaned up stale internal links and missing image requests found during the generated-site audit.
+
+## [2.4.0] - 2026-07-01
+### Added
+- Status: Expanded `/status/` into a denser reliability dashboard with API coverage, tracked build health, performance metrics, and recent fallback/error logs.
+- Logging: Added lightweight build-time status event logging for data fetch fallbacks and structured runtime error logs for Netlify functions.
+
+### Changed
+- TODO: Marked the Reliability / Status dashboard and logging items complete.
 
 ## [2.3.9] - 2026-06-29
 ### Changed
@@ -350,7 +381,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [2.0.0] - 2026-04-24
 
 ### Added
-- `docs/MIGRATION_PROCESS.md`: Added a repeatable migration workflow for bringing older pages onto the new design language without one-off typography patching.
+- Docs: Added a repeatable workflow for bringing older pages onto the new design language without one-off typography patching.
 
 ### Changed
 - `colophon.njk`: Rewrote the colophon around the current archive/workbench design language, updated the stack/fonts notes, and added an explicit redesign history that tracks this release as major redesign #6.

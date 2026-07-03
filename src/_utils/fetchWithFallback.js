@@ -1,5 +1,6 @@
 import fetch from "node-fetch";
 import { AssetCache } from "@11ty/eleventy-fetch";
+import { recordStatusEvent } from "./statusLog.js";
 
 /**
  * central helper for fetching external API data with timeouts and caching.
@@ -19,6 +20,7 @@ export async function fetchWithFallback({
   timeoutMs = 5000
 }) {
   const cache = new AssetCache(cacheKey);
+  const source = `data:${cacheKey}`;
 
   // Return valid cache immediately if available
   if (cache.isCacheValid(cacheDuration)) {
@@ -29,6 +31,12 @@ export async function fetchWithFallback({
       }
     } catch (e) {
       console.warn(`[fetchWithFallback] Error reading valid cache for key: ${cacheKey}. Re-fetching.`);
+      await recordStatusEvent({
+        level: "warn",
+        source,
+        message: e,
+        fallback: "refetch"
+      });
     }
   }
 
@@ -46,15 +54,30 @@ export async function fetchWithFallback({
     throw new Error("Fetch function returned null or undefined data");
   } catch (error) {
     console.warn(`[fetchWithFallback] Failed to fetch data for key "${cacheKey}": ${error.message}. Attempting expired cache fallback.`);
+    let fallback = "static";
     
     try {
       const cachedValue = await cache.getCachedValue();
       if (cachedValue !== undefined && cachedValue !== null) {
+        fallback = "expired-cache";
+        await recordStatusEvent({
+          level: "warn",
+          source,
+          message: error,
+          fallback
+        });
         return cachedValue;
       }
     } catch (cacheError) {
       // Empty/non-existent cache
     }
+
+    await recordStatusEvent({
+      level: "error",
+      source,
+      message: error,
+      fallback
+    });
     
     return fallbackData;
   }

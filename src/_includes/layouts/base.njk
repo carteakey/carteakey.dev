@@ -262,7 +262,7 @@
       </main>
 
       <footer class="not-prose flex w-full pt-3 pb-2 flex-col md:flex-row justify-between items-center gap-3 border-t border-gray-300/80 dark:border-gray-700 mt-6">
-        {% if spotify.nowPlaying %}
+        {% if spotify.nowPlaying and page.url != "/status/" %}
         <div class="footer-track flex items-center gap-2 not-prose">
           <img id="track-image" class="w-5 h-5 rounded-sm animate-spin-slow"
             src="{{ spotify.nowPlaying.albumImageUrl }}" alt="{{ spotify.nowPlaying.title }}" width="20" height="20" loading="lazy">

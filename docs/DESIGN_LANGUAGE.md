@@ -351,4 +351,4 @@ If you need a compact instruction for later passes, use this:
 
 > Make this page feel like carteakey.dev: dense editorial/archive design, textured paper background, squarish flat surfaces, display font for titles, serif for support copy, mono for metadata, minimal badge clutter, and structure that reads like an index of a mind rather than a startup UI.
 
-For the actual cleanup workflow, pair this with [MIGRATION_PROCESS.md](./MIGRATION_PROCESS.md).
+For cleanup work, keep the same principle: converge older pages onto the shared primitives before adding page-local styling.

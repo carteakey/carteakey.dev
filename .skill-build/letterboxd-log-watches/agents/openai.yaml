@@ -1,0 +1,4 @@
+interface:
+  display_name: "Log Letterboxd Watches"
+  short_description: "Turn cinema receipts into dated diary entries"
+  default_prompt: "Use $letterboxd-log-watches to add these cinema watches to my Letterboxd diary."

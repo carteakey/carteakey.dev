@@ -1,7 +1,7 @@
 ---
 layout: layouts/base.njk
 title: Colophon
-description: How this site is made, why it keeps changing, and what the current version is trying to be.
+description: How this site is made, what it runs on, and why it keeps changing.
 permalink: /colophon/
 eleventyNavigation:
   key: Colophon
@@ -12,7 +12,7 @@ eleventyNavigation:
 
 {% set pageEyebrow = "Build Notes" %}
 {% set pageTitle = "Colophon" %}
-{% set pageDescription = "How this site is made, why it keeps changing, and what the current design is trying to do." %}
+{% set pageDescription = "How this site is made, what it runs on, and why it keeps changing." %}
 {% include "components/page-header.njk" %}
 
 {% set repoBase = "https://github.com/carteakey/carteakey.dev/blob/main" %}
@@ -21,7 +21,7 @@ eleventyNavigation:
 
 <h2>Stack</h2>
 
-<p>This site still runs on the NEAT stack: Netlify, Eleventy, Alpine, Tailwind. That part has held up surprisingly well. The visual language has changed a lot more than the plumbing.</p>
+<p>This site runs on the <a href="/blog/understanding-the-neat-framework/">NEAT stack</a>: Netlify, Eleventy, Alpine, and Tailwind. The plumbing has stayed boring in the best way. The visual language has changed a lot more than the stack.</p>
 
 <table>
   <thead><tr><th>Layer</th><th>Tool</th></tr></thead>
@@ -33,8 +33,8 @@ eleventyNavigation:
     <tr><td>Comments</td><td><a href="https://giscus.app/">Giscus</a> via GitHub Discussions</td></tr>
     <tr><td>Upvotes</td><td><a href="https://upstash.com/">Upstash Redis</a> via Netlify Functions</td></tr>
     <tr><td>Search</td><td>Client-side search, no external index</td></tr>
-    <tr><td>Analytics</td><td>None</td></tr>
-    <tr><td>Fonts</td><td>Arimo (UI), ET Book (display), Crimson Pro (body), JetBrains Mono (meta/code) - self-hosted</td></tr>
+    <tr><td>Analytics</td><td>Google Analytics, plus a few local counters for site features</td></tr>
+    <tr><td>Fonts</td><td>Arimo, ET Book, Crimson Pro, JetBrains Mono, and a few page-specific faces</td></tr>
     <tr><td>Icons</td><td><a href="https://feathericons.com/">Feather Icons</a></td></tr>
     <tr><td>Syntax highlighting</td><td><a href="https://prismjs.com/">Prism.js</a> with custom themes</td></tr>
     <tr><td>Images</td><td><a href="https://www.11ty.dev/docs/plugins/image/">eleventy-img</a> plus a few remote image shortcuts</td></tr>
@@ -42,9 +42,9 @@ eleventyNavigation:
   </tbody>
 </table>
 
-<h2>Version 2.0.0</h2>
+<h2>Current Version</h2>
 
-<p>I bumped this release to <strong>2.0.0</strong> because it does not feel like another incremental cleanup. It feels like a reset. The site is less interested in looking tidy and more interested in looking like mine.</p>
+<p>The site is currently on <strong>v{{ versions.version }}</strong>. The 2.x era started as a reset: less interest in looking tidy, more interest in looking like mine.</p>
 
 <p>The current design is trying to be three things at once: a notebook, an archive, and a workbench. That pushed the site away from rounded app cards and startup-homepage habits. The new baseline is textured paper, squarer framing, denser indexes, stronger typography, and pages that feel like shelves instead of widgets.</p>
 
@@ -61,6 +61,12 @@ eleventyNavigation:
 </ul>
 
 <p>The actual working rules now live in the repo as <a href="{{ repoBase }}/docs/DESIGN_LANGUAGE.md">DESIGN_LANGUAGE.md</a>. I finally wrote them down because I got tired of rediscovering the same typography problems one page at a time.</p>
+
+<h2>Moving Parts</h2>
+
+<p>Most of the site is static, but a few sections are pulled together at build time. Goodreads fills the reading shelf, Letterboxd fills recent watching, Steam and GitHub provide small activity signals, and a handful of cached APIs keep the now page from feeling frozen.</p>
+
+<p>The interactive pieces are intentionally small. Giscus handles comments through GitHub Discussions. Upvotes and reactions use Redis behind Netlify Functions. Search stays client-side, which keeps the site easy to host and avoids sending the archive to an external search index.</p>
 
 <h2>Redesigns</h2>
 
@@ -82,15 +88,9 @@ eleventyNavigation:
 
 <p>The homepage now works better because it reads like a table of contents. The archive works better because titles actually look like titles. The footer works better because it looks like a map instead of leftover small print. None of that came from adding more components. It came from finally making the structure and the type agree with each other.</p>
 
-<h2>Migration Process</h2>
-
-<p>I also wrote down the migration workflow in <a href="{{ repoBase }}/docs/MIGRATION_PROCESS.md">MIGRATION_PROCESS.md</a>. That doc is for the boring but important part: how to take an older page full of utility text classes and move it onto the current primitives without turning the whole thing into a rewrite.</p>
-
-<p>That is the part I used to skip. Now it is the part I trust the most.</p>
-
 <h2>AI-Assisted Development</h2>
 
-<p>This site is built with AI help, but not on autopilot. Copilot, Codex, and the rest are useful for boilerplate, implementation, cleanup passes, and brute-force consistency work. They are much less useful at deciding what the site should feel like. That part is still mine.</p>
+<p>This site is built with AI help, but not on autopilot. Copilot, Codex, and the rest are useful for boilerplate, implementation, audits, cleanup passes, and repetitive consistency work. They are much less useful at deciding what the site should feel like. That part is still mine.</p>
 
 <p>Some posts are also AI-assisted and marked accordingly. I would rather over-disclose than pretend this stuff is not happening.</p>
 

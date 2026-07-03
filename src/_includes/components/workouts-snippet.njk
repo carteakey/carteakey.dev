@@ -44,4 +44,12 @@
     </div>
     <p class="m-0"><a href="/workouts" class="editorial-meta-link">View all workouts →</a></p>
   </div>
+{% else %}
+  <div class="strava-snippet space-y-3">
+    <h3 class="editorial-kicker">Recent Workouts</h3>
+    <div class="surface surface-compact">
+      <p class="editorial-support-compact m-0">No recent workout data available right now.</p>
+    </div>
+    <p class="m-0"><a href="/workouts" class="editorial-meta-link">View all workouts →</a></p>
+  </div>
 {% endif %}

@@ -20,68 +20,81 @@ eleventyNavigation:
 ] %}
 {% include "components/page-header.njk" %}
 
-{% if nowPage.highlights and nowPage.highlights.length > 0 %}
-<section class="surface surface-padding not-prose mb-8">
-  <ul class="now-log">
-    {% for item in nowPage.highlights %}
-    <li>{{ item | safe }}</li>
-    {% endfor %}
-  </ul>
+{% set hasWrittenNow = (nowPage.highlights and nowPage.highlights.length > 0) or (nowPage.updates and nowPage.updates.length > 0) %}
+{% if hasWrittenNow %}
+<section class="not-prose mb-10">
+  <h2 class="editorial-kicker mb-3">Written Now</h2>
+  <div class="surface surface-padding">
+    {% if nowPage.highlights and nowPage.highlights.length > 0 %}
+    <ul class="now-log">
+      {% for item in nowPage.highlights %}
+      <li>{{ item | safe }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+
+    {% if nowPage.updates and nowPage.updates.length > 0 %}
+    <ul class="now-log{% if nowPage.highlights and nowPage.highlights.length > 0 %} mt-4{% endif %}">
+      {% for item in nowPage.updates %}
+      <li>{{ item | safe }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </div>
 </section>
 {% endif %}
 
-{% if nowPage.updates and nowPage.updates.length > 0 %}
-<ul class="now-log">
-  {% for item in nowPage.updates %}
-  <li>{{ item | safe }}</li>
-  {% endfor %}
-</ul>
-{% endif %}
+<section class="mt-10 space-y-8 not-prose">
+  <div class="flex items-baseline justify-between gap-4 border-b border-gray-200 pb-2 dark:border-gray-800">
+    <h2 class="editorial-kicker">Activity Pulls</h2>
+  </div>
 
-<div class="mt-10 space-y-8 not-prose">
-  {% include "components/watching-snippet.njk" %}
+  <div class="grid gap-8 lg:grid-cols-2">
+    {# ── Currently Reading ── #}
+    {% if reading.currently_reading and reading.currently_reading.length > 0 %}
+    <section>
+      <h3 class="editorial-kicker mb-3">Currently Reading</h3>
+      <div class="divide-y divide-gray-100 dark:divide-gray-800/80">
+        {% for book in reading.currently_reading | head(3) %}
+        <div class="py-3 flex gap-3">
+          {% if book.cover %}
+          <a href="{{ book.url or reading.profileUrl }}" class="media-thumb media-thumb-book media-thumb-mini shrink-0" aria-label="{{ book.title }} cover">
+            <img src="{{ book.cover }}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" class="media-thumb-image">
+          </a>
+          {% else %}
+          <div class="media-thumb media-thumb-book media-thumb-mini media-thumb-placeholder shrink-0" aria-hidden="true">
+            <span>{{ book.title | first }}</span>
+          </div>
+          {% endif %}
+          <div class="min-w-0 flex-1">
+            <div class="flex items-baseline justify-between gap-4">
+              <div class="min-w-0">
+                {% if book.url %}<a href="{{ book.url }}" class="editorial-title-link">{{ book.title }}</a>{% else %}<span class="editorial-title-compact">{{ book.title }}</span>{% endif %}
+                <span class="editorial-support-compact"> - {{ book.author }}</span>
+              </div>
+              {% if book.progress !== undefined %}
+              <span class="meta-text text-xs text-gray-400 shrink-0">{{ book.progress }}%</span>
+              {% endif %}
+            </div>
+            {% if book.progress !== undefined %}
+            <div class="mt-1.5 h-1 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden max-w-xs">
+              <div class="h-full rounded-full" style="width: {{ book.progress }}%; background: var(--accent-color);"></div>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <a href="/reading/" class="editorial-meta-link mt-2 inline-block">Full reading shelf →</a>
+    </section>
+    {% endif %}
+
+    {% include "components/watching-snippet.njk" %}
+  </div>
+
   {% include "components/workouts-snippet.njk" %}
   {% include "components/games-snippet.njk" %}
-</div>
-
-{# ── Currently Reading ── #}
-{% if reading.currently_reading and reading.currently_reading.length > 0 %}
-<div class="not-prose mt-10">
-  <h2 class="editorial-kicker mb-3">Currently Reading</h2>
-  <div class="divide-y divide-gray-100 dark:divide-gray-800/80">
-    {% for book in reading.currently_reading %}
-    <div class="py-3 flex gap-3">
-      {% if book.cover %}
-      <a href="{{ book.url or reading.profileUrl }}" class="media-thumb media-thumb-book media-thumb-mini shrink-0" aria-label="{{ book.title }} cover">
-        <img src="{{ book.cover }}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" class="media-thumb-image">
-      </a>
-      {% else %}
-      <div class="media-thumb media-thumb-book media-thumb-mini media-thumb-placeholder shrink-0" aria-hidden="true">
-        <span>{{ book.title | first }}</span>
-      </div>
-      {% endif %}
-      <div class="min-w-0 flex-1">
-        <div class="flex items-baseline justify-between gap-4">
-          <div class="min-w-0">
-            {% if book.url %}<a href="{{ book.url }}" class="editorial-title-link">{{ book.title }}</a>{% else %}<span class="editorial-title-compact">{{ book.title }}</span>{% endif %}
-            <span class="editorial-support-compact"> - {{ book.author }}</span>
-          </div>
-          {% if book.progress !== undefined %}
-          <span class="meta-text text-xs text-gray-400 shrink-0">{{ book.progress }}%</span>
-          {% endif %}
-        </div>
-        {% if book.progress !== undefined %}
-        <div class="mt-1.5 h-1 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden max-w-xs">
-          <div class="h-full rounded-full" style="width: {{ book.progress }}%; background: var(--accent-color);"></div>
-        </div>
-        {% endif %}
-      </div>
-    </div>
-    {% endfor %}
-  </div>
-  <a href="/reading/" class="editorial-meta-link mt-2 inline-block">Full reading shelf →</a>
-</div>
-{% endif %}
+</section>
 
 <p class="editorial-support mt-10">
   Want to see how this page has changed? <a href="/now/archive/" class="accent-link">Browse the archives →</a>

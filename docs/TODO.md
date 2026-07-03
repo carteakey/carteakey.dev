@@ -34,12 +34,13 @@ This is the canonical working backlog merged from `docs/TODO.md`, audit docs, te
 - [ ] Redesign `/feed/` with persistent filters and a mobile-collapsible filter surface.
 - [ ] Add feed type chips with counts.
 - [ ] Add full-text search to `/feed/`.
-- [ ] Link all major content types from navigation or `/more/`: writing, snippets, TIL, reading, photos, watching, and reviews.
+- [x] Link all major content types from navigation or `/more/`: writing, snippets, TIL, reading, photos, watching, and reviews. (2026-07-03)
 
 ### Reliability / Status
 - [x] Add a build-time `/status/` page for integration health and fallback visibility. (2026-06-28)
-- [ ] Extend `/status/` into a richer dashboard with API health, build success rate, and performance metrics.
-- [ ] Add lightweight error logging for data fetch and runtime failures.
+- [x] Extend `/status/` into a richer dashboard with API health, build success rate, and performance metrics. (2026-07-01)
+- [x] Add lightweight error logging for data fetch and runtime failures. (2026-07-01)
+- [x] Clarify `/status/` severity labels and active fallback attention items. (2026-07-03)
 
 ### Newsletter / Support
 - [ ] Add a sticky Subscribe button and homepage email micro-form.
@@ -149,6 +150,7 @@ This is the canonical working backlog merged from `docs/TODO.md`, audit docs, te
 - [x] Move workout snippet and game snippet to the components folder.
 - [x] Workouts page - workouts-snippet.njk - make it 3 latest workouts in a row on desktop view. (2025-10-12)
 - [x] Now page - make games and workouts 3 columns on desktop view. Make the styling same as the main pages. (2025-10-12)
+- [x] Now page - separate written updates from pulled activity and show Reading/Watching in a two-column, three-item view. (2026-07-03)
 - [x] Quotes - same masonry layout as feed and gallery. (2025-10-12)
 - [x] I've moved the blog to blog folder but all the old links to the posts are broken. I need to set up redirects from /post-title to /blog/post-title. (2025-10-12)
 - [x] Now page - images look too big , handle them the same way as the posts. (2025-10-12)

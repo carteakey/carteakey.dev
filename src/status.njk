@@ -29,31 +29,58 @@ eleventyNavigation:
 {% if github.repos.length > 0 %}{% set githubState = "ok" %}{% endif %}
 {% set githubDetail = github.repos.length ~ " public repos" %}
 {% if github.repos[0] and github.repos[0].repo_updated %}
-  {% set githubDetail = githubDetail ~ "; latest updated " ~ (github.repos[0].repo_updated | formatDate) %}
+  {% set githubDetail = githubDetail ~ "; latest updated " ~ status.formatDisplayDate(github.repos[0].repo_updated) %}
 {% endif %}
 {% set contributionsState = "warn" %}
 {% if githubContributions.weeks.length > 0 %}{% set contributionsState = "ok" %}{% endif %}
-{% set spotifyState = "warn" %}
+{% set spotifyState = "missing" %}
 {% if status.env.spotify %}{% set spotifyState = "ok" %}{% endif %}
-{% set steamState = "warn" %}
+{% set steamState = "missing" %}
 {% if status.env.steam and steam.length > 0 %}{% set steamState = "ok" %}{% endif %}
-{% set stravaState = "warn" %}
+{% if status.env.steam and steam.length == 0 %}{% set steamState = "warn" %}{% endif %}
+{% set stravaState = "missing" %}
 {% if status.env.strava and strava.length > 0 %}{% set stravaState = "ok" %}{% endif %}
+{% if status.env.strava and strava.length == 0 %}{% set stravaState = "warn" %}{% endif %}
 {% set stravaDetail = strava.length ~ " recent activities" %}
 {% if strava[0] and strava[0].start_date %}
   {% set stravaDetail = stravaDetail ~ "; latest " ~ (strava[0].start_date | readableDate) %}
 {% endif %}
-{% set upstashState = "warn" %}
+{% set upstashState = "missing" %}
 {% if status.env.upstash %}{% set upstashState = "ok" %}{% endif %}
+{% set loggingState = "ok" %}
+{% if status.eventSummary.errors > 0 %}
+  {% set loggingState = "error" %}
+{% elif status.eventSummary.warnings > 0 %}
+  {% set loggingState = "warn" %}
+{% endif %}
+{% set buildState = "ok" %}
+{% if status.builds.quietRate < 100 %}
+  {% set buildState = "warn" %}
+{% endif %}
 
 {% macro statusBadge(state) %}
   {% if state == "ok" %}
     <span class="meta-text text-green-700 dark:text-green-300">OK</span>
   {% elif state == "warn" %}
     <span class="meta-text text-amber-700 dark:text-amber-300">Fallback</span>
+  {% elif state == "missing" %}
+    <span class="meta-text text-amber-700 dark:text-amber-300">Local secret</span>
+  {% elif state == "error" %}
+    <span class="meta-text text-red-700 dark:text-red-300">Error</span>
   {% else %}
     <span class="meta-text text-red-700 dark:text-red-300">Needs config</span>
   {% endif %}
+{% endmacro %}
+
+{% macro metricCell(label, value, detail, state) %}
+  <div class="border-b border-gray-200/70 py-4 dark:border-gray-800/80 sm:border-b-0 sm:border-r sm:pr-5 sm:last:border-r-0">
+    <div class="flex items-baseline justify-between gap-4">
+      <h2 class="editorial-kicker">{{ label }}</h2>
+      {{ statusBadge(state) }}
+    </div>
+    <p class="mt-2 font-mono text-2xl font-semibold text-gray-950 dark:text-gray-50">{{ value }}</p>
+    <p class="mt-1 editorial-support-compact">{{ detail }}</p>
+  </div>
 {% endmacro %}
 
 {% macro serviceRow(name, state, detail, cadence, href) %}
@@ -67,14 +94,96 @@ eleventyNavigation:
   </tr>
 {% endmacro %}
 
-<section class="surface surface-padding not-prose">
+{% macro eventRow(event) %}
+  <tr class="border-b border-gray-200/70 last:border-0 dark:border-gray-800/80">
+    <td class="py-3 pr-4 align-top meta-text">{{ event.timestamp }}</td>
+    <td class="py-3 pr-4 align-top">{{ statusBadge("error" if event.level == "error" else "warn") }}</td>
+    <td class="py-3 pr-4 align-top font-mono text-xs text-gray-800 dark:text-gray-200">{{ event.source }}</td>
+    <td class="py-3 pr-4 align-top editorial-support-compact">{{ event.message }}</td>
+    <td class="py-3 align-top meta-text">{{ event.fallback }}</td>
+  </tr>
+{% endmacro %}
+
+<section class="mt-6 surface surface-padding not-prose">
+  <div class="grid gap-0 sm:grid-cols-2 lg:grid-cols-4">
+    {{ metricCell(
+      "Local secrets",
+      status.envSummary.configured ~ "/" ~ status.envSummary.total,
+      "live credential groups present in this build",
+      "ok" if status.envSummary.configured == status.envSummary.total else "warn"
+    ) }}
+    {{ metricCell(
+      "Builds",
+      status.builds.successRate ~ "%",
+      status.builds.tracked ~ " tracked successful builds",
+      "ok"
+    ) }}
+    {{ metricCell(
+      "Fallback-free",
+      status.builds.quietRate ~ "%",
+      "tracked builds without fallback/error events",
+      buildState
+    ) }}
+    {{ metricCell(
+      "Last 24h events",
+      status.eventSummary.total,
+      status.eventSummary.errors ~ " errors; " ~ status.eventSummary.warnings ~ " warnings",
+      loggingState
+    ) }}
+  </div>
+</section>
+
+<section class="mt-6 surface surface-padding not-prose">
+  <div class="flex flex-col gap-1 border-b border-gray-200/70 pb-3 dark:border-gray-800/80 sm:flex-row sm:items-baseline sm:justify-between">
+    <h2 class="editorial-kicker">Attention</h2>
+    <p class="editorial-support-compact">Build succeeded; these are the active fallbacks worth checking.</p>
+  </div>
+  {% if status.eventSummary.attention.length %}
+    <ul class="divide-y divide-gray-200/70 dark:divide-gray-800/80">
+      {% for event in status.eventSummary.attention %}
+        <li class="grid gap-2 py-3 text-sm sm:grid-cols-[10rem_1fr_6rem] sm:items-baseline">
+          <span class="font-mono text-xs text-gray-800 dark:text-gray-200">{{ event.source }}</span>
+          <span class="editorial-support-compact">{{ event.message }}</span>
+          <span class="meta-text">{{ event.fallback }}</span>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="pt-3 editorial-support-compact">No fallback or error events in the last 24 hours.</p>
+  {% endif %}
+</section>
+
+<section class="mt-6 surface surface-padding not-prose">
+  <h2 class="editorial-kicker mb-3">Performance Snapshot</h2>
+  <dl class="grid gap-x-8 gap-y-3 text-sm sm:grid-cols-2 lg:grid-cols-4">
+    <div>
+      <dt class="meta-text">Build process elapsed</dt>
+      <dd class="mt-1 font-mono text-gray-950 dark:text-gray-50">{{ status.performance.buildElapsedMs }}ms</dd>
+    </div>
+    <div>
+      <dt class="meta-text">Average tracked build</dt>
+      <dd class="mt-1 font-mono text-gray-950 dark:text-gray-50">{{ status.builds.averageDurationMs }}ms</dd>
+    </div>
+    <div>
+      <dt class="meta-text">Memory RSS</dt>
+      <dd class="mt-1 font-mono text-gray-950 dark:text-gray-50">{{ status.performance.rssMb }}MB</dd>
+    </div>
+    <div>
+      <dt class="meta-text">Heap used</dt>
+      <dd class="mt-1 font-mono text-gray-950 dark:text-gray-50">{{ status.performance.heapUsedMb }}MB on {{ status.performance.node }}</dd>
+    </div>
+  </dl>
+</section>
+
+<section class="mt-6 surface surface-padding not-prose">
+  <h2 class="editorial-kicker mb-3">Integration Health</h2>
   <div class="overflow-x-auto">
     <table class="w-full text-sm">
       <caption class="sr-only">External service status</caption>
       <thead>
         <tr class="border-b border-gray-300/80 text-left meta-text dark:border-gray-700">
           <th scope="col" class="pb-2 pr-4">Service</th>
-          <th scope="col" class="pb-2 pr-4">State</th>
+          <th scope="col" class="pb-2 pr-4">Build state</th>
           <th scope="col" class="pb-2 pr-4">Current data</th>
           <th scope="col" class="pb-2">Refresh</th>
         </tr>
@@ -136,9 +245,43 @@ eleventyNavigation:
           "Fetched at build time",
           "/stats/"
         ) }}
+        {{ serviceRow(
+          "Status logging",
+          loggingState,
+          status.events.length ~ " retained events; latest fallback " ~ (status.eventSummary.latest.fallback if status.eventSummary.latest else "none"),
+          "Bounded .cache JSON log",
+          false
+        ) }}
       </tbody>
     </table>
   </div>
+</section>
+
+<section class="mt-6 surface surface-padding not-prose">
+  <h2 class="editorial-kicker mb-3">Recent Events</h2>
+  {% if status.events.length %}
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <caption class="sr-only">Recent status log events</caption>
+        <thead>
+          <tr class="border-b border-gray-300/80 text-left meta-text dark:border-gray-700">
+            <th scope="col" class="pb-2 pr-4">Time</th>
+            <th scope="col" class="pb-2 pr-4">Level</th>
+            <th scope="col" class="pb-2 pr-4">Source</th>
+            <th scope="col" class="pb-2 pr-4">Message</th>
+            <th scope="col" class="pb-2">Fallback</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for event in status.events %}
+            {{ eventRow(event) }}
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <p class="editorial-support-compact">No build-time fetch or fallback events have been logged yet.</p>
+  {% endif %}
 </section>
 
 <section class="mt-6 surface surface-padding not-prose">
@@ -147,5 +290,6 @@ eleventyNavigation:
     <li>This page reflects the last Eleventy build, not live request health.</li>
     <li>Fallback means the site should still render using cached, manual, or empty data.</li>
     <li>Secrets are checked only as present/missing booleans and are never rendered.</li>
+    <li>Netlify functions emit structured JSON error logs for runtime failures.</li>
   </ul>
 </section>

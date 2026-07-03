@@ -1,5 +1,6 @@
 import fetch from "node-fetch";
 import { AssetCache } from "@11ty/eleventy-fetch";
+import { recordStatusEvent } from "../_utils/statusLog.js";
 
 const {
     STEAM_API_KEY: apiKey,
@@ -19,6 +20,12 @@ export default async function() {
 
     if (!apiKey || !userId) {
         console.warn("Steam API key or user ID not configured, trying cache fallback");
+        await recordStatusEvent({
+            level: "warn",
+            source: "data:steam",
+            message: "Steam API key or user ID not configured",
+            fallback: "cache"
+        });
         try {
             return await gameCache.getCachedValue();
         } catch (e) {
@@ -30,7 +37,14 @@ export default async function() {
         const response = await fetch(`${api_endpoint}?key=${apiKey}&steamid=${userId}&format=json&count=10`);
 
         if (!response.ok) {
-            console.error("Failed to fetch Steam games:", await response.text());
+            const message = `Steam API returned ${response.status}: ${await response.text()}`;
+            console.error("Failed to fetch Steam games:", message);
+            await recordStatusEvent({
+                level: "error",
+                source: "data:steam",
+                message,
+                fallback: "cache"
+            });
             try {
                 return await gameCache.getCachedValue();
             } catch (e) {
@@ -63,6 +77,12 @@ export default async function() {
         return filteredGames;
     } catch (error) {
         console.error("Error fetching Steam games:", error);
+        await recordStatusEvent({
+            level: "error",
+            source: "data:steam",
+            message: error,
+            fallback: "cache"
+        });
         try {
             return await gameCache.getCachedValue();
         } catch (cacheError) {

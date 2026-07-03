@@ -4,10 +4,10 @@
 currently_reading:
   - title: "Dune"
     author: "Frank Herbert"
+    goodreadsId: "43419431"
     progress: 10
     started: 2026-03-01
     notes: "Just started. The world-building is immediately overwhelming in the best way."
-    cover: ""
 
 read: []
 

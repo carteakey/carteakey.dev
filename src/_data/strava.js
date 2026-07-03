@@ -1,6 +1,7 @@
 import fetch from "node-fetch";
 import { AssetCache } from "@11ty/eleventy-fetch";
 import querystring from "querystring";
+import { recordStatusEvent } from "../_utils/statusLog.js";
 
 const {
     STRAVA_CLIENT_ID: client_id,
@@ -74,6 +75,12 @@ async function getCachedFallback(activityCache) {
         }
     } catch (e) {
         console.warn("No cached Strava activities available");
+        await recordStatusEvent({
+            level: "warn",
+            source: "data:strava",
+            message: e,
+            fallback: "empty"
+        });
     }
     return [];
 }
@@ -104,6 +111,12 @@ export default async function() {
         const accessToken = await getAccessToken();
         if (!accessToken) {
             console.warn("Strava access token not available, trying cache fallback");
+            await recordStatusEvent({
+                level: "warn",
+                source: "data:strava",
+                message: "Strava access token not available",
+                fallback: "cache"
+            });
             return await getCachedFallback(activityCache);
         }
 
@@ -114,7 +127,14 @@ export default async function() {
         });
 
         if (!response.ok) {
-            console.error("Failed to fetch Strava activities:", await response.text());
+            const message = `Strava API returned ${response.status}: ${await response.text()}`;
+            console.error("Failed to fetch Strava activities:", message);
+            await recordStatusEvent({
+                level: "error",
+                source: "data:strava",
+                message,
+                fallback: "cache"
+            });
             return await getCachedFallback(activityCache);
         }
 
@@ -143,6 +163,12 @@ export default async function() {
         return filteredActivities;
     } catch (error) {
         console.error("Error fetching Strava activities:", error);
+        await recordStatusEvent({
+            level: "error",
+            source: "data:strava",
+            message: error,
+            fallback: "cache"
+        });
         return await getCachedFallback(activityCache);
     }
 }

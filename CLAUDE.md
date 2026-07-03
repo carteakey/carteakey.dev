@@ -2,6 +2,13 @@
 
 Personal blog built with Eleventy 3.x, Tailwind CSS v4, Alpine.js, and Nunjucks templates.
 
+## Commit And Push Cadence
+
+- Commit finished work with clear, scoped messages, but do **not** push every commit by default.
+- Let roughly **5–10 commits** pile up and push them as a batch to conserve Netlify free-tier build minutes.
+- After each commit, remind the user what the unpushed batch contains, how many commits are waiting, and whether the whole batch is coherent enough to push now.
+- Push sooner only when the user explicitly asks, the change is urgent/hotfix-grade, or the current batch already makes sense as one deploy unit.
+
 ## Post Frontmatter Modes
 
 These flags control visibility, display, and listing behaviour for posts in `src/posts/`.

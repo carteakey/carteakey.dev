@@ -1,4 +1,5 @@
 import { Redis } from '@upstash/redis'
+import { recordStatusEvent } from "../_utils/statusLog.js"
 
 
 
@@ -45,6 +46,12 @@ function getCanonicalSlug(slug) {
 export default async function() {
   if (!process.env.UPSTASH_REDIS_REST_URL || !process.env.UPSTASH_REDIS_REST_TOKEN) {
     console.warn('Upstash Redis credentials missing, returning empty upvotes');
+    await recordStatusEvent({
+      level: 'warn',
+      source: 'data:upvotes',
+      message: 'Upstash Redis credentials missing',
+      fallback: 'empty'
+    })
     return { posts: {} };
   }
 
@@ -76,6 +83,12 @@ export default async function() {
     return { posts };
   } catch (error) {
     console.error('Redis error:', error);
+    await recordStatusEvent({
+      level: 'error',
+      source: 'data:upvotes',
+      message: error,
+      fallback: 'empty'
+    })
     return { posts: {} };
   }
 } 

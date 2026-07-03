@@ -1,4 +1,5 @@
 import { Redis } from '@upstash/redis'
+import { logRuntimeError } from './_runtime-log.js'
 
 const redis = new Redis({
   url: process.env.UPSTASH_REDIS_REST_URL,
@@ -155,7 +156,10 @@ exports.handler = async function(event, context) {
 
     return { statusCode: 405, body: "Method Not Allowed" };
   } catch (error) {
-    console.error('Redis error:', error);
+    logRuntimeError('function:upvote', error, {
+      method: event.httpMethod,
+      hasSlug: Boolean(event.queryStringParameters?.slug || event.body?.includes('"slug"'))
+    });
     return { statusCode: 500, body: `Error: ${error.message}` };
   }
 };

@@ -55,7 +55,7 @@ This project uses a manual versioning process. It is your responsibility to keep
 * `docs/CHANGELOG.md` updated.
 
 
-5. **Push**: Push your changes to the `main` branch.
+5. **Batch Pushes**: Do not push every commit by default. Let roughly **5–10 commits** accumulate and push them together to conserve Netlify free-tier build minutes. After each commit, remind the user what the current unpushed batch contains, how many commits are waiting, and whether the batch is coherent enough to push now. Push sooner only when the user explicitly asks, the change is urgent/hotfix-grade, or the accumulated batch is already a sensible deploy unit.
 
 6. Update the docs/TODO.md file if you added or fixed something that should be noted there.
 ---
