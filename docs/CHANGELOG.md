@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [2.4.6] - 2026-07-09
 ### Changed
-- Posts: Rebuilt desktop author and outline rails as wider in-flow columns on a dedicated post canvas, preserving a comfortable article measure without viewport overflow.
+- Posts: Rebuilt desktop author and outline rails as wider in-flow columns on a dedicated post canvas, preserving a comfortable article measure without viewport overflow. Full-bleed tables now layer over the rails as they pass so the rails can remain sticky.
 
 ## [2.4.5] - 2026-07-09
 ### Changed

@@ -52,7 +52,7 @@ hasEthicalAds: false
   {# Left Sidebar - Author Card (or editorial meta-sidebar) #}
   {% if showSidebar %}
   <aside class="hidden xl:block post-rail post-rail-left">
-    <div class="post-rail-inner space-y-4">
+    <div class="post-rail-inner sticky top-24 space-y-4">
       {% if isEditorial and sidebar %}
         {% include "components/editorial-sidebar.njk" %}
       {% endif %}
@@ -88,7 +88,7 @@ hasEthicalAds: false
 
   {% if showSidebar %}
   <aside class="hidden xl:block post-rail post-rail-right text-sm text-gray-600 dark:text-gray-300">
-    <div class="post-rail-inner space-y-4">
+    <div class="post-rail-inner sticky top-24 space-y-4">
       {% if tocHtml | trim %}
       <section class="surface surface-padding">
         <p class="post-panel-title flex items-center gap-2">

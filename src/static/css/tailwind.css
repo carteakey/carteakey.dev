@@ -2631,6 +2631,7 @@ picture img {
       max-width: none;
       margin: 0;
     }
+
   }
 
   .post-header {
@@ -4212,6 +4213,8 @@ picture img {
 
   /* ── Wide table wrapper - breaks out of article container, sizes to content ── */
   .wide-wrap {
+    position: relative;
+    z-index: 20;
     width: 100vw;
     max-width: 100vw;
     margin-left: calc(50% - 50vw);
@@ -4220,7 +4223,10 @@ picture img {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     box-sizing: border-box;
+    background: rgb(251 250 246);
   }
+
+  .dark .wide-wrap { background: rgb(20 20 20); }
 
   /* Table sizes to its content, capped at the scroll container's padding-box */
   .wide-wrap table {

@@ -90,7 +90,7 @@ This is the canonical working backlog merged from `docs/TODO.md`, audit docs, te
 ### User Experience
 
 - [x] Optimize blog post thumbnails into responsive AVIF/WebP variants instead of serving full-resolution source images. (2026-06-21)
-- [x] Give desktop post rails dedicated layout columns so author and outline content remain readable. (2026-07-09)
+- [x] Give desktop post rails dedicated layout columns so author and outline content remain readable, while keeping wide tables inside the article column. (2026-07-09)
 - [x] Keep async thumbnail generation outside the synchronous Nunjucks feed-card macro to prevent nested/corrupted card markup. (2026-06-22)
 - [x] change all email references to carteakey.dev@gmail.com (2026-01-03)
 - [x] Standardize UPDATED labels to uppercase across all pages (2026-02-09)
