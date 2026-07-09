@@ -2597,40 +2597,6 @@ picture img {
     padding-bottom: 2rem;
   }
 
-  /* Keep desktop rails floating so browser zoom does not switch the post between
-     compact and spacious compositions. */
-  @media (min-width: 1280px) {
-    .post-wrap {
-      max-width: 50rem;
-    }
-
-    .post-shell {
-      max-width: 48rem;
-    }
-
-    .post-rail-left,
-    .post-rail-right {
-      position: absolute;
-      top: 0;
-    }
-
-    .post-rail-left {
-      left: -13rem;
-    }
-
-    .post-rail-right {
-      right: -13rem;
-    }
-
-    .post-rail-left .post-rail-inner {
-      width: 12rem;
-    }
-
-    .post-rail-right .post-rail-inner {
-      width: 12rem;
-    }
-  }
-
   .post-header {
     padding-bottom: 0.75rem;
   }
