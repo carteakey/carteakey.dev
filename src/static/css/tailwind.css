@@ -2597,6 +2597,42 @@ picture img {
     padding-bottom: 2rem;
   }
 
+  /* Give post rails their own desktop columns instead of squeezing them into
+     the reading measure or floating them outside the viewport. */
+  @media (min-width: 1280px) {
+    .post-wrap {
+      display: grid;
+      grid-template-columns: minmax(13rem, 15rem) minmax(0, 52rem) minmax(13rem, 15rem);
+      column-gap: 1.5rem;
+      width: min(calc(100vw - 3rem), 88rem);
+      max-width: none;
+      margin: 0;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .post-rail-left {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .post-rail-right {
+      grid-column: 3;
+      grid-row: 1;
+    }
+
+    .post-rail-inner {
+      width: 100%;
+    }
+
+    .post-shell {
+      grid-column: 2;
+      grid-row: 1;
+      max-width: none;
+      margin: 0;
+    }
+  }
+
   .post-header {
     padding-bottom: 0.75rem;
   }

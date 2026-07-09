@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.4.6] - 2026-07-09
+### Changed
+- Posts: Rebuilt desktop author and outline rails as wider in-flow columns on a dedicated post canvas, preserving a comfortable article measure without viewport overflow.
+
 ## [2.4.5] - 2026-07-09
 ### Changed
 - Visual polish: Added a consistent accent focus ring, clarified the homepage stats block on mobile, expanded Recent Activity to align with the homepage grid, and strengthened directory-row interaction feedback.
