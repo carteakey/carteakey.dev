@@ -51,7 +51,7 @@ hasEthicalAds: false
 <div class="post-wrap relative mx-auto w-full"{% if isEditorial %} data-pair="{{ edPair }}"{% endif %}>
   {# Left Sidebar - Author Card (or editorial meta-sidebar) #}
   {% if showSidebar %}
-  <aside class="hidden xl:block absolute -left-[280px] top-0">
+  <aside class="hidden 2xl:block absolute -left-[280px] top-0">
     <div class="sticky top-24 w-[240px] space-y-4">
       {% if isEditorial and sidebar %}
         {% include "components/editorial-sidebar.njk" %}
@@ -87,7 +87,7 @@ hasEthicalAds: false
   {# Right Sidebar - TOC & Comments #}
 
   {% if showSidebar %}
-  <aside class="hidden xl:block absolute -right-[300px] top-0 text-sm text-gray-600 dark:text-gray-300">
+  <aside class="hidden 2xl:block absolute -right-[300px] top-0 text-sm text-gray-600 dark:text-gray-300">
     <div class="sticky top-24 space-y-4 w-[260px]">
       {% if tocHtml | trim %}
       <section class="surface surface-padding">

@@ -26,7 +26,7 @@ This is the canonical working backlog merged from `docs/TODO.md`, audit docs, te
 ### Accessibility
 - [ ] Run a full axe and manual accessibility audit.
 - [ ] Fix dark mode contrast issues.
-- [ ] Add consistent `focus-visible` states to interactive elements.
+- [x] Add consistent `focus-visible` states to interactive elements. (2026-07-09)
 - [ ] Add `aria-describedby` to form errors.
 - [ ] Audit and fix missing alt text on feed images.
 

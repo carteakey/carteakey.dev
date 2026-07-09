@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.4.5] - 2026-07-09
+### Changed
+- Visual polish: Added a consistent accent focus ring, clarified the homepage stats block on mobile, expanded Recent Activity to align with the homepage grid, and strengthened directory-row interaction feedback.
+- Reading: Increased long-form post copy size and line-height without changing the denser UI scale.
+
+### Fixed
+- Posts: Delayed the desktop author and outline sidebars until ultra-wide screens so they no longer crowd the article at the `xl` breakpoint.
+
 ## [2.4.4] - 2026-07-03
 ### Changed
 - More: Updated the site inventory with Lexicon, Tools, Watching, and the More self-reference while leaving folio subpages and redirect/success routes out.

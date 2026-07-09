@@ -283,10 +283,9 @@
   --accent-color: #14b8a6;
 }
 
-*:focus {
-  outline: 0px !important;
-  appearance: none;
-  -webkit-appearance: none;
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 3px;
 }
 
 /* Typography defaults: prose should feel editorial, UI should stay crisp */
@@ -2176,12 +2175,19 @@ picture img {
     display: grid;
     align-content: start;
     gap: 0.2rem;
-    padding-left: 0;
+    padding-top: 1rem;
+    border-top: 1px solid rgb(214 207 193 / 0.95);
+  }
+
+  .dark .home-glance {
+    border-top-color: rgb(63 63 70 / 0.95);
   }
 
   @media (min-width: 960px) {
     .home-glance {
       padding-left: 1.25rem;
+      padding-top: 0;
+      border-top: 0;
       border-left: 1px solid rgb(214 207 193 / 0.95);
     }
 
@@ -2246,8 +2252,8 @@ picture img {
 
   .home-recent-panel {
     width: 100%;
-    max-width: 64rem;
-    margin-inline: auto;
+    max-width: none;
+    margin-inline: 0;
   }
 
   .home-quote-panel {
@@ -2414,6 +2420,8 @@ picture img {
     gap: 0.2rem;
     padding: 0.65rem 0;
     border-bottom: 1px solid rgb(229 223 211 / 0.95);
+    box-shadow: inset 0 0 0 transparent;
+    transition: background-color 160ms ease, box-shadow 160ms ease;
     text-decoration: none;
     color: inherit;
   }
@@ -2422,7 +2430,14 @@ picture img {
     border-bottom-color: rgb(39 39 42 / 0.9);
   }
 
-  .home-directory-item:hover .home-directory-name {
+  .home-directory-item:hover,
+  .home-directory-item:focus-visible {
+    background: color-mix(in srgb, var(--accent-color) 4%, transparent);
+    box-shadow: inset 2px 0 var(--accent-color);
+  }
+
+  .home-directory-item:hover .home-directory-name,
+  .home-directory-item:focus-visible .home-directory-name {
     color: var(--accent-color);
   }
 
@@ -2663,8 +2678,8 @@ picture img {
   .post-body {
     margin-top: 1rem;
     font-family: var(--font-sans);
-    font-size: 1rem;
-    line-height: 1.48;
+    font-size: 1.04rem;
+    line-height: 1.58;
     color: rgb(24 24 27 / 1);
   }
 
@@ -2696,8 +2711,8 @@ picture img {
 
   .post-body p,
   .post-body li {
-    font-size: 1rem;
-    line-height: 1.48;
+    font-size: 1.04rem;
+    line-height: 1.58;
   }
 
   .post-side-card {
