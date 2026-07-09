@@ -2597,31 +2597,37 @@ picture img {
     padding-bottom: 2rem;
   }
 
-  /* Keep desktop rails in flow so browser zoom does not switch the post between
-     two visibly different layouts. */
+  /* Keep desktop rails floating so browser zoom does not switch the post between
+     compact and spacious compositions. */
   @media (min-width: 1280px) {
     .post-wrap {
-      display: grid;
-      grid-template-columns: 10rem minmax(0, 1fr) 11rem;
-      column-gap: 1.25rem;
-      max-width: none;
-    }
-
-    .post-rail-left {
-      grid-column: 1;
-      grid-row: 1;
-    }
-
-    .post-rail-right {
-      grid-column: 3;
-      grid-row: 1;
+      max-width: 50rem;
     }
 
     .post-shell {
-      grid-column: 2;
-      grid-row: 1;
-      max-width: none;
-      margin: 0;
+      max-width: 48rem;
+    }
+
+    .post-rail-left,
+    .post-rail-right {
+      position: absolute;
+      top: 0;
+    }
+
+    .post-rail-left {
+      left: -13rem;
+    }
+
+    .post-rail-right {
+      right: -13rem;
+    }
+
+    .post-rail-left .post-rail-inner {
+      width: 12rem;
+    }
+
+    .post-rail-right .post-rail-inner {
+      width: 12rem;
     }
   }
 
