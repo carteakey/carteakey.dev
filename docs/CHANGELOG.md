@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.4.7] - 2026-07-09
+### Fixed
+- Posts: Kept desktop side rails in the same in-flow layout at every desktop width, preventing browser zoom from switching between compact and floating compositions.
+
 ## [2.4.6] - 2026-07-09
 ### Changed
 - Posts: Restored the author and outline rails at the `xl` breakpoint using a compact in-flow three-column layout, while keeping the roomier floating rails on ultra-wide screens.

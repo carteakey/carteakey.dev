@@ -2597,10 +2597,9 @@ picture img {
     padding-bottom: 2rem;
   }
 
-  /* Compact rail layout for 1280–1535px screens, where floating sidebars would
-     otherwise extend beyond the viewport. Ultra-wide screens use the roomier
-     floating rails below. */
-  @media (min-width: 1280px) and (max-width: 1535px) {
+  /* Keep desktop rails in flow so browser zoom does not switch the post between
+     two visibly different layouts. */
+  @media (min-width: 1280px) {
     .post-wrap {
       display: grid;
       grid-template-columns: 10rem minmax(0, 1fr) 11rem;
@@ -2623,30 +2622,6 @@ picture img {
       grid-row: 1;
       max-width: none;
       margin: 0;
-    }
-  }
-
-  @media (min-width: 1536px) {
-    .post-rail-left,
-    .post-rail-right {
-      position: absolute;
-      top: 0;
-    }
-
-    .post-rail-left {
-      left: -17.5rem;
-    }
-
-    .post-rail-right {
-      right: -18.75rem;
-    }
-
-    .post-rail-left .post-rail-inner {
-      width: 15rem;
-    }
-
-    .post-rail-right .post-rail-inner {
-      width: 16.25rem;
     }
   }
 
