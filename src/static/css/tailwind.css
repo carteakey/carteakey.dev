@@ -2597,6 +2597,59 @@ picture img {
     padding-bottom: 2rem;
   }
 
+  /* Compact rail layout for 1280–1535px screens, where floating sidebars would
+     otherwise extend beyond the viewport. Ultra-wide screens use the roomier
+     floating rails below. */
+  @media (min-width: 1280px) and (max-width: 1535px) {
+    .post-wrap {
+      display: grid;
+      grid-template-columns: 10rem minmax(0, 1fr) 11rem;
+      column-gap: 1.25rem;
+      max-width: none;
+    }
+
+    .post-rail-left {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .post-rail-right {
+      grid-column: 3;
+      grid-row: 1;
+    }
+
+    .post-shell {
+      grid-column: 2;
+      grid-row: 1;
+      max-width: none;
+      margin: 0;
+    }
+  }
+
+  @media (min-width: 1536px) {
+    .post-rail-left,
+    .post-rail-right {
+      position: absolute;
+      top: 0;
+    }
+
+    .post-rail-left {
+      left: -17.5rem;
+    }
+
+    .post-rail-right {
+      right: -18.75rem;
+    }
+
+    .post-rail-left .post-rail-inner {
+      width: 15rem;
+    }
+
+    .post-rail-right .post-rail-inner {
+      width: 16.25rem;
+    }
+  }
+
   .post-header {
     padding-bottom: 0.75rem;
   }

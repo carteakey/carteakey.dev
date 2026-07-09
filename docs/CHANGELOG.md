@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.4.6] - 2026-07-09
+### Changed
+- Posts: Restored the author and outline rails at the `xl` breakpoint using a compact in-flow three-column layout, while keeping the roomier floating rails on ultra-wide screens.
+
 ## [2.4.5] - 2026-07-09
 ### Changed
 - Visual polish: Added a consistent accent focus ring, clarified the homepage stats block on mobile, expanded Recent Activity to align with the homepage grid, and strengthened directory-row interaction feedback.
