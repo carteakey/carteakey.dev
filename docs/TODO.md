@@ -14,7 +14,7 @@
 
 ## Consolidated Backlog (2026-06-29)
 
-This is the canonical working backlog merged from `docs/TODO.md`, audit docs, testing notes, and the local LLM guide roadmap. Older sections below are retained for history and context.
+This is the repository thinking space merged from `docs/TODO.md`, audit docs, testing notes, and the local LLM guide roadmap. Intentionally committed implementation work is tracked in Linear; older sections below are retained for history and context.
 
 ### Immediate / Low-Hanging
 - [x] Add `aria-busy` to the post upvote button and prevent duplicate in-flight clicks. (2026-06-28)
@@ -24,16 +24,9 @@ This is the canonical working backlog merged from `docs/TODO.md`, audit docs, te
 - [ ] Run the quick verification checklist after major UI changes: easter eggs, responsive post list, JSON-LD, Open Graph tags, Twitter cards, absolute meta URLs, and OG image existence.
 
 ### Accessibility
-- [ ] Run a full axe and manual accessibility audit.
-- [ ] Fix dark mode contrast issues.
 - [x] Add consistent `focus-visible` states to interactive elements. (2026-07-09)
-- [ ] Add `aria-describedby` to form errors.
-- [ ] Audit and fix missing alt text on feed images.
 
 ### Content Discovery
-- [ ] Redesign `/feed/` with persistent filters and a mobile-collapsible filter surface.
-- [ ] Add feed type chips with counts.
-- [ ] Add full-text search to `/feed/`.
 - [x] Link all major content types from navigation or `/more/`: writing, snippets, TIL, reading, photos, watching, and reviews. (2026-07-03)
 
 ### Reliability / Status

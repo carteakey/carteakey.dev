@@ -4,6 +4,10 @@ You're working at the `carteakey.dev` codebase, a personal blog and portfolio si
 
 The branch is `main`. This is where you should make all your changes.
 
+## Planning
+
+Intentionally committed implementation work is tracked in Linear: [carteakey.dev](https://linear.app/carteakey/project/carteakeydev-50ebf450810b). Keep `docs/TODO.md` for ideas, research, questions, and future possibilities.
+
  ## 📋 PRE-EDIT CHECKLIST
 
 **Adherence to these rules is mandatory, ALWAYS check this file and follow these rules.**
