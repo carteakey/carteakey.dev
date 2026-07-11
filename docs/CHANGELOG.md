@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Posts: Rebuilt desktop author and outline rails as wider in-flow columns on a dedicated post canvas, preserving a comfortable article measure without viewport overflow. Full-bleed tables now layer over the rails as they pass so the rails can remain sticky.
 
 ## [2.4.5] - 2026-07-09
+### Added
+- Notes: Added note on Codex $20/mo being the best value AI coding plan, with cropped usage screenshots.
 ### Changed
 - Visual polish: Added a consistent accent focus ring, clarified the homepage stats block on mobile, expanded Recent Activity to align with the homepage grid, and strengthened directory-row interaction feedback.
 - Reading: Increased long-form post copy size and line-height without changing the denser UI scale.
