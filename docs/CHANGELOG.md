@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.4.7] - 2026-07-11
+### Added
+- Notes: Tightened Codex note with side-by-side screenshots and gateway-drug commentary.
+### Changed
+- CMS: Reduced blog tag limit from 4 to 2 to match site policy.
+- Fonts: Removed remaining Google Fonts CDN links (Bricolage Grotesque, Caveat); switched to self-hosted fallback stacks.
+### Fixed
+- Config: Removed shadowed duplicate `min` filter in eleventy.config.mjs.
+
 ## [2.4.6] - 2026-07-09
 ### Changed
 - Posts: Rebuilt desktop author and outline rails as wider in-flow columns on a dedicated post canvas, preserving a comfortable article measure without viewport overflow. Full-bleed tables now layer over the rails as they pass so the rails can remain sticky.

@@ -26,7 +26,7 @@ collections:
         label: "tags"
         name: "tags"
         allow_add: true
-        max: 4
+        max: 2
         min: 1
 
   - label: "Reviews"

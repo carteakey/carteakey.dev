@@ -585,11 +585,6 @@ export default function (eleventyConfig) {
     return array.slice(0, n);
   });
 
-  // Return the smallest number argument
-  eleventyConfig.addFilter("min", (...numbers) => {
-    return Math.min.apply(null, numbers);
-  });
-
   function filterTagList(tags) {
     return (tags || []).filter(
       (tag) => ["all", "nav", "post", "posts", "snippets", "prompts", "quotations"].indexOf(tag) === -1

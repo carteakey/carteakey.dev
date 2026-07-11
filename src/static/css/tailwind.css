@@ -8,7 +8,7 @@
   --font-*: initial;
   /* Default body copy font stack */
   --font-sans: var(--font-plus-jakarta-sans);
-  --font-bricolage: 'Bricolage Grotesque', 'Saira', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-bricolage: 'Saira', var(--font-plus-jakarta-sans);
   --font-plus-jakarta-sans: 'Plus Jakarta Sans', 'Saira', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Apple Color Emoji', 'Segoe UI Emoji', 'Inter';
   --font-saira: 'Saira', 'Plus Jakarta Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Apple Color Emoji', 'Segoe UI Emoji', 'Inter';
   --font-urbanist: 'Urbanist', var(--font-plus-jakarta-sans);
@@ -4360,7 +4360,7 @@ picture img {
     display: inline-block;
     margin-left: 0.7em;
     padding-left: 1.4em;
-    font-family: 'Caveat', 'Kalam', 'Comic Sans MS', cursive;
+    font-family: 'Kalam', 'Caveat', 'Comic Sans MS', cursive;
     font-size: 1.16rem;
     font-weight: 600;
     line-height: 1.05;
