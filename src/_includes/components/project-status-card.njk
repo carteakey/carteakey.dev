@@ -1,0 +1,30 @@
+{% set projectHref = null %}
+{% if project.url %}
+  {% set projectHref = project.url %}
+{% elif project.github %}
+  {% set projectHref = project.github %}
+{% endif %}
+
+<div class="flex items-start gap-3">
+  <div class="min-w-0 flex-1">
+    <div class="flex flex-wrap items-center gap-2">
+      {% if projectHref %}
+        <a href="{{ projectHref }}" title="View Project" class="editorial-title-link inline-flex items-center gap-1">
+          {{ project.title }}
+          {% feather "arrow-up-right", class="w-3.5 h-3.5 opacity-40" %}
+        </a>
+      {% else %}
+        <h4 class="editorial-title-compact m-0">{{ project.title }}</h4>
+      {% endif %}
+      {% if project.status %}
+        <span class="badge badge-compact badge-status">{{ project.status }}</span>
+      {% endif %}
+    </div>
+    <p class="editorial-support-compact mt-2 m-0">{{ project.description }}</p>
+  </div>
+  {% if project.github %}
+    <a class="shrink-0 text-gray-400 hover:text-gray-700 dark:text-gray-500 dark:hover:text-gray-300 transition-colors" title="View Code" href="{{ project.github }}">
+      {% feather "github", class="w-4 h-4" %}
+    </a>
+  {% endif %}
+</div>

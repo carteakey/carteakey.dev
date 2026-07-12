@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.6.1] - 2026-07-31
+### Added
+- Projects: Added data-driven Current work and Coming soon sections with status cards.
+- Projects: Added visual thumbnails and repository artwork for selected projects.
+
+### Changed
+- Dependencies: Updated Tailwind, Markdown parsing, OpenAI, and PostCSS, and patched transitive `form-data` and `undici` vulnerabilities.
+- Projects: Added the public L3MS, ChirpType, and Assethetic projects; routed cartebase to its public data dashboard; and refreshed the project layout and descriptions.
+- Tools: Updated ChirpType's description to include Windows support.
+
 ## [2.6.0] - 2026-07-27
 ### Added
 - Support: Added a metadata-driven support page and call-to-action with a safe setup state until an external support URL is configured.

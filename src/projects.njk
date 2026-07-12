@@ -11,19 +11,73 @@ eleventyNavigation:
 
 {% set pageEyebrow = "Things I Build" %}
 {% set pageTitle = "Projects" %}
-{% set pageDescription = "A running list of personal projects, experiments, and the code that powers them." %}
+{% set pageDescription = "A running list of personal projects, current builds, upcoming releases, and the code that powers them." %}
 {% set itemCount = projects.projects | length %}
-{% set itemLabel = "projects" %}
+{% set itemLabel = "public projects" %}
 {% set pageActions = [{ href: "https://github.com/carteakey?tab=repositories", label: "Browse GitHub", external: true, accent: true }] %}
 
 {% include "components/page-header.njk" %}
 
 <div class="mx-auto">
-  <p class="editorial-support mb-6">Here are some of my personal projects.</p>
+  <p class="editorial-support mb-8">Here are some of my personal projects, including the things currently taking up my evenings.</p>
+
+  {% if projects.current | length or projects.coming_soon | length %}
+    <section class="mb-12" aria-labelledby="current-work-heading">
+      <div class="mb-4">
+        <h2 id="current-work-heading" class="editorial-kicker">Current work</h2>
+        <p class="editorial-support-compact mt-1">Projects in active development, playtesting, or getting ready for a public release.</p>
+      </div>
+
+      <div class="grid gap-8 lg:grid-cols-2">
+        {% if projects.current | length %}
+          <div>
+            <h3 class="editorial-kicker mb-3">Currently working on</h3>
+            <div class="space-y-3">
+              {% for project in projects.current %}
+                <article class="surface surface-hover surface-padding rounded-sm">
+                  {% if project.image_path %}
+                    <div class="mb-3 overflow-hidden rounded-sm border border-gray-200 dark:border-gray-800">
+                      {% image project.image_path, project.title, "h-32 w-full object-cover" %}
+                    </div>
+                  {% endif %}
+                  {% include "components/project-status-card.njk" %}
+                </article>
+              {% endfor %}
+            </div>
+          </div>
+        {% endif %}
+
+        {% if projects.coming_soon | length %}
+          <div>
+            <h3 class="editorial-kicker mb-3">Coming soon</h3>
+            <div class="space-y-3">
+              {% for project in projects.coming_soon %}
+                <article class="surface surface-hover surface-padding rounded-sm">
+                  {% if project.image_path %}
+                    <div class="mb-3 overflow-hidden rounded-sm border border-gray-200 dark:border-gray-800">
+                      {% image project.image_path, project.title, "h-32 w-full object-cover" %}
+                    </div>
+                  {% endif %}
+                  {% include "components/project-status-card.njk" %}
+                </article>
+              {% endfor %}
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </section>
+  {% endif %}
+
+  <h2 class="editorial-kicker mb-4">Selected projects</h2>
 
   <ul class="not-prose divide-y divide-gray-200 dark:divide-gray-800/80">
     {% for project in projects.projects %}
       <li class="group flex items-start gap-4 py-4">
+        {% if project.image_path %}
+          <div class="w-24 shrink-0 overflow-hidden rounded-sm border border-gray-200 dark:border-gray-800 sm:w-32">
+            {% image project.image_path, project.title, "h-16 w-full object-cover sm:h-20" %}
+          </div>
+        {% endif %}
         <div class="flex-1 min-w-0">
           <div class="flex flex-wrap items-center gap-2">
             <a href="{% if project.url %}{{ project.url }}{% else %}{{ project.github }}{% endif %}" title="View Project" class="editorial-title-link inline-flex items-center gap-1">
