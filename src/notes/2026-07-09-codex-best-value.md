@@ -14,10 +14,7 @@ Having used Claude Code extensively at work and Codex + Antigravity for personal
 
 The main reason: frequent session resets, banked reset credits that carry forward, and the fact that it runs gpt-5.5 as the top model. I've burned through close to $600 API equivalent in the last ~20 days across two accounts — and paid $40 total.
 
-<div class="flex gap-4 not-prose">
-{% image "./src/static/img/notes/codex-value-dark.png", "Codex usage stats: $414.25 30-day API cost, 487M tokens, 3 banked limit reset credits", "max-w-[48%] rounded-lg shadow-md border border-surface-border" %}
-{% image "./src/static/img/notes/codex-value-light.png", "Second Codex account: $177.10 30-day cost, 209M tokens, same 3 banked resets", "max-w-[48%] rounded-lg shadow-md border border-surface-border" %}
-</div>
+{% image "./src/static/img/notes/codex-value-dark.png", "Codex usage stats: $414.25 30-day API cost, 487M tokens, 3 banked limit reset credits", "max-w-md rounded-lg shadow-md border border-surface-border" %}
 
 The pricing isn't an accident. Plans like this are the gateway drug — cheap enough to get you hooked, generous enough to make you dependent, and carefully designed so you can't imagine going back to writing code without an agent sitting next to you. And it's working.
 
