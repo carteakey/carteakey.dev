@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.5.0] - 2026-07-11
+### Added
+- Folio: Agentic Coding Model Tier List — a new folio page at `/folio/model-tier-list/` with tiered model cards, service comparison table, API pricing table, and cost calculator. Driven by `src/_data/models.yaml`.
+- Skill: `update-model-list` skill for regenerating model YAML with current research.
+### Changed
+- Folio index: Updated with the new model-tier-list entry and revised copy.
+
 ## [2.4.7] - 2026-07-11
 ### Added
 - Notes: Tightened Codex note with side-by-side screenshots and gateway-drug commentary.

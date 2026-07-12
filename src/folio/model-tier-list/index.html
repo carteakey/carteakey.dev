@@ -1,0 +1,872 @@
+---
+layout: false
+permalink: /folio/model-tier-list/
+title: "Agentic Coding Models // Tier List"
+description: "Which coding and agentic AI models are worth your time and money? A living tier list with API pricing, service comparisons, and a cost calculator."
+date: 2026-07-11
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MODEL TIER LIST // agentic coding models - carteakey.dev/folio</title>
+  <meta name="description" content="Which coding and agentic AI models are worth your time and money? A living tier list with API pricing, service comparisons, and a cost calculator.">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <meta property="og:title" content="AGENTIC CODING MODELS // tier list">
+  <meta property="og:description" content="Which coding and agentic AI models are worth your time and money? A living tier list with API pricing, service comparisons, and a cost calculator.">
+  <meta property="og:url" content="https://carteakey.dev/folio/model-tier-list/">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital@0;1&display=swap');
+
+    :root {
+      --bg: #070b11;
+      --surface: #0d1420;
+      --surface2: #121c2c;
+      --border: #1a2840;
+      --border2: #243852;
+      --text: #c9d1db;
+      --text2: #8892a0;
+      --dim: #556070;
+      --accent: #22d3ee;
+      --accent2: #0891b2;
+      --s-plus: #fbbf24;
+      --s-plus-bg: rgba(251,191,36,0.08);
+      --s: #22d3ee;
+      --s-bg: rgba(34,211,238,0.08);
+      --a-plus: #4ade80;
+      --a-plus-bg: rgba(74,222,128,0.08);
+      --a: #60a5fa;
+      --a-bg: rgba(96,165,250,0.08);
+      --b: #a78bfa;
+      --b-bg: rgba(167,139,250,0.08);
+      --c: #6b7280;
+      --c-bg: rgba(107,114,128,0.08);
+      --radius: 6px;
+      --font-sans: 'Inter', system-ui, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --font-serif: 'Source Serif 4', serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      font-size: 14px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    .header {
+      margin-bottom: 48px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 32px;
+    }
+
+    .header-stamp {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      margin-bottom: 8px;
+    }
+
+    .header h1 {
+      font-family: var(--font-sans);
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+
+    .header-meta {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--dim);
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .header-desc {
+      font-family: var(--font-serif);
+      font-size: 15px;
+      color: var(--text2);
+      margin-top: 12px;
+      max-width: 640px;
+    }
+
+    .blunt-winners {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 8px;
+      margin: 24px 0 40px;
+    }
+
+    .winner-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 10px 12px;
+    }
+
+    .winner-card .title {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--dim);
+      margin-bottom: 2px;
+    }
+
+    .winner-card .model {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .controls {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .controls input, .controls select {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text);
+      padding: 8px 12px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      outline: none;
+    }
+
+    .controls input:focus, .controls select:focus {
+      border-color: var(--accent2);
+    }
+
+    .controls input {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .controls select {
+      cursor: pointer;
+    }
+
+    .tier-section {
+      margin-bottom: 40px;
+    }
+
+    .tier-header {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .tier-badge {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 16px;
+      background: var(--s-bg);
+      color: var(--s);
+      padding: 2px 10px;
+      border-radius: 4px;
+      letter-spacing: 0.05em;
+    }
+
+    .tier-section[data-tier="s-plus"] .tier-badge { background: var(--s-plus-bg); color: var(--s-plus); }
+    .tier-section[data-tier="s"] .tier-badge { background: var(--s-bg); color: var(--s); }
+    .tier-section[data-tier="a-plus"] .tier-badge { background: var(--a-plus-bg); color: var(--a-plus); }
+    .tier-section[data-tier="a"] .tier-badge { background: var(--a-bg); color: var(--a); }
+    .tier-section[data-tier="b"] .tier-badge { background: var(--b-bg); color: var(--b); }
+    .tier-section[data-tier="c"] .tier-badge { background: var(--c-bg); color: var(--c); }
+
+    .tier-desc {
+      font-size: 12px;
+      color: var(--dim);
+      font-family: var(--font-mono);
+    }
+
+    .model-count {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--dim);
+      margin-left: auto;
+    }
+
+    .model-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 8px;
+    }
+
+    .model-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .model-card.hidden {
+      display: none;
+    }
+
+    .model-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .model-name {
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--text);
+    }
+
+    .model-provider {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--dim);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .model-verdict {
+      font-size: 12px;
+      color: var(--text2);
+      line-height: 1.5;
+    }
+
+    .model-tags {
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+
+    .model-tag {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      padding: 1px 6px;
+      border-radius: 3px;
+      border: 1px solid var(--border);
+      color: var(--dim);
+    }
+
+    .model-tag.api { border-color: rgba(34,211,238,0.3); color: #22d3ee; }
+    .model-tag.open { border-color: rgba(74,222,128,0.3); color: #4ade80; }
+    .model-tag.closed { border-color: rgba(251,191,36,0.3); color: #fbbf24; }
+    .model-tag.very-fast { border-color: rgba(74,222,128,0.3); color: #4ade80; }
+    .model-tag.fast { border-color: rgba(96,165,250,0.3); color: #60a5fa; }
+    .model-tag.medium { border-color: rgba(167,139,250,0.3); color: #a78bfa; }
+    .model-tag.slow { border-color: rgba(248,113,113,0.3); color: #f87171; }
+    .model-tag.very-high { border-color: rgba(248,113,113,0.3); color: #f87171; }
+    .model-tag.high { border-color: rgba(251,191,36,0.3); color: #fbbf24; }
+    .model-tag.low { border-color: rgba(74,222,128,0.3); color: #4ade80; }
+    .model-tag.very-low { border-color: rgba(52,211,153,0.3); color: #34d399; }
+
+    .model-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px 16px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--dim);
+    }
+
+    .model-stats .label { color: var(--dim); }
+    .model-stats .value { color: var(--text2); }
+
+    .model-best {
+      font-size: 11px;
+      color: var(--text2);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+
+    .model-best strong {
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .model-sources {
+      font-size: 10px;
+      display: flex;
+      gap: 8px;
+    }
+
+    .model-sources a {
+      font-family: var(--font-mono);
+      color: var(--accent2);
+    }
+
+    .section-header {
+      font-family: var(--font-sans);
+      font-size: 20px;
+      font-weight: 700;
+      margin: 48px 0 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .services-table-wrap {
+      overflow-x: auto;
+    }
+
+    .services-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+
+    .services-table th {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--dim);
+      text-align: left;
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+
+    .services-table td {
+      padding: 10px;
+      border-bottom: 1px solid var(--border2);
+      vertical-align: top;
+    }
+
+    .services-table tr:hover td {
+      background: rgba(34,211,238,0.03);
+    }
+
+    .services-table .service-name {
+      font-weight: 600;
+      color: var(--text);
+      white-space: nowrap;
+    }
+
+    .services-table .service-price {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      white-space: nowrap;
+    }
+
+    .services-table .service-models {
+      font-size: 11px;
+      color: var(--text2);
+      line-height: 1.6;
+    }
+
+    .services-table .service-tags {
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+
+    .services-table .service-tag {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      padding: 1px 6px;
+      border-radius: 3px;
+      border: 1px solid var(--border);
+      color: var(--dim);
+    }
+
+    .services-table .service-desc {
+      font-size: 11px;
+      color: var(--text2);
+      line-height: 1.5;
+      max-width: 280px;
+    }
+
+    .pricing-table-wrap {
+      overflow-x: auto;
+    }
+
+    .pricing-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+
+    .pricing-table th {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--dim);
+      text-align: left;
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+
+    .pricing-table td {
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--border2);
+    }
+
+    .pricing-table tr:hover td {
+      background: rgba(34,211,238,0.03);
+    }
+
+    .pricing-table .price-cell {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .price-na {
+      color: var(--dim);
+      font-style: italic;
+      font-size: 11px;
+    }
+
+    .calculator {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin: 24px 0 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .calculator h3 {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--dim);
+    }
+
+    .calculator-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .calculator-row label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text2);
+      min-width: 80px;
+    }
+
+    .calculator-row input, .calculator-row select {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text);
+      padding: 6px 10px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+    }
+
+    .calculator-row input { width: 120px; }
+
+    .calc-result {
+      font-family: var(--font-mono);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--accent);
+      padding: 8px 0;
+    }
+
+    .disclaimer {
+      font-size: 11px;
+      color: var(--dim);
+      line-height: 1.5;
+      margin-top: 48px;
+      padding: 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+
+    .footer-link {
+      text-align: center;
+      margin-top: 48px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--dim);
+    }
+
+    .footer-link a { color: var(--accent2); }
+
+    .no-results {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--dim);
+      padding: 24px;
+      text-align: center;
+      grid-column: 1 / -1;
+    }
+
+    @media (max-width: 768px) {
+      .container { padding: 24px 16px 60px; }
+      .header h1 { font-size: 22px; }
+      .model-grid { grid-template-columns: 1fr; }
+      .blunt-winners { grid-template-columns: 1fr 1fr; }
+      .services-table td, .services-table th { font-size: 11px; padding: 6px 8px; }
+    }
+
+    @media (max-width: 480px) {
+      .blunt-winners { grid-template-columns: 1fr; }
+    }
+
+    .empty-state { display: none; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="header">
+    <div class="header-stamp">Folio 003 // Tier List</div>
+    <h1>Agentic Coding Models</h1>
+    <div class="header-meta">
+      <span>Updated: {{ models.meta.updated_at }}</span>
+      <span>{{ models.models | length }} models</span>
+      <span>{{ models.services | length }} services</span>
+    </div>
+    <div class="header-desc">
+      Which coding and agentic AI models are worth your time and money? These rankings are editorial judgments based on practical coding ability, agent reliability, price, and availability.
+    </div>
+
+    <div class="blunt-winners">
+      {% for w in models.blunt_winners %}
+      <div class="winner-card">
+        <div class="title">{{ w.title }}</div>
+        <div class="model">{{ w.model }}</div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="controls">
+    <input type="text" id="search" placeholder="Search models…" oninput="filterModels()">
+    <select id="provider-filter" onchange="filterModels()">
+      <option value="">All providers</option>
+      {% for p in models.providers %}
+      <option value="{{ p.id }}">{{ p.name }}</option>
+      {% endfor %}
+    </select>
+    <select id="open-filter" onchange="filterModels()">
+      <option value="">All weight types</option>
+      <option value="open">Open weights</option>
+      <option value="closed">Closed</option>
+    </select>
+  </div>
+
+  {% for tier in models.tiers %}
+  {% set hasModels = false %}
+  {% for m in models.models %}{% if m.tier == tier.id %}{% set hasModels = true %}{% endif %}{% endfor %}
+  <div class="tier-section" data-tier="{{ tier.id }}">
+    <div class="tier-header">
+      <span class="tier-badge">{{ tier.label }}</span>
+      <span class="tier-desc">{{ tier.description }}</span>
+    </div>
+
+    {% if hasModels %}
+    <div class="model-grid">
+    {% for model in models.models %}{% if model.tier == tier.id %}
+      <div class="model-card" data-provider="{{ model.provider_id }}" data-open="{{ 'open' if model.open_weights else 'closed' }}" data-name="{{ model.name | lower }}">
+        <div class="model-top">
+          <div>
+            <div class="model-name">{{ model.name }}</div>
+            <div class="model-provider">{{ model.provider_id }}</div>
+          </div>
+          <div class="model-tags">
+            {% if model.api_available %}<span class="model-tag api">API</span>{% endif %}
+            <span class="model-tag {{ 'open' if model.open_weights else 'closed' }}">{{ 'Open' if model.open_weights else 'Closed' }}</span>
+            {% if model.speed %}<span class="model-tag {{ model.speed }}">{{ model.speed }}</span>{% endif %}
+            {% if model.price_level %}<span class="model-tag {{ model.price_level }}">{{ model.price_level }}</span>{% endif %}
+          </div>
+        </div>
+        <div class="model-verdict">{{ model.verdict }}</div>
+        <div class="model-best">
+          <strong>Best for:</strong>
+          {% for b in model.best_for %}
+          <span>{{ b }}{% if not loop.last %},{% endif %}</span>
+          {% endfor %}
+        </div>
+        <div class="model-stats">
+          <span><span class="label">Context</span> <span class="value">{{ (model.context_window / 1000) | round }}K</span></span>
+          {% if model.api_pricing %}
+          <span><span class="label">In/Out</span> <span class="value">${{ model.api_pricing.input_per_million }}/${{ model.api_pricing.output_per_million }} /1M</span></span>
+          {% endif %}
+        </div>
+        {% if model.sources %}
+        <div class="model-sources">
+          {% for s in model.sources %}
+          <a href="{{ s.url }}" target="_blank" rel="noopener">{{ s.title }}</a>{% if not loop.last %} · {% endif %}
+          {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+      {% endif %}
+    {% endfor %}
+    </div>
+    {% else %}
+    <div class="model-grid"><div class="no-results">No models in this tier.</div></div>
+    {% endif %}
+  </div>
+  {% endfor %}
+
+  <h2 class="section-header">Services & Subscriptions</h2>
+
+  <div class="services-table-wrap">
+    <table class="services-table">
+      <thead>
+        <tr>
+          <th>Service</th>
+          <th>Price/mo</th>
+          <th>Models</th>
+          <th>Interface</th>
+          <th>BYOK</th>
+          <th>Best for</th>
+          <th>Limitation</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for svc in models.services %}
+        <tr>
+          <td><span class="service-name">{{ svc.name }}</span></td>
+          <td>
+            {% if svc.monthly_price.amount == 0 %}
+            <span class="service-price">Free</span>
+            {% else %}
+            <span class="service-price">${{ svc.monthly_price.amount }}</span>
+            {% endif %}
+          </td>
+          <td>
+            <div class="service-models">
+            {% for m in svc.models %}
+              {{ m }}{% if not loop.last %}<br>{% endif %}
+            {% endfor %}
+            </div>
+          </td>
+          <td>
+            <div class="service-tags">
+            {% for i in svc.interfaces %}
+              <span class="service-tag">{{ i }}</span>
+            {% endfor %}
+            </div>
+          </td>
+          <td>
+            {% if svc.byok %}
+            <span class="service-tag">BYOK</span>
+            {% else %}
+            <span class="price-na">—</span>
+            {% endif %}
+          </td>
+          <td><span class="service-desc">{{ svc.best_for }}</span></td>
+          <td><span class="service-desc">{{ svc.limitation }}</span></td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <h2 class="section-header">API Pricing</h2>
+
+  <div class="controls" style="margin-bottom:12px">
+    <select id="pricing-provider" onchange="filterPricing()">
+      <option value="">All providers</option>
+      {% for p in models.providers %}
+      <option value="{{ p.id }}">{{ p.name }}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <div class="pricing-table-wrap">
+    <table class="pricing-table" id="pricing-table">
+      <thead>
+        <tr>
+          <th>Model</th>
+          <th>Provider</th>
+          <th>Input /1M</th>
+          <th>Cached /1M</th>
+          <th>Output /1M</th>
+          <th>Context</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for model in models.models %}
+      {% if model.api_pricing %}
+        <tr data-provider="{{ model.provider_id }}">
+          <td class="service-name">{{ model.name }}</td>
+          <td class="model-provider">{{ model.provider_id }}</td>
+          <td class="price-cell">${{ model.api_pricing.input_per_million }}</td>
+          <td class="price-cell">
+            {% if model.api_pricing.cached_input_per_million != null %}
+            ${{ model.api_pricing.cached_input_per_million }}
+            {% else %}
+            <span class="price-na">N/A</span>
+            {% endif %}
+          </td>
+          <td class="price-cell">${{ model.api_pricing.output_per_million }}</td>
+          <td class="price-cell">{{ (model.context_window / 1000) | round }}K</td>
+        </tr>
+      {% endif %}
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="calculator" id="calculator">
+    <h3>Cost Calculator <span style="font-weight:400;text-transform:none;color:var(--dim)">— estimate API call costs</span></h3>
+    <div class="calculator-row">
+      <label for="calc-model">Model</label>
+      <select id="calc-model" oninput="calcCost()">
+        {% for model in models.models %}
+        {% if model.api_pricing %}
+        <option value="{{ model.api_pricing.input_per_million }},{{ model.api_pricing.output_per_million }}">{{ model.name }}</option>
+        {% endif %}
+        {% endfor %}
+      </select>
+    </div>
+    <div class="calculator-row">
+      <label for="calc-input">Input tokens</label>
+      <input type="number" id="calc-input" value="1000" min="0" oninput="calcCost()">
+      <label for="calc-output">Output tokens</label>
+      <input type="number" id="calc-output" value="500" min="0" oninput="calcCost()">
+    </div>
+    <div class="calc-result" id="calc-result">$0.00</div>
+  </div>
+
+  <div class="disclaimer">
+    <strong>Disclaimer:</strong> {{ models.meta.disclaimer }}
+  </div>
+
+  <div class="footer-link">
+    <a href="/folio/">← Back to Folio</a>
+  </div>
+
+</div>
+
+<script>
+  function getProviderId(name) {
+    const map = {
+      'OpenAI': 'openai',
+      'Anthropic': 'anthropic',
+      'Google DeepMind': 'google',
+      'DeepSeek': 'deepseek',
+      'Moonshot AI': 'moonshot',
+      'Zhipu AI': 'zhipu',
+      'MiniMax': 'minmax',
+      'Alibaba Cloud': 'alibaba',
+      'Meta': 'meta',
+      'xAI': 'xai',
+      'Mistral': 'mistral',
+      'GitHub': 'github',
+      'Cursor': 'cursor',
+      'Codeium': 'codeium',
+      'OpenRouter': 'openrouter'
+    };
+    return map[name] || name.toLowerCase().replace(/[\s\/]+/g, '-');
+  }
+
+  function filterModels() {
+    var q = document.getElementById('search').value.toLowerCase();
+    var p = document.getElementById('provider-filter').value;
+    var o = document.getElementById('open-filter').value;
+    var cards = document.querySelectorAll('.model-card');
+    var anyVisible = {};
+
+    cards.forEach(function(c) {
+      var name = c.getAttribute('data-name') || '';
+      var prov = c.getAttribute('data-provider') || '';
+      var open = c.getAttribute('data-open') || '';
+      var match = true;
+      if (q && name.indexOf(q) === -1) match = false;
+      if (p && prov !== p) match = false;
+      if (o && open !== o) match = false;
+      c.classList.toggle('hidden', !match);
+
+      var section = c.closest('.tier-section');
+      if (section) {
+        var sid = section.getAttribute('data-tier') || '';
+        if (!anyVisible[sid]) anyVisible[sid] = false;
+        if (match) anyVisible[sid] = true;
+      }
+    });
+
+    document.querySelectorAll('.tier-section').forEach(function(s) {
+      var sid = s.getAttribute('data-tier') || '';
+      var hasVisible = anyVisible[sid];
+      var allCards = s.querySelectorAll('.model-card');
+      s.style.display = (allCards.length === 0 || hasVisible) ? '' : 'none';
+    });
+
+    var noResults = document.getElementById('no-results');
+    var totalVisible = cards.length - document.querySelectorAll('.model-card.hidden').length;
+    if (noResults) noResults.style.display = totalVisible === 0 ? 'block' : 'none';
+  }
+
+  function filterPricing() {
+    var p = document.getElementById('pricing-provider').value;
+    document.querySelectorAll('#pricing-table tbody tr').forEach(function(r) {
+      r.style.display = (!p || r.getAttribute('data-provider') === p) ? '' : 'none';
+    });
+  }
+
+  function calcCost() {
+    var parts = document.getElementById('calc-model').value.split(',');
+    var inPrice = parseFloat(parts[0]) || 0;
+    var outPrice = parseFloat(parts[1]) || 0;
+    var inTokens = parseInt(document.getElementById('calc-input').value) || 0;
+    var outTokens = parseInt(document.getElementById('calc-output').value) || 0;
+    var cost = (inTokens / 1000000 * inPrice) + (outTokens / 1000000 * outPrice);
+    document.getElementById('calc-result').textContent = '$' + cost.toFixed(6);
+  }
+
+  window.addEventListener('DOMContentLoaded', function() {
+    calcCost();
+    setTimeout(function() {
+      fetch('/.netlify/functions/upvote?slug=folio-model-tier-list&trackView=true')
+        .then(function(r) { return r.json(); })
+        .then(function(d) {
+          if (d && typeof d.views !== 'undefined') {
+            // view counted
+          }
+        })
+        .catch(function() {});
+    }, 1000);
+  });
+</script>
+
+</body>
+</html>

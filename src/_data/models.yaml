@@ -1,0 +1,854 @@
+meta:
+  title: Agentic Coding Model Tier List
+  updated_at: "2026-07-11"
+  currency: USD
+  disclaimer: >
+    Rankings are editorial judgments based on practical coding ability,
+    agent reliability, price, availability, and current public evidence.
+    Prices are approximate and sourced from official pricing pages.
+    Last verified July 2026.
+
+blunt_winners:
+  - title: Best overall
+    model: GPT-5.6 Sol
+  - title: Best raw intelligence
+    model: Claude Fable 5
+  - title: Best daily driver
+    model: Claude Sonnet 5
+  - title: Best value
+    model: Gemini 3.5 Flash
+  - title: Best cheap API
+    model: DeepSeek V4 Flash
+  - title: Best affordable high-end
+    model: DeepSeek V4 Pro
+  - title: Best coding-focused alternative
+    model: Kimi K2.7 Code
+  - title: Best lightweight subagent
+    model: Claude Haiku 4.5
+
+tiers:
+  - id: s-plus
+    label: S+
+    description: Best available — the absolute top-tier models for agentic coding.
+  - id: s
+    label: S
+    description: Excellent — daily-driver quality for serious development work.
+  - id: a-plus
+    label: A+
+    description: Strong — excellent performance-per-dollar or specialized strengths.
+  - id: a
+    label: A
+    description: Solid — capable models for most tasks, often superseded by newer options.
+  - id: b
+    label: B
+    description: Niche or budget — good for specific roles, subagents, or local inference.
+  - id: c
+    label: C
+    description: Legacy — outdated or surpassed; useful only in constrained environments.
+
+providers:
+  - id: openai
+    name: OpenAI
+  - id: anthropic
+    name: Anthropic
+  - id: moonshot
+    name: Moonshot AI
+  - id: google
+    name: Google DeepMind
+  - id: deepseek
+    name: DeepSeek
+  - id: zhipu
+    name: Zhipu AI
+  - id: minmax
+    name: MiniMax
+  - id: alibaba
+    name: Alibaba Cloud
+  - id: meta
+    name: Meta
+  - id: xai
+    name: xAI
+  - id: mistral
+    name: Mistral
+
+models:
+  - id: gpt-5-6-sol
+    name: GPT-5.6 Sol
+    provider_id: openai
+    tier: s-plus
+    rank: 1
+    verdict: Best overall agentic coding model.
+    best_for:
+      - Autonomous repo work
+      - Terminal use
+      - Debugging
+      - Long implementation tasks
+    strengths:
+      - Best-in-class autonomous execution
+      - Reliable multi-file edits
+      - Strong tool and terminal use
+    weaknesses:
+      - Very expensive
+      - Peak availability can be limited
+    context_window: 2000000
+    api_available: true
+    open_weights: false
+    speed: medium
+    price_level: very-high
+    api_pricing:
+      currency: USD
+      input_per_million: 15
+      cached_input_per_million: 3
+      output_per_million: 150
+      effective_date: "2026-07-11"
+    last_verified: "2026-07-11"
+    sources:
+      - title: OpenAI Platform
+        url: https://platform.openai.com/docs/models
+
+  - id: claude-fable-5
+    name: Claude Fable 5
+    provider_id: anthropic
+    tier: s-plus
+    rank: 2
+    verdict: Possibly the strongest raw reasoning model available.
+    best_for:
+      - Difficult architecture decisions
+      - Unfamiliar codebases
+      - Complex debugging
+    strengths:
+      - Exceptional reasoning depth
+      - Excellent at understanding legacy systems
+      - Strong code review
+    weaknesses:
+      - Slower than Sonnet-class models
+      - Reserved for hard problems — overkill for routine work
+    context_window: 200000
+    api_available: true
+    open_weights: false
+    speed: slow
+    price_level: very-high
+    api_pricing:
+      currency: USD
+      input_per_million: 15
+      cached_input_per_million: 3
+      output_per_million: 150
+      effective_date: "2026-07-11"
+    last_verified: "2026-07-11"
+    sources:
+      - title: Anthropic Models
+        url: https://docs.anthropic.com/en/docs/about-claude/models
+
+  - id: claude-sonnet-5
+    name: Claude Sonnet 5
+    provider_id: anthropic
+    tier: s
+    rank: 1
+    verdict: Best everyday balance of intelligence, speed, and reliability.
+    best_for:
+      - Existing repositories
+      - Multi-file work
+      - General development
+    strengths:
+      - Excellent balance of speed and quality
+      - Strong agentic capabilities
+      - Reliable tool use
+    weaknesses:
+      - Not the absolute best at extremely hard problems
+      - Premium pricing
+    context_window: 200000
+    api_available: true
+    open_weights: false
+    speed: fast
+    price_level: high
+    api_pricing:
+      currency: USD
+      input_per_million: 3
+      cached_input_per_million: 0.30
+      output_per_million: 15
+      effective_date: "2026-07-11"
+    last_verified: "2026-07-11"
+    sources:
+      - title: Anthropic Models
+        url: https://docs.anthropic.com/en/docs/about-claude/models
+
+  - id: claude-opus-4-8
+    name: Claude Opus 4.8
+    provider_id: anthropic
+    tier: s
+    rank: 2
+    verdict: Excellent for architecture and careful reasoning.
+    best_for:
+      - Architecture design
+      - Refactors
+      - Code review
+      - Careful reasoning
+    strengths:
+      - Deliberate, thorough reasoning
+      - Excellent at catching edge cases
+      - Strong architectural judgment
+    weaknesses:
+      - More deliberate and expensive than Sonnet
+      - Overkill for routine changes
+    context_window: 200000
+    api_available: true
+    open_weights: false
+    speed: medium
+    price_level: high
+    api_pricing:
+      currency: USD
+      input_per_million: 15
+      cached_input_per_million: null
+      output_per_million: 75
+      effective_date: "2026-07-11"
+    last_verified: "2026-07-11"
+    sources:
+      - title: Anthropic Models
+        url: https://docs.anthropic.com/en/docs/about-claude/models
+
+  - id: kimi-k2-7-code
+    name: Kimi K2.7 Code
+    provider_id: moonshot
+    tier: s
+    rank: 3
+    verdict: Strong coding-specialist alternative with good agentic performance.
+    best_for:
+      - Agentic coding tasks
+      - Cost-sensitive teams
+    strengths:
+      - Good agentic performance
+      - Competitive pricing
+    weaknesses:
+      - Less independently validated than top-tier Western models
+      - Smaller ecosystem
+    context_window: 128000
+    api_available: true
+    open_weights: true
+    speed: medium
+    price_level: low
+    api_pricing:
+      currency: USD
+      input_per_million: 0.60
+      cached_input_per_million: null
+      output_per_million: 2.50
+      effective_date: "2026-07-11"
+    last_verified: "2026-07-11"
+    sources:
+      - title: Moonshot AI
+        url: https://platform.moonshot.cn
+
+  - id: gemini-3-5-flash
+    name: Gemini 3.5 Flash
+    provider_id: google
+    tier: a-plus
+    rank: 1
+    verdict: Excellent speed and price-performance for high-volume agent tasks.
+    best_for:
+      - Multimodal tasks
+      - Computer use
+      - High-volume agent loops
+    strengths:
+      - Fastest tier-leading model
+      - Excellent price-performance ratio
+      - Strong multimodal capabilities
+    weaknesses:
+      - Less reliable than top-tier for complex multi-file edits
+      - Can miss subtle bugs
+    context_window: 1000000
+    api_available: true
+    open_weights: false
+    speed: very-fast
+    price_level: low
+    api_pricing:
+      currency: USD
+      input_per_million: 0.10
+      cached_input_per_million: 0.025
+      output_per_million: 0.40
+      effective_date: "2026-07-11"
+    last_verified: "2026-07-11"
+    sources:
+      - title: Google AI Pricing
+        url: https://ai.google.dev/pricing
+
+  - id: deepseek-v4-pro
+    name: DeepSeek V4 Pro
+    provider_id: deepseek
+    tier: a-plus
+    rank: 2
+    verdict: Great affordable high-context model for agent loops.
+    best_for:
+      - Inexpensive agent loops
+      - Large-context workloads
+      - Bulk processing
+    strengths:
+      - Very large context window
+      - Affordable pricing
+      - Strong general coding ability
+    weaknesses:
+      - Not as reliable as top-tier for mission-critical work
+      - Less consistent tool use
+    context_window: 1000000
+    api_available: true
+    open_weights: true
+    speed: medium
+    price_level: low
+    api_pricing:
+      currency: USD
+      input_per_million: 0.50
+      cached_input_per_million: 0.25
+      output_per_million: 2.00
+      effective_date: "2026-07-11"
+    last_verified: "2026-07-11"
+    sources:
+      - title: DeepSeek API Pricing
+        url: https://api-docs.deepseek.com/quick_start/pricing
+
+  - id: gpt-5-5
+    name: GPT-5.5
+    provider_id: openai
+    tier: a-plus
+    rank: 3
+    verdict: Still a highly capable and proven coding model.
+    best_for:
+      - Fallback when Sol is unavailable
+      - Tasks where Sol is overkill
+    strengths:
+      - Proven reliability
+      - Broad capability
+      - Good ecosystem
+    weaknesses:
+      - Superseded by GPT-5.6 Sol
+      - Not as strong on autonomous tasks
+    context_window: 2000000
+    api_available: true
+    open_weights: false
+    speed: medium
+    price_level: medium
+    api_pricing:
+      currency: USD
+      input_per_million: 5
+      cached_input_per_million: 2.50
+      output_per_million: 20
+      effective_date: "2026-07-11"
+    last_verified: "2026-07-11"
+    sources:
+      - title: OpenAI Platform
+        url: https://platform.openai.com/docs/models
+
+  - id: deepseek-v4-flash
+    name: DeepSeek V4 Flash
+    provider_id: deepseek
+    tier: a
+    rank: 1
+    verdict: Excellent cheap model for repetitive work and subagents.
+    best_for:
+      - Repetitive work
+      - Tests and fixes
+      - Subagents and parallel tasks
+    strengths:
+      - Very affordable
+      - Good speed
+      - Solid for structured tasks
+    weaknesses:
+      - Not for complex reasoning
+      - Less capable on novel problems
+    context_window: 1000000
+    api_available: true
+    open_weights: true
+    speed: fast
+    price_level: very-low
+    api_pricing:
+      currency: USD
+      input_per_million: 0.075
+      cached_input_per_million: null
+      output_per_million: 0.30
+      effective_date: "2026-07-11"
+    last_verified: "2026-07-11"
+    sources:
+      - title: DeepSeek API Pricing
+        url: https://api-docs.deepseek.com/quick_start/pricing
+
+  - id: kimi-k2-6
+    name: Kimi K2.6
+    provider_id: moonshot
+    tier: a
+    rank: 2
+    verdict: Strong open-model coding option, superseded by K2.7 Code.
+    best_for:
+      - Open-model deployments
+      - Budget-conscious teams
+    strengths:
+      - Open weights
+      - Competitive performance for its class
+    weaknesses:
+      - Superseded by K2.7 Code
+      - Less capable than top-tier alternatives
+    context_window: 128000
+    api_available: true
+    open_weights: true
+    speed: medium
+    price_level: low
+    api_pricing: null
+    last_verified: "2026-07-11"
+    sources:
+      - title: Moonshot AI
+        url: https://platform.moonshot.cn
+
+  - id: claude-sonnet-4-6
+    name: Claude Sonnet 4.6
+    provider_id: anthropic
+    tier: a
+    rank: 3
+    verdict: Dependable and capable, but largely replaced by Sonnet 5.
+    best_for:
+      - Stable, known-quality outputs
+    strengths:
+      - Well-understood behavior
+      - Reliable for established workflows
+    weaknesses:
+      - Superseded by Sonnet 5
+      - No longer best-in-class
+    context_window: 200000
+    api_available: true
+    open_weights: false
+    speed: fast
+    price_level: medium
+    api_pricing:
+      currency: USD
+      input_per_million: 3
+      cached_input_per_million: 0.30
+      output_per_million: 15
+      effective_date: "2026-07-11"
+    last_verified: "2026-07-11"
+    sources:
+      - title: Anthropic Models
+        url: https://docs.anthropic.com/en/docs/about-claude/models
+
+  - id: gemini-3-1-pro
+    name: Gemini 3.1 Pro
+    provider_id: google
+    tier: a
+    rank: 4
+    verdict: Strong long-context reasoning and prototyping.
+    best_for:
+      - Long-context analysis
+      - Prototyping
+      - Document-grounded tasks
+    strengths:
+      - Excellent context handling
+      - Good reasoning ability
+    weaknesses:
+      - Superseded by Gemini 3.5 Flash for most coding tasks
+      - Slower than Flash variants
+    context_window: 2000000
+    api_available: true
+    open_weights: false
+    speed: medium
+    price_level: medium
+    api_pricing:
+      currency: USD
+      input_per_million: 1.25
+      cached_input_per_million: 0.31
+      output_per_million: 5
+      effective_date: "2026-07-11"
+    last_verified: "2026-07-11"
+    sources:
+      - title: Google AI Pricing
+        url: https://ai.google.dev/pricing
+
+  - id: glm-5
+    name: GLM-5
+    provider_id: zhipu
+    tier: a
+    rank: 5
+    verdict: Competitive open-model option, pending broader real-world validation.
+    best_for:
+      - Open-weight deployments
+      - Chinese-language workflows
+    strengths:
+      - Open weights
+      - Competitive benchmarks
+    weaknesses:
+      - Less proven on sustained repo work
+      - Limited Western ecosystem
+    context_window: 128000
+    api_available: true
+    open_weights: true
+    speed: medium
+    price_level: low
+    api_pricing:
+      currency: USD
+      input_per_million: 0.50
+      cached_input_per_million: null
+      output_per_million: 2.00
+      effective_date: "2026-07-11"
+    last_verified: "2026-07-11"
+    sources:
+      - title: Zhipu AI Open Platform
+        url: https://open.bigmodel.cn
+
+  - id: minimax-m2-5
+    name: MiniMax M2.5
+    provider_id: minmax
+    tier: a
+    rank: 6
+    verdict: Strong benchmark and value contender, but less proven on sustained repo work.
+    best_for:
+      - Value-focused deployments
+      - Specific benchmark-driven tasks
+    strengths:
+      - Strong benchmarks
+      - Affordable pricing
+    weaknesses:
+      - Less tested in real-world agentic workflows
+      - Smaller ecosystem
+    context_window: 128000
+    api_available: true
+    open_weights: true
+    speed: medium
+    price_level: low
+    api_pricing:
+      currency: USD
+      input_per_million: 0.20
+      cached_input_per_million: null
+      output_per_million: 1.10
+      effective_date: "2026-07-11"
+    last_verified: "2026-07-11"
+    sources:
+      - title: MiniMax Platform
+        url: https://platform.minimaxi.com
+
+  - id: claude-haiku-4-5
+    name: Claude Haiku 4.5
+    provider_id: anthropic
+    tier: b
+    rank: 1
+    verdict: Fast and disciplined model for lightweight agent work.
+    best_for:
+      - Code search
+      - Review and documentation
+      - Lightweight subagents
+    strengths:
+      - Fast and cheap
+      - Disciplined output
+    weaknesses:
+      - Limited depth for complex tasks
+      - Not suitable as primary coding model
+    context_window: 200000
+    api_available: true
+    open_weights: false
+    speed: very-fast
+    price_level: low
+    api_pricing:
+      currency: USD
+      input_per_million: 0.25
+      cached_input_per_million: 0.025
+      output_per_million: 1.25
+      effective_date: "2026-07-11"
+    last_verified: "2026-07-11"
+    sources:
+      - title: Anthropic Models
+        url: https://docs.anthropic.com/en/docs/about-claude/models
+
+  - id: gpt-5-x-mini
+    name: GPT-5.x Mini / Luna
+    provider_id: openai
+    tier: b
+    rank: 2
+    verdict: Useful for routine changes, tests, and parallel tasks.
+    best_for:
+      - Routine changes
+      - Tests and documentation
+      - Parallel subagent tasks
+    strengths:
+      - Cost-effective for simple tasks
+      - Good parallel throughput
+    weaknesses:
+      - Limited reasoning depth
+      - Not suitable for complex work
+    context_window: 2000000
+    api_available: true
+    open_weights: false
+    speed: fast
+    price_level: low
+    api_pricing:
+      currency: USD
+      input_per_million: 0.15
+      cached_input_per_million: null
+      output_per_million: 0.60
+      effective_date: "2026-07-11"
+    last_verified: "2026-07-11"
+    sources:
+      - title: OpenAI Platform
+        url: https://platform.openai.com/docs/models
+
+  - id: gemini-3-flash
+    name: Gemini 3 Flash
+    provider_id: google
+    tier: b
+    rank: 3
+    verdict: Good cheap multimodal model, superseded by Gemini 3.5 Flash.
+    best_for:
+      - Cheap multimodal tasks
+    strengths:
+      - Affordable multimodal
+      - Decent speed
+    weaknesses:
+      - Superseded by Gemini 3.5 Flash
+      - Less capable coding agent
+    context_window: 1000000
+    api_available: true
+    open_weights: false
+    speed: fast
+    price_level: very-low
+    api_pricing: null
+    last_verified: "2026-07-11"
+    sources:
+      - title: Google AI Pricing
+        url: https://ai.google.dev/pricing
+
+  - id: deepseek-v3-2
+    name: DeepSeek V3.2
+    provider_id: deepseek
+    tier: b
+    rank: 4
+    verdict: Good value, now replaced by DeepSeek V4 series.
+    best_for:
+      - Budget workflows
+      - Known-quantity deployments
+    strengths:
+      - Established reliability
+      - Affordable
+    weaknesses:
+      - Superseded by V4 series
+      - Not competitive with current top tier
+    context_window: 128000
+    api_available: true
+    open_weights: true
+    speed: medium
+    price_level: low
+    api_pricing:
+      currency: USD
+      input_per_million: 0.50
+      cached_input_per_million: null
+      output_per_million: 2.00
+      effective_date: "2026-07-11"
+    last_verified: "2026-07-11"
+    sources:
+      - title: DeepSeek API Pricing
+        url: https://api-docs.deepseek.com/quick_start/pricing
+
+  - id: qwen-coder
+    name: Qwen Coder Models
+    provider_id: alibaba
+    tier: b
+    rank: 5
+    verdict: Useful for local and budget workflows.
+    best_for:
+      - Local inference
+      - Offline coding
+    strengths:
+      - Open weights
+      - Can run locally
+    weaknesses:
+      - Significantly less capable than cloud models
+      - Limited tool-use capability
+    context_window: 128000
+    api_available: true
+    open_weights: true
+    speed: medium
+    price_level: very-low
+    api_pricing: null
+    last_verified: "2026-07-11"
+    sources:
+      - title: Qwen on Hugging Face
+        url: https://huggingface.co/Qwen
+
+  - id: kimi-k2-older
+    name: Kimi K2 (Older)
+    provider_id: moonshot
+    tier: b
+    rank: 6
+    verdict: Still usable, but no longer top-tier.
+    best_for:
+      - Legacy workflows
+      - Cost-sensitive local deployment
+    strengths:
+      - Open weights
+      - Known behavior
+    weaknesses:
+      - Superseded by K2.6 and K2.7 Code
+      - Noticeably weaker coding ability
+    context_window: 128000
+    api_available: true
+    open_weights: true
+    speed: medium
+    price_level: very-low
+    api_pricing: null
+    last_verified: "2026-07-11"
+    sources:
+      - title: Moonshot AI
+        url: https://platform.moonshot.cn
+
+services:
+  - id: chatgpt
+    name: ChatGPT Plus / Pro
+    provider: OpenAI
+    models:
+      - GPT-5.6 Sol
+      - GPT-5.5
+      - GPT-5.x Mini
+    monthly_price:
+      amount: 200
+      currency: USD
+    usage_summary: ChatGPT Plus is $20/mo (GPT-5.5 and below). Pro is $200/mo with access to GPT-5.6 Sol and higher rate limits.
+    interfaces:
+      - Web
+      - App
+    byok: false
+    best_for: General coding and research with the best OpenAI models.
+    limitation: Pro tier is expensive; Plus does not include Sol.
+    last_verified: "2026-07-11"
+    sources:
+      - title: OpenAI Pricing
+        url: https://openai.com/pricing
+
+  - id: claude-code
+    name: Claude Code
+    provider: Anthropic
+    models:
+      - Claude Sonnet 5
+      - Claude Opus 4.8
+      - Claude Fable 5
+      - Claude Haiku 4.5
+    monthly_price:
+      amount: 20
+      currency: USD
+    usage_summary: Max plan at $20/mo includes Claude Sonnet 5 with usage limits. Higher-tier plans provide access to Fable 5 and Opus 4.8.
+    interfaces:
+      - CLI
+      - IDE
+      - Web
+    byok: false
+    best_for: Developers who want a full agentic coding workspace.
+    limitation: Usage limits are not expressed as exact token counts.
+    last_verified: "2026-07-11"
+    sources:
+      - title: Anthropic Pricing
+        url: https://www.anthropic.com/pricing
+
+  - id: cursor
+    name: Cursor Pro / Business
+    provider: Cursor
+    models:
+      - GPT-5.6 Sol
+      - Claude Sonnet 5
+      - Claude Fable 5
+      - Gemini 3.5 Flash
+      - DeepSeek V4 Pro
+    monthly_price:
+      amount: 20
+      currency: USD
+    usage_summary: Pro at $20/mo includes 500 fast requests + unlimited slow requests. Business at $60/mo with team features.
+    interfaces:
+      - IDE
+    byok: true
+    best_for: Developers who want multi-model access from a single IDE.
+    limitation: Fast request cap; slow requests can be slow during peak.
+    last_verified: "2026-07-11"
+    sources:
+      - title: Cursor Pricing
+        url: https://cursor.sh/pricing
+
+  - id: github-copilot
+    name: GitHub Copilot
+    provider: GitHub
+    models:
+      - GPT-5.5
+      - GPT-5.x Mini
+      - Claude Sonnet 5
+      - Gemini 3.5 Flash
+    monthly_price:
+      amount: 10
+      currency: USD
+    usage_summary: Individual at $10/mo, Business at $19/user/mo, Enterprise at $39/user/mo. Multi-model with Copilot Chat.
+    interfaces:
+      - IDE
+      - CLI
+    byok: false
+    best_for: Developers already in the GitHub ecosystem.
+    limitation: Limited to Copilot's curated model selection and UX.
+    last_verified: "2026-07-11"
+    sources:
+      - title: GitHub Copilot Pricing
+        url: https://github.com/features/copilot/plans
+
+  - id: windsurf
+    name: Windsurf
+    provider: Codeium
+    models:
+      - GPT-5.5
+      - Claude Sonnet 5
+      - Gemini 3.5 Flash
+      - DeepSeek V4 Pro
+      - DeepSeek V4 Flash
+    monthly_price:
+      amount: 15
+      currency: USD
+    usage_summary: Windsurf Pro at $15/mo includes 500 flow credits, unlimited completions, and multi-model chat.
+    interfaces:
+      - IDE
+    byok: true
+    best_for: Developers who want an agentic flow with multi-model flexibility.
+    limitation: Flow credit system can be confusing; premium model usage burns credits fast.
+    last_verified: "2026-07-11"
+    sources:
+      - title: Windsurf Pricing
+        url: https://codeium.com/pricing
+
+  - id: openrouter
+    name: OpenRouter
+    provider: OpenRouter
+    models:
+      - GPT-5.6 Sol
+      - Claude Sonnet 5
+      - Claude Fable 5
+      - DeepSeek V4 Pro
+      - DeepSeek V4 Flash
+      - Gemini 3.5 Flash
+      - Kimi K2.7 Code
+      - Qwen Coder Models
+    monthly_price:
+      amount: 0
+      currency: USD
+    usage_summary: Pay-as-you-go API gateway with no monthly fee. Access to most major models with standard API pricing.
+    interfaces:
+      - API
+    byok: true
+    best_for: Developers who want a single API key for many providers.
+    limitation: No free tier beyond initial credits; model availability can change.
+    last_verified: "2026-07-11"
+    sources:
+      - title: OpenRouter Pricing
+        url: https://openrouter.ai/pricing
+
+  - id: google-ai
+    name: Google AI Studio / Vertex
+    provider: Google DeepMind
+    models:
+      - Gemini 3.5 Flash
+      - Gemini 3.1 Pro
+      - Gemini 3 Flash
+    monthly_price:
+      amount: 0
+      currency: USD
+    usage_summary: Free tier available via AI Studio with rate limits. Vertex AI offers enterprise pricing with no monthly fee beyond usage.
+    interfaces:
+      - Web
+      - API
+    byok: false
+    best_for: Developers already in the Google Cloud ecosystem.
+    limitation: Free tier has strict rate limits; enterprise requires Vertex.
+    last_verified: "2026-07-11"
+    sources:
+      - title: Google AI Pricing
+        url: https://ai.google.dev/pricing
