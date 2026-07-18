@@ -31,6 +31,7 @@ This site is where I write about stuff, and share projects, code snippets, and t
 - 🌗 **Dark mode** toggle (remembers your preference)
 - 💬 **Comments** via Giscus (GitHub Issues)
 - 📈 **Upvotes** and dynamic counters (via Netlify Functions + Redis)
+- 📊 **Sampled Core Web Vitals** through a privacy-limited first-party collector
 - 🎵 **Now playing** integration with Spotify
 - 📚 **Reading shelf** synced from Goodreads with manual physical-book/progress overrides and cover thumbnails
 - 🎬 **Film diary** synced from dated Letterboxd entries with poster thumbnails
