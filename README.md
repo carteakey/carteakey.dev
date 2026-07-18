@@ -45,6 +45,7 @@ npm run start
 ```
 - Visit [http://localhost:8080](http://localhost:8080) to view the site locally.
 - Edit content in `src/` (posts, pages, data, etc).
+- After a production build, run `npm run verify:ui` to smoke-check generated metadata, responsive archive markup, social images, and easter-egg wiring.
 
 ## Deploy
 

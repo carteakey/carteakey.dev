@@ -16,7 +16,8 @@
     "start:css": "tailwindcss -i ./src/static/css/tailwind.css -o ./_site/css/tailwind.css --watch --postcss",
     "debug": "DEBUG=* eleventy",
     "metrics:merge-check": "node ./utils/check-engagement-merge.mjs",
-    "audit:lighthouse": "pnpm dlx @lhci/cli@0.15.1 autorun --config=./lighthouserc.cjs"
+    "audit:lighthouse": "pnpm dlx @lhci/cli@0.15.1 autorun --config=./lighthouserc.cjs",
+    "verify:ui": "node ./utils/verify-ui.mjs"
   },
   "repository": {
     "type": "git",
