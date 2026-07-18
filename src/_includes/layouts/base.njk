@@ -9,7 +9,7 @@
 
   {# Google Fonts removed — all fonts now self-hosted via src/static/fonts/ #}
   <meta name="generator" content="Eleventy">
-  <link id="prism-theme" href="/static/css/prism/prism-light.css" rel="stylesheet"/>
+  <link id="prism-theme" href="/static/css/prism/prism-light.css?v={{ versions.version }}" rel="stylesheet"/>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-DKK1XXJY42"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -21,10 +21,10 @@
     gtag("config", "G-DKK1XXJY42");
   </script>
 
-  <script src="/static/js/theme.js"></script>
+  <script src="/static/js/theme.js?v={{ versions.version }}" data-asset-version="{{ versions.version }}"></script>
   
   <script defer src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-  <script defer src="/static/js/alpine.min.js"></script>
+  <script defer src="/static/js/alpine.min.js?v={{ versions.version }}"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#14b8a6" id="theme-color-meta">
@@ -81,7 +81,7 @@
   <meta name="author" content="{{ metadata.author.name }}" />
   <link rel="canonical" href="{{ resolvedCanonicalUrl }}" />
   
-  <link rel="stylesheet" href="{{ '/css/tailwind.css' | url }}" />
+  <link rel="stylesheet" href="{{ '/css/tailwind.css' | url }}?v={{ versions.version }}" />
 
   <link rel="alternate" type="application/atom+xml" title="{{ metadata.title }} - Atom Feed" href="{{ '/feed.xml' | url }}">
   
@@ -416,11 +416,11 @@
   </script>
 
   {# Easter Eggs - loaded from external file #}
-  <script defer src="/static/js/easter-eggs.js"></script>
-  <script defer src="/static/js/newsletter.js"></script>
+  <script defer src="/static/js/easter-eggs.js?v={{ versions.version }}"></script>
+  <script defer src="/static/js/newsletter.js?v={{ versions.version }}"></script>
   {% if monitoring.webVitalsEnabled %}
     <script
-      src="/static/js/web-vitals.js"
+      src="/static/js/web-vitals.js?v={{ versions.version }}"
       data-endpoint="/.netlify/functions/web-vitals"
       data-sample-rate="{{ monitoring.webVitalsSampleRate }}"
     ></script>

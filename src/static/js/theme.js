@@ -1,6 +1,11 @@
 // Theme Management - Dark/Light Mode and Accent Colors
 // Extracted from base.njk for cleaner template
 
+const ASSET_VERSION = document.currentScript?.dataset.assetVersion || '';
+const versionedAsset = (path) => ASSET_VERSION
+  ? `${path}?v=${encodeURIComponent(ASSET_VERSION)}`
+  : path;
+
 const ACCENT_COLORS = {
   gray: "#6b7280",
   slate: "#64748b",
@@ -90,9 +95,9 @@ function switchPrismTheme() {
   if (!themeLink) return;
   
   if (isDarkMode()) {
-    themeLink.setAttribute('href', '/static/css/prism/prism-twilight.css');
+    themeLink.setAttribute('href', versionedAsset('/static/css/prism/prism-twilight.css'));
   } else {
-    themeLink.setAttribute('href', '/static/css/prism/prism-light.css');
+    themeLink.setAttribute('href', versionedAsset('/static/css/prism/prism-light.css'));
   }
   if (typeof Prism !== 'undefined') Prism.highlightAll();
 }
