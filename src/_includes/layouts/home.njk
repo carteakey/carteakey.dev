@@ -2,7 +2,7 @@
 layout: layouts/base.njk
 templateClass: tmpl-home
 ---
-{% if page.url != "/" %}
+{% if page.url != "/" and not hideBreadcrumbs %}
   {% include "components/breadcrumbs.njk" %}
 {% endif %}
 {{ content | safe }}

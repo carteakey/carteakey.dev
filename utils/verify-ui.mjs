@@ -93,6 +93,7 @@ async function verifyMetadata(html, label) {
 
 async function main() {
   const home = await readOutput("index.html");
+  const hindiHome = await readOutput("hi/index.html");
   const archive = await readOutput("blog/index.html");
   const easterEggs = await readOutput("static/js/easter-eggs.js");
   const blogRoot = path.join(outputDir, "blog");
@@ -115,6 +116,9 @@ async function main() {
   check(easterEggs.includes("konamiCode") && easterEggs.includes("showSecretMessage") && easterEggs.includes("sparkleMode"), "All three easter-egg triggers remain in the script");
   check(archive.includes("sm:flex-row") && archive.includes("hidden sm:block"), "The post list keeps its responsive row and thumbnail classes");
   check(archive.includes('id="blogList"') && archive.includes('id="blogGrid"'), "Both post list views are rendered");
+  check(hindiHome.includes('<html lang="hi"'), "The Hindi landing page declares its document language");
+  check(hindiHome.includes('hreflang="en"') && hindiHome.includes('hreflang="hi"') && hindiHome.includes('hreflang="x-default"'), "The translated landing page links all language alternatives");
+  check(home.includes('href="https://carteakey.dev/hi/"') && home.includes('hreflang="hi"'), "The English home page advertises its Hindi translation");
 
   await verifyMetadata(home, "Home page");
   if (representativePost) {
