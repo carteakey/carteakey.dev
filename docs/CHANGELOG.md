@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.6.0] - 2026-07-17
+### Added
+- Support: Added a metadata-driven support page and call-to-action with a safe setup state until an external support URL is configured.
+- Newsletter: Added a sticky subscribe action, homepage email form, and privacy-friendly Redis submission metrics.
+- Snippets and learning: Added browser-local snippet favorites and learning progress controls.
+- Monitoring: Added sampled Core Web Vitals collection and a monthly Lighthouse workflow.
+- Internationalization: Added opt-in language metadata, alternate links, a language switcher, and a Hindi homepage proof page.
+- Verification: Added generated-page UI checks for responsive post lists, easter eggs, metadata, structured data, and social-image integrity.
+
+### Changed
+- Assets: Switched first-party CSS and JavaScript to deterministic content-versioned URLs.
+- Fonts: Removed unused font files and preloaded the active face, cutting the custom font payload by 74.5%.
+- Local inference guide: Added a symptom-first path and evidence labels, corrected current llama.cpp defaults, trimmed generic material, and documented the research and visual decisions.
+- TODO: Completed and reconciled the remaining repository backlog, including duplicate historical entries.
+
+### Fixed
+- Local inference evidence: Published complete evidence-shaped L3MS profiles and kept community submissions in a separate unranked schema and view.
+
 ## [2.5.1] - 2026-07-12
 ### Changed
 - Home: Simplified Site Index hover states to a quiet title-color shift while retaining a clear keyboard focus outline.
