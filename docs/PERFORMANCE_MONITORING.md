@@ -21,3 +21,9 @@ Daily metric hashes use `web-vitals:YYYY-MM-DD:LCP`, `:CLS`, and `:INP`. They co
 CLS sums use a scale of 100,000; LCP and INP are stored in milliseconds. Divide `sumScaled` by the scale and then by `count` to calculate the daily mean. The rating buckets are more useful than the mean for a quick health check.
 
 Localhost is never sampled. Live verification therefore requires a Netlify deploy with the Upstash variables configured.
+
+## Monthly synthetic audit
+
+`.github/workflows/lighthouse.yml` runs Lighthouse CI against the homepage, writing archive, and Now page on the first day of each month. It can also be started manually. HTML and JSON reports are retained as GitHub Actions artifacts for 90 days.
+
+Run the same audit locally with `pnpm audit:lighthouse`. The command audits the deployed production site, not the local build.

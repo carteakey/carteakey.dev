@@ -1,0 +1,39 @@
+name: Monthly Lighthouse Audit
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '15 8 1 * *'
+
+permissions:
+  contents: read
+
+jobs:
+  lighthouse:
+    name: Audit production routes
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Enable pnpm
+        run: corepack enable
+
+      - name: Run Lighthouse CI
+        run: pnpm dlx @lhci/cli@0.15.1 autorun --config=./lighthouserc.cjs
+
+      - name: Upload Lighthouse reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-reports-${{ github.run_number }}
+          path: lighthouse-reports/
+          if-no-files-found: warn
+          retention-days: 90
