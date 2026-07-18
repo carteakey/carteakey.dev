@@ -2260,6 +2260,104 @@ picture img {
     width: 100%;
   }
 
+  .home-newsletter-panel {
+    display: grid;
+    gap: 0.9rem;
+    align-items: end;
+    padding: 0.9rem 0;
+    border-block: 1px solid rgb(214 207 193 / 0.95);
+  }
+
+  .dark .home-newsletter-panel {
+    border-color: rgb(63 63 70 / 0.95);
+  }
+
+  @media (min-width: 768px) {
+    .home-newsletter-panel {
+      grid-template-columns: minmax(0, 1fr) minmax(20rem, 0.8fr);
+    }
+  }
+
+  .home-newsletter-form {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.45rem;
+  }
+
+  .home-newsletter-input {
+    min-width: 0;
+    border: 1px solid rgb(209 213 219 / 1);
+    border-radius: 0.16rem;
+    background: transparent;
+    padding: 0.55rem 0.7rem;
+    font-size: 0.82rem;
+  }
+
+  .dark .home-newsletter-input {
+    border-color: rgb(82 82 91 / 1);
+    color: rgb(244 244 245 / 1);
+  }
+
+  .home-newsletter-button {
+    border-radius: 0.16rem;
+    padding: 0.55rem 0.85rem;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .home-newsletter-error {
+    grid-column: 1 / -1;
+    margin: 0;
+    color: rgb(185 28 28 / 1);
+    font-size: 0.72rem;
+  }
+
+  .dark .home-newsletter-error {
+    color: rgb(252 165 165 / 1);
+  }
+
+  .subscribe-sticky {
+    position: fixed;
+    right: max(0.75rem, env(safe-area-inset-right));
+    bottom: max(0.75rem, env(safe-area-inset-bottom));
+    z-index: 40;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.38rem;
+    border: 1px solid color-mix(in srgb, var(--accent-color) 65%, rgb(214 207 193));
+    border-radius: 0.16rem;
+    background: rgb(251 250 246 / 0.94);
+    padding: 0.46rem 0.62rem;
+    box-shadow: 0 3px 12px rgb(24 24 27 / 0.09);
+    color: var(--accent-color);
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    text-transform: uppercase;
+    backdrop-filter: blur(8px);
+  }
+
+  .subscribe-sticky:hover {
+    border-color: var(--accent-color);
+  }
+
+  .dark .subscribe-sticky {
+    background: rgb(20 20 20 / 0.94);
+    box-shadow: 0 3px 12px rgb(0 0 0 / 0.28);
+  }
+
+  @media (min-width: 1024px) {
+    .subscribe-sticky {
+      right: 1.25rem;
+      bottom: 1.25rem;
+    }
+  }
+
   .home-recent-panel .feed-list {
     border-top: 0;
   }

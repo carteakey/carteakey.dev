@@ -4,6 +4,8 @@
 
 The newsletter feature has been implemented using **Netlify Forms**, which is a built-in feature that requires no additional configuration on your end. Here's what you need to know:
 
+Submission totals are also counted in Upstash Redis after Netlify accepts the form. Configure `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` in Netlify to enable those counters. No email address or name is sent to the tracking function; it records only the form source and aggregate date.
+
 ## How it works
 
 1. **Form Submission**: When someone submits the newsletter form, Netlify automatically captures the data

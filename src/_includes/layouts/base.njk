@@ -415,6 +415,14 @@
 
   {# Easter Eggs - loaded from external file #}
   <script defer src="/static/js/easter-eggs.js"></script>
+  <script defer src="/static/js/newsletter.js"></script>
+
+  {% if page.url != "/newsletter/" and page.url != "/newsletter/success/" %}
+    <a href="/newsletter/" class="subscribe-sticky accent-focus not-prose" aria-label="Subscribe to new writing">
+      {% feather "mail", class="w-3.5 h-3.5" %}
+      <span>Subscribe</span>
+    </a>
+  {% endif %}
 
   {# Service Worker Registration for Offline Support #}
   <script>
