@@ -2346,6 +2346,65 @@ picture img {
     border-color: var(--accent-color);
   }
 
+  .snippet-filter-button,
+  .snippet-favorite-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgb(209 213 219 / 1);
+    border-radius: 0.16rem;
+    background: transparent;
+    color: rgb(107 114 128 / 1);
+    transition: border-color 0.15s ease, color 0.15s ease, background-color 0.15s ease;
+  }
+
+  .snippet-filter-button {
+    gap: 0.35rem;
+    padding: 0.35rem 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .snippet-filter-count {
+    min-width: 1.1rem;
+    border-left: 1px solid currentColor;
+    padding-left: 0.35rem;
+    text-align: center;
+  }
+
+  .snippet-favorite-button {
+    width: 1.8rem;
+    height: 1.8rem;
+  }
+
+  .snippet-filter-button:hover,
+  .snippet-filter-button.is-active,
+  .snippet-favorite-button:hover,
+  .snippet-favorite-button.is-favorite {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+  }
+
+  .snippet-favorite-button.is-favorite svg {
+    fill: currentColor;
+  }
+
+  .dark .snippet-filter-button,
+  .dark .snippet-favorite-button {
+    border-color: rgb(63 63 70 / 1);
+    color: rgb(161 161 170 / 1);
+  }
+
+  .dark .snippet-filter-button:hover,
+  .dark .snippet-filter-button.is-active,
+  .dark .snippet-favorite-button:hover,
+  .dark .snippet-favorite-button.is-favorite {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+  }
+
   .dark .subscribe-sticky {
     background: rgb(20 20 20 / 0.94);
     box-shadow: 0 3px 12px rgb(0 0 0 / 0.28);
