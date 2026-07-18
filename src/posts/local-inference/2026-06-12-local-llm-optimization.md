@@ -4,7 +4,7 @@ description: A practical guide to hardware, OS, and llama.cpp tuning, built from
 image: /img/blog-sketches/unique/local-llm-optimization-stamp-trim.png
 imageAlt: "Transparent monochrome sketch of a workstation PC tower with exposed GPU fans, monitor displaying tuning parameters, and dials measuring tokens-per-second performance"
 date: 2026-06-12
-updated: 2026-06-25
+updated: 2026-07-17
 authored_by: ai-assisted
 draft: false
 tags:
@@ -21,39 +21,31 @@ Over the past year I've written posts on running [gpt-oss-120b](/blog/local-infe
 
 This is my attempt at a master reference. Instead of re-discovering flags in every new model post, I want one doc to link back to. If you're hitting a performance wall, starting from scratch, or just want to understand what each knob actually does - start here.
 
-The scope is intentionally wide. The numbers in this guide come from one machine: an RTX 4070 12 GB, i5-12600K, 32 GB of DDR5-6000, Linux, CUDA, and recent llama.cpp builds. The Apple Silicon, AMD, multi-GPU, and server sections are useful starting points, but I haven't tested those setups myself.
+The scope is intentionally wide. The numbers in this guide come from one machine: an RTX 4070 12 GB, i5-12600K, DDR5-6000, Linux, CUDA, and recent llama.cpp builds. Its RAM capacity changed during the project, so the dashboard records the hardware used for each run instead of pretending every result came from one fixed configuration. The Apple Silicon, AMD, multi-GPU, and server sections are useful starting points, but I haven't tested those setups myself.
 
-When I give a number, it came from this box. Things I still need to test are called out as such.
+Claims use three labels:
+
+- **Tested here** means I measured it on the RTX 4070 node. The exact command and available run metadata live in the [L3MS dashboard](https://github.com/carteakey/l3ms).
+- **Upstream behavior** means it comes from current llama.cpp documentation, checked on July 17, 2026.
+- **Needs testing** means it is a useful lead, not a recommendation.
 
 ---
 
-## 1. TL;DR: Start Here
+## 1. Start with the Symptom
 
-- **If you want maximum control and performance:** use `llama.cpp` directly. This guide assumes that path.
-- **If you want desktop UX, model browsing, and a good local OpenAI-compatible endpoint:** LM Studio is perfectly reasonable.
-- **If you want multi-user serving, batching, and production throughput:** evaluate `vLLM`.
-- **If you are on Apple Silicon:** compare `llama.cpp` Metal with `mlx`; unified memory changes the sizing math.
-- **If TG is bad on MoE models:** check RAM speed before touching flags. Enabling XMP took my machine from roughly one-third speed back to normal.
-- **If you hit VRAM limits:** reduce context, quantize KV cache, lower `--parallel`, then tune layer placement.
-- **If you use MTP speculative decoding:** benchmark draft acceptance and KV cache precision together; raw TPS is not enough.
-- **If your workload is coding agents:** measure TTFT, PP, TG, prompt-cache reuse, tool-call latency, and long-session stability together.
-- **If you are running a single-user homelab:** prefer `--parallel 1`, explicit context sizing, and static placement once you have a stable config.
+| Symptom | Check first | Then change |
+| --- | --- | --- |
+| Model fails to load or dies late in a session | Free VRAM and real serving context | Reduce context or slots, quantize KV, increase fit headroom, then change [placement](#10-layer-placement-the-core-optimization-for-moe) |
+| Prompt processing is slow | PP with a representative prompt | Sweep [`--ubatch-size`](#12-2-ubatch-size-ub-physical-micro-batch); check GPU offload and backend |
+| Token generation is slow | TG, RAM speed, CPU frequency | Fix memory/power state, then compare [placement](#10-layer-placement-the-core-optimization-for-moe) and [P-core pinning](#14-3-taskset-p-core-pinning-linux) |
+| Speculation adds no speed | Acceptance, TG, and end-to-end loop time | Shorten the draft or compare target/draft [KV precision](#19-2-target-and-draft-kv-cache-precision) |
+| Two GPUs are slower than one | Split mode and interconnect | Start with [layer mode](#21-multi-gpu-primer); treat tensor mode as experimental |
 
-### 1.1 Where to Jump In
-
-This is a reference, not a linear tutorial. Start with the part that matches the problem:
-
-- **MoE generation is slow:** check [RAM speed](#6-1-the-memory-hierarchy-the-most-important-mental-model), then [layer placement](#10-layer-placement-the-core-optimization-for-moe) and [P-core pinning](#14-3-taskset-p-core-pinning-linux).
-- **The model does not fit or dies later in a session:** start with [`--fit`](#10-4-fit-on-recommended-starting-point), [context and KV cache](#11-context-and-kv-cache), then the [known OOM causes](#known-tg-variability-root-causes).
-- **Vision fails at load or on the first image:** go to [Vision / Multimodal](#20-vision-multimodal). The projector and image batch need their own headroom.
-- **MTP is no faster than normal decoding:** check [draft acceptance and KV precision](#19-2-target-and-draft-kv-cache-precision), not just reported TG.
-- **Coding feels slow even with good TG:** measure the whole agent loop in [Coding Workloads](#18-coding-workloads-what-to-measure).
-- **You have more than one GPU:** start with [Multi-GPU](#21-multi-gpu-primer) before guessing tensor split ratios.
-- **You use LM Studio or Ollama:** the [hardware](#6-hardware), [OS](#7-os-choice), and [security](#23-security-notes) sections still apply. Most llama.cpp flags do not.
+For coding agents, save TTFT, PP, TG, cache behavior, and a complete tool loop. A fast decode number can still hide repeated prefill or a cold prompt cache.
 
 ### 1.2 Safe Starting Profiles
 
-These are conservative baselines for a single-user server. They are starting points, not universal optimums; model architecture still changes the memory math.
+These are **tested-here starting profiles**, not llama.cpp defaults. They describe how I begin on this node before model-specific tuning.
 
 | Workload | `--fit-target` | Context | KV cache | `--parallel` | Batch |
 | --- | ---: | ---: | --- | ---: | ---: |
@@ -62,34 +54,18 @@ These are conservative baselines for a single-user server. They are starting poi
 | Vision, 12 GB VRAM | 512+ MiB | 64k | `q8_0` / `q8_0` | 1 | 256 |
 | MTP speculative decoding | 512+ MiB | 64k | Benchmark per model | 1 | 1024 |
 
-> **Avoid the exciting failure modes:** leave at least 512 MiB of fit headroom, test `GGML_CUDA_GRAPH_OPT` before keeping it, exclude E-cores on hybrid Intel CPUs, and benchmark MTP KV precision per model.
+> **Tested here:** 512 MiB of fit headroom, one slot, and q8 KV have been reliable for text on this 12 GB card. Vision needed more headroom. Treat those as local results, not capacity rules for another architecture.
 
-## 2. Optimization Priority Checklist
+## 2. What Has Actually Moved the Needle
 
-Ordered by typical impact. Each item links to the section with the full explanation.
-
-| # | Action | Impact | Section |
-| --- | --- | --- | --- |
-| 1 | **Enable XMP/EXPO in BIOS** | Up to 2–3× TG if RAM is running far below its rated speed | §6.1 |
-| 2 | **Use MTP speculative drafting** | 2.0x-2.6x TG speedup | §19.1 |
-| 3 | **Use QAT low-bit models** (e.g. Q4 QAT) | Recovers much of the lost low-bit quality | §9.3 |
-| 4 | **Run Linux** or tune Windows power plan | ~15-20% TPS | §7 |
-| 5 | **Replace `power-profiles-daemon` with `tuned-ppd`** | Eliminates intermittent 20-30% TG drop | §7.4 |
-| 6 | **Build llama.cpp from source; keep updated** | MoE kernel improvements per release | §8.2 |
-| 7 | **Use `--fit on`** for VRAM-optimal layer placement | Major TG; no manual tuning | §10.4 |
-| 8 | **Use `-ctk q8_0 -ctv q8_0`** as a text-server baseline | Frees KV VRAM for extra GPU layers | §11.2 |
-| 9 | **Benchmark target and draft KV precision for MTP** | Gemma 4 was sensitive; other models may not be | §19.2 |
-| 10 | **Set `--parallel 1`** for single-user homelab | Reclaims KV VRAM for weights | §11.3 |
-| 11 | **Pin to P-cores** with `taskset -c` | +20-30% TG on Intel hybrid | §14.3 |
-| 12 | **Enable `--flash-attn on`** | Required for large-context stability | §11.4 |
-| 13 | **Enable `--no-mmap`** | Eliminates TG jitter from page faults | §15.1 |
-| 14 | **Enable `--mlock`** | Prevents mid-session swap degradation | §15.2 |
-| 15 | **Go headless** (`systemctl isolate multi-user.target`) | Frees 200-400 MB RAM + compositor VRAM | §7.4 |
-| 16 | **iGPU for display** (motherboard HDMI) | Frees 500-1000 MB VRAM | §6.2 |
-| 17 | **Sweep `--ubatch-size`** on your real prompt shape | PP/VRAM tradeoff; no universal value | §12.2 |
-| 18 | **Try n-gram speculative decoding** for repetitive code sessions | Needs local benchmark before I publish numbers | §19.4 |
-| 19 | **A/B test `GGML_CUDA_GRAPH_OPT`** with enough headroom | Can reduce dispatch overhead, but can also regress | §17.1 |
-| 20 | **Consider ik_llama.cpp** (MoE optimizations) | Specialized/niche; not covered here | §22 |
+| Evidence | Change | Result on this node |
+| --- | --- | --- |
+| **Tested here** | Enable the rated XMP profile | Restored MoE TG from roughly one-third speed |
+| **Tested here** | Keep hybrid Intel E-cores out of the inference thread set | Improved TG by 20–30% in affected profiles |
+| **Tested here** | Quantize text-server KV to q8 and use one slot | Freed enough VRAM for more GPU-resident weights |
+| **Tested here** | Gemma 4 QAT plus MTP | 2.0–2.6× TG in the published runs; not a general MTP promise |
+| **Upstream behavior** | Let fit select placement when no explicit placement is supplied | Current llama.cpp enables fit by default; use `llama-fit-params` to capture reproducible flags |
+| **Needs testing** | n-gram speculation, CUDA graph optimization, tensor-parallel multi-GPU | Keep only when an end-to-end workload beats the baseline |
 
 ## 3. What to Measure Before Tuning
 
@@ -111,54 +87,22 @@ Do not optimize from a single short prompt. Short prompts hide KV cache costs, l
 
 ---
 
-## 4. Glossary
+## 4. Small Glossary
 
 | Term | Definition |
 | --- | --- |
-| **GGUF** | File format for quantized LLM weights used by llama.cpp. Stores weights, metadata, and tokenizer in a single binary. |
-| **Quantization** | Reducing weight numerical precision (FP16 → Q4, etc.) to shrink model size and accelerate compute. More bits = higher quality, larger file. |
-| **QAT (Quantization-Aware Training)** | Training/fine-tuning a model with quantization noise injected. Often preserves more quality than post-training quantization at the same bit depth. |
-| **MTP (Multi-Token Prediction)** | Speculative decoding method native to MTP-trained models (e.g. Gemma 4). Uses a companion draft model to generate multiple candidate tokens in parallel, which the base model validates in one GPU step. |
-| **PP / Prompt Processing** | Tokens per second during the prefill phase - how fast the model reads your input. GPU-bound. |
-| **TG / Token Generation** | Tokens per second during autoregressive decode - how fast you see output stream. Memory-bandwidth-bound. **This is what the user feels.** |
+| **PP / Prompt Processing** | Tokens per second while the model reads the prompt. |
+| **TG / Token Generation** | Tokens per second while it generates output. |
 | **KV Cache** | Buffer storing attention Key/Value tensors for all prior context tokens. Grows linearly with context length. Lives in VRAM. |
-| **Context Window** | Maximum total tokens (input + output) in one session. Determines KV cache size. |
-| **Dense Model** | Standard transformer: all parameters active per token. Must fit in VRAM for full-speed inference. |
-| **MoE / Mixture of Experts** | Architecture where each token activates only a small subset of "expert" networks. Enables very large total parameters with low per-token compute. Expert weights that don't fit in VRAM can spill to system RAM. |
-| **Active Parameters** | For MoE: the subset of params computed per token. gpt-oss-120b: ~5B active of 120B total. Qwen3-Coder-Next: ~3B active of 80B total. TG speed tracks active count, not total. |
-| **VRAM** | Video RAM - on-die GPU memory. Lowest latency, highest bandwidth storage for inference. |
-| **Perplexity** | Statistical measure of model surprise on a test corpus. Useful smoke test, but not the same as matching the original model's behavior. |
-| **KLD / KL Divergence** | Distance between the baseline model's next-token distribution and the quantized model's distribution on the same prompts. Lower drift usually means a better reconstruction. |
-| **llama-bench** | CLI tool for synthetic PP and TG benchmarking, included in llama.cpp. |
-| **llama-fit-params** | CLI tool that probes free VRAM and outputs optimal `-ngl` and `--override-tensor` flags without starting a server. |
-| **`-ngl` / n-gpu-layers** | Number of transformer blocks to load onto GPU VRAM. |
-| **`-ot` / override-tensor** | Regex-based per-tensor placement override - route specific weight tensors to CPU or GPU. |
-| **XMP / EXPO** | BIOS profiles (Intel XMP / AMD EXPO) that run system RAM at its rated speed. "Auto" in BIOS often defaults to JEDEC base - a fraction of rated speed. |
-| **Fit** | `--fit on` flag: auto-probes VRAM and computes optimal placement at startup, accounting for KV cache. |
+| **MoE** | A model that activates only some expert weights per token; offloaded experts can make system RAM bandwidth matter. |
+| **MTP** | Speculation using a companion draft model trained for multi-token prediction. |
+| **Fit** | llama.cpp's automatic VRAM-aware placement pass. |
 
 ---
 
-## 5. The Inference Landscape
+## 5. Pick the Runtime Before the Flags
 
-### 5.1 Why Run Locally?
-
-- **Privacy**: prompts never leave your machine.
-- **Cost**: no per-token bill, just the hardware and electricity you are already paying for.
-- **Control**: any model, any quant, any parameters. No deprecations, no rate limits, no pricing changes.
-- **Offline**: works without internet.
-- **Experimentation**: swap models, tune parameters, run evals without API contracts.
-
-### 5.2 Cloud vs Local - Honest Tradeoffs
-
-| | Hosted API | Self-hosted cloud GPU | Local hardware |
-| --- | --- | --- | --- |
-| Setup | Minutes | Hours | Hours–days |
-| Model quality ceiling | Frontier | Your choice | Your choice |
-| Per-token cost | $1–15/M | $0.10–0.50/GPU-hr | Electricity |
-| Privacy | Provider sees data | You control | Full |
-| Hardware investment | None | None | $500–$3000+ |
-
-Most serious users end up with both: cloud APIs for frontier tasks, local for everything privacy-sensitive, experimental, or routine.
+This guide is about tuning llama.cpp on a consumer CUDA workstation. If the requirement is a desktop model browser, use LM Studio; if it is simple model management, use Ollama; if it is high-throughput multi-user serving on datacenter GPUs, evaluate vLLM. The rest of this post assumes direct access to llama.cpp flags.
 
 ### 5.3 Local Inference Tools
 
@@ -236,15 +180,15 @@ VRAM is the primary inference resource. More VRAM = more layers on GPU = faster 
 
 For **dense models** (all in VRAM): CPU is nearly idle during inference. Core count has minimal impact.
 
-For **MoE hybrid**: CPU executes expert forward passes for every token. Expert compute is the TG bottleneck. **Intel hybrid (12th gen+):** P-cores and E-cores have significantly different throughput for matrix operations. E-cores drag TG down by 20–30%. Always pin to P-cores:
+For **MoE hybrid** runs, CPU-resident experts can make CPU and RAM the TG bottleneck. **Tested here:** including E-cores on the i5-12600K reduced TG by 20–30%, so these profiles pin inference to its P-cores:
 
 ```bash
 taskset -c 0-11 llama-server ...   # i5-12600K: cores 0-11 are P-cores
 ```
 
-Thread count: set `--threads` to P-core count, leaving 1–2 for the OS. More threads than P-cores is counterproductive.
+Start with the P-core count for `--threads`, leaving capacity for the OS, then confirm with a short sweep.
 
-### 6.4 What Is "Good Enough" Throughput?
+### 6.4 How Throughput Feels on This Setup
 
 | TG speed | Experience |
 | --- | --- |
@@ -254,7 +198,7 @@ Thread count: set `--threads` to P-core count, leaving 1–2 for the OS. More th
 | 20–40 t/s | Fast; coding agents feel snappy |
 | 40+ t/s | Near-instant for most tasks |
 
-For coding agents: TG dominates. First-token latency matters less once the context is warm. Every t/s gained compounds across a full session.
+For coding agents, do not read this table alone. Cold TTFT and repeated prefill can dominate even when warm TG feels fast.
 
 ---
 
@@ -262,11 +206,11 @@ For coding agents: TG dominates. First-token latency matters less once the conte
 
 ### 7.1 Linux
 
-Highest-performance path for CUDA inference.
+Linux exposes the CPU, memory, and service controls used in my profiles.
 
-- **~15–20% TPS advantage** over Windows in practice: leaner CUDA driver overhead, better scheduling under sustained load, direct memory control.
+- **Tested here:** Linux was 15–20% faster than the Windows configuration I compared. That is one machine, not an OS constant.
 - Full access to CPU governor, NUMA, huge pages, cgroups, headless mode.
-- Recommended distributions: CachyOS (real-time kernel, best power management tuning surface), Ubuntu/Debian (easiest CUDA packages), Arch (rolling, latest drivers).
+- Choose a distribution with a current supported GPU stack. My node runs CachyOS; Ubuntu/Debian and Arch are common alternatives.
 
 ### 7.2 Windows
 
@@ -288,7 +232,7 @@ Different runtime stack - CUDA guidance does not apply.
 
 ### 7.4 Linux OS Tuning
 
-These settings have measurable impact on TG throughput.
+These settings corrected measurable problems on this node. Apply them one at a time and keep a baseline.
 
 #### CPU Governor and Power Profile
 ```bash
@@ -302,7 +246,7 @@ cat /sys/devices/system/cpu/cpu0/cpufreq/energy_performance_preference
 grep "cpu MHz" /proc/cpuinfo | sort -rn | head -6
 ```
 
-**The `power-profiles-daemon` trap**: KDE and GNOME ship with `power-profiles-daemon`, which can set a non-performance HWP (hardware P-state) mode on some boots. The insidious symptom: all sysfs checks (`scaling_governor`, `energy_performance_preference`, `cpu MHz`) report "performance" - but TG runs 20–30% below expected, and it varies between boots. The degradation happens at the hardware MSR level where standard tooling doesn't look.
+**Tested here:** `power-profiles-daemon` sometimes left this Intel node 20–30% below its TG baseline even while common sysfs values reported `performance`. Replacing it with `tuned-ppd` made the runs consistent. This is a diagnosis for that symptom, not a blanket desktop recommendation.
 
 Fix - replace with `tuned-ppd`:
 ```bash
@@ -321,7 +265,7 @@ sudo tuned-adm profile throughput-performance
 #### Transparent Huge Pages
 ```bash
 cat /sys/kernel/mm/transparent_hugepage/enabled
-# Recommended: [always]
+# Test both values; this node uses [always]
 echo always | sudo tee /sys/kernel/mm/transparent_hugepage/enabled
 ```
 
@@ -343,13 +287,11 @@ Without a display server, use `zellij` in a TTY for split panes: `zellij` in any
 
 ### 8.1 Why Not Ollama?
 
-Ollama uses llama.cpp internally but exposes a minimal, fixed-default configuration surface. Every flag in §10-§17 of this guide - layer placement, KV quantization, fit parameters, batch sizes, CUDA env vars - is unavailable or unexposed in Ollama.
-
-Ollama is the right choice for quick setup and model management. If you're reading this guide, you've outgrown it.
+Ollama uses llama.cpp internally and deliberately exposes a smaller tuning surface. It is useful for quick setup and model management. Direct llama.cpp is the better fit when the work is comparing placement, KV precision, batch sizes, or backend flags.
 
 ### 8.2 Building from Source
 
-Always build from source. Distro packages are outdated and not compiled for your GPU. MoE inference performance improves significantly with each llama.cpp release.
+For reproducible tuning, build from a recorded llama.cpp commit. A distribution package is fine when its version and backend match your needs; source builds make architecture flags and benchmark provenance explicit.
 
 **CUDA build:**
 ```bash
@@ -585,9 +527,11 @@ A pattern matching only `_exps` leaves `_shexp` on GPU, silently consuming VRAM 
 
 Safe to include `(ch|)` even for models without shared experts - it's harmless and future-proofs the pattern.
 
-### 10.4 `--fit on` - Recommended Starting Point
+### 10.4 `--fit` - Automatic Placement
 
-Auto-probes free VRAM at startup, computes optimal `-ngl` + `-ot` placement automatically. Zero manual tuning.
+> **Upstream behavior:** current llama.cpp enables fit by default when placement is not supplied. Explicit `-ngl`, `--tensor-split`, or `--override-tensor` values take control instead.
+
+Fit probes free VRAM at startup and computes `-ngl` and `-ot` placement. I still write `--fit on` in test commands because it makes the intent visible:
 
 ```bash
 llama-server \
@@ -598,7 +542,7 @@ llama-server \
   ...
 ```
 
-**`--fit-target` note**: CUDA's VMM pool grows as context fills. `--fit-target 128` can look great in a short bench and OOM later, so I use at least 512 MiB for a persistent server. Current llama.cpp builds also include mmproj memory in the fit calculation ([PR #21489](https://github.com/ggml-org/llama.cpp/pull/21489)). My vision profile still uses 2048 MiB because it has been stable on a 12 GB card; older builds need that headroom set manually.
+> **Tested here:** CUDA's VMM pool grows as context fills. A 128 MiB target survived short benches and later failed, so my persistent text profiles leave at least 512 MiB. Vision uses 2048 MiB. Current llama.cpp builds also include mmproj memory in the fit calculation ([PR #21489](https://github.com/ggml-org/llama.cpp/pull/21489)).
 
 **Dry run without starting a server:**
 ```bash
@@ -618,10 +562,10 @@ This output is what you hardcode for static placement.
 | Startup | +1–5s probe delay | Instant |
 | Placement | Fresh each boot | Fixed |
 | Tuning effort | None | One-time from `llama-fit-params` |
-| Best for | Experimentation | Production |
+| Best for | Exploration | Repeated, comparable runs |
 | Reproducibility | Good (if VRAM is free) | Deterministic |
 
-For a stable homelab server, derive placement once with `llama-fit-params` and hardcode it in your run script. Use `--fit on` when testing new models or after hardware changes.
+For a repeatable profile, derive placement once with `llama-fit-params` and save the result with the benchmark. Re-run fit after changing the model, context, backend, or available VRAM.
 
 ---
 
@@ -654,9 +598,9 @@ Quantizing the KV cache halves (q8_0) or further reduces (q4_0) its VRAM footpri
 
 | KV quant | VRAM vs f16 | Quality | Recommendation |
 | --- | --- | --- | --- |
-| `f16` | 1× | Lossless | Default |
-| **`q8_0`** | **0.5×** | **Effectively lossless** | **Default recommendation** |
-| `q4_0` | ~0.33× | Some degradation at long context | Only under extreme VRAM pressure |
+| `f16` | 1× | Baseline | Start here when validating a model |
+| **`q8_0`** | **~0.5×** | **Measure against f16** | **Tested-here text baseline** |
+| `q4_0` | ~0.33× | More likely to alter output | Use only after an acceptance or quality check |
 
 **The compounding effect**: on a 12 GB card with 64k context, switching f16 → q8_0 KV frees ~2 GB. That 2 GB lets `llama-fit-params` keep one to two additional GPU layers - translating directly to higher TG. Confirmed on Qwen3-Coder-Next: q8_0 KV at 64k unlocked 2 extra GPU layers and added ~2 t/s TG vs f16 KV.
 
@@ -672,15 +616,15 @@ Each slot maintains its own KV cache. `--parallel 4` multiplies KV VRAM by 4.
 
 On gpt-oss-120b, dropping `--parallel 4` → `--parallel 1` freed ~540 MiB VRAM - enough for one more GPU layer and +1 t/s TG.
 
-### 11.4 `--flash-attn on` (`-fa`)
+### 11.4 Flash Attention (`-fa`)
 
-Reduces attention memory traffic and avoids materializing the full attention matrix, which makes long-context inference much more practical on constrained VRAM. No meaningful downside on CUDA in my testing.
+Reduces attention memory traffic and avoids materializing the full attention matrix, which makes long-context inference more practical on constrained VRAM.
 
 ```bash
 --flash-attn on
 ```
 
-Always enable. Required for certain KV quantization types on some configurations.
+> **Upstream behavior:** current llama.cpp defaults to `--flash-attn auto`, not forced on. **Tested here:** forcing it on has worked for these CUDA profiles. Keep `auto` on unfamiliar backends, and force it only after checking model support and memory use.
 
 > [Vulkan]: Flash attention support varies by driver version. Verify before relying on it.
 
@@ -693,9 +637,9 @@ Always enable. Required for certain KV quantization types on some configurations
 Controls how many tokens are processed in one forward pass during prefill. Higher = better PP throughput; more VRAM required.
 
 ```bash
---batch-size 2048   # high throughput (~maximum for most models)
---batch-size 1024   # balanced; good default
---batch-size 512    # conservative; use for vision or tight VRAM
+--batch-size 2048   # current upstream default
+--batch-size 1024   # tested-here text profile
+--batch-size 512    # lower peak memory
 ```
 
 Reduce if you hit CUDA OOM during the prefill phase specifically.
@@ -838,10 +782,10 @@ Without this, llama.cpp uses memory-mapped I/O. Expert weight accesses during de
 With `--no-mmap`, the entire model loads into RAM before inference begins. No page faults.
 
 ```bash
---no-mmap   # recommended for all hybrid MoE and persistent server setups
+--no-mmap
 ```
 
-Tradeoff: longer startup. Worth it for any persistent server.
+> **Tested here:** this removed page-fault jitter from hybrid MoE runs. The tradeoff is a longer startup and full upfront RAM allocation, so compare it on the actual server workload.
 
 ### 15.2 `--mlock`
 
@@ -933,11 +877,12 @@ Minimum data to save with any published profile:
 model:
 quant:
 llama.cpp commit:
-command:
+benchmark command:
 context:
 parallel:
 batch / ubatch:
 KV cache:
+prompt-cache state:
 PP:
 TG:
 TTFT:
@@ -947,7 +892,7 @@ VRAM after long session:
 notes:
 ```
 
-This is the part I want L3MS to make boring: one command, one profile, enough metadata that the result is not just "feels fast."
+L3MS now publishes this evidence with each local profile. Old runs keep unknown fields as “not recorded” instead of inventing values. Community submissions use a [separate schema](https://github.com/carteakey/l3ms/blob/main/docs/community-runs.md) and appear in an unranked community view; they never enter the local RTX 4070 ranking.
 
 ---
 
@@ -955,16 +900,13 @@ This is the part I want L3MS to make boring: one command, one profile, enough me
 
 Autoregressive token generation (TG) is memory-bandwidth bound: the GPU must read all active model weights from memory for every single token it generates. Speculative decoding works around this by using a lightweight draft model to guess upcoming tokens, which the base model verifies in one forward pass.
 
-On models trained with Multi-Token Prediction (MTP) heads (like Gemma 4 or Qwen 3.6), we use native MTP speculative drafting to achieve massive speedups.
+On models trained with Multi-Token Prediction heads, a companion draft model can help. It only counts as a win when acceptance and end-to-end latency improve.
 
 ### 19.1 MTP Drafting Configuration Flags
 
-Instead of pairing the base model with an unrelated draft model, mainline `llama.cpp` supports native companion MTP draft models:
-* `--spec-draft-model`: Path to the companion MTP GGUF file (e.g. `mtp-gemma-4-26B-A4B-it.gguf` ~460MB).
-* `--spec-type draft-mtp`: Tells llama-server to run in MTP verification mode.
-* `--spec-draft-n-max`: The maximum candidate sequence length drafted per iteration.
-  * For larger models (e.g., Gemma 4 26B), set to `2`. Higher values introduce computational overhead that hurts TG.
-  * For lighter models (e.g., Gemma 4 12B), set to `4` to capture longer draft runs.
+Mainline llama.cpp supports companion MTP draft models through `--spec-draft-model`, `--spec-type draft-mtp`, and `--spec-draft-n-max`.
+
+> **Tested here:** draft lengths of 2 for Gemma 4 26B and 4 for Gemma 4 12B won on this node. **Upstream behavior:** the current general default maximum is 3. Sweep around the default instead of copying my model-specific values.
 
 ### 19.2 Target and Draft KV Cache Precision
 
@@ -986,16 +928,16 @@ Record acceptance rate, TG, and VRAM. Saving memory is pointless if the draft mo
 
 ### 19.3 Speculative Performance Gains
 
-Tested on a single RTX 4070 12GB:
+**Tested here** on a single RTX 4070 12 GB; exact run evidence belongs with the dashboard profile:
 * Gemma 4 26B Baseline: 38.5 tok/s
 * Gemma 4 26B QAT + MTP: **100.60 tok/s** (2.6x speedup)
 * Gemma 4 12B QAT + MTP: **120.80 tok/s** (2.0x speedup)
 
 ### 19.4 n-gram Speculative Decoding
 
-llama.cpp also has draftless speculative modes. They do not need a separate draft model. Instead, they look for repeated token patterns in the current context or in a small n-gram table.
+llama.cpp also has draftless speculative modes. They look for repeated token patterns in the current context or a small n-gram table.
 
-This is promising for coding because code sessions repeat paths, function names, imports, boilerplate, and edit patterns. It may do nothing on free-form chat. I have not published speedup numbers yet because this needs to be tested through L3MS on the actual 4070 node.
+> **Needs testing:** code repeats paths, imports, and edit patterns, but I have not measured an L3MS speedup yet.
 
 Start with `ngram-mod`, which is the most interesting current option for persistent server use:
 
@@ -1093,7 +1035,7 @@ Separate text and vision servers on different ports if running both workloads fr
 
 ## 21. Multi-GPU Primer
 
-I do not run a multi-GPU L3MS node right now, so treat this as orientation, not a tuned recipe.
+> **Upstream behavior:** this section follows the current llama.cpp multi-GPU guide. **Needs testing:** I do not run a multi-GPU L3MS node, so none of these are local benchmark results.
 
 llama.cpp has three split modes:
 
@@ -1131,11 +1073,11 @@ llama-server \
 
 Important constraints:
 
-- `layer` is the boring default. Start there.
+- `layer` is the compatible default. Start there; automatic fit works in this mode unless explicit placement flags take over.
 - `row` exists mostly for older setups; I would not build new guidance around it.
 - `tensor` is experimental and does not support every architecture. Many MoE / hybrid architectures fail with an explicit "not implemented" error.
 - `tensor` does not support quantized KV cache right now. Use `f16`, `bf16`, or `f32` KV.
-- `--fit` is not supported with `tensor`, so you need to manage context, parallel slots, and GPU layers yourself.
+- Automatic fit is disabled in `tensor` mode, so you need to manage context, parallel slots, and placement yourself.
 - `GGML_CUDA_P2P=1` can help peer transfers when the driver and motherboard support it, but it can also crash or corrupt output on some systems. Test before keeping it.
 
 If multi-GPU is slower than one GPU, the interconnect is probably the bottleneck. Try `layer` before `tensor`, check whether NCCL is available on CUDA builds, and don't assume a `--tensor-split` ratio from someone else's hardware means anything on yours.
@@ -1229,6 +1171,7 @@ sudo tuned-adm active
 
 | Date | Note |
 | --- | --- |
+| 2026-07-17 | Added evidence labels and a symptom-first path; removed generic cloud/local material; corrected current fit, batch, and flash-attention defaults; linked complete L3MS profile evidence and the separate community-run schema. |
 | 2026-06-25 | Trimmed the coding-workload section, tightened quant/QAT/iMatrix/IQ guidance with Unsloth Dynamic and ikawrakow notes, and added a compressed GLM-5.2 PPL/KLD quant-eval section. |
 | 2026-06-25 | Added Phase 2 material: coding-workload metrics, n-gram speculation recipes, ubatch sweep guidance, ROCm/HIP and dynamic backend notes, iMatrix/IQ quant guidance, and a multi-GPU primer. |
 | 2026-06-22 | Tightened the tested scope, corrected mmproj fitting, separated target and draft KV caches, removed `LLAMA_SET_ROWS`, and turned CUDA graphs into an A/B test. |

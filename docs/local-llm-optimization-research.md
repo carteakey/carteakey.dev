@@ -1,0 +1,16 @@
+# Local LLM Optimization Research Pass
+
+Checked on 2026-07-17. This is the source and visual ledger for the Phase 3 editorial pass on the local inference guide. Primary project documentation is preferred over summaries and search snippets.
+
+| Guide area | Primary evidence checked | Editorial result | Visual / licence decision |
+| --- | --- | --- | --- |
+| Opening and diagnostics | Local L3MS profiles and model posts | Replaced the long priority list with a symptom-first path; introduced Tested here, Upstream behavior, and Needs testing labels | Keep the existing original workstation sketch. It is specific to the post, monochrome, transparent, and legible at feed size. No additional image improves the troubleshooting path. |
+| Runtime and server defaults | [llama-server README](https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md) | Corrected logical batch default to 2048, ubatch default to 512, flash attention default to auto, localhost bind default, and prompt-cache behavior | Tables and commands are more accessible than a screenshot of CLI help. |
+| Build and backends | [llama.cpp build guide](https://github.com/ggml-org/llama.cpp/blob/master/docs/build.md) | Kept backend-specific build commands; removed no current build guidance | No sourced diagram needed. |
+| Quantization | [quantize README](https://github.com/ggml-org/llama.cpp/blob/master/tools/quantize/README.md) | Kept quant selection tied to evaluation rather than a universal bit level | Quant quality data depends on model and corpus, so a generic chart would imply false precision. |
+| Placement and fit | [fit discussion](https://github.com/ggml-org/llama.cpp/discussions/18049), [mmproj fit PR](https://github.com/ggml-org/llama.cpp/pull/21489) | Clarified that fit is normally enabled, explicit placement takes control, `llama-fit-params` produces reproducible flags, and current fit accounts for mmproj | Command examples carry the useful information better than a placement diagram. |
+| Speculative decoding | [speculative decoding guide](https://github.com/ggml-org/llama.cpp/blob/master/docs/speculative.md) | Separated current upstream modes/defaults from Gemma-specific local results; kept acceptance and end-to-end latency as the decision metrics | No generic speedup chart: acceptance and gains are configuration-specific. |
+| Multi-GPU | [multi-GPU guide](https://github.com/ggml-org/llama.cpp/blob/master/docs/multi-gpu.md) | Distinguished default layer/pipeline mode from experimental tensor mode; clarified fit, KV, P2P, and compatibility constraints | A topology graphic would add decoration without a tested local topology. |
+| Published benchmark evidence | [L3MS](https://github.com/carteakey/l3ms) | Required PP, TG, context, cache state, draft acceptance, llama.cpp commit, and benchmark command; unknown historical values remain explicit | The generated L3MS dashboard is the canonical interactive view. Community runs remain unranked and separate. |
+
+llama.cpp is MIT licensed. Small attributed excerpts or adapted diagrams would be permissible, but this pass uses links and original prose instead. The existing sketch remains the only post image; adding section art would increase page weight without making any tuning decision clearer.
