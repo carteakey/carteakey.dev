@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Lexicon: Added "The IKEA Effect" entry with illustration.
 - Memes: Imported 6 new AI memes to the folio.
 - Vibes: Imported `x-axis-war-crimes` visual.
-- Assets: Fetched authentic official brand SVGs for all 11 providers (`src/static/assets/providers/`) and 7 services (`src/static/assets/services/`) with Eleventy passthrough copy to `/assets`.
+- Assets: Fetched authentic full-color official brand SVGs for all 11 providers (`src/static/assets/providers/`) and 7 services (`src/static/assets/services/`) with Eleventy passthrough copy to `/assets`.
 
 ### Changed
 - Refactor: Renamed `src/_data/memes.yaml` to `src/_data/ai-memes.yaml` and updated media-import skill to support Lexicon target.
