@@ -10,11 +10,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Lexicon: Added "The IKEA Effect" entry with illustration.
 - Memes: Imported 6 new AI memes to the folio.
 - Vibes: Imported `x-axis-war-crimes` visual.
+- Assets: Added 11 provider SVGs (`/assets/providers/`) and 7 service SVGs (`/assets/services/`) with Eleventy passthrough copy.
 
 ### Changed
 - Refactor: Renamed `src/_data/memes.yaml` to `src/_data/ai-memes.yaml` and updated media-import skill to support Lexicon target.
 - Shortcodes: Converted raw markdown image syntax across 9 blog posts to custom Eleventy `{% image %}` shortcodes.
-- Folio: Converted single-line model tier list Quick Recommendations into a clean, responsive card grid.
+- Folio: Styled Quick answer block matching the reference mockup layout with star header, vertical recommendation list, and link anchor.
 
 ### Fixed
 - Frontmatter: Trimmed post tags on `unforwarder-v2` and `wikibones` to adhere to the 2-tag max guideline.

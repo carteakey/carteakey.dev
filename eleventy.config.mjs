@@ -424,6 +424,7 @@ export default function (eleventyConfig) {
   // Copy the `img` and `css` folders to the output
   // Copy all static images (includes subfolders like /static/img/vibes)
   eleventyConfig.addPassthroughCopy({ "./src/static/img": "/img/" });
+  eleventyConfig.addPassthroughCopy({ "./src/assets": "/assets" });
   eleventyConfig.addPassthroughCopy("./src/static/css/prism-a11y-dark.css");
   eleventyConfig.addPassthroughCopy({ "./src/static/css/prism": "/static/css/prism" });
   eleventyConfig.addPassthroughCopy({ "./src/static/js": "/static/js" });
