@@ -14,7 +14,7 @@ pinned: false
 
 Google's release of the QAT (Quantization-Aware Training) variants of Gemma 4 has changed the game for local inference on consumer hardware. By combining **QAT** with **MTP (Multi-Token Prediction)**, we can now run the heavy Gemma 4 26B MoE model at over **100 tokens/second** on a single 12GB GPU.
 
-![](/img/speed.gif)
+{% image "./src/static/img/speed.gif", "Gemma 4 26B speed test animation" %}
 
 Here is a performance breakdown comparing various configurations on a consumer RTX 4070 setup.
 

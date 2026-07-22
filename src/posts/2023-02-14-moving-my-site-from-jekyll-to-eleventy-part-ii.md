@@ -15,7 +15,7 @@ This is in continuation of my older [post.](https://www.carteakey.dev/moving-sit
 
 The site has come a long way from back when I posted the original article ([This](https://deploy-preview-2--starlit-brigadeiros-b87f35.netlify.app) is what it looked like).
 
-![](/img/carteakey.dev.old.png)
+{% image "./src/static/img/carteakey.dev.old.png", "Old carteakey.dev design" %}
 
 Here’s what I’ve been able to add so far.
 

@@ -17,7 +17,7 @@ Google recently released the QAT (Quantization-Aware Training) variant of their 
 
 By pairing Unsloth's QAT quantized model with a converted Q8_0 assistant/draft model and running mainline llama.cpp with native Gemma 4 MTP support, we can achieve an incredible **120.8 tokens/second** locally!
 
-![](/img/speed.gif)
+{% image "./src/static/img/speed.gif", "Gemma 4 12B speed test animation" %}
 
 ## System Specifications
 

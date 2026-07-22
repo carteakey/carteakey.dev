@@ -21,7 +21,7 @@ There is a whole universe around self-hosting (see r/selfhosted) where having a 
 * Network drives (NextCloud, rdrive)
 * and a lot more...
 
-![](/img/rabbit-hole.png)
+{% image "./src/static/img/rabbit-hole.png", "Self-hosting rabbit hole" %}
 
 Here are some of my opinions, tips, and tricks on doing so. This is going to be a multi-part article.
 
@@ -34,7 +34,7 @@ However, it makes sense when the device in question is your primary PC. As a hom
 - Hard to SSH into (without some [advanced config](https://www.carteakey.dev/remoting-into-wsl2-externally-the-easy-way/) or using VPN like Tailscale.)
 - WSL has really bad performance on files outside the WSL system e.g. a NTFS hard drive connected to your PC (even [Microsoft recommends against it](https://learn.microsoft.com/en-us/windows/wsl/filesystems)).
 - If you use docker the system is 3 levels deep. - `Windows > WSL2 > Docker Image` - That's some unnecessary overhead.
-![](/img/inception-deeper.gif "OS within an OS within an OS")
+{% image_cc "./src/static/img/inception-deeper.gif", "OS within an OS within an OS", "", "OS within an OS within an OS" %}
 
 The best option is going all Linux.
 

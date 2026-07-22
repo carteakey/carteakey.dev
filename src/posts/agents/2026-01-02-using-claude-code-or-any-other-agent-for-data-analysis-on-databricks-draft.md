@@ -21,7 +21,7 @@ Using the latest and greatest AI agents like Claude Code can be of great use and
 
 Therefore, i wrote this framework of sorts using AI of course (very broken, very demure) to use Claude Sonnet models (the best imo) to connect to Databricks and run analysis and finally package it nicely into a notebook.
 
-![](/img/thanos.png)
+{% image "./src/static/img/thanos.png", "Fine I'll do it myself meme" %}
 
 ## Getting started (skip if you have the attention span of a goldfish)
 

@@ -49,7 +49,7 @@ A {% define "vault", "A folder where Obsidian stores notes and preferences. You 
 
   (_If you have an existing vault in your PC, enter the same name here._)
 
-![Obsidian on iOS](/img/obsidian-sync/obsidian-ios.png)
+{% image "./src/static/img/obsidian-sync/obsidian-ios.png", "Obsidian on iOS" %}
 
 - Wait for the iCloud to sync on your PC and you should see the "Obsidian" folder containing the vault directory. To migrate your existing notes, copy all files from your existing vault to that directory.
 

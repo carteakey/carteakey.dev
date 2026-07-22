@@ -15,7 +15,7 @@ tags:
 
 My blog uses **\~\~AI\~\~**, no seriously! Head to my homepage and you will find that the "quote of the day" is (or used to be) powered by ChatGPT. This site refreshes daily which ended up very silently leaking my whole 5$ of OpenAI API credit, leaving my blog stuck with a fallback, ultra-generic quote. Sad times! 
 
-![](/img/alvin.png)
+{% image "./src/static/img/alvin.png", "Alvin reaction meme" %}
 
 Instead of throwing more money into the OpenAI pit, I decided to spin up my own local LLM and expose it safely to the web. Don't think quotes need deep research or chain of thoughts anyways.
 
@@ -51,4 +51,4 @@ Instead of throwing more money into the OpenAI pit, I decided to spin up my own 
 
 And now the blog proudly sports unique, fresh quotes daily, no longer hostage to an external API credit balance.
 
-![](/img/mandela.png)
+{% image "./src/static/img/mandela.png", "Nelson Mandela quote meme" %}
