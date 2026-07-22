@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Refactor: Renamed `src/_data/memes.yaml` to `src/_data/ai-memes.yaml` and updated media-import skill to support Lexicon target.
 - Shortcodes: Converted raw markdown image syntax across 9 blog posts to custom Eleventy `{% image %}` shortcodes.
+- Folio: Converted single-line model tier list Quick Recommendations into a clean, responsive card grid.
 
 ### Fixed
 - Frontmatter: Trimmed post tags on `unforwarder-v2` and `wikibones` to adhere to the 2-tag max guideline.
