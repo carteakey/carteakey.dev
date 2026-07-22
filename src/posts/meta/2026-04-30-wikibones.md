@@ -9,8 +9,6 @@ imageAlt: Transparent monochrome sketch of a bone-like file tree for a Git-backe
 tags:
   - AI
   - Agents
-  - PKM
-  - Homelab
 hidden: true
 draft: true
 pinned: false

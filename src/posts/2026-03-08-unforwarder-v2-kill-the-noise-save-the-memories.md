@@ -10,7 +10,6 @@ hidden: true
 tags:
   - Self-Host
   - VLM
-  - WhatsApp
 ---
 
 About a year ago I wrote about [The Unforwarder](/blog/the-unforwarder-how-i-stopped-backing-up-junk-photos/) - a 60-line Python script that used a local vision model to sort WhatsApp images into "real photos worth keeping" and "junk to delete". It worked. I was happy.

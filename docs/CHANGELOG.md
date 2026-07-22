@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Skill: `update-model-list` skill for regenerating model YAML with current research.
 ### Changed
 - Folio index: Updated with the new model-tier-list entry and revised copy.
+### Fixed
+- Frontmatter: Trimmed post tags on `unforwarder-v2` and `wikibones` to adhere to the 2-tag max guideline.
 
 ## [2.4.7] - 2026-07-11
 ### Added
