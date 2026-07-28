@@ -11,11 +11,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Newsletter: Added a sticky subscribe action, homepage email form, and privacy-friendly Redis submission metrics.
 - Snippets and learning: Added browser-local snippet favorites and learning progress controls.
 - Monitoring: Added sampled Core Web Vitals collection and a monthly Lighthouse workflow.
-- Internationalization: Added opt-in language metadata, alternate links, a language switcher, and a Hindi homepage proof page.
+- Internationalization: Added opt-in language metadata and alternate-link infrastructure; the Hindi proof page remains available in source for a future translation pass.
 - Verification: Added generated-page UI checks for responsive post lists, easter eggs, metadata, structured data, and social-image integrity.
 
 ### Changed
 - Home: Simplified Site Index hover states to a quiet title-color shift while retaining a clear keyboard focus outline.
+- Internationalization: Temporarily disabled the Hindi proof page and language switcher until fuller translated content is ready.
 - Assets: Switched first-party CSS and JavaScript to deterministic content-versioned URLs.
 - Fonts: Removed unused font files and preloaded the active face, cutting the custom font payload by 74.5%.
 - Local inference guide: Added a symptom-first path and evidence labels, corrected current llama.cpp defaults, trimmed generic material, and documented the research and visual decisions.

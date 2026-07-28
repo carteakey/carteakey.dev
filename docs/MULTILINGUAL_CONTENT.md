@@ -2,6 +2,10 @@
 
 English remains the default language. Translations are opt-in and live at language-prefixed URLs such as `/hi/`; untranslated pages keep their existing URLs.
 
+## Current status
+
+The multilingual metadata and layout support are retained for future translations, but the Hindi proof page and language switcher are temporarily disabled. The source remains in `src/hi/` as a reference; its `permalink: false` front matter keeps it out of the published build until the Hindi content is ready.
+
 Add these fields to every page in a translated set:
 
 ```yaml
