@@ -18,18 +18,18 @@ Some examples..
 
 **On Note-taking systems**
 
-![](/img/pasted-image-20240101172423.png)
+{% image "./src/static/img/pasted-image-20240101172423.png", "Note-taking systems IQ bell curve meme" %}
 
 **On data tools**
 
-![](/img/1693419289846.jpeg)
+{% image "./src/static/img/1693419289846.jpeg", "Data tools IQ bell curve meme" %}
 
 **On Linux (btw)**
 
-![](/img/f3botxxxebuljfd.jpg)
+{% image "./src/static/img/f3botxxxebuljfd.jpg", "Linux IQ bell curve meme" %}
 
 **On LLM evals**
 
-![](/img/ggzb-fnxkaa4pac.jpeg)
+{% image "./src/static/img/ggzb-fnxkaa4pac.jpeg", "LLM evals IQ bell curve meme" %}
 
 and i could go on..

@@ -100,4 +100,4 @@ With all set and done, we should now be able to use our own little copilot to he
 
 Below is an example.
 
-![](/img/codellama.png)
+{% image "./src/static/img/codellama.png", "Continue extension with Code Llama in VS Code" %}

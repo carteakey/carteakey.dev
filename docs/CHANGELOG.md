@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [2.6.0] - 2026-07-17
+## [2.6.0] - 2026-07-27
 ### Added
 - Support: Added a metadata-driven support page and call-to-action with a safe setup state until an external support URL is configured.
 - Newsletter: Added a sticky subscribe action, homepage email form, and privacy-friendly Redis submission metrics.
@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Verification: Added generated-page UI checks for responsive post lists, easter eggs, metadata, structured data, and social-image integrity.
 
 ### Changed
+- Home: Simplified Site Index hover states to a quiet title-color shift while retaining a clear keyboard focus outline.
 - Assets: Switched first-party CSS and JavaScript to deterministic content-versioned URLs.
 - Fonts: Removed unused font files and preloaded the active face, cutting the custom font payload by 74.5%.
 - Local inference guide: Added a symptom-first path and evidence labels, corrected current llama.cpp defaults, trimmed generic material, and documented the research and visual decisions.
@@ -23,9 +24,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Local inference evidence: Published complete evidence-shaped L3MS profiles and kept community submissions in a separate unranked schema and view.
 
-## [2.5.1] - 2026-07-12
+## [2.5.1] - 2026-07-22
+### Added
+- Lexicon: Added "The IKEA Effect" entry with illustration.
+- Memes: Imported 6 new AI memes to the folio.
+- Vibes: Imported `x-axis-war-crimes` visual.
+- Assets: Fetched authentic full-color official brand SVGs for all 11 providers (`src/static/assets/providers/`) and 7 services (`src/static/assets/services/`) with Eleventy passthrough copy to `/assets`.
+
 ### Changed
-- Home: Simplified Site Index hover states to a quiet title-color shift while retaining a clear keyboard focus outline.
+- Refactor: Renamed `src/_data/memes.yaml` to `src/_data/ai-memes.yaml` and updated media-import skill to support Lexicon target.
+- Shortcodes: Converted raw markdown image syntax across 9 blog posts to custom Eleventy `{% image %}` shortcodes.
+- Folio: Styled Quick answer block matching the reference mockup layout with star header, vertical recommendation list, and link anchor.
+
+### Fixed
+- Frontmatter: Trimmed post tags on `unforwarder-v2` and `wikibones` to adhere to the 2-tag max guideline.
 
 ## [2.5.0] - 2026-07-11
 ### Added
