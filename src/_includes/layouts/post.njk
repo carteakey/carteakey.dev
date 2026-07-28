@@ -223,6 +223,26 @@ hasEthicalAds: false
       </p>
     {% endif %}
 
+    <section class="learning-post-panel not-prose" data-learning-panel>
+      <div>
+        <p class="post-panel-title">Learning progress</p>
+        <p class="editorial-support-compact mt-1"><span data-learning-state>To learn</span> · saved only in this browser</p>
+      </div>
+      <button
+        type="button"
+        class="learning-toggle accent-focus"
+        data-learning-toggle
+        data-learning-id="{{ page.url }}"
+        data-learning-title="{{ title | escape }}"
+        aria-pressed="false"
+      >
+        {% feather "check", class="w-3.5 h-3.5" %}
+        <span data-learning-label>Mark as learned</span>
+      </button>
+    </section>
+    <p id="learningLiveStatus" class="sr-only" aria-live="polite"></p>
+    <script defer src="/static/js/learning-progress.js?v={{ versions.version }}"></script>
+
     {% set reactionOptions = [
       { id: 'thumbs_up', emoji: '👍', label: 'Helpful' },
       { id: 'sparkles', emoji: '✨', label: 'Delightful' },

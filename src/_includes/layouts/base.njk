@@ -1,15 +1,16 @@
 <!DOCTYPE html>
-<html lang="{{ metadata.language }}" class="scroll-smooth">
+<html lang="{{ language or metadata.language }}"{% if direction %} dir="{{ direction }}"{% endif %} class="scroll-smooth">
 
 <head>
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
   <link rel="manifest" href="/site.webmanifest" />
+  <link rel="preload" href="/static/fonts/plus-jakarta-sans/PlusJakartaSans[wght].woff2?v={{ versions.version }}" as="font" type="font/woff2" crossorigin />
 
-  {# Google Fonts removed — all fonts now self-hosted via src/static/fonts/ #}
+  {# Site fonts are self-hosted via src/static/fonts/. #}
   <meta name="generator" content="Eleventy">
-  <link id="prism-theme" href="/static/css/prism/prism-light.css" rel="stylesheet"/>
+  <link id="prism-theme" href="/static/css/prism/prism-light.css?v={{ versions.version }}" rel="stylesheet"/>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-DKK1XXJY42"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -21,10 +22,10 @@
     gtag("config", "G-DKK1XXJY42");
   </script>
 
-  <script src="/static/js/theme.js"></script>
+  <script src="/static/js/theme.js?v={{ versions.version }}" data-asset-version="{{ versions.version }}"></script>
   
   <script defer src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-  <script defer src="/static/js/alpine.min.js"></script>
+  <script defer src="/static/js/alpine.min.js?v={{ versions.version }}"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#14b8a6" id="theme-color-meta">
@@ -50,7 +51,12 @@
   {% endif %}
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:locale" content="en_US" />
+  <meta property="og:locale" content="{{ ogLocale or 'en_CA' }}" />
+  {% for translation in translations | default([]) %}
+    {% if translation.language != (language or metadata.language) and translation.ogLocale %}
+  <meta property="og:locale:alternate" content="{{ translation.ogLocale }}" />
+    {% endif %}
+  {% endfor %}
   
   {# Article specific Open Graph tags #}
   {% if templateClass == 'tmpl-post' %}
@@ -80,8 +86,14 @@
   {# Additional SEO Meta Tags #}
   <meta name="author" content="{{ metadata.author.name }}" />
   <link rel="canonical" href="{{ resolvedCanonicalUrl }}" />
+  {% for translation in translations | default([]) %}
+  <link rel="alternate" hreflang="{{ translation.language }}" href="{{ translation.url | absoluteUrl(metadata.url) }}" />
+    {% if translation.language == metadata.language %}
+  <link rel="alternate" hreflang="x-default" href="{{ translation.url | absoluteUrl(metadata.url) }}" />
+    {% endif %}
+  {% endfor %}
   
-  <link rel="stylesheet" href="{{ '/css/tailwind.css' | url }}" />
+  <link rel="stylesheet" href="{{ '/css/tailwind.css' | url }}?v={{ versions.version }}" />
 
   <link rel="alternate" type="application/atom+xml" title="{{ metadata.title }} - Atom Feed" href="{{ '/feed.xml' | url }}">
   
@@ -144,6 +156,22 @@
                 </li>
               {% endif %}
             {%- endfor %}
+
+            {% if translations and translations.length > 1 %}
+              <li class="flex items-center gap-1 border-l border-gray-300 dark:border-gray-700 pl-2" aria-label="Language">
+                {% for translation in translations %}
+                  <a
+                    href="{{ translation.url }}"
+                    hreflang="{{ translation.language }}"
+                    lang="{{ translation.language }}"
+                    class="font-mono text-[0.68rem] no-underline px-1 py-0.5 {% if translation.language == (language or metadata.language) %}font-bold border-b-2{% else %}opacity-60 hover:opacity-100{% endif %}"
+                    {% if translation.language == (language or metadata.language) %}aria-current="page"{% endif %}
+                    aria-label="Read this page in {{ translation.label }}"
+                    {% if translation.language == (language or metadata.language) %}style="border-color: var(--accent-color)"{% endif %}
+                  >{{ translation.shortLabel or translation.language | upper }}</a>
+                {% endfor %}
+              </li>
+            {% endif %}
 
             <li class="flex items-center">
               <a class="font-medium no-underline inline-flex items-center justify-center p-1.5 border border-transparent hover:border-gray-300 dark:hover:border-gray-700 transition-colors" href="{{ '/search/' | url }}" title="Search" aria-label="Search" style="color: var(--accent-color)">
@@ -268,6 +296,7 @@
           <a class="p-1.5 border border-transparent hover:border-gray-300 dark:hover:border-gray-700 transition-all text-gray-500 dark:text-gray-400" href="{{ '/search/' | url }}" title="Search" aria-label="Search">{% feather "search", class="w-4 h-4" %}</a>
           <a class="p-1.5 border border-transparent hover:border-gray-300 dark:hover:border-gray-700 transition-all text-gray-500 dark:text-gray-400" href="{{ '/feed.xml' | url }}" title="RSS" aria-label="RSS">{% feather "rss", class="w-4 h-4" %}</a>
           <a class="p-1.5 border border-transparent hover:border-gray-300 dark:hover:border-gray-700 transition-all text-gray-500 dark:text-gray-400" href="{{ '/newsletter/' | url }}" title="Newsletter" aria-label="Newsletter">{% feather "mail", class="w-4 h-4" %}</a>
+          <a class="p-1.5 border border-transparent hover:border-gray-300 dark:hover:border-gray-700 transition-all text-gray-500 dark:text-gray-400" href="{{ '/support/' | url }}" title="Support" aria-label="Support this site">{% feather "coffee", class="w-4 h-4" %}</a>
         </div>
       </footer>
 
@@ -303,6 +332,8 @@
               <li><a href="{{ '/search' | url }}" class="footer-nav-link">{% feather "search", class="w-3 h-3 shrink-0" %} Search</a></li>
               <li><a href="{{ '/stats' | url }}" class="footer-nav-link">{% feather "bar-chart", class="w-3 h-3 shrink-0" %} Stats</a></li>
               <li><a href="{{ '/guestbook' | url }}" class="footer-nav-link">{% feather "message-square", class="w-3 h-3 shrink-0" %} Guestbook</a></li>
+              <li><a href="{{ '/support' | url }}" class="footer-nav-link">{% feather "coffee", class="w-3 h-3 shrink-0" %} Support</a></li>
+              <li><a href="{{ '/learning' | url }}" class="footer-nav-link">{% feather "check-square", class="w-3 h-3 shrink-0" %} Learning</a></li>
             </ul>
           </div>
         </div>
@@ -367,6 +398,8 @@
               <li><a href="{{ '/bookmarks' | url }}" class="footer-nav-link">{% feather "bookmark", class="w-3 h-3 shrink-0" %} Bookmarks</a></li>
               <li><a href="{{ '/newsletter' | url }}" class="footer-nav-link">{% feather "mail", class="w-3 h-3 shrink-0" %} Newsletter</a></li>
               <li><a href="{{ '/guestbook' | url }}" class="footer-nav-link">{% feather "message-square", class="w-3 h-3 shrink-0" %} Guestbook</a></li>
+              <li><a href="{{ '/support' | url }}" class="footer-nav-link">{% feather "coffee", class="w-3 h-3 shrink-0" %} Support</a></li>
+              <li><a href="{{ '/learning' | url }}" class="footer-nav-link">{% feather "check-square", class="w-3 h-3 shrink-0" %} Learning</a></li>
             </ul>
           </div>
 
@@ -411,7 +444,22 @@
   </script>
 
   {# Easter Eggs - loaded from external file #}
-  <script defer src="/static/js/easter-eggs.js"></script>
+  <script defer src="/static/js/easter-eggs.js?v={{ versions.version }}"></script>
+  <script defer src="/static/js/newsletter.js?v={{ versions.version }}"></script>
+  {% if monitoring.webVitalsEnabled %}
+    <script
+      src="/static/js/web-vitals.js?v={{ versions.version }}"
+      data-endpoint="/.netlify/functions/web-vitals"
+      data-sample-rate="{{ monitoring.webVitalsSampleRate }}"
+    ></script>
+  {% endif %}
+
+  {% if page.url != "/newsletter/" and page.url != "/newsletter/success/" %}
+    <a href="/newsletter/" class="subscribe-sticky accent-focus not-prose" aria-label="Subscribe to new writing">
+      {% feather "mail", class="w-3.5 h-3.5" %}
+      <span>Subscribe</span>
+    </a>
+  {% endif %}
 
   {# Service Worker Registration for Offline Support #}
   <script>

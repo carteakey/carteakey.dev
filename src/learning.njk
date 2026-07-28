@@ -1,0 +1,80 @@
+---
+layout: layouts/base.njk
+title: Learning Progress
+description: A private, browser-local tracker for working through carteakey.dev guides and essays.
+eleventyNavigation:
+  key: Learning
+  order: 14
+---
+{% include "components/breadcrumbs.njk" %}
+
+{% set pageEyebrow = "Local Notebook" %}
+{% set pageTitle = "Learning Progress" %}
+{% set pageDescription = "Mark writing as learned while you work through it. Progress stays in this browser and is never sent to the server." %}
+{% include "components/page-header.njk" %}
+
+{% set learningPosts = [] %}
+{% for post in collections.posts %}
+  {% set rawTags = post.data.tags | default([]) %}
+  {% if not post.data.hidden and not post.data.draft and ('template' not in rawTags) and ('internal' not in rawTags) %}
+    {% set learningPosts = (learningPosts.push(post), learningPosts) %}
+  {% endif %}
+{% endfor %}
+
+<section class="learning-summary surface surface-padding not-prose" aria-labelledby="learning-summary-title">
+  <div>
+    <p class="page-eyebrow">Progress</p>
+    <h2 id="learning-summary-title" class="editorial-title-compact"><span id="learningCompletedCount">0</span> of <span id="learningTotalCount">{{ learningPosts | length }}</span> completed</h2>
+    <p id="learningProgressText" class="editorial-support-compact mt-1">0% complete</p>
+  </div>
+  <div class="learning-progress-track" aria-hidden="true">
+    <span id="learningProgressBar" class="learning-progress-value" style="width: 0%"></span>
+  </div>
+</section>
+
+<div class="learning-controls not-prose">
+  <div class="relative">
+    {% feather "search", class="w-3.5 h-3.5 text-gray-400 absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" %}
+    <label class="sr-only" for="learningSearch">Search learning list</label>
+    <input id="learningSearch" type="search" placeholder="Search writing…" class="learning-search accent-field accent-focus">
+  </div>
+  <div class="learning-filter-group" aria-label="Filter learning progress">
+    <button type="button" class="learning-filter is-active accent-focus" data-learning-filter="all" aria-pressed="true">All</button>
+    <button type="button" class="learning-filter accent-focus" data-learning-filter="open" aria-pressed="false">To learn</button>
+    <button type="button" class="learning-filter accent-focus" data-learning-filter="complete" aria-pressed="false">Learned</button>
+  </div>
+</div>
+
+<div class="learning-list not-prose">
+  {% for post in learningPosts | reverse %}
+    {% set visibleTags = post.data.tags | filterTagList %}
+    <article
+      class="learning-item"
+      data-learning-item
+      data-learning-id="{{ post.url }}"
+      data-learning-search="{{ (post.data.title ~ ' ' ~ post.data.description ~ ' ' ~ (visibleTags | join(' '))) | lower | escape }}"
+    >
+      <div class="min-w-0">
+        <p class="meta-text text-[0.66rem] text-gray-500 dark:text-gray-400"><span data-learning-state>To learn</span> · {{ post.date | readableDate }}</p>
+        <h2 class="editorial-title-compact mt-1"><a href="{{ post.url }}" class="title-hover no-underline">{{ post.data.title }}</a></h2>
+        {% if post.data.description %}<p class="editorial-support-compact mt-1">{{ post.data.description }}</p>{% endif %}
+      </div>
+      <button
+        type="button"
+        class="learning-toggle accent-focus"
+        data-learning-toggle
+        data-learning-id="{{ post.url }}"
+        data-learning-title="{{ post.data.title | escape }}"
+        aria-pressed="false"
+      >
+        {% feather "check", class="w-3.5 h-3.5" %}
+        <span data-learning-label>Mark as learned</span>
+      </button>
+    </article>
+  {% endfor %}
+</div>
+
+<p id="learningEmptyState" class="hidden editorial-support-compact py-8 text-center">Nothing matches this view.</p>
+<p id="learningLiveStatus" class="sr-only" aria-live="polite"></p>
+
+<script defer src="/static/js/learning-progress.js?v={{ versions.version }}"></script>

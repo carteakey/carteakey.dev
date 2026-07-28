@@ -2,6 +2,8 @@
 layout: layouts/home.njk
 htmlTemplateEngine: "webc"
 description: Personal workbench and writing index of Kartikey Chauhan. Senior Data Analyst at McAfee, exploring analytics, local AI, and homelabs.
+language: en
+ogLocale: en_CA
 ---
 {% from "components/feed-card.njk" import feedCard %}
 
@@ -73,6 +75,7 @@ description: Personal workbench and writing index of Kartikey Chauhan. Senior Da
           <a href="/projects">Projects</a>
           <a href="/cv">CV</a>
           <a href="/feed/">Feed</a>
+          <a href="/support/">Support</a>
           <a href="https://github.com/carteakey" target="_blank" rel="noopener">GitHub ↗</a>
         </div>
       </div>
@@ -171,7 +174,47 @@ description: Personal workbench and writing index of Kartikey Chauhan. Senior Da
       </div>
   </section>
 
-  <section class="home-quote-panel animate-enter stagger-3">
+  <section class="home-newsletter-panel animate-enter stagger-3 not-prose" aria-labelledby="home-newsletter-title">
+    <div>
+      <p class="home-panel-kicker">Occasional dispatches</p>
+      <h2 id="home-newsletter-title" class="editorial-title-compact mt-1">New writing, sent when it is ready.</h2>
+      <p class="editorial-support-compact mt-1">No weekly content treadmill. Just new posts and substantial updates.</p>
+    </div>
+    <form
+      name="newsletter"
+      method="POST"
+      action="/newsletter/success/"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+      data-newsletter-form
+      data-newsletter-source="homepage"
+      data-error-target="#homeNewsletterError"
+      class="home-newsletter-form"
+    >
+      <input type="hidden" name="form-name" value="newsletter">
+      <input type="hidden" name="source" value="homepage">
+      <input type="hidden" name="consent" value="homepage-subscribe-form">
+      <label class="sr-only" for="home-newsletter-bot">Do not fill this out</label>
+      <input class="hidden" id="home-newsletter-bot" name="bot-field" tabindex="-1" autocomplete="off">
+      <label class="sr-only" for="homeNewsletterEmail">Email address</label>
+      <input
+        id="homeNewsletterEmail"
+        name="email"
+        type="email"
+        autocomplete="email"
+        required
+        placeholder="you@example.com"
+        class="home-newsletter-input accent-field accent-focus"
+      >
+      <button type="submit" class="accent-button accent-focus home-newsletter-button">
+        <span data-submit-label>Subscribe</span>
+        <span class="hidden" data-submit-loading>Sending…</span>
+      </button>
+      <p id="homeNewsletterError" class="hidden home-newsletter-error" data-newsletter-error role="alert">That did not go through. Please try again.</p>
+    </form>
+  </section>
+
+  <section class="home-quote-panel animate-enter stagger-4">
     <div class="home-panel-head">
       <p class="home-panel-kicker">Quote Of The Day</p>
     </div>
@@ -180,7 +223,7 @@ description: Personal workbench and writing index of Kartikey Chauhan. Senior Da
   </section>
 </div>
 
-<script src="/static/js/typeit.min.js"></script>
+<script src="/static/js/typeit.min.js?v={{ versions.version }}"></script>
 <script>
   (() => {
     const topic = document.getElementById('homeTypedTopic');

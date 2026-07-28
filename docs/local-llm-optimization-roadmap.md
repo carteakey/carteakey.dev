@@ -1,7 +1,7 @@
 # Local LLM Optimization Guide Roadmap
 
-Status: active  
-Started: 2026-06-22  
+Status: complete
+Started: 2026-06-22
 Primary guide: `src/posts/local-inference/2026-06-12-local-llm-optimization.md`
 
 This roadmap turns the useful parts of the June 2026 LocalLLaMA feedback into scoped work. The guide is based on one consumer CUDA machine, so claims should stay close to either upstream documentation or measurements from that machine.
@@ -10,7 +10,7 @@ This roadmap turns the useful parts of the June 2026 LocalLLaMA feedback into sc
 
 New and revised guidance should make its evidence level obvious:
 
-- **Tested here:** measured on the RTX 4070 12GB / i5-12600K / 32GB DDR5-6000 L3MS node.
+- **Tested here:** measured on the RTX 4070 12GB / i5-12600K / DDR5-6000 L3MS node. RAM capacity is recorded per run because it changed during the project.
 - **Upstream behavior:** documented or implemented by current llama.cpp.
 - **Needs testing:** plausible or community-reported, but not yet promoted into a recommendation.
 
@@ -37,17 +37,17 @@ New and revised guidance should make its evidence level obvious:
 
 ## Phase 3: editorial pass
 
-- [ ] Run the research/image prompt loop section by section: gather primary sources, source charts, licensing notes, and useful visual ideas; reconcile each section against the current guide; then optimize for brevity and accessibility.
-- [ ] Trim generic cloud/local and glossary material that repeats common knowledge.
-- [ ] Add a shorter human reading path for OOM, slow PP, slow TG, speculative decoding, and multi-GPU.
-- [ ] Replace universal prescriptions with evidence labels and exact tested configurations.
-- [ ] Cut repeated explanations and any prose that reads like generated connective tissue.
+- [x] Run the research/image prompt loop section by section: gather primary sources, source charts, licensing notes, and useful visual ideas; reconcile each section against the current guide; then optimize for brevity and accessibility. (2026-07-17)
+- [x] Trim generic cloud/local and glossary material that repeats common knowledge. (2026-07-17)
+- [x] Add a shorter human reading path for OOM, slow PP, slow TG, speculative decoding, and multi-GPU. (2026-07-17)
+- [x] Replace universal prescriptions with evidence labels and exact tested configurations. (2026-07-17)
+- [x] Cut repeated explanations and any prose that reads like generated connective tissue. (2026-07-17)
 
 ## Phase 4: L3MS/dashboard follow-up
 
-- [ ] Add PP, TG, tested context, cache state, draft acceptance, llama.cpp commit, and benchmark command to each published profile.
-- [ ] Add a separate community-runs schema for 24GB, dense 27B, AMD, Apple Silicon, and multi-GPU submissions.
-- [ ] Never mix community results into the local RTX 4070 ranking without a hardware/source label.
+- [x] Add PP, TG, tested context, cache state, draft acceptance, llama.cpp commit, and benchmark command to each published profile. Historical values that were not captured are explicitly marked as not recorded. (2026-07-17)
+- [x] Add a separate community-runs schema for 24GB, dense 27B, AMD, Apple Silicon, and multi-GPU submissions. (2026-07-17)
+- [x] Never mix community results into the local RTX 4070 ranking without a hardware/source label. Community runs have a separate unranked dashboard view. (2026-07-17)
 
 ## Deferred until evidence improves
 

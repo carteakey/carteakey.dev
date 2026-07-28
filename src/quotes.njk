@@ -57,7 +57,7 @@ eleventyNavigation:
 {% include "components/feed-masonry-script.njk" %}
 
 <!-- The script itself, loaded AFTER your root element. -->
-<script src="/static/js/typeit.min.js"></script>
+<script src="/static/js/typeit.min.js?v={{ versions.version }}"></script>
 <script>
     const instance = new TypeIt("#qotd", {
         speed: 30,

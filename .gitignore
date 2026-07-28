@@ -7,6 +7,8 @@ package-lock.json
 **/.DS_Store
 *.md2
 *lighthouse*.html
+.lighthouseci/
+lighthouse-reports/
 # Local Netlify folder
 .netlify
 .vscode/tasks.json

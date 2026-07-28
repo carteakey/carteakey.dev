@@ -8,171 +8,13 @@
   --font-*: initial;
   /* Default body copy font stack */
   --font-sans: var(--font-plus-jakarta-sans);
-  --font-bricolage: 'Saira', var(--font-plus-jakarta-sans);
-  --font-plus-jakarta-sans: 'Plus Jakarta Sans', 'Saira', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Apple Color Emoji', 'Segoe UI Emoji', 'Inter';
-  --font-saira: 'Saira', 'Plus Jakarta Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Apple Color Emoji', 'Segoe UI Emoji', 'Inter';
-  --font-urbanist: 'Urbanist', var(--font-plus-jakarta-sans);
-  --font-exo-2: 'Exo 2', var(--font-plus-jakarta-sans);
-  --font-arimo: 'Arimo', var(--font-plus-jakarta-sans);
-  --font-rubik: 'Rubik', var(--font-plus-jakarta-sans);
-  --font-poppins: 'Poppins', var(--font-plus-jakarta-sans);
-  --font-geist: 'Geist', var(--font-plus-jakarta-sans);
-  --font-crimson-pro: 'Crimson Pro', 'et-book', Georgia, serif;
-  --font-et-book: 'et-book', 'Crimson Pro', Georgia, serif;
+  --font-plus-jakarta-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Apple Color Emoji', 'Segoe UI Emoji', 'Inter';
   --font-serif: var(--font-plus-jakarta-sans);
   --font-display: var(--font-plus-jakarta-sans);
   --font-mono: var(--font-jetbrains-mono);
-  --font-jetbrains-mono: 'JetBrains Mono', 'IBM Plex Mono', 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
-  --font-ibm-plex-mono: 'IBM Plex Mono', var(--font-jetbrains-mono);
-  --font-geist-mono: 'Geist Mono', var(--font-jetbrains-mono);
+  --font-jetbrains-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
 
   --animate-spin-slow: spin 7s linear infinite;
-}
-
-/* saira-regular - latin */
-@font-face {
-  font-display: swap;
-  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-  font-family: 'Saira';
-  font-style: normal;
-  font-weight: 400;
-  src: url('/static/fonts/saira-v22-latin-regular.woff2') format('woff2');
-  /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-}
-
-/* saira-700 - latin */
-@font-face {
-  font-display: swap;
-  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-  font-family: 'Saira';
-  font-style: normal;
-  font-weight: 700;
-  src: url('/static/fonts/saira-v22-latin-700.woff2') format('woff2');
-  /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-}
-
-/* ibm-plex-mono-regular - latin */
-@font-face {
-  font-display: swap;
-  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-  font-family: 'IBM Plex Mono';
-  font-style: normal;
-  font-weight: 400;
-  src: url('/static/fonts/ibm-plex-mono-v20-latin-regular.woff2') format('woff2');
-  /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-}
-
-/* ibm-plex-mono-700 - latin */
-@font-face {
-  font-display: swap;
-  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-  font-family: 'IBM Plex Mono';
-  font-style: normal;
-  font-weight: 700;
-  src: url('/static/fonts/ibm-plex-mono-v20-latin-700.woff2') format('woff2');
-  /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-}
-
-/* urbanist-regular - latin */
-@font-face {
-  font-display: swap;
-  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-  font-family: 'Urbanist';
-  font-style: normal;
-  font-weight: 400;
-  src: url('/static/fonts/urbanist-v18-latin-regular.woff2') format('woff2');
-  /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-}
-
-/* urbanist-700 - latin */
-@font-face {
-  font-display: swap;
-  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-  font-family: 'Urbanist';
-  font-style: normal;
-  font-weight: 700;
-  src: url('/static/fonts/urbanist-v18-latin-700.woff2') format('woff2');
-  /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-}
-
-/* exo-2-regular - latin */
-@font-face {
-  font-display: swap;
-  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-  font-family: 'Exo 2';
-  font-style: normal;
-  font-weight: 400;
-  src: url('/static/fonts/exo-2-v26-latin-regular.woff2') format('woff2');
-  /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-}
-
-/* exo-2-700 - latin */
-@font-face {
-  font-display: swap;
-  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-  font-family: 'Exo 2';
-  font-style: normal;
-  font-weight: 700;
-  src: url('/static/fonts/exo-2-v26-latin-700.woff2') format('woff2');
-  /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-}
-
-/* arimo-regular - latin */
-@font-face {
-  font-display: swap;
-  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-  font-family: 'Arimo';
-  font-style: normal;
-  font-weight: 400;
-  src: url('/static/fonts/arimo-v35-latin-regular.woff2') format('woff2');
-  /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-}
-
-/* rubik-regular - latin */
-@font-face {
-  font-display: swap;
-  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-  font-family: 'Rubik';
-  font-style: normal;
-  font-weight: 400;
-  src: url('/static/fonts/rubik-v31-latin-regular.woff2') format('woff2');
-  /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-}
-
-/* crimson-pro-regular - latin */
-@font-face {
-  font-display: swap;
-  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-  font-family: 'Crimson Pro';
-  font-style: normal;
-  font-weight: 400;
-  src: url('/static/fonts/crimson-pro-v28-latin-regular.woff2') format('woff2');
-  /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-}
-
-@font-face {
-  font-family: 'Geist';
-  src: url('/static/fonts/geist/Geist[wght].woff2') format('woff2-variations');
-  font-weight: 100 900;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Geist Mono';
-  src: url('/static/fonts/geist/GeistMono[wght].woff2') format('woff2-variations');
-  font-weight: 100 900;
-  font-style: normal;
-  font-display: swap;
-}
-
-
-@font-face {
-  font-family: "Poppins";
-  src: url("/static/fonts/poppins/Poppins-Regular.woff2") format("woff2");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
 }
 
 @font-face {
@@ -332,33 +174,6 @@
   font-weight: 200 800;
   font-style: italic;
   font-display: swap;
-}
-
-@font-face {
-  font-family: "et-book";
-  src:
-    url("/static/fonts/etbookot-roman-webfont.woff2") format("woff2"),
-    url("/static/fonts/etbookot-roman-webfont.woff") format("woff");
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "et-book";
-  src:
-    url("/static/fonts/etbookot-italic-webfont.woff2") format("woff2"),
-    url("/static/fonts/etbookot-italic-webfont.woff") format("woff");
-  font-weight: normal;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: "et-book";
-  src:
-    url("/static/fonts/etbookot-bold-webfont.woff2") format("woff2"),
-    url("/static/fonts/etbookot-bold-webfont.woff") format("woff");
-  font-weight: bold;
-  font-style: normal;
 }
 
 @layer utilities {
@@ -2260,6 +2075,332 @@ picture img {
     width: 100%;
   }
 
+  .home-newsletter-panel {
+    display: grid;
+    gap: 0.9rem;
+    align-items: end;
+    padding: 0.9rem 0;
+    border-block: 1px solid rgb(214 207 193 / 0.95);
+  }
+
+  .dark .home-newsletter-panel {
+    border-color: rgb(63 63 70 / 0.95);
+  }
+
+  @media (min-width: 768px) {
+    .home-newsletter-panel {
+      grid-template-columns: minmax(0, 1fr) minmax(20rem, 0.8fr);
+    }
+  }
+
+  .home-newsletter-form {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.45rem;
+  }
+
+  .home-newsletter-input {
+    min-width: 0;
+    border: 1px solid rgb(209 213 219 / 1);
+    border-radius: 0.16rem;
+    background: transparent;
+    padding: 0.55rem 0.7rem;
+    font-size: 0.82rem;
+  }
+
+  .dark .home-newsletter-input {
+    border-color: rgb(82 82 91 / 1);
+    color: rgb(244 244 245 / 1);
+  }
+
+  .home-newsletter-button {
+    border-radius: 0.16rem;
+    padding: 0.55rem 0.85rem;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .home-newsletter-error {
+    grid-column: 1 / -1;
+    margin: 0;
+    color: rgb(185 28 28 / 1);
+    font-size: 0.72rem;
+  }
+
+  .dark .home-newsletter-error {
+    color: rgb(252 165 165 / 1);
+  }
+
+  .subscribe-sticky {
+    position: fixed;
+    right: max(0.75rem, env(safe-area-inset-right));
+    bottom: max(0.75rem, env(safe-area-inset-bottom));
+    z-index: 40;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.38rem;
+    border: 1px solid color-mix(in srgb, var(--accent-color) 65%, rgb(214 207 193));
+    border-radius: 0.16rem;
+    background: rgb(251 250 246 / 0.94);
+    padding: 0.46rem 0.62rem;
+    box-shadow: 0 3px 12px rgb(24 24 27 / 0.09);
+    color: var(--accent-color);
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    text-transform: uppercase;
+    backdrop-filter: blur(8px);
+  }
+
+  .subscribe-sticky:hover {
+    border-color: var(--accent-color);
+  }
+
+  .snippet-filter-button,
+  .snippet-favorite-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgb(209 213 219 / 1);
+    border-radius: 0.16rem;
+    background: transparent;
+    color: rgb(107 114 128 / 1);
+    transition: border-color 0.15s ease, color 0.15s ease, background-color 0.15s ease;
+  }
+
+  .snippet-filter-button {
+    gap: 0.35rem;
+    padding: 0.35rem 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .snippet-filter-count {
+    min-width: 1.1rem;
+    border-left: 1px solid currentColor;
+    padding-left: 0.35rem;
+    text-align: center;
+  }
+
+  .snippet-favorite-button {
+    width: 1.8rem;
+    height: 1.8rem;
+  }
+
+  .snippet-filter-button:hover,
+  .snippet-filter-button.is-active,
+  .snippet-favorite-button:hover,
+  .snippet-favorite-button.is-favorite {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+  }
+
+  .snippet-favorite-button.is-favorite svg {
+    fill: currentColor;
+  }
+
+  .dark .snippet-filter-button,
+  .dark .snippet-favorite-button {
+    border-color: rgb(63 63 70 / 1);
+    color: rgb(161 161 170 / 1);
+  }
+
+  .dark .snippet-filter-button:hover,
+  .dark .snippet-filter-button.is-active,
+  .dark .snippet-favorite-button:hover,
+  .dark .snippet-favorite-button.is-favorite {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+  }
+
+  .learning-summary {
+    display: grid;
+    gap: 0.9rem;
+    align-items: end;
+  }
+
+  @media (min-width: 768px) {
+    .learning-summary {
+      grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.8fr);
+    }
+  }
+
+  .learning-progress-track {
+    height: 0.42rem;
+    overflow: hidden;
+    border: 1px solid rgb(214 207 193 / 1);
+    background: rgb(246 241 230 / 0.8);
+  }
+
+  .dark .learning-progress-track {
+    border-color: rgb(63 63 70 / 1);
+    background: rgb(39 39 42 / 0.8);
+  }
+
+  .learning-progress-value {
+    display: block;
+    height: 100%;
+    background: var(--accent-color);
+    transition: width 0.2s ease;
+  }
+
+  .learning-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.65rem;
+    margin: 1rem 0 0.5rem;
+  }
+
+  .learning-search {
+    width: min(18rem, 70vw);
+    border: 1px solid rgb(209 213 219 / 1);
+    border-radius: 0.16rem;
+    background: transparent;
+    padding: 0.42rem 0.65rem 0.42rem 2rem;
+    font-size: 0.78rem;
+  }
+
+  .dark .learning-search {
+    border-color: rgb(63 63 70 / 1);
+    color: rgb(244 244 245 / 1);
+  }
+
+  .learning-filter-group {
+    display: inline-flex;
+    border: 1px solid rgb(209 213 219 / 1);
+  }
+
+  .dark .learning-filter-group {
+    border-color: rgb(63 63 70 / 1);
+  }
+
+  .learning-filter {
+    border-right: 1px solid rgb(209 213 219 / 1);
+    padding: 0.38rem 0.55rem;
+    background: transparent;
+    color: rgb(82 82 91 / 1);
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .learning-filter:last-child {
+    border-right: 0;
+  }
+
+  .learning-filter.is-active {
+    background: color-mix(in srgb, var(--accent-color) 12%, transparent);
+    color: var(--accent-color);
+  }
+
+  .dark .learning-filter {
+    border-color: rgb(63 63 70 / 1);
+    color: rgb(161 161 170 / 1);
+  }
+
+  .dark .learning-filter.is-active {
+    color: var(--accent-color);
+  }
+
+  .learning-list {
+    border-top: 1px solid rgb(214 207 193 / 0.95);
+  }
+
+  .learning-item,
+  .learning-post-panel {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .learning-item {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgb(229 223 211 / 0.95);
+  }
+
+  .dark .learning-list,
+  .dark .learning-item {
+    border-color: rgb(63 63 70 / 0.9);
+  }
+
+  .learning-post-panel {
+    padding: 0.75rem;
+    border-block: 1px solid rgb(214 207 193 / 0.95);
+  }
+
+  .dark .learning-post-panel {
+    border-color: rgb(63 63 70 / 0.95);
+  }
+
+  .learning-toggle {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: 0.35rem;
+    border: 1px solid rgb(209 213 219 / 1);
+    border-radius: 0.16rem;
+    background: transparent;
+    padding: 0.4rem 0.55rem;
+    color: rgb(82 82 91 / 1);
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .learning-toggle:hover,
+  .learning-toggle.is-complete {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+  }
+
+  .learning-toggle.is-complete svg {
+    stroke-width: 3;
+  }
+
+  .dark .learning-toggle {
+    border-color: rgb(63 63 70 / 1);
+    color: rgb(161 161 170 / 1);
+  }
+
+  .dark .learning-toggle:hover,
+  .dark .learning-toggle.is-complete {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+  }
+
+  @media (max-width: 639px) {
+    .learning-item,
+    .learning-post-panel {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  }
+
+  .dark .subscribe-sticky {
+    background: rgb(20 20 20 / 0.94);
+    box-shadow: 0 3px 12px rgb(0 0 0 / 0.28);
+  }
+
+  @media (min-width: 1024px) {
+    .subscribe-sticky {
+      right: 1.25rem;
+      bottom: 1.25rem;
+    }
+  }
+
   .home-recent-panel .feed-list {
     border-top: 0;
   }
@@ -2420,8 +2561,7 @@ picture img {
     gap: 0.2rem;
     padding: 0.65rem 0;
     border-bottom: 1px solid rgb(229 223 211 / 0.95);
-    box-shadow: inset 0 0 0 transparent;
-    transition: background-color 160ms ease, box-shadow 160ms ease;
+    transition: color 160ms ease;
     text-decoration: none;
     color: inherit;
   }
@@ -2430,10 +2570,9 @@ picture img {
     border-bottom-color: rgb(39 39 42 / 0.9);
   }
 
-  .home-directory-item:hover,
   .home-directory-item:focus-visible {
-    background: color-mix(in srgb, var(--accent-color) 4%, transparent);
-    box-shadow: inset 2px 0 var(--accent-color);
+    outline: 2px solid var(--accent-color);
+    outline-offset: 3px;
   }
 
   .home-directory-item:hover .home-directory-name,

@@ -16,7 +16,7 @@ eleventyNavigation:
   {% include "components/page-header.njk" %}
 
   <div id="subscribeForm" class="{{ cardShell }} p-6 sm:p-8">
-    <form name="newsletter" method="POST" action="/newsletter/success/" data-netlify="true" netlify-honeypot="bot-field" class="space-y-4">
+    <form name="newsletter" method="POST" action="/newsletter/success/" data-netlify="true" netlify-honeypot="bot-field" class="space-y-4" data-newsletter-form data-newsletter-source="newsletter-page" data-error-target="#errorMessage">
       <input type="hidden" name="form-name" value="newsletter" />
       
       <!-- Honeypot field for spam protection -->
@@ -68,8 +68,8 @@ eleventyNavigation:
         id="submitButton"
         class="w-32  accent-button accent-focus flex items-center justify-center gap-2 rounded-sm px-6 py-3 text-base font-medium"
       >
-        <span id="submitText">Subscribe</span>
-        <span id="submitLoading" class="hidden">
+        <span id="submitText" data-submit-label>Subscribe</span>
+        <span id="submitLoading" class="hidden" data-submit-loading>
           <div class="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
         </span>
       </button>
@@ -88,7 +88,7 @@ eleventyNavigation:
     </div>
   </div>
 
-  <div id="errorMessage" class="hidden mt-8 rounded-sm border border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-900/20 p-6">
+  <div id="errorMessage" class="hidden mt-8 rounded-sm border border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-900/20 p-6" data-newsletter-error role="alert">
     <div class="flex items-start gap-3">
       {% feather "alert-circle", class="w-6 h-6 text-red-600 dark:text-red-400 flex-shrink-0 mt-0.5" %}
       <div>
@@ -131,47 +131,3 @@ eleventyNavigation:
     </div>
   </div>
 </div>
-
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const form = document.querySelector('form[name="newsletter"]');
-    const subscribeForm = document.getElementById('subscribeForm');
-    const successMessage = document.getElementById('successMessage');
-    const errorMessage = document.getElementById('errorMessage');
-    const submitButton = document.getElementById('submitButton');
-    const submitText = document.getElementById('submitText');
-    const submitLoading = document.getElementById('submitLoading');
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      
-      // Show loading state
-      submitButton.disabled = true;
-      submitText.classList.add('hidden');
-      submitLoading.classList.remove('hidden');
-      errorMessage.classList.add('hidden');
-
-      const formData = new FormData(form);
-
-      try {
-        const response = await fetch('/', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: new URLSearchParams(formData).toString()
-        });
-
-        if (response.ok) {
-          window.location.href = form.getAttribute('action') || '/newsletter/success/';
-        } else {
-          throw new Error('Form submission failed');
-        }
-      } catch (error) {
-        console.error('Error:', error);
-        errorMessage.classList.remove('hidden');
-        submitButton.disabled = false;
-        submitText.classList.remove('hidden');
-        submitLoading.classList.add('hidden');
-      }
-    });
-  });
-</script>

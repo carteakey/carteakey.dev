@@ -20,8 +20,8 @@ This is the repository thinking space merged from `docs/TODO.md`, audit docs, te
 - [x] Add `aria-busy` to the post upvote button and prevent duplicate in-flight clicks. (2026-06-28)
 - [x] Add visible focus affordances to archive, feed, and snippets search inputs. (2026-06-28)
 - [x] Add a newsletter success redirect and `/newsletter/success/` confirmation page. (2026-06-28)
-- [ ] Add a Buy Me a Coffee link or equivalent support link, saved for later.
-- [ ] Run the quick verification checklist after major UI changes: easter eggs, responsive post list, JSON-LD, Open Graph tags, Twitter cards, absolute meta URLs, and OG image existence.
+- [x] Add a configurable support flow with a disabled/test state until an external support URL is chosen. (2026-07-17)
+- [x] Add an automated generated-page verification checklist for easter eggs, responsive post lists, JSON-LD, Open Graph tags, Twitter cards, absolute meta URLs, and OG image existence. (2026-07-17)
 
 ### Accessibility
 - [x] Add consistent `focus-visible` states to interactive elements. (2026-07-09)
@@ -36,9 +36,9 @@ This is the repository thinking space merged from `docs/TODO.md`, audit docs, te
 - [x] Clarify `/status/` severity labels and active fallback attention items. (2026-07-03)
 
 ### Newsletter / Support
-- [ ] Add a sticky Subscribe button and homepage email micro-form.
-- [ ] Add newsletter tracking through Netlify Analytics or a custom Redis counter.
-- [ ] Add a support link flow once the Buy Me a Coffee or equivalent URL is chosen.
+- [x] Add a sticky Subscribe button and homepage email micro-form. (2026-07-17)
+- [x] Add privacy-friendly newsletter submission tracking with a Redis-backed counter and no stored email addresses. (2026-07-17)
+- [x] Add a metadata-driven support link flow with a clear test state until the external URL is chosen. (2026-07-17)
 
 ### SEO / Metadata
 - [x] Expand BlogPosting JSON-LD with `articleBody`, `wordCount`, and `readingTime`. (2026-07-01)
@@ -48,25 +48,25 @@ This is the repository thinking space merged from `docs/TODO.md`, audit docs, te
 - [x] Add canonical tag logic for duplicate content. (2026-07-01)
 
 ### Performance / Monitoring
-- [ ] Set up Core Web Vitals monitoring.
-- [ ] Add a monthly Lighthouse check to GitHub Actions.
-- [ ] Decide whether CSS/JS cache busting is still needed before adding timestamped asset URLs.
-- [ ] Optimize custom fonts.
+- [x] Set up sampled Core Web Vitals monitoring. (2026-07-17)
+- [x] Add a monthly Lighthouse check to GitHub Actions. (2026-07-17)
+- [x] Add deterministic content-versioned first-party asset URLs instead of timestamps. (2026-07-17)
+- [x] Remove unused custom font files and preload the active face, reducing the font payload by 74.5%. (2026-07-17)
 
 ### Feature Backlog
-- [ ] Code snippet favorites - let visitors save useful snippets.
-- [ ] Learning progress tracker.
-- [ ] Multi-language support.
+- [x] Add browser-local code snippet favorites. (2026-07-17)
+- [x] Add a browser-local learning progress tracker. (2026-07-17)
+- [x] Add opt-in multilingual page metadata, language switching, and a Hindi proof page. (2026-07-17)
 
 ### Local LLM Guide Roadmap
-- [ ] Run the section-by-section research/image prompt loop.
-- [ ] Trim generic cloud/local and glossary material.
-- [ ] Add a shorter human reading path for OOM, slow PP, slow TG, speculative decoding, and multi-GPU.
-- [ ] Replace universal prescriptions with evidence labels and exact tested configurations.
-- [ ] Cut repeated explanations and prose that reads like generated connective tissue.
-- [ ] Add PP, TG, tested context, cache state, draft acceptance, llama.cpp commit, and benchmark command to each profile.
-- [ ] Add a community-runs schema.
-- [ ] Keep community results separate from the local RTX 4070 ranking unless clearly labeled.
+- [x] Run the section-by-section research/image prompt loop and record the source, licensing, and visual decisions. (2026-07-17)
+- [x] Trim generic cloud/local and glossary material. (2026-07-17)
+- [x] Add a shorter human reading path for OOM, slow PP, slow TG, speculative decoding, and multi-GPU. (2026-07-17)
+- [x] Replace universal prescriptions with evidence labels and exact tested configurations. (2026-07-17)
+- [x] Cut repeated explanations and prose that reads like generated connective tissue. (2026-07-17)
+- [x] Add PP, TG, tested context, cache state, draft acceptance, llama.cpp commit, and benchmark command to each L3MS profile. (2026-07-17)
+- [x] Add and validate a separate L3MS community-runs schema. (2026-07-17)
+- [x] Keep community results in a separate unranked view from the local RTX 4070 ranking. (2026-07-17)
 
 ## High Priority Features
 
@@ -186,7 +186,7 @@ After: https://carteakey.dev
 
 
 
-- [ ] Add a Buy Me a Coffee link or equivalent support link, saved for later.
+- [x] Add a configurable support flow with a disabled/test state until an external support URL is chosen. (2026-07-17)
 
 ### Performance & Technical
 - [x] Add service worker for offline reading (2026-01-03)
@@ -195,12 +195,12 @@ After: https://carteakey.dev
 - [x] Add a build-time `/status/` page for integration health and fallback visibility. (2026-06-28)
 
 ### Interactive Features
-- [ ] Code snippet favorites - Let visitors save useful snippets
+- [x] Code snippet favorites - let visitors save useful snippets locally. (2026-07-17)
 - [x] Tag filtering - Interactive tag-based post filtering (2026-01-03)
 
 ### Analytics & Insights
 
-- [ ] Learning progress tracker
+- [x] Learning progress tracker with browser-local state. (2026-07-17)
 - [x] View count tracking (privacy-friendly) (2026-01-03)
 
 ### Content Organization
@@ -216,8 +216,8 @@ After: https://carteakey.dev
 
 - [x] Comment threading - Enhanced Giscus comments via Giscus/GitHub Discussions with stable thread terms. (2026-06-25)
 - [x] Live typing effect - Animate the homepage topic line under the intro headline. (2026-06-25)
-- [ ] Custom fonts optimization
-- [ ] Multi-language support
+- [x] Custom font optimization. (2026-07-17)
+- [x] Opt-in multi-language support with a Hindi proof page. (2026-07-17)
 - [x] Add print styles - Better printing experience (2026-03-23)
 - [x] Add JSON-LD structured data for blog posts (2026-03-23)
 - [x] Popular posts widget - Most upvoted content (2026-03-23)

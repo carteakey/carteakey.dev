@@ -31,6 +31,7 @@ This site is where I write about stuff, and share projects, code snippets, and t
 - 🌗 **Dark mode** toggle (remembers your preference)
 - 💬 **Comments** via Giscus (GitHub Issues)
 - 📈 **Upvotes** and dynamic counters (via Netlify Functions + Redis)
+- 📊 **Sampled Core Web Vitals** through a privacy-limited first-party collector
 - 🎵 **Now playing** integration with Spotify
 - 📚 **Reading shelf** synced from Goodreads with manual physical-book/progress overrides and cover thumbnails
 - 🎬 **Film diary** synced from dated Letterboxd entries with poster thumbnails
@@ -44,10 +45,12 @@ npm run start
 ```
 - Visit [http://localhost:8080](http://localhost:8080) to view the site locally.
 - Edit content in `src/` (posts, pages, data, etc).
+- After a production build, run `npm run verify:ui` to smoke-check generated metadata, responsive archive markup, social images, and easter-egg wiring.
 
 ## Deploy
 
 - Pushed to `main` branch → auto-deployed to Netlify.
+- To enable direct support, set `SUPPORT_URL` to the provider's HTTPS page in Netlify. `SUPPORT_PROVIDER` optionally changes the displayed provider name.
 
 ## Credits
 

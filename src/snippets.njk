@@ -36,8 +36,14 @@ eleventyNavigation:
         {% feather "grid", class="w-4 h-4" %}
       </button>
     </div>
+    <button type="button" id="snippetFavoritesFilter" class="snippet-filter-button accent-focus" aria-pressed="false">
+      {% feather "bookmark", class="w-3.5 h-3.5" %}
+      <span>Saved</span>
+      <span id="snippetFavoritesCount" class="snippet-filter-count">0</span>
+    </button>
   </div>
 </div>
+<p id="snippetFavoriteStatus" class="sr-only" aria-live="polite"></p>
 
 {# ── LIST VIEW (default) ─────────────────────────────── #}
 <div id="snippetList" class="mt-4 divide-y divide-gray-100 dark:divide-gray-800/80">
@@ -52,8 +58,9 @@ eleventyNavigation:
       data-tags="{{ filteredTags | join(' ') | lower }}"
       data-language="{{ snippet.data.language | default('') | lower }}"
       data-body="{{ searchExcerpt }}"
+      data-snippet-id="{{ snippet.url }}"
     >
-      <div class="flex flex-col md:flex-row md:gap-6">
+      <div class="flex flex-row gap-3 md:gap-6">
         <div class="shrink-0 md:w-36 flex flex-col gap-1 pt-0.5">
           <time class="meta-text text-xs text-gray-400 dark:text-gray-500" datetime="{{ snippet.date | htmlDateString }}">{{ snippet.date | readableDate }}</time>
           {% if snippet.data.language %}
@@ -74,6 +81,18 @@ eleventyNavigation:
             {% endif %}
           </div>
         </div>
+        <button
+          type="button"
+          class="snippet-favorite-button accent-focus shrink-0"
+          data-snippet-favorite
+          data-snippet-id="{{ snippet.url }}"
+          data-snippet-title="{{ snippet.data.title | escape }}"
+          aria-pressed="false"
+          title="Save snippet"
+        >
+          {% feather "bookmark", class="w-4 h-4" %}
+          <span class="sr-only">Save {{ snippet.data.title }}</span>
+        </button>
       </div>
     </article>
   {%- endfor -%}
@@ -93,13 +112,24 @@ eleventyNavigation:
       data-tags="{{ filteredTags | join(' ') | lower }}"
       data-language="{{ snippet.data.language | default('') | lower }}"
       data-body="{{ searchExcerpt }}"
+      data-snippet-id="{{ snippet.url }}"
     >
       <div class="flex items-center gap-2 mb-2">
         <span class="feed-list-dot bg-purple-400 shrink-0"></span>
         <time class="meta-text text-[0.68rem] text-gray-400 dark:text-gray-500">{{ snippet.date | readableDate }}</time>
-        {% if snippet.data.language %}
-          <span class="badge badge-tag badge-compact ml-auto">{{ snippet.data.language }}</span>
-        {% endif %}
+        {% if snippet.data.language %}<span class="badge badge-tag badge-compact">{{ snippet.data.language }}</span>{% endif %}
+        <button
+          type="button"
+          class="snippet-favorite-button accent-focus ml-auto"
+          data-snippet-favorite
+          data-snippet-id="{{ snippet.url }}"
+          data-snippet-title="{{ snippet.data.title | escape }}"
+          aria-pressed="false"
+          title="Save snippet"
+        >
+          {% feather "bookmark", class="w-4 h-4" %}
+          <span class="sr-only">Save {{ snippet.data.title }}</span>
+        </button>
       </div>
       <h3 class="editorial-title-compact m-0">
         <a href="{{ snippet.url }}" class="title-hover" style="color: inherit; text-decoration: none;">{{ snippet.data.title }}</a>
@@ -118,6 +148,8 @@ eleventyNavigation:
   {%- endfor -%}
 </div>
 
+<p id="snippetEmptyState" class="hidden editorial-support-compact py-8 text-center">No snippets match this view.</p>
+
 <style>
   .line-clamp-2 {
     display: -webkit-box;
@@ -127,15 +159,4 @@ eleventyNavigation:
   }
 </style>
 
-<script>
-  const searchInput = document.getElementById('snippetSearch');
-  const snippetCards = Array.from(document.querySelectorAll('[data-snippet-card]'));
-
-  searchInput.addEventListener('input', (e) => {
-    const term = e.target.value.trim().toLowerCase();
-    snippetCards.forEach((card) => {
-      const matches = !term || ['title','tags','language','body'].some(k => (card.dataset[k] || '').includes(term));
-      card.closest('article').classList.toggle('hidden', !matches);
-    });
-  });
-</script>
+<script defer src="/static/js/snippet-favorites.js?v={{ versions.version }}"></script>

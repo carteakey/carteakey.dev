@@ -1,0 +1,51 @@
+---
+layout: layouts/base.njk
+title: Support
+description: Ways to support carteakey.dev and help keep the site independent.
+eleventyNavigation:
+  key: Support
+  order: 13
+---
+{% include "components/breadcrumbs.njk" %}
+
+{% set pageEyebrow = "Independent Web" %}
+{% set pageTitle = "Support the site" %}
+{% set pageDescription = "carteakey.dev is an independent personal site. Reading, sharing, and replying are already useful ways to support it." %}
+{% include "components/page-header.njk" %}
+
+<div class="grid gap-4 md:grid-cols-2 not-prose">
+  <section class="surface surface-padding">
+    <p class="page-eyebrow">Direct support</p>
+    <h2 class="editorial-title-compact mt-1">Buy the next coffee</h2>
+    {% if support.configured %}
+      <p class="editorial-support mt-2">
+        If something here saved you time, you can leave a one-off tip through {{ support.provider }}.
+      </p>
+      <a
+        href="{{ support.url }}"
+        class="accent-button accent-focus inline-flex items-center gap-2 mt-4 rounded-sm px-4 py-2 text-sm font-semibold no-underline"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {% feather "coffee", class="w-4 h-4" %}
+        Open {{ support.provider }}
+      </a>
+    {% else %}
+      <p class="editorial-support mt-2">
+        Direct contributions are not enabled yet. The page is ready; the support URL only needs to be configured at deploy time.
+      </p>
+      <p class="meta-text mt-4">Set <code>SUPPORT_URL</code> and optionally <code>SUPPORT_PROVIDER</code> in Netlify.</p>
+    {% endif %}
+  </section>
+
+  <section class="surface surface-padding">
+    <p class="page-eyebrow">No money required</p>
+    <h2 class="editorial-title-compact mt-1">Help the work travel</h2>
+    <ul class="mt-3 space-y-2 editorial-support list-disc pl-5">
+      <li><a href="/newsletter/" class="accent-link">Subscribe to new writing</a>.</li>
+      <li><a href="/feed.xml" class="accent-link">Follow the RSS feed</a>.</li>
+      <li>Share a useful post with someone who would actually enjoy it.</li>
+      <li><a href="/guestbook/" class="accent-link">Leave a note in the guestbook</a>.</li>
+    </ul>
+  </section>
+</div>
