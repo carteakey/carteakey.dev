@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.6.1] - 2026-08-05
+### Added
+- Notes: Added a comparison of the new Muse, Luna, and DeepSeek coding prices, including current subscription deals and an accompanying panic-button illustration.
+
 ## [2.6.0] - 2026-07-27
 ### Added
 - Support: Added a metadata-driven support page and call-to-action with a safe setup state until an external support URL is configured.
