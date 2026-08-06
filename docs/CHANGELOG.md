@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.6.2] - 2026-08-05
+### Changed
+- Model tier list: Refreshed `src/_data/models.yaml` to the August 2026 lineup — added GPT-5.6 Sol/Terra/Luna, Claude Fable 5, Claude Opus 5, Kimi K3, Grok 4.5, GLM-5.2, MiniMax M2.7, Muse Spark 1.2, Qwen3.7-Max, and Qwen3.6-27B; reworked tier labels (S+ through D); expanded service list to 27 entries with current plan pricing.
+- Assets: Mapped provider and service brand SVGs to the refreshed `models.yaml` identifiers so folio icons resolve instead of falling back to initial-letter placeholders.
+- Folio: Updated the tier-list card copy from July to August 2026.
+
 ## [2.6.1] - 2026-07-31
 ### Added
 - Projects: Added data-driven Current work and Coming soon sections with status cards.
