@@ -4,4 +4,5 @@ allowBuilds:
   sharp: true
 overrides:
   form-data: 4.0.6
-  undici: 7.28.0
+  '@11ty/webc>nanoid': 5.1.16
+  undici: 7.29.0

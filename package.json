@@ -31,7 +31,7 @@
   "dependencies": {
     "@11ty/eleventy": "^3.1.6",
     "@11ty/eleventy-fetch": "^5.1.3",
-    "@11ty/eleventy-img": "^6.0.4",
+    "@11ty/eleventy-img": "^7.0.0",
     "@11ty/eleventy-navigation": "^1.0.5",
     "@11ty/eleventy-plugin-rss": "^2.0.4",
     "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.2",
@@ -54,7 +54,7 @@
     "npm-check-updates": "^19.6.0",
     "npm-run-all": "^4.1.5",
     "openai": "^6.46.0",
-    "sharp": "^0.33.5",
+    "sharp": "^0.35.3",
     "steamwidgets": "^1.0.9",
     "yargs": "^18.0.0"
   },
