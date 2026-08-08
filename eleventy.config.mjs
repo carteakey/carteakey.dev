@@ -6,7 +6,6 @@ import { DateTime } from "luxon";
 import markdownIt from "markdown-it";
 import markdownItAnchor from "markdown-it-anchor";
 import { full as emoji } from 'markdown-it-emoji'
-import eleventyGoogleFonts from "eleventy-google-fonts";
 
 import syntaxHighlight from "@11ty/eleventy-plugin-syntaxhighlight";
 import pluginNavigation from "@11ty/eleventy-navigation";
@@ -425,7 +424,6 @@ export default function (eleventyConfig) {
   // Copy all static images (includes subfolders like /static/img/vibes)
   eleventyConfig.addPassthroughCopy({ "./src/static/img": "/img/" });
   eleventyConfig.addPassthroughCopy({ "./src/static/assets": "/assets" });
-  eleventyConfig.addPassthroughCopy("./src/static/css/prism-a11y-dark.css");
   eleventyConfig.addPassthroughCopy({ "./src/static/css/prism": "/static/css/prism" });
   eleventyConfig.addPassthroughCopy({ "./src/static/js": "/static/js" });
   eleventyConfig.addPassthroughCopy("./src/_redirects");
@@ -438,7 +436,6 @@ export default function (eleventyConfig) {
   // Add plugins
   eleventyConfig.addPlugin(syntaxHighlight);
   eleventyConfig.addPlugin(pluginNavigation);
-  eleventyConfig.addPlugin(eleventyGoogleFonts);
   eleventyConfig.addPlugin(eleventyPluginFeathericons);
   eleventyConfig.addPlugin(EleventyRenderPlugin);
   eleventyConfig.addPlugin(feedPlugin, {

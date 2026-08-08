@@ -9,12 +9,12 @@ const regex = /<div class="meme-card" data-tags="([^"]*)" data-caption="([^"]*)"
 const memes = [];
 let match;
 while ((match = regex.exec(html)) !== null) {
-    const tags = match[1].split(',');
+    const tags = match[1].split(',').map((tag) => tag.trim()).filter(Boolean);
     const caption = match[2];
     const id = match[3];
     const imgSrc = match[4];
     const vidSrc = match[5];
-    const vibes = parseInt(match[6], 10);
+    const vibes = Number.parseInt(match[6], 10) || 0;
     const submitter = match[7];
     const time = match[8].trim();
     const sourceUrl = match[9];
@@ -23,15 +23,13 @@ while ((match = regex.exec(html)) !== null) {
     memes.push({
         id,
         image: imgSrc || vidSrc,
-        alt: caption, // Using caption as alt for simplicity
         caption,
         tags,
         vibes,
         submitter,
         time,
-        source: (sourceUrl && sourceName) ? { name: sourceName, url: sourceUrl } : null,
-        isVideo: !!vidSrc
+        ...(sourceUrl && sourceName ? { source_url: sourceUrl, source_name: sourceName } : {})
     });
 }
 console.log(`Extracted ${memes.length} memes.`);
-fs.writeFileSync('src/_data/memes.yaml', yaml.dump(memes));
+fs.writeFileSync('src/_data/ai-memes.yaml', yaml.dump(memes));

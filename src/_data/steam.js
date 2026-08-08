@@ -1,4 +1,3 @@
-import fetch from "node-fetch";
 import { AssetCache } from "@11ty/eleventy-fetch";
 import { recordStatusEvent } from "../_utils/statusLog.js";
 

@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.6.4] - 2026-08-08
+### Changed
+- Simplified external fetching around the Node 26 runtime by removing the redundant `node-fetch` and `axios` dependencies.
+- Consolidated the photo importer’s shared AI-description, geocoding, slug, and coordinate helpers.
+- Removed unused direct dependencies, the inactive Google Fonts plugin, and a stale Prism passthrough target.
+- Kept feed-card styling under its dedicated component rules instead of inheriting a second surface definition.
+- Excluded archived templates from Eleventy processing so the retired `/more-card/` page no longer ships or appears in the page inventory.
+- Updated the one-off meme parser to write the current `ai-memes.yaml` schema instead of the retired filename and fields.
+
 ## [2.6.3] - 2026-08-08
 ### Changed
 - Dependencies: Updated Eleventy Image and Sharp to patched major versions and pinned vulnerable WebC/TOC transitive dependencies to secure releases; the pnpm audit is now clean.

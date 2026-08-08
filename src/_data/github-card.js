@@ -1,4 +1,3 @@
-import fetch from "node-fetch";
 import { AssetCache } from "@11ty/eleventy-fetch";
 
 const REPOS_API = "https://api.github.com/users/carteakey/repos?sort=updated&direction=desc&per_page=100";

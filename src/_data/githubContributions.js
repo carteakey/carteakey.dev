@@ -1,4 +1,3 @@
-import fetch from "node-fetch";
 import { AssetCache } from "@11ty/eleventy-fetch";
 
 const API_ENDPOINT = "https://github-contributions-api.jogruber.de/v4/carteakey";

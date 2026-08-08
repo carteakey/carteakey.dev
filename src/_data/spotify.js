@@ -1,5 +1,4 @@
 import querystring from "querystring";
-import fetch from "node-fetch";
 import { AssetCache } from "@11ty/eleventy-fetch";
 import { fetchWithFallback } from "../_utils/fetchWithFallback.js";
 
@@ -129,4 +128,3 @@ export default async function () {
     }
   });
 }
-

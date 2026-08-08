@@ -415,8 +415,7 @@ picture img {
 
   /* Shared surfaces */
   .surface,
-  .card,
-  .feed-card-full {
+  .card {
     border-radius: 0.12rem;
     border: 1px solid rgb(210 205 195 / 0.9);
     background: rgb(251 250 246 / 0.72);
@@ -425,29 +424,25 @@ picture img {
   }
 
   .dark .surface,
-  .dark .card,
-  .dark .feed-card-full {
+  .dark .card {
     border-color: rgb(63 63 70 / 0.95);
     background: rgb(20 20 20 / 0.82);
     box-shadow: none;
   }
 
   .surface-hover,
-  .card-hover,
-  .feed-card-full {
+  .card-hover {
     transition: border-color 160ms ease, background-color 160ms ease, color 160ms ease;
   }
 
   .surface-hover:hover,
-  .card-hover:hover,
-  .feed-card-full:hover {
+  .card-hover:hover {
     border-color: color-mix(in srgb, var(--accent-color) 36%, rgb(210 205 195));
     background: color-mix(in srgb, var(--accent-color) 3%, rgb(251 250 246));
   }
 
   .dark .surface-hover:hover,
-  .dark .card-hover:hover,
-  .dark .feed-card-full:hover {
+  .dark .card-hover:hover {
     border-color: color-mix(in srgb, var(--accent-color) 40%, rgb(63 63 70));
     background: color-mix(in srgb, var(--accent-color) 6%, rgb(20 20 20));
   }

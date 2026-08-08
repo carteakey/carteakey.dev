@@ -1,4 +1,3 @@
-import fetch from "node-fetch";
 import { fetchWithFallback } from "../_utils/fetchWithFallback.js";
 
 const api_endpoint = "https://api.github.com/users/carteakey/repos?sort=updated&direction=desc";
@@ -40,4 +39,3 @@ export default async function () {
     }
   });
 }
-

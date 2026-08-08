@@ -16,6 +16,8 @@
 
 This is the repository thinking space merged from `docs/TODO.md`, audit docs, testing notes, and the local LLM guide roadmap. Intentionally committed implementation work is tracked in Linear; older sections below are retained for history and context.
 
+- [x] Second-pass cleanup: remove unused build dependencies, consolidate photo-ingestion helpers, ignore archived templates, and standardize native Node fetch usage. (2026-08-08)
+
 ### Immediate / Low-Hanging
 - [x] Add `aria-busy` to the post upvote button and prevent duplicate in-flight clicks. (2026-06-28)
 - [x] Add visible focus affordances to archive, feed, and snippets search inputs. (2026-06-28)

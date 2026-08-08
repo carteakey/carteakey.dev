@@ -3,114 +3,21 @@ import fs from "fs/promises";
 import path from "path";
 import sharp from "sharp";
 import yaml from "js-yaml";
-import axios from "axios";
-import OpenAI from "openai";
 import inquirer from "inquirer";
 import dotenv from "dotenv";
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
+import {
+  convertDMSToDD,
+  getPhotoDescription,
+  reverseGeocode,
+  slugify,
+} from "./photo-helpers.mjs";
 
 dotenv.config();
 
 const PHOTOS_YAML_PATH = "src/_data/photos.yaml";
 const IMAGE_DIR = "src/static/img/photography";
-
-function slugify(text) {
-  return text
-    .toString()
-    .toLowerCase()
-    .replace(/\s+/g, "-") // Replace spaces with -
-    .replace(/[^\w-]+/g, "") // Remove all non-word chars
-    .replace(/--+/g, "-") // Replace multiple - with single -
-    .replace(/^-+/, "") // Trim - from start of text
-    .replace(/-+$/, ""); // Trim - from end of text
-}
-
-function convertDMSToDD(dms, ref) {
-  if (!dms || dms.length !== 3) return null;
-  const [degrees, minutes, seconds] = dms;
-  let dd = degrees + minutes / 60 + seconds / 3600;
-  if (ref === "S" || ref === "W") {
-    dd = dd * -1;
-  }
-  return dd;
-}
-
-async function getOllamaDescription(imagePath) {
-  try {
-    const ollamaUrl = (process.env["OLLAMA_API_URL"] || "http://localhost:11434");
-    console.log("Using Ollama API URL:", ollamaUrl);
-    const client = new OpenAI({
-      baseURL: ollamaUrl,
-      apiKey: "ollama", // required but unused
-    });
-
-    const imageAsBase64 = await fs.readFile(imagePath, { encoding: "base64" });
-    const response = await client.chat.completions.create({
-      model: "llama3.2-vision",
-      messages: [
-        {
-          role: "user",
-          content: [
-            {
-              type: "text",
-              text: "Generate a one-sentence description for a photography portfolio, focusing on the subject, composition, and mood. Be creative and evocative. After the description, on a new line, provide a title in the format 'Title: [title here]'. The response must only contain the single sentence description and the title.",
-            },
-            {
-              type: "image_url",
-              image_url: `data:image/jpeg;base64,${imageAsBase64}`,
-            },
-          ],
-        },
-      ],
-    });
-    return response.choices[0].message.content;
-  } catch (error) {
-    console.error("Error getting description from Ollama:", error.message);
-    if (error.response) console.error(error.response.data);
-    return null;
-  }
-}
-
-async function getOpenAIDescription(imagePath) {
-  try {
-    const openai = new OpenAI();
-    const imageAsBase64 = await fs.readFile(imagePath, { encoding: "base64" });
-    const response = await openai.chat.completions.create({
-      model: "gpt-4-turbo",
-      messages: [
-        {
-          role: "user",
-          content: [
-            {
-              type: "text",
-              text: "Generate a one-sentence description for a photography portfolio, focusing on the subject, composition, and mood. Be creative and evocative. After the description, on a new line, provide a title in the format 'Title: [title here]'. The response must only contain the single sentence description and the title.",
-            },
-            {
-              type: "image_url",
-              image_url: `data:image/jpeg;base64,${imageAsBase64}`,
-            },
-          ],
-        },
-      ],
-    });
-    return response.choices[0].message.content;
-  } catch (error) {
-    console.error("Error getting description from OpenAI:", error.message);
-    return null;
-  }
-}
-
-async function reverseGeocode(lat, lon) {
-  try {
-    const response = await axios.get(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`);
-    const { address } = response.data;
-    return `${address.city || ""}, ${address.state || ""}, ${address.country || ""}`.replace(/ ,/g, "").trim();
-  } catch (error) {
-    console.error("Error reverse geocoding:", error.message);
-    return "Unknown";
-  }
-}
 
 async function main() {
   const argv = yargs(hideBin(process.argv))
@@ -215,11 +122,7 @@ async function main() {
   // Generate description and title
   let description, title;
   let rawDescription;
-  if (model === "Ollama") {
-    rawDescription = await getOllamaDescription(imagePath);
-  } else {
-    rawDescription = await getOpenAIDescription(imagePath);
-  }
+  rawDescription = await getPhotoDescription(imagePath, model);
 
   if (!rawDescription) {
     console.error("Failed to get description. Aborting.");
