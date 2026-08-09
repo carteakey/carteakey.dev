@@ -31,6 +31,30 @@ function shouldHideContent(item) {
   return item?.data?.hidden === true && !SHOW_HIDDEN_CONTENT;
 }
 
+function isVisibleContent(item, now = new Date()) {
+  return !shouldHideContent(item) && (!item?.date || !(item.date > now));
+}
+
+function archiveDateTime(dateInput) {
+  if (typeof dateInput === "string") {
+    return DateTime.fromISO(dateInput);
+  }
+  if (dateInput instanceof Date) {
+    return DateTime.fromJSDate(dateInput);
+  }
+  return DateTime.fromISO(dateInput.toString());
+}
+
+function archiveDateSegment(dateInput) {
+  if (typeof dateInput === "string") {
+    return dateInput;
+  }
+  if (dateInput instanceof Date) {
+    return DateTime.fromJSDate(dateInput).toFormat("yyyy-MM-dd");
+  }
+  return dateInput.toString();
+}
+
 function stripHtmlToText(content = "") {
   return String(content)
     .replace(/<script[\s\S]*?<\/script>/gi, " ")
@@ -497,50 +521,19 @@ export default function (eleventyConfig) {
 
   // Archive-specific date filters
   eleventyConfig.addFilter("archiveTitle", (dateInput) => {
-    let dateTime;
-    if (typeof dateInput === 'string') {
-      dateTime = DateTime.fromISO(dateInput);
-    } else if (dateInput instanceof Date) {
-      dateTime = DateTime.fromJSDate(dateInput);
-    } else {
-      dateTime = DateTime.fromISO(dateInput.toString());
-    }
-    return `Now (${dateTime.toFormat("MMM d, yyyy")})`;
+    return `Now (${archiveDateTime(dateInput).toFormat("MMM d, yyyy")})`;
   });
 
   eleventyConfig.addFilter("archiveHeading", (dateInput) => {
-    let dateTime;
-    if (typeof dateInput === 'string') {
-      dateTime = DateTime.fromISO(dateInput);
-    } else if (dateInput instanceof Date) {
-      dateTime = DateTime.fromJSDate(dateInput);
-    } else {
-      dateTime = DateTime.fromISO(dateInput.toString());
-    }
-    return dateTime.toFormat("MMM d, yyyy");
+    return archiveDateTime(dateInput).toFormat("MMM d, yyyy");
   });
 
   eleventyConfig.addFilter("archivePermalink", (dateInput) => {
-    let dateString;
-    if (typeof dateInput === 'string') {
-      dateString = dateInput;
-    } else if (dateInput instanceof Date) {
-      dateString = DateTime.fromJSDate(dateInput).toFormat("yyyy-MM-dd");
-    } else {
-      dateString = dateInput.toString();
-    }
-    return `/now/archive/${dateString}/`;
+    return `/now/archive/${archiveDateSegment(dateInput)}/`;
   });
 
   eleventyConfig.addFilter("archiveReadableDate", (dateInput) => {
-    // Handle both string and Date object inputs
-    if (typeof dateInput === 'string') {
-      return DateTime.fromISO(dateInput).toFormat("MMM d, yyyy");
-    } else if (dateInput instanceof Date) {
-      return DateTime.fromJSDate(dateInput).toFormat("MMM d, yyyy");
-    } else {
-      return DateTime.fromISO(dateInput.toString()).toFormat("MMM d, yyyy");
-    }
+    return archiveDateTime(dateInput).toFormat("MMM d, yyyy");
   });
 
   //Image Plugin
@@ -806,7 +799,7 @@ export default function (eleventyConfig) {
     if (!Array.isArray(posts)) return 0;
     return posts.reduce((total, post) => {
       const content = getSafeContent(post);
-      const text = (content || "").replace(/<[^>]+>/g, "");
+      const text = stripHtmlToText(content);
       return total + text.split(/\s+/).filter((w) => w.length > 0).length;
     }, 0);
   });
@@ -896,11 +889,7 @@ export default function (eleventyConfig) {
     const now = new Date();
     return collectionApi
       .getFilteredByGlob("./src/snippets/**/*.md")
-      .filter((snippet) => {
-        if (shouldHideContent(snippet)) return false;
-        if (snippet.date && snippet.date > now) return false;
-        return true;
-      })
+      .filter((snippet) => isVisibleContent(snippet, now))
       .sort((a, b) => b.date - a.date);
   });
 
@@ -922,12 +911,7 @@ export default function (eleventyConfig) {
     const now = new Date();
     return collectionApi
       .getFilteredByGlob("./src/posts/**/*.md")
-      .filter(post => {
-        if (shouldHideContent(post)) return false;
-        // Hide if date is in the future
-        if (post.date && post.date > now) return false;
-        return true;
-      })
+      .filter((post) => isVisibleContent(post, now))
       .sort((a, b) => {
         // Pinned posts first, then by date (newest first)
         const aPinned = a.data.pinned ? 1 : 0;
@@ -942,11 +926,7 @@ export default function (eleventyConfig) {
     const now = new Date();
     return collectionApi
       .getFilteredByGlob("./src/reviews/**/*.md")
-      .filter((review) => {
-        if (shouldHideContent(review)) return false;
-        if (review.date && review.date > now) return false;
-        return true;
-      })
+      .filter((review) => isVisibleContent(review, now))
       .sort((a, b) => b.date - a.date);
   });
 
@@ -954,11 +934,7 @@ export default function (eleventyConfig) {
     const now = new Date();
     return collectionApi
       .getFilteredByTag("prompts")
-      .filter(prompt => {
-        if (shouldHideContent(prompt)) return false;
-        if (prompt.date && prompt.date > now) return false;
-        return true;
-      })
+      .filter((prompt) => isVisibleContent(prompt, now))
       .sort((a, b) => b.date - a.date);
   });
 
@@ -967,13 +943,11 @@ export default function (eleventyConfig) {
     const now = new Date();
     const posts = collectionApi
       .getFilteredByGlob("./src/posts/**/*.md")
-      .filter(post => {
-        if (shouldHideContent(post)) return false;
-        if (post.data.draft === true) return false;
-        if (post.date && post.date > now) return false;
-        if (!post.data.featured) return false;
-        return true;
-      });
+      .filter((post) =>
+        isVisibleContent(post, now) &&
+        post.data.draft !== true &&
+        post.data.featured
+      );
 
     // Sort by weight (lower first), then by updated/date (newest first)
     posts.sort((a, b) => {
@@ -1008,11 +982,7 @@ export default function (eleventyConfig) {
 
     collectionApi
       .getFilteredByGlob("./src/posts/**/*.md")
-      .filter((post) => {
-        if (shouldHideContent(post)) return false;
-        if (post.date && post.date > now) return false;
-        return true;
-      })
+      .filter((post) => isVisibleContent(post, now))
       .forEach((post) => {
         const relativePath = normalizeRelativePath(post.inputPath);
         const parts = relativePath.split("/");
@@ -1057,8 +1027,7 @@ export default function (eleventyConfig) {
     return collectionApi.getAll().filter(page => {
       // Only filter posts, not all pages, for hidden/future
       if (page.inputPath && page.inputPath.includes("/posts/")) {
-        if (shouldHideContent(page)) return false;
-        if (page.date && page.date > now) return false;
+        return isVisibleContent(page, now);
       }
       return true;
     });
@@ -1098,11 +1067,7 @@ export default function (eleventyConfig) {
   eleventyConfig.addCollection("quotations", function (collectionApi) {
     const now = new Date();
     return collectionApi.getFilteredByGlob("src/quotations/**/*.md")
-      .filter((quote) => {
-        if (shouldHideContent(quote)) return false;
-        if (quote.date && quote.date > now) return false;
-        return true;
-      })
+      .filter((quote) => isVisibleContent(quote, now))
       .sort((a, b) => b.date - a.date);
   });
 
@@ -1143,11 +1108,7 @@ export default function (eleventyConfig) {
   eleventyConfig.addCollection("notes", function (collectionApi) {
     const now = new Date();
     return collectionApi.getFilteredByGlob("./src/notes/**/*.md")
-      .filter((note) => {
-        if (shouldHideContent(note)) return false;
-        if (note.date && note.date > now) return false;
-        return true;
-      })
+      .filter((note) => isVisibleContent(note, now))
       .sort((a, b) => b.date - a.date);
   });
 
@@ -1155,7 +1116,6 @@ export default function (eleventyConfig) {
   eleventyConfig.addCollection("feed", async function (collectionApi) {
     const now = new Date();
 
-    const stripHtml = (html = "") => html.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
     const truncate = (text = "", limit = 220) => {
       if (text.length <= limit) return text;
       return `${text.slice(0, limit).trimEnd()}…`;
@@ -1172,16 +1132,12 @@ export default function (eleventyConfig) {
     const posts = await Promise.all(
       collectionApi
         .getFilteredByGlob("./src/posts/**/*.md")
-        .filter((post) => {
-          if (shouldHideContent(post)) return false;
-          if (post.date && post.date > now) return false;
-          return true;
-        })
+        .filter((post) => isVisibleContent(post, now))
         .map(async (post) => {
           post.data.feedType = "post";
           const postDate = normalizeDate(post.data.updated) || post.date;
           const summarySource = post.data.description || post.data.excerpt || "";
-          const summary = summarySource ? truncate(stripHtml(summarySource)) : null;
+          const summary = summarySource ? truncate(stripHtmlToText(summarySource)) : null;
           const image = post.data.image ?? null;
           return {
             type: "post",
@@ -1205,15 +1161,11 @@ export default function (eleventyConfig) {
 
     const snippets = collectionApi
       .getFilteredByTag("snippets")
-      .filter((snippet) => {
-        if (shouldHideContent(snippet)) return false;
-        if (snippet.date && snippet.date > now) return false;
-        return true;
-      })
+      .filter((snippet) => isVisibleContent(snippet, now))
       .map((snippet) => {
         snippet.data.feedType = "snippet";
         const summarySource = snippet.data.description || snippet.data.excerpt || "";
-        const summary = summarySource ? truncate(stripHtml(summarySource)) : null;
+        const summary = summarySource ? truncate(stripHtmlToText(summarySource)) : null;
         return {
           type: "snippet",
           title: snippet.data.title,
@@ -1229,15 +1181,11 @@ export default function (eleventyConfig) {
 
     const prompts = collectionApi
       .getFilteredByTag("prompts")
-      .filter((prompt) => {
-        if (shouldHideContent(prompt)) return false;
-        if (prompt.date && prompt.date > now) return false;
-        return true;
-      })
+      .filter((prompt) => isVisibleContent(prompt, now))
       .map((prompt) => {
         prompt.data.feedType = "prompt";
         const summarySource = prompt.data.description || prompt.data.excerpt || "";
-        const summary = summarySource ? truncate(stripHtml(summarySource)) : null;
+        const summary = summarySource ? truncate(stripHtmlToText(summarySource)) : null;
         return {
           type: "prompt",
           title: prompt.data.title,
@@ -1253,15 +1201,11 @@ export default function (eleventyConfig) {
 
     const notes = collectionApi
       .getFilteredByGlob("./src/notes/**/*.md")
-      .filter((entry) => {
-        if (shouldHideContent(entry)) return false;
-        if (entry.date && entry.date > now) return false;
-        return true;
-      })
+      .filter((entry) => isVisibleContent(entry, now))
       .map((note) => {
         note.data.feedType = "note";
         const summarySource = note.data.description || note.data.excerpt || "";
-        const summary = summarySource ? truncate(stripHtml(summarySource), 260) : null;
+        const summary = summarySource ? truncate(stripHtmlToText(summarySource), 260) : null;
         return {
           type: "note",
           title: note.data.title || "Note",
@@ -1288,7 +1232,7 @@ export default function (eleventyConfig) {
           title: `Now Update — ${display}`,
           date: archiveDate,
           url: entry.url,
-          summary: summarySource ? truncate(stripHtml(summarySource), 220) : null,
+          summary: summarySource ? truncate(stripHtmlToText(summarySource), 220) : null,
           original: entry,
           hidden: !!entry.data.hidden,
         };
@@ -1349,14 +1293,10 @@ export default function (eleventyConfig) {
 
     const tilEntries = collectionApi
       .getFilteredByGlob("./src/til/**/*.md")
-      .filter((entry) => {
-        if (shouldHideContent(entry)) return false;
-        if (entry.date && entry.date > now) return false;
-        return true;
-      })
+      .filter((entry) => isVisibleContent(entry, now))
       .map((entry) => {
         const summarySource = entry.data.description || entry.data.excerpt || "";
-        const summary = summarySource ? truncate(stripHtml(summarySource)) : null;
+        const summary = summarySource ? truncate(stripHtmlToText(summarySource)) : null;
         return {
           type: "til",
           title: entry.data.title,
@@ -1370,14 +1310,10 @@ export default function (eleventyConfig) {
 
     const quotationsList = collectionApi
       .getFilteredByGlob("./src/quotations/**/*.md")
-      .filter((entry) => {
-        if (shouldHideContent(entry)) return false;
-        if (entry.date && entry.date > now) return false;
-        return true;
-      })
+      .filter((entry) => isVisibleContent(entry, now))
       .map((entry) => {
         const summarySource = entry.data.description || entry.data.excerpt || "";
-        const summary = summarySource ? truncate(stripHtml(summarySource)) : null;
+        const summary = summarySource ? truncate(stripHtmlToText(summarySource)) : null;
         return {
           type: "quotation",
           title: `Quotation from ${entry.data.author}`,
@@ -1391,14 +1327,10 @@ export default function (eleventyConfig) {
 
     const folioEntries = collectionApi
       .getFilteredByGlob("./src/folio/**/index.html")
-      .filter((entry) => {
-        if (shouldHideContent(entry)) return false;
-        if (entry.date && entry.date > now) return false;
-        return true;
-      })
+      .filter((entry) => isVisibleContent(entry, now))
       .map((entry) => {
         const summarySource = entry.data.description || "";
-        const summary = summarySource ? truncate(stripHtml(summarySource)) : null;
+        const summary = summarySource ? truncate(stripHtmlToText(summarySource)) : null;
         return {
           type: "folio",
           title: entry.data.title || "Folio",
@@ -1412,14 +1344,10 @@ export default function (eleventyConfig) {
 
     const lexiconList = collectionApi
       .getFilteredByGlob("./src/lexicon/**/*.md")
-      .filter((entry) => {
-        if (shouldHideContent(entry)) return false;
-        if (entry.date && entry.date > now) return false;
-        return true;
-      })
+      .filter((entry) => isVisibleContent(entry, now))
       .map((entry) => {
         const summarySource = entry.data.description || entry.data.excerpt || "";
-        const summary = summarySource ? truncate(stripHtml(summarySource)) : null;
+        const summary = summarySource ? truncate(stripHtmlToText(summarySource)) : null;
         return {
           type: "lexicon",
           title: entry.data.title,
@@ -1482,11 +1410,7 @@ export default function (eleventyConfig) {
 
     return collectionApi
       .getFilteredByGlob("./src/posts/**/*.md")
-      .filter((post) => {
-        if (shouldHideContent(post)) return false;
-        if (post.date && post.date > now) return false;
-        return true;
-      })
+      .filter((post) => isVisibleContent(post, now))
       .map((post) => ({
         title: post.data.title,
         url: post.url,
