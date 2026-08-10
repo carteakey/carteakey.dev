@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Profile image zoom: load a dedicated 1200px headshot when opening the homepage or post byline image, avoiding blurry upscaling of the 400px thumbnail.
-- Reading: Accept cached Goodreads date strings, render ratings as stars, and show manual start dates for current books.
+- Reading: Accept cached Goodreads date strings, render ratings as stars, show manual start dates, and filter Currently Reading to explicitly tracked in-progress books.
 
 ## [2.6.6] - 2026-08-09
 ### Added

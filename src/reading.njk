@@ -14,11 +14,11 @@ eleventyNavigation:
 {% set pageDescription = 'Books I\'m reading, have read, and want to read. Synced from <a href="' ~ reading.profileUrl ~ '" class="accent-link">Goodreads</a>, with a few manual additions.' %}
 {% include "components/page-header.njk" %}
 
-{% if reading.currently_reading and reading.currently_reading.length > 0 %}
+{% if reading.in_progress and reading.in_progress.length > 0 %}
 <section class="not-prose mb-8">
   <h2 class="editorial-kicker mb-3">Currently Reading</h2>
   <div class="divide-y divide-gray-100 dark:divide-gray-800/80">
-    {% for book in reading.currently_reading %}
+    {% for book in reading.in_progress %}
     <div class="py-3.5">
       <div class="flex gap-3.5 sm:gap-4">
         {% if book.cover %}

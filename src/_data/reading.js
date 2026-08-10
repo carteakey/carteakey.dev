@@ -89,16 +89,25 @@ function mergeBooks(goodreadsBooks = [], manualBooks = []) {
   return [...books.values()];
 }
 
+function isInProgress(book) {
+  const hasProgress = book.progress !== undefined && book.progress !== null;
+  const hasStarted = book.started !== undefined && book.started !== null && book.started !== "";
+  return hasProgress || hasStarted;
+}
+
 export default async function () {
   const manual = load(await readFile(MANUAL_DATA_PATH, "utf8")) || {};
   const shelfEntries = await Promise.all(
     Object.entries(shelves).map(async ([key, shelf]) => [key, await fetchShelf(shelf)])
   );
 
+  const shelvesData = Object.fromEntries(
+    shelfEntries.map(([key, books]) => [key, mergeBooks(books, manual[key])])
+  );
+
   return {
     profileUrl: GOODREADS_PROFILE_URL,
-    ...Object.fromEntries(
-      shelfEntries.map(([key, books]) => [key, mergeBooks(books, manual[key])])
-    )
+    ...shelvesData,
+    in_progress: (shelvesData.currently_reading || []).filter(isInProgress)
   };
 }
