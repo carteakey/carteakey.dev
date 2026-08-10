@@ -191,4 +191,11 @@ Until then, this is where I landed: the custom Ghostty stack when I want the bes
 
 ---
 
+## Changelog
+
+| Date | Note |
+| --- | --- |
+| 2026-08-09 | Added the current tier list, pros/cons table, and SSH-support comparison. Updated the recommendation to Ghostty as the best overall setup, with Zed and cmux in S tier. |
+| 2026-04-16 | Initial post. |
+
 *All tools tested on macOS. Ghostty, Yazi and lazygit are free and open-source. Claude Code CLI requires an Anthropic API key.*
