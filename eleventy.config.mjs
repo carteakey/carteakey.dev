@@ -55,6 +55,37 @@ function archiveDateSegment(dateInput) {
   return dateInput.toString();
 }
 
+function dateTimeFromInput(dateInput, options = {}) {
+  if (dateInput instanceof DateTime) {
+    return dateInput;
+  }
+  if (dateInput instanceof Date) {
+    const isUtcDateOnly =
+      !options.zone &&
+      dateInput.getUTCHours() === 0 &&
+      dateInput.getUTCMinutes() === 0 &&
+      dateInput.getUTCSeconds() === 0 &&
+      dateInput.getUTCMilliseconds() === 0;
+    if (isUtcDateOnly) {
+      return DateTime.fromJSDate(dateInput, { zone: "utc" });
+    }
+    return DateTime.fromJSDate(dateInput, options);
+  }
+  if (typeof dateInput === "string") {
+    const parsed = DateTime.fromISO(dateInput, options);
+    if (parsed.isValid) {
+      return parsed;
+    }
+
+    return DateTime.fromJSDate(new Date(dateInput), options);
+  }
+  if (typeof dateInput === "number") {
+    return DateTime.fromMillis(dateInput, options);
+  }
+
+  return DateTime.invalid("invalid input");
+}
+
 function stripHtmlToText(content = "") {
   return String(content)
     .replace(/<script[\s\S]*?<\/script>/gi, " ")
@@ -496,7 +527,8 @@ export default function (eleventyConfig) {
 
   // https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#valid-date-string
   eleventyConfig.addFilter("htmlDateString", (dateObj) => {
-    return DateTime.fromJSDate(dateObj, { zone: "utc" }).toFormat("yyyy-LL-dd");
+    const dateTime = dateTimeFromInput(dateObj, { zone: "utc" });
+    return dateTime.isValid ? dateTime.toFormat("yyyy-LL-dd") : "";
   });
 
   eleventyConfig.addFilter("postDate", (dateObj) => {
@@ -517,7 +549,8 @@ export default function (eleventyConfig) {
   });
 
   eleventyConfig.addFilter("readableDate", (dateObj) => {
-    return DateTime.fromJSDate(dateObj).toFormat("MMM d, yyyy");
+    const dateTime = dateTimeFromInput(dateObj);
+    return dateTime.isValid ? dateTime.toFormat("MMM d, yyyy") : "";
   });
   eleventyConfig.addFilter("shortDate", (dateObj) => {
     return DateTime.fromJSDate(dateObj).toFormat("MMM yy");

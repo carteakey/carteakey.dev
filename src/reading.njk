@@ -36,7 +36,14 @@ eleventyNavigation:
               {% if book.url %}<a href="{{ book.url }}" class="editorial-title-link">{{ book.title }}</a>{% else %}<span class="editorial-title">{{ book.title }}</span>{% endif %}
               <span class="editorial-support"> - {{ book.author }}</span>
             </div>
-            {% if book.progress !== undefined %}<span class="meta-text shrink-0">{{ book.progress }}%</span>{% endif %}
+            {% if book.started or book.progress !== undefined %}
+            <div class="flex items-center gap-3 shrink-0 mt-0.5 sm:mt-0">
+              {% if book.started %}
+                <time class="meta-text text-gray-500 dark:text-gray-400" datetime="{{ book.started | htmlDateString }}">Started {{ book.started | readableDate }}</time>
+              {% endif %}
+              {% if book.progress !== undefined %}<span class="meta-text">{{ book.progress }}%</span>{% endif %}
+            </div>
+            {% endif %}
           </div>
           {% if book.progress !== undefined %}
           {# Progress bar #}
@@ -79,10 +86,12 @@ eleventyNavigation:
             </div>
             <div class="flex items-center gap-2 shrink-0 mt-0.5 sm:mt-0">
               {% if book.finished %}
-                <time class="meta-text text-gray-500 dark:text-gray-400">{{ book.finished | readableDate }}</time>
+                <time class="meta-text text-gray-500 dark:text-gray-400" datetime="{{ book.finished | htmlDateString }}">{{ book.finished | readableDate }}</time>
               {% endif %}
               {% if book.rating %}
-                <span class="meta-text" style="color: var(--accent-color);">{{ "★" * book.rating }}{{ "☆" * (5 - book.rating) }}</span>
+                <span class="meta-text" style="color: var(--accent-color);" aria-label="{{ book.rating }} out of 5 stars">
+                  {% for star in [1, 2, 3, 4, 5] %}{% if star <= book.rating %}★{% else %}☆{% endif %}{% endfor %}
+                </span>
               {% endif %}
             </div>
           </div>
