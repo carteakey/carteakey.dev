@@ -176,6 +176,15 @@
   font-display: swap;
 }
 
+/* Editorial annotations use this face on demand; it is not preloaded. */
+@font-face {
+  font-family: "Caveat";
+  src: url("/static/fonts/caveat/Caveat-latin.woff2") format("woff2");
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 @layer utilities {
   .full-width-wrapper {
     width: 100vw;
@@ -4494,14 +4503,15 @@ picture img {
     display: inline-block;
     margin-left: 0.7em;
     padding-left: 1.4em;
-    font-family: 'Kalam', 'Caveat', 'Comic Sans MS', cursive;
+    font-family: "Caveat", "Comic Sans MS", cursive;
     font-size: 1.16rem;
     font-weight: 600;
     line-height: 1.05;
     color: color-mix(in srgb, var(--accent-color) 88%, black 12%);
     transform: translateY(0.04em) rotate(-2deg);
     vertical-align: baseline;
-    white-space: nowrap;
+    max-width: min(12rem, calc(100vw - 2rem));
+    white-space: normal;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 56 20' fill='none'%3E%3Cpath d='M2 14 C 8 6, 15 18, 22 10 C 28 4, 35 16, 42 9' stroke='currentColor' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E");
     background-size: 0.85em auto;
     background-repeat: no-repeat;
@@ -4515,56 +4525,39 @@ picture img {
   }
 
   @media (min-width: 1280px) {
+    /* Keep annotations in the paragraph's flow so they cannot cover later text. */
+    .tmpl-post .note {
+      display: inline-flex;
+      align-items: baseline;
+      max-width: 100%;
+      vertical-align: baseline;
+    }
+
     .tmpl-post .note-comment {
-      position: absolute;
-      top: 50%;
+      flex: 0 1 10rem;
       width: 10rem;
       margin-left: 0;
-      background-image: none;
-      white-space: normal;
-      z-index: 2;
+      max-width: 10rem;
+    }
+
+    .tmpl-post .note-left {
+      flex-direction: row-reverse;
     }
 
     .tmpl-post .note-left .note-comment {
-      right: calc(100% + 2.75rem);
       padding: 0 1.55rem 0 0;
       text-align: right;
-      transform: translateY(-52%) rotate(-2deg);
+      transform: rotate(-2deg);
+      background-position: right 55%;
     }
 
     .tmpl-post .note-right .note-comment {
-      left: calc(100% + 2.75rem);
       padding: 0 0 0 1.55rem;
       text-align: left;
-      transform: translateY(-52%) rotate(2deg);
-    }
-
-    .tmpl-post .note-left .note-comment::after,
-    .tmpl-post .note-right .note-comment::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      width: 0.9rem;
-      height: 0.55rem;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 56 20' fill='none'%3E%3Cpath d='M2 14 C 8 6, 15 18, 22 10 C 28 4, 35 16, 42 9' stroke='currentColor' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E");
-      background-size: contain;
-      background-repeat: no-repeat;
-      transform: translateY(-50%);
-      opacity: 0.95;
-    }
-
-    .tmpl-post .note-left .note-comment::after {
-      right: 0;
-      transform: translateY(-50%) scaleX(-1);
-    }
-
-    .tmpl-post .note-right .note-comment::before {
-      left: 0;
+      transform: rotate(2deg);
+      background-position: left 55%;
     }
   }
-
-  /* TODO: this assumes available gutters on xl+ post layouts. Dense pages may   */
-  /* still need a dedicated annotation lane or JS measurement to avoid overlap.  */
 }
 
 /* ── Code block copy button ── */

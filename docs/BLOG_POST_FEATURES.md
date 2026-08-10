@@ -76,7 +76,7 @@ Use sparingly for personal commentary.
 {% annotate "probably for the best", "left" %}sane product manager{% endannotate %}
 ```
 
-This renders with the handwritten `.note` treatment and can use the left or right gutter on wide screens.
+This renders with the handwritten `.note` treatment. On wide screens, the left/right option controls the note's in-flow ordering and alignment so it stays clear of the surrounding sentence.
 
 ### Wide Blocks
 

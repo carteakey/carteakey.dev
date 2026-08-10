@@ -1,11 +1,12 @@
 # Font strategy
 
-The published site currently uses two self-hosted families:
+The published site currently uses three self-hosted families:
 
 - Plus Jakarta Sans for body, display, and editorial text.
 - JetBrains Mono for code and interface labels.
+- Caveat for handwritten editorial annotations.
 
-The normal Plus Jakarta Sans variable file is preloaded because it is used above the fold on every page. Italic and monospace files remain demand-loaded through `@font-face`, avoiding unnecessary high-priority requests.
+The normal Plus Jakarta Sans variable file is preloaded because it is used above the fold on every page. Italic, monospace, and Caveat files remain demand-loaded through `@font-face`, avoiding unnecessary high-priority requests.
 
 ## Trimmed font history
 
