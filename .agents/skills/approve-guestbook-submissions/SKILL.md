@@ -32,19 +32,31 @@ site output directly.
    node .agents/skills/approve-guestbook-submissions/scripts/approve-guestbook.mjs
    ```
 
-3. When the user has authorized all remaining submissions, run the same helper
-   with `--apply`. It calls `PUT /api/v1/submissions/{id}/ham` for each spam
-   submission, refetches verified guestbook submissions, and appends only notes
-   not already represented in `src/_data/guestbook.yaml`.
+3. If the user has already verified submissions in Netlify, sync those without
+   touching spam:
 
    ```sh
-   node .agents/skills/approve-guestbook-submissions/scripts/approve-guestbook.mjs --apply
+   node .agents/skills/approve-guestbook-submissions/scripts/approve-guestbook.mjs --sync-verified
+   node .agents/skills/approve-guestbook-submissions/scripts/approve-guestbook.mjs --sync-verified --apply
    ```
 
-4. Review the diff. New entries must contain `name`, `website` (possibly
+4. For spam submissions, approve only the exact IDs the user has selected when
+   the queue contains obvious spam. Pass a comma-separated allowlist:
+
+   ```sh
+   node .agents/skills/approve-guestbook-submissions/scripts/approve-guestbook.mjs \
+     --approve-ids <submission-id[,submission-id...]> --apply
+   ```
+
+   Only use plain `--apply` when the user explicitly confirms that every spam
+   submission should be verified. The helper calls
+   `PUT /api/v1/submissions/{id}/ham`, refetches verified guestbook submissions,
+   and appends only notes not already represented in the YAML file.
+
+5. Review the diff. New entries must contain `name`, `website` (possibly
    empty), `message`, an explicit ISO date, and one of the existing sticky-note
    colors. Do not hand-edit `_site/`.
-5. Run `npm run build` and spot-check `/guestbook/`. Report the number approved,
+6. Run `npm run build` and spot-check `/guestbook/`. Report the number approved,
    number appended, and any API failures. Commit the repository data change
    using the project's normal workflow when the user asked for a committed
    change.
@@ -54,6 +66,8 @@ site output directly.
 - The helper is read-only unless `--apply` is present.
 - Approve only submissions belonging to the exact `guestbook` form. Never
   operate on site-wide submissions or a similarly named form.
+- Prefer `--sync-verified` for entries already marked verified in Netlify; it
+  changes no remote submission state.
 - If one `ham` request fails, continue the remaining requests, sync successful
   approvals, and exit non-zero with the failed submission IDs.
 - If Netlify access is unavailable, do not fabricate entries or mark local

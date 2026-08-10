@@ -19,6 +19,8 @@ function usage() {
 
 Options:
   --apply                 Mark spam submissions verified and update guestbook.yaml
+  --sync-verified         Sync already-verified submissions without touching spam
+  --approve-ids <ids>     Limit spam approval to comma-separated submission IDs
   --site-id <uuid>        Netlify site UUID (defaults to NETLIFY_SITE_ID)
   --file <path>           Guestbook YAML path (defaults to src/_data/guestbook.yaml)
   --help                  Show this help
@@ -28,6 +30,8 @@ Options:
 function parseArgs(argv) {
   const options = {
     apply: false,
+    syncVerified: false,
+    approveIds: [],
     siteId: process.env.NETLIFY_SITE_ID,
     token: process.env.NETLIFY_AUTH_TOKEN ?? process.env.NETLIFY_API_TOKEN,
     file: DATA_FILE,
@@ -37,6 +41,12 @@ function parseArgs(argv) {
     const argument = argv[index];
     if (argument === "--apply") {
       options.apply = true;
+    } else if (argument === "--sync-verified") {
+      options.syncVerified = true;
+    } else if (argument === "--approve-ids") {
+      const ids = argv[++index];
+      if (!ids) throw new Error("--approve-ids requires at least one submission ID.");
+      options.approveIds.push(...ids.split(",").map((id) => id.trim()).filter(Boolean));
     } else if (argument === "--site-id") {
       options.siteId = argv[++index];
     } else if (argument === "--file") {
@@ -114,6 +124,13 @@ function dedupeKey(entry) {
   return [entry.name, entry.website, entry.message, entry.date].join("\u0000");
 }
 
+function isExistingEntry(existing, incoming) {
+  return (
+    dedupeKey(existing) === dedupeKey(incoming) ||
+    (existing.name === incoming.name && existing.date === incoming.date)
+  );
+}
+
 function yamlScalar(value) {
   return JSON.stringify(String(value ?? ""));
 }
@@ -123,8 +140,9 @@ async function appendEntries(file, entries) {
   const currentText = await fs.readFile(file, "utf8");
   const parsed = parseYaml(currentText) ?? {};
   const existingEntries = Array.isArray(parsed.entries) ? parsed.entries : [];
-  const known = new Set(existingEntries.map(dedupeKey));
-  const additions = entries.filter((entry) => !known.has(dedupeKey(entry)));
+  const additions = entries.filter(
+    (entry) => !existingEntries.some((existing) => isExistingEntry(existing, entry)),
+  );
   if (!additions.length) return 0;
 
   const startColor = existingEntries.length;
@@ -143,6 +161,15 @@ async function appendEntries(file, entries) {
   return additions.length;
 }
 
+async function getNewEntries(file, entries) {
+  const currentText = await fs.readFile(file, "utf8");
+  const parsed = parseYaml(currentText) ?? {};
+  const existingEntries = Array.isArray(parsed.entries) ? parsed.entries : [];
+  return entries.filter(
+    (entry) => !existingEntries.some((existing) => isExistingEntry(existing, entry)),
+  );
+}
+
 function sortByDate(submissions) {
   return [...submissions].sort((left, right) =>
     String(left.created_at ?? "").localeCompare(String(right.created_at ?? "")),
@@ -158,29 +185,55 @@ async function main() {
   const form = Array.isArray(forms) ? forms.find((candidate) => candidate.name === FORM_NAME) : null;
   if (!form) throw new Error(`Netlify form '${FORM_NAME}' was not found on the configured site.`);
 
+  if (options.syncVerified) {
+    const verified = sortByDate(await getAllSubmissions(options.siteId, form.id, options.token, "verified"));
+    const verifiedEntries = verified.map(submissionData).filter(Boolean);
+    const additions = await getNewEntries(options.file, verifiedEntries);
+    console.log(`Form: ${FORM_NAME} (${form.id})`);
+    console.log(`Verified submissions: ${verifiedEntries.length}`);
+    console.log(`New entries to append: ${additions.length}`);
+    for (const entry of additions) {
+      console.log(`- ${entry.submissionId} — ${entry.date} — ${entry.name}: ${entry.message}`);
+    }
+    if (!options.apply) {
+      console.log("\nDry run only. Re-run with --sync-verified --apply to append these verified entries.");
+      return;
+    }
+    const appendedCount = await appendEntries(options.file, verifiedEntries);
+    console.log(`Appended to ${options.file}: ${appendedCount}`);
+    return;
+  }
+
   const spam = sortByDate(await getAllSubmissions(options.siteId, form.id, options.token, "spam"));
   const candidates = spam.map(submissionData).filter(Boolean);
+  const approveIdSet = new Set(options.approveIds);
+  const selectedCandidates = approveIdSet.size
+    ? candidates.filter((entry) => approveIdSet.has(entry.submissionId))
+    : candidates;
   const invalidCount = spam.length - candidates.length;
 
   console.log(`Form: ${FORM_NAME} (${form.id})`);
   console.log(`Remaining spam submissions: ${spam.length}`);
   if (invalidCount) console.log(`Skipped submissions missing name, message, or valid date: ${invalidCount}`);
-  if (!candidates.length) {
+  if (!selectedCandidates.length) {
     console.log("Nothing to approve.");
     return;
   }
-  for (const entry of candidates) {
-    console.log(`- ${entry.date} — ${entry.name}: ${entry.message}`);
+  if (approveIdSet.size) {
+    console.log(`Allowlist skipped: ${candidates.length - selectedCandidates.length}`);
+  }
+  for (const entry of selectedCandidates) {
+    console.log(`- ${entry.submissionId} — ${entry.date} — ${entry.name}: ${entry.message}`);
   }
 
   if (!options.apply) {
-    console.log("\nDry run only. Re-run with --apply to mark these submissions verified and sync the YAML file.");
+    console.log("\nDry run only. Re-run with --apply to mark the selected submissions verified and sync the YAML file.");
     return;
   }
 
   const failures = [];
   let approvedCount = 0;
-  for (const entry of candidates) {
+  for (const entry of selectedCandidates) {
     try {
       await netlifyRequest(`${API_ROOT}/submissions/${encodeURIComponent(entry.submissionId)}/ham`, {
         method: "PUT",

@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [2.6.7] - 2026-08-09
+### Added
+- Guestbook: Synced five already-verified submissions and added verified-only and allowlisted approval modes to the guestbook skill.
+
 ### Fixed
 - Profile image zoom: load a dedicated 1200px headshot when opening the homepage or post byline image, avoiding blurry upscaling of the 400px thumbnail.
 - Reading: Accept cached Goodreads date strings, render ratings as stars, and show manual start dates for current books.
