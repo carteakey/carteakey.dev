@@ -308,7 +308,7 @@ async function copyPostAssets(srcDir, destDir) {
   }
 }
 
-async function imageShortcode(src, alt, css) {
+async function imageShortcode(src, alt, css, zoomSrc) {
   // Preserve animation for GIFs by bypassing transformation
   if (/\.gif$/i.test(src)) {
     return buildRemoteImageMarkup(mapSrcToPublicUrl(src), alt, css);
@@ -327,6 +327,10 @@ async function imageShortcode(src, alt, css) {
     decoding: "async",
     "data-zoomable": "",
   };
+
+  if (zoomSrc) {
+    imageAttributes["data-zoom-src"] = mapSrcToPublicUrl(zoomSrc);
+  }
 
   return generateHTML(metadata, imageAttributes, {
     whitespaceMode: "inline",
