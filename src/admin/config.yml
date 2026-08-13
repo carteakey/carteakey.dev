@@ -7,6 +7,27 @@ media_folder: "src/static/img" # Media files will be stored in the repo under sr
 public_folder: "/img"
 
 collections:
+  - label: "Skills"
+    name: "skills"
+    folder: "src/skill-library"
+    create: true
+    slug: "{{slug}}"
+    editor:
+      preview: true
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Description", name: "description", widget: "string" }
+      - { label: "Added Date", name: "date", widget: "datetime" }
+      - { label: "Source", name: "sourceName", widget: "string", hint: "For example: Skillrex, GitHub, or the originating project." }
+      - { label: "Skill File URL", name: "fileUrl", widget: "string" }
+      - widget: list
+        label: "Tags"
+        name: "tags"
+        allow_add: true
+        max: 2
+        min: 1
+      - { label: "Personal Notes", name: "body", widget: "markdown" }
+
   - label: "Blog"
     name: "blog"
     folder: "src/posts"

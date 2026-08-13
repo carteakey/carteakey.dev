@@ -466,6 +466,7 @@ export const config = {
 
 export default function (eleventyConfig) {
   eleventyConfig.addGlobalData("isDev", !IS_PRODUCTION_BUILD);
+  eleventyConfig.addGlobalData("currentYear", new Date().getFullYear());
   eleventyConfig.addGlobalData("showHiddenContent", SHOW_HIDDEN_CONTENT);
   eleventyConfig.addGlobalData("eleventyComputed", {
     permalink: (data = {}) => {
@@ -615,7 +616,7 @@ export default function (eleventyConfig) {
 
   function filterTagList(tags) {
     return (tags || []).filter(
-      (tag) => ["all", "nav", "post", "posts", "snippets", "prompts", "quotations"].indexOf(tag) === -1
+      (tag) => ["all", "nav", "post", "posts", "snippets", "agent-skills", "prompts", "quotations"].indexOf(tag) === -1
     );
   }
 
@@ -930,6 +931,14 @@ export default function (eleventyConfig) {
       .sort((a, b) => b.date - a.date);
   });
 
+  eleventyConfig.addCollection("agentSkills", function (collectionApi) {
+    const now = new Date();
+    return collectionApi
+      .getFilteredByGlob("./src/skill-library/**/*.md")
+      .filter((skill) => isVisibleContent(skill, now))
+      .sort((a, b) => b.date - a.date);
+  });
+
   // Create an array of all tags (excluding snippet tags)
   eleventyConfig.addCollection("tagList", function (collection) {
     let tagSet = new Set();
@@ -1058,14 +1067,15 @@ export default function (eleventyConfig) {
     return Array.from(folderMap.values()).sort((a, b) => a.url.localeCompare(b.url));
   });
 
-  // Custom allPages collection: like collections.all but hides hidden:true and future-dated posts
+  // Public page inventory: omit non-rendered, hidden, template, and future-dated entries.
   eleventyConfig.addCollection("allPages", function (collectionApi) {
     const now = new Date();
     return collectionApi.getAll().filter(page => {
-      // Only filter posts, not all pages, for hidden/future
-      if (page.inputPath && page.inputPath.includes("/posts/")) {
-        return isVisibleContent(page, now);
-      }
+      const inputPath = page.inputPath || "";
+      if (!page.url || page.data?.permalink === false) return false;
+      if (page.data?.hidden === true) return false;
+      if (page.date && page.date > now) return false;
+      if (/(^|\/)_(?:template)(?:\.|\/)|\/1990-01-01-template\./.test(inputPath)) return false;
       return true;
     });
   });

@@ -12,7 +12,7 @@ eleventyNavigation:
 <div class=" mx-auto">
   {% set cardShell = "surface" %}
   {% set pageTitle = "Newsletter" %}
-  {% set pageDescription = "Get notified when I publish new posts about AI, data science, machine learning, self-hosting, and technology. No spam, unsubscribe anytime." %}
+  {% set pageDescription = "A quiet weekly digest of new posts about AI, data science, self-hosting, and technology. No email when there is nothing new; unsubscribe anytime." %}
   {% include "components/page-header.njk" %}
 
   <div id="subscribeForm" class="{{ cardShell }} p-6 sm:p-8">
@@ -59,7 +59,7 @@ eleventyNavigation:
           class="mt-1 rounded accent-field"
         />
         <label for="consent" class="ml-2 editorial-support-compact text-gray-600 dark:text-gray-300">
-          I agree to receive occasional emails about new blog posts and updates.
+          I agree to receive a weekly digest when there is new writing.
         </label>
       </div>
 
@@ -82,7 +82,7 @@ eleventyNavigation:
       <div>
         <h2 class="editorial-title-compact text-green-900 dark:text-green-100 mb-1">Thanks for subscribing!</h2>
         <p class="text-green-800 dark:text-green-200">
-          You'll receive an email when I publish new content. Check your spam folder if you don't see it.
+          You'll receive at most one digest a week, and only when there is new writing.
         </p>
       </div>
     </div>
@@ -126,7 +126,7 @@ eleventyNavigation:
         <h3 class="mt-0 text-base font-semibold">What to Expect</h3>
       </div>
       <p class="editorial-support-compact">
-        Posts about AI/ML projects, data science workflows, self-hosting guides, and technology experiments. Typically 1-2 posts per month.
+        A compact list of newly published posts, sent at most once a week. Quiet weeks produce no email.
       </p>
     </div>
   </div>

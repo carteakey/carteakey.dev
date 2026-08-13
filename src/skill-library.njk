@@ -1,0 +1,77 @@
+---
+layout: layouts/base.njk
+title: Skills
+description: Agent skill files I use, write, and find worth keeping.
+permalink: /skills/
+eleventyNavigation:
+  key: Skills
+  order: 6
+---
+
+{% include "components/breadcrumbs.njk" %}
+
+{% set pageEyebrow = "Agent Workflows" %}
+{% set pageTitle = "Skills" %}
+{% set pageDescription = "Reusable agent instructions from Skillrex and useful corners of the internet—with a link to the original file and the notes I wish came with it." %}
+{% set itemCount = collections.agentSkills | length %}
+{% set itemLabel = "skills" %}
+
+{% include "components/page-header.njk" %}
+
+{% if collections.agentSkills | length %}
+  <div class="flex items-baseline justify-end mb-2">
+    <div class="relative">
+      {% feather "search", class="w-3.5 h-3.5 text-gray-400 absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" %}
+      <input type="search" id="skillSearch" placeholder="Search..." aria-label="Search skills" class="rounded-sm border border-gray-200 dark:border-gray-700 bg-transparent py-1.5 pl-8 pr-3 text-sm accent-field accent-focus focus:outline-none dark:text-gray-100 w-44 placeholder:text-gray-400">
+    </div>
+  </div>
+
+  <div id="skillList" class="mt-2 divide-y divide-gray-100 dark:divide-gray-800/80">
+    {%- for skill in collections.agentSkills | reverse -%}
+      {% set filteredTags = skill.data.tags | default([]) | filterTagList %}
+      {% set searchExcerpt = skill | safeContent | striptags | replace('\n', ' ') | truncate(220, true, '') | lower %}
+      <article class="py-4 group" data-skill-card data-title="{{ skill.data.title | lower }}" data-tags="{{ filteredTags | join(' ') | lower }}" data-source="{{ skill.data.sourceName | default('') | lower }}" data-body="{{ skill.data.description | default('') | lower }} {{ searchExcerpt }}">
+        <div class="flex flex-col md:flex-row md:gap-6">
+          <div class="shrink-0 md:w-36 flex flex-col gap-1 pt-0.5">
+            <time class="meta-text text-xs text-gray-400 dark:text-gray-500" datetime="{{ skill.date | htmlDateString }}">{{ skill.date | readableDate }}</time>
+            {% if skill.data.sourceName %}<span class="meta-text text-[0.68rem] text-gray-400 dark:text-gray-500">{{ skill.data.sourceName }}</span>{% endif %}
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+              <a href="{{ skill.url }}" class="editorial-title-link title-hover" style="text-decoration: none;">{{ skill.data.title }}</a>
+              <a href="{{ skill.data.fileUrl }}" target="_blank" rel="noopener" class="editorial-meta-link inline-flex items-center gap-1" style="text-decoration: none;">SKILL.md {% feather "external-link", class="w-3 h-3" %}</a>
+            </div>
+            {% if skill.data.description %}<p class="editorial-support-compact mt-1 mb-0">{{ skill.data.description }}</p>{% endif %}
+            {% if filteredTags | length %}
+              <div class="flex flex-wrap gap-1 mt-2">
+                {% for tag in filteredTags | head(2) %}<span class="badge badge-tag badge-compact">{{ tag }}</span>{% endfor %}
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </article>
+    {%- endfor -%}
+  </div>
+  <p id="skillEmptyState" class="hidden editorial-support-compact py-8 text-center">No skills match that search.</p>
+{% else %}
+  <div class="surface surface-compact mt-5">
+    <p class="editorial-support-compact m-0">Nothing published here yet. Skills will appear after I have reviewed the file, written my notes, and confirmed a stable public source.</p>
+  </div>
+{% endif %}
+
+<script>
+  const skillSearch = document.getElementById('skillSearch')
+  const skillCards = document.querySelectorAll('[data-skill-card]')
+  const skillEmptyState = document.getElementById('skillEmptyState')
+
+  skillSearch?.addEventListener('input', function () {
+    const query = this.value.toLowerCase().trim()
+    let visibleCount = 0
+    skillCards.forEach((card) => {
+      const matches = !query || ['title', 'tags', 'source', 'body'].some((field) => card.dataset[field]?.includes(query))
+      card.classList.toggle('hidden', !matches)
+      if (matches) visibleCount += 1
+    })
+    skillEmptyState?.classList.toggle('hidden', visibleCount !== 0)
+  })
+</script>

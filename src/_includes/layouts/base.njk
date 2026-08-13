@@ -333,7 +333,7 @@
               <li><a href="{{ '/stats' | url }}" class="footer-nav-link">{% feather "bar-chart", class="w-3 h-3 shrink-0" %} Stats</a></li>
               <li><a href="{{ '/guestbook' | url }}" class="footer-nav-link">{% feather "message-square", class="w-3 h-3 shrink-0" %} Guestbook</a></li>
               <li><a href="{{ '/support' | url }}" class="footer-nav-link">{% feather "coffee", class="w-3 h-3 shrink-0" %} Support</a></li>
-              <li><a href="{{ '/learning' | url }}" class="footer-nav-link">{% feather "check-square", class="w-3 h-3 shrink-0" %} Learning</a></li>
+              <li><a href="{{ '/learning' | url }}" class="footer-nav-link">{% feather "check-square", class="w-3 h-3 shrink-0" %} Reading Tracker</a></li>
             </ul>
           </div>
         </div>
@@ -399,7 +399,7 @@
               <li><a href="{{ '/newsletter' | url }}" class="footer-nav-link">{% feather "mail", class="w-3 h-3 shrink-0" %} Newsletter</a></li>
               <li><a href="{{ '/guestbook' | url }}" class="footer-nav-link">{% feather "message-square", class="w-3 h-3 shrink-0" %} Guestbook</a></li>
               <li><a href="{{ '/support' | url }}" class="footer-nav-link">{% feather "coffee", class="w-3 h-3 shrink-0" %} Support</a></li>
-              <li><a href="{{ '/learning' | url }}" class="footer-nav-link">{% feather "check-square", class="w-3 h-3 shrink-0" %} Learning</a></li>
+              <li><a href="{{ '/learning' | url }}" class="footer-nav-link">{% feather "check-square", class="w-3 h-3 shrink-0" %} Reading Tracker</a></li>
             </ul>
           </div>
 
@@ -407,7 +407,7 @@
         
         {# Made with love section #}
         <div class="mt-4 footer-smallprint flex items-center justify-between flex-wrap gap-2">
-          <span>Made with ❤️ · <a href="https://www.11ty.dev/" target="_blank" rel="noopener">Eleventy</a> + <a href="https://tailwindcss.com/" target="_blank" rel="noopener">Tailwind</a> · <a href="/colophon/">Colophon</a> · © {{ metadata.author.name }} 2025</span>
+          <span>Made with ❤️ · <a href="https://www.11ty.dev/" target="_blank" rel="noopener">Eleventy</a> + <a href="https://tailwindcss.com/" target="_blank" rel="noopener">Tailwind</a> · <a href="/colophon/">Colophon</a> · © {{ metadata.author.name }} {{ currentYear }}</span>
           <button onclick="document.getElementById('shortcuts-overlay').style.display='flex'" title="Keyboard shortcuts" class="footer-shortcuts-button">? shortcuts</button>
         </div>
       </div>

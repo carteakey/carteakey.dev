@@ -5,6 +5,42 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.6.14] - 2026-08-12
+### Added
+- Skills: Added a searchable publishing section for skill-file links, descriptions, provenance, tags, and personal notes.
+
+### Changed
+- Skills radar: Preserved the existing data-career visualization at `/skills-radar/` so `/skills/` can become the skill library.
+
+## [2.6.13] - 2026-08-12
+### Changed
+- Status: Kept the public health summary focused on useful source availability and removed credential, runtime, cache, and raw error details.
+- Quotes: Removed the internal fallback-provider label and corrected the page description.
+- Footer: Made the copyright year follow the build year automatically.
+
+### Fixed
+- Build: Clean `_site` before production builds so removed and renamed routes cannot linger as ghost copies.
+- Page list: Exclude non-rendered, hidden, template, and future-dated entries from the public URL inventory.
+- Page list: Render stable titles for archived Now snapshots instead of exposing template expressions.
+- Projects: Fetch up to 100 public GitHub repositories instead of silently truncating the table at 30.
+- Status: Count the same explicitly tracked in-progress books shown on the Reading page.
+
+## [2.6.12] - 2026-08-12
+### Added
+- Newsletter: Added a weekly, new-post-only digest with consented Netlify recipients, Resend delivery, duplicate suppression, test previews, and signed one-click unsubscribe links.
+
+### Changed
+- Newsletter: Clarified that quiet weeks produce no email and delivery is capped at one digest per week.
+
+## [2.6.11] - 2026-08-12
+### Changed
+- Reading tracker: Renamed the learning progress interface and its controls around read and unread states.
+- Support: Removed deployment configuration instructions from the public page.
+
+### Fixed
+- Projects: Restored the GitHub profile card and sourced contribution activity directly from GitHub when refreshing the cache.
+- Bookmarks: Render each entry only in its assigned category instead of repeating every card in every category.
+
 ## [2.6.10] - 2026-08-09
 ### Added
 - Blog template: Added a newest-first changelog section for documenting post updates.

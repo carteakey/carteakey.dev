@@ -36,3 +36,6 @@ package = "netlify-plugin-cache"
 
   [plugins.inputs]
   paths = [ ".cache" ]
+
+[functions."newsletter-digest"]
+  schedule = "0 14 * * 5"

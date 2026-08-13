@@ -1,16 +1,16 @@
 ---
 layout: layouts/base.njk
-title: Learning Progress
-description: A private, browser-local tracker for working through carteakey.dev guides and essays.
+title: Reading Tracker
+description: A private, browser-local tracker for reading carteakey.dev guides and essays.
 eleventyNavigation:
-  key: Learning
+  key: Reading Tracker
   order: 14
 ---
 {% include "components/breadcrumbs.njk" %}
 
 {% set pageEyebrow = "Local Notebook" %}
-{% set pageTitle = "Learning Progress" %}
-{% set pageDescription = "Mark writing as learned while you work through it. Progress stays in this browser and is never sent to the server." %}
+{% set pageTitle = "Reading Tracker" %}
+{% set pageDescription = "Mark writing as read as you work through it. Progress stays in this browser and is never sent to the server." %}
 {% include "components/page-header.njk" %}
 
 {% set learningPosts = [] %}
@@ -35,13 +35,13 @@ eleventyNavigation:
 <div class="learning-controls not-prose">
   <div class="relative">
     {% feather "search", class="w-3.5 h-3.5 text-gray-400 absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" %}
-    <label class="sr-only" for="learningSearch">Search learning list</label>
+    <label class="sr-only" for="learningSearch">Search reading list</label>
     <input id="learningSearch" type="search" placeholder="Search writing…" class="learning-search accent-field accent-focus">
   </div>
-  <div class="learning-filter-group" aria-label="Filter learning progress">
+  <div class="learning-filter-group" aria-label="Filter reading progress">
     <button type="button" class="learning-filter is-active accent-focus" data-learning-filter="all" aria-pressed="true">All</button>
-    <button type="button" class="learning-filter accent-focus" data-learning-filter="open" aria-pressed="false">To learn</button>
-    <button type="button" class="learning-filter accent-focus" data-learning-filter="complete" aria-pressed="false">Learned</button>
+    <button type="button" class="learning-filter accent-focus" data-learning-filter="open" aria-pressed="false">Unread</button>
+    <button type="button" class="learning-filter accent-focus" data-learning-filter="complete" aria-pressed="false">Read</button>
   </div>
 </div>
 
@@ -55,7 +55,7 @@ eleventyNavigation:
       data-learning-search="{{ (post.data.title ~ ' ' ~ post.data.description ~ ' ' ~ (visibleTags | join(' '))) | lower | escape }}"
     >
       <div class="min-w-0">
-        <p class="meta-text text-[0.66rem] text-gray-500 dark:text-gray-400"><span data-learning-state>To learn</span> · {{ post.date | readableDate }}</p>
+        <p class="meta-text text-[0.66rem] text-gray-500 dark:text-gray-400"><span data-learning-state>Unread</span> · {{ post.date | readableDate }}</p>
         <h2 class="editorial-title-compact mt-1"><a href="{{ post.url }}" class="title-hover no-underline">{{ post.data.title }}</a></h2>
         {% if post.data.description %}<p class="editorial-support-compact mt-1">{{ post.data.description }}</p>{% endif %}
       </div>
@@ -68,7 +68,7 @@ eleventyNavigation:
         aria-pressed="false"
       >
         {% feather "check", class="w-3.5 h-3.5" %}
-        <span data-learning-label>Mark as learned</span>
+        <span data-learning-label>Mark as read</span>
       </button>
     </article>
   {% endfor %}

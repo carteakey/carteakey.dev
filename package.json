@@ -1,10 +1,11 @@
 {
   "name": "carteakey.dev",
-  "version": "2.6.7",
+  "version": "2.6.14",
   "description": "",
   "type": "module",
   "packageManager": "pnpm@11.5.0",
   "scripts": {
+    "prebuild": "node ./utils/clean-build.mjs",
     "build": "npm-run-all -s build:*",
     "build:11ty": "eleventy",
     "build:css": "tailwindcss -i ./src/static/css/tailwind.css -o ./_site/css/tailwind.css --minify --postcss",
@@ -16,6 +17,7 @@
     "start:css": "tailwindcss -i ./src/static/css/tailwind.css -o ./_site/css/tailwind.css --watch --postcss",
     "debug": "DEBUG=* eleventy",
     "metrics:merge-check": "node ./utils/check-engagement-merge.mjs",
+    "newsletter:test": "node ./utils/send-newsletter-test.mjs",
     "audit:lighthouse": "pnpm dlx @lhci/cli@0.15.1 autorun --config=./lighthouserc.cjs",
     "verify:ui": "node ./utils/verify-ui.mjs"
   },

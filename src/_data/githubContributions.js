@@ -1,117 +1,91 @@
 import { AssetCache } from "@11ty/eleventy-fetch";
 
-const API_ENDPOINT = "https://github-contributions-api.jogruber.de/v4/carteakey";
+const API_ENDPOINT = "https://github.com/users/carteakey/contributions";
 const CACHE_KEY = "github-contributions";
-
-const FALLBACK_DATA = {
-  totalCount: 46,
-  maxCount: 5,
-  dailyAverage: 1.642857142857143,
-  dailyAverageRounded: 1.6,
-  weeklyAverage: 11.5,
-  weeklyAverageRounded: 11.5,
-  currentStreak: {
-    length: 7,
-    startDate: "2025-09-29",
-    endDate: "2025-10-05",
-  },
-  longestStreak: {
-    length: 7,
-    startDate: "2025-09-29",
-    endDate: "2025-10-05",
-  },
-  weeks: [
-    {
-      firstDay: "2025-09-08",
-      contributionDays: [
-        { date: "2025-09-08", count: 0, color: null, weekday: 0 },
-        { date: "2025-09-09", count: 1, color: null, weekday: 1 },
-        { date: "2025-09-10", count: 2, color: null, weekday: 2 },
-        { date: "2025-09-11", count: 0, color: null, weekday: 3 },
-        { date: "2025-09-12", count: 3, color: null, weekday: 4 },
-        { date: "2025-09-13", count: 2, color: null, weekday: 5 },
-        { date: "2025-09-14", count: 1, color: null, weekday: 6 },
-      ],
-    },
-    {
-      firstDay: "2025-09-15",
-      contributionDays: [
-        { date: "2025-09-15", count: 1, color: null, weekday: 0 },
-        { date: "2025-09-16", count: 0, color: null, weekday: 1 },
-        { date: "2025-09-17", count: 4, color: null, weekday: 2 },
-        { date: "2025-09-18", count: 3, color: null, weekday: 3 },
-        { date: "2025-09-19", count: 0, color: null, weekday: 4 },
-        { date: "2025-09-20", count: 2, color: null, weekday: 5 },
-        { date: "2025-09-21", count: 2, color: null, weekday: 6 },
-      ],
-    },
-    {
-      firstDay: "2025-09-22",
-      contributionDays: [
-        { date: "2025-09-22", count: 0, color: null, weekday: 0 },
-        { date: "2025-09-23", count: 0, color: null, weekday: 1 },
-        { date: "2025-09-24", count: 3, color: null, weekday: 2 },
-        { date: "2025-09-25", count: 5, color: null, weekday: 3 },
-        { date: "2025-09-26", count: 2, color: null, weekday: 4 },
-        { date: "2025-09-27", count: 1, color: null, weekday: 5 },
-        { date: "2025-09-28", count: 0, color: null, weekday: 6 },
-      ],
-    },
-    {
-      firstDay: "2025-09-29",
-      contributionDays: [
-        { date: "2025-09-29", count: 1, color: null, weekday: 0 },
-        { date: "2025-09-30", count: 2, color: null, weekday: 1 },
-        { date: "2025-10-01", count: 1, color: null, weekday: 2 },
-        { date: "2025-10-02", count: 4, color: null, weekday: 3 },
-        { date: "2025-10-03", count: 3, color: null, weekday: 4 },
-        { date: "2025-10-04", count: 1, color: null, weekday: 5 },
-        { date: "2025-10-05", count: 2, color: null, weekday: 6 },
-      ],
-    },
-  ],
+const EMPTY_DATA = {
+  totalCount: 0,
+  maxCount: 0,
+  dailyAverage: 0,
+  dailyAverageRounded: 0,
+  weeklyAverage: 0,
+  weeklyAverageRounded: 0,
+  currentStreak: null,
+  longestStreak: null,
+  weeks: [],
 };
 
-function normalizeContributions(payload) {
-  if (!payload || !Array.isArray(payload.weeks)) {
-    return {
-      totalCount: 0,
-      maxCount: 0,
-      currentStreak: null,
-      longestStreak: null,
-      weeks: [],
-    };
+function streakFromDays(days, fromEnd = false) {
+  let length = 0;
+  let best = { length: 0, startDate: null, endDate: null };
+  let currentStart = null;
+
+  for (const day of days) {
+    if (day.count > 0) {
+      currentStart ||= day.date;
+      length += 1;
+      if (length > best.length) {
+        best = { length, startDate: currentStart, endDate: day.date };
+      }
+    } else {
+      length = 0;
+      currentStart = null;
+    }
   }
 
-  const weeks = payload.weeks.map((week) => ({
-    firstDay: week.firstDay,
-    contributionDays: Array.isArray(week.contributionDays)
-      ? week.contributionDays.map((day) => ({
-          date: day.date,
-          count: day.contributionCount,
-          color: day.color,
-          weekday: day.weekday,
-        }))
-      : [],
-  }));
+  if (!fromEnd) return best.length ? best : null;
 
-  const flatDays = weeks.flatMap((week) => week.contributionDays);
-  const totalCount = flatDays.reduce((sum, day) => sum + (day.count || 0), 0);
-  const maxCount = flatDays.reduce((max, day) => Math.max(max, day.count || 0), 0);
-  const daysTracked = flatDays.length || 1; // avoid divide-by-zero
-  const dailyAverage = totalCount / daysTracked;
-  const weeklyAverage = dailyAverage * 7;
+  const eligible = [...days];
+  if (eligible.at(-1)?.count === 0) eligible.pop();
+  const active = [];
+  for (let index = eligible.length - 1; index >= 0 && eligible[index].count > 0; index -= 1) {
+    active.unshift(eligible[index]);
+  }
+
+  return active.length
+    ? { length: active.length, startDate: active[0].date, endDate: active.at(-1).date }
+    : null;
+}
+
+function normalizeContributions(html) {
+  const days = [];
+  const cellPattern = /data-date="([^"]+)"[^>]*id="([^"]+)"[^>]*><\/td>\s*<tool-tip[^>]*for="\2"[^>]*>([^<]+)<\/tool-tip>/g;
+
+  for (const match of html.matchAll(cellPattern)) {
+    const countMatch = match[3].match(/([\d,]+) contributions?/);
+    days.push({
+      date: match[1],
+      count: countMatch ? Number(countMatch[1].replaceAll(",", "")) : 0,
+      color: null,
+      weekday: new Date(`${match[1]}T00:00:00Z`).getUTCDay(),
+    });
+  }
+
+  if (!days.length) throw new Error("GitHub contribution calendar contained no days");
+
+  days.sort((a, b) => a.date.localeCompare(b.date));
+  const weeksByDate = new Map();
+  for (const day of days) {
+    const date = new Date(`${day.date}T00:00:00Z`);
+    date.setUTCDate(date.getUTCDate() - day.weekday);
+    const firstDay = date.toISOString().slice(0, 10);
+    if (!weeksByDate.has(firstDay)) weeksByDate.set(firstDay, []);
+    weeksByDate.get(firstDay).push(day);
+  }
+
+  const totalCount = days.reduce((sum, day) => sum + day.count, 0);
+  const maxCount = days.reduce((max, day) => Math.max(max, day.count), 0);
+  const dailyAverage = totalCount / days.length;
 
   return {
     totalCount,
     maxCount,
     dailyAverage,
     dailyAverageRounded: Number(dailyAverage.toFixed(1)),
-    weeklyAverage,
-    weeklyAverageRounded: Number(weeklyAverage.toFixed(1)),
-    currentStreak: payload.contributions?.currentStreak || null,
-    longestStreak: payload.contributions?.longestStreak || null,
-    weeks,
+    weeklyAverage: dailyAverage * 7,
+    weeklyAverageRounded: Number((dailyAverage * 7).toFixed(1)),
+    currentStreak: streakFromDays(days, true),
+    longestStreak: streakFromDays(days),
+    weeks: [...weeksByDate].map(([firstDay, contributionDays]) => ({ firstDay, contributionDays })),
   };
 }
 
@@ -119,38 +93,27 @@ export default async function () {
   const cache = new AssetCache(CACHE_KEY);
 
   if (cache.isCacheValid("1d")) {
-    return cache.getCachedValue();
+    const cached = await cache.getCachedValue();
+    if (cached?.weeks?.length) return cached;
   }
 
   try {
     const response = await fetch(API_ENDPOINT, {
-      headers: {
-        "User-Agent": "carteakey.dev (Eleventy cache)",
-      },
+      headers: { "User-Agent": "carteakey.dev (Eleventy cache)" },
     });
+    if (!response.ok) throw new Error(`GitHub responded with ${response.status}`);
 
-    if (!response.ok) {
-      throw new Error(`GitHub contributions API responded with ${response.status}`);
-    }
-
-    const rawData = await response.json();
-    const normalized = normalizeContributions(rawData);
-
+    const normalized = normalizeContributions(await response.text());
     await cache.save(normalized, "json");
     return normalized;
   } catch (error) {
     console.error("Unable to fetch GitHub contributions", error);
-
     try {
       const cached = await cache.getCachedValue();
-      if (cached) {
-        return cached;
-      }
+      if (cached?.weeks?.length) return cached;
     } catch (cacheError) {
       console.error("No cached GitHub contributions available", cacheError);
     }
-
-    await cache.save(FALLBACK_DATA, "json");
-    return FALLBACK_DATA;
+    return EMPTY_DATA;
   }
 }
