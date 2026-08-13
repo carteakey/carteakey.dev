@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [2.6.14] - 2026-08-12
 ### Added
 - Skills: Added a searchable publishing section for skill-file links, descriptions, provenance, tags, and personal notes.
+- Notes: Added a comparison of the new Muse, Luna, and DeepSeek coding prices, including current subscription deals and an accompanying panic-button illustration.
 
 ### Changed
 - Skills radar: Preserved the existing data-career visualization at `/skills-radar/` so `/skills/` can become the skill library.
