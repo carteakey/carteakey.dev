@@ -4,7 +4,7 @@ description: A practical guide to hardware, OS, and llama.cpp tuning, built from
 image: /img/blog-sketches/unique/local-llm-optimization-stamp-trim.png
 imageAlt: "Transparent monochrome sketch of a workstation PC tower with exposed GPU fans, monitor displaying tuning parameters, and dials measuring tokens-per-second performance"
 date: 2026-06-12
-updated: 2026-07-17
+updated: 2026-08-14
 authored_by: ai-assisted
 draft: false
 tags:
@@ -31,7 +31,31 @@ Claims use three labels:
 
 ---
 
-## 1. Start with the Symptom
+## 1. TL;DR: Start Here
+
+- Use `llama.cpp` directly when you want maximum control and performance. This guide assumes that path.
+- LM Studio is a perfectly reasonable choice when you want desktop UX, model browsing, and a good local OpenAI-compatible endpoint.
+- Evaluate `vLLM` when you need multi-user serving, batching, and production throughput.
+- On Apple Silicon, compare `llama.cpp` Metal with `mlx`; unified memory changes the sizing math.
+- If TG is bad on an MoE model, check RAM speed before touching flags. Enabling XMP took my machine from roughly one-third speed back to normal.
+- If you hit VRAM limits, reduce context, quantize KV cache, lower `--parallel`, then tune layer placement.
+- For MTP speculative decoding, benchmark draft acceptance and KV cache precision together. Raw TPS is not enough.
+- For coding agents, measure TTFT, PP, TG, prompt-cache reuse, tool-call latency, and long-session stability together.
+- On a single-user homelab, start with `--parallel 1`, explicit context sizing, and static placement once you have a stable config.
+
+### 1.1 Where to Jump In
+
+This is a reference, not a linear tutorial. Start with the part that matches the problem:
+
+- Slow MoE generation: check [RAM speed](#6-1-the-memory-hierarchy-the-most-important-mental-model), then [layer placement](#10-layer-placement-the-core-optimization-for-moe) and [P-core pinning](#14-3-taskset-p-core-pinning-linux).
+- A model that does not fit or dies later in a session: start with [`--fit`](#10-4-fit-automatic-placement), [context and KV cache](#11-context-and-kv-cache), then the [known OOM causes](#known-tg-variability-root-causes).
+- Vision failing at load or on the first image: go to [Vision / Multimodal](#20-vision-multimodal). The projector and image batch need their own headroom.
+- MTP that is no faster than normal decoding: check [draft acceptance and KV precision](#19-2-target-and-draft-kv-cache-precision), not just reported TG.
+- Coding that feels slow despite good TG: measure the whole agent loop in [Coding Workloads](#18-coding-workloads-what-to-measure).
+- More than one GPU: read [Multi-GPU](#21-multi-gpu-primer) before guessing tensor split ratios.
+- LM Studio or Ollama: the [hardware](#6-hardware), [OS](#7-os-choice), and [security](#23-security-notes) sections still apply. Most llama.cpp flags do not.
+
+### 1.2 Start with the Symptom
 
 | Symptom | Check first | Then change |
 | --- | --- | --- |
@@ -43,7 +67,7 @@ Claims use three labels:
 
 For coding agents, save TTFT, PP, TG, cache behavior, and a complete tool loop. A fast decode number can still hide repeated prefill or a cold prompt cache.
 
-### 1.2 Safe Starting Profiles
+### 1.3 Safe Starting Profiles
 
 These are **tested-here starting profiles**, not llama.cpp defaults. They describe how I begin on this node before model-specific tuning.
 
@@ -56,16 +80,32 @@ These are **tested-here starting profiles**, not llama.cpp defaults. They descri
 
 > **Tested here:** 512 MiB of fit headroom, one slot, and q8 KV have been reliable for text on this 12 GB card. Vision needed more headroom. Treat those as local results, not capacity rules for another architecture.
 
-## 2. What Has Actually Moved the Needle
+## 2. Optimization Priority Checklist
 
-| Evidence | Change | Result on this node |
-| --- | --- | --- |
-| **Tested here** | Enable the rated XMP profile | Restored MoE TG from roughly one-third speed |
-| **Tested here** | Keep hybrid Intel E-cores out of the inference thread set | Improved TG by 20–30% in affected profiles |
-| **Tested here** | Quantize text-server KV to q8 and use one slot | Freed enough VRAM for more GPU-resident weights |
-| **Tested here** | Gemma 4 QAT plus MTP | 2.0–2.6× TG in the published runs; not a general MTP promise |
-| **Upstream behavior** | Let fit select placement when no explicit placement is supplied | Current llama.cpp enables fit by default; use `llama-fit-params` to capture reproducible flags |
-| **Needs testing** | n-gram speculation, CUDA graph optimization, tensor-parallel multi-GPU | Keep only when an end-to-end workload beats the baseline |
+This is the order I use on this node. The evidence column matters: a local win is not automatically a rule for every architecture.
+
+| # | Action | Evidence / result | Section |
+| ---: | --- | --- | ---: |
+| 1 | Enable the rated XMP/EXPO profile | **Tested here:** restored MoE TG from roughly one-third speed | §6.1 |
+| 2 | Use MTP speculative drafting on supported models | **Tested here:** Gemma 4 QAT + MTP improved TG by 2.0–2.6× | §19.1 |
+| 3 | Compare QAT low-bit models with ordinary post-training quants | **Tested here:** Gemma 4 QAT preserved more useful quality at low bit depth | §9.3 |
+| 4 | Use Linux, or tune the Windows power plan | **Tested here:** Linux was 15–20% faster than the Windows setup I compared | §7 |
+| 5 | Check `power-profiles-daemon` when TG changes between boots | **Tested here:** `tuned-ppd` removed an intermittent 20–30% slowdown | §7.4 |
+| 6 | Build llama.cpp from source and keep a known-good binary | **Upstream behavior:** defaults and kernels change; keep the old build for A/B tests | §8.2 |
+| 7 | Let `--fit` choose placement before hardcoding it | **Upstream behavior:** current llama.cpp enables fit when placement is not supplied | §10.4 |
+| 8 | Try `-ctk q8_0 -ctv q8_0` for a text server | **Tested here:** freed enough VRAM for more GPU-resident weights | §11.2 |
+| 9 | Benchmark target and draft KV precision together for MTP | **Tested here:** Gemma 4 acceptance was sensitive to the combination | §19.2 |
+| 10 | Set `--parallel 1` for a single-user server | **Tested here:** reclaimed KV VRAM for weights | §11.3 |
+| 11 | Keep E-cores out of the inference thread set on hybrid Intel CPUs | **Tested here:** improved TG by 20–30% in affected profiles | §14.3 |
+| 12 | Check flash attention on the model and backend you use | **Upstream behavior:** the current default is `auto`; forcing it on worked in these CUDA profiles | §11.4 |
+| 13 | Compare `--no-mmap` on hybrid MoE runs | **Tested here:** removed page-fault jitter, with a longer startup | §15.1 |
+| 14 | Use `--mlock` when swap is degrading long sessions | **Upstream behavior:** locks model pages in RAM; confirm the host has enough memory | §15.2 |
+| 15 | Go headless when the node does not need a desktop | **Tested here:** freed desktop RAM and compositor VRAM | §7.4 |
+| 16 | Route the display through an iGPU when available | **Needs testing elsewhere:** this can reclaim desktop VRAM on a dedicated NVIDIA card | §6.2 |
+| 17 | Sweep `--ubatch-size` on the real prompt shape | **Upstream behavior:** it trades prompt-processing throughput against peak VRAM | §12.2 |
+| 18 | Try n-gram speculation for repetitive code sessions | **Needs testing:** no L3MS speedup is published yet | §19.4 |
+| 19 | A/B test `GGML_CUDA_GRAPH_OPT` with enough headroom | **Needs testing:** it can reduce dispatch overhead or regress the workload | §17.1 |
+| 20 | Consider ik_llama.cpp for specialized MoE work | **Needs testing here:** useful advanced reference, but not part of the main profile | §22 |
 
 ## 3. What to Measure Before Tuning
 
@@ -87,22 +127,56 @@ Do not optimize from a single short prompt. Short prompts hide KV cache costs, l
 
 ---
 
-## 4. Small Glossary
+## 4. Glossary
 
 | Term | Definition |
 | --- | --- |
-| **PP / Prompt Processing** | Tokens per second while the model reads the prompt. |
-| **TG / Token Generation** | Tokens per second while it generates output. |
+| **GGUF** | The file format llama.cpp uses for model weights, metadata, and the tokenizer. |
+| **Quantization** | Reducing numerical precision to shrink weights and reduce memory traffic. Lower bit depth usually trades some quality for size and speed. |
+| **QAT (Quantization-Aware Training)** | Training or fine-tuning with quantization effects in the loop. It can preserve more quality than post-training quantization at the same bit depth, but the workload still gets the final vote. |
+| **MTP (Multi-Token Prediction)** | Speculative decoding with a companion draft model trained to propose multiple tokens for the target model to verify. |
+| **PP / Prompt Processing** | Tokens per second while the model reads the prompt. This is the prefill phase. |
+| **TG / Token Generation** | Tokens per second while it generates output. This is the autoregressive decode phase. |
 | **KV Cache** | Buffer storing attention Key/Value tensors for all prior context tokens. Grows linearly with context length. Lives in VRAM. |
-| **MoE** | A model that activates only some expert weights per token; offloaded experts can make system RAM bandwidth matter. |
-| **MTP** | Speculation using a companion draft model trained for multi-token prediction. |
-| **Fit** | llama.cpp's automatic VRAM-aware placement pass. |
+| **Context Window** | The maximum input and output tokens in one session. It determines the upper bound of the KV cache allocation. |
+| **Dense Model** | A transformer that uses all of its model weights for every token. Full-speed inference normally requires the weights to fit in VRAM. |
+| **MoE / Mixture of Experts** | A model that activates only some expert weights per token. Offloaded experts can make system RAM bandwidth matter. |
+| **Active Parameters** | The subset of an MoE model used for each token. TG follows the active path and its memory placement more closely than the headline parameter count. |
+| **VRAM** | GPU memory used for weights, KV cache, compute buffers, and multimodal projectors. |
+| **Perplexity (PPL)** | A measure of model surprise on a test corpus. Useful for catching badly damaged quants, but not a replacement for task evaluation. |
+| **KLD / KL Divergence** | The distance between the baseline and quantized model's next-token distributions on the same prompts. Lower drift usually means a closer reconstruction. |
+| **`llama-bench`** | llama.cpp's synthetic prompt-processing and token-generation benchmark. |
+| **`llama-fit-params`** | A utility that probes available VRAM and prints reproducible placement flags without starting the server. |
+| **`-ngl` / `--n-gpu-layers`** | The number of transformer blocks placed on the GPU. |
+| **`-ot` / `--override-tensor`** | A regex-based override for placing specific tensors on the CPU or GPU. |
+| **XMP / EXPO** | BIOS memory profiles that run system RAM at its rated speed instead of a slower base profile. |
+| **Fit** | llama.cpp's automatic VRAM-aware placement pass. Current builds use it when explicit placement flags are absent. |
 
 ---
 
-## 5. Pick the Runtime Before the Flags
+## 5. The Inference Landscape
 
-This guide is about tuning llama.cpp on a consumer CUDA workstation. If the requirement is a desktop model browser, use LM Studio; if it is simple model management, use Ollama; if it is high-throughput multi-user serving on datacenter GPUs, evaluate vLLM. The rest of this post assumes direct access to llama.cpp flags.
+### 5.1 Why Run Locally?
+
+- Prompts stay on hardware I control.
+- There is no per-token bill once the machine is running.
+- I can use any model, quant, context size, and sampling setup the hardware will tolerate.
+- It keeps working offline.
+- I can run messy benchmarks and swap models without an API contract changing underneath the experiment.
+
+### 5.2 Cloud vs Local - Honest Tradeoffs
+
+| | Hosted API | Self-hosted cloud GPU | Local hardware |
+| --- | --- | --- | --- |
+| Setup | Minutes | Hours | Hours to days |
+| Model ceiling | Provider's frontier models | Limited by the rented GPU | Limited by the hardware you own |
+| Ongoing cost | Per token or subscription | Per GPU-hour plus storage | Electricity and hardware depreciation |
+| Privacy | Provider processes the request | You control the deployment | The prompt stays on your network |
+| Upfront hardware | None | None | Consumer GPU or workstation |
+
+I use both. Hosted APIs are still better for frontier tasks; local models handle private, experimental, and routine work without a meter running.
+
+Before touching flags, pick the runtime that matches the job. This guide is about tuning llama.cpp on a consumer CUDA workstation. If the requirement is a desktop model browser, use LM Studio; if it is simple model management, use Ollama; if it is high-throughput multi-user serving on datacenter GPUs, evaluate vLLM. The rest of this post assumes direct access to llama.cpp flags.
 
 ### 5.3 Local Inference Tools
 
@@ -1171,6 +1245,7 @@ sudo tuned-adm active
 
 | Date | Note |
 | --- | --- |
+| 2026-08-14 | Restored the TL;DR, problem-based reading map, complete optimization checklist, glossary, and local/cloud framing while retaining the evidence labels and corrected llama.cpp defaults from the July review. |
 | 2026-07-17 | Added evidence labels and a symptom-first path; removed generic cloud/local material; corrected current fit, batch, and flash-attention defaults; linked complete L3MS profile evidence and the separate community-run schema. |
 | 2026-06-25 | Trimmed the coding-workload section, tightened quant/QAT/iMatrix/IQ guidance with Unsloth Dynamic and ikawrakow notes, and added a compressed GLM-5.2 PPL/KLD quant-eval section. |
 | 2026-06-25 | Added Phase 2 material: coding-workload metrics, n-gram speculation recipes, ubatch sweep guidance, ROCm/HIP and dynamic backend notes, iMatrix/IQ quant guidance, and a multi-GPU primer. |
