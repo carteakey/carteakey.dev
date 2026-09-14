@@ -1,6 +1,8 @@
 ---
 title: Running Qwen3.8-Flash-Next locally on a 12GB VRAM card (yes, the 176B one)
 description: AtomicChat AD-4.27bpw with the 51B ngram table on SSD via lazy mmap — 180-200 tok/s prefill, 20.65 tok/s MTP, and a 64k window on an RTX 4070 + 64GB RAM
+image: /img/blog-sketches/unique/running-qwen3-8-flash-next-locally-stamp-trim.png
+imageAlt: Transparent monochrome sketch of a GPU offloading to an NVMe SSD drive next to a token speed gauge and architecture notebook
 date: 2026-08-27
 updated: 2026-09-14
 authored_by: ai-assisted
