@@ -1596,6 +1596,151 @@ export default function (eleventyConfig) {
     return `<span class="note ${sideClass}"><span class="note-target">${content}</span><span class="note-comment" aria-label="Note">${safeComment}</span></span>`;
   });
 
+  // {% progression_chart { kicker: "...", title: "...", points: [...] } %}
+  eleventyConfig.addShortcode("progression_chart", function (opts = {}) {
+    const kicker = opts.kicker || "";
+    const title = opts.title || "";
+    const badge = opts.badge || "";
+    const caption = opts.caption || "";
+    const unit = opts.unit || "t/s";
+    const rawPoints = Array.isArray(opts.points) ? opts.points : [];
+
+    if (rawPoints.length === 0) return "";
+
+    const vals = rawPoints.map((p) => Number(p.val) || 0);
+    const maxVal = Math.max(...vals);
+    const maxY = Number(opts.maxY) || (Math.ceil(maxVal / 5) * 5 || 25);
+    const minY = Number(opts.minY) || 0;
+
+    const xStart = 80;
+    const xEnd = 720;
+    const yBottom = 235;
+    const yTop = 45;
+    const n = rawPoints.length;
+
+    const points = rawPoints.map((p, i) => {
+      const val = Number(p.val) || 0;
+      const x = n > 1 ? xStart + (i / (n - 1)) * (xEnd - xStart) : 400;
+      const y = yBottom - ((val - minY) / (maxY - minY)) * (yBottom - yTop);
+      return {
+        ...p,
+        val,
+        x: Number(x.toFixed(1)),
+        y: Number(y.toFixed(1)),
+        color: p.color || "#0d9488",
+      };
+    });
+
+    // Build smooth bezier path
+    let curvePath = `M ${points[0].x},${points[0].y}`;
+    for (let i = 0; i < points.length - 1; i++) {
+      const p0 = points[i];
+      const p1 = points[i + 1];
+      const dx = p1.x - p0.x;
+      const cx1 = (p0.x + dx * 0.45).toFixed(1);
+      const cy1 = p0.y.toFixed(1);
+      const cx2 = (p1.x - dx * 0.45).toFixed(1);
+      const cy2 = p1.y.toFixed(1);
+      curvePath += ` C ${cx1},${cy1} ${cx2},${cy2} ${p1.x},${p1.y}`;
+    }
+
+    const areaPath = `${curvePath} L ${points[points.length - 1].x},${yBottom} L ${points[0].x},${yBottom} Z`;
+
+    // Grid steps
+    const gridStep = Math.max(1, Math.round((maxY - minY) / 5));
+    const gridLines = [];
+    for (let g = minY; g <= maxY; g += gridStep) {
+      const gy = Number((yBottom - ((g - minY) / (maxY - minY)) * (yBottom - yTop)).toFixed(1));
+      const isBase = g === minY;
+      const dash = isBase ? "" : ' stroke-dasharray="4 4"';
+      const lbl = g === maxY ? `${g} ${unit}` : `${g}`;
+      gridLines.push(`      <line x1="60" y1="${gy}" x2="760" y2="${gy}" class="chart-grid"${dash} stroke-width="1" />`);
+      gridLines.push(`      <text x="48" y="${gy + 4}" text-anchor="end" class="chart-dim">${lbl}</text>`);
+    }
+
+    // Dots & Labels
+    const dotsHtml = [];
+    points.forEach((p) => {
+      if (p.highlight) {
+        dotsHtml.push(`      <circle cx="${p.x}" cy="${p.y}" r="9" fill="${p.color}" fill-opacity="0.25" />`);
+        dotsHtml.push(`      <circle cx="${p.x}" cy="${p.y}" r="5.5" fill="${p.color}" class="chart-dot-border" stroke-width="2" />`);
+        dotsHtml.push(`      <text x="${p.x}" y="${p.y - 15}" text-anchor="middle" class="chart-hl-num">${p.val}</text>`);
+        dotsHtml.push(`      <text x="${p.x}" y="255" text-anchor="middle" class="chart-hl-lbl">${p.lbl || ""}</text>`);
+        dotsHtml.push(`      <text x="${p.x}" y="270" text-anchor="middle" class="chart-hl-sub">${p.sub || ""}</text>`);
+      } else {
+        dotsHtml.push(`      <circle cx="${p.x}" cy="${p.y}" r="5" fill="${p.color}" class="chart-dot-border" stroke-width="2" />`);
+        dotsHtml.push(`      <text x="${p.x}" y="${p.y - 12}" text-anchor="middle" class="chart-main">${p.val}</text>`);
+        dotsHtml.push(`      <text x="${p.x}" y="255" text-anchor="middle" class="chart-lbl">${p.lbl || ""}</text>`);
+        dotsHtml.push(`      <text x="${p.x}" y="270" text-anchor="middle" class="chart-sub">${p.sub || ""}</text>`);
+      }
+    });
+
+    const lines = [
+      `<div class="not-prose my-8 overflow-hidden rounded-xl border border-stone-300/80 bg-stone-50/80 p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900/70">`,
+      `  <div class="mb-3 flex flex-wrap items-baseline justify-between gap-2 border-b border-stone-200/80 pb-3 dark:border-zinc-800">`,
+      `    <div>`,
+      kicker ? `      <p class="font-mono text-[0.68rem] font-medium tracking-wider uppercase text-teal-700 dark:text-teal-400">${kicker}</p>` : ``,
+      title ? `      <h3 class="mt-0.5 text-base font-semibold text-stone-900 dark:text-zinc-100">${title}</h3>` : ``,
+      `    </div>`,
+      badge ? `    <div class="flex items-center gap-1.5 rounded-md bg-teal-500/10 px-2.5 py-1 text-xs font-medium text-teal-800 dark:text-teal-300"><span>${badge}</span></div>` : ``,
+      `  </div>`,
+      `  <div class="w-full overflow-x-auto">`,
+      `    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 310" class="w-full min-w-[620px] h-auto font-sans" aria-label="${title || "Progression chart"}">`,
+      `      <defs>`,
+      `        <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">`,
+      `          <stop offset="0%" stop-color="#0d9488" stop-opacity="0.32" />`,
+      `          <stop offset="100%" stop-color="#0d9488" stop-opacity="0.01" />`,
+      `        </linearGradient>`,
+      `        <linearGradient id="lineGrad" x1="0" y1="0" x2="1" y2="0">`,
+      `          <stop offset="0%" stop-color="#eab308" />`,
+      `          <stop offset="25%" stop-color="#f97316" />`,
+      `          <stop offset="65%" stop-color="#0d9488" />`,
+      `          <stop offset="100%" stop-color="#059669" />`,
+      `        </linearGradient>`,
+      `        <style>`,
+      `          .chart-dim { fill: #78716c; font-size: 10px; font-family: ui-monospace, monospace; }`,
+      `          .chart-main { fill: #1c1917; font-size: 12px; font-weight: 700; font-family: ui-monospace, monospace; }`,
+      `          .chart-lbl { fill: #44403c; font-size: 11px; font-weight: 500; }`,
+      `          .chart-sub { fill: #78716c; font-size: 10px; font-family: ui-monospace, monospace; }`,
+      `          .chart-hl-num { fill: #047857; font-size: 13px; font-weight: 800; font-family: ui-monospace, monospace; }`,
+      `          .chart-hl-lbl { fill: #047857; font-size: 11px; font-weight: 700; }`,
+      `          .chart-hl-sub { fill: #059669; font-size: 10px; font-weight: 600; font-family: ui-monospace, monospace; }`,
+      `          .chart-grid { stroke: #e7e5e4; }`,
+      `          .chart-dot-border { stroke: #ffffff; }`,
+      `          .dark .chart-dim, [data-theme="dark"] .chart-dim { fill: #71717a; }`,
+      `          .dark .chart-main, [data-theme="dark"] .chart-main { fill: #f4f4f5; }`,
+      `          .dark .chart-lbl, [data-theme="dark"] .chart-lbl { fill: #d4d4d8; }`,
+      `          .dark .chart-sub, [data-theme="dark"] .chart-sub { fill: #a1a1aa; }`,
+      `          .dark .chart-hl-num, [data-theme="dark"] .chart-hl-num { fill: #34d399; }`,
+      `          .dark .chart-hl-lbl, [data-theme="dark"] .chart-hl-lbl { fill: #34d399; }`,
+      `          .dark .chart-hl-sub, [data-theme="dark"] .chart-hl-sub { fill: #6ee7b7; }`,
+      `          .dark .chart-grid, [data-theme="dark"] .chart-grid { stroke: #27272a; }`,
+      `          .dark .chart-dot-border, [data-theme="dark"] .chart-dot-border { stroke: #18181b; }`,
+      `          @media (prefers-color-scheme: dark) {`,
+      `            .chart-dim { fill: #71717a; }`,
+      `            .chart-main { fill: #f4f4f5; }`,
+      `            .chart-lbl { fill: #d4d4d8; }`,
+      `            .chart-sub { fill: #a1a1aa; }`,
+      `            .chart-hl-num { fill: #34d399; }`,
+      `            .chart-hl-lbl { fill: #34d399; }`,
+      `            .chart-hl-sub { fill: #6ee7b7; }`,
+      `            .chart-grid { stroke: #27272a; }`,
+      `            .chart-dot-border { stroke: #18181b; }`,
+      `          }`,
+      `        </style>`,
+      `      </defs>`,
+      ...gridLines,
+      `      <path d="${areaPath}" fill="url(#areaGrad)" />`,
+      `      <path d="${curvePath}" fill="none" stroke="url(#lineGrad)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />`,
+      ...dotsHtml,
+      `    </svg>`,
+      `  </div>`,
+      caption ? `  <p class="mt-3 border-t border-stone-200/60 pt-2 text-center text-[0.75rem] text-stone-500 dark:border-zinc-800 dark:text-zinc-400">${caption}</p>` : ``,
+      `</div>`,
+    ];
+    return lines.filter((line) => line.trim().length > 0).join("\n");
+  });
+
   // Render a string as markdown. Used by the sidebar partial so `sidebar.content:`
   // frontmatter can contain real markdown instead of raw HTML.
   eleventyConfig.addFilter("markdownify", function (str) {
