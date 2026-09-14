@@ -139,6 +139,10 @@ This post covers the quant choice, the upstream master refresh (promoted to Gold
   - **MTP Tier (`qwen38-flash-next-mtp`)**: **tg 20.65 tok/s aggregate** (>20 tok/s across all tasks, up to 21.9–22.4 tok/s code/SQL) with compact `shared-Q4_K_M.gguf` (1.78 GB) + PR #28243 on master (-ncmoe 45, 16k ctx, 11.78 GB VRAM).
 - **Key note**: mmap **on** (the opposite of my other posts) — lazy paging *is* the offload mechanism here. `--no-mmap --mlock` is instant death for this model on 64 GB. Initial cold-start generations pay an NVMe page-in transient (~10–14 tok/s) before converging into DRAM at steady state.
 
+{% callout "note", "Live Leaderboard & Reproduction Scripts" %}
+The active profile leaderboard at [l3ms.carteakey.dev](https://l3ms.carteakey.dev/) is updated with these Qwen3.8-Flash-Next benchmark tiers alongside all other models served and benchmarked on this exact machine (RTX 4070 12GB + 64GB DDR5, including Gemma 4 26B QAT+MTP @ 100 tok/s and Qwen3.8-27B @ 36.7 tok/s). All serving configurations, placement recipes, and automated bench harnesses are published in the [l3ms repository](https://github.com/carteakey/l3ms).
+{% endcallout %}
+
 ## Why this quant?
 
 Qwen3.8-Flash-Next is 177B params: 125B MoE (6B active), 51B n-gram table, 4B MTP head. The n-gram table is read ~2.7 KB per token from a 36 GB address space — a 1-in-13-million read ratio that NVMe answers in <100 µs. The experts are the opposite: ~2.5 GB of active weights per token, hopeless from disk.
@@ -415,4 +419,5 @@ I also run the [Qwen3.8-27B UD-IQ3_XXS](/blog/running-qwen3-8-27b-locally/) on t
 - [llama.cpp PR #27794 — lazy tensor reads](https://github.com/ggml-org/llama.cpp/pull/27794)
 - [llama.cpp PR #27836 — qwen4exp MTP draft head](https://github.com/ggml-org/llama.cpp/pull/27836) + [crusaderky detached-head patch](https://github.com/crusaderky/llama.cpp/commit/a82a58a57fc307e5cec0dc68db64d143339be4f2)
 - [agentionai/Qwen3.8-Flash-Next-MTP-Q8_0-GGUF](https://huggingface.co/agentionai/Qwen3.8-Flash-Next-MTP-Q8_0-GGUF) (sidecar head) · [jlkivey/Qwen3.8-Flash-Next-MTP-PR27836-GGUF](https://huggingface.co/jlkivey/Qwen3.8-Flash-Next-MTP-PR27836-GGUF) (graft head + script)
-- [l3ms — homelab LLM toolkit, build/bench scripts for this model](https://github.com/carteakey/l3ms)
+- [l3ms.carteakey.dev](https://l3ms.carteakey.dev/) (live homelab LLM leaderboard, served models, and task benchmarks)
+- [carteakey/l3ms repository](https://github.com/carteakey/l3ms) (homelab LLM toolkit, build flags, serving configurations, and bench reproduction scripts)
