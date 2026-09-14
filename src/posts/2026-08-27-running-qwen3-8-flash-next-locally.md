@@ -8,8 +8,6 @@ draft: false
 hidden: false
 tags:
   - AI
-  - llama.cpp
-  - Qwen
   - Self-Host
 pinned: false
 ---
@@ -255,7 +253,7 @@ The QSA Hadamard-rotation fix (in the PR head now — the old `self_k_rot` asser
 
 ## 27B or Flash-Next?
 
-I also run the [Qwen3.8-27B UD-IQ3_XXS](qwen3-8-27b-local-post.md) on this box, and the full comparison — measured head-to-head, a benchmark-anchored intelligence index (~90 vs ~74), the hardware/task decision matrix, and a quant-agnostic dense-vs-MoE chooser tree — now lives in its own post: [Qwen3.8-27B vs Qwen3.8-Flash-Next — which one to run locally](qwen3-8-27b-vs-flash-next-local-post.md).
+I also run the [Qwen3.8-27B UD-IQ3_XXS](/blog/running-qwen3-8-27b-locally/) on this box, and the full comparison — measured head-to-head, a benchmark-anchored intelligence index (~90 vs ~74), the hardware/task decision matrix, and a quant-agnostic dense-vs-MoE chooser tree — now lives in its own post: [Qwen3.8-27B vs Qwen3.8-Flash-Next — which one to run locally](/blog/qwen3-8-27b-vs-flash-next/).
 
 ## What did NOT help (and why)
 
@@ -293,7 +291,7 @@ I also run the [Qwen3.8-27B UD-IQ3_XXS](qwen3-8-27b-local-post.md) on this box, 
 | 2026-08-28 | **Attribution 2×2 + warm-pool measurement** (`bench-llama-qwen38-flash-next-graphopt.sh`): `GGML_CUDA_GRAPH_OPT=1` is a **no-op** on current master (graphs already reused 1902/request without it; ±0.2% tg); `--fit on --fit-target 512` = +2.8% over `-ncmoe 46` (20.45 vs 19.90 median) at 64k — base swap entry switched to fit-on. Warm ngram-mod pool on repeated content: 18.9 → **35.9 t/s** (+90%); novel-content decode ~20 t/s. |
 | 2026-08-28 | Thread-intel pass: tensor-type dump shows routed experts are IQ2_XS + Q2_K_S (label bpw is a weighted average) — TODO #1 gets a verify-first caveat. `ngram-mod,ngram-map-k4v` combo A/B: no effect on distinct prompts. MTP bandwidth caveat + kvarn5 watch item noted. |
 | 2026-08-28 | **pp investigation** (`bench-llama-qwen38-flash-next-pp.sh`): three effects were stacked. (1) first prompt after every (re)load pays expert-page NVMe fault-in — ~45 GiB ÷ ~6 GB/s (SN770, Gen4 x4) ≈ 7.5 s; recurs with `globalTTL: 600`. (2) identical repeat prompts hit KV prefix reuse — `prompt_n` collapses and naive pp math reports garbage (~22 t/s); always print `prompt_n`, force full re-prefill with a unique prefix. (3) real warm full-prefill pp on a fresh quiet boot: **~200 t/s** (fit-on, 64k, THP=always) — above the doc's 180 reference. THP=always measured neutral-to-positive; kept on (`defrag=defer+madvise`). A mid-session dip to ~97 was desktop churn + swap pressure, resolved by reboot — the 64 GB box has zero slack against the 45.6 GiB expert set. |
-| 2026-08-31 | **27B-vs-Flash-Next comparison split into its own post** ([qwen3-8-27b-vs-flash-next-local-post.md](qwen3-8-27b-vs-flash-next-local-post.md)): head-to-head table, intelligence index (~90 vs ~74 via LLM Stats 49.7 + KLD curves), decision matrix, and a quant-agnostic dense-vs-MoE chooser tree. Pointer section added here. |
+| 2026-08-31 | **27B-vs-Flash-Next comparison split into its own post** ([Qwen3.8-27B vs Qwen3.8-Flash-Next](/blog/qwen3-8-27b-vs-flash-next/)): head-to-head table, intelligence index (~90 vs ~74 via LLM Stats 49.7 + KLD curves), decision matrix, and a quant-agnostic dense-vs-MoE chooser tree. Pointer section added here. |
 | 2026-09-14 | **Upstream master refresh promoted to Gold; Vision tier & compact MTP 20.65 t/s breakthrough.** Refreshed upstream master (`b78a39a2f`, 175 commits newer) promoted to Gold serving baseline after delivering 19.35 t/s aggregate (+2.6% over old gold, +7.5% over ik_llama base, +10.9% on pathlib code) on unique 6-task corpus. Multimodal `qwen38-flash-next-vision` tier wired with `mmproj-F16.gguf` (-ncmoe 45, 16k ctx, 18.2–18.6 t/s). Compact `shared-Q4_K_M.gguf` (1.78 GB) with Daniel Han PR #28243 saves ~870 MiB VRAM, allowing `-ncmoe 45` (+1 MoE on GPU) to fit 11.78 GB VRAM and hit **20.65 t/s aggregate** (>20 t/s on every task). Diagnosed fresh-boot 10–14 t/s probe 1 decode as mmap NVMe cold page-in transient (not system swap). |
 
 ## References
