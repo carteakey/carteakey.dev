@@ -1,99 +1,87 @@
 /**
- * prism.js Twilight theme
- * Based (more or less) on the Twilight theme originally of Textmate fame.
- * @author Remy Bach
+ * prism.js Twilight theme - Modernized for carteakey.dev
+ * Clean, flat, high-contrast dark tokens matching the site design system.
  */
+
 code[class*="language-"],
 pre[class*="language-"] {
-	color: white;
+	color: #f4f4f5;
 	background: none;
-	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-	font-size: 1em;
+	font-family: var(--font-mono, 'JetBrains Mono', 'Fira Code', Consolas, monospace);
+	font-size: 0.82rem;
 	text-align: left;
-	text-shadow: 0 -.1em .2em black;
 	white-space: pre;
 	word-spacing: normal;
 	word-break: normal;
-	word-wrap: normal;
-	line-height: 1.5;
-
-	-moz-tab-size: 4;
-	-o-tab-size: 4;
-	tab-size: 4;
-
-	-webkit-hyphens: none;
-	-moz-hyphens: none;
-	-ms-hyphens: none;
+	line-height: 1.55;
+	tab-size: 2;
 	hyphens: none;
-}
-
-pre[class*="language-"],
-:not(pre) > code[class*="language-"] {
-	background: hsl(0, 0%, 8%); /* #141414 */
 }
 
 /* Code blocks */
 pre[class*="language-"] {
-	border-radius: .5em;
-	border: .3em solid hsl(0, 0%, 33%); /* #282A2B */
-	box-shadow: 1px 1px .5em black inset;
-	margin: .5em 0;
-	overflow: auto;
-	padding: 1em;
+	overflow-x: auto;
+	border-radius: 6px;
+	padding: 0.9em 1.1em;
+	background: #18181b;
+	border: 1px solid rgb(63 63 70 / 0.6);
+	margin: 1em 0;
 }
 
-pre[class*="language-"]::-moz-selection {
-	/* Firefox */
-	background: hsl(200, 4%, 16%); /* #282A2B */
+pre[class*="language-"] > code {
+	background: none;
+	border: none;
+	padding: 0;
+	box-shadow: none;
+	background-image: none;
 }
 
-pre[class*="language-"]::selection {
-	/* Safari */
-	background: hsl(200, 4%, 16%); /* #282A2B */
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	background: rgb(39 39 42 / 0.7);
+	color: #e4e4e7;
+	border: 1px solid rgb(63 63 70 / 0.7);
+	border-radius: 3px;
+	padding: 0.12em 0.38em;
+	font-size: 0.82em;
+	white-space: nowrap;
 }
 
 /* Text Selection colour */
 pre[class*="language-"]::-moz-selection, pre[class*="language-"] ::-moz-selection,
 code[class*="language-"]::-moz-selection, code[class*="language-"] ::-moz-selection {
 	text-shadow: none;
-	background: hsla(0, 0%, 93%, 0.15); /* #EDEDED */
+	background: rgba(255, 255, 255, 0.15);
 }
 
 pre[class*="language-"]::selection, pre[class*="language-"] ::selection,
 code[class*="language-"]::selection, code[class*="language-"] ::selection {
 	text-shadow: none;
-	background: hsla(0, 0%, 93%, 0.15); /* #EDEDED */
+	background: rgba(255, 255, 255, 0.15);
 }
 
-/* Inline code */
-:not(pre) > code[class*="language-"] {
-	border-radius: .3em;
-	border: .13em solid hsl(0, 0%, 33%); /* #545454 */
-	box-shadow: 1px 1px .3em -.1em black inset;
-	padding: .15em .2em .05em;
-	white-space: normal;
-}
-
+/* Tokens */
 .token.comment,
 .token.prolog,
 .token.doctype,
 .token.cdata {
-	color: hsl(0, 0%, 47%); /* #777777 */
+	color: #71717a;
+	font-style: italic;
 }
 
 .token.punctuation {
-	opacity: .7;
+	color: #a1a1aa;
 }
 
 .token.namespace {
-	opacity: .7;
+	opacity: 0.7;
 }
 
 .token.tag,
 .token.boolean,
 .token.number,
 .token.deleted {
-	color: hsl(14, 58%, 55%); /* #CF6A4C */
+	color: #cf6a4c;
 }
 
 .token.keyword,
@@ -102,7 +90,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 .token.constant,
 .token.symbol,
 .token.builtin {
-	color: hsl(53, 89%, 79%); /* #F9EE98 */
+	color: #f9ee98;
 }
 
 .token.attr-name,
@@ -116,22 +104,25 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 .style .token.string,
 .token.variable,
 .token.inserted {
-	color: hsl(76, 21%, 52%); /* #8F9D6A */
+	color: #8f9d6a;
 }
 
-.token.atrule {
-	color: hsl(218, 22%, 55%); /* #7587A6 */
+.token.atrule,
+.token.function,
+.token.class-name {
+	color: #7587a6;
 }
 
 .token.regex,
 .token.important {
-	color: hsl(42, 75%, 65%); /* #E9C062 */
+	color: #e9c062;
 }
 
 .token.important,
 .token.bold {
 	font-weight: bold;
 }
+
 .token.italic {
 	font-style: italic;
 }
@@ -149,51 +140,24 @@ pre[data-line] {
 .language-markup .token.tag,
 .language-markup .token.attr-name,
 .language-markup .token.punctuation {
-	color: hsl(33, 33%, 52%); /* #AC885B */
+	color: #ac885b;
 }
 
-/* Make the tokens sit above the line highlight so the colours don't look faded. */
 .token {
 	position: relative;
 	z-index: 1;
 }
 
 .line-highlight {
-	background: hsla(0, 0%, 33%, 0.25); /* #545454 */
-	background: linear-gradient(to right, hsla(0, 0%, 33%, .1) 70%, hsla(0, 0%, 33%, 0)); /* #545454 */
-	border-bottom: 1px dashed hsl(0, 0%, 33%); /* #545454 */
-	border-top: 1px dashed hsl(0, 0%, 33%); /* #545454 */
+	background: rgba(255, 255, 255, 0.06);
+	border-left: 3px solid var(--accent-color, #14b8a6);
 	left: 0;
 	line-height: inherit;
-	margin-top: 0.75em; /* Same as .prism’s padding-top */
+	margin-top: 0.75em;
 	padding: inherit 0;
 	pointer-events: none;
 	position: absolute;
 	right: 0;
 	white-space: pre;
 	z-index: 0;
-}
-
-.line-highlight:before,
-.line-highlight[data-end]:after {
-	background-color: hsl(215, 15%, 59%); /* #8794A6 */
-	border-radius: 999px;
-	box-shadow: 0 1px white;
-	color: hsl(24, 20%, 95%); /* #F5F2F0 */
-	content: attr(data-start);
-	font: bold 65%/1.5 sans-serif;
-	left: .6em;
-	min-width: 1em;
-	padding: 0 .5em;
-	position: absolute;
-	text-align: center;
-	text-shadow: none;
-	top: .4em;
-	vertical-align: .3em;
-}
-
-.line-highlight[data-end]:after {
-	bottom: .4em;
-	content: attr(data-end);
-	top: auto;
 }

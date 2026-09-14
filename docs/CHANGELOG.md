@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.6.16] - 2026-09-14
+### Fixed
+- Syntax highlighting & tables: Eliminated "black on black" inline code rendering in dark mode. Modernized `prism-twilight.css` by removing legacy TextMate inset box shadows, pitch-black `#141414` backgrounds, blurry text shadows, and awkward inline code wrapping. Updated inline code and table cell styles in `tailwind.css` to use elevated zinc surfaces with clean borders, completely unboxed table header code, and unboxed row header identifiers in table first columns.
+
 ## [2.6.15] - 2026-09-14
 ### Changed
 - Posts: Marked the three Qwen 3.8 local inference posts (August 19, 27, and 31, 2026) as draft.
