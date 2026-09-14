@@ -6,7 +6,7 @@ imageAlt: Transparent monochrome sketch of a GPU offloading to an NVMe SSD drive
 date: 2026-08-27
 updated: 2026-09-14
 authored_by: ai-assisted
-draft: false
+draft: true
 hidden: false
 tags:
   - AI

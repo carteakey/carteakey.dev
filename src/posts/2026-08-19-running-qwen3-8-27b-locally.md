@@ -4,7 +4,7 @@ description: Ridge 3.7bpw, UD-IQ3_XXS, and UD-Q2_K_XL on llama.cpp with an RTX 4
 date: 2026-08-19
 updated: 2026-08-19
 authored_by: ai-assisted
-draft: false
+draft: true
 tags:
   - AI
   - Self-Host

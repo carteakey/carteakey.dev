@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.6.15] - 2026-09-14
+### Changed
+- Posts: Marked the three Qwen 3.8 local inference posts (August 19, 27, and 31, 2026) as draft.
+
+### Fixed
+- Tables: Fixed dark mode table rendering by adding explicit dark surface backgrounds and borders, aligning cell dividers with the zinc palette, refining subtle alternating row striping, normalizing inline code inside table headers to prevent button-pill wrapping, and tuning code badge contrast inside table cells.
+
 ## [2.6.14] - 2026-08-12
 ### Added
 - Skills: Added a searchable publishing section for skill-file links, descriptions, provenance, tags, and personal notes.

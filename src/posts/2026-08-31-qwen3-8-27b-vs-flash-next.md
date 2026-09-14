@@ -4,7 +4,7 @@ description: Head-to-head on an RTX 4070 + 64 GB box — measured throughput, a 
 date: 2026-08-31
 updated: 2026-08-31
 authored_by: ai-assisted
-draft: false
+draft: true
 tags:
   - AI
   - Self-Host
