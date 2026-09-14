@@ -30,82 +30,98 @@ This post covers the quant choice, the upstream master refresh (promoted to Gold
     </div>
   </div>
   <div class="w-full overflow-x-auto">
-    <svg viewBox="0 0 800 310" class="w-full min-w-[620px] h-auto font-sans" aria-label="Throughput progression graph showing tokens per second from 6.5 to 20.65 across six optimization iterations">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 310" class="w-full min-w-[620px] h-auto font-sans" aria-label="Throughput progression graph showing tokens per second from 6.5 to 20.65 across six optimization iterations">
       <defs>
         <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#0d9488" stop-opacity="0.35" />
-          <stop offset="100%" stop-color="#0d9488" stop-opacity="0.02" />
+          <stop offset="0%" stop-color="#0d9488" stop-opacity="0.32" />
+          <stop offset="100%" stop-color="#0d9488" stop-opacity="0.01" />
         </linearGradient>
         <linearGradient id="lineGrad" x1="0" y1="0" x2="1" y2="0">
           <stop offset="0%" stop-color="#eab308" />
-          <stop offset="30%" stop-color="#f97316" />
-          <stop offset="70%" stop-color="#0d9488" />
+          <stop offset="25%" stop-color="#f97316" />
+          <stop offset="65%" stop-color="#0d9488" />
           <stop offset="100%" stop-color="#059669" />
         </linearGradient>
+        <style>
+          .chart-dim { fill: #78716c; font-size: 10px; font-family: ui-monospace, monospace; }
+          .chart-main { fill: #1c1917; font-size: 12px; font-weight: 700; font-family: ui-monospace, monospace; }
+          .chart-lbl { fill: #44403c; font-size: 11px; font-weight: 500; }
+          .chart-sub { fill: #78716c; font-size: 10px; font-family: ui-monospace, monospace; }
+          .chart-hl-num { fill: #047857; font-size: 13px; font-weight: 800; font-family: ui-monospace, monospace; }
+          .chart-hl-lbl { fill: #047857; font-size: 11px; font-weight: 700; }
+          .chart-hl-sub { fill: #059669; font-size: 10px; font-weight: 600; font-family: ui-monospace, monospace; }
+          .chart-grid { stroke: #e7e5e4; }
+          .chart-dot-border { stroke: #ffffff; }
+          .dark .chart-dim, [data-theme="dark"] .chart-dim { fill: #71717a; }
+          .dark .chart-main, [data-theme="dark"] .chart-main { fill: #f4f4f5; }
+          .dark .chart-lbl, [data-theme="dark"] .chart-lbl { fill: #d4d4d8; }
+          .dark .chart-sub, [data-theme="dark"] .chart-sub { fill: #a1a1aa; }
+          .dark .chart-hl-num, [data-theme="dark"] .chart-hl-num { fill: #34d399; }
+          .dark .chart-hl-lbl, [data-theme="dark"] .chart-hl-lbl { fill: #34d399; }
+          .dark .chart-hl-sub, [data-theme="dark"] .chart-hl-sub { fill: #6ee7b7; }
+          .dark .chart-grid, [data-theme="dark"] .chart-grid { stroke: #27272a; }
+          .dark .chart-dot-border, [data-theme="dark"] .chart-dot-border { stroke: #18181b; }
+          @media (prefers-color-scheme: dark) {
+            .chart-dim { fill: #71717a; }
+            .chart-main { fill: #f4f4f5; }
+            .chart-lbl { fill: #d4d4d8; }
+            .chart-sub { fill: #a1a1aa; }
+            .chart-hl-num { fill: #34d399; }
+            .chart-hl-lbl { fill: #34d399; }
+            .chart-hl-sub { fill: #6ee7b7; }
+            .chart-grid { stroke: #27272a; }
+            .chart-dot-border { stroke: #18181b; }
+          }
+        </style>
       </defs>
-
       <!-- Y Grid Lines & Labels -->
-      <line x1="60" y1="235" x2="760" y2="235" stroke="currentColor" stroke-opacity="0.15" stroke-width="1" />
-      <text x="48" y="239" text-anchor="end" class="fill-stone-400 dark:fill-zinc-500 text-[10px] font-mono">0</text>
-
-      <line x1="60" y1="197" x2="760" y2="197" stroke="currentColor" stroke-opacity="0.1" stroke-dasharray="4 4" />
-      <text x="48" y="201" text-anchor="end" class="fill-stone-400 dark:fill-zinc-500 text-[10px] font-mono">5</text>
-
-      <line x1="60" y1="159" x2="760" y2="159" stroke="currentColor" stroke-opacity="0.1" stroke-dasharray="4 4" />
-      <text x="48" y="163" text-anchor="end" class="fill-stone-400 dark:fill-zinc-500 text-[10px] font-mono">10</text>
-
-      <line x1="60" y1="121" x2="760" y2="121" stroke="currentColor" stroke-opacity="0.1" stroke-dasharray="4 4" />
-      <text x="48" y="125" text-anchor="end" class="fill-stone-400 dark:fill-zinc-500 text-[10px] font-mono">15</text>
-
-      <line x1="60" y1="83" x2="760" y2="83" stroke="currentColor" stroke-opacity="0.1" stroke-dasharray="4 4" />
-      <text x="48" y="87" text-anchor="end" class="fill-stone-400 dark:fill-zinc-500 text-[10px] font-mono">20</text>
-
-      <line x1="60" y1="45" x2="760" y2="45" stroke="currentColor" stroke-opacity="0.1" stroke-dasharray="4 4" />
-      <text x="48" y="49" text-anchor="end" class="fill-stone-400 dark:fill-zinc-500 text-[10px] font-mono">25 t/s</text>
-
+      <line x1="60" y1="235" x2="760" y2="235" class="chart-grid" stroke-width="1" />
+      <text x="48" y="239" text-anchor="end" class="chart-dim">0</text>
+      <line x1="60" y1="197" x2="760" y2="197" class="chart-grid" stroke-dasharray="4 4" stroke-width="1" />
+      <text x="48" y="201" text-anchor="end" class="chart-dim">5</text>
+      <line x1="60" y1="159" x2="760" y2="159" class="chart-grid" stroke-dasharray="4 4" stroke-width="1" />
+      <text x="48" y="163" text-anchor="end" class="chart-dim">10</text>
+      <line x1="60" y1="121" x2="760" y2="121" class="chart-grid" stroke-dasharray="4 4" stroke-width="1" />
+      <text x="48" y="125" text-anchor="end" class="chart-dim">15</text>
+      <line x1="60" y1="83" x2="760" y2="83" class="chart-grid" stroke-dasharray="4 4" stroke-width="1" />
+      <text x="48" y="87" text-anchor="end" class="chart-dim">20</text>
+      <line x1="60" y1="45" x2="760" y2="45" class="chart-grid" stroke-dasharray="4 4" stroke-width="1" />
+      <text x="48" y="49" text-anchor="end" class="chart-dim">25 t/s</text>
       <!-- Shaded Area Under Curve -->
       <path d="M 80,185.6 C 144,170 144,142.3 208,142.3 C 272,142.3 272,119.5 336,119.5 C 400,119.5 400,91.4 464,91.4 C 528,91.4 528,87.9 592,87.9 C 656,87.9 656,78.1 720,78.1 L 720,235 L 80,235 Z" fill="url(#areaGrad)" />
-
       <!-- Main Curve -->
       <path d="M 80,185.6 C 144,170 144,142.3 208,142.3 C 272,142.3 272,119.5 336,119.5 C 400,119.5 400,91.4 464,91.4 C 528,91.4 528,87.9 592,87.9 C 656,87.9 656,78.1 720,78.1" fill="none" stroke="url(#lineGrad)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />
-
-      <!-- Data Points & Labels -->
       <!-- Point 1: 6.5 -->
-      <circle cx="80" cy="185.6" r="5" class="fill-yellow-500 stroke-white dark:zinc-900" stroke-width="2" />
-      <text x="80" y="173" text-anchor="middle" class="fill-stone-900 dark:fill-zinc-100 font-mono text-[12px] font-bold">6.5</text>
-      <text x="80" y="255" text-anchor="middle" class="fill-stone-700 dark:fill-zinc-300 text-[11px] font-medium">Powersave</text>
-      <text x="80" y="270" text-anchor="middle" class="fill-stone-400 dark:fill-zinc-500 font-mono text-[10px]">Aug 27 (base)</text>
-
+      <circle cx="80" cy="185.6" r="5" fill="#eab308" class="chart-dot-border" stroke-width="2" />
+      <text x="80" y="173" text-anchor="middle" class="chart-main">6.5</text>
+      <text x="80" y="255" text-anchor="middle" class="chart-lbl">Powersave</text>
+      <text x="80" y="270" text-anchor="middle" class="chart-sub">Aug 27 (base)</text>
       <!-- Point 2: 12.2 -->
-      <circle cx="208" cy="142.3" r="5" class="fill-orange-500 stroke-white dark:zinc-900" stroke-width="2" />
-      <text x="208" y="130" text-anchor="middle" class="fill-stone-900 dark:fill-zinc-100 font-mono text-[12px] font-bold">12.2</text>
-      <text x="208" y="255" text-anchor="middle" class="fill-stone-700 dark:fill-zinc-300 text-[11px] font-medium">CPU Governor</text>
-      <text x="208" y="270" text-anchor="middle" class="fill-stone-400 dark:fill-zinc-500 font-mono text-[10px]">+88% (4.5GHz)</text>
-
+      <circle cx="208" cy="142.3" r="5" fill="#f97316" class="chart-dot-border" stroke-width="2" />
+      <text x="208" y="130" text-anchor="middle" class="chart-main">12.2</text>
+      <text x="208" y="255" text-anchor="middle" class="chart-lbl">CPU Governor</text>
+      <text x="208" y="270" text-anchor="middle" class="chart-sub">+88% (4.5GHz)</text>
       <!-- Point 3: 15.2 -->
-      <circle cx="336" cy="119.5" r="5" class="fill-amber-600 stroke-white dark:zinc-900" stroke-width="2" />
-      <text x="336" y="107" text-anchor="middle" class="fill-stone-900 dark:fill-zinc-100 font-mono text-[12px] font-bold">15.2</text>
-      <text x="336" y="255" text-anchor="middle" class="fill-stone-700 dark:fill-zinc-300 text-[11px] font-medium">Lazy SSD mmap</text>
-      <text x="336" y="270" text-anchor="middle" class="fill-stone-400 dark:fill-zinc-500 font-mono text-[10px]">PR #27794</text>
-
+      <circle cx="336" cy="119.5" r="5" fill="#d97706" class="chart-dot-border" stroke-width="2" />
+      <text x="336" y="107" text-anchor="middle" class="chart-main">15.2</text>
+      <text x="336" y="255" text-anchor="middle" class="chart-lbl">Lazy SSD mmap</text>
+      <text x="336" y="270" text-anchor="middle" class="chart-sub">PR #27794</text>
       <!-- Point 4: 18.9 -->
-      <circle cx="464" cy="91.4" r="5" class="fill-teal-600 stroke-white dark:zinc-900" stroke-width="2" />
-      <text x="464" y="79" text-anchor="middle" class="fill-stone-900 dark:fill-zinc-100 font-mono text-[12px] font-bold">18.9</text>
-      <text x="464" y="255" text-anchor="middle" class="fill-stone-700 dark:fill-zinc-300 text-[11px] font-medium">q8 KV + Fit</text>
-      <text x="464" y="270" text-anchor="middle" class="fill-stone-400 dark:fill-zinc-500 font-mono text-[10px]">64k ctx GPU</text>
-
+      <circle cx="464" cy="91.4" r="5" fill="#0d9488" class="chart-dot-border" stroke-width="2" />
+      <text x="464" y="79" text-anchor="middle" class="chart-main">18.9</text>
+      <text x="464" y="255" text-anchor="middle" class="chart-lbl">q8 KV + Fit</text>
+      <text x="464" y="270" text-anchor="middle" class="chart-sub">64k ctx GPU</text>
       <!-- Point 5: 19.35 -->
-      <circle cx="592" cy="87.9" r="5" class="fill-teal-500 stroke-white dark:zinc-900" stroke-width="2" />
-      <text x="592" y="75" text-anchor="middle" class="fill-stone-900 dark:fill-zinc-100 font-mono text-[12px] font-bold">19.35</text>
-      <text x="592" y="255" text-anchor="middle" class="fill-stone-700 dark:fill-zinc-300 text-[11px] font-medium">Master Refresh</text>
-      <text x="592" y="270" text-anchor="middle" class="fill-stone-400 dark:fill-zinc-500 font-mono text-[10px]">Fused MoE</text>
-
+      <circle cx="592" cy="87.9" r="5" fill="#14b8a6" class="chart-dot-border" stroke-width="2" />
+      <text x="592" y="75" text-anchor="middle" class="chart-main">19.35</text>
+      <text x="592" y="255" text-anchor="middle" class="chart-lbl">Master Refresh</text>
+      <text x="592" y="270" text-anchor="middle" class="chart-sub">Fused MoE</text>
       <!-- Point 6: 20.65 (Current / Today) -->
-      <circle cx="720" cy="78.1" r="9" class="fill-emerald-400/30" />
-      <circle cx="720" cy="78.1" r="5.5" class="fill-emerald-500 stroke-white dark:zinc-900" stroke-width="2" />
-      <text x="720" y="63" text-anchor="middle" class="fill-emerald-700 dark:fill-emerald-300 font-mono text-[13px] font-extrabold">20.65</text>
-      <text x="720" y="255" text-anchor="middle" class="fill-emerald-700 dark:fill-emerald-300 text-[11px] font-bold">Compact MTP</text>
-      <text x="720" y="270" text-anchor="middle" class="fill-emerald-600 dark:fill-emerald-400 font-mono text-[10px] font-semibold">TODAY · ncmoe 45</text>
+      <circle cx="720" cy="78.1" r="9" fill="#10b981" fill-opacity="0.25" />
+      <circle cx="720" cy="78.1" r="5.5" fill="#10b981" class="chart-dot-border" stroke-width="2" />
+      <text x="720" y="63" text-anchor="middle" class="chart-hl-num">20.65</text>
+      <text x="720" y="255" text-anchor="middle" class="chart-hl-lbl">Compact MTP</text>
+      <text x="720" y="270" text-anchor="middle" class="chart-hl-sub">TODAY · ncmoe 45</text>
     </svg>
   </div>
   <p class="mt-3 border-t border-stone-200/60 pt-2 text-center text-[0.75rem] text-stone-500 dark:border-zinc-800 dark:text-zinc-400">
