@@ -2,6 +2,7 @@
 layout: layouts/home.njk
 title: Uses
 description: A list of hardware, software, and tools I use for work and personal projects.
+underConstruction: true
 eleventyNavigation:
   key: Uses
   order: 11
@@ -9,69 +10,69 @@ eleventyNavigation:
 
 <h1>Uses</h1>
 <p class="text-gray-600 dark:text-gray-300 mb-8">
-  A comprehensive list of the tools, software, and hardware I use daily. Inspired by 
+  A living list of the hardware, software, and services I actually use. Inspired by
   <a href="https://uses.tech/" class="accent-link" target="_blank" rel="noopener">uses.tech</a>.
 </p>
 
-{# ── Neofetch-style hardware block ── #}
+{# ── Machine snapshots ── #}
 <div class="not-prose mb-12 animate-enter stagger-1">
-  <div class="surface rounded-sm bg-[#1e1e1e] dark:bg-[#1a1b26] text-[#a9b1d6] font-mono text-sm overflow-hidden border border-gray-800 shadow-xl rounded-sm">
-    <div class="flex items-center gap-2 px-4 py-3 bg-[#2d2d2d] dark:bg-[#16161e] border-b border-gray-800">
-      <div class="flex gap-1.5 shrink-0">
-        <div class="w-3 h-3 rounded-full bg-[#ff5f56]"></div>
-        <div class="w-3 h-3 rounded-full bg-[#ffbd2e]"></div>
-        <div class="w-3 h-3 rounded-full bg-[#27c93f]"></div>
-      </div>
-      <div class="flex-1 text-center text-xs font-semibold text-gray-400 select-none">kartikey@macbook:~</div>
-    </div>
-    
-    <div class="p-6 overflow-x-auto">
-      <div class="flex flex-col md:flex-row gap-8 items-center md:items-start">
-        <pre class="text-[#7aa2f7] shrink-0 leading-[1.15] hidden sm:block font-bold">
-                    c.',
-                 ,xNMM.
-               .OMMMMo
-               lMM"
-             .;lNMMMx.
-            .OMMMMo
-            lMM"
-          .;lNMMM.        Kartikey
-         .OMMMMo          Chauhan
-         lMM"             -------
-       .;lNMMMx.
-      .OMMMMo
-      lMM"
-    .;lNMMM.
-   .OMMMMo
-   lMM"
-        </pre>
-        <div class="flex-1 min-w-0">
-          <div class="font-bold mb-1 text-[#9ece6a]">kartikey<span class="text-white">@</span>macbook</div>
-          <div class="text-gray-500 mb-3">----------------</div>
-          <div class="grid grid-cols-[max-content_1fr] gap-x-3 gap-y-1.5">
-            {% for key, value in uses.neofetch %}
-              <div class="font-bold text-[#7aa2f7]">{{ key }}</div>
-              <div class="text-[#c0caf5]">{{ value }}</div>
-            {% endfor %}
+  <div class="flex items-baseline justify-between gap-4 mb-4">
+    <h2 class="editorial-title">Machine snapshots</h2>
+    <span class="font-mono text-[0.65rem] uppercase tracking-[0.12em] text-gray-500 dark:text-gray-400">Fastfetch + Freeze</span>
+  </div>
+  <div class="grid gap-6 lg:grid-cols-2">
+    {% for machine in uses.machines %}
+      <article class="surface rounded-sm overflow-hidden border border-gray-800 bg-[#1e1e1e] dark:bg-[#1a1b26]">
+        <div class="flex items-center gap-2 px-3 py-2 bg-[#2d2d2d] dark:bg-[#16161e] border-b border-gray-800">
+          <div class="flex gap-1.5 shrink-0" aria-hidden="true">
+            <span class="w-2.5 h-2.5 rounded-full bg-[#ff5f56]"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-[#ffbd2e]"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-[#27c93f]"></span>
           </div>
-          <div class="flex gap-1 mt-6">
-            <div class="w-5 h-5 bg-[#3b4261]"></div>
-            <div class="w-5 h-5 bg-[#f7768e]"></div>
-            <div class="w-5 h-5 bg-[#9ece6a]"></div>
-            <div class="w-5 h-5 bg-[#e0af68]"></div>
-            <div class="w-5 h-5 bg-[#7aa2f7]"></div>
-            <div class="w-5 h-5 bg-[#bb9af7]"></div>
-            <div class="w-5 h-5 bg-[#7dcfff]"></div>
-            <div class="w-5 h-5 bg-[#a9b1d6]"></div>
-          </div>
+          <p class="min-w-0 flex-1 truncate text-center font-mono text-[0.65rem] font-semibold text-gray-400">{{ machine.label }}</p>
         </div>
-      </div>
-    </div>
+        {% image machine.image, machine.imageAlt, "block w-full h-auto" %}
+        <div class="border-t border-gray-800 px-4 py-3 text-[#c0caf5]">
+          <h3 class="font-mono text-xs font-semibold">{{ machine.name }}</h3>
+          <p class="mt-1 font-mono text-[0.68rem] leading-relaxed text-[#a9b1d6]">{{ machine.description }}</p>
+        </div>
+      </article>
+    {% endfor %}
   </div>
 </div>
 
+{# ── CasaKey homelab ── #}
+<section class="not-prose mb-16 animate-enter stagger-2" aria-labelledby="casakey-heading">
+  <div class="flex items-baseline justify-between gap-4 mb-4">
+    <h2 id="casakey-heading" class="editorial-title">🏠 {{ uses.homelab.name }}</h2>
+    <span class="font-mono text-[0.65rem] uppercase tracking-[0.12em] text-gray-500 dark:text-gray-400">Homelab</span>
+  </div>
+  <p class="editorial-support mb-5">{{ uses.homelab.description }}</p>
+  <div class="surface rounded-sm surface-padding">
+    <div class="mx-auto mb-6 w-fit border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 px-4 py-3 text-center">
+      <p class="font-mono text-xs font-semibold">🕸️ {{ uses.homelab.network.name }}</p>
+      <p class="mt-1 font-mono text-[0.65rem] text-gray-600 dark:text-gray-400">{{ uses.homelab.network.description }}</p>
+    </div>
+    <div class="mb-6 text-center font-mono text-sm text-gray-400 dark:text-gray-500" aria-hidden="true">↓</div>
+    <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
+      {% for host in uses.homelab.hosts %}
+        <article class="border border-gray-200 bg-gray-50 p-4 dark:border-gray-800 dark:bg-gray-900">
+          <p class="font-mono text-xs font-semibold"><span aria-hidden="true">{{ host.emoji }}</span> {{ host.name }}</p>
+          <p class="mt-2 font-mono text-[0.65rem] uppercase tracking-[0.1em] text-gray-500 dark:text-gray-400">{{ host.role }}</p>
+          <p class="mt-2 editorial-support-compact">{{ host.description }}</p>
+        </article>
+      {% endfor %}
+    </div>
+    <div class="mt-5 flex flex-wrap justify-center gap-x-5 gap-y-2 font-mono text-[0.65rem] text-gray-500 dark:text-gray-400">
+      {% for link in uses.homelab.links %}
+        <span>{{ link }}</span>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
 {# ── Main categories in multi-column text layout ── #}
-<div class="not-prose animate-enter stagger-2">
+<div class="not-prose animate-enter stagger-3">
   <div class="grid md:grid-cols-2 gap-x-12 gap-y-12">
     {% for category in uses.categories %}
       <section>

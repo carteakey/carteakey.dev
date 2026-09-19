@@ -70,7 +70,7 @@ This project uses a manual versioning process. It is your responsibility to keep
 
 - Eleventy source lives in `src/`; `_includes/layouts/*.njk` hold page shells, `_data/*.{js,yaml}` feed global data, and build output is `_site/` (don’t hand-edit it).
 
-- Use `npm run start` for live work (parallel Eleventy serve + Tailwind watch). `npm run build` = Eleventy + Tailwind production passes used by Netlify (`netlify.toml`).
+- Use `npm run start` for live work (parallel Eleventy serve + Tailwind watch). `npm run build` = Eleventy + Tailwind production passes used by Netlify (`netlify.toml`). When starting the local server, ALWAYS report the Tailscale URL alongside localhost (run `tailscale ip -4` to get the IP; the dev server binds to all interfaces, e.g. `http://<tailscale-ip>:8080/`).
 
 - Local-only Eleventy re-run exists via `npm run build:11ty`; VS Code task “Build Eleventy site” wraps that command if you prefer the task runner.
 

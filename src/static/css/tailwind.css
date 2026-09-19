@@ -774,6 +774,59 @@ picture img {
     color: color-mix(in srgb, rgb(245 158 11) 95%, white);
   }
 
+  .construction-notice {
+    position: fixed;
+    top: 3.25rem;
+    right: 0.75rem;
+    z-index: 30;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    border: 1px solid rgb(245 158 11 / 0.52);
+    border-radius: 0.16rem;
+    background: color-mix(in srgb, rgb(245 158 11) 14%, rgb(251 250 246) 96%);
+    padding: 0.28rem 0.48rem;
+    box-shadow: 2px 2px 0 rgb(245 158 11 / 0.14);
+    color: rgb(146 64 14);
+    font-family: var(--font-mono);
+    font-size: 0.61rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    line-height: 1.1;
+    text-transform: uppercase;
+  }
+
+  .construction-notice-icon {
+    font-size: 0.78rem;
+    line-height: 1;
+  }
+
+  .dark .construction-notice {
+    border-color: rgb(245 158 11 / 0.42);
+    background: color-mix(in srgb, rgb(245 158 11) 13%, rgb(24 24 24) 94%);
+    color: rgb(253 230 138);
+  }
+
+  @media (max-width: 40rem) {
+    .construction-notice {
+      top: 3rem;
+      right: 0.5rem;
+      padding: 0.25rem 0.34rem;
+    }
+
+    .construction-notice-label {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+  }
+
   .badge-interactive,
   .tag-interactive {
     transition: border-color 150ms ease, background-color 150ms ease, color 150ms ease;
@@ -2075,6 +2128,17 @@ picture img {
     margin-inline: 0;
   }
 
+  /* Prevent the implicit mobile grid track from expanding to a card's content. */
+  @media (max-width: 47.999rem) {
+    .home-feed-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  .home-feed-grid > .feed-card {
+    min-width: 0;
+  }
+
   .home-quote-panel {
     width: 100%;
   }
@@ -2163,6 +2227,13 @@ picture img {
 
   .subscribe-sticky:hover {
     border-color: var(--accent-color);
+  }
+
+  /* Keep the fixed call-to-action above mobile browser controls. */
+  @media (max-width: 639px) {
+    .subscribe-sticky {
+      bottom: calc(5rem + env(safe-area-inset-bottom));
+    }
   }
 
   .snippet-filter-button,
@@ -4656,5 +4727,91 @@ picture img {
   .copy-code-btn:hover {
     color: var(--accent-color);
     border-color: var(--accent-color);
+  }
+}
+
+/* ── Authorship filter (reader-controlled AI content toggle) ── */
+@layer components {
+  /* Hide list/feed items excluded by the active filter mode */
+  html[data-ai-filter="no-generated"] [data-authored-by="ai-generated"],
+  html[data-ai-filter="human-only"] [data-authored-by="ai-assisted"],
+  html[data-ai-filter="human-only"] [data-authored-by="ai-generated"] {
+    display: none !important;
+  }
+
+  /* Header segmented control: All / No-Gen / Human */
+  .ai-filter-seg {
+    display: inline-flex;
+    align-items: stretch;
+    border: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+    border-radius: 0.22rem;
+    overflow: hidden;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.02em;
+    line-height: 1;
+    color: var(--accent-color);
+    background: transparent;
+  }
+
+  .ai-filter-seg button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.32rem 0.5rem;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: inherit;
+    opacity: 0.55;
+    cursor: pointer;
+    transition: opacity 0.15s ease, background-color 0.15s ease;
+  }
+
+  .ai-filter-seg button + button {
+    border-left: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+  }
+
+  .ai-filter-seg button:hover {
+    opacity: 0.85;
+  }
+
+  .ai-filter-seg button:focus-visible {
+    outline: 2px solid var(--accent-color);
+    outline-offset: -2px;
+  }
+
+  html[data-ai-filter="all"] .ai-filter-seg button[data-ai-filter-option="all"],
+  html[data-ai-filter="no-generated"] .ai-filter-seg button[data-ai-filter-option="no-generated"],
+  html[data-ai-filter="human-only"] .ai-filter-seg button[data-ai-filter-option="human-only"] {
+    opacity: 1;
+    background: color-mix(in srgb, var(--accent-color) 14%, transparent);
+  }
+
+  html:not([data-ai-filter]) .ai-filter-seg button[data-ai-filter-option="all"] {
+    opacity: 1;
+    background: color-mix(in srgb, var(--accent-color) 14%, transparent);
+  }
+
+  /* Small fixed notice counting items hidden by the filter */
+  .ai-filter-notice {
+    position: fixed;
+    bottom: 0.75rem;
+    left: 0.75rem;
+    z-index: 40;
+    font-size: 0.65rem;
+    font-family: var(--font-mono);
+    letter-spacing: 0.02em;
+    padding: 0.3rem 0.6rem;
+    border-radius: 0.16rem;
+    border: 1px solid color-mix(in srgb, var(--accent-color) 30%, transparent);
+    background: rgb(24 24 27 / 0.92);
+    color: rgb(228 228 231);
+    pointer-events: none;
+  }
+
+  .dark .ai-filter-notice {
+    background: rgb(39 39 42 / 0.92);
+    color: rgb(212 212 216);
   }
 }

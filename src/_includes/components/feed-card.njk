@@ -80,7 +80,7 @@
 
   {# ── STREAM VARIANT (lifestream style) ── #}
   {% if variant == 'stream' %}
-  <article class="feed-card-stream{% if extraClasses %} {{ extraClasses }}{% endif %} group py-1.5" {% if outerAttrs %}{{ outerAttrs | safe }}{% endif %}>
+  <article class="feed-card-stream{% if extraClasses %} {{ extraClasses }}{% endif %} group py-1.5" {% if item.authored_by %}data-authored-by="{{ item.authored_by }}" {% endif %}{% if outerAttrs %}{{ outerAttrs | safe }}{% endif %}>
     <div class="flex flex-col md:flex-row md:gap-8">
       {# Left column: Date & Type #}
       <div class="shrink-0 md:w-28 pt-1 flex flex-row md:flex-col gap-3 md:gap-1.5 items-center md:items-start mb-3 md:mb-0">
@@ -245,7 +245,7 @@
 
   {# ── LIST VARIANT (homepage preview - single compact row) ── #}
   {% elif variant == 'list' %}
-  <li class="feed-list-row{% if extraClasses %} {{ extraClasses }}{% endif %}" {% if outerAttrs %}{{ outerAttrs | safe }}{% endif %}>
+  <li class="feed-list-row{% if extraClasses %} {{ extraClasses }}{% endif %}" {% if item.authored_by %}data-authored-by="{{ item.authored_by }}" {% endif %}{% if outerAttrs %}{{ outerAttrs | safe }}{% endif %}>
     <span class="feed-list-date meta-text">{{ item.date | shortDate }}</span>
     {% if item.url %}
       <a href="{{ item.url | url }}" class="feed-list-title title-hover">{% if item.featured %}<span style="color: rgb(245 158 11); margin-right: 0.35rem;" title="Featured" aria-label="Featured">★</span>{% endif %}{% if item.pinned %}<span class="inline-flex items-center" style="color: var(--accent-color); margin-right: 0.35rem; margin-top: -2px;" title="Pinned" aria-label="Pinned">{% feather "bookmark", class="w-3.5 h-3.5 fill-current opacity-20" %}</span>{% endif %}{{ item.title }}</a>
@@ -263,7 +263,7 @@
 
   {# ── FULL VARIANT (feed page - clean surface rounded-sm in a grid) ── #}
   {% else %}
-  <article class="feed-card surface surface-compact rounded-sm feed-card-full{% if extraClasses %} {{ extraClasses }}{% endif %}" {% if outerAttrs %}{{ outerAttrs | safe }}{% endif %}>
+  <article class="feed-card surface surface-compact rounded-sm feed-card-full{% if extraClasses %} {{ extraClasses }}{% endif %}" {% if item.authored_by %}data-authored-by="{{ item.authored_by }}" {% endif %}{% if outerAttrs %}{{ outerAttrs | safe }}{% endif %}>
     {# Header row: type dot + label + date #}
     <div class="flex items-center gap-2 mb-2.5">
       <span class="badge badge-type badge-compact {{ typeBadgeClass }}">{{ badgeLabel }}</span>

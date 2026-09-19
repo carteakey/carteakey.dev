@@ -2,7 +2,7 @@
 title: Site Sucker Alias (ss)
 description: A powerful wget alias to mirror websites locally, bypassing robots.txt and excluding media files.
 date: 2026-05-03T00:00:00.000Z
-authored_by: kchauhan
+authored_by: human
 updated: 2026-05-03T00:00:00.000Z
 slug: site-sucker-wget-alias
 ---

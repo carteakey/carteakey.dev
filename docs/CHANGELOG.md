@@ -5,6 +5,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.2] - 2026-09-19
+### Added
+- Uses: Added the CasaKey homelab map and the first Fastfetch + Freeze machine snapshot.
+
+### Changed
+- Uses: Refreshed the hardware, audio, software, browser, notes, task, and retired-device lists from the interview.
+
+## [2.7.1] - 2026-09-09
+### Added
+- A self-contained browser platformer at `/folio/mario/`, playable offline with keyboard controls, original canvas pixel art, enemies, coins, scrolling, lives, timer, and a course-clear state.
+- Two prompt-library entries: the browser Mario clone prompt and a reference-image-to-browser-demo prompt with its local visual reference.
+
+### Changed
+- Local inference guide: Restored the TL;DR, problem-based navigation, complete evidence-aware optimization checklist, glossary, and local-versus-cloud framing while retaining the July accuracy corrections.
+
+## [2.7.0] - 2026-08-31
+### Added
+- Reader-controlled authorship filter: a header toggle with three modes - "AI: All" (everything), "AI: No-Gen" (hides AI-generated content, keeps human + AI-assisted), and "AI: Human" (hides all AI-assisted and AI-generated content). Persisted in localStorage, applied instantly via CSS with no flash, and announced by a small fixed notice counting hidden items.
+- The filter works across the homepage feed, `/feed/`, `/blog/` (list + grid), tags pages, `/snippets/` (list + grid), `/prompts/`, `/reviews/`, and `/search/` (results re-filter live on toggle).
+- Authorship badges are now exposed on surfaces that previously hid the flag: `/snippets/`, `/prompts/`, `/reviews/` lists, and search result cards.
+
+### Fixed
+- Snippets `wget-mirror-site.md` and `ssh-network-scan.md` had an invalid `authored_by: kchauhan` value that rendered as "Unclassified"; now `human`.
+- Homepage: restored the Recent Activity grid at tablet and desktop widths during local development.
+
 ## [2.6.17] - 2026-09-18
 ### Added
 - Posts: Added a hidden draft tracing MarioBench to CRTBench, with eight game images, four genre tracks, initial Mario findings, local quantized Qwen context, community references, and evaluation/provenance limits.
@@ -14,6 +39,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Syntax highlighting & tables: Eliminated "black on black" inline code rendering in dark mode. Modernized `prism-twilight.css` by removing legacy TextMate inset box shadows, pitch-black `#141414` backgrounds, blurry text shadows, and awkward inline code wrapping. Updated inline code and table cell styles in `tailwind.css` to use elevated zinc surfaces with clean borders, completely unboxed table header code, and unboxed row header identifiers in table first columns.
 
 ## [2.6.15] - 2026-09-14
+### Added
+- Work-in-progress pages can now opt into a compact, corner-mounted construction notice with `underConstruction: true` frontmatter; `/uses/` is marked while it is being completed.
+- The Uses page now has an image-based Fastfetch machine grid and a compact CasaKey homelab map.
+
+### Fixed
+- The mobile subscribe button now remains above iOS Safari's bottom browser controls.
+- Homepage activity cards now stay within the mobile content column instead of creating horizontal page overflow.
+
 ### Changed
 - Posts: Marked the three Qwen 3.8 local inference posts (August 19, 27, and 31, 2026) as draft.
 

@@ -66,6 +66,7 @@ eleventyNavigation:
         <article
           class="py-3.5 group"
           data-blog-card
+          {% if post.data.authored_by %}data-authored-by="{{ post.data.authored_by }}"{% endif %}
           data-title="{{ post.data.title | lower }}"
           data-tags="{{ filteredTags | join(' ') | lower }}"
           data-body="{{ searchDesc }}"
@@ -130,6 +131,7 @@ eleventyNavigation:
     <article
       class="feed-card-full surface-compact"
       data-blog-card
+      {% if post.data.authored_by %}data-authored-by="{{ post.data.authored_by }}"{% endif %}
       data-title="{{ post.data.title | lower }}"
       data-tags="{{ filteredTags | join(' ') | lower }}"
       data-body="{{ searchDesc }}"
