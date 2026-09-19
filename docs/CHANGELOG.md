@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.6.16] - 2026-09-15
+### Changed
+- Removed the homepage At a Glance counts sidebar, retaining the original introduction, featured posts beside the site index, and illustrated square activity cards with existing pin ordering.
+
 ## [2.6.15] - 2026-08-14
 ### Changed
 - Local inference guide: Restored the TL;DR, problem-based navigation, complete evidence-aware optimization checklist, glossary, and local-versus-cloud framing while retaining the July accuracy corrections.

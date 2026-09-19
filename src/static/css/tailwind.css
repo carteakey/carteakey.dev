@@ -1864,7 +1864,7 @@ picture img {
 
   @media (min-width: 960px) {
     .home-intro-grid {
-      grid-template-columns: minmax(0, 2.2fr) minmax(17rem, 1fr);
+      grid-template-columns: minmax(0, 1fr);
       align-items: start;
     }
   }
@@ -2073,6 +2073,16 @@ picture img {
     width: 100%;
     max-width: none;
     margin-inline: 0;
+  }
+
+  @media (max-width: 47.999rem) {
+    .home-feed-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  .home-feed-grid > .feed-card {
+    min-width: 0;
   }
 
   .home-quote-panel {
