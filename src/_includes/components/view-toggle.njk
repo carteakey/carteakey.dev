@@ -1,29 +1,31 @@
-{# 
-  View Toggle Component
-  =====================
-  Toggle between grid and list views for collection pages.
-  
+{#
+  Shared collection view toggle.
+
   Usage:
-  {% include "components/view-toggle.njk" %}
-  
-  Requires Alpine.js and data-view-mode attribute on parent container.
+  {% from "components/view-toggle.njk" import viewToggle %}
+  {{ viewToggle([
+    { value: "stream", label: "Stream view", icon: "activity" },
+    { value: "list", label: "List view", icon: "list" },
+    { value: "grid", label: "Grid view", icon: "grid" }
+  ]) }}
+
+  The parent must expose an Alpine `view` property. Use collectionView() from
+  /static/js/collection-views.js when the preference should persist.
 #}
 
-<div class="view-toggle" x-data>
-  <button 
-    type="button" 
-    title="Grid view"
-    :class="{ 'active': $root.querySelector('[data-view-mode]')?.dataset.viewMode !== 'list' }"
-    @click="$root.querySelector('[data-view-mode]')?.setAttribute('data-view-mode', 'grid')"
-  >
-    {% feather "grid", class="w-4 h-4" %}
-  </button>
-  <button 
-    type="button" 
-    title="List view"
-    :class="{ 'active': $root.querySelector('[data-view-mode]')?.dataset.viewMode === 'list' }"
-    @click="$root.querySelector('[data-view-mode]')?.setAttribute('data-view-mode', 'list')"
-  >
-    {% feather "list", class="w-4 h-4" %}
-  </button>
-</div>
+{% macro viewToggle(views, model = "view") %}
+  <div class="view-toggle" role="group" aria-label="Choose layout">
+    {% for option in views %}
+      <button
+        type="button"
+        title="{{ option.label }}"
+        aria-label="{{ option.label }}"
+        :aria-pressed="{{ model }} === '{{ option.value }}'"
+        :class="{ 'active': {{ model }} === '{{ option.value }}' }"
+        @click="{{ model }} = '{{ option.value }}'"
+      >
+        {% feather option.icon, class="w-4 h-4" %}
+      </button>
+    {% endfor %}
+  </div>
+{% endmacro %}

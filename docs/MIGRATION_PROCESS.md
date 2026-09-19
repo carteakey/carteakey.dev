@@ -54,6 +54,21 @@ Each element should fall into one of four roles:
 
 If you cannot explain what role a text element plays, stop and decide that first.
 
+### 3. Name the page archetype
+
+Choose the page's structural role before adjusting its cards:
+
+- index for title-led archives
+- wall for varied artifacts and projects
+- shelf for cover-led media
+- ledger for comparable records
+
+See [DESIGN_LANGUAGE.md](./DESIGN_LANGUAGE.md) for the contract. If a page mixes archetypes, identify the primary one and keep secondary sections visually subordinate.
+
+### 4. Decide whether multiple views earn their keep
+
+Add a view switch only when it changes the task, not merely the number of columns. Use the shared `viewToggle` macro and `collectionView()` helper, persist the choice, and prefer one semantic copy of the content with layout classes.
+
 ## Current shared primitives
 
 Use the shared primitives before inventing more page-local CSS.
@@ -206,6 +221,9 @@ After a pass:
 - Are labels/dates/counts mono?
 - Did any old `text-sm text-gray-500` stacks remain in important content?
 - Did the page get denser in a useful way, not just tighter?
+- Is its index, wall, shelf, or ledger archetype obvious?
+- Do any view modes remain useful and readable on mobile?
+- Does `npm run verify:ui` still enforce the page's important structural contract?
 
 ## Release checklist
 

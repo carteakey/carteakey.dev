@@ -210,6 +210,27 @@ Collection pages should read like catalogs.
 - let titles carry weight
 - use description text as editorial support, not filler
 
+Rows are the safe default, not a universal mandate. Choose the shape that best expresses the collection:
+
+- **Index** — writing, snippets, changelogs, and other title-led archives. Default to a compact chronological list.
+- **Wall** — projects, mixed feed items, quotes, and other objects whose varied size is meaningful. Default to a dense masonry grid.
+- **Shelf** — books, films, games, and other cover-led collections. Use a regular visual grid when equal-sized media matters more than text rhythm.
+- **Ledger** — stats, repositories, status, and comparable records. Use aligned rows or a table.
+
+Do not force every collection into the same layout. Cohesion comes from the shared header, type roles, surfaces, metadata, spacing, and controls. Character comes from choosing the right archetype.
+
+### Multiple views
+
+Offer multiple views when the same collection supports genuinely different tasks, such as reading full notes versus scanning their titles. A toggle should not exist only as decoration.
+
+- Use the shared `viewToggle` macro and `collectionView()` helper.
+- Name modes by behavior: `stream`, `list`, and `grid`/`wall`.
+- Pick a deliberate default that expresses the page: Projects opens as a wall; Notes opens as a stream.
+- Persist the reader's choice in `localStorage`.
+- Render one semantic copy of each item and change layout with container classes when practical. Do not duplicate full content merely to support another view.
+- Every view must work at mobile width and without relying on hover.
+- Masonry is progressive enhancement: the underlying CSS grid and source order must remain readable before JavaScript runs.
+
 ### Post pages
 
 Post pages should feel like a reading surface with margin structure.
@@ -375,6 +396,9 @@ When building or redesigning a page:
 3. Prefer shared semantic classes in `src/static/css/tailwind.css`.
 4. If a new repeated pattern appears twice, give it a named class.
 5. Do not solve typography with raw utility chains unless the element is truly one-off and non-editorial.
+6. Start collection pages from one of the four documented archetypes: index, wall, shelf, or ledger.
+7. Reuse `components/page-header.njk`, `components/view-toggle.njk`, `.surface`, and the editorial type primitives before adding page-local equivalents.
+8. Record intentional exceptions in the template or this document. A visually different folio is character; an unexplained one-off control is drift.
 
 ## Shared Primitives
 
@@ -414,6 +438,8 @@ Use this when reviewing a page after changes:
 - Are surfaces square and flat enough?
 - Is there any rounded-card or startup UI drift?
 - Did any `text-sm text-gray-500` style utility stack sneak back into core content?
+- Does the page clearly belong to an index, wall, shelf, or ledger archetype?
+- If it offers multiple views, do they serve distinct reading tasks and use the shared controls?
 
 ## One-Line Prompt Version
 

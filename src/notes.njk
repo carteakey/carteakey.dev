@@ -8,6 +8,7 @@ eleventyNavigation:
   order: 6
 ---
 
+{% from "components/view-toggle.njk" import viewToggle %}
 {% include "components/breadcrumbs.njk" %}
 
 {% set pageEyebrow = "Short-form" %}
@@ -17,27 +18,52 @@ eleventyNavigation:
 {% set itemLabel = "notes" %}
 {% include "components/page-header.njk" %}
 
-<div class="notes-index divide-y divide-gray-100 dark:divide-gray-800/80">
-  {%- for note in collections.notes -%}
-  <article class="note-index-row group">
-    <div class="flex flex-col md:flex-row md:gap-6">
-      <div class="shrink-0 md:w-28 pt-0.5">
-        <time class="note-index-date meta-text" datetime="{{ note.date | htmlDateString }}">{{ note.date | readableDate }}</time>
-      </div>
-      <div class="flex-1 min-w-0">
-        {% if note.data.title %}
-          <div class="leading-snug mb-1">
-            <a href="{{ note.url }}" class="note-index-title title-hover">{{ note.data.title }}</a>
+<div class="not-prose" x-data="collectionView('notes-view', 'stream', ['stream', 'list', 'grid'])">
+  <div class="collection-view-toolbar collection-view-toolbar-compact">
+    <p class="editorial-support-compact">Choose the reading rhythm that fits: full notes, a compact index, or a wall.</p>
+    {{ viewToggle([
+      { value: "stream", label: "Stream view", icon: "activity" },
+      { value: "list", label: "List view", icon: "list" },
+      { value: "grid", label: "Wall view", icon: "grid" }
+    ]) }}
+  </div>
+
+  <div
+    class="notes-index"
+    :class="{
+      'notes-view-stream': view === 'stream',
+      'notes-view-list': view === 'list',
+      'notes-view-grid feed-masonry': view === 'grid'
+    }"
+    data-feed-masonry
+    style="--feed-row-height: 16px;"
+  >
+    {%- for note in collections.notes -%}
+    <article class="note-index-row note-card feed-card group">
+      <div class="note-card-inner">
+        <div class="note-card-meta">
+          <time class="note-index-date meta-text" datetime="{{ note.date | htmlDateString }}">{{ note.date | readableDate }}</time>
+        </div>
+        <div class="note-card-content">
+          {% if note.data.title %}
+            <div class="leading-snug mb-1">
+              <a href="{{ note.url }}" class="note-index-title title-hover">{{ note.data.title }}</a>
+            </div>
+          {% endif %}
+          <p class="note-card-excerpt editorial-support-compact">
+            {{ note | safeContent | plainText | truncate(180, true, '…') }}
+          </p>
+          <div class="note-index-body note-card-body site-content">
+            {{ note | safeContent | safe }}
           </div>
-        {% endif %}
-        <div class="note-index-body site-content">
-          {{ note | safeContent | safe }}
-        </div>
-        <div class="mt-1.5">
-          <a href="{{ note.url }}" class="note-index-link">Permalink →</a>
+          <div class="note-card-link">
+            <a href="{{ note.url }}" class="note-index-link">Permalink →</a>
+          </div>
         </div>
       </div>
-    </div>
-  </article>
-  {%- endfor -%}
+    </article>
+    {%- endfor -%}
+  </div>
 </div>
+
+{% include "components/feed-masonry-script.njk" %}

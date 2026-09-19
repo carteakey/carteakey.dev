@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.8] - 2026-09-24
+### Added
+- Collection views: Added a shared accessible view toggle and persistent layout helper for collection pages.
+- Notes: Added stream, compact list, and masonry wall views while keeping one semantic copy of every note.
+
+### Changed
+- Projects: Reworked the selected-project archive into a default masonry wall with a compact list alternative.
+- Design language: Defined index, wall, shelf, and ledger page archetypes, documented when multiple views are warranted, and added the rules to the contributor playbook and UI smoke checks.
+- Notes: Returned titles and note copy to the documented display-and-serif editorial type roles.
+
 ## [2.7.7] - 2026-09-24
 ### Changed
 - Homepage: Renamed the activity section to “From the workbench” and the newsletter label to “Occasional notes.”
@@ -12,53 +22,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Theme: Matched the light browser chrome color to the cobalt site accent.
 - UI verification: Matched the homepage portrait check to the new halftone image.
-
-## [2.7.6] - 2026-09-24
-### Changed
-- Design: Adopted the cobalt and pixel-accent identity across the homepage, posts, and footer.
-
-### Added
-- Folio: Imported 17 new AI memes to the Agent Tick archive (`src/_data/ai-memes.yaml`).
-- Vibes: Added 28 new visuals, memes, and illustrations to the vibes gallery (`src/static/img/vibes/`).
-- Skills: Added the downloads-media-router skill for routing scanned downloads to the right folder.
-
-## [2.7.5] - 2026-09-24
-### Changed
-- Support: Added a coffee and heart icon and a donation method list that can hold more providers later.
-
-## [2.7.4] - 2026-09-24
-### Changed
-- Support: Enabled one-off tips through the public Ko-fi page.
-
-## [2.7.3] - 2026-09-22
-### Changed
-- Homepage: Removed the redundant count sidebar so the introduction spans the page width.
-- Dependencies: Updated the RSS plugin to 3.0.0, Inquirer to 14.2.2, and js-yaml to a patched 5.4.2 release, with a refreshed pnpm lockfile and compatible photo/meme utilities.
-
-## [2.7.2] - 2026-09-19
-### Added
-- Uses: Added the CasaKey homelab map and the first Fastfetch + Freeze machine snapshot.
-
-### Changed
-- Uses: Refreshed the hardware, audio, software, browser, notes, task, and retired-device lists from the interview.
-
-## [2.7.1] - 2026-09-09
-### Added
-- A self-contained browser platformer at `/folio/mario/`, playable offline with keyboard controls, original canvas pixel art, enemies, coins, scrolling, lives, timer, and a course-clear state.
-- Two prompt-library entries: the browser Mario clone prompt and a reference-image-to-browser-demo prompt with its local visual reference.
-
-### Changed
-- Local inference guide: Restored the TL;DR, problem-based navigation, complete evidence-aware optimization checklist, glossary, and local-versus-cloud framing while retaining the July accuracy corrections.
-
-## [2.7.0] - 2026-08-31
-### Added
-- Reader-controlled authorship filter: a header toggle with three modes - "AI: All" (everything), "AI: No-Gen" (hides AI-generated content, keeps human + AI-assisted), and "AI: Human" (hides all AI-assisted and AI-generated content). Persisted in localStorage, applied instantly via CSS with no flash, and announced by a small fixed notice counting hidden items.
-- The filter works across the homepage feed, `/feed/`, `/blog/` (list + grid), tags pages, `/snippets/` (list + grid), `/prompts/`, `/reviews/`, and `/search/` (results re-filter live on toggle).
-- Authorship badges are now exposed on surfaces that previously hid the flag: `/snippets/`, `/prompts/`, `/reviews/` lists, and search result cards.
-
-### Fixed
-- Snippets `wget-mirror-site.md` and `ssh-network-scan.md` had an invalid `authored_by: kchauhan` value that rendered as "Unclassified"; now `human`.
-- Homepage: restored the Recent Activity grid at tablet and desktop widths during local development.
 
 ## [2.6.17] - 2026-09-18
 ### Added

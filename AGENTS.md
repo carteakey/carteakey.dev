@@ -18,6 +18,9 @@ Intentionally committed implementation work is tracked in Linear: [carteakey.dev
 
 1. **Simplicity First**: Use a minimal approach. Avoid unnecessary complexity, libraries, or build tools.
 2. **Dense Editorial / Workbench UI**: The site is a personal workbench. Prioritize `.surface` containers, document-oriented typography, mono labels, and high-density layouts over generic "dashboard" cards with heavy shadows and padding.
+   - Collection pages must declare a clear archetype from `docs/DESIGN_LANGUAGE.md`: index, wall, shelf, or ledger.
+   - Use the shared page header, view-toggle macro, persistent collection-view helper, surfaces, and editorial type primitives before adding local equivalents.
+   - Visual exceptions are welcome for authored folios and content-led experiences, but incidental control and typography drift is not.
 3. **Date Immutability**: All permanent content (posts, folios, snippets) must have an explicitly declared `date` (and optionally `updated`) in its frontmatter. Never rely on file system modification times.
 4. **2-Tag Maximum**: Every post must have **exactly 1–2 tags**. Use Title Case (e.g., `AI`, `Self-Host`, `Agents`). Never add a third tag - use a series folder for finer grouping instead.
 ---

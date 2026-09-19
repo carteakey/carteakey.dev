@@ -94,7 +94,10 @@ async function verifyMetadata(html, label) {
 async function main() {
   const home = await readOutput("index.html");
   const archive = await readOutput("blog/index.html");
+  const notes = await readOutput("notes/index.html");
+  const projects = await readOutput("projects/index.html");
   const easterEggs = await readOutput("static/js/easter-eggs.js");
+  const collectionViews = await readOutput("static/js/collection-views.js");
   const blogRoot = path.join(outputDir, "blog");
   const blogFiles = (await walk(blogRoot))
     .filter((file) => file.endsWith("index.html") && file !== path.join(blogRoot, "index.html"));
@@ -122,6 +125,11 @@ async function main() {
   check(easterEggs.includes("konamiCode") && easterEggs.includes("showSecretMessage") && easterEggs.includes("sparkleMode"), "All three easter-egg triggers remain in the script");
   check(archive.includes("sm:flex-row") && archive.includes("hidden sm:block"), "The post list keeps its responsive row and thumbnail classes");
   check(archive.includes('id="blogList"') && archive.includes('id="blogGrid"'), "Both post list views are rendered");
+  check(projects.includes("projects-collection-grid") && projects.includes("projects-collection-list"), "Projects keeps both wall and list layouts");
+  check(projects.includes("collectionView('projects-view', 'grid'"), "Projects defaults to the project wall");
+  check(notes.includes("notes-view-stream") && notes.includes("notes-view-list") && notes.includes("notes-view-grid"), "Notes renders stream, list, and wall layouts from one collection");
+  check(notes.includes("collectionView('notes-view', 'stream'"), "Notes defaults to the reading stream");
+  check(collectionViews.includes("localStorage.setItem") && collectionViews.includes("feed:layout"), "Collection view preferences persist and relayout masonry grids");
   try {
     await access(path.join(outputDir, "hi/index.html"));
     check(false, "The Hindi proof page remains unpublished while translation work is paused");
