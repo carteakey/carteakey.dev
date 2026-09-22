@@ -2004,13 +2004,17 @@ picture img {
     Alpha-safe cobalt recolor for transparent monochrome sketch illustrations
     (the post header/OG stamps). CSS filter operates per-pixel on RGB only,
     so transparent areas stay transparent - unlike .duotone-cobalt above.
+    brightness(0) saturate(100%) forces every opaque pixel to true black
+    first (alpha untouched) - the source art's anti-aliased edges aren't
+    pure black, and without this the recolor step below drifts from blue
+    toward purple/pink across the tonal range once saturation is cranked up.
   */
   .stamp-cobalt {
-    filter: invert(14%) sepia(66%) saturate(5800%) hue-rotate(246deg) brightness(93%) contrast(101%);
+    filter: brightness(0) saturate(100%) invert(20%) sepia(90%) saturate(2500%) hue-rotate(215deg) brightness(95%) contrast(105%);
   }
 
   .dark .stamp-cobalt {
-    filter: invert(60%) sepia(55%) saturate(1200%) hue-rotate(200deg) brightness(105%) contrast(100%);
+    filter: brightness(0) saturate(100%) invert(60%) sepia(55%) saturate(1200%) hue-rotate(200deg) brightness(105%) contrast(100%);
   }
 
   /* Fine grain on the nav accent-color track, same texture family as the
@@ -4766,57 +4770,90 @@ picture img {
     display: none !important;
   }
 
-  /* Header segmented control: All / No-Gen / Human */
-  .ai-filter-seg {
-    display: inline-flex;
-    align-items: stretch;
-    border: 1px solid color-mix(in srgb, currentColor 18%, transparent);
-    border-radius: 0.22rem;
+  /* Header authorship filter: a single icon trigger + dropdown menu,
+     consistent with the search/compass icon buttons beside it, instead of
+     a permanently-expanded 3-button segmented control. */
+  .ai-filter-trigger {
+    position: relative;
+  }
+
+  /* Active-state dot: shown whenever the filter isn't the default "all". */
+  html[data-ai-filter="no-generated"] .ai-filter-trigger::after,
+  html[data-ai-filter="human-only"] .ai-filter-trigger::after {
+    content: "";
+    position: absolute;
+    top: 0.2rem;
+    right: 0.2rem;
+    width: 0.35rem;
+    height: 0.35rem;
+    border-radius: 999px;
+    background: var(--accent-color);
+    border: 1px solid var(--zen-paper);
+  }
+
+  .dark html[data-ai-filter="no-generated"] .ai-filter-trigger::after,
+  .dark html[data-ai-filter="human-only"] .ai-filter-trigger::after {
+    border-color: #141414;
+  }
+
+  .ai-filter-menu {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 0.4rem);
+    z-index: 30;
+    display: flex;
+    flex-direction: column;
+    min-width: 11rem;
+    border: 1px solid rgb(214 207 193 / 1);
+    border-radius: 0.2rem;
+    background: var(--zen-paper);
+    box-shadow: 0 4px 16px rgb(0 0 0 / 0.1);
     overflow: hidden;
-    font-family: var(--font-mono);
-    font-size: 0.65rem;
-    letter-spacing: 0.02em;
-    line-height: 1;
-    color: var(--accent-color);
-    background: transparent;
   }
 
-  .ai-filter-seg button {
-    display: inline-flex;
+  .dark .ai-filter-menu {
+    border-color: rgb(63 63 70 / 1);
+    background: #1c1c1c;
+    box-shadow: 0 4px 16px rgb(0 0 0 / 0.4);
+  }
+
+  .ai-filter-menu-item {
+    display: flex;
     align-items: center;
-    gap: 0.3rem;
-    padding: 0.32rem 0.5rem;
+    gap: 0.5rem;
+    padding: 0.5rem 0.7rem;
     border: 0;
-    border-radius: 0;
     background: transparent;
-    color: inherit;
-    opacity: 0.55;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    text-align: left;
+    color: rgb(63 63 70 / 1);
     cursor: pointer;
-    transition: opacity 0.15s ease, background-color 0.15s ease;
+    transition: background-color 0.15s ease;
   }
 
-  .ai-filter-seg button + button {
-    border-left: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+  .dark .ai-filter-menu-item {
+    color: rgb(212 212 216 / 1);
   }
 
-  .ai-filter-seg button:hover {
-    opacity: 0.85;
+  .ai-filter-menu-item:hover {
+    background: color-mix(in srgb, var(--accent-color) 10%, transparent);
   }
 
-  .ai-filter-seg button:focus-visible {
+  .ai-filter-menu-item:focus-visible {
     outline: 2px solid var(--accent-color);
     outline-offset: -2px;
   }
 
-  html[data-ai-filter="all"] .ai-filter-seg button[data-ai-filter-option="all"],
-  html[data-ai-filter="no-generated"] .ai-filter-seg button[data-ai-filter-option="no-generated"],
-  html[data-ai-filter="human-only"] .ai-filter-seg button[data-ai-filter-option="human-only"] {
-    opacity: 1;
+  html[data-ai-filter="all"] .ai-filter-menu-item[data-ai-filter-option="all"],
+  html[data-ai-filter="no-generated"] .ai-filter-menu-item[data-ai-filter-option="no-generated"],
+  html[data-ai-filter="human-only"] .ai-filter-menu-item[data-ai-filter-option="human-only"] {
+    color: var(--accent-color);
     background: color-mix(in srgb, var(--accent-color) 14%, transparent);
   }
 
-  html:not([data-ai-filter]) .ai-filter-seg button[data-ai-filter-option="all"] {
-    opacity: 1;
+  html:not([data-ai-filter]) .ai-filter-menu-item[data-ai-filter-option="all"] {
+    color: var(--accent-color);
     background: color-mix(in srgb, var(--accent-color) 14%, transparent);
   }
 
