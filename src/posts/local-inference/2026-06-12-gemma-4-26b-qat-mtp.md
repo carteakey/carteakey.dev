@@ -54,7 +54,7 @@ To evaluate whether this blazing throughput comes with a qualitative penalty, I 
 1. Standard dynamic/mixed-precision quants (`UD-Q5_K_XL` and `Q4_K_M`).
 2. The flat QAT variants (`UD-Q4_K_XL`).
 
-For these evaluations, I'll be using our newly added [acrostic-june-sonnet.md](file:///home/kchauhan/repos/carteakey.dev/src/prompts/acrostic-june-sonnet.md) test-which requires a model to satisfy line counts, rhyme schemes, and a 14-letter acrostic constraint simultaneously-alongside chessboard SVG generation tests.
+For these evaluations, I'll be using our newly added [Shakespearean June Sonnet](/prompts/shakespearean-june-sonnet/) test-which requires a model to satisfy line counts, rhyme schemes, and a 14-letter acrostic constraint simultaneously-alongside chessboard SVG generation tests.
 
 I'll update this post with the qualitative evaluation results and success rates once benchmarking is complete.
 
