@@ -11,6 +11,8 @@
   --font-plus-jakarta-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Apple Color Emoji', 'Segoe UI Emoji', 'Inter';
   --font-serif: var(--font-plus-jakarta-sans);
   --font-display: var(--font-plus-jakarta-sans);
+  --font-monument: var(--font-fraunces);
+  --font-fraunces: 'Fraunces', ui-serif, Georgia, 'Times New Roman', serif;
   --font-mono: var(--font-jetbrains-mono);
   --font-jetbrains-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
 
@@ -80,8 +82,13 @@
     position: fixed;
     inset: 0;
     pointer-events: none;
-    display: none;
+    display: block;
     z-index: -1;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grain)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 180px 180px;
+    mix-blend-mode: multiply;
+    opacity: 0.16;
   }
 
   body::after {
@@ -89,8 +96,9 @@
     position: fixed;
     inset: 0;
     pointer-events: none;
-    display: none;
+    display: block;
     z-index: -1;
+    background: radial-gradient(ellipse at center, transparent 45%, rgba(120, 72, 24, 0.09) 100%);
   }
 }
 
@@ -113,11 +121,12 @@
   }
 
   .dark body::before {
-    display: none;
+    mix-blend-mode: screen;
+    opacity: 0.1;
   }
 
   .dark body::after {
-    display: none;
+    background: radial-gradient(ellipse at center, transparent 50%, rgba(0, 0, 0, 0.4) 100%);
   }
 }
 
@@ -1923,17 +1932,113 @@ picture img {
   }
 
   .home-avatar-shell {
-    width: 4.8rem;
-    height: 4.8rem;
+    position: relative;
+    width: 6.5rem;
+    height: 6.5rem;
     border-radius: 0.12rem;
     overflow: hidden;
-    border: 1px solid rgb(214 207 193 / 1);
+    border: 2px solid var(--accent-color);
     background: rgb(251 250 246 / 0.92);
   }
 
+  @media (min-width: 768px) {
+    .home-avatar-shell {
+      width: 8.6rem;
+      height: 8.6rem;
+    }
+  }
+
   .dark .home-avatar-shell {
-    border-color: rgb(63 63 70 / 1);
     background: rgb(24 24 27 / 0.92);
+  }
+
+  /* The source file itself is a pre-shrunk 22x22px PNG (headshot-pixel.png) -
+     nearest-neighbor upscaling a real low-res source is far more reliably
+     blocky across browsers than transform-scaling a full-res image down and
+     back up, which several engines silently re-smooth during compositing. */
+  .home-avatar-shell img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    image-rendering: pixelated;
+  }
+
+  /*
+    Cobalt Dither Monumentalism: shared duotone+grain treatment for opaque
+    photos/screenshots. Tint follows the user's chosen accent color, not a
+    fixed hex, so it stays in sync with the nav accent picker. Not
+    alpha-safe - do not use on transparent line art (a full-bleed tint
+    pseudo-element would color the transparent backdrop too). See
+    .stamp-cobalt below for the alpha-safe equivalent.
+  */
+  .duotone-cobalt {
+    position: relative;
+  }
+
+  .duotone-cobalt img {
+    filter: grayscale(1) contrast(1.2) brightness(1.05);
+  }
+
+  /*
+    ::before paints BEHIND the img (pseudo-element paint order is
+    before -> children -> after), so a blend layer meant to tint the photo
+    has to live on ::after instead, or it's invisibly occluded by the
+    opaque image on top of it. Tint + grain are combined into this one
+    layer (background-blend-mode composites them with each other first),
+    then mix-blend-mode composites that combined layer against the photo.
+  */
+  .duotone-cobalt::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='d'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23d)'/%3E%3C/svg%3E"),
+      linear-gradient(var(--accent-color), var(--accent-color));
+    background-repeat: repeat, no-repeat;
+    background-size: 100px 100px, 100% 100%;
+    background-blend-mode: overlay;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+  }
+
+  /*
+    Alpha-safe cobalt recolor for transparent monochrome sketch illustrations
+    (the post header/OG stamps). CSS filter operates per-pixel on RGB only,
+    so transparent areas stay transparent - unlike .duotone-cobalt above.
+  */
+  .stamp-cobalt {
+    filter: invert(14%) sepia(66%) saturate(5800%) hue-rotate(246deg) brightness(93%) contrast(101%);
+  }
+
+  .dark .stamp-cobalt {
+    filter: invert(60%) sepia(55%) saturate(1200%) hue-rotate(200deg) brightness(105%) contrast(100%);
+  }
+
+  /* Fine grain on the nav accent-color track, same texture family as the
+     page-level grain and the cobalt-dither photo treatment. */
+  .accent-slider-track {
+    position: relative;
+  }
+
+  .accent-slider-track::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cfilter id='d'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23d)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    mix-blend-mode: overlay;
+    opacity: 0.35;
+    pointer-events: none;
+  }
+
+  .accent-slider-track,
+  .accent-slider-knob {
+    box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.18);
+  }
+
+  .dark .accent-slider-track,
+  .dark .accent-slider-knob {
+    box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.18);
   }
 
   .home-eyebrow {
@@ -1947,17 +2052,19 @@ picture img {
 
   .home-title {
     margin: 0;
-    font-family: var(--font-sans);
-    font-size: 2.55rem;
-    line-height: 0.96;
-    letter-spacing: 0;
-    font-weight: 800;
+    font-family: var(--font-monument);
+    font-optical-sizing: auto;
+    font-size: 2.9rem;
+    line-height: 0.94;
+    letter-spacing: -0.01em;
+    font-weight: 900;
+    font-style: normal;
     color: rgb(17 24 39 / 1);
   }
 
   @media (min-width: 768px) {
     .home-title {
-      font-size: 3.65rem;
+      font-size: 4.4rem;
     }
   }
 

@@ -52,8 +52,18 @@ ogLocale: en_CA
 <div class="home-index-shell not-prose">
   <section class="home-intro-grid animate-enter">
     <div class="home-intro-main">
-      <div class="home-avatar-shell shrink-0">
-        {% image "./src/static/img/headshot.png" , "Kartikey Chauhan", "w-full h-full object-cover", "./src/static/img/headshot-zoom.jpg" %}
+      <div class="home-avatar-shell duotone-cobalt shrink-0">
+        <img
+          src="{{ '/img/headshot-pixel.png' | url }}"
+          alt="Kartikey Chauhan"
+          width="22"
+          height="22"
+          loading="eager"
+          decoding="async"
+          class="w-full h-full object-cover"
+          data-zoomable
+          data-zoom-src="{{ '/img/headshot-zoom.jpg' | url }}"
+        >
       </div>
 
       <div>
@@ -96,7 +106,7 @@ ogLocale: en_CA
             <li class="home-selected-item">
               <a href="{{ item.url | url }}" class="home-selected-link">
                 {% if item.image %}
-                  {% post_thumbnail item.image, item.imageAlt or item.title, "home-selected-image dark:invert dark:brightness-125", 64 %}
+                  {% post_thumbnail item.image, item.imageAlt or item.title, "stamp-cobalt home-selected-image", 64 %}
                 {% endif %}
                 <span class="home-selected-copy">
                   <span class="home-selected-title">{{ item.title }}</span>
