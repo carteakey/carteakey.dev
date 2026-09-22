@@ -2,7 +2,7 @@
 import fs from "fs/promises";
 import path from "path";
 import sharp from "sharp";
-import yaml from "js-yaml";
+import { load, dump } from "js-yaml";
 import inquirer from "inquirer";
 import dotenv from "dotenv";
 import yargs from "yargs";
@@ -75,7 +75,7 @@ async function main() {
 
   const { model } = await inquirer.prompt([
     {
-      type: "list",
+      type: "select",
       name: "model",
       message: "Which AI model would you like to use for the description?",
       choices: ["Ollama", "OpenAI"],
@@ -84,7 +84,7 @@ async function main() {
 
   const answers = await inquirer.prompt([
     {
-      type: "list",
+      type: "select",
       name: "category",
       message: "What is the category of the photo?",
       choices: ["real", "virtual"],
@@ -152,7 +152,7 @@ async function main() {
 
   // Update photos.yaml
   const photosYaml = await fs.readFile(PHOTOS_YAML_PATH, "utf-8");
-  const photos = yaml.load(photosYaml);
+  const photos = load(photosYaml);
 
   const newPhoto = {
     title,
@@ -186,7 +186,7 @@ async function main() {
     console.log(JSON.stringify(newPhoto, null, 2));
     console.log("\nImage would be copied to:", newImagePath);
   } else {
-    await fs.writeFile(PHOTOS_YAML_PATH, yaml.dump(photos));
+    await fs.writeFile(PHOTOS_YAML_PATH, dump(photos));
     await fs.copyFile(imagePath, newImagePath);
     console.log(`Successfully added ${title} to photos.yaml`);
   }

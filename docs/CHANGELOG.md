@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.3] - 2026-09-22
+### Changed
+- Homepage: Removed the redundant count sidebar so the introduction spans the page width.
+- Dependencies: Updated the RSS plugin to 3.0.0, Inquirer to 14.2.2, and js-yaml to a patched 5.4.2 release, with a refreshed pnpm lockfile and compatible photo/meme utilities.
+
 ## [2.7.2] - 2026-09-19
 ### Added
 - Uses: Added the CasaKey homelab map and the first Fastfetch + Freeze machine snapshot.

@@ -1915,13 +1915,6 @@ picture img {
     border-bottom-color: rgb(63 63 70 / 0.95);
   }
 
-  @media (min-width: 960px) {
-    .home-intro-grid {
-      grid-template-columns: minmax(0, 2.2fr) minmax(17rem, 1fr);
-      align-items: start;
-    }
-  }
-
   .home-intro-main {
     display: grid;
     grid-template-columns: auto 1fr;
@@ -2041,79 +2034,6 @@ picture img {
 
   .dark .home-link-row a {
     color: rgb(212 212 216 / 1);
-  }
-
-  .home-glance {
-    display: grid;
-    align-content: start;
-    gap: 0.2rem;
-    padding-top: 1rem;
-    border-top: 1px solid rgb(214 207 193 / 0.95);
-  }
-
-  .dark .home-glance {
-    border-top-color: rgb(63 63 70 / 0.95);
-  }
-
-  @media (min-width: 960px) {
-    .home-glance {
-      padding-left: 1.25rem;
-      padding-top: 0;
-      border-top: 0;
-      border-left: 1px solid rgb(214 207 193 / 0.95);
-    }
-
-    .dark .home-glance {
-      border-left-color: rgb(63 63 70 / 0.95);
-    }
-  }
-
-  .home-glance-title {
-    margin: 0 0 0.45rem;
-    font-family: var(--font-mono);
-    font-size: 0.66rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: rgb(115 115 115 / 1);
-  }
-
-  .home-glance-row {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 1rem;
-    padding: 0.45rem 0;
-    border-bottom: 1px solid rgb(229 223 211 / 0.95);
-  }
-
-  .dark .home-glance-row {
-    border-bottom-color: rgb(39 39 42 / 0.9);
-  }
-
-  .home-glance-label,
-  .home-glance-value {
-    font-family: var(--font-mono);
-  }
-
-  .home-glance-label {
-    font-size: 0.72rem;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    color: rgb(82 82 91 / 1);
-  }
-
-  .home-glance-value {
-    font-size: 0.84rem;
-    font-weight: 700;
-    color: rgb(17 24 39 / 1);
-  }
-
-  .dark .home-glance-label {
-    color: rgb(161 161 170 / 1);
-  }
-
-  .dark .home-glance-value {
-    color: rgb(244 244 245 / 1);
   }
 
   .home-grid-two,

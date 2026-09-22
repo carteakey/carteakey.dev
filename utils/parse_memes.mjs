@@ -1,5 +1,5 @@
 import fs from 'fs';
-import yaml from 'js-yaml';
+import { dump } from 'js-yaml';
 
 // Since we might not have cheerio, let's use a regex based parser
 const html = fs.readFileSync('src/folio/ai-memes/index.html', 'utf8');
@@ -32,4 +32,4 @@ while ((match = regex.exec(html)) !== null) {
     });
 }
 console.log(`Extracted ${memes.length} memes.`);
-fs.writeFileSync('src/_data/ai-memes.yaml', yaml.dump(memes));
+fs.writeFileSync('src/_data/ai-memes.yaml', dump(memes));
