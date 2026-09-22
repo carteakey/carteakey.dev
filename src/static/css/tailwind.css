@@ -2159,6 +2159,16 @@ picture img {
     margin-inline: 0;
   }
 
+  /* Recent Activity is a chronological log, secondary to the curated
+     Featured Posts above it - quieted so the two don't compete. */
+  .home-recent-panel .home-panel-kicker {
+    opacity: 0.75;
+  }
+
+  .home-recent-panel .editorial-title-compact {
+    font-size: 0.93rem;
+  }
+
   /* Prevent the implicit mobile grid track from expanding to a card's content. */
   @media (max-width: 47.999rem) {
     .home-feed-grid {
@@ -2518,7 +2528,7 @@ picture img {
 
   @media (min-width: 900px) {
     .home-grid-two {
-      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+      grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
     }
   }
 
@@ -2574,7 +2584,7 @@ picture img {
 
   .home-selected-item,
   .home-popular-item {
-    padding: 0.6rem 0;
+    padding: 0.85rem 0;
     border-bottom: 1px solid rgb(229 223 211 / 0.95);
   }
 
@@ -2586,9 +2596,10 @@ picture img {
   .home-selected-title {
     display: block;
     font-family: var(--font-serif);
-    font-size: 1rem;
-    font-weight: 600;
-    line-height: 1.34;
+    font-size: 1.18rem;
+    font-weight: 700;
+    line-height: 1.28;
+    letter-spacing: -0.005em;
     color: rgb(17 24 39 / 1);
     text-decoration: none;
   }
@@ -2614,8 +2625,8 @@ picture img {
     display: block;
     grid-column: 2;
     grid-row: 1;
-    width: 4rem;
-    height: 4rem;
+    width: 4.75rem;
+    height: 4.75rem;
   }
 
   .home-selected-image {
@@ -2665,7 +2676,7 @@ picture img {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     gap: 0.2rem;
-    padding: 0.65rem 0;
+    padding: 0.5rem 0;
     border-bottom: 1px solid rgb(229 223 211 / 0.95);
     transition: color 160ms ease;
     text-decoration: none;
@@ -2695,8 +2706,8 @@ picture img {
 
   .home-directory-name {
     font-family: var(--font-sans);
-    font-size: 0.98rem;
-    font-weight: 700;
+    font-size: 0.86rem;
+    font-weight: 600;
     line-height: 1.1;
     letter-spacing: 0;
     color: rgb(17 24 39 / 1);
@@ -2716,7 +2727,7 @@ picture img {
 
   .home-directory-note {
     font-family: var(--font-sans);
-    font-size: 0.88rem;
+    font-size: 0.8rem;
     line-height: 1.38;
     color: rgb(107 114 128 / 1);
   }
