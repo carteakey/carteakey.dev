@@ -40,10 +40,10 @@
       button.classList.toggle('is-complete', complete)
 
       const label = button.querySelector('[data-learning-label]')
-      if (label) label.textContent = complete ? 'Learned' : 'Mark as learned'
+      if (label) label.textContent = complete ? 'Read' : 'Mark as read'
 
       const state = button.closest('[data-learning-item], [data-learning-panel]')?.querySelector('[data-learning-state]')
-      if (state) state.textContent = complete ? 'Completed' : 'To learn'
+      if (state) state.textContent = complete ? 'Read' : 'Unread'
     }
   }
 
@@ -91,13 +91,13 @@
 
       if (isComplete(id)) {
         delete progress[id]
-        if (liveStatus) liveStatus.textContent = `${title} moved back to the learning queue.`
+        if (liveStatus) liveStatus.textContent = `${title} marked as unread.`
       } else {
         progress[id] = {
           completedAt: new Date().toISOString(),
           title,
         }
-        if (liveStatus) liveStatus.textContent = `${title} marked as learned.`
+        if (liveStatus) liveStatus.textContent = `${title} marked as read.`
       }
 
       saveProgress()

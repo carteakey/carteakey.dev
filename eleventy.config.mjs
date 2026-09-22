@@ -6,7 +6,6 @@ import { DateTime } from "luxon";
 import markdownIt from "markdown-it";
 import markdownItAnchor from "markdown-it-anchor";
 import { full as emoji } from 'markdown-it-emoji'
-import eleventyGoogleFonts from "eleventy-google-fonts";
 
 import syntaxHighlight from "@11ty/eleventy-plugin-syntaxhighlight";
 import pluginNavigation from "@11ty/eleventy-navigation";
@@ -30,6 +29,61 @@ const SHOW_HIDDEN_CONTENT = process.env.SHOW_HIDDEN === "true" || !IS_PRODUCTION
 
 function shouldHideContent(item) {
   return item?.data?.hidden === true && !SHOW_HIDDEN_CONTENT;
+}
+
+function isVisibleContent(item, now = new Date()) {
+  return !shouldHideContent(item) && (!item?.date || !(item.date > now));
+}
+
+function archiveDateTime(dateInput) {
+  if (typeof dateInput === "string") {
+    return DateTime.fromISO(dateInput);
+  }
+  if (dateInput instanceof Date) {
+    return DateTime.fromJSDate(dateInput);
+  }
+  return DateTime.fromISO(dateInput.toString());
+}
+
+function archiveDateSegment(dateInput) {
+  if (typeof dateInput === "string") {
+    return dateInput;
+  }
+  if (dateInput instanceof Date) {
+    return DateTime.fromJSDate(dateInput).toFormat("yyyy-MM-dd");
+  }
+  return dateInput.toString();
+}
+
+function dateTimeFromInput(dateInput, options = {}) {
+  if (dateInput instanceof DateTime) {
+    return dateInput;
+  }
+  if (dateInput instanceof Date) {
+    const isUtcDateOnly =
+      !options.zone &&
+      dateInput.getUTCHours() === 0 &&
+      dateInput.getUTCMinutes() === 0 &&
+      dateInput.getUTCSeconds() === 0 &&
+      dateInput.getUTCMilliseconds() === 0;
+    if (isUtcDateOnly) {
+      return DateTime.fromJSDate(dateInput, { zone: "utc" });
+    }
+    return DateTime.fromJSDate(dateInput, options);
+  }
+  if (typeof dateInput === "string") {
+    const parsed = DateTime.fromISO(dateInput, options);
+    if (parsed.isValid) {
+      return parsed;
+    }
+
+    return DateTime.fromJSDate(new Date(dateInput), options);
+  }
+  if (typeof dateInput === "number") {
+    return DateTime.fromMillis(dateInput, options);
+  }
+
+  return DateTime.invalid("invalid input");
 }
 
 function stripHtmlToText(content = "") {
@@ -285,7 +339,7 @@ async function copyPostAssets(srcDir, destDir) {
   }
 }
 
-async function imageShortcode(src, alt, css) {
+async function imageShortcode(src, alt, css, zoomSrc) {
   // Preserve animation for GIFs by bypassing transformation
   if (/\.gif$/i.test(src)) {
     return buildRemoteImageMarkup(mapSrcToPublicUrl(src), alt, css);
@@ -304,6 +358,10 @@ async function imageShortcode(src, alt, css) {
     decoding: "async",
     "data-zoomable": "",
   };
+
+  if (zoomSrc) {
+    imageAttributes["data-zoom-src"] = mapSrcToPublicUrl(zoomSrc);
+  }
 
   return generateHTML(metadata, imageAttributes, {
     whitespaceMode: "inline",
@@ -408,6 +466,7 @@ export const config = {
 
 export default function (eleventyConfig) {
   eleventyConfig.addGlobalData("isDev", !IS_PRODUCTION_BUILD);
+  eleventyConfig.addGlobalData("currentYear", new Date().getFullYear());
   eleventyConfig.addGlobalData("showHiddenContent", SHOW_HIDDEN_CONTENT);
   eleventyConfig.addGlobalData("eleventyComputed", {
     permalink: (data = {}) => {
@@ -425,7 +484,6 @@ export default function (eleventyConfig) {
   // Copy all static images (includes subfolders like /static/img/vibes)
   eleventyConfig.addPassthroughCopy({ "./src/static/img": "/img/" });
   eleventyConfig.addPassthroughCopy({ "./src/static/assets": "/assets" });
-  eleventyConfig.addPassthroughCopy("./src/static/css/prism-a11y-dark.css");
   eleventyConfig.addPassthroughCopy({ "./src/static/css/prism": "/static/css/prism" });
   eleventyConfig.addPassthroughCopy({ "./src/static/js": "/static/js" });
   eleventyConfig.addPassthroughCopy("./src/_redirects");
@@ -438,7 +496,6 @@ export default function (eleventyConfig) {
   // Add plugins
   eleventyConfig.addPlugin(syntaxHighlight);
   eleventyConfig.addPlugin(pluginNavigation);
-  eleventyConfig.addPlugin(eleventyGoogleFonts);
   eleventyConfig.addPlugin(eleventyPluginFeathericons);
   eleventyConfig.addPlugin(EleventyRenderPlugin);
   eleventyConfig.addPlugin(feedPlugin, {
@@ -471,7 +528,8 @@ export default function (eleventyConfig) {
 
   // https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#valid-date-string
   eleventyConfig.addFilter("htmlDateString", (dateObj) => {
-    return DateTime.fromJSDate(dateObj, { zone: "utc" }).toFormat("yyyy-LL-dd");
+    const dateTime = dateTimeFromInput(dateObj, { zone: "utc" });
+    return dateTime.isValid ? dateTime.toFormat("yyyy-LL-dd") : "";
   });
 
   eleventyConfig.addFilter("postDate", (dateObj) => {
@@ -492,7 +550,8 @@ export default function (eleventyConfig) {
   });
 
   eleventyConfig.addFilter("readableDate", (dateObj) => {
-    return DateTime.fromJSDate(dateObj).toFormat("MMM d, yyyy");
+    const dateTime = dateTimeFromInput(dateObj);
+    return dateTime.isValid ? dateTime.toFormat("MMM d, yyyy") : "";
   });
   eleventyConfig.addFilter("shortDate", (dateObj) => {
     return DateTime.fromJSDate(dateObj).toFormat("MMM yy");
@@ -500,50 +559,19 @@ export default function (eleventyConfig) {
 
   // Archive-specific date filters
   eleventyConfig.addFilter("archiveTitle", (dateInput) => {
-    let dateTime;
-    if (typeof dateInput === 'string') {
-      dateTime = DateTime.fromISO(dateInput);
-    } else if (dateInput instanceof Date) {
-      dateTime = DateTime.fromJSDate(dateInput);
-    } else {
-      dateTime = DateTime.fromISO(dateInput.toString());
-    }
-    return `Now (${dateTime.toFormat("MMM d, yyyy")})`;
+    return `Now (${archiveDateTime(dateInput).toFormat("MMM d, yyyy")})`;
   });
 
   eleventyConfig.addFilter("archiveHeading", (dateInput) => {
-    let dateTime;
-    if (typeof dateInput === 'string') {
-      dateTime = DateTime.fromISO(dateInput);
-    } else if (dateInput instanceof Date) {
-      dateTime = DateTime.fromJSDate(dateInput);
-    } else {
-      dateTime = DateTime.fromISO(dateInput.toString());
-    }
-    return dateTime.toFormat("MMM d, yyyy");
+    return archiveDateTime(dateInput).toFormat("MMM d, yyyy");
   });
 
   eleventyConfig.addFilter("archivePermalink", (dateInput) => {
-    let dateString;
-    if (typeof dateInput === 'string') {
-      dateString = dateInput;
-    } else if (dateInput instanceof Date) {
-      dateString = DateTime.fromJSDate(dateInput).toFormat("yyyy-MM-dd");
-    } else {
-      dateString = dateInput.toString();
-    }
-    return `/now/archive/${dateString}/`;
+    return `/now/archive/${archiveDateSegment(dateInput)}/`;
   });
 
   eleventyConfig.addFilter("archiveReadableDate", (dateInput) => {
-    // Handle both string and Date object inputs
-    if (typeof dateInput === 'string') {
-      return DateTime.fromISO(dateInput).toFormat("MMM d, yyyy");
-    } else if (dateInput instanceof Date) {
-      return DateTime.fromJSDate(dateInput).toFormat("MMM d, yyyy");
-    } else {
-      return DateTime.fromISO(dateInput.toString()).toFormat("MMM d, yyyy");
-    }
+    return archiveDateTime(dateInput).toFormat("MMM d, yyyy");
   });
 
   //Image Plugin
@@ -588,7 +616,7 @@ export default function (eleventyConfig) {
 
   function filterTagList(tags) {
     return (tags || []).filter(
-      (tag) => ["all", "nav", "post", "posts", "snippets", "prompts", "quotations"].indexOf(tag) === -1
+      (tag) => ["all", "nav", "post", "posts", "snippets", "agent-skills", "prompts", "quotations"].indexOf(tag) === -1
     );
   }
 
@@ -809,7 +837,7 @@ export default function (eleventyConfig) {
     if (!Array.isArray(posts)) return 0;
     return posts.reduce((total, post) => {
       const content = getSafeContent(post);
-      const text = (content || "").replace(/<[^>]+>/g, "");
+      const text = stripHtmlToText(content);
       return total + text.split(/\s+/).filter((w) => w.length > 0).length;
     }, 0);
   });
@@ -899,11 +927,15 @@ export default function (eleventyConfig) {
     const now = new Date();
     return collectionApi
       .getFilteredByGlob("./src/snippets/**/*.md")
-      .filter((snippet) => {
-        if (shouldHideContent(snippet)) return false;
-        if (snippet.date && snippet.date > now) return false;
-        return true;
-      })
+      .filter((snippet) => isVisibleContent(snippet, now))
+      .sort((a, b) => b.date - a.date);
+  });
+
+  eleventyConfig.addCollection("agentSkills", function (collectionApi) {
+    const now = new Date();
+    return collectionApi
+      .getFilteredByGlob("./src/skill-library/**/*.md")
+      .filter((skill) => isVisibleContent(skill, now))
       .sort((a, b) => b.date - a.date);
   });
 
@@ -925,12 +957,7 @@ export default function (eleventyConfig) {
     const now = new Date();
     return collectionApi
       .getFilteredByGlob("./src/posts/**/*.md")
-      .filter(post => {
-        if (shouldHideContent(post)) return false;
-        // Hide if date is in the future
-        if (post.date && post.date > now) return false;
-        return true;
-      })
+      .filter((post) => isVisibleContent(post, now))
       .sort((a, b) => {
         // Pinned posts first, then by date (newest first)
         const aPinned = a.data.pinned ? 1 : 0;
@@ -945,11 +972,7 @@ export default function (eleventyConfig) {
     const now = new Date();
     return collectionApi
       .getFilteredByGlob("./src/reviews/**/*.md")
-      .filter((review) => {
-        if (shouldHideContent(review)) return false;
-        if (review.date && review.date > now) return false;
-        return true;
-      })
+      .filter((review) => isVisibleContent(review, now))
       .sort((a, b) => b.date - a.date);
   });
 
@@ -957,11 +980,7 @@ export default function (eleventyConfig) {
     const now = new Date();
     return collectionApi
       .getFilteredByTag("prompts")
-      .filter(prompt => {
-        if (shouldHideContent(prompt)) return false;
-        if (prompt.date && prompt.date > now) return false;
-        return true;
-      })
+      .filter((prompt) => isVisibleContent(prompt, now))
       .sort((a, b) => b.date - a.date);
   });
 
@@ -970,13 +989,11 @@ export default function (eleventyConfig) {
     const now = new Date();
     const posts = collectionApi
       .getFilteredByGlob("./src/posts/**/*.md")
-      .filter(post => {
-        if (shouldHideContent(post)) return false;
-        if (post.data.draft === true) return false;
-        if (post.date && post.date > now) return false;
-        if (!post.data.featured) return false;
-        return true;
-      });
+      .filter((post) =>
+        isVisibleContent(post, now) &&
+        post.data.draft !== true &&
+        post.data.featured
+      );
 
     // Sort by weight (lower first), then by updated/date (newest first)
     posts.sort((a, b) => {
@@ -1011,11 +1028,7 @@ export default function (eleventyConfig) {
 
     collectionApi
       .getFilteredByGlob("./src/posts/**/*.md")
-      .filter((post) => {
-        if (shouldHideContent(post)) return false;
-        if (post.date && post.date > now) return false;
-        return true;
-      })
+      .filter((post) => isVisibleContent(post, now))
       .forEach((post) => {
         const relativePath = normalizeRelativePath(post.inputPath);
         const parts = relativePath.split("/");
@@ -1054,15 +1067,15 @@ export default function (eleventyConfig) {
     return Array.from(folderMap.values()).sort((a, b) => a.url.localeCompare(b.url));
   });
 
-  // Custom allPages collection: like collections.all but hides hidden:true and future-dated posts
+  // Public page inventory: omit non-rendered, hidden, template, and future-dated entries.
   eleventyConfig.addCollection("allPages", function (collectionApi) {
     const now = new Date();
     return collectionApi.getAll().filter(page => {
-      // Only filter posts, not all pages, for hidden/future
-      if (page.inputPath && page.inputPath.includes("/posts/")) {
-        if (shouldHideContent(page)) return false;
-        if (page.date && page.date > now) return false;
-      }
+      const inputPath = page.inputPath || "";
+      if (!page.url || page.data?.permalink === false) return false;
+      if (page.data?.hidden === true) return false;
+      if (page.date && page.date > now) return false;
+      if (/(^|\/)_(?:template)(?:\.|\/)|\/1990-01-01-template\./.test(inputPath)) return false;
       return true;
     });
   });
@@ -1101,11 +1114,7 @@ export default function (eleventyConfig) {
   eleventyConfig.addCollection("quotations", function (collectionApi) {
     const now = new Date();
     return collectionApi.getFilteredByGlob("src/quotations/**/*.md")
-      .filter((quote) => {
-        if (shouldHideContent(quote)) return false;
-        if (quote.date && quote.date > now) return false;
-        return true;
-      })
+      .filter((quote) => isVisibleContent(quote, now))
       .sort((a, b) => b.date - a.date);
   });
 
@@ -1146,11 +1155,7 @@ export default function (eleventyConfig) {
   eleventyConfig.addCollection("notes", function (collectionApi) {
     const now = new Date();
     return collectionApi.getFilteredByGlob("./src/notes/**/*.md")
-      .filter((note) => {
-        if (shouldHideContent(note)) return false;
-        if (note.date && note.date > now) return false;
-        return true;
-      })
+      .filter((note) => isVisibleContent(note, now))
       .sort((a, b) => b.date - a.date);
   });
 
@@ -1158,7 +1163,6 @@ export default function (eleventyConfig) {
   eleventyConfig.addCollection("feed", async function (collectionApi) {
     const now = new Date();
 
-    const stripHtml = (html = "") => html.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
     const truncate = (text = "", limit = 220) => {
       if (text.length <= limit) return text;
       return `${text.slice(0, limit).trimEnd()}…`;
@@ -1175,16 +1179,12 @@ export default function (eleventyConfig) {
     const posts = await Promise.all(
       collectionApi
         .getFilteredByGlob("./src/posts/**/*.md")
-        .filter((post) => {
-          if (shouldHideContent(post)) return false;
-          if (post.date && post.date > now) return false;
-          return true;
-        })
+        .filter((post) => isVisibleContent(post, now))
         .map(async (post) => {
           post.data.feedType = "post";
           const postDate = normalizeDate(post.data.updated) || post.date;
           const summarySource = post.data.description || post.data.excerpt || "";
-          const summary = summarySource ? truncate(stripHtml(summarySource)) : null;
+          const summary = summarySource ? truncate(stripHtmlToText(summarySource)) : null;
           const image = post.data.image ?? null;
           return {
             type: "post",
@@ -1208,15 +1208,11 @@ export default function (eleventyConfig) {
 
     const snippets = collectionApi
       .getFilteredByTag("snippets")
-      .filter((snippet) => {
-        if (shouldHideContent(snippet)) return false;
-        if (snippet.date && snippet.date > now) return false;
-        return true;
-      })
+      .filter((snippet) => isVisibleContent(snippet, now))
       .map((snippet) => {
         snippet.data.feedType = "snippet";
         const summarySource = snippet.data.description || snippet.data.excerpt || "";
-        const summary = summarySource ? truncate(stripHtml(summarySource)) : null;
+        const summary = summarySource ? truncate(stripHtmlToText(summarySource)) : null;
         return {
           type: "snippet",
           title: snippet.data.title,
@@ -1232,15 +1228,11 @@ export default function (eleventyConfig) {
 
     const prompts = collectionApi
       .getFilteredByTag("prompts")
-      .filter((prompt) => {
-        if (shouldHideContent(prompt)) return false;
-        if (prompt.date && prompt.date > now) return false;
-        return true;
-      })
+      .filter((prompt) => isVisibleContent(prompt, now))
       .map((prompt) => {
         prompt.data.feedType = "prompt";
         const summarySource = prompt.data.description || prompt.data.excerpt || "";
-        const summary = summarySource ? truncate(stripHtml(summarySource)) : null;
+        const summary = summarySource ? truncate(stripHtmlToText(summarySource)) : null;
         return {
           type: "prompt",
           title: prompt.data.title,
@@ -1256,15 +1248,11 @@ export default function (eleventyConfig) {
 
     const notes = collectionApi
       .getFilteredByGlob("./src/notes/**/*.md")
-      .filter((entry) => {
-        if (shouldHideContent(entry)) return false;
-        if (entry.date && entry.date > now) return false;
-        return true;
-      })
+      .filter((entry) => isVisibleContent(entry, now))
       .map((note) => {
         note.data.feedType = "note";
         const summarySource = note.data.description || note.data.excerpt || "";
-        const summary = summarySource ? truncate(stripHtml(summarySource), 260) : null;
+        const summary = summarySource ? truncate(stripHtmlToText(summarySource), 260) : null;
         return {
           type: "note",
           title: note.data.title || "Note",
@@ -1291,7 +1279,7 @@ export default function (eleventyConfig) {
           title: `Now Update — ${display}`,
           date: archiveDate,
           url: entry.url,
-          summary: summarySource ? truncate(stripHtml(summarySource), 220) : null,
+          summary: summarySource ? truncate(stripHtmlToText(summarySource), 220) : null,
           original: entry,
           hidden: !!entry.data.hidden,
         };
@@ -1352,14 +1340,10 @@ export default function (eleventyConfig) {
 
     const tilEntries = collectionApi
       .getFilteredByGlob("./src/til/**/*.md")
-      .filter((entry) => {
-        if (shouldHideContent(entry)) return false;
-        if (entry.date && entry.date > now) return false;
-        return true;
-      })
+      .filter((entry) => isVisibleContent(entry, now))
       .map((entry) => {
         const summarySource = entry.data.description || entry.data.excerpt || "";
-        const summary = summarySource ? truncate(stripHtml(summarySource)) : null;
+        const summary = summarySource ? truncate(stripHtmlToText(summarySource)) : null;
         return {
           type: "til",
           title: entry.data.title,
@@ -1373,14 +1357,10 @@ export default function (eleventyConfig) {
 
     const quotationsList = collectionApi
       .getFilteredByGlob("./src/quotations/**/*.md")
-      .filter((entry) => {
-        if (shouldHideContent(entry)) return false;
-        if (entry.date && entry.date > now) return false;
-        return true;
-      })
+      .filter((entry) => isVisibleContent(entry, now))
       .map((entry) => {
         const summarySource = entry.data.description || entry.data.excerpt || "";
-        const summary = summarySource ? truncate(stripHtml(summarySource)) : null;
+        const summary = summarySource ? truncate(stripHtmlToText(summarySource)) : null;
         return {
           type: "quotation",
           title: `Quotation from ${entry.data.author}`,
@@ -1394,14 +1374,10 @@ export default function (eleventyConfig) {
 
     const folioEntries = collectionApi
       .getFilteredByGlob("./src/folio/**/index.html")
-      .filter((entry) => {
-        if (shouldHideContent(entry)) return false;
-        if (entry.date && entry.date > now) return false;
-        return true;
-      })
+      .filter((entry) => isVisibleContent(entry, now))
       .map((entry) => {
         const summarySource = entry.data.description || "";
-        const summary = summarySource ? truncate(stripHtml(summarySource)) : null;
+        const summary = summarySource ? truncate(stripHtmlToText(summarySource)) : null;
         return {
           type: "folio",
           title: entry.data.title || "Folio",
@@ -1415,14 +1391,10 @@ export default function (eleventyConfig) {
 
     const lexiconList = collectionApi
       .getFilteredByGlob("./src/lexicon/**/*.md")
-      .filter((entry) => {
-        if (shouldHideContent(entry)) return false;
-        if (entry.date && entry.date > now) return false;
-        return true;
-      })
+      .filter((entry) => isVisibleContent(entry, now))
       .map((entry) => {
         const summarySource = entry.data.description || entry.data.excerpt || "";
-        const summary = summarySource ? truncate(stripHtml(summarySource)) : null;
+        const summary = summarySource ? truncate(stripHtmlToText(summarySource)) : null;
         return {
           type: "lexicon",
           title: entry.data.title,
@@ -1485,11 +1457,7 @@ export default function (eleventyConfig) {
 
     return collectionApi
       .getFilteredByGlob("./src/posts/**/*.md")
-      .filter((post) => {
-        if (shouldHideContent(post)) return false;
-        if (post.date && post.date > now) return false;
-        return true;
-      })
+      .filter((post) => isVisibleContent(post, now))
       .map((post) => ({
         title: post.data.title,
         url: post.url,
@@ -1626,6 +1594,151 @@ export default function (eleventyConfig) {
     const normalizedSide = String(side || "right").trim().toLowerCase();
     const sideClass = normalizedSide === "left" ? "note-left" : "note-right";
     return `<span class="note ${sideClass}"><span class="note-target">${content}</span><span class="note-comment" aria-label="Note">${safeComment}</span></span>`;
+  });
+
+  // {% progression_chart { kicker: "...", title: "...", points: [...] } %}
+  eleventyConfig.addShortcode("progression_chart", function (opts = {}) {
+    const kicker = opts.kicker || "";
+    const title = opts.title || "";
+    const badge = opts.badge || "";
+    const caption = opts.caption || "";
+    const unit = opts.unit || "t/s";
+    const rawPoints = Array.isArray(opts.points) ? opts.points : [];
+
+    if (rawPoints.length === 0) return "";
+
+    const vals = rawPoints.map((p) => Number(p.val) || 0);
+    const maxVal = Math.max(...vals);
+    const maxY = Number(opts.maxY) || (Math.ceil(maxVal / 5) * 5 || 25);
+    const minY = Number(opts.minY) || 0;
+
+    const xStart = 80;
+    const xEnd = 720;
+    const yBottom = 235;
+    const yTop = 45;
+    const n = rawPoints.length;
+
+    const points = rawPoints.map((p, i) => {
+      const val = Number(p.val) || 0;
+      const x = n > 1 ? xStart + (i / (n - 1)) * (xEnd - xStart) : 400;
+      const y = yBottom - ((val - minY) / (maxY - minY)) * (yBottom - yTop);
+      return {
+        ...p,
+        val,
+        x: Number(x.toFixed(1)),
+        y: Number(y.toFixed(1)),
+        color: p.color || "#0d9488",
+      };
+    });
+
+    // Build smooth bezier path
+    let curvePath = `M ${points[0].x},${points[0].y}`;
+    for (let i = 0; i < points.length - 1; i++) {
+      const p0 = points[i];
+      const p1 = points[i + 1];
+      const dx = p1.x - p0.x;
+      const cx1 = (p0.x + dx * 0.45).toFixed(1);
+      const cy1 = p0.y.toFixed(1);
+      const cx2 = (p1.x - dx * 0.45).toFixed(1);
+      const cy2 = p1.y.toFixed(1);
+      curvePath += ` C ${cx1},${cy1} ${cx2},${cy2} ${p1.x},${p1.y}`;
+    }
+
+    const areaPath = `${curvePath} L ${points[points.length - 1].x},${yBottom} L ${points[0].x},${yBottom} Z`;
+
+    // Grid steps
+    const gridStep = Math.max(1, Math.round((maxY - minY) / 5));
+    const gridLines = [];
+    for (let g = minY; g <= maxY; g += gridStep) {
+      const gy = Number((yBottom - ((g - minY) / (maxY - minY)) * (yBottom - yTop)).toFixed(1));
+      const isBase = g === minY;
+      const dash = isBase ? "" : ' stroke-dasharray="4 4"';
+      const lbl = g === maxY ? `${g} ${unit}` : `${g}`;
+      gridLines.push(`      <line x1="60" y1="${gy}" x2="760" y2="${gy}" class="chart-grid"${dash} stroke-width="1" />`);
+      gridLines.push(`      <text x="48" y="${gy + 4}" text-anchor="end" class="chart-dim">${lbl}</text>`);
+    }
+
+    // Dots & Labels
+    const dotsHtml = [];
+    points.forEach((p) => {
+      if (p.highlight) {
+        dotsHtml.push(`      <circle cx="${p.x}" cy="${p.y}" r="9" fill="${p.color}" fill-opacity="0.25" />`);
+        dotsHtml.push(`      <circle cx="${p.x}" cy="${p.y}" r="5.5" fill="${p.color}" class="chart-dot-border" stroke-width="2" />`);
+        dotsHtml.push(`      <text x="${p.x}" y="${p.y - 15}" text-anchor="middle" class="chart-hl-num">${p.val}</text>`);
+        dotsHtml.push(`      <text x="${p.x}" y="255" text-anchor="middle" class="chart-hl-lbl">${p.lbl || ""}</text>`);
+        dotsHtml.push(`      <text x="${p.x}" y="270" text-anchor="middle" class="chart-hl-sub">${p.sub || ""}</text>`);
+      } else {
+        dotsHtml.push(`      <circle cx="${p.x}" cy="${p.y}" r="5" fill="${p.color}" class="chart-dot-border" stroke-width="2" />`);
+        dotsHtml.push(`      <text x="${p.x}" y="${p.y - 12}" text-anchor="middle" class="chart-main">${p.val}</text>`);
+        dotsHtml.push(`      <text x="${p.x}" y="255" text-anchor="middle" class="chart-lbl">${p.lbl || ""}</text>`);
+        dotsHtml.push(`      <text x="${p.x}" y="270" text-anchor="middle" class="chart-sub">${p.sub || ""}</text>`);
+      }
+    });
+
+    const lines = [
+      `<div class="not-prose my-8 overflow-hidden rounded-xl border border-stone-300/80 bg-stone-50/80 p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900/70">`,
+      `  <div class="mb-3 flex flex-wrap items-baseline justify-between gap-2 border-b border-stone-200/80 pb-3 dark:border-zinc-800">`,
+      `    <div>`,
+      kicker ? `      <p class="font-mono text-[0.68rem] font-medium tracking-wider uppercase text-teal-700 dark:text-teal-400">${kicker}</p>` : ``,
+      title ? `      <h3 class="mt-0.5 text-base font-semibold text-stone-900 dark:text-zinc-100">${title}</h3>` : ``,
+      `    </div>`,
+      badge ? `    <div class="flex items-center gap-1.5 rounded-md bg-teal-500/10 px-2.5 py-1 text-xs font-medium text-teal-800 dark:text-teal-300"><span>${badge}</span></div>` : ``,
+      `  </div>`,
+      `  <div class="w-full overflow-x-auto">`,
+      `    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 310" class="w-full min-w-[620px] h-auto font-sans" aria-label="${title || "Progression chart"}">`,
+      `      <defs>`,
+      `        <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">`,
+      `          <stop offset="0%" stop-color="#0d9488" stop-opacity="0.32" />`,
+      `          <stop offset="100%" stop-color="#0d9488" stop-opacity="0.01" />`,
+      `        </linearGradient>`,
+      `        <linearGradient id="lineGrad" x1="0" y1="0" x2="1" y2="0">`,
+      `          <stop offset="0%" stop-color="#eab308" />`,
+      `          <stop offset="25%" stop-color="#f97316" />`,
+      `          <stop offset="65%" stop-color="#0d9488" />`,
+      `          <stop offset="100%" stop-color="#059669" />`,
+      `        </linearGradient>`,
+      `        <style>`,
+      `          .chart-dim { fill: #78716c; font-size: 10px; font-family: ui-monospace, monospace; }`,
+      `          .chart-main { fill: #1c1917; font-size: 12px; font-weight: 700; font-family: ui-monospace, monospace; }`,
+      `          .chart-lbl { fill: #44403c; font-size: 11px; font-weight: 500; }`,
+      `          .chart-sub { fill: #78716c; font-size: 10px; font-family: ui-monospace, monospace; }`,
+      `          .chart-hl-num { fill: #047857; font-size: 13px; font-weight: 800; font-family: ui-monospace, monospace; }`,
+      `          .chart-hl-lbl { fill: #047857; font-size: 11px; font-weight: 700; }`,
+      `          .chart-hl-sub { fill: #059669; font-size: 10px; font-weight: 600; font-family: ui-monospace, monospace; }`,
+      `          .chart-grid { stroke: #e7e5e4; }`,
+      `          .chart-dot-border { stroke: #ffffff; }`,
+      `          .dark .chart-dim, [data-theme="dark"] .chart-dim { fill: #71717a; }`,
+      `          .dark .chart-main, [data-theme="dark"] .chart-main { fill: #f4f4f5; }`,
+      `          .dark .chart-lbl, [data-theme="dark"] .chart-lbl { fill: #d4d4d8; }`,
+      `          .dark .chart-sub, [data-theme="dark"] .chart-sub { fill: #a1a1aa; }`,
+      `          .dark .chart-hl-num, [data-theme="dark"] .chart-hl-num { fill: #34d399; }`,
+      `          .dark .chart-hl-lbl, [data-theme="dark"] .chart-hl-lbl { fill: #34d399; }`,
+      `          .dark .chart-hl-sub, [data-theme="dark"] .chart-hl-sub { fill: #6ee7b7; }`,
+      `          .dark .chart-grid, [data-theme="dark"] .chart-grid { stroke: #27272a; }`,
+      `          .dark .chart-dot-border, [data-theme="dark"] .chart-dot-border { stroke: #18181b; }`,
+      `          @media (prefers-color-scheme: dark) {`,
+      `            .chart-dim { fill: #71717a; }`,
+      `            .chart-main { fill: #f4f4f5; }`,
+      `            .chart-lbl { fill: #d4d4d8; }`,
+      `            .chart-sub { fill: #a1a1aa; }`,
+      `            .chart-hl-num { fill: #34d399; }`,
+      `            .chart-hl-lbl { fill: #34d399; }`,
+      `            .chart-hl-sub { fill: #6ee7b7; }`,
+      `            .chart-grid { stroke: #27272a; }`,
+      `            .chart-dot-border { stroke: #18181b; }`,
+      `          }`,
+      `        </style>`,
+      `      </defs>`,
+      ...gridLines,
+      `      <path d="${areaPath}" fill="url(#areaGrad)" />`,
+      `      <path d="${curvePath}" fill="none" stroke="url(#lineGrad)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />`,
+      ...dotsHtml,
+      `    </svg>`,
+      `  </div>`,
+      caption ? `  <p class="mt-3 border-t border-stone-200/60 pt-2 text-center text-[0.75rem] text-stone-500 dark:border-zinc-800 dark:text-zinc-400">${caption}</p>` : ``,
+      `</div>`,
+    ];
+    return lines.filter((line) => line.trim().length > 0).join("\n");
   });
 
   // Render a string as markdown. Used by the sidebar partial so `sidebar.content:`

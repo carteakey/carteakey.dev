@@ -2,22 +2,26 @@ categories:
   - name: Hardware
     emoji: "🖥️"
     items:
-      - name: MacBook Pro 14" (M3 Pro) - Work
+      - name: MacBook Pro 14" (M3 Pro, 18 GB) - Work
         emoji: "💻"
-        description: Primary development machine. The M3 chip handles everything from code editing to running local LLMs.
+        description: Work machine.
         link: https://www.apple.com/macbook-pro/
 
-      - name: MacBook - Personal
+      - name: MacBook Air (M2, 16 GB) - Personal
         emoji: "💻"
-        description: Personal laptop for everyday use.
+        description: Personal laptop and the one connected to the Dell ultrawide.
 
-      - name: Windows PC - Gaming + Workstation
+      - name: MacBook Air (M1, 8 GB)
+        emoji: "💻"
+        description: Remote coding, agents, MCP, and personal homelab services.
+
+      - name: Yeti - Windows + CachyOS
         emoji: "🖥️"
-        description: Desktop for gaming and heavier workstation tasks.
+        description: Dual-boot gaming PC and Linux workstation with an RTX 4070 for local models.
 
       - name: Asus FX505 - Home Server
         emoji: "🗄️"
-        description: Repurposed gaming laptop running as a home server.
+        description: Repurposed gaming laptop running CachyOS and the media/library side of CasaKey.
 
       - name: Raspberry Pi - Always-on Server
         emoji: "🍓"
@@ -30,13 +34,21 @@ categories:
 
       - name: Apple Magic Keyboard
         emoji: "⌨️"
-        description: Wireless keyboard for Mac. Clean and minimal.
+        description: Daily keyboard for the Macs.
         link: https://www.apple.com/shop/product/MK2C3LL/A/magic-keyboard-with-touch-id
+
+      - name: Apple Magic Trackpad
+        emoji: "🖱️"
+        description: The trackpad setup for macOS work.
 
       - name: Redragon Kumara
         emoji: "⌨️"
         description: Mechanical keyboard for Windows/gaming use.
         link: https://www.redragonzone.com/products/redragon-k552-kumara
+
+      - name: Redragon Gaming Mouse
+        emoji: "🖱️"
+        description: Gaming mouse for Yeti's Windows side.
 
       - name: Logitech M720 Triathlon
         emoji: "🖱️"
@@ -48,18 +60,61 @@ categories:
         description: Compact MIDI keyboard controller for music production.
         link: https://www.akaipro.com/mpk-mini-mk3
 
+  - name: Pocket Devices
+    emoji: "🎒"
+    items:
+      - name: iPhone 16
+        emoji: "📱"
+        description: Daily iPhone.
+
+      - name: Pixel 7
+        emoji: "📱"
+        description: Android phone.
+
+      - name: Kindle Colorsoft
+        emoji: "📚"
+        description: E-reader.
+
+      - name: Meta Quest 3S
+        emoji: "🥽"
+        description: VR headset.
+
+      - name: Steam Deck LCD
+        emoji: "🎮"
+        description: Handheld PC gaming.
+
+      - name: PlayStation 5
+        emoji: "🎮"
+        description: Console gaming.
+
+      - name: Ray-Ban Meta (Gen 2)
+        emoji: "🕶️"
+        description: Camera glasses.
+
+      - name: Sony DSC-H70
+        emoji: "📷"
+        description: Small retro point-and-shoot camera.
+
   - name: Audio
     emoji: "🎧"
     items:
       - name: AirPods Pro 2
         emoji: "🎧"
-        description: Primary headphones. ANC + transparency mode, great for on-the-go.
+        description: Everyday headphones.
         link: https://www.apple.com/airpods-pro/
 
       - name: Sennheiser HD 4.50 BTNC
         emoji: "🎧"
-        description: Over-ear wireless headphones with noise cancellation. Alternate pick for long sessions.
+        description: Over-ear noise-cancelling headphones.
         link: https://www.sennheiser.com/en-us/catalog/products/headphones/hd-4-50-btnc/hd-4-50-btnc-508384
+
+      - name: Logitech G Pro X
+        emoji: "🎧"
+        description: Gaming headset.
+
+      - name: BOYA Magic
+        emoji: "🎙️"
+        description: Wireless microphone.
 
       - name: Crinacle Zero 2
         emoji: "🎵"
@@ -79,25 +134,31 @@ categories:
   - name: Development Tools
     emoji: "⚡"
     items:
-      - name: VS Code
+      - name: Zed
         emoji: "📝"
-        description: My primary code editor. Fast, extensible, and great with Copilot.
-        link: https://code.visualstudio.com/
+        description: Editor for current coding work.
+        link: https://zed.dev/
 
-      - name: iTerm2
+      - name: Ghostty
         emoji: "🖥️"
-        description: Terminal emulator with great split pane support and customization.
-        link: https://iterm2.com/
+        description: Terminal.
+        link: https://ghostty.org/
 
-      - name: Oh My Zsh
-        emoji: "🐚"
-        description: Framework for managing Zsh configuration with useful plugins.
-        link: https://ohmyz.sh/
-
-      - name: GitHub Copilot
+      - name: Codex
         emoji: "🤖"
-        description: AI pair programmer that helps write code faster.
-        link: https://github.com/features/copilot
+        description: Personal coding agent.
+
+      - name: Claude
+        emoji: "🤖"
+        description: Work coding agent.
+
+      - name: Antigravity
+        emoji: "🛰️"
+        description: Another coding environment in the rotation.
+
+      - name: OpenCode Go
+        emoji: "🛟"
+        description: Fallback coding agent.
 
       - name: Docker Desktop
         emoji: "🐳"
@@ -157,72 +218,43 @@ categories:
   - name: Organize
     emoji: "📅"
     items:
-      - name: Notion
-        emoji: "📋"
-        description: Project management for Dev and Homelab projects. Replaced GitHub Projects.
-        link: https://www.notion.so/
-
       - name: Apple Notes
         emoji: "🍎"
-        description: Personal note-taking. Simple and syncs seamlessly across Apple devices.
+        description: Personal notes.
 
       - name: Obsidian
         emoji: "🗒️"
-        description: Knowledge base for technical notes and long-form writing.
+        description: Knowledge base and long-form thinking.
         link: https://obsidian.md/
-
-      - name: Google Calendar
-        emoji: "📆"
-        description: Calendar and scheduling.
-        link: https://calendar.google.com/
 
       - name: Apple Reminders
         emoji: "✅"
-        description: Task and todo management.
+        description: Personal tasks.
+
+      - name: TickTick
+        emoji: "✅"
+        description: Shared lists and tasks.
+        link: https://ticktick.com/
 
       - name: Safari
         emoji: "🧭"
-        description: Primary browser on Mac, iPhone, and iPad.
+        description: Regular browser across Apple devices.
         link: https://www.apple.com/safari/
 
-      - name: Edge
+      - name: Zen Browser
         emoji: "🌐"
-        description: Primary browser on Windows.
-        link: https://www.microsoft.com/en-us/edge
-
-      - name: Firefox
-        emoji: "🦊"
-        description: Secondary browser for dev and homelab work across Mac, Windows, and Linux.
-        link: https://www.mozilla.org/firefox/
+        description: The other regular browser.
+        link: https://zen-browser.app/
 
       - name: Raindrop.io
         emoji: "🔖"
         description: Primary bookmark manager.
         link: https://raindrop.io/
 
-      - name: Hoarder
-        emoji: "📦"
-        description: Secondary bookmark manager for archiving and image-heavy content.
-        link: https://hoarder.app/
-
       - name: Bitwarden
         emoji: "🔐"
-        description: Primary password manager. Open-source and cross-platform.
+        description: Password manager.
         link: https://bitwarden.com/
-
-      - name: Apple Passwords
-        emoji: "🔑"
-        description: Secondary password manager for Apple ecosystem.
-
-      - name: Microsoft Authenticator
-        emoji: "🔒"
-        description: 2FA authentication.
-        link: https://www.microsoft.com/en-us/security/mobile-authenticator-app
-
-      - name: Raycast
-        emoji: "🚀"
-        description: Launcher and productivity tool for macOS.
-        link: https://www.raycast.com/
 
   - name: Services
     emoji: "☁️"
@@ -253,6 +285,41 @@ categories:
         link: https://giscus.app/
 
 retired:
+  - name: iPhone 12 mini
+    emoji: "📱"
+    description: Replaced by the iPhone 16.
+    retired_date: "2026"
+
+  - name: iPad (10th generation)
+    emoji: "📱"
+    description: Decluttered.
+    retired_date: "2026"
+
+  - name: Nothing Phone (2a)
+    emoji: "📱"
+    description: Decluttered.
+    retired_date: "2026"
+
+  - name: Shokz OpenRun Pro 2
+    emoji: "🎧"
+    description: Decluttered.
+    retired_date: "2026"
+
+  - name: Neck Fan
+    emoji: "💨"
+    description: Decluttered.
+    retired_date: "2026"
+
+  - name: Miyoo
+    emoji: "🎮"
+    description: Decluttered.
+    retired_date: "2026"
+
+  - name: Older PlayStation 4 consoles
+    emoji: "🎮"
+    description: Decluttered.
+    retired_date: "2026"
+
   - name: Dell U2722D Monitor
     emoji: "🖥️"
     description: Replaced by Dell P3424WEB ultrawide.
@@ -304,6 +371,9 @@ retired:
     retired_date: "2024"
 
 changelog:
+  - date: "2026-09"
+    change: "Rebuilt around the current machines, gaming devices, audio, notes and task tools, browsers, and decluttered gear; added the CasaKey homelab map and a Fastfetch + Freeze machine grid."
+
   - date: "2026-03"
     change: "Added Audio section (AirPods Pro 2, Sennheiser HD 4.50, Crinacle Zero 2, Moondrop Chu 2, Moondrop Quarks DSP); updated peripherals (Dell P3424WEB, Apple Magic Keyboard, Redragon Kumara, Logitech M720, Akai MPK Mini)"
 
@@ -328,16 +398,44 @@ changelog:
   - date: "2023-06"
     change: "Added DuckDB to data stack"
 
-neofetch:
-  os: "macOS Sequoia 15.3"
-  host: "MacBook Pro 14\" (M3 Pro, 2024)"
-  kernel: "Darwin 24.3.0"
-  shell: "zsh 5.9 (oh-my-zsh)"
-  terminal: "iTerm2 3.5"
-  editor: "VS Code 1.96"
-  resolution: "3024x1964 (built-in) + 3840x2160"
-  cpu: "Apple M3 Pro (11-core)"
-  gpu: "Apple M3 Pro (14-core GPU)"
-  memory: "18 GB unified"
-  disk: "512 GB SSD"
-  uptime: "always on ☕"
+machines:
+  - name: "MacBook Air (M2, 2022)"
+    label: "Personal Mac"
+    description: "A frozen Fastfetch snapshot from the machine itself."
+    image: "./src/static/img/uses/fastfetch-m2.png"
+    imageAlt: "Fastfetch output for Kartikey's MacBook Air M2, showing macOS, Apple M2 hardware, 16 gigabytes of memory, and the Dell P3424WEB display."
+
+homelab:
+  name: "CasaKey"
+  description: "The homelab has grown into a small fleet of Macs, a Raspberry Pi, an old gaming laptop, a NAS, and Yeti when I need a GPU. Most machines connect over Tailscale; Yeti runs my local models."
+  network:
+    name: "Tailscale"
+    description: "Private access between the machines."
+  hosts:
+    - name: "M1 Air"
+      emoji: "💻"
+      role: "Personal cloud"
+      description: "Docker, MCP servers, agents, photos, and documents."
+
+    - name: "FX505"
+      emoji: "🗄️"
+      role: "Media and library"
+      description: "The long-running CachyOS box for the self-hosted entertainment side."
+
+    - name: "Raspberry Pi"
+      emoji: "🍓"
+      role: "Always on"
+      description: "Monitoring, notifications, and fleet control."
+
+    - name: "Glowdesk"
+      emoji: "💾"
+      role: "NAS"
+      description: "Shared storage for media and the archive."
+
+    - name: "Yeti"
+      emoji: "🧠"
+      role: "GPU workstation"
+      description: "Windows is currently for gaming while I move the rest of my work to CachyOS; its RTX 4070 runs Gemma 4 and Qwen 3.6 MTP locally."
+  links:
+    - "FX505 ↔ Glowdesk: Ethernet + NFS"
+    - "Raspberry Pi → Yeti: Wake-on-LAN"

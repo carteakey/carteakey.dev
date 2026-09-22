@@ -1,11 +1,10 @@
-import fetch from "node-fetch";
 import { fetchWithFallback } from "../_utils/fetchWithFallback.js";
 
-const api_endpoint = "https://api.github.com/users/carteakey/repos?sort=updated&direction=desc";
+const api_endpoint = "https://api.github.com/users/carteakey/repos?sort=updated&direction=desc&per_page=100";
 
 export default async function () {
   return fetchWithFallback({
-    cacheKey: "repos",
+    cacheKey: "repos-100",
     cacheDuration: "1d",
     timeoutMs: 5000,
     fallbackData: { repos: [] },
@@ -40,4 +39,3 @@ export default async function () {
     }
   });
 }
-

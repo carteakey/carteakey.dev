@@ -34,7 +34,13 @@ permalink: /bookmarks/
   </div>
 
   {% for category in categories %}
-    {% set items = bookmarks.bookmarks | selectattr('category', 'equalto', category) | sort(attribute='date') | reverse %}
+    {% set items = [] %}
+    {% for bookmark in bookmarks.bookmarks %}
+      {% if bookmark.category == category %}
+        {% set items = (items.push(bookmark), items) %}
+      {% endif %}
+    {% endfor %}
+    {% set items = items | sort(attribute='date') | reverse %}
     {% set catCount = items | length %}
     <section id="{{ category | slugify }}" class="mt-10">
       <h2 class="editorial-kicker flex items-center gap-2 mb-4">

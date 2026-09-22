@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Super Mario Bros. — Browser Edition</title>
+  <style>
+    :root { color-scheme: dark; --ink:#fff7dc; --red:#ef3340; --blue:#168bd1; }
+    * { box-sizing:border-box; }
+    body { margin:0; min-height:100vh; display:grid; place-items:center; background:#101827; color:var(--ink); font:600 14px/1.4 ui-monospace,SFMono-Regular,Menlo,monospace; }
+    main { width:min(100vw, 1040px); padding:18px; }
+    header { display:flex; justify-content:space-between; gap:12px; align-items:end; margin:0 0 10px; text-transform:uppercase; letter-spacing:.08em; }
+    h1 { margin:0; color:#ffd34e; font-size:clamp(16px,3vw,25px); text-shadow:3px 3px #8f281e; }
+    .hint { color:#b8c8d9; font-size:11px; text-align:right; }
+    .frame { position:relative; border:5px solid #f7e7b5; border-radius:6px; background:#092c4a; box-shadow:0 14px 40px #0008, inset 0 0 0 3px #823429; overflow:hidden; }
+    canvas { display:block; width:100%; height:auto; image-rendering:pixelated; image-rendering:crisp-edges; }
+    #message { position:absolute; inset:0; display:grid; place-items:center; background:#071526b8; text-align:center; padding:24px; }
+    #message[hidden] { display:none; }
+    .panel { padding:20px 26px; border:3px solid #ffd34e; background:#162840f2; box-shadow:8px 8px #0007; }
+    .panel h2 { margin:0 0 8px; color:#ffd34e; font-size:24px; }
+    .panel p { margin:7px 0; }
+    kbd { border:1px solid #b8c8d9; border-bottom-width:3px; border-radius:3px; padding:2px 6px; color:#fff; }
+    footer { display:flex; justify-content:space-between; gap:10px; margin-top:9px; color:#9bb1c3; font-size:11px; }
+  </style>
+</head>
+<body>
+<main>
+  <header><h1>Super Mario Bros. / Browser Edition</h1><div class="hint">A tiny original homage<br>no server · no assets · no libraries</div></header>
+  <div class="frame">
+    <canvas id="game" width="960" height="540" aria-label="A playable platform game"></canvas>
+    <div id="message"><div class="panel"><h2>READY?</h2><p>Press <kbd>SPACE</kbd> to start</p><p>Arrows move · Space jumps · Shift runs</p></div></div>
+  </div>
+  <footer><span>Collect coins · stomp goombas · reach the flag</span><span id="status">WORLD 1-1 · 3 LIVES</span></footer>
+</main>
+<script>
+(() => {
+  'use strict';
+  const canvas = document.querySelector('#game'), ctx = canvas.getContext('2d'), overlay = document.querySelector('#message'), status = document.querySelector('#status');
+  const W=960,H=540, gravity=.55, levelWidth=6400, keys=new Set();
+  let state='ready', camera=0, score=0, coins=0, lives=3, last=0, time=300, timer;
+  const player={x:90,y:390,w:28,h:38,vx:0,vy:0,onGround:false,face:1,big:false};
+  const solids=[], coinsList=[], enemies=[], particles=[];
+  const add=(x,y,w,h,type='brick')=>solids.push({x,y,w,h,type});
+  const coin=(x,y)=>coinsList.push({x,y,r:9,got:false,bob:Math.random()*6});
+  const goomba=(x,y)=>enemies.push({x,y,w:30,h:28,vx:-.75,vy:0,dead:0});
+  function buildLevel(){
+    solids.length=coinsList.length=enemies.length=0;
+    add(0,474,levelWidth,66,'ground');
+    [[430,390],[460,390],[490,390],[820,330],[850,330],[880,330],[1200,400],[1230,400],[1260,400],[1610,370],[1640,370],[1670,370],[2140,420],[2170,420],[2200,420],[2650,350],[2680,350],[2710,350],[3240,405],[3270,405],[3300,405],[3800,375],[3830,375],[3860,375],[4440,330],[4470,330],[4500,330],[5000,400],[5030,400],[5060,400]].forEach(a=>add(...a,'brick'));
+    [[555,280],[585,280],[615,280],[950,230],[980,230],[1010,230],[1360,300],[1390,300],[1420,300],[1810,260],[1840,260],[1870,260],[2350,310],[2380,310],[2410,310],[2850,250],[2880,250],[2910,250],[3440,305],[3470,305],[3500,305],[4020,275],[4050,275],[4080,275],[4600,220],[4630,220],[4660,220],[5230,300],[5260,300],[5290,300]].forEach(a=>add(...a,'question'));
+    [[520,350],[900,290],[1300,360],[1740,330],[2290,380],[2790,310],[3380,365],[3950,335],[4550,290],[5180,350]].forEach(([x,y])=>coin(x,y));
+    [680,1070,1510,2010,2520,3040,3650,4170,4780,5400].forEach(x=>goomba(x,446));
+    add(5770,414,24,60,'pipe'); add(6070,414,24,60,'pipe');
+    add(6250,170,8,304,'flagpole'); add(6258,450,150,24,'castle');
+  }
+  function reset(){ player.x=90; player.y=390; player.vx=player.vy=0; player.big=false; camera=0; score=0; coins=0; time=300; buildLevel(); clearInterval(timer); timer=setInterval(()=>{if(state==='playing'&&time>0)time--;},1000); }
+  function start(){ if(state==='won'||state==='lost')reset(); state='playing'; overlay.hidden=true; }
+  function rect(a,b){return a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y;}
+  function jump(){ if(state==='ready'||state!=='playing'){start(); return;} if(player.onGround){player.vy=-12.5; player.onGround=false; burst(player.x+14,player.y+38,'#fff2c0',5);} }
+  addEventListener('keydown',e=>{if(['ArrowLeft','ArrowRight','ArrowUp','ArrowDown',' ','Shift'].includes(e.key))e.preventDefault(); keys.add(e.key); if(e.key===' ')jump(); if(e.key==='Enter'&&(state==='won'||state==='lost'))start();});
+  addEventListener('keyup',e=>keys.delete(e.key));
+  function burst(x,y,color,n){for(let i=0;i<n;i++)particles.push({x,y,vx:(Math.random()-.5)*3,vy:-Math.random()*3-1,life:30,color});}
+  function update(){
+    if(state!=='playing')return;
+    const run=keys.has('Shift'), dir=(keys.has('ArrowRight')?1:0)-(keys.has('ArrowLeft')?1:0); player.vx += dir*(run?.65:.48); player.vx*=dir? .91:.78; player.vx=Math.max(- (run?6:3.6),Math.min(run?6:3.6,player.vx)); if(dir)player.face=dir; player.vy+=gravity; player.x+=player.vx; player.y+=player.vy; player.onGround=false;
+    for(const s of solids){if(!rect(player,s))continue; const px=player.x+player.w/2, py=player.y+player.h/2, sx=s.x+s.w/2, sy=s.y+s.h/2; if(Math.abs(px-sx)/(player.w/2+s.w/2)<1&&player.vy>=0&&player.y+player.h-player.vy<=s.y+5){player.y=s.y-player.h;player.vy=0;player.onGround=true;} else if(player.vy<0&&player.y>=s.y+s.h-4){player.y=s.y+s.h;player.vy=0; if(s.type==='question'){s.type='used';coin(s.x+s.w/2,s.y-24);}} else if(player.vx>0)player.x=s.x-player.w; else if(player.vx<0)player.x=s.x+s.w; player.vx=0;}
+    for(const c of coinsList){c.bob+=.08;if(!c.got&&Math.hypot(player.x+14-c.x,player.y+18-(c.y+Math.sin(c.bob)*4))<25){c.got=true;coins++;score+=100;burst(c.x,c.y,'#ffd34e',7);}}
+    for(const e of enemies){if(e.dead){e.dead--;continue;} e.vy+=gravity;e.x+=e.vx;e.y+=e.vy; for(const s of solids)if(rect(e,s)&&e.vy>=0){e.y=s.y-e.h;e.vy=0;} if(e.x<0||e.x>levelWidth)e.vx*=-1; if(rect(player,e)){if(player.vy>1&&player.y+player.h-e.y<18){e.dead=16;player.vy=-8;score+=200;burst(e.x+15,e.y,'#f7d1a0',8);}else loseLife();}}
+    for(const p of particles){p.x+=p.vx;p.y+=p.vy;p.vy+=.12;p.life--;} for(let i=particles.length-1;i>=0;i--)if(particles[i].life<=0)particles.splice(i,1);
+    if(player.y>H+50)loseLife(); if(player.x>6235){state='won'; overlay.hidden=false;overlay.querySelector('h2').textContent='COURSE CLEAR!';overlay.querySelector('p').innerHTML='Score '+score.toLocaleString()+' · '+coins+' coins<br>Press <kbd>ENTER</kbd> to play again';}
+    camera=Math.max(0,Math.min(levelWidth-W,player.x-W*.35)); status.textContent='WORLD 1-1 · '+lives+' LIVES · SCORE '+String(score).padStart(6,'0');
+  }
+  function loseLife(){lives--; if(lives<=0){state='lost';overlay.hidden=false;overlay.querySelector('h2').textContent='GAME OVER';overlay.querySelector('p').innerHTML='Final score '+score.toLocaleString()+'<br>Press <kbd>ENTER</kbd> to retry';}else{player.x=Math.max(90,player.x-260);player.y=300;player.vy=0;}}
+  function cloud(x,y,s){ctx.fillStyle='#fff9df';ctx.fillRect(x,y,60*s,18*s);ctx.fillRect(x+15*s,y-12*s,35*s,30*s);ctx.fillRect(x+40*s,y-7*s,30*s,25*s);}
+  function draw(){ctx.clearRect(0,0,W,H); ctx.fillStyle='#63c8f3';ctx.fillRect(0,0,W,H);ctx.fillStyle='#b7edff';ctx.fillRect(0,390,W,84);
+    ctx.save();ctx.translate(-camera*.25,0); cloud(140,90,1);cloud(820,130,.7);cloud(1520,75,.8);cloud(2410,120,1);cloud(3440,78,.75);cloud(4700,110,1);ctx.fillStyle='#55b96d';for(let x=0;x<levelWidth;x+=420){ctx.beginPath();ctx.moveTo(x,474);ctx.lineTo(x+130,360);ctx.lineTo(x+280,474);ctx.fill();}ctx.restore();
+    ctx.save();ctx.translate(-camera,0); for(const s of solids)drawSolid(s); for(const c of coinsList)if(!c.got)drawCoin(c); for(const e of enemies)if(!e.dead)drawEnemy(e); drawFlag(); drawPlayer(); for(const p of particles){ctx.fillStyle=p.color;ctx.fillRect(p.x,p.y,4,4);}ctx.restore();
+    ctx.fillStyle='#fff';ctx.font='bold 16px monospace';ctx.fillText('COINS '+String(coins).padStart(2,'0'),24,31);ctx.fillText('TIME '+String(time).padStart(3,'0'),W-110,31);
+  }
+  function drawSolid(s){const x=s.x,y=s.y;if(s.type==='ground'){ctx.fillStyle='#b9673e';ctx.fillRect(x,y,s.w,s.h);ctx.fillStyle='#56b957';ctx.fillRect(x,y,s.w,12);ctx.fillStyle='#8a432f';for(let i=x;i<x+s.w;i+=32)ctx.fillRect(i+2,y+20,25,8);}else if(s.type==='brick'||s.type==='used'){ctx.fillStyle=s.type==='used'?'#9d8b6a':'#c85632';ctx.fillRect(x,y,s.w,s.h);ctx.strokeStyle='#702d24';ctx.lineWidth=3;ctx.strokeRect(x+1,y+1,s.w-2,s.h-2);if(s.type==='brick'){ctx.beginPath();ctx.moveTo(x+s.w/2,y);ctx.lineTo(x+s.w/2,y+s.h);ctx.moveTo(x,y+s.h/2);ctx.lineTo(x+s.w,y+s.h/2);ctx.stroke();}}else if(s.type==='question'){ctx.fillStyle='#ffc533';ctx.fillRect(x,y,s.w,s.h);ctx.fillStyle='#8d4328';ctx.font='bold 22px monospace';ctx.fillText('?',x+8,y+22);}else if(s.type==='pipe'){ctx.fillStyle='#27a847';ctx.fillRect(x-7,y,s.w+14,12);ctx.fillRect(x,y+11,s.w,s.h-11);}else if(s.type==='flagpole'){ctx.fillStyle='#e9f1dc';ctx.fillRect(x,y,7,s.h);ctx.fillStyle='#ed3945';ctx.beginPath();ctx.moveTo(x+6,y+8);ctx.lineTo(x+48,y+23);ctx.lineTo(x+6,y+38);ctx.fill();}else{ctx.fillStyle='#d87345';ctx.fillRect(x,y,s.w,s.h);}}
+  function drawCoin(c){ctx.fillStyle='#ffce32';ctx.beginPath();ctx.ellipse(c.x,c.y+Math.sin(c.bob)*4,7,10,0,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#e49325';ctx.stroke();}
+  function drawEnemy(e){ctx.fillStyle='#98442c';ctx.fillRect(e.x+3,e.y+9,24,17);ctx.fillStyle='#f4c08b';ctx.fillRect(e.x+5,e.y+3,20,12);ctx.fillStyle='#241d29';ctx.fillRect(e.x+8,e.y+7,3,4);ctx.fillRect(e.x+19,e.y+7,3,4);ctx.fillStyle='#392034';ctx.fillRect(e.x,e.y+25,11,4);ctx.fillRect(e.x+19,e.y+25,11,4);}
+  function drawPlayer(){const x=player.x,y=player.y;ctx.fillStyle='#ef3340';ctx.fillRect(x+5,y,x+19,9);ctx.fillRect(x+1,y+6,27,8);ctx.fillStyle='#f4b789';ctx.fillRect(x+7,y+13,16,12);ctx.fillStyle='#168bd1';ctx.fillRect(x+3,y+25,23,10);ctx.fillStyle='#ef3340';ctx.fillRect(x+1,y+34,12,4);ctx.fillRect(x+17,y+34,12,4);ctx.fillStyle='#291c2b';ctx.fillRect(x+7,y+17,3,4);ctx.fillRect(x+19,y+17,3,4);}
+  function drawFlag(){ctx.fillStyle='#f6f0ce';ctx.fillRect(6250,170,8,304);ctx.fillStyle='#ed3945';ctx.fillRect(6257,180,42,30);}
+  function loop(t){const dt=Math.min(32,t-last);last=t;for(let i=0;i<Math.ceil(dt/16);i++)update();draw();requestAnimationFrame(loop);} reset(); requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>

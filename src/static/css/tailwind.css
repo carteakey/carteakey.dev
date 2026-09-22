@@ -176,6 +176,15 @@
   font-display: swap;
 }
 
+/* Editorial annotations use this face on demand; it is not preloaded. */
+@font-face {
+  font-family: "Caveat";
+  src: url("/static/fonts/caveat/Caveat-latin.woff2") format("woff2");
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 @layer utilities {
   .full-width-wrapper {
     width: 100vw;
@@ -415,8 +424,7 @@ picture img {
 
   /* Shared surfaces */
   .surface,
-  .card,
-  .feed-card-full {
+  .card {
     border-radius: 0.12rem;
     border: 1px solid rgb(210 205 195 / 0.9);
     background: rgb(251 250 246 / 0.72);
@@ -425,29 +433,25 @@ picture img {
   }
 
   .dark .surface,
-  .dark .card,
-  .dark .feed-card-full {
+  .dark .card {
     border-color: rgb(63 63 70 / 0.95);
     background: rgb(20 20 20 / 0.82);
     box-shadow: none;
   }
 
   .surface-hover,
-  .card-hover,
-  .feed-card-full {
+  .card-hover {
     transition: border-color 160ms ease, background-color 160ms ease, color 160ms ease;
   }
 
   .surface-hover:hover,
-  .card-hover:hover,
-  .feed-card-full:hover {
+  .card-hover:hover {
     border-color: color-mix(in srgb, var(--accent-color) 36%, rgb(210 205 195));
     background: color-mix(in srgb, var(--accent-color) 3%, rgb(251 250 246));
   }
 
   .dark .surface-hover:hover,
-  .dark .card-hover:hover,
-  .dark .feed-card-full:hover {
+  .dark .card-hover:hover {
     border-color: color-mix(in srgb, var(--accent-color) 40%, rgb(63 63 70));
     background: color-mix(in srgb, var(--accent-color) 6%, rgb(20 20 20));
   }
@@ -768,6 +772,59 @@ picture img {
     border-color: rgb(245 158 11 / 0.3);
     background: color-mix(in srgb, rgb(245 158 11) 16%, rgb(17 24 39));
     color: color-mix(in srgb, rgb(245 158 11) 95%, white);
+  }
+
+  .construction-notice {
+    position: fixed;
+    top: 3.25rem;
+    right: 0.75rem;
+    z-index: 30;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    border: 1px solid rgb(245 158 11 / 0.52);
+    border-radius: 0.16rem;
+    background: color-mix(in srgb, rgb(245 158 11) 14%, rgb(251 250 246) 96%);
+    padding: 0.28rem 0.48rem;
+    box-shadow: 2px 2px 0 rgb(245 158 11 / 0.14);
+    color: rgb(146 64 14);
+    font-family: var(--font-mono);
+    font-size: 0.61rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    line-height: 1.1;
+    text-transform: uppercase;
+  }
+
+  .construction-notice-icon {
+    font-size: 0.78rem;
+    line-height: 1;
+  }
+
+  .dark .construction-notice {
+    border-color: rgb(245 158 11 / 0.42);
+    background: color-mix(in srgb, rgb(245 158 11) 13%, rgb(24 24 24) 94%);
+    color: rgb(253 230 138);
+  }
+
+  @media (max-width: 40rem) {
+    .construction-notice {
+      top: 3rem;
+      right: 0.5rem;
+      padding: 0.25rem 0.34rem;
+    }
+
+    .construction-notice-label {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
   }
 
   .badge-interactive,
@@ -1858,13 +1915,6 @@ picture img {
     border-bottom-color: rgb(63 63 70 / 0.95);
   }
 
-  @media (min-width: 960px) {
-    .home-intro-grid {
-      grid-template-columns: minmax(0, 2.2fr) minmax(17rem, 1fr);
-      align-items: start;
-    }
-  }
-
   .home-intro-main {
     display: grid;
     grid-template-columns: auto 1fr;
@@ -1986,79 +2036,6 @@ picture img {
     color: rgb(212 212 216 / 1);
   }
 
-  .home-glance {
-    display: grid;
-    align-content: start;
-    gap: 0.2rem;
-    padding-top: 1rem;
-    border-top: 1px solid rgb(214 207 193 / 0.95);
-  }
-
-  .dark .home-glance {
-    border-top-color: rgb(63 63 70 / 0.95);
-  }
-
-  @media (min-width: 960px) {
-    .home-glance {
-      padding-left: 1.25rem;
-      padding-top: 0;
-      border-top: 0;
-      border-left: 1px solid rgb(214 207 193 / 0.95);
-    }
-
-    .dark .home-glance {
-      border-left-color: rgb(63 63 70 / 0.95);
-    }
-  }
-
-  .home-glance-title {
-    margin: 0 0 0.45rem;
-    font-family: var(--font-mono);
-    font-size: 0.66rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: rgb(115 115 115 / 1);
-  }
-
-  .home-glance-row {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 1rem;
-    padding: 0.45rem 0;
-    border-bottom: 1px solid rgb(229 223 211 / 0.95);
-  }
-
-  .dark .home-glance-row {
-    border-bottom-color: rgb(39 39 42 / 0.9);
-  }
-
-  .home-glance-label,
-  .home-glance-value {
-    font-family: var(--font-mono);
-  }
-
-  .home-glance-label {
-    font-size: 0.72rem;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    color: rgb(82 82 91 / 1);
-  }
-
-  .home-glance-value {
-    font-size: 0.84rem;
-    font-weight: 700;
-    color: rgb(17 24 39 / 1);
-  }
-
-  .dark .home-glance-label {
-    color: rgb(161 161 170 / 1);
-  }
-
-  .dark .home-glance-value {
-    color: rgb(244 244 245 / 1);
-  }
-
   .home-grid-two,
   .home-grid-four {
     display: grid;
@@ -2069,6 +2046,17 @@ picture img {
     width: 100%;
     max-width: none;
     margin-inline: 0;
+  }
+
+  /* Prevent the implicit mobile grid track from expanding to a card's content. */
+  @media (max-width: 47.999rem) {
+    .home-feed-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  .home-feed-grid > .feed-card {
+    min-width: 0;
   }
 
   .home-quote-panel {
@@ -2159,6 +2147,13 @@ picture img {
 
   .subscribe-sticky:hover {
     border-color: var(--accent-color);
+  }
+
+  /* Keep the fixed call-to-action above mobile browser controls. */
+  @media (max-width: 639px) {
+    .subscribe-sticky {
+      bottom: calc(5rem + env(safe-area-inset-bottom));
+    }
   }
 
   .snippet-filter-button,
@@ -3479,13 +3474,17 @@ picture img {
     border: 1px solid rgb(229 231 235);
     border-radius: 3px;
     padding: 0.1em 0.35em;
+    box-shadow: none;
+    text-shadow: none;
     white-space: nowrap;
   }
 
   .dark .site-content :not(pre)>code {
-    background: rgb(31 41 55);
-    color: rgb(209 213 219);
-    border-color: rgb(55 65 81);
+    background: rgb(39 39 42 / 0.7);
+    color: rgb(228 228 231);
+    border-color: rgb(63 63 70 / 0.7);
+    box-shadow: none;
+    text-shadow: none;
   }
 
   /* Code blocks */
@@ -3620,6 +3619,8 @@ picture img {
 
   .site-content .table-scroll > table {
     margin: 0;
+    min-width: 100%;
+    width: max-content;
   }
 
   .site-content table {
@@ -3631,6 +3632,11 @@ picture img {
     margin: 1.1em 0;
     border: 1px solid rgb(229 223 211 / 0.95);
     background: rgb(251 250 246 / 0.62);
+  }
+
+  .dark .site-content table {
+    border-color: rgb(63 63 70 / 0.95);
+    background: rgb(20 20 20 / 0.82);
   }
 
   .site-content thead th {
@@ -3649,9 +3655,22 @@ picture img {
   }
 
   .dark .site-content thead th {
-    border-color: rgb(63 63 70);
+    border-bottom-color: rgb(63 63 70);
     color: rgb(156 163 175);
-    background: rgb(24 24 27 / 0.84);
+    background: rgb(24 24 27 / 0.95);
+  }
+
+  .site-content thead th code,
+  .wide-wrap table th code {
+    font-size: inherit;
+    font-family: inherit;
+    background: none !important;
+    border: none !important;
+    padding: 0 !important;
+    color: inherit;
+    white-space: nowrap;
+    box-shadow: none !important;
+    text-shadow: none !important;
   }
 
   .site-content td {
@@ -3659,10 +3678,11 @@ picture img {
     border-bottom: 1px solid rgb(235 230 219 / 0.95);
     color: rgb(39 39 42);
     vertical-align: top;
+    max-width: 22rem;
   }
 
   .dark .site-content td {
-    border-color: rgb(55 65 81);
+    border-bottom-color: rgb(39 39 42);
     color: rgb(228 228 231);
   }
 
@@ -3675,6 +3695,44 @@ picture img {
 
   .dark .site-content tbody td:first-child {
     color: rgb(250 250 250);
+  }
+
+  /* Table cell inline code */
+  .site-content td code,
+  .wide-wrap table td code {
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.82em;
+    background: rgb(243 244 246 / 0.85);
+    color: rgb(31 41 55);
+    border: 1px solid rgb(229 231 235 / 0.85);
+    border-radius: 3px;
+    padding: 0.1em 0.35em;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    white-space: nowrap;
+  }
+
+  .dark .site-content td code,
+  .dark .wide-wrap table td code {
+    background: rgb(39 39 42 / 0.7);
+    color: rgb(228 228 231);
+    border-color: rgb(63 63 70 / 0.7);
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  /* Unbox first-column code elements so row headers render cleanly as bold monospace labels */
+  .site-content tbody td:first-child code,
+  .wide-wrap table tbody td:first-child code {
+    font-size: inherit;
+    font-family: inherit;
+    font-weight: inherit;
+    background: none !important;
+    border: none !important;
+    padding: 0 !important;
+    color: inherit;
+    box-shadow: none !important;
+    text-shadow: none !important;
   }
 
   .site-content .table-icon,
@@ -3716,7 +3774,7 @@ picture img {
   }
 
   .dark .site-content tbody tr:nth-child(even) {
-    background: rgb(17 24 39 / 0.3);
+    background: rgb(255 255 255 / 0.025);
   }
 
   @media (max-width: 767px) {
@@ -4380,6 +4438,11 @@ picture img {
     background: rgb(251 250 246 / 0.62);
   }
 
+  .dark .wide-wrap table {
+    border-color: rgb(63 63 70 / 0.95);
+    background: rgb(20 20 20 / 0.82);
+  }
+
   .wide-wrap table th,
   .wide-wrap table td {
     padding: 0.58em 0.85em;
@@ -4404,7 +4467,7 @@ picture img {
   .dark .wide-wrap table th {
     border-bottom-color: rgb(63 63 70);
     color: rgb(156 163 175);
-    background: rgb(24 24 27 / 0.84);
+    background: rgb(24 24 27 / 0.95);
   }
 
   .wide-wrap table tbody td:first-child {
@@ -4422,10 +4485,10 @@ picture img {
     border-bottom: 1px solid rgb(235 230 219 / 0.95);
     color: rgb(39 39 42);
   }
-  .dark .wide-wrap table td { border-bottom-color: rgb(31 41 55); }
+  .dark .wide-wrap table td { border-bottom-color: rgb(39 39 42); }
 
   .wide-wrap table tbody tr:nth-child(even) { background: rgb(255 255 255 / 0.45); }
-  .dark .wide-wrap table tbody tr:nth-child(even) { background: rgb(24 24 27 / 0.4); }
+  .dark .wide-wrap table tbody tr:nth-child(even) { background: rgb(255 255 255 / 0.025); }
 
   @media (max-width: 767px) {
     .wide-wrap {
@@ -4499,14 +4562,15 @@ picture img {
     display: inline-block;
     margin-left: 0.7em;
     padding-left: 1.4em;
-    font-family: 'Kalam', 'Caveat', 'Comic Sans MS', cursive;
+    font-family: "Caveat", "Comic Sans MS", cursive;
     font-size: 1.16rem;
     font-weight: 600;
     line-height: 1.05;
     color: color-mix(in srgb, var(--accent-color) 88%, black 12%);
     transform: translateY(0.04em) rotate(-2deg);
     vertical-align: baseline;
-    white-space: nowrap;
+    max-width: min(12rem, calc(100vw - 2rem));
+    white-space: normal;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 56 20' fill='none'%3E%3Cpath d='M2 14 C 8 6, 15 18, 22 10 C 28 4, 35 16, 42 9' stroke='currentColor' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E");
     background-size: 0.85em auto;
     background-repeat: no-repeat;
@@ -4520,56 +4584,39 @@ picture img {
   }
 
   @media (min-width: 1280px) {
+    /* Keep annotations in the paragraph's flow so they cannot cover later text. */
+    .tmpl-post .note {
+      display: inline-flex;
+      align-items: baseline;
+      max-width: 100%;
+      vertical-align: baseline;
+    }
+
     .tmpl-post .note-comment {
-      position: absolute;
-      top: 50%;
+      flex: 0 1 10rem;
       width: 10rem;
       margin-left: 0;
-      background-image: none;
-      white-space: normal;
-      z-index: 2;
+      max-width: 10rem;
+    }
+
+    .tmpl-post .note-left {
+      flex-direction: row-reverse;
     }
 
     .tmpl-post .note-left .note-comment {
-      right: calc(100% + 2.75rem);
       padding: 0 1.55rem 0 0;
       text-align: right;
-      transform: translateY(-52%) rotate(-2deg);
+      transform: rotate(-2deg);
+      background-position: right 55%;
     }
 
     .tmpl-post .note-right .note-comment {
-      left: calc(100% + 2.75rem);
       padding: 0 0 0 1.55rem;
       text-align: left;
-      transform: translateY(-52%) rotate(2deg);
-    }
-
-    .tmpl-post .note-left .note-comment::after,
-    .tmpl-post .note-right .note-comment::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      width: 0.9rem;
-      height: 0.55rem;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 56 20' fill='none'%3E%3Cpath d='M2 14 C 8 6, 15 18, 22 10 C 28 4, 35 16, 42 9' stroke='currentColor' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E");
-      background-size: contain;
-      background-repeat: no-repeat;
-      transform: translateY(-50%);
-      opacity: 0.95;
-    }
-
-    .tmpl-post .note-left .note-comment::after {
-      right: 0;
-      transform: translateY(-50%) scaleX(-1);
-    }
-
-    .tmpl-post .note-right .note-comment::before {
-      left: 0;
+      transform: rotate(2deg);
+      background-position: left 55%;
     }
   }
-
-  /* TODO: this assumes available gutters on xl+ post layouts. Dense pages may   */
-  /* still need a dedicated annotation lane or JS measurement to avoid overlap.  */
 }
 
 /* ── Code block copy button ── */
@@ -4600,5 +4647,91 @@ picture img {
   .copy-code-btn:hover {
     color: var(--accent-color);
     border-color: var(--accent-color);
+  }
+}
+
+/* ── Authorship filter (reader-controlled AI content toggle) ── */
+@layer components {
+  /* Hide list/feed items excluded by the active filter mode */
+  html[data-ai-filter="no-generated"] [data-authored-by="ai-generated"],
+  html[data-ai-filter="human-only"] [data-authored-by="ai-assisted"],
+  html[data-ai-filter="human-only"] [data-authored-by="ai-generated"] {
+    display: none !important;
+  }
+
+  /* Header segmented control: All / No-Gen / Human */
+  .ai-filter-seg {
+    display: inline-flex;
+    align-items: stretch;
+    border: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+    border-radius: 0.22rem;
+    overflow: hidden;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.02em;
+    line-height: 1;
+    color: var(--accent-color);
+    background: transparent;
+  }
+
+  .ai-filter-seg button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.32rem 0.5rem;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: inherit;
+    opacity: 0.55;
+    cursor: pointer;
+    transition: opacity 0.15s ease, background-color 0.15s ease;
+  }
+
+  .ai-filter-seg button + button {
+    border-left: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+  }
+
+  .ai-filter-seg button:hover {
+    opacity: 0.85;
+  }
+
+  .ai-filter-seg button:focus-visible {
+    outline: 2px solid var(--accent-color);
+    outline-offset: -2px;
+  }
+
+  html[data-ai-filter="all"] .ai-filter-seg button[data-ai-filter-option="all"],
+  html[data-ai-filter="no-generated"] .ai-filter-seg button[data-ai-filter-option="no-generated"],
+  html[data-ai-filter="human-only"] .ai-filter-seg button[data-ai-filter-option="human-only"] {
+    opacity: 1;
+    background: color-mix(in srgb, var(--accent-color) 14%, transparent);
+  }
+
+  html:not([data-ai-filter]) .ai-filter-seg button[data-ai-filter-option="all"] {
+    opacity: 1;
+    background: color-mix(in srgb, var(--accent-color) 14%, transparent);
+  }
+
+  /* Small fixed notice counting items hidden by the filter */
+  .ai-filter-notice {
+    position: fixed;
+    bottom: 0.75rem;
+    left: 0.75rem;
+    z-index: 40;
+    font-size: 0.65rem;
+    font-family: var(--font-mono);
+    letter-spacing: 0.02em;
+    padding: 0.3rem 0.6rem;
+    border-radius: 0.16rem;
+    border: 1px solid color-mix(in srgb, var(--accent-color) 30%, transparent);
+    background: rgb(24 24 27 / 0.92);
+    color: rgb(228 228 231);
+    pointer-events: none;
+  }
+
+  .dark .ai-filter-notice {
+    background: rgb(39 39 42 / 0.92);
+    color: rgb(212 212 216);
   }
 }

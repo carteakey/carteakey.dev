@@ -53,7 +53,7 @@ ogLocale: en_CA
   <section class="home-intro-grid animate-enter">
     <div class="home-intro-main">
       <div class="home-avatar-shell shrink-0">
-        {% image "./src/static/img/headshot.png" , "Kartikey Chauhan", "w-full h-full object-cover" %}
+        {% image "./src/static/img/headshot.png" , "Kartikey Chauhan", "w-full h-full object-cover", "./src/static/img/headshot-zoom.jpg" %}
       </div>
 
       <div>
@@ -81,29 +81,6 @@ ogLocale: en_CA
       </div>
     </div>
 
-    <aside class="home-glance">
-      <p class="home-glance-title">At A Glance</p>
-      <div class="home-glance-row">
-        <span class="home-glance-label">Posts</span>
-        <span class="home-glance-value">{{ collections.posts | length }}</span>
-      </div>
-      <div class="home-glance-row">
-        <span class="home-glance-label">Notes</span>
-        <span class="home-glance-value">{{ collections.notes | length }}</span>
-      </div>
-      <div class="home-glance-row">
-        <span class="home-glance-label">Projects</span>
-        <span class="home-glance-value">{{ projects.projects | length }}</span>
-      </div>
-      <div class="home-glance-row">
-        <span class="home-glance-label">Snippets</span>
-        <span class="home-glance-value">{{ collections.snippets | length }}</span>
-      </div>
-      <div class="home-glance-row">
-        <span class="home-glance-label">Quotations</span>
-        <span class="home-glance-value">{{ collections.quotations | length }}</span>
-      </div>
-    </aside>
   </section>
 
   <section class="home-grid-two animate-enter stagger-1">

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Approve Guestbook Submissions"
+  short_description: "Verify pending Netlify guestbook entries"
+  default_prompt: "Use $approve-guestbook-submissions to verify pending Netlify guestbook entries and update the site data."

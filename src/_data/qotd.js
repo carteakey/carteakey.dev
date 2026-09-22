@@ -1,6 +1,5 @@
 import OpenAI from 'openai';
 import { AssetCache } from "@11ty/eleventy-fetch";
-import axios from 'axios';
 
 async function checkOpenRouterAvailable() {
   if (!process.env['OPENROUTER_API_KEY']) {
@@ -107,8 +106,10 @@ async function generateQuote() {
 async function checkOllamaAvailable() {
   try {
     const ollamaUrl = process.env['OLLAMA_API_URL'] || 'http://localhost:11434/v1';
-    await axios.get(ollamaUrl.replace('/v1', '/api/tags'), { timeout: 2000 });
-    return true;
+    const response = await fetch(ollamaUrl.replace('/v1', '/api/tags'), {
+      signal: AbortSignal.timeout(2000),
+    });
+    return response.ok;
   } catch (e) {
     return false;
   }

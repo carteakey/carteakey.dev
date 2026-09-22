@@ -112,6 +112,13 @@ async function main() {
 
   check(Boolean(representativePost), "A generated BlogPosting page is available for metadata checks");
   check(home.includes("/static/js/easter-eggs.js"), "The shared layout loads the easter-egg script");
+  check(home.includes('data-zoom-src="/img/headshot-zoom.jpg"'), "The home profile image uses a high-resolution zoom source");
+  try {
+    await access(path.join(outputDir, "img/headshot-zoom.jpg"));
+    check(true, "The high-resolution profile zoom asset exists in the built site");
+  } catch {
+    check(false, "The high-resolution profile zoom asset exists in the built site");
+  }
   check(easterEggs.includes("konamiCode") && easterEggs.includes("showSecretMessage") && easterEggs.includes("sparkleMode"), "All three easter-egg triggers remain in the script");
   check(archive.includes("sm:flex-row") && archive.includes("hidden sm:block"), "The post list keeps its responsive row and thumbnail classes");
   check(archive.includes('id="blogList"') && archive.includes('id="blogGrid"'), "Both post list views are rendered");

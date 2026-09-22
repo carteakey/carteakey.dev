@@ -151,6 +151,7 @@ eleventyNavigation:
           content: {{ post | safeContent | striptags | replace('\n', ' ') | replace('\r', ' ') | truncate(420) | dump | safe }},
           type: 'post',
           hidden: {{ (post.data.hidden == true) | dump | safe }},
+          authored_by: {{ (post.data.authored_by or 'human') | dump | safe }},
           date: {{ post.date | dump | safe }},
           year: {{ post.date | date("Y") | dump | safe }}
         }{% if not loop.last %},{% endif %}
@@ -169,6 +170,7 @@ eleventyNavigation:
           content: {{ snippet | safeContent | striptags | replace('\n', ' ') | replace('\r', ' ') | dump | safe }},
           type: 'snippet',
           hidden: {{ (snippet.data.hidden == true) | dump | safe }},
+          authored_by: {{ (snippet.data.authored_by or 'human') | dump | safe }},
           date: {{ snippet.date | dump | safe }},
           year: {{ snippet.date | date("Y") | dump | safe }}
         }{% if not loop.last %},{% endif %}
@@ -262,7 +264,10 @@ eleventyNavigation:
         const matchesType = !type || item.type === type;
         const matchesTag = !tag || item.tags.includes(tag);
         const matchesYear = !year || item.year === year;
-        return matchesQuery && matchesType && matchesTag && matchesYear;
+        const matchesAiFilter = typeof window.aiFilterAllows === 'function'
+          ? window.aiFilterAllows(item.authored_by)
+          : true;
+        return matchesQuery && matchesType && matchesTag && matchesYear && matchesAiFilter;
       })
       .map((item) => ({
         ...item,
@@ -330,6 +335,11 @@ eleventyNavigation:
       const hiddenBadge = item.hidden
         ? '<span class="ml-2 px-2 py-1 text-xs rounded-sm bg-amber-100 dark:bg-amber-900/30 text-amber-800 dark:text-amber-200">Hidden</span>'
         : '';
+      const aiBadge = item.authored_by === 'ai-generated'
+        ? '<span class="ml-2 px-2 py-1 text-xs rounded-sm badge-status" style="--badge-accent: #7c3aed;">AI Generated</span>'
+        : item.authored_by === 'ai-assisted'
+          ? '<span class="ml-2 px-2 py-1 text-xs rounded-sm badge-status" style="--badge-accent: #2563eb;">AI Assisted</span>'
+          : '';
       const safeTitle = escapeHtml(item.title);
       const safeDescription = escapeHtml(item.description || 'No description provided.');
       const safeUrl = escapeHtml(item.url);
@@ -344,6 +354,7 @@ eleventyNavigation:
               ${typeBadge}
             </span>
             ${hiddenBadge}
+            ${aiBadge}
           </div>
           <p class="text-gray-600 dark:text-gray-300 mb-1.5">${escapeHtml(truncateText(item.description || item.content, 180))}</p>
           <p class="meta-text text-[0.65rem] text-gray-400 dark:text-gray-500 mb-2">${escapeHtml(item.year || '')}</p>
@@ -418,6 +429,11 @@ eleventyNavigation:
       element.addEventListener('change', () => {
         runSearch();
       });
+    });
+
+    // Re-run when the header authorship (AI content) filter changes
+    document.addEventListener('aifilterchange', () => {
+      runSearch();
     });
 
     // Keyboard navigation

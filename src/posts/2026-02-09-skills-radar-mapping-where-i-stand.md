@@ -11,7 +11,7 @@ tags:
 hidden: true
 ---
 
-If you work in data, you've probably noticed that the lines between Data Analyst, Data Scientist, Data Engineer, and ML Engineer are blurrier than ever. Job postings mix and match responsibilities. Your day-to-day rarely fits neatly into one box. So I built a [skills radar](/skills/) to figure out where I actually stand.
+If you work in data, you've probably noticed that the lines between Data Analyst, Data Scientist, Data Engineer, and ML Engineer are blurrier than ever. Job postings mix and match responsibilities. Your day-to-day rarely fits neatly into one box. So I built a [skills radar](/skills-radar/) to figure out where I actually stand.
 
 ## The Idea
 
@@ -39,7 +39,7 @@ If I had to describe my profile in one line: **a data analyst with strong consul
 
 The nice thing about visualizing this is that it removes the ambiguity. Instead of listing skills on a resume and hoping people understand the weighting, the radar chart tells the story instantly. You can see where I'm strong, where I'm growing, and where I'm deliberately *not* trying to be.
 
-Check out the [interactive version](/skills/) - you can toggle the role overlays to see how my profile compares.
+Check out the [interactive version](/skills-radar/) - you can toggle the role overlays to see how my profile compares.
 
 ## How to Build Your Own
 

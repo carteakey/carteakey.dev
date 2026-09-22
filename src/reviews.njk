@@ -9,6 +9,7 @@ eleventyNavigation:
   order: 3
 ---
 
+{% from "components/authorship-badge.njk" import authorshipBadge %}
 {% include "components/breadcrumbs.njk" %}
 
 {% set pageEyebrow = "Things Considered" %}
@@ -25,13 +26,14 @@ eleventyNavigation:
 
 <div class="divide-y divide-gray-100 dark:divide-gray-800/80">
   {% for entry in collections.reviews %}
-    <article class="py-4 group">
+    <article class="py-4 group" {% if entry.data.authored_by %}data-authored-by="{{ entry.data.authored_by }}"{% endif %}>
       <div class="flex flex-col sm:flex-row sm:gap-5">
         <div class="shrink-0 sm:w-32 pt-0.5">
           <time class="meta-text text-xs text-gray-400 dark:text-gray-500" datetime="{{ entry.date | htmlDateString }}">{{ entry.date | readableDate }}</time>
           <div class="mt-1.5 flex flex-wrap gap-1">
             <span class="badge badge-accent badge-compact">{{ entry.data.kind | default("Review") }}</span>
             {% if entry.data.category %}<span class="badge badge-tag badge-compact">{{ entry.data.category }}</span>{% endif %}
+            {{ authorshipBadge(entry.data.authored_by, compact=true) }}
           </div>
         </div>
         <div class="min-w-0 flex-1">

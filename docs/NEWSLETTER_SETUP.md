@@ -1,8 +1,30 @@
-# Newsletter Setup - Netlify Forms
+# Newsletter Setup
 
 ## What was done
 
-The newsletter feature has been implemented using **Netlify Forms**, which is a built-in feature that requires no additional configuration on your end. Here's what you need to know:
+Netlify Forms collects consented subscribers. A scheduled Netlify Function sends a digest on Fridays at 14:00 UTC through Resend, but only when the public Atom feed contains a post newer than the last successful issue.
+
+## Required production environment
+
+- `NETLIFY_AUTH_TOKEN` and `NETLIFY_SITE_ID`: read the `newsletter` form submissions.
+- `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN`: store the last sent post and hashed unsubscribe entries.
+- `RESEND_API_KEY`: deliver the email.
+- `NEWSLETTER_SECRET`: a long random value used to sign one-click unsubscribe links.
+- Optional `NEWSLETTER_FROM` and `NEWSLETTER_REPLY_TO`: override the defaults.
+
+The default sender is `Kartikey Chauhan <digest@newsletter.carteakey.dev>`. The `newsletter.carteakey.dev` sending domain must remain verified in Resend.
+
+## Editorial behavior
+
+- At most one issue per week.
+- No issue when nothing new was published.
+- Only public blog posts from `/feed.xml` are included.
+- Each recipient gets an individual unsubscribe link.
+- A successful issue records its newest post, preventing duplicate sends if the job reruns.
+
+## Test an issue
+
+Run `npm run newsletter:test -- you@example.com`. The command always writes the rendered issue to `.cache/newsletter-preview.html`. With `RESEND_API_KEY` and `NEWSLETTER_SECRET` configured, it also sends that exact issue to the supplied address. If the past week is quiet, test mode uses the newest public post so the layout can still be checked.
 
 Submission totals are also counted in Upstash Redis after Netlify accepts the form. Configure `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` in Netlify to enable those counters. No email address or name is sent to the tracking function; it records only the form source and aggregate date.
 

@@ -14,7 +14,7 @@ eleventyNavigation:
         {% include "components/breadcrumbs.njk" %}
 
         {% set pageTitle = "Quotes" %}
-        {% set pageDescription = "Words that stick with me-updated whenever I stumble upon lines worth rereading." %}
+        {% set pageDescription = "Words that stick with me, updated whenever I stumble upon lines worth rereading." %}
         {% include "components/page-header.njk" %}
     </div>
 
@@ -28,9 +28,6 @@ eleventyNavigation:
             <blockquote id="qotd" class="editorial-title text-sm leading-relaxed m-0">
                 {{ qotd.quote }}
             </blockquote>
-            <p class="text-right editorial-support-compact italic mt-2 m-0" id="who">
-                Powered by {{ qotd.provider }}
-            </p>
         </div>
     </section>
 

@@ -50,8 +50,6 @@ npm run start
 ## Deploy
 
 - Pushed to `main` branch → auto-deployed to Netlify.
-- To enable direct support, set `SUPPORT_URL` to the provider's HTTPS page in Netlify. `SUPPORT_PROVIDER` optionally changes the displayed provider name.
-
 ## Credits
 
 - Built and maintained by [Kartikey Chauhan](https://carteakey.dev)

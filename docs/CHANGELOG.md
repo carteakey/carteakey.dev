@@ -5,14 +5,168 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [2.6.2] - 2026-09-14
+## [2.7.4] - 2026-09-22
 ### Added
 - Folio: Imported 17 new AI memes to the Agent Tick archive (`src/_data/ai-memes.yaml`).
 - Vibes: Added 28 new visuals, memes, and illustrations to the vibes gallery (`src/static/img/vibes/`).
+- Skills: Added the downloads-media-router skill for routing scanned downloads to the right folder.
 
-## [2.6.1] - 2026-08-05
+## [2.7.3] - 2026-09-22
+### Changed
+- Homepage: Removed the redundant count sidebar so the introduction spans the page width.
+- Dependencies: Updated the RSS plugin to 3.0.0, Inquirer to 14.2.2, and js-yaml to a patched 5.4.2 release, with a refreshed pnpm lockfile and compatible photo/meme utilities.
+
+## [2.7.2] - 2026-09-19
 ### Added
+- Uses: Added the CasaKey homelab map and the first Fastfetch + Freeze machine snapshot.
+
+### Changed
+- Uses: Refreshed the hardware, audio, software, browser, notes, task, and retired-device lists from the interview.
+
+## [2.7.1] - 2026-09-09
+### Added
+- A self-contained browser platformer at `/folio/mario/`, playable offline with keyboard controls, original canvas pixel art, enemies, coins, scrolling, lives, timer, and a course-clear state.
+- Two prompt-library entries: the browser Mario clone prompt and a reference-image-to-browser-demo prompt with its local visual reference.
+
+### Changed
+- Local inference guide: Restored the TL;DR, problem-based navigation, complete evidence-aware optimization checklist, glossary, and local-versus-cloud framing while retaining the July accuracy corrections.
+
+## [2.7.0] - 2026-08-31
+### Added
+- Reader-controlled authorship filter: a header toggle with three modes - "AI: All" (everything), "AI: No-Gen" (hides AI-generated content, keeps human + AI-assisted), and "AI: Human" (hides all AI-assisted and AI-generated content). Persisted in localStorage, applied instantly via CSS with no flash, and announced by a small fixed notice counting hidden items.
+- The filter works across the homepage feed, `/feed/`, `/blog/` (list + grid), tags pages, `/snippets/` (list + grid), `/prompts/`, `/reviews/`, and `/search/` (results re-filter live on toggle).
+- Authorship badges are now exposed on surfaces that previously hid the flag: `/snippets/`, `/prompts/`, `/reviews/` lists, and search result cards.
+
+### Fixed
+- Snippets `wget-mirror-site.md` and `ssh-network-scan.md` had an invalid `authored_by: kchauhan` value that rendered as "Unclassified"; now `human`.
+- Homepage: restored the Recent Activity grid at tablet and desktop widths during local development.
+
+## [2.6.17] - 2026-09-18
+### Added
+- Posts: Added a hidden draft tracing MarioBench to CRTBench, with eight game images, four genre tracks, initial Mario findings, local quantized Qwen context, community references, and evaluation/provenance limits.
+
+## [2.6.16] - 2026-09-14
+### Fixed
+- Syntax highlighting & tables: Eliminated "black on black" inline code rendering in dark mode. Modernized `prism-twilight.css` by removing legacy TextMate inset box shadows, pitch-black `#141414` backgrounds, blurry text shadows, and awkward inline code wrapping. Updated inline code and table cell styles in `tailwind.css` to use elevated zinc surfaces with clean borders, completely unboxed table header code, and unboxed row header identifiers in table first columns.
+
+## [2.6.15] - 2026-09-14
+### Added
+- Work-in-progress pages can now opt into a compact, corner-mounted construction notice with `underConstruction: true` frontmatter; `/uses/` is marked while it is being completed.
+- The Uses page now has an image-based Fastfetch machine grid and a compact CasaKey homelab map.
+
+### Fixed
+- The mobile subscribe button now remains above iOS Safari's bottom browser controls.
+- Homepage activity cards now stay within the mobile content column instead of creating horizontal page overflow.
+
+### Changed
+- Posts: Marked the three Qwen 3.8 local inference posts (August 19, 27, and 31, 2026) as draft.
+
+### Fixed
+- Tables: Fixed dark mode table rendering by adding explicit dark surface backgrounds and borders, aligning cell dividers with the zinc palette, refining subtle alternating row striping, normalizing inline code inside table headers to prevent button-pill wrapping, and tuning code badge contrast inside table cells.
+
+## [2.6.14] - 2026-08-12
+### Added
+- Skills: Added a searchable publishing section for skill-file links, descriptions, provenance, tags, and personal notes.
 - Notes: Added a comparison of the new Muse, Luna, and DeepSeek coding prices, including current subscription deals and an accompanying panic-button illustration.
+
+### Changed
+- Skills radar: Preserved the existing data-career visualization at `/skills-radar/` so `/skills/` can become the skill library.
+
+## [2.6.13] - 2026-08-12
+### Changed
+- Status: Kept the public health summary focused on useful source availability and removed credential, runtime, cache, and raw error details.
+- Quotes: Removed the internal fallback-provider label and corrected the page description.
+- Footer: Made the copyright year follow the build year automatically.
+
+### Fixed
+- Build: Clean `_site` before production builds so removed and renamed routes cannot linger as ghost copies.
+- Page list: Exclude non-rendered, hidden, template, and future-dated entries from the public URL inventory.
+- Page list: Render stable titles for archived Now snapshots instead of exposing template expressions.
+- Projects: Fetch up to 100 public GitHub repositories instead of silently truncating the table at 30.
+- Status: Count the same explicitly tracked in-progress books shown on the Reading page.
+
+## [2.6.12] - 2026-08-12
+### Added
+- Newsletter: Added a weekly, new-post-only digest with consented Netlify recipients, Resend delivery, duplicate suppression, test previews, and signed one-click unsubscribe links.
+
+### Changed
+- Newsletter: Clarified that quiet weeks produce no email and delivery is capped at one digest per week.
+
+## [2.6.11] - 2026-08-12
+### Changed
+- Reading tracker: Renamed the learning progress interface and its controls around read and unread states.
+- Support: Removed deployment configuration instructions from the public page.
+
+### Fixed
+- Projects: Restored the GitHub profile card and sourced contribution activity directly from GitHub when refreshing the cache.
+- Bookmarks: Render each entry only in its assigned category instead of repeating every card in every category.
+
+## [2.6.10] - 2026-08-09
+### Added
+- Blog template: Added a newest-first changelog section for documenting post updates.
+
+### Changed
+- Agent IDE post: Added the August 9, 2026 changelog entry alongside the tier-list update.
+
+## [2.6.9] - 2026-08-09
+### Added
+- Agent IDE post: Added an updated tier list and pros/cons comparison for Ghostty, Zed, cmux, and the other evaluated workflows.
+
+### Changed
+- Agent IDE post: Added tier and SSH-support columns to the feature matrix and refreshed the recommendation for August 2026.
+
+## [2.6.8] - 2026-08-09
+### Changed
+- Fonts: Added the self-hosted Caveat face for handwritten editorial annotations.
+
+### Fixed
+- Editorial annotations: Keep wide-screen notes in the text flow so long comments cannot overlap surrounding prose.
+
+## [2.6.7] - 2026-08-09
+### Added
+- Guestbook: Synced five already-verified submissions and added verified-only and allowlisted approval modes to the guestbook skill.
+
+### Fixed
+- Profile image zoom: load a dedicated 1200px headshot when opening the homepage or post byline image, avoiding blurry upscaling of the 400px thumbnail.
+- Reading: Accept cached Goodreads date strings, render ratings as stars, show manual start dates, and filter Currently Reading to explicitly tracked in-progress books.
+
+## [2.6.6] - 2026-08-09
+### Added
+- Skill: Added `approve-guestbook-submissions` for verifying Netlify guestbook submissions and syncing them into the site's YAML data.
+
+## [2.6.5] - 2026-08-08
+### Changed
+- Centralized hidden/future-content filtering and archive date parsing across Eleventy collections.
+- Reused the shared HTML-to-text normalizer for feed summaries and word counts.
+
+## [2.6.4] - 2026-08-08
+### Changed
+- Simplified external fetching around the Node 26 runtime by removing the redundant `node-fetch` and `axios` dependencies.
+- Consolidated the photo importer’s shared AI-description, geocoding, slug, and coordinate helpers.
+- Removed unused direct dependencies, the inactive Google Fonts plugin, and a stale Prism passthrough target.
+- Kept feed-card styling under its dedicated component rules instead of inheriting a second surface definition.
+- Excluded archived templates from Eleventy processing so the retired `/more-card/` page no longer ships or appears in the page inventory.
+- Updated the one-off meme parser to write the current `ai-memes.yaml` schema instead of the retired filename and fields.
+
+## [2.6.3] - 2026-08-08
+### Changed
+- Dependencies: Updated Eleventy Image and Sharp to patched major versions and pinned vulnerable WebC/TOC transitive dependencies to secure releases; the pnpm audit is now clean.
+
+## [2.6.2] - 2026-08-05
+### Changed
+- Model tier list: Refreshed `src/_data/models.yaml` to the August 2026 lineup — added GPT-5.6 Sol/Terra/Luna, Claude Fable 5, Claude Opus 5, Kimi K3, Grok 4.5, GLM-5.2, MiniMax M2.7, Muse Spark 1.2, Qwen3.7-Max, and Qwen3.6-27B; reworked tier labels (S+ through D); expanded service list to 27 entries with current plan pricing.
+- Assets: Mapped provider and service brand SVGs to the refreshed `models.yaml` identifiers so folio icons resolve instead of falling back to initial-letter placeholders.
+- Folio: Updated the tier-list card copy from July to August 2026.
+
+## [2.6.1] - 2026-07-31
+### Added
+- Projects: Added data-driven Current work and Coming soon sections with status cards.
+- Projects: Added visual thumbnails and repository artwork for selected projects.
+
+### Changed
+- Dependencies: Updated Tailwind, Markdown parsing, OpenAI, and PostCSS, and patched transitive `form-data` and `undici` vulnerabilities.
+- Projects: Added the public L3MS, ChirpType, and Assethetic projects; routed cartebase to its public data dashboard; and refreshed the project layout and descriptions.
+- Tools: Updated ChirpType's description to include Windows support.
 
 ## [2.6.0] - 2026-07-27
 ### Added

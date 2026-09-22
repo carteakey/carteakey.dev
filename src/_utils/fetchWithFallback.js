@@ -1,4 +1,3 @@
-import fetch from "node-fetch";
 import { AssetCache } from "@11ty/eleventy-fetch";
 import { recordStatusEvent } from "./statusLog.js";
 
@@ -41,11 +40,17 @@ export async function fetchWithFallback({
   }
 
   try {
-    // Wrap fetchFn with a timeout promise
-    const timeoutPromise = new Promise((_, reject) =>
-      setTimeout(() => reject(new Error(`Timeout after ${timeoutMs}ms`)), timeoutMs)
-    );
-    const data = await Promise.race([fetchFn(), timeoutPromise]);
+    let timeoutId;
+    const timeoutPromise = new Promise((_, reject) => {
+      timeoutId = setTimeout(() => reject(new Error(`Timeout after ${timeoutMs}ms`)), timeoutMs);
+    });
+
+    let data;
+    try {
+      data = await Promise.race([fetchFn(), timeoutPromise]);
+    } finally {
+      clearTimeout(timeoutId);
+    }
 
     if (data !== undefined && data !== null) {
       await cache.save(data, "json");

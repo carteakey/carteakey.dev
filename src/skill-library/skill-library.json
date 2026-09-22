@@ -1,0 +1,7 @@
+{
+  "layout": "layouts/skill.njk",
+  "tags": ["agent-skills"],
+  "eleventyComputed": {
+    "permalink": "/skills/{{ page.fileSlug }}/"
+  }
+}

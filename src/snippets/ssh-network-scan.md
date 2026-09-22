@@ -2,7 +2,7 @@
 title: Local Network SSH Scan
 description: A bash script to scan the local network (via ARP table) and check for active SSH responders.
 date: 2026-05-03T00:00:00.000Z
-authored_by: kchauhan
+authored_by: human
 updated: 2026-05-03T00:00:00.000Z
 slug: ssh-network-scan
 ---

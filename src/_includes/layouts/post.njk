@@ -60,7 +60,7 @@ hasEthicalAds: false
       <section class="surface surface-padding post-side-card not-prose">
         <a href="/about" class="block group">
           <div class="relative w-20 h-20 mb-3">
-            {% image "./src/static/img/headshot.png", "{{ metadata.author.name }}", "relative w-20 h-20 rounded-[0.18rem] object-cover border border-gray-200 dark:border-gray-700 transition-all shadow-sm" %}
+            {% image "./src/static/img/headshot.png", "{{ metadata.author.name }}", "relative w-20 h-20 rounded-[0.18rem] object-cover border border-gray-200 dark:border-gray-700 transition-all shadow-sm", "./src/static/img/headshot-zoom.jpg" %}
           </div>
         </a>
         <p class="post-side-kicker">About the author</p>
@@ -225,8 +225,8 @@ hasEthicalAds: false
 
     <section class="learning-post-panel not-prose" data-learning-panel>
       <div>
-        <p class="post-panel-title">Learning progress</p>
-        <p class="editorial-support-compact mt-1"><span data-learning-state>To learn</span> · saved only in this browser</p>
+        <p class="post-panel-title">Reading tracker</p>
+        <p class="editorial-support-compact mt-1"><span data-learning-state>Unread</span> · saved only in this browser</p>
       </div>
       <button
         type="button"
@@ -237,7 +237,7 @@ hasEthicalAds: false
         aria-pressed="false"
       >
         {% feather "check", class="w-3.5 h-3.5" %}
-        <span data-learning-label>Mark as learned</span>
+        <span data-learning-label>Mark as read</span>
       </button>
     </section>
     <p id="learningLiveStatus" class="sr-only" aria-live="polite"></p>

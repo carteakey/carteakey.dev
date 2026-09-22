@@ -16,6 +16,9 @@
 
 This is the repository thinking space merged from `docs/TODO.md`, audit docs, testing notes, and the local LLM guide roadmap. Intentionally committed implementation work is tracked in Linear; older sections below are retained for history and context.
 
+- [x] Second-pass cleanup: remove unused build dependencies, consolidate photo-ingestion helpers, ignore archived templates, and standardize native Node fetch usage. (2026-08-08)
+- [x] Consolidate Eleventy visibility/date rules and feed text normalization so collection behavior has one source of truth. (2026-08-08)
+
 ### Immediate / Low-Hanging
 - [x] Add `aria-busy` to the post upvote button and prevent duplicate in-flight clicks. (2026-06-28)
 - [x] Add visible focus affordances to archive, feed, and snippets search inputs. (2026-06-28)
@@ -78,7 +81,7 @@ This is the repository thinking space merged from `docs/TODO.md`, audit docs, te
 - [x] Migrate `projects.njk` to the new shared primitive editorial type system. (2026-04-24)
 - [x] Migrate `stats.njk` to the new shared primitive editorial type system. (2026-04-24)
 - [x] Migrate remaining collection pages (e.g. `data.njk`, `cv.njk`, `workouts.njk`, `bookmarks.njk`, `quotes.njk`, `skills.njk`) off of utility stacks. (2026-04-24)
-- [x] Annotation comments should float into the side gutters on xl+ screens without hiding the existing Outline / "Join the Conversation" sidebars. Today they stay inline as a fallback. Options to explore: a JS measurer that aligns comments to highlighted lines, or a layout that reserves a dedicated annotation gutter separate from the sidebars. (updated 2026-04-22)
+- [x] Keep annotation comments flow-safe on xl+ screens without hiding the existing Outline / "Join the Conversation" sidebars; wide-screen notes now use in-flow left/right ordering while a dedicated gutter remains a future option. (updated 2026-08-09)
 
 ### User Experience
 

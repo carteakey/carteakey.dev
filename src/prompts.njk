@@ -8,6 +8,7 @@ eleventyNavigation:
 permalink: /prompts/
 ---
 
+{% from "components/authorship-badge.njk" import authorshipBadge %}
 {% include "components/breadcrumbs.njk" %}
 
 {% set promptsList = collections.prompts | reverse %}
@@ -52,12 +53,13 @@ permalink: /prompts/
       <div class="mt-3 space-y-2">
         {% for prompt in promptsList %}
           {% if prompt.data.category == category %}
-          <article class="surface surface-compact surface-hover rounded-sm group">
+          <article class="surface surface-compact surface-hover rounded-sm group" {% if prompt.data.authored_by %}data-authored-by="{{ prompt.data.authored_by }}"{% endif %}>
             <div class="flex items-start justify-between gap-4">
               <div class="flex-1 min-w-0">
                 <a href="{{ prompt.url }}" class="editorial-title-compact text-gray-900 link-accent dark:text-white">
                   {{ prompt.data.title }}
                 </a>
+                {{ authorshipBadge(prompt.data.authored_by, compact=true) }}
                 {% if prompt.data.description %}
                   <p class="mt-1 text-xs text-gray-600 dark:text-gray-400 line-clamp-2">{{ prompt.data.description }}</p>
                 {% endif %}

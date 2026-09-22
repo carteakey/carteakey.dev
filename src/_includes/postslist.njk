@@ -4,7 +4,7 @@
   {% for post in postslist | reverse %}
   {% set rawTags = post.data.tags | default([]) %}
   {% set filteredTags = rawTags | filterTagList %}
-  <li class="postlist-item{% if post.url == url %} postlist-item-active{% endif %}">
+  <li class="postlist-item{% if post.url == url %} postlist-item-active{% endif %}" {% if post.data.authored_by %}data-authored-by="{{ post.data.authored_by }}"{% endif %}>
     <article class="py-3.5 group">
       <div class="flex flex-col sm:flex-row md:gap-6 sm:gap-4">
 

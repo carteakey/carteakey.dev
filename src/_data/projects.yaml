@@ -1,4 +1,46 @@
 ---
+current:
+  - title: Aidar
+    description: "AI-writing signal tracker being calibrated against benchmark and hardened corpora."
+    image_path: "./src/static/img/projects/aidar.png"
+    status: Calibrating
+    url: /blog/aidar-tracking-ai-writing-drift/
+    github: https://github.com/carteakey/aidar
+
+  - title: L3MS
+    description: "Keyboard-first local LLM workbench moving through its Rust parity and verification pass."
+    image_path: "./src/static/img/projects/l3ms.png"
+    status: Building
+    url: https://l3ms.carteakey.dev
+    github: https://github.com/carteakey/l3ms
+
+  - title: Placedex
+    description: "Location-first checklists with mapped quests and flexible items for anything worth doing."
+    image_path: "./src/static/img/projects/placedex.png"
+    status: Building
+
+  - title: Lytte
+    description: "Private, local-first meeting transcription and summarization across web and desktop surfaces."
+    image_path: "./src/static/img/projects/lytte.png"
+    status: In development
+
+  - title: Assethetic
+    description: "Reusable Codex skills and workflows for generating, validating, and packaging visual assets."
+    image_path: "./src/static/img/projects/assethetic.png"
+    status: Building
+    github: https://github.com/carteakey/assethetic
+
+coming_soon:
+  - title: Tokemon
+    description: "A local-first token garden that turns coding-agent usage metadata into an evolving creature and dashboard."
+    image_path: "./src/static/img/projects/tokemon.png"
+    status: Coming soon
+
+  - title: Eighteen Dawns
+    description: "A finite side-scrolling pixel-action campaign set across the eighteen days of the Kurukshetra War."
+    image_path: "./src/static/img/projects/eighteen-dawns.png"
+    status: Playtesting
+
 projects:
   - title: aidar
     description: "Detects AI-era writing signals in web content. Scans sites and measures stylistic drift associated with LLM-generated text."
@@ -83,14 +125,41 @@ projects:
 
   - title: nanoghibli
     description: "Multimodal AI pipeline that transforms video clips into Studio Ghibli-style anime trailers using Gemini and Veo."
+    image_path: "./src/static/img/projects/nanoghibli.png"
     github: https://github.com/carteakey/nanoghibli
     tags:
       - python
       - gemini
       - ai
 
+  - title: L3MS
+    description: "Keyboard-first toolkit for local LLM workflows: model downloads, llama.cpp runs, benchmarks, chat, and runtime telemetry."
+    image_path: "./src/static/img/projects/l3ms.png"
+    url: https://l3ms.carteakey.dev
+    github: https://github.com/carteakey/l3ms
+    tags:
+      - rust
+      - local-ai
+
+  - title: ChirpType
+    description: "On-device voice-to-text hotkey app for macOS and Windows. Transcribes locally and pastes words into any focused app."
+    image_path: "./src/static/img/projects/chirptype.png"
+    github: https://github.com/carteakey/chirptype
+    tags:
+      - python
+      - speech-to-text
+
+  - title: assethetic
+    description: "Reusable Codex skills and workflows for generating, validating, and packaging AI-created visual assets."
+    image_path: "./src/static/img/projects/assethetic.png"
+    github: https://github.com/carteakey/assethetic
+    tags:
+      - codex
+      - image-generation
+
   - title: clawfin
     description: "Canadian-first personal finance dashboard. Self-hosted, AI-native, built for people who want to own their money data."
+    image_path: "./src/static/img/projects/clawfin.png"
     github: https://github.com/carteakey/clawfin
     tags:
       - python
@@ -99,6 +168,7 @@ projects:
 
   - title: folderal
     description: "Local-first PDF organizer that uses Ollama to classify and sort documents without touching the cloud."
+    image_path: "./src/static/img/projects/folderal.png"
     github: https://github.com/carteakey/folderal
     tags:
       - python
@@ -106,8 +176,9 @@ projects:
       - ai
 
   - title: cartebase
-    description: "Personal SQLite workspace - a single database for browsing history, bookmarks, music, games, and purchases. Your data, one place."
-    github: https://github.com/carteakey/cartebase
+    description: "Personal SQLite workspace - a single database for browsing history, bookmarks, music, games, and purchases. Powers the public data dashboard."
+    image_path: "./src/static/img/projects/cartebase.png"
+    url: /data/
     tags:
       - python
       - sqlite
@@ -115,6 +186,7 @@ projects:
 
   - title: notes.carteakey.dev
     description: "A public digital garden. Evolving notes, half-formed ideas, and working thinking - built with Quartz."
+    image_path: "./src/static/img/projects/notes.png"
     url: https://notes.carteakey.dev
     tags:
       - quartz
@@ -122,6 +194,7 @@ projects:
 
   - title: cv.carteakey.dev
     description: "A minimal, auto-generated CV rendered from YAML. Because keeping a PDF up to date is a solved problem."
+    image_path: "./src/static/img/projects/cv.png"
     url: https://cv.carteakey.dev
     github: https://github.com/carteakey/cv.carteakey.dev
     tags:
