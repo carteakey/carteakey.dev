@@ -411,7 +411,7 @@ picture img {
 
   .start-here-note {
     font-family: var(--font-mono);
-    font-size: 0.68rem;
+    font-size: 0.74rem;
     text-transform: uppercase;
     letter-spacing: 0.06em;
     color: rgb(107 114 128);
@@ -556,7 +556,7 @@ picture img {
     background: rgb(251 250 246 / 0.9);
     padding: 0.2rem 0.48rem;
     font-family: var(--font-mono);
-    font-size: 0.64rem;
+    font-size: 0.7rem;
     line-height: 1.1;
     font-weight: 600;
     letter-spacing: 0.05em;
@@ -802,7 +802,7 @@ picture img {
     box-shadow: 2px 2px 0 rgb(245 158 11 / 0.14);
     color: rgb(146 64 14);
     font-family: var(--font-mono);
-    font-size: 0.61rem;
+    font-size: 0.68rem;
     font-weight: 700;
     letter-spacing: 0.07em;
     line-height: 1.1;
@@ -887,7 +887,7 @@ picture img {
     background-color: color-mix(in srgb, var(--accent-color) 6%, rgb(251 250 246));
     padding: 0.18rem 0.48rem;
     font-family: var(--font-mono);
-    font-size: 0.66rem;
+    font-size: 0.72rem;
     line-height: 1;
     font-weight: 700;
     color: color-mix(in srgb, var(--accent-color) 85%, black);
@@ -1041,7 +1041,7 @@ picture img {
 @layer components {
   .meta-text {
     font-family: var(--font-mono);
-    font-size: 0.7rem;
+    font-size: 0.76rem;
     letter-spacing: 0.02em;
   }
 }
@@ -1111,7 +1111,7 @@ picture img {
   }
 
   .feed-list-date {
-    font-size: 0.66rem;
+    font-size: 0.72rem;
     line-height: 1.45;
     color: rgb(115 115 115);
     white-space: nowrap;
@@ -1158,7 +1158,7 @@ picture img {
   }
 
   .note-index-date {
-    font-size: 0.66rem;
+    font-size: 0.72rem;
     line-height: 1.45;
     color: rgb(115 115 115 / 1);
   }
@@ -1227,7 +1227,7 @@ picture img {
   .note-index-link,
   .note-entry-backlink {
     font-family: var(--font-mono);
-    font-size: 0.68rem;
+    font-size: 0.74rem;
     text-transform: uppercase;
     letter-spacing: 0.04em;
     text-decoration: none;
@@ -1328,7 +1328,7 @@ picture img {
     left: 50%;
     transform: translateX(-50%);
     white-space: nowrap;
-    font-size: 0.65rem;
+    font-size: 0.71rem;
     font-family: var(--font-mono);
     letter-spacing: 0.02em;
     padding: 0.2rem 0.5rem;
@@ -1541,7 +1541,7 @@ picture img {
   .page-eyebrow {
     margin: 0 0 0.32rem;
     font-family: var(--font-mono);
-    font-size: 0.64rem;
+    font-size: 0.7rem;
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -1644,7 +1644,7 @@ picture img {
   }
 
   .page-header-meta-label {
-    font-size: 0.62rem;
+    font-size: 0.69rem;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: rgb(156 163 175 / 1);
@@ -1663,7 +1663,7 @@ picture img {
   .editorial-kicker {
     margin: 0;
     font-family: var(--font-mono);
-    font-size: 0.66rem;
+    font-size: 0.72rem;
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -1739,7 +1739,7 @@ picture img {
 
   .editorial-meta-link {
     font-family: var(--font-mono);
-    font-size: 0.68rem;
+    font-size: 0.74rem;
     letter-spacing: 0.04em;
     text-transform: uppercase;
     text-decoration: none;
@@ -1786,7 +1786,7 @@ picture img {
 
   .footer-track-label {
     font-family: var(--font-mono);
-    font-size: 0.64rem;
+    font-size: 0.7rem;
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -1816,7 +1816,7 @@ picture img {
   .footer-nav-heading {
     margin: 0 0 0.45rem;
     font-family: var(--font-mono);
-    font-size: 0.64rem;
+    font-size: 0.7rem;
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -1874,7 +1874,7 @@ picture img {
     padding: 0.12rem 0.42rem;
     cursor: pointer;
     font-family: var(--font-mono);
-    font-size: 0.65rem;
+    font-size: 0.71rem;
     color: rgb(115 115 115 / 1);
     line-height: 1.4;
     letter-spacing: 0.04em;
@@ -2059,7 +2059,7 @@ picture img {
   .home-eyebrow {
     margin: 0 0 0.35rem;
     font-family: var(--font-mono);
-    font-size: 0.64rem;
+    font-size: 0.7rem;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: var(--accent-color);
@@ -2237,7 +2237,7 @@ picture img {
     border-radius: 0.16rem;
     padding: 0.55rem 0.85rem;
     font-family: var(--font-mono);
-    font-size: 0.7rem;
+    font-size: 0.76rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.04em;
@@ -2269,7 +2269,7 @@ picture img {
     box-shadow: 0 3px 12px rgb(24 24 27 / 0.09);
     color: var(--accent-color);
     font-family: var(--font-mono);
-    font-size: 0.66rem;
+    font-size: 0.72rem;
     font-weight: 700;
     letter-spacing: 0.04em;
     text-decoration: none;
@@ -2304,7 +2304,7 @@ picture img {
     gap: 0.35rem;
     padding: 0.35rem 0.5rem;
     font-family: var(--font-mono);
-    font-size: 0.68rem;
+    font-size: 0.74rem;
     text-transform: uppercase;
     letter-spacing: 0.03em;
   }
@@ -2416,7 +2416,7 @@ picture img {
     background: transparent;
     color: rgb(82 82 91 / 1);
     font-family: var(--font-mono);
-    font-size: 0.66rem;
+    font-size: 0.72rem;
     text-transform: uppercase;
     letter-spacing: 0.03em;
   }
@@ -2481,7 +2481,7 @@ picture img {
     padding: 0.4rem 0.55rem;
     color: rgb(82 82 91 / 1);
     font-family: var(--font-mono);
-    font-size: 0.66rem;
+    font-size: 0.72rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.03em;
@@ -2567,7 +2567,7 @@ picture img {
   .home-panel-kicker {
     margin: 0;
     font-family: var(--font-mono);
-    font-size: 0.68rem;
+    font-size: 0.74rem;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: rgb(82 82 91 / 1);
@@ -2579,7 +2579,7 @@ picture img {
 
   .home-panel-link {
     font-family: var(--font-mono);
-    font-size: 0.7rem;
+    font-size: 0.76rem;
     text-decoration: none;
     text-transform: uppercase;
     letter-spacing: 0.04em;
@@ -2730,7 +2730,7 @@ picture img {
 
   .home-directory-count {
     font-family: var(--font-mono);
-    font-size: 0.66rem;
+    font-size: 0.72rem;
     text-transform: uppercase;
     letter-spacing: 0.04em;
     color: rgb(115 115 115 / 1);
@@ -2835,7 +2835,7 @@ picture img {
   .home-quote-source {
     margin: 0.45rem 0 0;
     font-family: var(--font-mono);
-    font-size: 0.68rem;
+    font-size: 0.74rem;
     text-transform: uppercase;
     letter-spacing: 0.06em;
     color: rgb(115 115 115 / 1);
@@ -2969,7 +2969,7 @@ picture img {
     align-items: center;
     gap: 0.35rem;
     font-family: var(--font-mono);
-    font-size: 0.66rem;
+    font-size: 0.72rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
     color: rgb(82 82 91 / 1);
@@ -3026,7 +3026,7 @@ picture img {
   .post-side-kicker {
     margin: 0 0 0.35rem;
     font-family: var(--font-mono);
-    font-size: 0.62rem;
+    font-size: 0.69rem;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: rgb(115 115 115 / 1);
@@ -3093,7 +3093,7 @@ picture img {
   .post-panel-title {
     margin: 0;
     font-family: var(--font-mono);
-    font-size: 0.66rem;
+    font-size: 0.72rem;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: rgb(82 82 91 / 1);
@@ -3198,7 +3198,7 @@ picture img {
     text-decoration: none;
     transition: border-color 160ms ease, background-color 160ms ease, color 160ms ease;
     font-family: var(--font-mono);
-    font-size: 0.68rem;
+    font-size: 0.74rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.04em;
@@ -3285,7 +3285,7 @@ picture img {
 
   .post-nav-kicker {
     font-family: var(--font-mono);
-    font-size: 0.64rem;
+    font-size: 0.7rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.04em;
@@ -3774,7 +3774,7 @@ picture img {
 
   .site-content thead th {
     font-family: var(--font-mono);
-    font-size: 0.66rem;
+    font-size: 0.72rem;
     font-weight: 700;
     letter-spacing: 0.04em;
     text-transform: uppercase;
@@ -4052,7 +4052,7 @@ picture img {
 
   .site-content .footnotes .footnote-backref {
     font-family: var(--font-mono);
-    font-size: 0.68rem;
+    font-size: 0.74rem;
     margin-left: 0.35rem;
     text-transform: uppercase;
     letter-spacing: 0.02em;
@@ -4320,7 +4320,7 @@ picture img {
     gap: 0.55rem;
     margin: 0 0 0.35rem;
     font-family: var(--font-mono);
-    font-size: 0.66rem;
+    font-size: 0.72rem;
     line-height: 1.3;
     font-weight: 600;
     letter-spacing: 0.08em;
@@ -4586,7 +4586,7 @@ picture img {
 
   .wide-wrap table th {
     font-family: var(--font-mono);
-    font-size: 0.66rem;
+    font-size: 0.72rem;
     font-weight: 700;
     letter-spacing: 0.04em;
     text-transform: uppercase;
@@ -4885,7 +4885,7 @@ picture img {
     bottom: 0.75rem;
     left: 0.75rem;
     z-index: 40;
-    font-size: 0.65rem;
+    font-size: 0.71rem;
     font-family: var(--font-mono);
     letter-spacing: 0.02em;
     padding: 0.3rem 0.6rem;
