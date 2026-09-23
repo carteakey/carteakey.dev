@@ -154,7 +154,25 @@
           </a>
 
           <ul class="list-none m-0 p-0 flex items-center gap-2">
-            {# Main navigation items #}
+            {# Mobile: hamburger menu for the primary links hidden below sm - previously
+               About/Writing/Now had no mobile access point at all except the footer. #}
+            <li class="flex items-center relative sm:hidden" x-data="{ open: false }" @keydown.escape="open = false" @click.outside="open = false">
+              <button type="button" @click="open = !open" :aria-expanded="open.toString()"
+                class="font-medium no-underline inline-flex items-center justify-center p-1.5 border border-transparent hover:border-gray-300 dark:hover:border-gray-700 transition-colors"
+                style="color: var(--accent-color)" title="Menu" aria-label="Main menu">
+                {% feather "menu", class="w-4 h-4" %}
+              </button>
+              <div x-show="open" x-transition.opacity.duration.100ms @click="open = false"
+                class="nav-dropdown-menu" role="menu" aria-label="Main menu" style="display: none;">
+                {%- for entry in navPages %}
+                  {% if entry.title == "About" or entry.title == "Writing" or entry.title == "Now" %}
+                    <a href="{{ entry.url }}" class="nav-dropdown-item" role="menuitem">{{ entry.title }}</a>
+                  {% endif %}
+                {%- endfor %}
+              </div>
+            </li>
+
+            {# Desktop: Main navigation items #}
             {%- for entry in navPages %}
               {% if entry.title == "About" or entry.title == "Writing" or entry.title == "Now" %}
                 <li class="px-1.5 sm:px-2 py-1 transition-all hidden sm:flex items-center">
@@ -257,14 +275,14 @@
                 {% feather "filter", class="w-4 h-4" %}
               </button>
               <div id="aiFilterToggle" x-show="open" x-transition.opacity.duration.100ms @click="open = false"
-                class="ai-filter-menu" role="group" aria-label="AI content filter" style="display: none;">
-                <button type="button" data-ai-filter-option="all" class="ai-filter-menu-item" aria-label="Show all content">
+                class="nav-dropdown-menu" role="group" aria-label="AI content filter" style="display: none;">
+                <button type="button" data-ai-filter-option="all" class="nav-dropdown-item" aria-label="Show all content">
                   {% feather "eye", class="w-3.5 h-3.5" %} All content
                 </button>
-                <button type="button" data-ai-filter-option="no-generated" class="ai-filter-menu-item" aria-label="Hide AI-generated content">
+                <button type="button" data-ai-filter-option="no-generated" class="nav-dropdown-item" aria-label="Hide AI-generated content">
                   {% feather "zap", class="w-3.5 h-3.5" %} Hide AI-generated
                 </button>
-                <button type="button" data-ai-filter-option="human-only" class="ai-filter-menu-item" aria-label="Show only human-written content">
+                <button type="button" data-ai-filter-option="human-only" class="nav-dropdown-item" aria-label="Show only human-written content">
                   {% feather "edit-2", class="w-3.5 h-3.5" %} Human-written only
                 </button>
               </div>
