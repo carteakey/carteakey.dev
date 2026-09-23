@@ -132,6 +132,10 @@
 
 :root {
   --accent-color: #14b8a6;
+  /* Default (teal) recolor for .stamp-cobalt; overridden per-theme by
+     setAccentVariables() in theme.js, which runs synchronously before
+     first paint - same timing guarantee as --accent-color above. */
+  --stamp-filter: brightness(0) saturate(100%) invert(30%) sepia(100%) saturate(350%) hue-rotate(129deg) brightness(150%) contrast(100%);
 }
 
 :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
@@ -2001,20 +2005,25 @@ picture img {
   }
 
   /*
-    Alpha-safe cobalt recolor for transparent monochrome sketch illustrations
-    (the post header/OG stamps). CSS filter operates per-pixel on RGB only,
-    so transparent areas stay transparent - unlike .duotone-cobalt above.
-    brightness(0) saturate(100%) forces every opaque pixel to true black
-    first (alpha untouched) - the source art's anti-aliased edges aren't
-    pure black, and without this the recolor step below drifts from blue
-    toward purple/pink across the tonal range once saturation is cranked up.
+    Alpha-safe accent recolor for transparent monochrome sketch illustrations
+    (the post header/OG stamps, feed-card thumbnails). CSS filter operates
+    per-pixel on RGB only, so transparent areas stay transparent - unlike
+    .duotone-cobalt above, which needs mix-blend-mode and can't be used on
+    art with a transparent backdrop without also tinting the page behind it.
+
+    --stamp-filter is a full recolor recipe solved per accent theme (see
+    STAMP_FILTERS in theme.js) so this exactly matches --accent-color rather
+    than approximating it with a single shared hue-rotate: brightness(0)
+    saturate(100%) always collapses the source to true black first (the
+    source art's anti-aliased edges aren't pure black, and without this the
+    recolor step drifts hue across the tonal range once saturated), then the
+    rest of the chain was solved by simulating the actual CSS Filter Effects
+    matrices against that fixed black point to land on each theme's hex.
+    Same value in light and dark - it's a flat recolor, not a blend against
+    the page background, so it doesn't need a per-theme dark variant.
   */
   .stamp-cobalt {
-    filter: brightness(0) saturate(100%) invert(20%) sepia(90%) saturate(2500%) hue-rotate(215deg) brightness(95%) contrast(105%);
-  }
-
-  .dark .stamp-cobalt {
-    filter: brightness(0) saturate(100%) invert(60%) sepia(55%) saturate(1200%) hue-rotate(200deg) brightness(105%) contrast(100%);
+    filter: var(--stamp-filter);
   }
 
   /* Fine grain on the nav accent-color track, same texture family as the

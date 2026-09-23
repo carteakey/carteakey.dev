@@ -31,6 +31,36 @@ const ACCENT_COLORS = {
   rose: "#f43f5e"
 };
 
+// Recolors the transparent sketch illustrations (stamp-cobalt) to match the
+// chosen accent exactly. Solved by simulating the actual CSS Filter Effects
+// matrices (invert/sepia/saturate/hue-rotate/brightness) against pure black -
+// brightness(0) saturate(100%) always collapses the source to black first, so
+// this is a fixed transform per accent, not an approximation guessed by eye.
+const STAMP_FILTERS = {
+  gray: "brightness(0) saturate(100%) invert(25%) sepia(90%) saturate(50%) hue-rotate(180deg) brightness(150%) contrast(100%)",
+  slate: "brightness(0) saturate(100%) invert(25%) sepia(90%) saturate(100%) hue-rotate(177deg) brightness(150%) contrast(100%)",
+  zinc: "brightness(0) saturate(100%) invert(30%) sepia(60%) saturate(50%) hue-rotate(207deg) brightness(130%) contrast(100%)",
+  neutral: "brightness(0) saturate(100%) invert(30%) sepia(60%) saturate(50%) hue-rotate(237deg) brightness(130%) contrast(100%)",
+  stone: "brightness(0) saturate(100%) invert(30%) sepia(60%) saturate(50%) hue-rotate(330deg) brightness(130%) contrast(100%)",
+  red: "brightness(0) saturate(100%) invert(25%) sepia(75%) saturate(1200%) hue-rotate(327deg) brightness(130%) contrast(100%)",
+  orange: "brightness(0) saturate(100%) invert(30%) sepia(75%) saturate(750%) hue-rotate(348deg) brightness(150%) contrast(100%)",
+  amber: "brightness(0) saturate(100%) invert(30%) sepia(100%) saturate(1350%) hue-rotate(30deg) brightness(150%) contrast(100%)",
+  yellow: "brightness(0) saturate(100%) invert(30%) sepia(100%) saturate(1500%) hue-rotate(36deg) brightness(150%) contrast(100%)",
+  lime: "brightness(0) saturate(100%) invert(30%) sepia(100%) saturate(1500%) hue-rotate(60deg) brightness(150%) contrast(100%)",
+  green: "brightness(0) saturate(100%) invert(30%) sepia(100%) saturate(350%) hue-rotate(93deg) brightness(150%) contrast(100%)",
+  emerald: "brightness(0) saturate(100%) invert(30%) sepia(100%) saturate(350%) hue-rotate(111deg) brightness(150%) contrast(100%)",
+  teal: "brightness(0) saturate(100%) invert(30%) sepia(100%) saturate(350%) hue-rotate(129deg) brightness(150%) contrast(100%)",
+  cyan: "brightness(0) saturate(100%) invert(25%) sepia(100%) saturate(1350%) hue-rotate(162deg) brightness(150%) contrast(100%)",
+  sky: "brightness(0) saturate(100%) invert(30%) sepia(90%) saturate(550%) hue-rotate(156deg) brightness(150%) contrast(100%)",
+  blue: "brightness(0) saturate(100%) invert(30%) sepia(60%) saturate(750%) hue-rotate(180deg) brightness(140%) contrast(100%)",
+  indigo: "brightness(0) saturate(100%) invert(25%) sepia(60%) saturate(950%) hue-rotate(207deg) brightness(150%) contrast(100%)",
+  violet: "brightness(0) saturate(100%) invert(30%) sepia(90%) saturate(700%) hue-rotate(225deg) brightness(120%) contrast(100%)",
+  purple: "brightness(0) saturate(100%) invert(25%) sepia(60%) saturate(1200%) hue-rotate(240deg) brightness(150%) contrast(100%)",
+  fuchsia: "brightness(0) saturate(100%) invert(25%) sepia(75%) saturate(1350%) hue-rotate(264deg) brightness(140%) contrast(100%)",
+  pink: "brightness(0) saturate(100%) invert(25%) sepia(75%) saturate(700%) hue-rotate(282deg) brightness(150%) contrast(100%)",
+  rose: "brightness(0) saturate(100%) invert(30%) sepia(75%) saturate(1150%) hue-rotate(315deg) brightness(110%) contrast(100%)"
+};
+
 const isDarkMode = () =>
   localStorage.theme === "dark" ||
   (!("theme" in localStorage) &&
@@ -51,6 +81,10 @@ const getAccentTheme = () => {
 const setAccentVariables = (theme) => {
   const accentColor = ACCENT_COLORS[theme] || ACCENT_COLORS.teal;
   document.documentElement.style.setProperty("--accent-color", accentColor);
+  document.documentElement.style.setProperty(
+    "--stamp-filter",
+    STAMP_FILTERS[theme] || STAMP_FILTERS.teal
+  );
   const tcMeta = document.getElementById("theme-color-meta");
   if (tcMeta) tcMeta.setAttribute("content", accentColor);
 };
