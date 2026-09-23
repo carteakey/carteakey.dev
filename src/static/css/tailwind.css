@@ -135,7 +135,7 @@
   /* Default (teal) recolor for .stamp-cobalt; overridden per-theme by
      setAccentVariables() in theme.js, which runs synchronously before
      first paint - same timing guarantee as --accent-color above. */
-  --stamp-filter: brightness(0) saturate(100%) invert(30%) sepia(100%) saturate(350%) hue-rotate(129deg) brightness(150%) contrast(100%);
+  --stamp-filter: invert(40%) sepia(100%) saturate(350%) hue-rotate(126deg) contrast(100%) brightness(115%);
 }
 
 :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
@@ -2012,13 +2012,15 @@ picture img {
     art with a transparent backdrop without also tinting the page behind it.
 
     --stamp-filter is a full recolor recipe solved per accent theme (see
-    STAMP_FILTERS in theme.js) so this exactly matches --accent-color rather
-    than approximating it with a single shared hue-rotate: brightness(0)
-    saturate(100%) always collapses the source to true black first (the
-    source art's anti-aliased edges aren't pure black, and without this the
-    recolor step drifts hue across the tonal range once saturated), then the
-    rest of the chain was solved by simulating the actual CSS Filter Effects
-    matrices against that fixed black point to land on each theme's hex.
+    STAMP_FILTERS in theme.js) so this closely matches --accent-color rather
+    than approximating it with one shared hue-rotate. Deliberately does NOT
+    force the source to a single tone (e.g. via brightness(0)) first: this
+    art uses light-vs-dark *opaque* gray values, not alpha, for shading and
+    fine detail, and collapsing everything to one starting tone flattened
+    detailed icons into solid silhouettes. Solved instead against the art's
+    real bold-ink tone, with brightness capped so lighter shading pixels
+    don't blow out - see the STAMP_FILTERS comment in theme.js for the full
+    reasoning and the resulting per-theme fit quality.
     Same value in light and dark - it's a flat recolor, not a blend against
     the page background, so it doesn't need a per-theme dark variant.
   */
