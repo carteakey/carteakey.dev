@@ -3509,7 +3509,7 @@ picture img {
     font-size: 0.82rem;
     line-height: 1.55;
     overflow-x: auto;
-    border-radius: 6px;
+    border-radius: 2px;
     margin: 1em 0;
     padding: 0.9em 1.1em;
     background: #f6f8fa;
@@ -3664,7 +3664,7 @@ picture img {
     text-transform: uppercase;
     text-align: left;
     padding: 0.55em 0.8em;
-    border-bottom: 1px solid rgb(214 207 193 / 0.95);
+    border-bottom: 2px solid var(--accent-color);
     color: rgb(82 82 91);
     background: rgb(251 250 246 / 0.94);
     white-space: nowrap;
@@ -3672,7 +3672,6 @@ picture img {
   }
 
   .dark .site-content thead th {
-    border-bottom-color: rgb(63 63 70);
     color: rgb(156 163 175);
     background: rgb(24 24 27 / 0.95);
   }
