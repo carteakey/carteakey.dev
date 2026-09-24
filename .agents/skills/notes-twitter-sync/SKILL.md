@@ -16,16 +16,26 @@ This skill defines the workflow for syncing short-form notes (`src/notes/`) with
 
 ---
 
-## 1. Outbound Syndication (Notes → Twitter)
+## 1. Outbound Syndication (Notes & Blog Posts → Twitter)
 
-### Command
+### Commands
 ```bash
-# Preview formatting, character lengths, thread splitting, and attached media
+# Syndicate a note (automatically appends canonical permalink)
 npm run syndicate:note src/notes/YYYY-MM-DD-<slug>.md
 
-# Or manually associate an already-published tweet URL with a note
-npm run syndicate:note src/notes/YYYY-MM-DD-<slug>.md --set-url "https://x.com/carteakey/status/<id>"
+# Syndicate / draft a blog post announcement (defaults to promo mode: title + desc + link + hashtags)
+npm run syndicate:post src/posts/agents/YYYY-MM-DD-<slug>.md
+
+# Draft a blog post as a full thread
+npm run syndicate:post src/posts/agents/YYYY-MM-DD-<slug>.md --mode thread
+
+# Link an already-published tweet URL back to any note or blog post frontmatter
+npm run syndicate src/notes/YYYY-MM-DD-<slug>.md --set-url "https://x.com/carteakey/status/<id>"
 ```
+
+### Permalink Behavior
+- **Notes**: Automatically appends the canonical permalink `https://carteakey.dev/notes/<slug>/` to the single tweet or as the final link in the thread.
+- **Blog Posts**: Automatically resolves the category and slug to `https://carteakey.dev/blog/<category>/<slug>/` and embeds it directly in the promo or thread.
 
 ### Automation Credentials (Optional)
 If direct API posting is enabled, add to `.env`:

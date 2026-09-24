@@ -8,10 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [2.7.8] - 2026-09-24
 ### Added
 - Notes: Added a note on Claude Opus 5.5 replacing the `/wait-what` skill through higher communication density and leading directly with dollar impacts and root causes.
-- Notes: Added outbound syndication tooling (`utils/syndicate-note-to-x.mjs`) to publish or preview notes as X/Twitter threads with media and backfill `tweet_url`.
+- Notes & Blog Posts: Added unified outbound syndication tooling (`utils/syndicate-to-x.mjs`, `npm run syndicate:note`, `npm run syndicate:post`) to preview/publish notes and blog posts as X threads or announcement tweets, with automatic canonical permalink embedding and media attachment.
 - Notes: Added manual tweet ingestion tooling (`utils/ingest-tweet.mjs`) to fetch tweets, download media to `src/static/img/notes/`, and format standard linked markdown notes.
 - UI: Added `tweet_url` external link support to single note headers and stream/list/wall card footers.
-### Added
 - Collection views: Added a shared accessible view toggle and persistent layout helper for collection pages.
 - Notes: Added stream, compact list, and masonry wall views while keeping one semantic copy of every note.
 
