@@ -320,6 +320,40 @@ earlier this session: the avatar briefly had duotone + grain + pixelation
 all at once). Pick the one effect that's right for that image's content -
 halftone for photos, plain grayscale for sketches - and stop there.
 
+### Dark mode: verify, don't assume
+
+Two bugs this round, same root cause - a rule tuned by eye in one theme,
+never actually checked in the other:
+
+- **Contrast.** `--accent-color` (#2323e6) reads fine on warm paper but is
+  genuinely hard to read as body text/links against the dark theme's
+  near-black - confirmed with a side-by-side render, not assumed.
+  `.dark` overrides it to a lighter-lightness version of the same hue
+  (#6d6dff). Any new saturated color needs its own dark-mode contrast
+  check before shipping, not an assumption that one hex works everywhere.
+- **Tonal inversion on halftone/duotone images.** These images' "empty"
+  regions (no dots, low alpha) are the *source photo's light tones* -
+  they need a **fixed backdrop that doesn't change with the site theme**,
+  or the dark theme's near-black background shows through them and the
+  photo's light areas become the darkest thing on screen (a literal
+  negative). Pick a backdrop that fits the image's content - light paper
+  for the avatar, dark "night" backdrop for the skyline band - but it
+  must be the same color in both themes, not "transparent, whatever's
+  behind it."
+- Pre-baked/rasterized color (the halftone PNGs) can't read CSS custom
+  properties, so it won't follow the `.dark` accent override above. A
+  known, accepted minor mismatch for now - not worth a second rendered
+  asset per theme yet.
+
+### Pixel-accent typography
+
+Press Start 2P (a literal pixel/arcade font) is reserved for single
+**accent words** inline within otherwise-normal type - the "Kartikey."
+span in the H1, the typed rotating topic word - never a full sentence or
+headline. Tried it on the whole H1 first: too much, read as a costume
+rather than an accent. Scoped to one word at roughly half the
+surrounding text's size, it works as a stamp/label moment instead.
+
 ## Anti-Patterns
 
 Do not introduce:
