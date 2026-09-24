@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [2.7.8] - 2026-09-24
 ### Added
+- Notes: Added a note on Claude Opus 5.5 replacing the `/wait-what` skill through higher communication density and leading directly with dollar impacts and root causes.
+### Added
 - Collection views: Added a shared accessible view toggle and persistent layout helper for collection pages.
 - Notes: Added stream, compact list, and masonry wall views while keeping one semantic copy of every note.
 
