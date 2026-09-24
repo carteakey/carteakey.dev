@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.7] - 2026-09-24
+### Changed
+- Homepage: Renamed the activity section to “From the workbench” and the newsletter label to “Occasional notes.”
+
+### Fixed
+- Theme: Matched the light browser chrome color to the cobalt site accent.
+- UI verification: Matched the homepage portrait check to the new halftone image.
+
 ## [2.7.6] - 2026-09-24
 ### Changed
 - Design: Adopted the cobalt and pixel-accent identity across the homepage, posts, and footer.

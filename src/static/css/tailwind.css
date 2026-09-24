@@ -2374,9 +2374,7 @@ picture img {
     margin-inline: 0;
   }
 
-  /* "Dispatches" is now the homepage's only content section (Featured
-     Posts and Site Index were removed) - full visual weight, no longer
-     dimmed relative to a curated section that no longer exists. */
+  /* Give the homepage feed full visual weight. */
   .home-recent-panel-primary .editorial-title-compact {
     font-size: 1.05rem;
     font-weight: 700;

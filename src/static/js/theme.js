@@ -6,13 +6,8 @@ const versionedAsset = (path) => ASSET_VERSION
   ? `${path}?v=${encodeURIComponent(ASSET_VERSION)}`
   : path;
 
-// Fixed site accent - was previously a 22-color user picker (with a
-// matching per-theme STAMP_FILTERS recolor table for the sketch
-// illustrations). Removed after direct feedback that a customizable
-// palette read as indecisive rather than considered - a site should
-// commit to one color, not let visitors reskin it. Slate matches the
-// cool, restrained reference the site's look was rebuilt around.
-const ACCENT_COLOR = "#64748b";
+// Match the light-mode accent in tailwind.css for browser chrome.
+const ACCENT_COLOR = "#2323e6";
 
 const isDarkMode = () =>
   localStorage.theme === "dark" ||
