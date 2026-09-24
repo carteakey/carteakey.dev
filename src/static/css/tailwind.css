@@ -2971,6 +2971,22 @@ picture img {
     color: rgb(212 212 216 / 1);
   }
 
+  /* Scrollspy active state - set by the IntersectionObserver in post.njk.
+     Deliberately placed in this same @layer utilities block as the base
+     .tmpl-post .toc a rule above, not the components-layer block where an
+     earlier version of this rule accidentally landed: Tailwind's cascade
+     layers make layer order absolute regardless of selector specificity,
+     so a components-layer rule can never beat a utilities-layer one no
+     matter how specific it is - cost a real debugging round to track down
+     why color wasn't applying despite winning on specificity alone. */
+  .tmpl-post .toc a.toc-active {
+    color: var(--accent-color);
+    font-weight: 600;
+    padding-left: 0.5rem;
+    margin-left: -0.5rem;
+    border-left: 2px solid var(--accent-color);
+  }
+
   .breadcrumb-link,
   .breadcrumb-current {
     font-family: var(--font-mono);
@@ -4011,6 +4027,7 @@ picture img {
   .dark .toc a {
     color: rgb(156 163 175);
   }
+
 
   .dark .toc a:hover {
     color: var(--accent-color);

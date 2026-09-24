@@ -101,7 +101,7 @@ hasEthicalAds: false
           {% feather "list", class="w-5 h-5 opacity-70" %}
           Outline
         </p>
-        <div class="mt-4 max-h-[60vh] overflow-y-auto pr-1 space-y-2">
+        <div class="toc-list mt-4 max-h-[60vh] overflow-y-auto pr-1 space-y-2">
           {{ tocHtml | safe }}
         </div>
       </section>
@@ -711,6 +711,33 @@ hasEthicalAds: false
       update();
       window.addEventListener("scroll", update, { passive: true });
       window.addEventListener("resize", update);
+
+      // TOC scrollspy: highlight the current section's link in the sticky
+      // desktop outline as headings pass through the top of the reading
+      // area. Scoped to .toc-list (desktop sidebar only) - the mobile
+      // outline isn't persistently visible while scrolling, so there's
+      // nothing for it to orient against.
+      const tocLinks = document.querySelectorAll(".toc-list a[href^='#']");
+      if (tocLinks.length) {
+        const linksById = new Map();
+        tocLinks.forEach((a) => linksById.set(decodeURIComponent(a.getAttribute("href").slice(1)), a));
+        const headings = Array.from(body.querySelectorAll("h2[id], h3[id]")).filter((h) => linksById.has(h.id));
+
+        const setActive = (id) => {
+          tocLinks.forEach((a) => a.classList.remove("toc-active"));
+          const active = linksById.get(id);
+          if (active) active.classList.add("toc-active");
+        };
+
+        const observer = new IntersectionObserver(
+          (entries) => {
+            const visible = entries.filter((e) => e.isIntersecting);
+            if (visible.length) setActive(visible[0].target.id);
+          },
+          { rootMargin: "-15% 0px -70% 0px" }
+        );
+        headings.forEach((h) => observer.observe(h));
+      }
     })();
   </script>
 
