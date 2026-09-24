@@ -31,3 +31,6 @@ Opus 5.5 led with the dollar amount and the commit:
 Then it showed the one-line half-open interval comparison `[Aug 1 00:00, Sep 1 00:00)` and explained the boundary condition in three sentences.
 
 Everyone tracks SWE-bench percentages and context window sizes on release day. But when you spend eight hours a day inside an agent terminal, this is the actual load-bearing news. You don't need a meta-prompt or an external skill to slap the model into being concise anymore. It just speaks like a staff engineer on the first try.
+
+Worth stating plainly, saying the quiet part out loud: with Opus 5.5, the load-bearing issue of Claude's lingo and chronic verbosity may decisively be heading in the right direction. For years, every bug investigation came bundled with a three-act play, five paragraphs of unsolicited pedagogical sympathy, and bespoke prompt skills like `/wait-what` just to get it to stop talking. If Opus 5.5's grand architectural breakthrough is that it finally learned how to shut up, lead with the dollar amount, and close the PR, then we are truly living in the future.
+
