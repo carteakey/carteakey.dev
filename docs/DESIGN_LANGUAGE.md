@@ -4,6 +4,11 @@ This site is not a product landing page. It should read like a personal notebook
 
 The visual goal is not polish for its own sake. The goal is to make the structure feel authored.
 
+> This document describes where the visual language landed. For the
+> rounds that got cut, the reasoning behind specific decisions, and
+> technical learnings along the way, see
+> `docs/DESIGN_EXPERIMENTATION_LOG.md`.
+
 ## Core Feel
 
 - Dense, but intentional
@@ -58,6 +63,11 @@ The page background should feel like light textured paper.
 - Prefer paper/noise texture
 - Prefer subtle tonal variation
 - Avoid glossy gradients, blobs, neon glows, and glassmorphism
+- Confirmed the hard way: a generative soft-blurred-blob SVG wash tried
+  behind the homepage intro read as a generic AI-hero gradient the moment
+  it was actually visible enough to notice - removed. Grain and halftone
+  dot-screen are textures; soft gradient blobs are not, no matter how
+  muted the color.
 
 ## Typography System
 
@@ -270,19 +280,45 @@ Quotes should feel like pinned signals, not testimonial cards.
 
 ## Color and Tone
 
-- Background: warm paper
-- Borders: quiet and visible
-- Accent: selective, not everywhere
-- Text: dark enough to read as print, not washed-out SaaS gray
+**Revised** (Nous Research pivot - see `docs/DESIGN_EXPERIMENTATION_LOG.md`
+for the full history). This section previously said "accent: selective, not
+everywhere" and "do not use accent to compensate for weak layout." That was
+right for the editorial/archival era of this site and wrong for the current
+one - direct feedback was that a scattered, restrained accent read as
+indecisive. The fix wasn't more restraint, it was full commitment to one
+specific color used confidently and broadly.
 
-Accent color should guide attention, not paint the whole page.
+- Background: warm paper (unchanged)
+- Borders: quiet and visible (unchanged)
+- Text: dark enough to read as print, not washed-out SaaS gray (unchanged)
+- **Accent: one fixed saturated color, used broadly** - nav, links, borders,
+  the avatar's duotone tint, badges. Not a user-selectable palette (there
+  was one; it read as "the designer couldn't commit to a color" and was
+  removed). Not confined to small restrained touches either - the accent
+  should read as a real commitment, not a garnish.
 
-Use accent for:
-- links that need draw
-- active hover states
-- restrained separators or quote rules
+### Halftone imagery
 
-Do not use accent to compensate for weak layout.
+Real photos (the avatar, the footer's skyline band) get a genuine halftone
+dot-screen in the accent color - dot *radius* modulated by the source
+photo's actual luminance, not a CSS filter approximation (a filter can fake
+a flat duotone but not true halftone; see the experimentation log for why
+that distinction mattered in practice). Built with a small Node script
+(sample source luminance on a grid, draw one SVG circle per cell) rather
+than any runtime CSS trick.
+
+The site's own line-art sketch illustrations (post header stamps, feed
+thumbnails) are the exception - they stay **plain grayscale, no accent
+tint**. Different sketches have different natural ink density, so
+recoloring them all to the identical accent made them look inconsistent
+with each other ("messy" - direct feedback). Two different problems,
+two different fixes: halftone treats real photographs, flat recolor
+doesn't work reliably across a set of independently-drawn line art.
+
+Do not stack multiple effects on one image (a mistake made and reverted
+earlier this session: the avatar briefly had duotone + grain + pixelation
+all at once). Pick the one effect that's right for that image's content -
+halftone for photos, plain grayscale for sketches - and stop there.
 
 ## Anti-Patterns
 

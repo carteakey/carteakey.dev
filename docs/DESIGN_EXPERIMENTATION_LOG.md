@@ -6,26 +6,16 @@ is a history - it keeps failed and superseded directions on record instead of
 deleting them, because the "why we didn't do X" is often as useful as "what
 we did."
 
-## ⚠️ Open conflict: this session's direction vs. DESIGN_LANGUAGE.md
+## ✅ Resolved: DESIGN_LANGUAGE.md conflict
 
-`DESIGN_LANGUAGE.md` explicitly says:
-- "Prefer paper/noise texture... **Avoid glossy gradients, blobs, neon glows,
-  and glassmorphism**"
-- "Accent color should **guide attention, not paint the whole page**... Do
-  not use accent to compensate for weak layout"
-- "Background: **warm paper**"
-
-The direction below (Nous Research pivot: full-bleed saturated single
-color, heavy graphic halftone, immersive blue) is close to that document's
-explicit anti-pattern list. This wasn't reconciled before building - flagging
-it here so it's visible. Either:
-1. The vision has genuinely moved on and `DESIGN_LANGUAGE.md` should be
-   rewritten to match, or
-2. This is a separate experimental direction and the editorial/archival
-   philosophy still holds for the "real" site.
-
-Worth resolving explicitly rather than letting the two documents silently
-disagree.
+This was flagged before the Nous Research pivot was built out, asking
+whether the destination philosophy doc needed updating to match. Resolved:
+the vision moved on, and `DESIGN_LANGUAGE.md`'s Color and Tone / Texture
+sections were rewritten to match once the direction was actually built and
+settled (not before - a moving target isn't worth documenting). The
+editorial/archival *structure* principles (density, squareness, no
+rounded-card startup UI) turned out not to actually be in conflict - only
+the color/accent philosophy needed to change.
 
 ## Round 1: "Cobalt Dither Monumentalism"
 
