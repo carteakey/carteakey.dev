@@ -356,25 +356,7 @@
 
 
       {# Extended footer section #}
-      <div class="relative overflow-hidden border-t border-gray-200 dark:border-gray-700 pt-4 pb-6 not-prose">
-
-        {# Footer illustration: sits BEHIND the nav grid/copyright line as a
-           faint backdrop (not a standalone block) - same cobalt-sketch
-           language as the post stamps: analytics -> local AI/server ->
-           homelab rack -> internet archives, matching the homepage eyebrow
-           line. Low opacity so the nav text on top stays legible. Plain
-           <img>, not the {% image %} shortcode, because that shortcode's
-           jpeg fallback format would flatten the transparent background to
-           solid white for non-avif/webp browsers - same reasoning as the
-           post header stamp above. #}
-        <img
-          src="{{ '/img/footer-sketch.png' | url }}"
-          alt=""
-          aria-hidden="true"
-          loading="lazy"
-          decoding="async"
-          class="stamp-cobalt absolute -z-10 inset-x-0 bottom-0 w-full h-auto max-h-48 md:max-h-56 object-cover object-bottom opacity-[0.12] pointer-events-none select-none"
-        >
+      <div class="border-t border-gray-200 dark:border-gray-700 pt-4 pb-6 not-prose">
 
         {# Categorized footer navigation - 4-col on md+; flat link list on mobile #}
 
