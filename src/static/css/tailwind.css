@@ -2156,14 +2156,22 @@ picture img {
      scale the serif lead read "too flashy"/oversized next to the pixel
      word once both got big; turning down just the lead fixed it without
      needing to touch the accent word at all. */
+  /* Full consistency pass: the lead text now shares the accent word's
+     font family too, not just its own separate serif. Press Start 2P
+     reads much bulkier per-character than Fraunces at the same size, so
+     this needed a real size cut when switching, not just a family swap -
+     kept at roughly the same scale as .home-title-accent since they're
+     now the same typeface and should read as one consistent voice. */
   .home-title-lead {
-    font-size: 2.5rem;
+    font-family: "Press Start 2P", var(--font-monument);
+    font-size: 1.5rem;
+    letter-spacing: 0;
     margin-right: 0.4rem;
   }
 
   @media (min-width: 768px) {
     .home-title-lead {
-      font-size: 3.9rem;
+      font-size: 2.3rem;
       margin-right: 0.65rem;
     }
   }
@@ -2186,10 +2194,11 @@ picture img {
   .home-typing-line {
     margin: 0.95rem 0 0;
     max-width: 44rem;
-    font-family: var(--font-sans);
-    font-size: 1rem;
-    line-height: 1.35;
-    font-weight: 700;
+    font-family: "Press Start 2P", var(--font-monument);
+    font-size: 0.68rem;
+    line-height: 1.7;
+    letter-spacing: 0;
+    font-weight: normal;
     color: rgb(39 39 42 / 1);
   }
 
@@ -2197,9 +2206,8 @@ picture img {
     display: inline-block;
     color: var(--accent-color);
     font-family: "Press Start 2P", var(--font-monument);
-    font-size: 0.68em;
+    font-size: 1em;
     letter-spacing: 0;
-    vertical-align: -0.08em;
   }
 
   .dark .home-typing-line {
