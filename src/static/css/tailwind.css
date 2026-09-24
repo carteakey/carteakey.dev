@@ -2697,19 +2697,37 @@ picture img {
   .dark .post-header {
   }
 
+  .reading-progress {
+    position: fixed;
+    top: 0;
+    inset-inline: 0;
+    height: 2px;
+    z-index: 50;
+    background: transparent;
+    pointer-events: none;
+  }
+
+  .reading-progress-bar {
+    height: 100%;
+    width: 0%;
+    background: var(--accent-color);
+    transition: width 80ms linear;
+  }
+
   .post-title {
     margin: 0;
-    font-family: var(--font-sans);
+    font-family: var(--font-monument);
+    font-optical-sizing: auto;
     font-size: 2.05rem;
-    line-height: 1.02;
-    letter-spacing: 0;
+    line-height: 1.04;
+    letter-spacing: -0.005em;
     font-weight: 800;
     color: rgb(17 24 39 / 1);
   }
 
   @media (min-width: 768px) {
     .post-title {
-      font-size: 2.55rem;
+      font-size: 2.75rem;
     }
   }
 
