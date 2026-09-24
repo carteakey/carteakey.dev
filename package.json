@@ -19,7 +19,9 @@
     "metrics:merge-check": "node ./utils/check-engagement-merge.mjs",
     "newsletter:test": "node ./utils/send-newsletter-test.mjs",
     "audit:lighthouse": "pnpm dlx @lhci/cli@0.15.1 autorun --config=./lighthouserc.cjs",
-    "verify:ui": "node ./utils/verify-ui.mjs"
+    "verify:ui": "node ./utils/verify-ui.mjs",
+    "syndicate:note": "node ./utils/syndicate-note-to-x.mjs",
+    "ingest:tweet": "node ./utils/ingest-tweet.mjs"
   },
   "repository": {
     "type": "git",

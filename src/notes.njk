@@ -56,8 +56,14 @@ eleventyNavigation:
           <div class="note-index-body note-card-body site-content">
             {{ note | safeContent | safe }}
           </div>
-          <div class="note-card-link">
+          <div class="note-card-link flex items-center justify-between">
             <a href="{{ note.url }}" class="note-index-link">Permalink →</a>
+            {% set tUrl = note.data.tweet_url or note.data.tweetUrl %}
+            {% if tUrl %}
+              <a href="{{ tUrl }}" target="_blank" rel="noopener noreferrer" class="meta-text text-xs hover:text-[var(--accent-color)] transition-colors inline-flex items-center gap-1">
+                <span>On X ↗</span>
+              </a>
+            {% endif %}
           </div>
         </div>
       </div>
