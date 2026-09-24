@@ -1,424 +1,578 @@
-- id: "040"
-  image: "/img/folio/ai-memes/what-the-heck-did-it-do-v0-seibk7er41gg1.webp"
-  caption: "What the heck did it even do."
+- id: '057'
+  image: /img/folio/ai-memes/huggingface-acquired-by-nvidia.png
+  caption: 'Hugging Face acquired by NVIDIA: an active supporter of llama.cpp.'
   tags:
-    - "agents"
-    - "hallucinated"
+    - hallucinated
+    - shipped-to-prod
   vibes: 0
-  submitter: "anonymous intern"
-  time: "just now"
-- id: "039"
-  image: "/img/folio/ai-memes/this-my-life-now-v0-8c0ekgsitmdg1.webp"
-  caption: "This is just my life now."
+  submitter: anonymous intern
+  time: just now
+- id: '056'
+  image: /img/folio/ai-memes/opencode-rate-limit-chaos.jpeg
+  caption: OpenAI rate limit exceeded while recursively fetching free tools.
   tags:
-    - "relatable"
-    - "existential"
+    - agents
+    - my-agent-did-this
   vibes: 0
-  submitter: "anonymous intern"
-  time: "just now"
-- id: "038"
-  image: "/img/folio/ai-memes/some-of-you-mfs-v0-tltn7gxi8eug1.webp"
-  caption: "Some of you mfs."
+  submitter: anonymous intern
+  time: just now
+- id: '055'
+  image: /img/folio/ai-memes/we-sandboxed-the-agent.webp
+  caption: We sandboxed the agent; meanwhile the agent broke containment.
   tags:
-    - "xkcd-style"
-    - "relatable"
+    - agents
+    - my-agent-did-this
   vibes: 0
-  submitter: "anonymous intern"
-  time: "just now"
-- id: "037"
-  image: "/img/folio/ai-memes/no-bad-claude-v0-qb9dzuqznevg1.webp"
-  caption: "No bad Claude."
+  submitter: anonymous intern
+  time: just now
+- id: '054'
+  image: /img/folio/ai-memes/ten-hour-ai-bear-market.webp
+  caption: 'We have hit a wall: no noticeable model improvements in the last 6-9 hours.'
   tags:
-    - "vibe-coding"
-    - "agents"
+    - relatable
+    - existential
   vibes: 0
-  submitter: "anonymous intern"
-  time: "just now"
-- id: "036"
-  image: "/img/folio/ai-memes/n025oj8n13og1.webp"
-  caption: "Yet another day in the feed."
+  submitter: anonymous intern
+  time: just now
+- id: '053'
+  image: /img/folio/ai-memes/benchmarks-labs-dont-want-you-to-see.webp
+  caption: 'GoonBench v1: not quantized behind your back.'
   tags:
-    - "relatable"
+    - hallucinated
+    - relatable
   vibes: 0
-  submitter: "anonymous intern"
-  time: "just now"
-- id: "035"
-  image: "/img/folio/ai-memes/i-study-whether-ais-can-be-conscious-today-one-emailed-me-v0-j4dj3euss2ng1.jpeg.webp"
-  caption: "I study whether AIs can be conscious today one emailed me."
+  submitter: anonymous intern
+  time: just now
+- id: '052'
+  image: /img/folio/ai-memes/mario-model-tools-context.jpeg
+  caption: Model, tools, and the ultimate fire mario context.
   tags:
-    - "existential"
-    - "agents"
+    - agents
+    - prompt-engineering
   vibes: 0
-  submitter: "anonymous intern"
-  time: "just now"
-- id: "034"
-  image: "/img/folio/ai-memes/how-to-properly-deal-with-a-file-v0-vlrvbxabpevg1.webp"
-  caption: "How to properly deal with a file."
+  submitter: anonymous intern
+  time: just now
+- id: '051'
+  image: /img/folio/ai-memes/baby-names-gpt-realtime.jpeg
+  caption: 'Boy names: Terra, gpt-4o-mini-realtime-preview, gremlin.'
   tags:
-    - "vibe-coding"
-    - "prompt-engineering"
+    - relatable
+    - prompt-engineering
   vibes: 0
-  submitter: "anonymous intern"
-  time: "just now"
-- id: "033"
-  image: "/img/folio/ai-memes/Screenshot 2026-04-11 at 7.09.39 PM.png"
-  caption: "A screenshot from the archives."
+  submitter: anonymous intern
+  time: just now
+- id: '050'
+  image: /img/folio/ai-memes/slop-cop-citation.jpeg
+  caption: Cited for 1,485 additions across 19 files. Megadiff privileges suspended.
   tags:
-    - "agents"
+    - my-agent-did-this
+    - vibe-coding
   vibes: 0
-  submitter: "anonymous intern"
-  time: "just now"
-- id: "032"
-  image: "/img/folio/ai-memes/Screenshot 2026-04-04 at 7.08.26 PM.png"
-  caption: "More agentic chaos."
+  submitter: anonymous intern
+  time: just now
+- id: '049'
+  image: /img/folio/ai-memes/levels-of-subagent-prompts.webp
+  caption: You are a dumb pipe. Do not infer intent. Do not touch unnamed files.
   tags:
-    - "chaos"
+    - agents
+    - prompt-engineering
   vibes: 0
-  submitter: "anonymous intern"
-  time: "just now"
-- id: "031"
-  image: "/img/folio/ai-memes/Screenshot 2026-04-04 at 7.07.45 PM.png"
-  caption: "When the context window gets too small."
+  submitter: anonymous intern
+  time: just now
+- id: '048'
+  image: /img/folio/ai-memes/deepswe-hr-rules.jpeg
+  caption: '70%+ on DeepSWE: Know your work rules.'
   tags:
-    - "relatable"
+    - relatable
+    - agents
   vibes: 0
-  submitter: "anonymous intern"
-  time: "just now"
-- id: "030"
-  image: "/img/folio/ai-memes/Screenshot 2026-04-04 at 7.00.28 PM.png"
-  caption: "Ship it anyway."
+  submitter: anonymous intern
+  time: just now
+- id: '047'
+  image: /img/folio/ai-memes/what-are-you-a-neocloud.jpeg
+  caption: What are you? An idiot sandwich / A neocloud.
   tags:
-    - "shipped-to-prod"
+    - relatable
+    - agents
   vibes: 0
-  submitter: "anonymous intern"
-  time: "just now"
-- id: "029"
-  image: "/img/folio/ai-memes/Screenshot 2026-04-04 at 5.37.44 PM.png"
-  caption: "Debugging in 2026."
+  submitter: anonymous intern
+  time: just now
+- id: '046'
+  image: /img/folio/ai-memes/kirkland-signature-llm.webp
+  caption: 'Kirkland Signature 405B: one billion tokens per tub.'
   tags:
-    - "burnout"
+    - relatable
+    - existential
   vibes: 0
-  submitter: "anonymous intern"
-  time: "just now"
-- id: "028"
-  image: "/img/folio/ai-memes/Screenshot 2026-04-04 at 5.17.52 PM.png"
-  caption: "The agent did this."
+  submitter: anonymous intern
+  time: just now
+- id: '045'
+  image: /img/folio/ai-memes/model-choice-sweat-buttons.png
+  caption: Choosing between Muse, Luna, and DeepSeek V4 Flash.
   tags:
-    - "my-agent-did-this"
+    - vibe-coding
+    - agents
   vibes: 0
-  submitter: "anonymous intern"
-  time: "just now"
-- id: "027"
-  image: "/img/folio/ai-memes/Screenshot 2025-05-03 at 9.07.35 PM.png"
-  caption: "Classic moment."
+  submitter: anonymous intern
+  time: just now
+- id: '044'
+  image: /img/folio/ai-memes/claude-rate-limit-cycle.webp
+  caption: Spend two prompts, touch grass against your will, repeat.
   tags:
-    - "relatable"
+    - relatable
+    - burnout
   vibes: 0
-  submitter: "anonymous intern"
-  time: "just now"
-- id: "026"
-  image: "/img/folio/ai-memes/HF51mDfasAITudQ.jpeg"
-  caption: "Just out here vibing."
+  submitter: anonymous intern
+  time: just now
+- id: '043'
+  image: /img/folio/ai-memes/luna-darios-mom-terra.webp
+  caption: 'Coming Thursday: Luna, Dario''s mom, Terra.'
   tags:
-    - "vibe-coding"
+    - existential
+    - relatable
   vibes: 0
-  submitter: "anonymous intern"
-  time: "just now"
-- id: "025"
-  image: "/img/folio/ai-memes/IMG_0642.jpeg"
-  caption: "POV: you shipped it to prod without testing."
+  submitter: anonymous intern
+  time: just now
+- id: '042'
+  image: /img/folio/ai-memes/virgin-fable-vs-chad-sol.webp
+  caption: The Virgin Fable Rollout vs The Chad Sol Launch.
   tags:
-    - "burnout"
-    - "shipped-to-prod"
+    - relatable
+    - shipped-to-prod
   vibes: 0
-  submitter: "anonymous intern"
-  time: "just now"
-  source_name: "the feed"
-  source_url: "#"
-- id: "024"
-  image: "/img/folio/ai-memes/i-vibecoded-a-skill-that-makes-llms-stop-making-mistakes-v0-ff3lr6ziyltg1.png.webp"
-  caption: "I vibecoded a skill that makes LLMs stop making mistakes."
+  submitter: anonymous intern
+  time: just now
+- id: '041'
+  image: /img/folio/ai-memes/accelerate-evolution.webp
+  caption: Prompt engineer to vibe coder to unemployed in three years flat.
   tags:
-    - "vibe-coding"
-    - "prompt-engineering"
+    - vibe-coding
+    - agents
+    - burnout
   vibes: 0
-  submitter: "anonymous intern"
-  time: "just now"
-  source_name: "the feed"
-  source_url: "#"
-- id: "023"
-  image: "/img/folio/ai-memes/HC1DwN2bQAAxH0e.jpeg"
-  caption: "When the context window hits just right."
+  submitter: anonymous intern
+  time: just now
+- id: '040'
+  image: /img/folio/ai-memes/what-the-heck-did-it-do-v0-seibk7er41gg1.webp
+  caption: What the heck did it even do.
   tags:
-    - "hallucinated"
-    - "relatable"
+    - agents
+    - hallucinated
   vibes: 0
-  submitter: "anonymous intern"
-  time: "just now"
-  source_name: "the feed"
-  source_url: "#"
-- id: "022"
-  image: "/img/folio/ai-memes/HB8VAw5XQAA4ia4.jpg"
-  caption: "Just another day in the agentic mines."
+  submitter: anonymous intern
+  time: just now
+- id: '039'
+  image: /img/folio/ai-memes/this-my-life-now-v0-8c0ekgsitmdg1.webp
+  caption: This is just my life now.
   tags:
-    - "agents"
-    - "existential"
+    - relatable
+    - existential
   vibes: 0
-  submitter: "anonymous intern"
-  time: "just now"
-  source_name: "the feed"
-  source_url: "#"
-- id: "021"
-  image: "/img/folio/ai-memes/openai-valued-at-852-billion-after-completing-122-billion-v0-j3b1adon0gsg1.jpeg.webp"
-  caption: "OpenAI valued at 852 billion after completing 122 billion funding round"
+  submitter: anonymous intern
+  time: just now
+- id: '038'
+  image: /img/folio/ai-memes/some-of-you-mfs-v0-tltn7gxi8eug1.webp
+  caption: Some of you mfs.
   tags:
-    - "openai"
-    - "valuation"
-    - "agents"
-    - "finance"
+    - xkcd-style
+    - relatable
   vibes: 0
-  submitter: ""
-  time: ""
-- id: "020"
-  image: "/img/folio/ai-memes/my-experience-spending-2k-and-experimenting-on-a-strix-halo-v0-mm0kqqj35aqg1.jpeg.webp"
-  caption: "My experience spending $2k and experimenting on a Strix Halo"
+  submitter: anonymous intern
+  time: just now
+- id: '037'
+  image: /img/folio/ai-memes/no-bad-claude-v0-qb9dzuqznevg1.webp
+  caption: No bad Claude.
   tags:
-    - "hardware"
-    - "strix-halo"
-    - "experiment"
-    - "cost"
+    - vibe-coding
+    - agents
   vibes: 0
-  submitter: ""
-  time: ""
-- id: "019"
-  image: "/img/folio/ai-memes/i-came-from-data-engineering-stuff-before-jumping-into-llm-v0-gccmg22z2qqg1.png.webp"
-  caption: "I came from data engineering stuff before jumping into LLMs"
+  submitter: anonymous intern
+  time: just now
+- id: '036'
+  image: /img/folio/ai-memes/n025oj8n13og1.webp
+  caption: Yet another day in the feed.
   tags:
-    - "data-engineering"
-    - "llm"
-    - "career"
-    - "relatable"
+    - relatable
   vibes: 0
-  submitter: ""
-  time: ""
-- id: "018"
-  image: "/img/folio/ai-memes/vibe-code-so-hard-your-entire-waitlist-is-visible-in-v0-w6xeqz5dt4qg1.png.webp"
-  caption: "Vibe code so hard your entire waitlist is visible"
+  submitter: anonymous intern
+  time: just now
+- id: '035'
+  image: /img/folio/ai-memes/i-study-whether-ais-can-be-conscious-today-one-emailed-me-v0-j4dj3euss2ng1.jpeg.webp
+  caption: I study whether AIs can be conscious today one emailed me.
   tags:
-    - "vibe-coding"
-    - "security"
-    - "fail"
-    - "relatable"
+    - existential
+    - agents
   vibes: 0
-  submitter: ""
-  time: ""
-- id: "017"
-  image: "/img/folio/ai-memes/i-lwk-miss-old-corporate-slop-art-now-its-js-ai-v0-a3xc7ndb5gqg1.png.webp"
-  caption: "I lowkey miss old corporate slop art, now it's just AI"
+  submitter: anonymous intern
+  time: just now
+- id: '034'
+  image: /img/folio/ai-memes/how-to-properly-deal-with-a-file-v0-vlrvbxabpevg1.webp
+  caption: How to properly deal with a file.
   tags:
-    - "ai-art"
-    - "corporate-slop"
-    - "design"
-    - "nostalgia"
+    - vibe-coding
+    - prompt-engineering
   vibes: 0
-  submitter: ""
-  time: ""
-- id: "016"
-  image: "/img/folio/ai-memes/spit-my-coffee-v0-xntewqgzlprg1.webp"
-  caption: "When the hallucination is just too funny"
+  submitter: anonymous intern
+  time: just now
+- id: '033'
+  image: /img/folio/ai-memes/Screenshot 2026-04-11 at 7.09.39 PM.png
+  caption: A screenshot from the archives.
   tags:
-    - "funny"
-    - "hallucination"
-    - "coffee"
-    - "reaction"
+    - agents
   vibes: 0
-  submitter: ""
-  time: ""
-- id: "015"
-  image: "/img/folio/ai-memes/ci2wws6bctqg1.png.webp"
-  caption: "Just another day trying to keep up with the papers"
+  submitter: anonymous intern
+  time: just now
+- id: '032'
+  image: /img/folio/ai-memes/Screenshot 2026-04-04 at 7.08.26 PM.png
+  caption: More agentic chaos.
   tags:
-    - "ai-models"
-    - "papers"
-    - "exhaustion"
-    - "relatable"
+    - chaos
   vibes: 0
-  submitter: ""
-  time: ""
-- id: "014"
-  image: "/img/folio/ai-memes/HEwWtygakAAmpAr.jpeg"
-  caption: "Anthropic is now officially more open than OpenAI"
+  submitter: anonymous intern
+  time: just now
+- id: '031'
+  image: /img/folio/ai-memes/Screenshot 2026-04-04 at 7.07.45 PM.png
+  caption: When the context window gets too small.
   tags:
-    - "anthropic"
-    - "openai"
-    - "open-source"
-    - "irony"
+    - relatable
   vibes: 0
-  submitter: ""
-  time: ""
-- id: "013"
-  image: "/img/folio/ai-memes/HE9RDAta0AAWSAP.jpeg"
-  caption: "The endless sea of 'What can I help you ship?' interfaces"
+  submitter: anonymous intern
+  time: just now
+- id: '030'
+  image: /img/folio/ai-memes/Screenshot 2026-04-04 at 7.00.28 PM.png
+  caption: Ship it anyway.
   tags:
-    - "v0"
-    - "ui"
-    - "sameness"
-    - "vibe-coding"
+    - shipped-to-prod
   vibes: 0
-  submitter: ""
-  time: ""
-- id: "012"
-  image: "/img/folio/ai-memes/HE0PiHQbAAAJiSX.jpeg"
-  caption: "Caveman querying the original local LLM"
+  submitter: anonymous intern
+  time: just now
+- id: '029'
+  image: /img/folio/ai-memes/Screenshot 2026-04-04 at 5.37.44 PM.png
+  caption: Debugging in 2026.
   tags:
-    - "caveman"
-    - "funny"
-    - "local-models"
-    - "history"
+    - burnout
   vibes: 0
-  submitter: ""
-  time: ""
-- id: "011"
-  image: "/img/folio/ai-memes/legendary-xkcd-updated-for-2026-v0-lfrtbgxnarmg1.png.webp"
-  caption: "Classic XKCD updated for 2026: the autonomous agent edition"
+  submitter: anonymous intern
+  time: just now
+- id: '028'
+  image: /img/folio/ai-memes/Screenshot 2026-04-04 at 5.17.52 PM.png
+  caption: The agent did this.
   tags:
-    - "xkcd-style"
-    - "agents"
-    - "2026"
-    - "legendary"
+    - my-agent-did-this
+  vibes: 0
+  submitter: anonymous intern
+  time: just now
+- id: '027'
+  image: /img/folio/ai-memes/Screenshot 2025-05-03 at 9.07.35 PM.png
+  caption: Classic moment.
+  tags:
+    - relatable
+  vibes: 0
+  submitter: anonymous intern
+  time: just now
+- id: '026'
+  image: /img/folio/ai-memes/HF51mDfasAITudQ.jpeg
+  caption: Just out here vibing.
+  tags:
+    - vibe-coding
+  vibes: 0
+  submitter: anonymous intern
+  time: just now
+- id: '025'
+  image: /img/folio/ai-memes/IMG_0642.jpeg
+  caption: 'POV: you shipped it to prod without testing.'
+  tags:
+    - burnout
+    - shipped-to-prod
+  vibes: 0
+  submitter: anonymous intern
+  time: just now
+  source_name: the feed
+  source_url: '#'
+- id: '024'
+  image: /img/folio/ai-memes/i-vibecoded-a-skill-that-makes-llms-stop-making-mistakes-v0-ff3lr6ziyltg1.png.webp
+  caption: I vibecoded a skill that makes LLMs stop making mistakes.
+  tags:
+    - vibe-coding
+    - prompt-engineering
+  vibes: 0
+  submitter: anonymous intern
+  time: just now
+  source_name: the feed
+  source_url: '#'
+- id: '023'
+  image: /img/folio/ai-memes/HC1DwN2bQAAxH0e.jpeg
+  caption: When the context window hits just right.
+  tags:
+    - hallucinated
+    - relatable
+  vibes: 0
+  submitter: anonymous intern
+  time: just now
+  source_name: the feed
+  source_url: '#'
+- id: '022'
+  image: /img/folio/ai-memes/HB8VAw5XQAA4ia4.jpg
+  caption: Just another day in the agentic mines.
+  tags:
+    - agents
+    - existential
+  vibes: 0
+  submitter: anonymous intern
+  time: just now
+  source_name: the feed
+  source_url: '#'
+- id: '021'
+  image: /img/folio/ai-memes/openai-valued-at-852-billion-after-completing-122-billion-v0-j3b1adon0gsg1.jpeg.webp
+  caption: OpenAI valued at 852 billion after completing 122 billion funding round
+  tags:
+    - openai
+    - valuation
+    - agents
+    - finance
+  vibes: 0
+  submitter: ''
+  time: ''
+- id: '020'
+  image: /img/folio/ai-memes/my-experience-spending-2k-and-experimenting-on-a-strix-halo-v0-mm0kqqj35aqg1.jpeg.webp
+  caption: My experience spending $2k and experimenting on a Strix Halo
+  tags:
+    - hardware
+    - strix-halo
+    - experiment
+    - cost
+  vibes: 0
+  submitter: ''
+  time: ''
+- id: '019'
+  image: /img/folio/ai-memes/i-came-from-data-engineering-stuff-before-jumping-into-llm-v0-gccmg22z2qqg1.png.webp
+  caption: I came from data engineering stuff before jumping into LLMs
+  tags:
+    - data-engineering
+    - llm
+    - career
+    - relatable
+  vibes: 0
+  submitter: ''
+  time: ''
+- id: '018'
+  image: /img/folio/ai-memes/vibe-code-so-hard-your-entire-waitlist-is-visible-in-v0-w6xeqz5dt4qg1.png.webp
+  caption: Vibe code so hard your entire waitlist is visible
+  tags:
+    - vibe-coding
+    - security
+    - fail
+    - relatable
+  vibes: 0
+  submitter: ''
+  time: ''
+- id: '017'
+  image: /img/folio/ai-memes/i-lwk-miss-old-corporate-slop-art-now-its-js-ai-v0-a3xc7ndb5gqg1.png.webp
+  caption: I lowkey miss old corporate slop art, now it's just AI
+  tags:
+    - ai-art
+    - corporate-slop
+    - design
+    - nostalgia
+  vibes: 0
+  submitter: ''
+  time: ''
+- id: '016'
+  image: /img/folio/ai-memes/spit-my-coffee-v0-xntewqgzlprg1.webp
+  caption: When the hallucination is just too funny
+  tags:
+    - funny
+    - hallucination
+    - coffee
+    - reaction
+  vibes: 0
+  submitter: ''
+  time: ''
+- id: '015'
+  image: /img/folio/ai-memes/ci2wws6bctqg1.png.webp
+  caption: Just another day trying to keep up with the papers
+  tags:
+    - ai-models
+    - papers
+    - exhaustion
+    - relatable
+  vibes: 0
+  submitter: ''
+  time: ''
+- id: '014'
+  image: /img/folio/ai-memes/HEwWtygakAAmpAr.jpeg
+  caption: Anthropic is now officially more open than OpenAI
+  tags:
+    - anthropic
+    - openai
+    - open-source
+    - irony
+  vibes: 0
+  submitter: ''
+  time: ''
+- id: '013'
+  image: /img/folio/ai-memes/HE9RDAta0AAWSAP.jpeg
+  caption: The endless sea of 'What can I help you ship?' interfaces
+  tags:
+    - v0
+    - ui
+    - sameness
+    - vibe-coding
+  vibes: 0
+  submitter: ''
+  time: ''
+- id: '012'
+  image: /img/folio/ai-memes/HE0PiHQbAAAJiSX.jpeg
+  caption: Caveman querying the original local LLM
+  tags:
+    - caveman
+    - funny
+    - local-models
+    - history
+  vibes: 0
+  submitter: ''
+  time: ''
+- id: '011'
+  image: /img/folio/ai-memes/legendary-xkcd-updated-for-2026-v0-lfrtbgxnarmg1.png.webp
+  caption: 'Classic XKCD updated for 2026: the autonomous agent edition'
+  tags:
+    - xkcd-style
+    - agents
+    - '2026'
+    - legendary
   vibes: 532
-  submitter: "anonymous intern"
-  time: "1 epoch ago"
-  source_name: "r/ProgrammerHumor"
-  source_url: "https://reddit.com/r/ProgrammerHumor"
-- id: "010"
-  image: "/img/folio/ai-memes/how-life-feels-rn-v0-e1p5js54qmog1.jpeg.webp"
-  caption: "When vibe coding meets real-life constraints"
+  submitter: anonymous intern
+  time: 1 epoch ago
+  source_name: r/ProgrammerHumor
+  source_url: https://reddit.com/r/ProgrammerHumor
+- id: '010'
+  image: /img/folio/ai-memes/how-life-feels-rn-v0-e1p5js54qmog1.jpeg.webp
+  caption: When vibe coding meets real-life constraints
   tags:
-    - "vibe-coding"
-    - "existential"
-    - "relatable"
-    - "burnout"
+    - vibe-coding
+    - existential
+    - relatable
+    - burnout
   vibes: 428
-  submitter: "anonymous intern"
-  time: "1 epoch ago"
-  source_name: "r/me_irl"
-  source_url: "https://reddit.com/r/me_irl"
-- id: "009"
-  image: "/img/folio/ai-memes/vibecoders-be-like-v0-0qwyoaqc6epg1.png.webp"
-  caption: "Vibe coding the features nobody asked for"
+  submitter: anonymous intern
+  time: 1 epoch ago
+  source_name: r/me_irl
+  source_url: https://reddit.com/r/me_irl
+- id: '009'
+  image: /img/folio/ai-memes/vibecoders-be-like-v0-0qwyoaqc6epg1.png.webp
+  caption: Vibe coding the features nobody asked for
   tags:
-    - "vibe-coding"
-    - "xkcd-style"
-    - "priorities"
-    - "shipped-to-prod"
+    - vibe-coding
+    - xkcd-style
+    - priorities
+    - shipped-to-prod
   vibes: 673
-  submitter: "anonymous intern"
-  time: "1 epoch ago"
-  source_name: "r/vibecoding"
-  source_url: "https://reddit.com/r/vibecoding"
-- id: "008"
-  image: "/img/folio/ai-memes/mwvyc0mbquog1.png"
-  caption: "The eternal struggle of documentation vs doing"
+  submitter: anonymous intern
+  time: 1 epoch ago
+  source_name: r/vibecoding
+  source_url: https://reddit.com/r/vibecoding
+- id: '008'
+  image: /img/folio/ai-memes/mwvyc0mbquog1.png
+  caption: The eternal struggle of documentation vs doing
   tags:
-    - "xkcd-style"
-    - "documentation"
-    - "relatable"
-    - "agents"
+    - xkcd-style
+    - documentation
+    - relatable
+    - agents
   vibes: 294
-  submitter: "anonymous intern"
-  time: "1 epoch ago"
-  source_name: "r/ProgrammerHumor"
-  source_url: "https://reddit.com/r/ProgrammerHumor"
-- id: "007"
-  image: "/img/folio/ai-memes/gork-is-this-true-v0-l9mvjbfkecxe1.jpeg.webp"
-  caption: "Grok confidently fact-checking itself in public"
+  submitter: anonymous intern
+  time: 1 epoch ago
+  source_name: r/ProgrammerHumor
+  source_url: https://reddit.com/r/ProgrammerHumor
+- id: '007'
+  image: /img/folio/ai-memes/gork-is-this-true-v0-l9mvjbfkecxe1.jpeg.webp
+  caption: Grok confidently fact-checking itself in public
   tags:
-    - "grok"
-    - "ai-models"
-    - "twitter-brain"
-    - "elon"
+    - grok
+    - ai-models
+    - twitter-brain
+    - elon
   vibes: 812
-  submitter: "anonymous intern"
-  time: "1 epoch ago"
-  source_name: "r/singularity"
-  source_url: "https://reddit.com/r/singularity"
-- id: "006"
-  image: "/img/folio/ai-memes/funny-grok-memes-4-20250709.jpg"
-  caption: "Grok discourse, now with 200% more chaos"
+  submitter: anonymous intern
+  time: 1 epoch ago
+  source_name: r/singularity
+  source_url: https://reddit.com/r/singularity
+- id: '006'
+  image: /img/folio/ai-memes/funny-grok-memes-4-20250709.jpg
+  caption: Grok discourse, now with 200% more chaos
   tags:
-    - "grok"
-    - "funny"
-    - "ai-models"
-    - "ridiculous"
+    - grok
+    - funny
+    - ai-models
+    - ridiculous
   vibes: 559
-  submitter: "anonymous intern"
-  time: "7 months ago"
-  source_name: "twitter"
-  source_url: "https://twitter.com"
-- id: "005"
-  image: "/img/folio/ai-memes/prompt-engineer.webp"
-  caption: "Another casualty of the prompt engineer stigma"
+  submitter: anonymous intern
+  time: 7 months ago
+  source_name: twitter
+  source_url: https://twitter.com
+- id: '005'
+  image: /img/folio/ai-memes/prompt-engineer.webp
+  caption: Another casualty of the prompt engineer stigma
   tags:
-    - "prompt-engineering"
-    - "dating"
-    - "linkedin-cringe"
-    - "relatable"
+    - prompt-engineering
+    - dating
+    - linkedin-cringe
+    - relatable
   vibes: 0
-  submitter: "anonymous intern"
-  time: "4 months ago"
-  source_name: "r/ProgrammerHumor"
-  source_url: "https://reddit.com/r/ProgrammerHumor"
-- id: "004"
-  image: "/img/folio/ai-memes/HDPCxPPWsAAPGdd.jpeg"
-  caption: "When the image model hallucinates a fever dream"
+  submitter: anonymous intern
+  time: 4 months ago
+  source_name: r/ProgrammerHumor
+  source_url: https://reddit.com/r/ProgrammerHumor
+- id: '004'
+  image: /img/folio/ai-memes/HDPCxPPWsAAPGdd.jpeg
+  caption: When the image model hallucinates a fever dream
   tags:
-    - "cursed"
-    - "ai-models"
-    - "nightmare-fuel"
-    - "what-is-this"
+    - cursed
+    - ai-models
+    - nightmare-fuel
+    - what-is-this
   vibes: 203
-  submitter: "anonymous intern"
-  time: "2 weeks ago"
-  source_name: "twitter"
-  source_url: "https://twitter.com"
-- id: "003"
-  image: "/img/folio/ai-memes/m2-res_854p.mp4"
-  caption: "When the agents start vibing together"
+  submitter: anonymous intern
+  time: 2 weeks ago
+  source_name: twitter
+  source_url: https://twitter.com
+- id: '003'
+  image: /img/folio/ai-memes/m2-res_854p.mp4
+  caption: When the agents start vibing together
   tags:
-    - "video"
-    - "agents"
-    - "vibes"
-    - "animated"
-    - "m2"
+    - video
+    - agents
+    - vibes
+    - animated
+    - m2
   vibes: 621
-  submitter: "anonymous intern"
-  time: "1 epoch ago"
-  source_name: "twitter"
-  source_url: "https://twitter.com"
-- id: "002"
-  image: "/img/folio/ai-memes/6fogby5w8x0g1.png"
-  caption: "When your agent says it is done and CI says otherwise"
+  submitter: anonymous intern
+  time: 1 epoch ago
+  source_name: twitter
+  source_url: https://twitter.com
+- id: '002'
+  image: /img/folio/ai-memes/6fogby5w8x0g1.png
+  caption: When your agent says it is done and CI says otherwise
   tags:
-    - "agents"
-    - "vibe-coding"
-    - "deadline"
-    - "chaos"
+    - agents
+    - vibe-coding
+    - deadline
+    - chaos
   vibes: 377
-  submitter: "anonymous intern"
-  time: "3 days ago"
-  source_name: "r/vibecoding"
-  source_url: "https://reddit.com/r/vibecoding"
-- id: "001"
-  image: "/img/folio/ai-memes/HDoE_2xWcAAOSEG.jpeg"
-  caption: "When the model free-associates straight into the uncanny valley"
+  submitter: anonymous intern
+  time: 3 days ago
+  source_name: r/vibecoding
+  source_url: https://reddit.com/r/vibecoding
+- id: '001'
+  image: /img/folio/ai-memes/HDoE_2xWcAAOSEG.jpeg
+  caption: When the model free-associates straight into the uncanny valley
   tags:
-    - "hallucinated"
-    - "cursed"
-    - "ai-models"
-    - "what-is-this"
+    - hallucinated
+    - cursed
+    - ai-models
+    - what-is-this
   vibes: 286
-  submitter: "anonymous intern"
-  time: "2 days ago"
-  source_name: "twitter"
-  source_url: "https://twitter.com"
+  submitter: anonymous intern
+  time: 2 days ago
+  source_name: twitter
+  source_url: https://twitter.com

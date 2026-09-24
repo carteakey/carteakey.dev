@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.6] - 2026-09-24
+### Changed
+- Design: Adopted the cobalt and pixel-accent identity across the homepage, posts, and footer.
+
+### Added
+- Folio: Imported 17 new AI memes to the Agent Tick archive (`src/_data/ai-memes.yaml`).
+- Vibes: Added 28 new visuals, memes, and illustrations to the vibes gallery (`src/static/img/vibes/`).
+- Skills: Added the downloads-media-router skill for routing scanned downloads to the right folder.
+
 ## [2.7.5] - 2026-09-24
 ### Changed
 - Support: Added a coffee and heart icon and a donation method list that can hold more providers later.

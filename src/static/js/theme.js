@@ -1,4 +1,4 @@
-// Theme Management - Dark/Light Mode and Accent Colors
+// Theme Management - Dark/Light Mode
 // Extracted from base.njk for cleaner template
 
 const ASSET_VERSION = document.currentScript?.dataset.assetVersion || '';
@@ -6,30 +6,13 @@ const versionedAsset = (path) => ASSET_VERSION
   ? `${path}?v=${encodeURIComponent(ASSET_VERSION)}`
   : path;
 
-const ACCENT_COLORS = {
-  gray: "#6b7280",
-  slate: "#64748b",
-  zinc: "#71717a",
-  neutral: "#737373",
-  stone: "#78716c",
-  red: "#ef4444",
-  orange: "#f97316",
-  amber: "#f59e0b",
-  yellow: "#eab308",
-  lime: "#84cc16",
-  green: "#22c55e",
-  emerald: "#10b981",
-  teal: "#14b8a6",
-  cyan: "#06b6d4",
-  sky: "#0ea5e9",
-  blue: "#3b82f6",
-  indigo: "#6366f1",
-  violet: "#8b5cf6",
-  purple: "#a855f7",
-  fuchsia: "#d946ef",
-  pink: "#ec4899",
-  rose: "#f43f5e"
-};
+// Fixed site accent - was previously a 22-color user picker (with a
+// matching per-theme STAMP_FILTERS recolor table for the sketch
+// illustrations). Removed after direct feedback that a customizable
+// palette read as indecisive rather than considered - a site should
+// commit to one color, not let visitors reskin it. Slate matches the
+// cool, restrained reference the site's look was rebuilt around.
+const ACCENT_COLOR = "#64748b";
 
 const isDarkMode = () =>
   localStorage.theme === "dark" ||
@@ -43,57 +26,19 @@ if (isDarkMode()) {
   document.documentElement.classList.remove("dark");
 }
 
-// Accent color theme management
-const getAccentTheme = () => {
-  return localStorage.accentTheme || "teal";
-};
-
-const setAccentVariables = (theme) => {
-  const accentColor = ACCENT_COLORS[theme] || ACCENT_COLORS.teal;
-  document.documentElement.style.setProperty("--accent-color", accentColor);
-  const tcMeta = document.getElementById("theme-color-meta");
-  if (tcMeta) tcMeta.setAttribute("content", accentColor);
-};
-
-const setAccentTheme = (theme) => {
-  localStorage.accentTheme = theme;
-  updateAccentClasses(theme);
-  syncThemeColorMeta();
-};
-
-const updateAccentClasses = (theme) => {
-  setAccentVariables(theme);
-};
-
 const syncThemeColorMeta = () => {
   const meta = document.getElementById("theme-color-meta");
   if (!meta) return;
-
-  if (isDarkMode()) {
-    meta.setAttribute("content", "#000000");
-    return;
-  }
-
-  const accentTheme = getAccentTheme();
-  const accentColor = ACCENT_COLORS[accentTheme] || ACCENT_COLORS.teal;
-  meta.setAttribute("content", accentColor);
+  meta.setAttribute("content", isDarkMode() ? "#000000" : ACCENT_COLOR);
 };
 
-// Initialize accent variables immediately
-setAccentVariables(getAccentTheme());
 syncThemeColorMeta();
-
-// Apply saved accent theme on page load
-document.addEventListener('DOMContentLoaded', () => {
-  updateAccentClasses(getAccentTheme());
-  syncThemeColorMeta();
-});
 
 // Prism syntax highlighting theme switching
 function switchPrismTheme() {
   const themeLink = document.getElementById('prism-theme');
   if (!themeLink) return;
-  
+
   if (isDarkMode()) {
     themeLink.setAttribute('href', versionedAsset('/static/css/prism/prism-twilight.css'));
   } else {
@@ -106,7 +51,6 @@ function switchPrismTheme() {
 switchPrismTheme();
 
 // Expose globals needed by Alpine.js expressions and inline event handlers
-window.setAccentTheme = setAccentTheme;
 window.isDarkMode = isDarkMode;
 window.switchPrismTheme = switchPrismTheme;
 window.syncThemeColorMeta = syncThemeColorMeta;

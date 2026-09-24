@@ -11,6 +11,8 @@
   --font-plus-jakarta-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Apple Color Emoji', 'Segoe UI Emoji', 'Inter';
   --font-serif: var(--font-plus-jakarta-sans);
   --font-display: var(--font-plus-jakarta-sans);
+  --font-monument: var(--font-fraunces);
+  --font-fraunces: 'Fraunces', ui-serif, Georgia, 'Times New Roman', serif;
   --font-mono: var(--font-jetbrains-mono);
   --font-jetbrains-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
 
@@ -80,8 +82,13 @@
     position: fixed;
     inset: 0;
     pointer-events: none;
-    display: none;
+    display: block;
     z-index: -1;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grain)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 180px 180px;
+    mix-blend-mode: multiply;
+    opacity: 0.16;
   }
 
   body::after {
@@ -89,8 +96,9 @@
     position: fixed;
     inset: 0;
     pointer-events: none;
-    display: none;
+    display: block;
     z-index: -1;
+    background: radial-gradient(ellipse at center, transparent 45%, rgba(120, 72, 24, 0.09) 100%);
   }
 }
 
@@ -113,16 +121,30 @@
   }
 
   .dark body::before {
-    display: none;
+    mix-blend-mode: screen;
+    opacity: 0.1;
   }
 
   .dark body::after {
-    display: none;
+    background: radial-gradient(ellipse at center, transparent 50%, rgba(0, 0, 0, 0.4) 100%);
   }
 }
 
 :root {
-  --accent-color: #14b8a6;
+  /* Fixed site accent - was a 22-color user picker, then a muted slate,
+     now a full commitment to one saturated ultramarine (Nous Research
+     pivot - see docs/DESIGN_EXPERIMENTATION_LOG.md). Sketch illustrations
+     (.stamp-cobalt) deliberately do NOT follow this - see that rule for
+     why. */
+  --accent-color: #2323e6;
+}
+
+/* Same hue, lifted lightness: #2323e6 measured genuinely hard to read as
+   body text/links on the dark theme's near-black background - verified
+   with a side-by-side contrast check, not assumed. Still reads as the
+   same rich blue/indigo, not washed out. */
+.dark {
+  --accent-color: #6d6dff;
 }
 
 :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
@@ -447,7 +469,7 @@ picture img {
 
   .start-here-note {
     font-family: var(--font-mono);
-    font-size: 0.68rem;
+    font-size: 0.74rem;
     text-transform: uppercase;
     letter-spacing: 0.06em;
     color: rgb(107 114 128);
@@ -592,7 +614,7 @@ picture img {
     background: rgb(251 250 246 / 0.9);
     padding: 0.2rem 0.48rem;
     font-family: var(--font-mono);
-    font-size: 0.64rem;
+    font-size: 0.7rem;
     line-height: 1.1;
     font-weight: 600;
     letter-spacing: 0.05em;
@@ -838,7 +860,7 @@ picture img {
     box-shadow: 2px 2px 0 rgb(245 158 11 / 0.14);
     color: rgb(146 64 14);
     font-family: var(--font-mono);
-    font-size: 0.61rem;
+    font-size: 0.68rem;
     font-weight: 700;
     letter-spacing: 0.07em;
     line-height: 1.1;
@@ -923,7 +945,7 @@ picture img {
     background-color: color-mix(in srgb, var(--accent-color) 6%, rgb(251 250 246));
     padding: 0.18rem 0.48rem;
     font-family: var(--font-mono);
-    font-size: 0.66rem;
+    font-size: 0.72rem;
     line-height: 1;
     font-weight: 700;
     color: color-mix(in srgb, var(--accent-color) 85%, black);
@@ -1077,7 +1099,7 @@ picture img {
 @layer components {
   .meta-text {
     font-family: var(--font-mono);
-    font-size: 0.7rem;
+    font-size: 0.76rem;
     letter-spacing: 0.02em;
   }
 }
@@ -1147,7 +1169,7 @@ picture img {
   }
 
   .feed-list-date {
-    font-size: 0.66rem;
+    font-size: 0.72rem;
     line-height: 1.45;
     color: rgb(115 115 115);
     white-space: nowrap;
@@ -1194,7 +1216,7 @@ picture img {
   }
 
   .note-index-date {
-    font-size: 0.66rem;
+    font-size: 0.72rem;
     line-height: 1.45;
     color: rgb(115 115 115 / 1);
   }
@@ -1263,7 +1285,7 @@ picture img {
   .note-index-link,
   .note-entry-backlink {
     font-family: var(--font-mono);
-    font-size: 0.68rem;
+    font-size: 0.74rem;
     text-transform: uppercase;
     letter-spacing: 0.04em;
     text-decoration: none;
@@ -1364,7 +1386,7 @@ picture img {
     left: 50%;
     transform: translateX(-50%);
     white-space: nowrap;
-    font-size: 0.65rem;
+    font-size: 0.71rem;
     font-family: var(--font-mono);
     letter-spacing: 0.02em;
     padding: 0.2rem 0.5rem;
@@ -1577,7 +1599,7 @@ picture img {
   .page-eyebrow {
     margin: 0 0 0.32rem;
     font-family: var(--font-mono);
-    font-size: 0.64rem;
+    font-size: 0.7rem;
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -1680,7 +1702,7 @@ picture img {
   }
 
   .page-header-meta-label {
-    font-size: 0.62rem;
+    font-size: 0.69rem;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: rgb(156 163 175 / 1);
@@ -1699,7 +1721,7 @@ picture img {
   .editorial-kicker {
     margin: 0;
     font-family: var(--font-mono);
-    font-size: 0.66rem;
+    font-size: 0.72rem;
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -1775,7 +1797,7 @@ picture img {
 
   .editorial-meta-link {
     font-family: var(--font-mono);
-    font-size: 0.68rem;
+    font-size: 0.74rem;
     letter-spacing: 0.04em;
     text-transform: uppercase;
     text-decoration: none;
@@ -1822,7 +1844,7 @@ picture img {
 
   .footer-track-label {
     font-family: var(--font-mono);
-    font-size: 0.64rem;
+    font-size: 0.7rem;
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -1849,10 +1871,120 @@ picture img {
     color: rgb(250 250 250 / 1);
   }
 
+  .footer-wordmark {
+    position: absolute;
+    z-index: -10;
+    left: 50%;
+    bottom: -0.5rem;
+    transform: translateX(-50%);
+    margin: 0;
+    width: 100%;
+    text-align: center;
+    white-space: nowrap;
+    font-family: var(--font-monument);
+    font-weight: 900;
+    font-size: 9rem;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: transparent;
+    -webkit-text-stroke: 1.5px rgb(17 24 39 / 0.16);
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .dark .footer-wordmark {
+    -webkit-text-stroke: 1.5px rgb(255 255 255 / 0.18);
+  }
+
+  @media (max-width: 900px) {
+    .footer-wordmark {
+      display: none;
+    }
+  }
+
+  /* Day/night pair (see the day/night comment in base.njk for the full
+     reasoning). Only one <img> is ever display:block at a time (the other
+     is dark:hidden/hidden dark:block), so they don't need absolute
+     stacking - the hidden one takes no layout space. Container background
+     matches whichever is showing: light paper for the day PNG's sparse/
+     near-transparent sky areas to read against, versus the night PNG
+     which bakes its own opaque dark backdrop into the image itself. */
+  .footer-photo-band {
+    position: relative;
+    width: 100%;
+    line-height: 0;
+    overflow: hidden;
+    background: var(--zen-paper, #fbfaf6);
+  }
+
+  .dark .footer-photo-band {
+    background: #0a0a1f;
+  }
+
+  /* No display:block here - Tailwind's .hidden/.dark:block/.dark:hidden
+     utilities on the two <img> tags need to control display themselves,
+     and a same-or-higher-specificity rule setting display unconditionally
+     would silently beat them regardless of theme (which is exactly what
+     happened: both images rendered display:block at once, in both
+     themes, because this rule's specificity (class+type) beat .hidden's
+     (class only)). The parent's line-height: 0 already removes the
+     inline-image whitespace gap this would otherwise have prevented. */
+  .footer-photo-band img {
+    width: 100%;
+    height: 9rem;
+    object-fit: cover;
+  }
+
+  @media (min-width: 768px) {
+    .footer-photo-band img {
+      height: 12rem;
+    }
+  }
+
+  .footer-band-icon {
+    position: absolute;
+    top: 0.9rem;
+    right: 1.1rem;
+    color: var(--accent-color);
+    opacity: 0.8;
+    pointer-events: none;
+  }
+
+  .footer-band-stars {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .footer-band-stars i {
+    position: absolute;
+    left: var(--x);
+    top: var(--y);
+    width: 2px;
+    height: 2px;
+    border-radius: 999px;
+    background: #ffffff;
+    opacity: 0.35;
+    animation: footer-star-twinkle 2.6s ease-in-out infinite;
+    animation-delay: var(--d);
+  }
+
+  @keyframes footer-star-twinkle {
+    0%, 100% { opacity: 0.25; }
+    50% { opacity: 0.95; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .footer-band-stars i {
+      animation: none;
+      opacity: 0.6;
+    }
+  }
+
   .footer-nav-heading {
     margin: 0 0 0.45rem;
     font-family: var(--font-mono);
-    font-size: 0.64rem;
+    font-size: 0.7rem;
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -1910,7 +2042,7 @@ picture img {
     padding: 0.12rem 0.42rem;
     cursor: pointer;
     font-family: var(--font-mono);
-    font-size: 0.65rem;
+    font-size: 0.71rem;
     color: rgb(115 115 115 / 1);
     line-height: 1.4;
     letter-spacing: 0.04em;
@@ -1954,6 +2086,7 @@ picture img {
   }
 
   .home-intro-grid {
+    position: relative;
     display: grid;
     gap: 1rem;
     padding-bottom: 1rem;
@@ -1971,24 +2104,80 @@ picture img {
     align-items: start;
   }
 
+  /* Fixed light backing regardless of site theme - not "background:
+     transparent in light mode, near-black in dark mode" like most
+     surfaces. The halftone SVG's gaps (the photo's light-toned areas,
+     e.g. background/highlights) are transparent; if the page's own dark-
+     mode background shows through them, light-toned regions of the photo
+     render as the darkest thing on screen and the tonal relationship
+     flips - the photo starts reading as a negative. */
   .home-avatar-shell {
-    width: 4.8rem;
-    height: 4.8rem;
-    border-radius: 0.12rem;
+    position: relative;
+    width: 9.5rem;
+    height: 9.5rem;
     overflow: hidden;
-    border: 1px solid rgb(214 207 193 / 1);
-    background: rgb(251 250 246 / 0.92);
+    background: #f4f3ee;
   }
 
-  .dark .home-avatar-shell {
-    border-color: rgb(63 63 70 / 1);
-    background: rgb(24 24 27 / 0.92);
+  @media (min-width: 768px) {
+    .home-avatar-shell {
+      width: 13rem;
+      height: 13rem;
+    }
+  }
+
+  .home-avatar-shell img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /*
+    Duotone treatment for opaque photos/screenshots: grayscale the photo,
+    then tint it with the fixed site accent. Not alpha-safe - do not use
+    on transparent line art (a full-bleed tint pseudo-element would color
+    the transparent backdrop too). See .stamp-cobalt below for the
+    alpha-safe equivalent.
+  */
+  .duotone-cobalt {
+    position: relative;
+  }
+
+  .duotone-cobalt img {
+    filter: grayscale(1) contrast(1.2) brightness(1.05);
+  }
+
+  /*
+    ::before paints BEHIND the img (pseudo-element paint order is
+    before -> children -> after), so the tint has to live on ::after
+    instead, or it's invisibly occluded by the opaque image on top of it.
+  */
+  .duotone-cobalt::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--accent-color);
+    mix-blend-mode: overlay;
+    pointer-events: none;
+  }
+
+  /*
+    Sketch illustrations (post header/OG stamps, feed-card thumbnails) stay
+    plain grayscale - no accent tint. Earlier this session they were
+    recolored to match --accent-color, but different sketches have
+    different natural ink density/tone, so the identical filter produced
+    visibly different-looking colors across images ("messy" - direct
+    feedback). Simplest fix: don't recolor them. dark:invert flips the
+    dark ink to light so it's still visible on a dark background.
+  */
+  .dark .stamp-cobalt {
+    filter: invert(1) brightness(1.1);
   }
 
   .home-eyebrow {
     margin: 0 0 0.35rem;
     font-family: var(--font-mono);
-    font-size: 0.64rem;
+    font-size: 0.7rem;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: var(--accent-color);
@@ -1996,41 +2185,135 @@ picture img {
 
   .home-title {
     margin: 0;
-    font-family: var(--font-sans);
-    font-size: 2.55rem;
-    line-height: 0.96;
-    letter-spacing: 0;
-    font-weight: 800;
+    font-family: var(--font-monument);
+    font-optical-sizing: auto;
+    line-height: 0.94;
+    letter-spacing: -0.01em;
+    font-weight: 900;
+    font-style: normal;
     color: rgb(17 24 39 / 1);
-  }
-
-  @media (min-width: 768px) {
-    .home-title {
-      font-size: 3.65rem;
-    }
   }
 
   .dark .home-title {
     color: rgb(250 250 250 / 1);
   }
 
+  /* "Hi, I'm" and "Kartikey." are sized independently now (not one em-
+     relative to the other) - they read as two different type treatments
+     (serif vs. pixel-accent) at two different scales on purpose, not a
+     single proportional headline. Direct feedback: at equal relative
+     scale the serif lead read "too flashy"/oversized next to the pixel
+     word once both got big; turning down just the lead fixed it without
+     needing to touch the accent word at all. */
+  /* Full consistency pass: the lead text now shares the accent word's
+     font family too, not just its own separate serif. Press Start 2P
+     reads much bulkier per-character than Fraunces at the same size, so
+     this needed a real size cut when switching, not just a family swap -
+     kept at roughly the same scale as .home-title-accent since they're
+     now the same typeface and should read as one consistent voice. */
+  .home-title-lead {
+    font-family: "Press Start 2P", var(--font-monument);
+    font-size: 1.5rem;
+    letter-spacing: 0;
+    margin-right: 0.4rem;
+  }
+
+  @media (min-width: 768px) {
+    .home-title-lead {
+      font-size: 2.3rem;
+      margin-right: 0.65rem;
+    }
+  }
+
+  /* Press Start 2P's comma glyph carries a lot of built-in trailing
+     advance width (a pixel-grid font quirk, not extra whitespace in the
+     markup - confirmed by inspecting the raw HTML). Pull the following
+     text back in to compensate; letter-spacing on the whole span isn't
+     enough since it's this one glyph specifically, not general spacing. */
+  .home-title-comma {
+    display: inline-block;
+    margin-right: -0.85em;
+  }
+
   .home-title-accent {
+    display: inline-block;
     color: var(--accent-color);
+    font-family: "Press Start 2P", var(--font-monument);
+    font-size: 1.45rem;
+    letter-spacing: 0;
+    vertical-align: -0.05em;
+    animation: kartikey-glitch-loop 3s steps(7, jump-end) infinite;
+  }
+
+  @media (min-width: 768px) {
+    .home-title-accent {
+      font-size: 2.2rem;
+    }
+  }
+
+  /* Recurring neon-sign-style flicker: a brief RGB-split glitch near the
+     start of each 3s loop, then a quiet hold at rest. Deliberately rare
+     rather than a constant glitch - constant motion on a name in the H1
+     would hurt readability, but an occasional flicker reads as a
+     tasteful "this sign is still on" detail. */
+  @keyframes kartikey-glitch-loop {
+    0%, 100% {
+      opacity: 1;
+      text-shadow: none;
+      transform: translateX(0);
+    }
+    2.93% {
+      opacity: 1;
+      text-shadow: -2px 0 #ff2d55, 2px 0 #00eaff;
+      transform: translateX(2px);
+    }
+    4.4% {
+      opacity: 0.15;
+      text-shadow: none;
+      transform: translateX(0);
+    }
+    6.6% {
+      opacity: 1;
+      text-shadow: 2px 0 #ff2d55, -2px 0 #00eaff;
+    }
+    8.8% {
+      opacity: 0.4;
+      text-shadow: none;
+    }
+    11% {
+      opacity: 1;
+      text-shadow: -1px 0 #ff2d55, 1px 0 #00eaff;
+    }
+    13.93% {
+      opacity: 1;
+      text-shadow: none;
+      transform: translateX(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .home-title-accent {
+      animation: none;
+    }
   }
 
   .home-typing-line {
-    margin: 0.45rem 0 0;
+    margin: 0.95rem 0 0;
     max-width: 44rem;
-    font-family: var(--font-sans);
-    font-size: 1rem;
-    line-height: 1.35;
-    font-weight: 700;
+    font-family: "Press Start 2P", var(--font-monument);
+    font-size: 0.68rem;
+    line-height: 1.7;
+    letter-spacing: 0;
+    font-weight: normal;
     color: rgb(39 39 42 / 1);
   }
 
   .home-typed-topic {
     display: inline-block;
     color: var(--accent-color);
+    font-family: "Press Start 2P", var(--font-monument);
+    font-size: 1em;
+    letter-spacing: 0;
   }
 
   .dark .home-typing-line {
@@ -2085,16 +2368,18 @@ picture img {
     color: rgb(212 212 216 / 1);
   }
 
-  .home-grid-two,
-  .home-grid-four {
-    display: grid;
-    gap: 1.5rem;
-  }
-
   .home-recent-panel {
     width: 100%;
     max-width: none;
     margin-inline: 0;
+  }
+
+  /* "Dispatches" is now the homepage's only content section (Featured
+     Posts and Site Index were removed) - full visual weight, no longer
+     dimmed relative to a curated section that no longer exists. */
+  .home-recent-panel-primary .editorial-title-compact {
+    font-size: 1.05rem;
+    font-weight: 700;
   }
 
   /* Prevent the implicit mobile grid track from expanding to a card's content. */
@@ -2154,7 +2439,7 @@ picture img {
     border-radius: 0.16rem;
     padding: 0.55rem 0.85rem;
     font-family: var(--font-mono);
-    font-size: 0.7rem;
+    font-size: 0.76rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.04em;
@@ -2186,7 +2471,7 @@ picture img {
     box-shadow: 0 3px 12px rgb(24 24 27 / 0.09);
     color: var(--accent-color);
     font-family: var(--font-mono);
-    font-size: 0.66rem;
+    font-size: 0.72rem;
     font-weight: 700;
     letter-spacing: 0.04em;
     text-decoration: none;
@@ -2221,7 +2506,7 @@ picture img {
     gap: 0.35rem;
     padding: 0.35rem 0.5rem;
     font-family: var(--font-mono);
-    font-size: 0.68rem;
+    font-size: 0.74rem;
     text-transform: uppercase;
     letter-spacing: 0.03em;
   }
@@ -2333,7 +2618,7 @@ picture img {
     background: transparent;
     color: rgb(82 82 91 / 1);
     font-family: var(--font-mono);
-    font-size: 0.66rem;
+    font-size: 0.72rem;
     text-transform: uppercase;
     letter-spacing: 0.03em;
   }
@@ -2398,7 +2683,7 @@ picture img {
     padding: 0.4rem 0.55rem;
     color: rgb(82 82 91 / 1);
     font-family: var(--font-mono);
-    font-size: 0.66rem;
+    font-size: 0.72rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.03em;
@@ -2456,7 +2741,7 @@ picture img {
 
   @media (min-width: 900px) {
     .home-grid-two {
-      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+      grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
     }
   }
 
@@ -2484,7 +2769,7 @@ picture img {
   .home-panel-kicker {
     margin: 0;
     font-family: var(--font-mono);
-    font-size: 0.68rem;
+    font-size: 0.74rem;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: rgb(82 82 91 / 1);
@@ -2496,241 +2781,11 @@ picture img {
 
   .home-panel-link {
     font-family: var(--font-mono);
-    font-size: 0.7rem;
+    font-size: 0.76rem;
     text-decoration: none;
     text-transform: uppercase;
     letter-spacing: 0.04em;
     color: var(--accent-color);
-  }
-
-  .home-selected-list,
-  .home-popular-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  .home-selected-item,
-  .home-popular-item {
-    padding: 0.6rem 0;
-    border-bottom: 1px solid rgb(229 223 211 / 0.95);
-  }
-
-  .dark .home-selected-item,
-  .dark .home-popular-item {
-    border-bottom-color: rgb(39 39 42 / 0.9);
-  }
-
-  .home-selected-title {
-    display: block;
-    font-family: var(--font-serif);
-    font-size: 1rem;
-    font-weight: 600;
-    line-height: 1.34;
-    color: rgb(17 24 39 / 1);
-    text-decoration: none;
-  }
-
-  .home-selected-link {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    gap: 0.8rem;
-    align-items: center;
-    color: inherit;
-    text-decoration: none;
-  }
-
-  .home-selected-link:hover .home-selected-title {
-    color: var(--accent-color);
-  }
-
-  .home-selected-copy {
-    min-width: 0;
-  }
-
-  .home-selected-link > picture {
-    display: block;
-    grid-column: 2;
-    grid-row: 1;
-    width: 4rem;
-    height: 4rem;
-  }
-
-  .home-selected-image {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    border: 0;
-    background: transparent;
-    padding: 0;
-  }
-
-  .dark .home-selected-image {
-    background: transparent;
-  }
-
-  .dark .home-selected-title {
-    color: rgb(250 250 250 / 1);
-  }
-
-  .home-selected-note {
-    display: block;
-    margin: 0.2rem 0 0;
-    font-family: var(--font-serif);
-    font-size: 0.9rem;
-    line-height: 1.48;
-    color: rgb(107 114 128 / 1);
-  }
-
-  .dark .home-selected-note {
-    color: rgb(161 161 170 / 1);
-  }
-
-  .home-directory-grid {
-    display: grid;
-    gap: 0;
-  }
-
-  @media (min-width: 640px) {
-    .home-directory-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      column-gap: 1rem;
-    }
-  }
-
-  .home-directory-item {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: 0.2rem;
-    padding: 0.65rem 0;
-    border-bottom: 1px solid rgb(229 223 211 / 0.95);
-    transition: color 160ms ease;
-    text-decoration: none;
-    color: inherit;
-  }
-
-  .dark .home-directory-item {
-    border-bottom-color: rgb(39 39 42 / 0.9);
-  }
-
-  .home-directory-item:focus-visible {
-    outline: 2px solid var(--accent-color);
-    outline-offset: 3px;
-  }
-
-  .home-directory-item:hover .home-directory-name,
-  .home-directory-item:focus-visible .home-directory-name {
-    color: var(--accent-color);
-  }
-
-  .home-directory-heading {
-    display: flex;
-    align-items: baseline;
-    gap: 0.5rem;
-    min-width: 0;
-  }
-
-  .home-directory-name {
-    font-family: var(--font-sans);
-    font-size: 0.98rem;
-    font-weight: 700;
-    line-height: 1.1;
-    letter-spacing: 0;
-    color: rgb(17 24 39 / 1);
-  }
-
-  .dark .home-directory-name {
-    color: rgb(244 244 245 / 1);
-  }
-
-  .home-directory-count {
-    font-family: var(--font-mono);
-    font-size: 0.66rem;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    color: rgb(115 115 115 / 1);
-  }
-
-  .home-directory-note {
-    font-family: var(--font-sans);
-    font-size: 0.88rem;
-    line-height: 1.38;
-    color: rgb(107 114 128 / 1);
-  }
-
-  .dark .home-directory-note {
-    color: rgb(161 161 170 / 1);
-  }
-
-  .home-featured {
-    display: grid;
-    gap: 0.8rem;
-  }
-
-  @media (min-width: 640px) {
-    .home-featured {
-      grid-template-columns: minmax(0, 1fr) auto;
-      align-items: start;
-    }
-  }
-
-  .home-featured-title {
-    margin: 0;
-    font-family: var(--font-sans);
-    font-size: 1.24rem;
-    line-height: 1.1;
-    letter-spacing: 0;
-    font-weight: 700;
-    color: rgb(17 24 39 / 1);
-  }
-
-  .dark .home-featured-title {
-    color: rgb(250 250 250 / 1);
-  }
-
-  .home-featured-title a {
-    color: inherit;
-    text-decoration: none;
-  }
-
-  .home-featured-title a:hover {
-    color: var(--accent-color);
-  }
-
-  .home-featured-description {
-    margin: 0.35rem 0 0;
-    font-family: var(--font-sans);
-    font-size: 0.92rem;
-    line-height: 1.42;
-    color: rgb(82 82 91 / 1);
-  }
-
-  .dark .home-featured-description {
-    color: rgb(161 161 170 / 1);
-  }
-
-  .home-featured-meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.45rem;
-    margin-top: 0.65rem;
-    align-items: center;
-  }
-
-  .home-featured-image img {
-    display: block;
-    width: 6.25rem;
-    height: 6.25rem;
-    object-fit: contain;
-    border: 1px solid rgb(214 207 193 / 1);
-    background: rgb(251 250 246 / 0.82);
-    padding: 0.4rem;
-  }
-
-  .dark .home-featured-image img {
-    border-color: rgb(63 63 70 / 1);
-    background: rgb(20 20 20 / 0.82);
   }
 
   .home-quote {
@@ -2751,7 +2806,7 @@ picture img {
   .home-quote-source {
     margin: 0.45rem 0 0;
     font-family: var(--font-mono);
-    font-size: 0.68rem;
+    font-size: 0.74rem;
     text-transform: uppercase;
     letter-spacing: 0.06em;
     color: rgb(115 115 115 / 1);
@@ -2824,19 +2879,45 @@ picture img {
   .dark .post-header {
   }
 
+  .reading-progress {
+    position: fixed;
+    top: 0;
+    inset-inline: 0;
+    height: 2px;
+    z-index: 50;
+    background: transparent;
+    pointer-events: none;
+  }
+
+  .reading-progress-bar {
+    height: 100%;
+    width: 0%;
+    background: var(--accent-color);
+    transition: width 80ms linear;
+  }
+
+  .post-title-eyebrow {
+    margin: 0 0 0.5rem;
+    font-family: "Press Start 2P", var(--font-monument);
+    font-size: 0.62rem;
+    letter-spacing: 0.02em;
+    color: var(--accent-color);
+  }
+
   .post-title {
     margin: 0;
-    font-family: var(--font-sans);
-    font-size: 2.05rem;
-    line-height: 1.02;
-    letter-spacing: 0;
+    font-family: var(--font-monument);
+    font-optical-sizing: auto;
+    font-size: 1.85rem;
+    line-height: 1.06;
+    letter-spacing: -0.005em;
     font-weight: 800;
     color: rgb(17 24 39 / 1);
   }
 
   @media (min-width: 768px) {
     .post-title {
-      font-size: 2.55rem;
+      font-size: 2.4rem;
     }
   }
 
@@ -2885,7 +2966,7 @@ picture img {
     align-items: center;
     gap: 0.35rem;
     font-family: var(--font-mono);
-    font-size: 0.66rem;
+    font-size: 0.72rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
     color: rgb(82 82 91 / 1);
@@ -2942,7 +3023,7 @@ picture img {
   .post-side-kicker {
     margin: 0 0 0.35rem;
     font-family: var(--font-mono);
-    font-size: 0.62rem;
+    font-size: 0.69rem;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: rgb(115 115 115 / 1);
@@ -3009,7 +3090,7 @@ picture img {
   .post-panel-title {
     margin: 0;
     font-family: var(--font-mono);
-    font-size: 0.66rem;
+    font-size: 0.72rem;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: rgb(82 82 91 / 1);
@@ -3060,6 +3141,22 @@ picture img {
   .dark .tmpl-post .toc a,
   .dark .tmpl-post .toc li {
     color: rgb(212 212 216 / 1);
+  }
+
+  /* Scrollspy active state - set by the IntersectionObserver in post.njk.
+     Deliberately placed in this same @layer utilities block as the base
+     .tmpl-post .toc a rule above, not the components-layer block where an
+     earlier version of this rule accidentally landed: Tailwind's cascade
+     layers make layer order absolute regardless of selector specificity,
+     so a components-layer rule can never beat a utilities-layer one no
+     matter how specific it is - cost a real debugging round to track down
+     why color wasn't applying despite winning on specificity alone. */
+  .tmpl-post .toc a.toc-active {
+    color: var(--accent-color);
+    font-weight: 600;
+    padding-left: 0.5rem;
+    margin-left: -0.5rem;
+    border-left: 2px solid var(--accent-color);
   }
 
   .breadcrumb-link,
@@ -3114,7 +3211,7 @@ picture img {
     text-decoration: none;
     transition: border-color 160ms ease, background-color 160ms ease, color 160ms ease;
     font-family: var(--font-mono);
-    font-size: 0.68rem;
+    font-size: 0.74rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.04em;
@@ -3201,7 +3298,7 @@ picture img {
 
   .post-nav-kicker {
     font-family: var(--font-mono);
-    font-size: 0.64rem;
+    font-size: 0.7rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.04em;
@@ -3541,7 +3638,7 @@ picture img {
     font-size: 0.82rem;
     line-height: 1.55;
     overflow-x: auto;
-    border-radius: 6px;
+    border-radius: 2px;
     margin: 1em 0;
     padding: 0.9em 1.1em;
     background: #f6f8fa;
@@ -3690,13 +3787,13 @@ picture img {
 
   .site-content thead th {
     font-family: var(--font-mono);
-    font-size: 0.66rem;
+    font-size: 0.72rem;
     font-weight: 700;
     letter-spacing: 0.04em;
     text-transform: uppercase;
     text-align: left;
     padding: 0.55em 0.8em;
-    border-bottom: 1px solid rgb(214 207 193 / 0.95);
+    border-bottom: 2px solid var(--accent-color);
     color: rgb(82 82 91);
     background: rgb(251 250 246 / 0.94);
     white-space: nowrap;
@@ -3704,7 +3801,6 @@ picture img {
   }
 
   .dark .site-content thead th {
-    border-bottom-color: rgb(63 63 70);
     color: rgb(156 163 175);
     background: rgb(24 24 27 / 0.95);
   }
@@ -3968,7 +4064,7 @@ picture img {
 
   .site-content .footnotes .footnote-backref {
     font-family: var(--font-mono);
-    font-size: 0.68rem;
+    font-size: 0.74rem;
     margin-left: 0.35rem;
     text-transform: uppercase;
     letter-spacing: 0.02em;
@@ -4103,6 +4199,7 @@ picture img {
     color: rgb(156 163 175);
   }
 
+
   .dark .toc a:hover {
     color: var(--accent-color);
   }
@@ -4236,7 +4333,7 @@ picture img {
     gap: 0.55rem;
     margin: 0 0 0.35rem;
     font-family: var(--font-mono);
-    font-size: 0.66rem;
+    font-size: 0.72rem;
     line-height: 1.3;
     font-weight: 600;
     letter-spacing: 0.08em;
@@ -4502,7 +4599,7 @@ picture img {
 
   .wide-wrap table th {
     font-family: var(--font-mono);
-    font-size: 0.66rem;
+    font-size: 0.72rem;
     font-weight: 700;
     letter-spacing: 0.04em;
     text-transform: uppercase;
@@ -4708,57 +4805,90 @@ picture img {
     display: none !important;
   }
 
-  /* Header segmented control: All / No-Gen / Human */
-  .ai-filter-seg {
-    display: inline-flex;
-    align-items: stretch;
-    border: 1px solid color-mix(in srgb, currentColor 18%, transparent);
-    border-radius: 0.22rem;
+  /* Header authorship filter: a single icon trigger + dropdown menu,
+     consistent with the search/compass icon buttons beside it, instead of
+     a permanently-expanded 3-button segmented control. */
+  .ai-filter-trigger {
+    position: relative;
+  }
+
+  /* Active-state dot: shown whenever the filter isn't the default "all". */
+  html[data-ai-filter="no-generated"] .ai-filter-trigger::after,
+  html[data-ai-filter="human-only"] .ai-filter-trigger::after {
+    content: "";
+    position: absolute;
+    top: 0.2rem;
+    right: 0.2rem;
+    width: 0.35rem;
+    height: 0.35rem;
+    border-radius: 999px;
+    background: var(--accent-color);
+    border: 1px solid var(--zen-paper);
+  }
+
+  .dark html[data-ai-filter="no-generated"] .ai-filter-trigger::after,
+  .dark html[data-ai-filter="human-only"] .ai-filter-trigger::after {
+    border-color: #141414;
+  }
+
+  .nav-dropdown-menu {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 0.4rem);
+    z-index: 30;
+    display: flex;
+    flex-direction: column;
+    min-width: 11rem;
+    border: 1px solid rgb(214 207 193 / 1);
+    border-radius: 0.2rem;
+    background: var(--zen-paper);
+    box-shadow: 0 4px 16px rgb(0 0 0 / 0.1);
     overflow: hidden;
-    font-family: var(--font-mono);
-    font-size: 0.65rem;
-    letter-spacing: 0.02em;
-    line-height: 1;
-    color: var(--accent-color);
-    background: transparent;
   }
 
-  .ai-filter-seg button {
-    display: inline-flex;
+  .dark .nav-dropdown-menu {
+    border-color: rgb(63 63 70 / 1);
+    background: #1c1c1c;
+    box-shadow: 0 4px 16px rgb(0 0 0 / 0.4);
+  }
+
+  .nav-dropdown-item {
+    display: flex;
     align-items: center;
-    gap: 0.3rem;
-    padding: 0.32rem 0.5rem;
+    gap: 0.5rem;
+    padding: 0.5rem 0.7rem;
     border: 0;
-    border-radius: 0;
     background: transparent;
-    color: inherit;
-    opacity: 0.55;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    text-align: left;
+    color: rgb(63 63 70 / 1);
     cursor: pointer;
-    transition: opacity 0.15s ease, background-color 0.15s ease;
+    transition: background-color 0.15s ease;
   }
 
-  .ai-filter-seg button + button {
-    border-left: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+  .dark .nav-dropdown-item {
+    color: rgb(212 212 216 / 1);
   }
 
-  .ai-filter-seg button:hover {
-    opacity: 0.85;
+  .nav-dropdown-item:hover {
+    background: color-mix(in srgb, var(--accent-color) 10%, transparent);
   }
 
-  .ai-filter-seg button:focus-visible {
+  .nav-dropdown-item:focus-visible {
     outline: 2px solid var(--accent-color);
     outline-offset: -2px;
   }
 
-  html[data-ai-filter="all"] .ai-filter-seg button[data-ai-filter-option="all"],
-  html[data-ai-filter="no-generated"] .ai-filter-seg button[data-ai-filter-option="no-generated"],
-  html[data-ai-filter="human-only"] .ai-filter-seg button[data-ai-filter-option="human-only"] {
-    opacity: 1;
+  html[data-ai-filter="all"] .nav-dropdown-item[data-ai-filter-option="all"],
+  html[data-ai-filter="no-generated"] .nav-dropdown-item[data-ai-filter-option="no-generated"],
+  html[data-ai-filter="human-only"] .nav-dropdown-item[data-ai-filter-option="human-only"] {
+    color: var(--accent-color);
     background: color-mix(in srgb, var(--accent-color) 14%, transparent);
   }
 
-  html:not([data-ai-filter]) .ai-filter-seg button[data-ai-filter-option="all"] {
-    opacity: 1;
+  html:not([data-ai-filter]) .nav-dropdown-item[data-ai-filter-option="all"] {
+    color: var(--accent-color);
     background: color-mix(in srgb, var(--accent-color) 14%, transparent);
   }
 
@@ -4768,7 +4898,7 @@ picture img {
     bottom: 0.75rem;
     left: 0.75rem;
     z-index: 40;
-    font-size: 0.65rem;
+    font-size: 0.71rem;
     font-family: var(--font-mono);
     letter-spacing: 0.02em;
     padding: 0.3rem 0.6rem;

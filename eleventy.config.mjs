@@ -402,8 +402,14 @@ async function generatePostThumbnailMetadata(src) {
 
   return Image(sourcePath, {
     // One shared set covers 64px homepage images and 80/96px post cards,
-    // including their high-density display sizes.
-    widths: [64, 96, 128, 192],
+    // including their high-density display sizes. Floor raised from 64 to
+    // 96: these are fine line-art sketches recolored by the stamp-cobalt
+    // accent filter, and downscaling to 64px blurred/lightened thin ink
+    // strokes enough (measured: a source's darkest ~14/255 ink landed at
+    // ~83/255 post-resize) that otherwise-identical filter values produced
+    // visibly different hues on different sketches - the resize blur, not
+    // the filter, was the inconsistency.
+    widths: [96, 128, 192, 256],
     formats: ["avif", "webp", "auto"],
     outputDir: "./_site/img/thumbnails/posts/",
     urlPath: "/img/thumbnails/posts/",

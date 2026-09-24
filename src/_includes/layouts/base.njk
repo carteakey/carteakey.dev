@@ -8,6 +8,11 @@
   <link rel="manifest" href="/site.webmanifest" />
   <link rel="preload" href="/static/fonts/plus-jakarta-sans/PlusJakartaSans[wght].woff2?v={{ versions.version }}" as="font" type="font/woff2" crossorigin />
 
+  {# Fraunces: monumental display serif, used sparingly for hero headlines #}
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Press+Start+2P&display=swap" />
+
   {# Site fonts are self-hosted via src/static/fonts/. #}
   <meta name="generator" content="Eleventy">
   <link id="prism-theme" href="/static/css/prism/prism-light.css?v={{ versions.version }}" rel="stylesheet"/>
@@ -149,7 +154,25 @@
           </a>
 
           <ul class="list-none m-0 p-0 flex items-center gap-2">
-            {# Main navigation items #}
+            {# Mobile: hamburger menu for the primary links hidden below sm - previously
+               About/Writing/Now had no mobile access point at all except the footer. #}
+            <li class="flex items-center relative sm:hidden" x-data="{ open: false }" @keydown.escape="open = false" @click.outside="open = false">
+              <button type="button" @click="open = !open" :aria-expanded="open.toString()"
+                class="font-medium no-underline inline-flex items-center justify-center p-1.5 border border-transparent hover:border-gray-300 dark:hover:border-gray-700 transition-colors"
+                style="color: var(--accent-color)" title="Menu" aria-label="Main menu">
+                {% feather "menu", class="w-4 h-4" %}
+              </button>
+              <div x-show="open" x-transition.opacity.duration.100ms @click="open = false"
+                class="nav-dropdown-menu" role="menu" aria-label="Main menu" style="display: none;">
+                {%- for entry in navPages %}
+                  {% if entry.title == "About" or entry.title == "Writing" or entry.title == "Now" %}
+                    <a href="{{ entry.url }}" class="nav-dropdown-item" role="menuitem">{{ entry.title }}</a>
+                  {% endif %}
+                {%- endfor %}
+              </div>
+            </li>
+
+            {# Desktop: Main navigation items #}
             {%- for entry in navPages %}
               {% if entry.title == "About" or entry.title == "Writing" or entry.title == "Now" %}
                 <li class="px-1.5 sm:px-2 py-1 transition-all hidden sm:flex items-center">
@@ -186,72 +209,22 @@
               </a>
             </li>
 
-            {# Accent theme slider - inline in nav, always visible #}
-            <li class="flex items-center ml-1" x-data="{
-              currentIndex: 12,
-              themes: [
-                { name: 'gray',    hex: '#6b7280' },
-                { name: 'slate',   hex: '#64748b' },
-                { name: 'zinc',    hex: '#71717a' },
-                { name: 'neutral', hex: '#737373' },
-                { name: 'stone',   hex: '#78716c' },
-                { name: 'red',     hex: '#ef4444' },
-                { name: 'orange',  hex: '#f97316' },
-                { name: 'amber',   hex: '#f59e0b' },
-                { name: 'yellow',  hex: '#eab308' },
-                { name: 'lime',    hex: '#84cc16' },
-                { name: 'green',   hex: '#22c55e' },
-                { name: 'emerald', hex: '#10b981' },
-                { name: 'teal',    hex: '#14b8a6' },
-                { name: 'cyan',    hex: '#06b6d4' },
-                { name: 'sky',     hex: '#0ea5e9' },
-                { name: 'blue',    hex: '#3b82f6' },
-                { name: 'indigo',  hex: '#6366f1' },
-                { name: 'violet',  hex: '#8b5cf6' },
-                { name: 'purple',  hex: '#a855f7' },
-                { name: 'fuchsia', hex: '#d946ef' },
-                { name: 'pink',    hex: '#ec4899' },
-                { name: 'rose',    hex: '#f43f5e' }
-              ],
-              init() {
-                const saved = localStorage.accentTheme || 'teal';
-                const idx = this.themes.findIndex(t => t.name === saved);
-                this.currentIndex = idx === -1 ? 12 : idx;
-              },
-              pick(i) {
-                this.currentIndex = i;
-                window.setAccentTheme(this.themes[i].name);
-              }
-            }" x-init="init()">
-              {# Mobile: tap colored dot to cycle accent color #}
-              <button class="sm:hidden w-4 h-4 rounded-sm border flex-shrink-0 focus:outline-none focus:ring-2 focus:ring-[var(--accent-color)] focus:ring-offset-2 dark:focus:ring-offset-zinc-900"
-                :style="`background-color: ${themes[currentIndex].hex}; border-color: ${themes[currentIndex].hex}`"
-                @click="pick((currentIndex + 1) % themes.length)"
-                :title="`Accent: ${themes[currentIndex].name} (tap to cycle)`"
-                :aria-label="`Accent color: ${themes[currentIndex].name}. Tap to cycle theme.`"></button>
-              {# Desktop: gradient slider #}
-              <div class="hidden sm:block relative w-28 h-4 overflow-hidden cursor-pointer border border-gray-300 dark:border-gray-700 focus-within:ring-2 focus-within:ring-[var(--accent-color)] focus-within:ring-offset-2 dark:focus-within:ring-offset-zinc-900 rounded-sm" style="background: linear-gradient(to right, #6b7280,#64748b,#71717a,#737373,#78716c,#ef4444,#f97316,#f59e0b,#eab308,#84cc16,#22c55e,#10b981,#14b8a6,#06b6d4,#0ea5e9,#3b82f6,#6366f1,#8b5cf6,#a855f7,#d946ef,#ec4899,#f43f5e);">
-                <div class="absolute top-0 h-full w-0.5 -translate-x-1/2 bg-white/80 pointer-events-none transition-all duration-150"
-                     :style="`left: ${(currentIndex / (themes.length - 1)) * 100}%`"></div>
-                <input type="range" min="0" :max="themes.length - 1" :value="currentIndex"
-                       @input="pick(parseInt($event.target.value))"
-                       @keydown.left.prevent="pick(currentIndex > 0 ? currentIndex - 1 : themes.length - 1)"
-                       @keydown.right.prevent="pick(currentIndex < themes.length - 1 ? currentIndex + 1 : 0)"
-                       aria-label="Accent color theme selector"
-                       class="absolute inset-0 w-full h-full opacity-0 cursor-pointer focus:outline-none">
-              </div>
-            </li>
-
-            <li class="flex items-center">
-              <div id="aiFilterToggle" class="ai-filter-seg" role="group" aria-label="AI content filter" title="Filter content by authorship">
-                <button type="button" data-ai-filter-option="all" aria-label="Show all content">
-                  {% feather "eye", class="w-3 h-3" %}<span class="hidden lg:inline">All</span>
+            <li class="flex items-center relative" x-data="{ open: false }" @keydown.escape="open = false" @click.outside="open = false">
+              <button type="button" @click="open = !open" :aria-expanded="open.toString()"
+                class="ai-filter-trigger font-medium no-underline inline-flex items-center justify-center p-1.5 border border-transparent hover:border-gray-300 dark:hover:border-gray-700 transition-colors"
+                style="color: var(--accent-color)" title="Filter content by authorship" aria-label="Filter content by authorship">
+                {% feather "filter", class="w-4 h-4" %}
+              </button>
+              <div id="aiFilterToggle" x-show="open" x-transition.opacity.duration.100ms @click="open = false"
+                class="nav-dropdown-menu" role="group" aria-label="AI content filter" style="display: none;">
+                <button type="button" data-ai-filter-option="all" class="nav-dropdown-item" aria-label="Show all content">
+                  {% feather "eye", class="w-3.5 h-3.5" %} All content
                 </button>
-                <button type="button" data-ai-filter-option="no-generated" aria-label="Hide AI-generated content">
-                  {% feather "zap", class="w-3 h-3" %}<span class="hidden lg:inline">No-Gen</span>
+                <button type="button" data-ai-filter-option="no-generated" class="nav-dropdown-item" aria-label="Hide AI-generated content">
+                  {% feather "zap", class="w-3.5 h-3.5" %} Hide AI-generated
                 </button>
-                <button type="button" data-ai-filter-option="human-only" aria-label="Show only human-written content">
-                  {% feather "edit-2", class="w-3 h-3" %}<span class="hidden lg:inline">Human</span>
+                <button type="button" data-ai-filter-option="human-only" class="nav-dropdown-item" aria-label="Show only human-written content">
+                  {% feather "edit-2", class="w-3.5 h-3.5" %} Human-written only
                 </button>
               </div>
             </li>
@@ -323,8 +296,48 @@
       </footer>
 
 
+      {# Footer photo band: a genuine halftone (dot size modulated by source
+         luminance, same technique as the homepage avatar, not a CSS filter)
+         of the Toronto skyline. Its own visible band, separate from the
+         wordmark below - in the Nous Research reference, the photo-halftone
+         lives in the hero and the footer is flat color + wordmark only;
+         they never overlap. Keeping that separation here too.
+
+         Day/night pair: the source photo is a daytime shot, so the "day"
+         render just lets the light theme's paper background show through
+         its sparse areas (same technique that caused the tonal-inversion
+         bug elsewhere - here it's used deliberately, since paper-colored
+         gaps correctly read as a pale sky). The "night" render keeps the
+         fixed dark backdrop from before. Sun/moon icon and a few
+         twinkling stars (dark mode only, respects reduced-motion) as a
+         small bit of delight - the one place on the site pure flair
+         over function was asked for. #}
+      <div class="footer-photo-band not-prose">
+        <img class="dark:hidden" src="{{ '/img/footer-landscape-halftone-day.png' | url }}" alt="" aria-hidden="true" loading="lazy" decoding="async">
+        <img class="hidden dark:block" src="{{ '/img/footer-landscape-halftone-night.png' | url }}" alt="" aria-hidden="true" loading="lazy" decoding="async">
+        <span class="footer-band-icon" aria-hidden="true">
+          {% feather "sun", class="block dark:hidden w-5 h-5" %}
+          {% feather "moon", class="hidden dark:block w-5 h-5" %}
+        </span>
+        <span class="footer-band-stars hidden dark:block" aria-hidden="true">
+          <i style="--x:12%; --y:20%; --d:0s;"></i>
+          <i style="--x:78%; --y:12%; --d:0.6s;"></i>
+          <i style="--x:55%; --y:28%; --d:1.2s;"></i>
+          <i style="--x:33%; --y:10%; --d:1.8s;"></i>
+          <i style="--x:90%; --y:24%; --d:0.3s;"></i>
+        </span>
+      </div>
+
       {# Extended footer section #}
-      <div class="border-t border-gray-200 dark:border-gray-700 pt-4 pb-6 not-prose">
+      <div class="relative overflow-hidden border-t border-gray-200 dark:border-gray-700 pt-4 pb-6 not-prose">
+
+        {# Bold oversized wordmark, structural type rather than decoration -
+           the other half of the Nous Research reference alongside the
+           saturated accent and the halftone avatar. Explicit -z-10: an
+           absolutely positioned element with z-index:auto still paints
+           ABOVE normal-flow siblings regardless of DOM order (learned the
+           hard way on the footer illustration earlier this session). #}
+        <p class="footer-wordmark" aria-hidden="true">carteakey</p>
 
         {# Categorized footer navigation - 4-col on md+; flat link list on mobile #}
 
@@ -426,7 +439,7 @@
           </div>
 
         </div>
-        
+
         {# Made with love section #}
         <div class="mt-4 footer-smallprint flex items-center justify-between flex-wrap gap-2">
           <span>Made with ❤️ · <a href="https://www.11ty.dev/" target="_blank" rel="noopener">Eleventy</a> + <a href="https://tailwindcss.com/" target="_blank" rel="noopener">Tailwind</a> · <a href="/colophon/">Colophon</a> · © {{ metadata.author.name }} {{ currentYear }}</span>
