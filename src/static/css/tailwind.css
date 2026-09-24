@@ -2782,6 +2782,14 @@ picture img {
     transition: width 80ms linear;
   }
 
+  .post-title-eyebrow {
+    margin: 0 0 0.5rem;
+    font-family: "Press Start 2P", var(--font-monument);
+    font-size: 0.62rem;
+    letter-spacing: 0.02em;
+    color: var(--accent-color);
+  }
+
   .post-title {
     margin: 0;
     font-family: var(--font-monument);

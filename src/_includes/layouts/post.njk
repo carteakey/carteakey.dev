@@ -115,6 +115,18 @@ hasEthicalAds: false
 
   <article class="post-shell min-w-0 space-y-4 px-4 sm:px-5 xl:px-0 animate-enter">
     <header class="post-header space-y-2.5">
+      {% set primaryTag = (tags | filterTagList)[0] %}
+      {% if primaryTag %}
+        {# Small pixel-accent category tag above the title, echoing the
+           homepage's small-pixel-word + big-serif-lead rhythm (inverted:
+           there it's lead-then-accent inline, here it's accent-then-lead
+           stacked). Universal - works for any title regardless of length
+           or content, so the title itself never needs the pixel
+           treatment (that hurts readability on arbitrary long titles,
+           per direct feedback - the touch lives beside the title, not
+           inside it). #}
+        <p class="post-title-eyebrow">[{{ primaryTag }}]</p>
+      {% endif %}
       <h1 class="post-title">{{ title }}</h1>
 
       {% if isDraft %}
