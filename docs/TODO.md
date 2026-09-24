@@ -60,6 +60,7 @@ This is the repository thinking space merged from `docs/TODO.md`, audit docs, te
 - [x] Add browser-local code snippet favorites. (2026-07-17)
 - [x] Add a browser-local learning progress tracker. (2026-07-17)
 - [x] Add opt-in multilingual page metadata, language switching, and a Hindi proof page. (2026-07-17)
+- [x] Add Notes ↔ Twitter workflow: outbound syndication (`npm run syndicate:note`) and on-demand tweet ingestion (`npm run ingest:tweet`). (2026-09-24)
 
 ### Local LLM Guide Roadmap
 - [x] Run the section-by-section research/image prompt loop and record the source, licensing, and visual decisions. (2026-07-17)

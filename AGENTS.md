@@ -89,6 +89,8 @@ This project uses a manual versioning process. It is your responsibility to keep
 
 - Public activity feeds: Goodreads (`_data/reading.js`) populates `/reading/` and `/now/` with cover thumbnails; manual books, hardcover entries, cover URLs, notes, and Kindle progress overrides live in `_data/reading-manual.yaml`. Letterboxd (`_data/watching.js`) populates `/watching/` and `/now/` with poster thumbnails parsed from RSS descriptions; its RSS feed includes only films logged as dated diary entries, while optional additions, poster URLs, and overrides live in `_data/watching-manual.yaml`. Both integrations cache for six hours and require no credentials.
 
+- Notes & Twitter/X workflow: Site notes in `src/notes/` are the canonical source of truth. Syndicate notes to X via `npm run syndicate:note <path>` (supports `--dry-run`, thread splitting, and `--set-url`). Ingest tweets to notes on-demand via `npm run ingest:tweet -- <url>` (downloads media to `src/static/img/notes/`, sets `tweet_url`). Both directions use `tweet_url` frontmatter to prevent loops and display bidirectional links on single notes and note index cards. Reference skill `.agents/skills/notes-twitter-sync/SKILL.md`.
+
 - Before replacing the editable `/now/` content in `_data/nowPage.yaml`, preserve the outgoing snapshot in `src/now/archive/YYYY-MM-DD.md`. Dynamic Goodreads and Letterboxd sections do not require a new archive snapshot on each feed refresh.
 
 - Data helpers like `src/_data/stats.js` expect Eleventy collections (`data.collections.posts`, `tagList`, etc.); when creating new computed data, follow the pattern of exporting plain objects with functions.
