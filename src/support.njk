@@ -16,20 +16,31 @@ eleventyNavigation:
 <div class="grid gap-4 md:grid-cols-2 not-prose">
   <section class="surface surface-padding">
     <p class="page-eyebrow">Direct support</p>
-    <h2 class="editorial-title-compact mt-1">Buy the next coffee</h2>
-    {% if support.configured %}
+    <h2 class="editorial-title-compact mt-1 flex items-center gap-2">
+      <span class="support-coffee-icon" aria-hidden="true">
+        {% feather "coffee", class="w-5 h-5" %}
+        {% feather "heart", class="support-coffee-heart" %}
+      </span>
+      Buy the next coffee
+    </h2>
+    {% if support.methods.length %}
       <p class="editorial-support mt-2">
-        If something here saved you time, you can leave a one-off tip through {{ support.provider }}.
+        If something here saved you time, you can leave a one-off tip.
       </p>
-      <a
-        href="{{ support.url }}"
-        class="accent-button accent-focus inline-flex items-center gap-2 mt-4 rounded-sm px-4 py-2 text-sm font-semibold no-underline"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        {% feather "coffee", class="w-4 h-4" %}
-        Open {{ support.provider }}
-      </a>
+      <ul class="mt-4 grid gap-2">
+        {% for method in support.methods %}
+          <li>
+            <a href="{{ method.url }}" class="support-method accent-focus" target="_blank" rel="noopener noreferrer">
+              <span class="support-method-icon" aria-hidden="true">{% feather method.icon, class="w-5 h-5" %}</span>
+              <span class="min-w-0 flex-1">
+                <span class="block text-sm font-semibold">{{ method.provider }}</span>
+                <span class="block text-xs editorial-support">{{ method.detail }}</span>
+              </span>
+              {% feather "arrow-up-right", class="w-4 h-4 shrink-0" %}
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
     {% else %}
       <p class="editorial-support mt-2">
         Direct contributions are not enabled right now.

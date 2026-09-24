@@ -304,6 +304,55 @@ picture img {
     background-color: color-mix(in srgb, var(--accent-color) 85%, black);
   }
 
+  .support-coffee-icon,
+  .support-method-icon {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent-color);
+    background: color-mix(in srgb, var(--accent-color) 11%, transparent);
+  }
+
+  .support-coffee-icon {
+    position: relative;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 0.6rem;
+  }
+
+  .support-coffee-heart {
+    position: absolute;
+    width: 0.65rem;
+    height: 0.65rem;
+    right: -0.2rem;
+    top: -0.2rem;
+    fill: currentColor;
+  }
+
+  .support-method {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.6rem 0.7rem;
+    border: 1px solid color-mix(in srgb, var(--accent-color) 30%, transparent);
+    border-radius: 0.2rem;
+    color: inherit;
+    text-decoration: none;
+    transition: border-color 150ms ease, background-color 150ms ease;
+  }
+
+  .support-method:hover {
+    border-color: var(--accent-color);
+    background: color-mix(in srgb, var(--accent-color) 5%, transparent);
+  }
+
+  .support-method-icon {
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+  }
+
   .dark .accent-button:hover {
     background-color: color-mix(in srgb, var(--accent-color) 75%, white);
   }
