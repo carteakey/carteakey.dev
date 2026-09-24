@@ -298,13 +298,34 @@
 
       {# Footer photo band: a genuine halftone (dot size modulated by source
          luminance, same technique as the homepage avatar, not a CSS filter)
-         of a personal landscape photo. Its own visible band, separate from
-         the wordmark below - in the Nous Research reference, the photo-
-         halftone lives in the hero and the footer is flat color + wordmark
-         only; they never overlap. Keeping that separation here too instead
-         of stacking both effects in one place. #}
+         of the Toronto skyline. Its own visible band, separate from the
+         wordmark below - in the Nous Research reference, the photo-halftone
+         lives in the hero and the footer is flat color + wordmark only;
+         they never overlap. Keeping that separation here too.
+
+         Day/night pair: the source photo is a daytime shot, so the "day"
+         render just lets the light theme's paper background show through
+         its sparse areas (same technique that caused the tonal-inversion
+         bug elsewhere - here it's used deliberately, since paper-colored
+         gaps correctly read as a pale sky). The "night" render keeps the
+         fixed dark backdrop from before. Sun/moon icon and a few
+         twinkling stars (dark mode only, respects reduced-motion) as a
+         small bit of delight - the one place on the site pure flair
+         over function was asked for. #}
       <div class="footer-photo-band not-prose">
-        <img src="{{ '/img/footer-landscape-halftone.png' | url }}" alt="" aria-hidden="true" loading="lazy" decoding="async">
+        <img class="dark:hidden" src="{{ '/img/footer-landscape-halftone-day.png' | url }}" alt="" aria-hidden="true" loading="lazy" decoding="async">
+        <img class="hidden dark:block" src="{{ '/img/footer-landscape-halftone-night.png' | url }}" alt="" aria-hidden="true" loading="lazy" decoding="async">
+        <span class="footer-band-icon" aria-hidden="true">
+          {% feather "sun", class="block dark:hidden w-5 h-5" %}
+          {% feather "moon", class="hidden dark:block w-5 h-5" %}
+        </span>
+        <span class="footer-band-stars hidden dark:block" aria-hidden="true">
+          <i style="--x:12%; --y:20%; --d:0s;"></i>
+          <i style="--x:78%; --y:12%; --d:0.6s;"></i>
+          <i style="--x:55%; --y:28%; --d:1.2s;"></i>
+          <i style="--x:33%; --y:10%; --d:1.8s;"></i>
+          <i style="--x:90%; --y:24%; --d:0.3s;"></i>
+        </span>
       </div>
 
       {# Extended footer section #}

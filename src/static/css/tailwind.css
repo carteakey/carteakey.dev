@@ -1853,19 +1853,22 @@ picture img {
     }
   }
 
-  /* Same bug class as the avatar (see .home-avatar-shell): the halftone
-     PNG's sparse/transparent areas are the photo's LIGHT tones (sky). In
-     dark mode those areas showed the page's near-black background through
-     them, flipping the photo's tonal read - the sky rendered as the
-     darkest part of the image, buildings as the brightest. Fixed backdrop
-     here too, but dark rather than light paper: reads as "night skyline,"
-     matches how the Nous reference's own hero/footer band is a fixed
-     saturated color regardless of anything else on the page, and doesn't
-     flip between the site's two themes. */
+  /* Day/night pair (see the day/night comment in base.njk for the full
+     reasoning). Only one <img> is ever display:block at a time (the other
+     is dark:hidden/hidden dark:block), so they don't need absolute
+     stacking - the hidden one takes no layout space. Container background
+     matches whichever is showing: light paper for the day PNG's sparse/
+     near-transparent sky areas to read against, versus the night PNG
+     which bakes its own opaque dark backdrop into the image itself. */
   .footer-photo-band {
+    position: relative;
     width: 100%;
     line-height: 0;
     overflow: hidden;
+    background: var(--zen-paper, #fbfaf6);
+  }
+
+  .dark .footer-photo-band {
     background: #0a0a1f;
   }
 
@@ -1879,6 +1882,46 @@ picture img {
   @media (min-width: 768px) {
     .footer-photo-band img {
       height: 12rem;
+    }
+  }
+
+  .footer-band-icon {
+    position: absolute;
+    top: 0.9rem;
+    right: 1.1rem;
+    color: var(--accent-color);
+    opacity: 0.8;
+    pointer-events: none;
+  }
+
+  .footer-band-stars {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .footer-band-stars i {
+    position: absolute;
+    left: var(--x);
+    top: var(--y);
+    width: 2px;
+    height: 2px;
+    border-radius: 999px;
+    background: #ffffff;
+    opacity: 0.35;
+    animation: footer-star-twinkle 2.6s ease-in-out infinite;
+    animation-delay: var(--d);
+  }
+
+  @keyframes footer-star-twinkle {
+    0%, 100% { opacity: 0.25; }
+    50% { opacity: 0.95; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .footer-band-stars i {
+      animation: none;
+      opacity: 0.6;
     }
   }
 
