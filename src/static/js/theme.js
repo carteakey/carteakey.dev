@@ -33,43 +33,48 @@ const ACCENT_COLORS = {
 
 // Recolors the transparent sketch illustrations (stamp-cobalt) to match the
 // chosen accent. Solved by simulating the actual CSS Filter Effects matrices
-// (invert/sepia/saturate/hue-rotate/brightness). Two earlier versions of
-// this each overfit to one calibration image's characteristic ink tone:
+// (invert/sepia/saturate/hue-rotate/brightness). Three earlier versions of
+// this each missed a different part of the problem:
 // v1 forced every pixel through brightness(0)/saturate(100%) first, which
 // erased the light-vs-dark *opaque* gray shading some icons use for detail
 // (not alpha) - fan blades and gauge markings flattened into solid
 // silhouettes. v2 dropped that but calibrated only against one sketch's
 // near-black ink (~rgb(13,13,13)); a different icon with a much lighter
-// natural ink tone (~rgb(74,74,74), no true dark anchor at all) still
-// flattened under the resulting high saturate/contrast values, which
-// amplify range-dependent behavior. This version solves against BOTH
-// tones at once (minimizes combined error) with contrast dropped entirely
-// and saturate capped low (<=5x) so the transform stays gentle enough to
-// degrade gracefully on any sketch's tonal range, at the cost of being a
-// looser match to the exact target hex than either earlier version.
+// natural tone still flattened. v3 solved against two source tones at
+// once but still visibly mismatched between images (e.g. one thumbnail
+// reading orange, another red, at the same accent) - the actual root
+// cause turned out to be upstream: post_thumbnail's 64px minimum width
+// (see generatePostThumbnailMetadata in eleventy.config.mjs) blurred each
+// sketch's thin ink strokes by a different amount depending on line
+// density, before this filter ever ran (measured: one source's ~14/255
+// ink landed at ~83/255 post-resize at 64px, another barely moved).
+// Raising that floor to 96px shrank the gap between sources substantially
+// (~64 vs ~74/255, was ~13 vs ~74) - recalibrated here against those
+// post-fix values, which is why this version can afford more saturation
+// than v3 while still tracking closely across different source images.
 const STAMP_FILTERS = {
-  gray: "invert(25%) sepia(65%) saturate(70%) hue-rotate(180deg) brightness(100%)",
+  gray: "invert(25%) sepia(100%) saturate(50%) hue-rotate(180deg) brightness(95%)",
   slate: "invert(25%) sepia(90%) saturate(110%) hue-rotate(177deg) brightness(95%)",
   zinc: "invert(25%) sepia(90%) saturate(30%) hue-rotate(201deg) brightness(95%)",
   neutral: "invert(25%) sepia(50%) saturate(30%) hue-rotate(234deg) brightness(105%)",
-  stone: "invert(25%) sepia(90%) saturate(30%) hue-rotate(342deg) brightness(95%)",
-  red: "invert(25%) sepia(100%) saturate(490%) hue-rotate(318deg) brightness(110%)",
+  stone: "invert(25%) sepia(100%) saturate(30%) hue-rotate(342deg) brightness(95%)",
+  red: "invert(25%) sepia(100%) saturate(490%) hue-rotate(318deg) brightness(95%)",
   orange: "invert(25%) sepia(100%) saturate(490%) hue-rotate(342deg) brightness(110%)",
-  amber: "invert(25%) sepia(100%) saturate(490%) hue-rotate(348deg) brightness(110%)",
+  amber: "invert(25%) sepia(100%) saturate(490%) hue-rotate(351deg) brightness(110%)",
   yellow: "invert(25%) sepia(100%) saturate(490%) hue-rotate(354deg) brightness(110%)",
   lime: "invert(25%) sepia(100%) saturate(490%) hue-rotate(33deg) brightness(110%)",
   green: "invert(25%) sepia(100%) saturate(330%) hue-rotate(96deg) brightness(110%)",
   emerald: "invert(25%) sepia(100%) saturate(490%) hue-rotate(117deg) brightness(110%)",
-  teal: "invert(25%) sepia(100%) saturate(490%) hue-rotate(132deg) brightness(110%)",
-  cyan: "invert(25%) sepia(100%) saturate(490%) hue-rotate(150deg) brightness(110%)",
+  teal: "invert(25%) sepia(100%) saturate(370%) hue-rotate(132deg) brightness(110%)",
+  cyan: "invert(25%) sepia(100%) saturate(490%) hue-rotate(147deg) brightness(110%)",
   sky: "invert(25%) sepia(100%) saturate(490%) hue-rotate(156deg) brightness(110%)",
-  blue: "invert(25%) sepia(100%) saturate(490%) hue-rotate(183deg) brightness(110%)",
-  indigo: "invert(25%) sepia(100%) saturate(490%) hue-rotate(201deg) brightness(110%)",
-  violet: "invert(25%) sepia(100%) saturate(490%) hue-rotate(216deg) brightness(110%)",
-  purple: "invert(25%) sepia(100%) saturate(490%) hue-rotate(225deg) brightness(110%)",
+  blue: "invert(25%) sepia(100%) saturate(470%) hue-rotate(180deg) brightness(105%)",
+  indigo: "invert(25%) sepia(100%) saturate(490%) hue-rotate(201deg) brightness(95%)",
+  violet: "invert(25%) sepia(100%) saturate(490%) hue-rotate(219deg) brightness(95%)",
+  purple: "invert(25%) sepia(100%) saturate(470%) hue-rotate(228deg) brightness(100%)",
   fuchsia: "invert(25%) sepia(100%) saturate(490%) hue-rotate(249deg) brightness(105%)",
-  pink: "invert(25%) sepia(100%) saturate(490%) hue-rotate(288deg) brightness(110%)",
-  rose: "invert(25%) sepia(100%) saturate(490%) hue-rotate(306deg) brightness(110%)"
+  pink: "invert(25%) sepia(100%) saturate(490%) hue-rotate(282deg) brightness(95%)",
+  rose: "invert(25%) sepia(100%) saturate(490%) hue-rotate(306deg) brightness(95%)"
 };
 
 const isDarkMode = () =>
