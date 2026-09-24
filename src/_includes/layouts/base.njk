@@ -11,7 +11,7 @@
   {# Fraunces: monumental display serif, used sparingly for hero headlines #}
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Press+Start+2P&display=swap" />
 
   {# Site fonts are self-hosted via src/static/fonts/. #}
   <meta name="generator" content="Eleventy">
@@ -295,6 +295,17 @@
         </div>
       </footer>
 
+
+      {# Footer photo band: a genuine halftone (dot size modulated by source
+         luminance, same technique as the homepage avatar, not a CSS filter)
+         of a personal landscape photo. Its own visible band, separate from
+         the wordmark below - in the Nous Research reference, the photo-
+         halftone lives in the hero and the footer is flat color + wordmark
+         only; they never overlap. Keeping that separation here too instead
+         of stacking both effects in one place. #}
+      <div class="footer-photo-band not-prose">
+        <img src="{{ '/img/footer-landscape-halftone.png' | url }}" alt="" aria-hidden="true" loading="lazy" decoding="async">
+      </div>
 
       {# Extended footer section #}
       <div class="relative overflow-hidden border-t border-gray-200 dark:border-gray-700 pt-4 pb-6 not-prose">

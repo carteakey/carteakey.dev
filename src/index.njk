@@ -7,47 +7,7 @@ ogLocale: en_CA
 ---
 {% from "components/feed-card.njk" import feedCard %}
 
-{% set highlightedPost = collections.featuredPost %}
-{% set feedItems = collections.feed | head(6) %}
-{% set popularPosts = (collections.popularPosts | default([])) | head(5) %}
-{% set homeIndexItems = [
-  {
-    url: "/blog/",
-    name: "Writing",
-    count: collections.posts | length,
-    note: "Long-form writing on data, local AI, self-hosting, systems, and the internet."
-  },
-  {
-    url: "/notes/",
-    name: "Notes",
-    count: collections.notes | length,
-    note: "Working thoughts, small logs, experiments, and ideas that are not done yet."
-  },
-  {
-    url: "/projects/",
-    name: "Projects",
-    count: projects.projects | length,
-    note: "Things I build, ship, abandon, and occasionally return to with better judgment."
-  },
-  {
-    url: "/snippets/",
-    name: "Snippets",
-    count: collections.snippets | length,
-    note: "A collection of useful code snippets and quick tips."
-  },
-  {
-    url: "/feed/",
-    name: "Feed",
-    count: "Log",
-    note: "A unified timeline of everything I publish on this site."
-  },
-  {
-    url: "/quotations/",
-    name: "Quotations",
-    count: collections.quotations | length,
-    note: "Borrowed clarity. Lines worth keeping around because they continue to explain things."
-  }
-] %}
+{% set feedItems = collections.feed | head(15) %}
 
 <div class="home-index-shell not-prose">
   <section class="home-intro-grid animate-enter">
@@ -83,57 +43,9 @@ ogLocale: en_CA
 
   </section>
 
-  <section class="home-grid-two animate-enter stagger-1">
-    {% if startHere and startHere.length %}
-      <div>
-        <div class="home-panel-head">
-          <p class="home-panel-kicker">Featured Posts</p>
-          <a href="/blog/" class="home-panel-link">All writing →</a>
-        </div>
-
-        <ul class="home-selected-list">
-          {% for item in startHere %}
-            <li class="home-selected-item">
-              <a href="{{ item.url | url }}" class="home-selected-link">
-                {% if item.image %}
-                  {% post_thumbnail item.image, item.imageAlt or item.title, "stamp-cobalt home-selected-image", 96 %}
-                {% endif %}
-                <span class="home-selected-copy">
-                  <span class="home-selected-title">{{ item.title }}</span>
-                  {% if item.note %}
-                    <span class="home-selected-note">{{ item.note }}</span>
-                  {% endif %}
-                </span>
-              </a>
-            </li>
-          {% endfor %}
-        </ul>
-      </div>
-    {% endif %}
-
-    <div>
+  <section class="home-recent-panel home-recent-panel-primary animate-enter stagger-1">
       <div class="home-panel-head">
-        <p class="home-panel-kicker">Site Index</p>
-        <a href="/more/" class="home-panel-link">Full map →</a>
-      </div>
-
-      <div class="home-directory-grid">
-        {% for item in homeIndexItems %}
-          <a href="{{ item.url }}" class="home-directory-item">
-            <span class="home-directory-heading">
-              <span class="home-directory-name">{{ item.name }}</span>
-              <span class="home-directory-count">{{ item.count }}</span>
-            </span>
-            <span class="home-directory-note">{{ item.note }}</span>
-          </a>
-        {% endfor %}
-      </div>
-    </div>
-  </section>
-
-  <section class="home-recent-panel animate-enter stagger-2">
-      <div class="home-panel-head">
-        <p class="home-panel-kicker">Recent Activity</p>
+        <p class="home-panel-kicker">Dispatches</p>
         <a href="/feed/" class="home-panel-link">All updates →</a>
       </div>
 

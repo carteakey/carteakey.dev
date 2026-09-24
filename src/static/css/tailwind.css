@@ -1830,18 +1830,37 @@ picture img {
     line-height: 1;
     letter-spacing: -0.02em;
     color: transparent;
-    -webkit-text-stroke: 1px rgb(17 24 39 / 0.08);
+    -webkit-text-stroke: 1.5px rgb(17 24 39 / 0.16);
     pointer-events: none;
     user-select: none;
   }
 
   .dark .footer-wordmark {
-    -webkit-text-stroke: 1px rgb(255 255 255 / 0.09);
+    -webkit-text-stroke: 1.5px rgb(255 255 255 / 0.18);
   }
 
   @media (max-width: 900px) {
     .footer-wordmark {
       display: none;
+    }
+  }
+
+  .footer-photo-band {
+    width: 100%;
+    line-height: 0;
+    overflow: hidden;
+  }
+
+  .footer-photo-band img {
+    display: block;
+    width: 100%;
+    height: 9rem;
+    object-fit: cover;
+  }
+
+  @media (min-width: 768px) {
+    .footer-photo-band img {
+      height: 12rem;
     }
   }
 
@@ -1968,25 +1987,26 @@ picture img {
     align-items: start;
   }
 
+  /* Fixed light backing regardless of site theme - not "background:
+     transparent in light mode, near-black in dark mode" like most
+     surfaces. The halftone SVG's gaps (the photo's light-toned areas,
+     e.g. background/highlights) are transparent; if the page's own dark-
+     mode background shows through them, light-toned regions of the photo
+     render as the darkest thing on screen and the tonal relationship
+     flips - the photo starts reading as a negative. */
   .home-avatar-shell {
     position: relative;
-    width: 6.5rem;
-    height: 6.5rem;
-    border-radius: 0.12rem;
+    width: 9.5rem;
+    height: 9.5rem;
     overflow: hidden;
-    border: 2px solid var(--accent-color);
-    background: rgb(251 250 246 / 0.92);
+    background: #f4f3ee;
   }
 
   @media (min-width: 768px) {
     .home-avatar-shell {
-      width: 8.6rem;
-      height: 8.6rem;
+      width: 13rem;
+      height: 13rem;
     }
-  }
-
-  .dark .home-avatar-shell {
-    background: rgb(24 24 27 / 0.92);
   }
 
   .home-avatar-shell img {
@@ -2069,7 +2089,12 @@ picture img {
   }
 
   .home-title-accent {
+    display: inline-block;
     color: var(--accent-color);
+    font-family: "Press Start 2P", var(--font-monument);
+    font-size: 0.5em;
+    letter-spacing: 0;
+    vertical-align: -0.05em;
   }
 
   .home-typing-line {
@@ -2139,26 +2164,18 @@ picture img {
     color: rgb(212 212 216 / 1);
   }
 
-  .home-grid-two,
-  .home-grid-four {
-    display: grid;
-    gap: 1.5rem;
-  }
-
   .home-recent-panel {
     width: 100%;
     max-width: none;
     margin-inline: 0;
   }
 
-  /* Recent Activity is a chronological log, secondary to the curated
-     Featured Posts above it - quieted so the two don't compete. */
-  .home-recent-panel .home-panel-kicker {
-    opacity: 0.75;
-  }
-
-  .home-recent-panel .editorial-title-compact {
-    font-size: 0.93rem;
+  /* "Dispatches" is now the homepage's only content section (Featured
+     Posts and Site Index were removed) - full visual weight, no longer
+     dimmed relative to a curated section that no longer exists. */
+  .home-recent-panel-primary .editorial-title-compact {
+    font-size: 1.05rem;
+    font-weight: 700;
   }
 
   /* Prevent the implicit mobile grid track from expanding to a card's content. */
@@ -2565,237 +2582,6 @@ picture img {
     text-transform: uppercase;
     letter-spacing: 0.04em;
     color: var(--accent-color);
-  }
-
-  .home-selected-list,
-  .home-popular-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  .home-selected-item,
-  .home-popular-item {
-    padding: 0.85rem 0;
-    border-bottom: 1px solid rgb(229 223 211 / 0.95);
-  }
-
-  .dark .home-selected-item,
-  .dark .home-popular-item {
-    border-bottom-color: rgb(39 39 42 / 0.9);
-  }
-
-  .home-selected-title {
-    display: block;
-    font-family: var(--font-serif);
-    font-size: 1.18rem;
-    font-weight: 700;
-    line-height: 1.28;
-    letter-spacing: -0.005em;
-    color: rgb(17 24 39 / 1);
-    text-decoration: none;
-  }
-
-  .home-selected-link {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    gap: 0.8rem;
-    align-items: center;
-    color: inherit;
-    text-decoration: none;
-  }
-
-  .home-selected-link:hover .home-selected-title {
-    color: var(--accent-color);
-  }
-
-  .home-selected-copy {
-    min-width: 0;
-  }
-
-  .home-selected-link > picture {
-    display: block;
-    grid-column: 2;
-    grid-row: 1;
-    width: 4.75rem;
-    height: 4.75rem;
-  }
-
-  .home-selected-image {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    border: 0;
-    background: transparent;
-    padding: 0;
-  }
-
-  .dark .home-selected-image {
-    background: transparent;
-  }
-
-  .dark .home-selected-title {
-    color: rgb(250 250 250 / 1);
-  }
-
-  .home-selected-note {
-    display: block;
-    margin: 0.2rem 0 0;
-    font-family: var(--font-serif);
-    font-size: 0.9rem;
-    line-height: 1.48;
-    color: rgb(107 114 128 / 1);
-  }
-
-  .dark .home-selected-note {
-    color: rgb(161 161 170 / 1);
-  }
-
-  .home-directory-grid {
-    display: grid;
-    gap: 0;
-  }
-
-  @media (min-width: 640px) {
-    .home-directory-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      column-gap: 1rem;
-    }
-  }
-
-  .home-directory-item {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: 0.2rem;
-    padding: 0.5rem 0;
-    border-bottom: 1px solid rgb(229 223 211 / 0.95);
-    transition: color 160ms ease;
-    text-decoration: none;
-    color: inherit;
-  }
-
-  .dark .home-directory-item {
-    border-bottom-color: rgb(39 39 42 / 0.9);
-  }
-
-  .home-directory-item:focus-visible {
-    outline: 2px solid var(--accent-color);
-    outline-offset: 3px;
-  }
-
-  .home-directory-item:hover .home-directory-name,
-  .home-directory-item:focus-visible .home-directory-name {
-    color: var(--accent-color);
-  }
-
-  .home-directory-heading {
-    display: flex;
-    align-items: baseline;
-    gap: 0.5rem;
-    min-width: 0;
-  }
-
-  .home-directory-name {
-    font-family: var(--font-sans);
-    font-size: 0.86rem;
-    font-weight: 600;
-    line-height: 1.1;
-    letter-spacing: 0;
-    color: rgb(17 24 39 / 1);
-  }
-
-  .dark .home-directory-name {
-    color: rgb(244 244 245 / 1);
-  }
-
-  .home-directory-count {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    color: rgb(115 115 115 / 1);
-  }
-
-  .home-directory-note {
-    font-family: var(--font-sans);
-    font-size: 0.8rem;
-    line-height: 1.38;
-    color: rgb(107 114 128 / 1);
-  }
-
-  .dark .home-directory-note {
-    color: rgb(161 161 170 / 1);
-  }
-
-  .home-featured {
-    display: grid;
-    gap: 0.8rem;
-  }
-
-  @media (min-width: 640px) {
-    .home-featured {
-      grid-template-columns: minmax(0, 1fr) auto;
-      align-items: start;
-    }
-  }
-
-  .home-featured-title {
-    margin: 0;
-    font-family: var(--font-sans);
-    font-size: 1.24rem;
-    line-height: 1.1;
-    letter-spacing: 0;
-    font-weight: 700;
-    color: rgb(17 24 39 / 1);
-  }
-
-  .dark .home-featured-title {
-    color: rgb(250 250 250 / 1);
-  }
-
-  .home-featured-title a {
-    color: inherit;
-    text-decoration: none;
-  }
-
-  .home-featured-title a:hover {
-    color: var(--accent-color);
-  }
-
-  .home-featured-description {
-    margin: 0.35rem 0 0;
-    font-family: var(--font-sans);
-    font-size: 0.92rem;
-    line-height: 1.42;
-    color: rgb(82 82 91 / 1);
-  }
-
-  .dark .home-featured-description {
-    color: rgb(161 161 170 / 1);
-  }
-
-  .home-featured-meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.45rem;
-    margin-top: 0.65rem;
-    align-items: center;
-  }
-
-  .home-featured-image img {
-    display: block;
-    width: 6.25rem;
-    height: 6.25rem;
-    object-fit: contain;
-    border: 1px solid rgb(214 207 193 / 1);
-    background: rgb(251 250 246 / 0.82);
-    padding: 0.4rem;
-  }
-
-  .dark .home-featured-image img {
-    border-color: rgb(63 63 70 / 1);
-    background: rgb(20 20 20 / 0.82);
   }
 
   .home-quote {
