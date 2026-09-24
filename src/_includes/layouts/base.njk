@@ -458,7 +458,23 @@
           </div>
 
         </div>
-        
+
+        {# Footer illustration: same cobalt-sketch language as the post stamps -
+           analytics -> local AI/server -> homelab rack -> internet archives,
+           matching the homepage eyebrow line. Plain <img>, not the {% image %}
+           shortcode, because that shortcode's jpeg fallback format would flatten
+           the transparent background to solid white for non-avif/webp browsers -
+           same reasoning as the post header stamp above. #}
+        <div class="not-prose flex justify-center mt-6">
+          <img
+            src="{{ '/img/footer-sketch.png' | url }}"
+            alt="Sketch of a chain of icons: an analytics dashboard, a local server tower, a homelab server rack behind an open door, and an archive box with a magnifying glass"
+            loading="lazy"
+            decoding="async"
+            class="stamp-cobalt w-full max-w-3xl h-auto opacity-80"
+          >
+        </div>
+
         {# Made with love section #}
         <div class="mt-4 footer-smallprint flex items-center justify-between flex-wrap gap-2">
           <span>Made with ❤️ · <a href="https://www.11ty.dev/" target="_blank" rel="noopener">Eleventy</a> + <a href="https://tailwindcss.com/" target="_blank" rel="noopener">Tailwind</a> · <a href="/colophon/">Colophon</a> · © {{ metadata.author.name }} {{ currentYear }}</span>
