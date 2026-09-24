@@ -2193,7 +2193,7 @@ picture img {
     font-size: 1.45rem;
     letter-spacing: 0;
     vertical-align: -0.05em;
-    animation: kartikey-glitch-loop 8s steps(7, jump-end) infinite;
+    animation: kartikey-glitch-loop 3s steps(7, jump-end) infinite;
   }
 
   @media (min-width: 768px) {
@@ -2203,9 +2203,9 @@ picture img {
   }
 
   /* Recurring neon-sign-style flicker: a brief RGB-split glitch near the
-     start of each 8s loop, then a long quiet hold at rest. Deliberately
-     rare rather than a constant glitch - constant motion on a name in
-     the H1 would hurt readability, but an occasional flicker reads as a
+     start of each 3s loop, then a quiet hold at rest. Deliberately rare
+     rather than a constant glitch - constant motion on a name in the H1
+     would hurt readability, but an occasional flicker reads as a
      tasteful "this sign is still on" detail. */
   @keyframes kartikey-glitch-loop {
     0%, 100% {
@@ -2213,29 +2213,29 @@ picture img {
       text-shadow: none;
       transform: translateX(0);
     }
-    1.1% {
+    2.93% {
       opacity: 1;
       text-shadow: -2px 0 #ff2d55, 2px 0 #00eaff;
       transform: translateX(2px);
     }
-    1.65% {
+    4.4% {
       opacity: 0.15;
       text-shadow: none;
       transform: translateX(0);
     }
-    2.48% {
+    6.6% {
       opacity: 1;
       text-shadow: 2px 0 #ff2d55, -2px 0 #00eaff;
     }
-    3.3% {
+    8.8% {
       opacity: 0.4;
       text-shadow: none;
     }
-    4.13% {
+    11% {
       opacity: 1;
       text-shadow: -1px 0 #ff2d55, 1px 0 #00eaff;
     }
-    5.23% {
+    13.93% {
       opacity: 1;
       text-shadow: none;
       transform: translateX(0);
