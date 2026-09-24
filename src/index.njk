@@ -53,17 +53,7 @@ ogLocale: en_CA
   <section class="home-intro-grid animate-enter">
     <div class="home-intro-main">
       <div class="home-avatar-shell duotone-cobalt shrink-0">
-        <img
-          src="{{ '/img/headshot-pixel.png' | url }}"
-          alt="Kartikey Chauhan"
-          width="22"
-          height="22"
-          loading="eager"
-          decoding="async"
-          class="w-full h-full object-cover"
-          data-zoomable
-          data-zoom-src="{{ '/img/headshot-zoom.jpg' | url }}"
-        >
+        {% image "./src/static/img/headshot.png" , "Kartikey Chauhan", "w-full h-full object-cover", "./src/static/img/headshot-zoom.jpg" %}
       </div>
 
       <div>
