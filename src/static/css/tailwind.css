@@ -2088,7 +2088,6 @@ picture img {
     margin: 0;
     font-family: var(--font-monument);
     font-optical-sizing: auto;
-    font-size: 2.9rem;
     line-height: 0.94;
     letter-spacing: -0.01em;
     font-weight: 900;
@@ -2096,23 +2095,42 @@ picture img {
     color: rgb(17 24 39 / 1);
   }
 
-  @media (min-width: 768px) {
-    .home-title {
-      font-size: 4.4rem;
-    }
-  }
-
   .dark .home-title {
     color: rgb(250 250 250 / 1);
+  }
+
+  /* "Hi, I'm" and "Kartikey." are sized independently now (not one em-
+     relative to the other) - they read as two different type treatments
+     (serif vs. pixel-accent) at two different scales on purpose, not a
+     single proportional headline. Direct feedback: at equal relative
+     scale the serif lead read "too flashy"/oversized next to the pixel
+     word once both got big; turning down just the lead fixed it without
+     needing to touch the accent word at all. */
+  .home-title-lead {
+    font-size: 2.5rem;
+    margin-right: 0.4rem;
+  }
+
+  @media (min-width: 768px) {
+    .home-title-lead {
+      font-size: 3.9rem;
+      margin-right: 0.65rem;
+    }
   }
 
   .home-title-accent {
     display: inline-block;
     color: var(--accent-color);
     font-family: "Press Start 2P", var(--font-monument);
-    font-size: 0.5em;
+    font-size: 1.45rem;
     letter-spacing: 0;
     vertical-align: -0.05em;
+  }
+
+  @media (min-width: 768px) {
+    .home-title-accent {
+      font-size: 2.2rem;
+    }
   }
 
   .home-typing-line {
@@ -2718,8 +2736,8 @@ picture img {
     margin: 0;
     font-family: var(--font-monument);
     font-optical-sizing: auto;
-    font-size: 2.05rem;
-    line-height: 1.04;
+    font-size: 1.85rem;
+    line-height: 1.06;
     letter-spacing: -0.005em;
     font-weight: 800;
     color: rgb(17 24 39 / 1);
@@ -2727,7 +2745,7 @@ picture img {
 
   @media (min-width: 768px) {
     .post-title {
-      font-size: 2.75rem;
+      font-size: 2.4rem;
     }
   }
 
