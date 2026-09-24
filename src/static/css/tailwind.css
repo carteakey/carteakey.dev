@@ -2193,7 +2193,7 @@ picture img {
     font-size: 1.45rem;
     letter-spacing: 0;
     vertical-align: -0.05em;
-    animation: kartikey-glitch-in 1.1s steps(7, jump-end) 1 both;
+    animation: kartikey-glitch-loop 8s steps(7, jump-end) infinite;
   }
 
   @media (min-width: 768px) {
@@ -2202,38 +2202,40 @@ picture img {
     }
   }
 
-  /* One-time CRT power-on flicker on page load - a single orchestrated
-     moment, not a continuous loop. RGB-split offsets mimic a misaligned
-     scanline before the glyph settles into place. */
-  @keyframes kartikey-glitch-in {
-    0% {
-      opacity: 0;
-      text-shadow: 2px 0 #ff2d55, -2px 0 #00eaff;
-      transform: translateX(-2px);
+  /* Recurring neon-sign-style flicker: a brief RGB-split glitch near the
+     start of each 8s loop, then a long quiet hold at rest. Deliberately
+     rare rather than a constant glitch - constant motion on a name in
+     the H1 would hurt readability, but an occasional flicker reads as a
+     tasteful "this sign is still on" detail. */
+  @keyframes kartikey-glitch-loop {
+    0%, 100% {
+      opacity: 1;
+      text-shadow: none;
+      transform: translateX(0);
     }
-    8% {
+    1.1% {
       opacity: 1;
       text-shadow: -2px 0 #ff2d55, 2px 0 #00eaff;
       transform: translateX(2px);
     }
-    12% {
+    1.65% {
       opacity: 0.15;
       text-shadow: none;
       transform: translateX(0);
     }
-    18% {
+    2.48% {
       opacity: 1;
       text-shadow: 2px 0 #ff2d55, -2px 0 #00eaff;
     }
-    24% {
+    3.3% {
       opacity: 0.4;
       text-shadow: none;
     }
-    30% {
+    4.13% {
       opacity: 1;
       text-shadow: -1px 0 #ff2d55, 1px 0 #00eaff;
     }
-    38%, 100% {
+    5.23% {
       opacity: 1;
       text-shadow: none;
       transform: translateX(0);
