@@ -1872,8 +1872,15 @@ picture img {
     background: #0a0a1f;
   }
 
+  /* No display:block here - Tailwind's .hidden/.dark:block/.dark:hidden
+     utilities on the two <img> tags need to control display themselves,
+     and a same-or-higher-specificity rule setting display unconditionally
+     would silently beat them regardless of theme (which is exactly what
+     happened: both images rendered display:block at once, in both
+     themes, because this rule's specificity (class+type) beat .hidden's
+     (class only)). The parent's line-height: 0 already removes the
+     inline-image whitespace gap this would otherwise have prevented. */
   .footer-photo-band img {
-    display: block;
     width: 100%;
     height: 9rem;
     object-fit: cover;
