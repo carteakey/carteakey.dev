@@ -157,3 +157,33 @@ proceeding further.
   work as done. Several fixes shipped as "done" earlier in this session
   turned out to be invisible or broken when actually rendered - guessing
   from CSS alone repeatedly produced false confidence.
+
+## Next steps / handoff
+
+Pushed to `design/grain-texture` as of commit `04f9cb7` (homepage pixel-font
+H1 + recurring CRT glitch on the accent name, footer day/night pair, post
+title/eyebrow/progress-bar upgrades, halftone-generator skill). Not yet
+merged to `main`. Picking up from here:
+
+1. **Stale accent color constant in `theme.js`** - `ACCENT_COLOR` is still
+   `#64748b` (the pre-Nous-pivot slate value) while `tailwind.css` uses
+   `#2323e6`. Check what this constant actually drives (theme-color meta
+   tag sync) and update it to match.
+2. **Extend the pixel/cobalt identity to remaining templates** - home and
+   post pages are done; tags, about, now, projects, and the 404 page
+   haven't been touched yet and will look inconsistent next to them. Keep
+   doing this 2-at-a-time with real screenshots, not all at once - the
+   "cringe" overcorrection earlier in this log happened from moving too
+   fast without checking taste along the way.
+3. **Replace the homepage avatar with a genuine halftone** using
+   `.agents/skills/halftone-generator/` now that it exists - the avatar
+   currently still uses the plain `headshot.png` via `.duotone-cobalt`,
+   not a real halftone. User has said they'll eventually swap the source
+   photo, which is the actual trigger for this.
+4. **Housekeeping**: `src/static/img/footer-sketch.png` is an unreferenced
+   leftover that keeps showing as modified in git status without ever
+   being used anywhere - confirm it's dead and delete it. Also: GitHub
+   flagged 3 high-severity Dependabot alerts on `main` (unrelated to this
+   design work, but unaddressed).
+5. Once the identity feels consistent across templates, open a PR from
+   `design/grain-texture` into `main`.
