@@ -131,15 +131,12 @@
 }
 
 :root {
-  /* Fixed site accent (slate) - was previously a 22-color user picker.
-     Removed after feedback that a customizable palette read as
-     indecisive; a site should commit to one color. See theme.js for
-     the same reasoning on the JS side. */
-  --accent-color: #64748b;
-  /* .stamp-cobalt recolor matched to --accent-color above (solved by
-     simulating the CSS Filter Effects matrices - see STAMP_FILTERS'
-     history in theme.js before it was simplified to this one value). */
-  --stamp-filter: invert(25%) sepia(90%) saturate(110%) hue-rotate(177deg) brightness(95%);
+  /* Fixed site accent - was a 22-color user picker, then a muted slate,
+     now a full commitment to one saturated ultramarine (Nous Research
+     pivot - see docs/DESIGN_EXPERIMENTATION_LOG.md). Sketch illustrations
+     (.stamp-cobalt) deliberately do NOT follow this - see that rule for
+     why. */
+  --accent-color: #2323e6;
 }
 
 :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
@@ -1922,6 +1919,7 @@ picture img {
   }
 
   .home-intro-grid {
+    position: relative;
     display: grid;
     gap: 1rem;
     padding-bottom: 1rem;
@@ -1996,27 +1994,16 @@ picture img {
   }
 
   /*
-    Alpha-safe accent recolor for transparent monochrome sketch illustrations
-    (the post header/OG stamps, feed-card thumbnails). CSS filter operates
-    per-pixel on RGB only, so transparent areas stay transparent - unlike
-    .duotone-cobalt above, which needs mix-blend-mode and can't be used on
-    art with a transparent backdrop without also tinting the page behind it.
-
-    --stamp-filter is a full recolor recipe solved per accent theme (see
-    STAMP_FILTERS in theme.js) so this closely matches --accent-color rather
-    than approximating it with one shared hue-rotate. Deliberately does NOT
-    force the source to a single tone (e.g. via brightness(0)) first: this
-    art uses light-vs-dark *opaque* gray values, not alpha, for shading and
-    fine detail, and collapsing everything to one starting tone flattened
-    detailed icons into solid silhouettes. Solved instead against the art's
-    real bold-ink tone, with brightness capped so lighter shading pixels
-    don't blow out - see the STAMP_FILTERS comment in theme.js for the full
-    reasoning and the resulting per-theme fit quality.
-    Same value in light and dark - it's a flat recolor, not a blend against
-    the page background, so it doesn't need a per-theme dark variant.
+    Sketch illustrations (post header/OG stamps, feed-card thumbnails) stay
+    plain grayscale - no accent tint. Earlier this session they were
+    recolored to match --accent-color, but different sketches have
+    different natural ink density/tone, so the identical filter produced
+    visibly different-looking colors across images ("messy" - direct
+    feedback). Simplest fix: don't recolor them. dark:invert flips the
+    dark ink to light so it's still visible on a dark background.
   */
-  .stamp-cobalt {
-    filter: var(--stamp-filter);
+  .dark .stamp-cobalt {
+    filter: invert(1) brightness(1.1);
   }
 
   .home-eyebrow {
