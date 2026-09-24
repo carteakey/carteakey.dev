@@ -1,4 +1,5 @@
-const DEFAULT_PROVIDER = 'Buy Me a Coffee';
+const DEFAULT_PROVIDER = 'Ko-fi';
+const DEFAULT_URL = 'https://ko-fi.com/carteakey';
 
 function isSafeSupportUrl(value) {
   if (!value) return false;
@@ -11,7 +12,7 @@ function isSafeSupportUrl(value) {
 }
 
 export default function () {
-  const url = process.env.SUPPORT_URL?.trim() || '';
+  const url = process.env.SUPPORT_URL?.trim() || DEFAULT_URL;
   const provider = process.env.SUPPORT_PROVIDER?.trim() || DEFAULT_PROVIDER;
 
   return {
