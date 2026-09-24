@@ -297,7 +297,15 @@
 
 
       {# Extended footer section #}
-      <div class="border-t border-gray-200 dark:border-gray-700 pt-4 pb-6 not-prose">
+      <div class="relative overflow-hidden border-t border-gray-200 dark:border-gray-700 pt-4 pb-6 not-prose">
+
+        {# Bold oversized wordmark, structural type rather than decoration -
+           the other half of the Nous Research reference alongside the
+           saturated accent and the halftone avatar. Explicit -z-10: an
+           absolutely positioned element with z-index:auto still paints
+           ABOVE normal-flow siblings regardless of DOM order (learned the
+           hard way on the footer illustration earlier this session). #}
+        <p class="footer-wordmark" aria-hidden="true">carteakey</p>
 
         {# Categorized footer navigation - 4-col on md+; flat link list on mobile #}
 

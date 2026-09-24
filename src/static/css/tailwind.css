@@ -1814,6 +1814,37 @@ picture img {
     color: rgb(250 250 250 / 1);
   }
 
+  .footer-wordmark {
+    position: absolute;
+    z-index: -10;
+    left: 50%;
+    bottom: -0.5rem;
+    transform: translateX(-50%);
+    margin: 0;
+    width: 100%;
+    text-align: center;
+    white-space: nowrap;
+    font-family: var(--font-monument);
+    font-weight: 900;
+    font-size: 9rem;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: transparent;
+    -webkit-text-stroke: 1px rgb(17 24 39 / 0.08);
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .dark .footer-wordmark {
+    -webkit-text-stroke: 1px rgb(255 255 255 / 0.09);
+  }
+
+  @media (max-width: 900px) {
+    .footer-wordmark {
+      display: none;
+    }
+  }
+
   .footer-nav-heading {
     margin: 0 0 0.45rem;
     font-family: var(--font-mono);
