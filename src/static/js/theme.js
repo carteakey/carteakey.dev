@@ -33,42 +33,43 @@ const ACCENT_COLORS = {
 
 // Recolors the transparent sketch illustrations (stamp-cobalt) to match the
 // chosen accent. Solved by simulating the actual CSS Filter Effects matrices
-// (invert/sepia/saturate/hue-rotate/contrast/brightness) against the art's
-// real bold-ink tone (~rgb(13,13,13), the 10th percentile of opaque pixel
-// values - sampled from the source art, not assumed). An earlier version
-// forced every pixel through brightness(0) first to guarantee one exact hue,
-// but these sketches use light-vs-dark *opaque* gray values (not alpha) for
-// shading and fine detail - forcing pure black erased that shading entirely,
-// flattening detailed icons into solid silhouettes. This version leaves the
-// source's natural tonal range alone (so shading/detail survive) and solves
-// each theme's transform to land close to its target hex at the ink tone,
-// capping brightness to 75-125% so lighter shading pixels don't blow out to
-// white in the process. Fit is close but not pixel-exact (worst case ~0.07
-// in normalized RGB distance, e.g. lime/green) - an intentional trade for
-// keeping the art legible.
+// (invert/sepia/saturate/hue-rotate/brightness). Two earlier versions of
+// this each overfit to one calibration image's characteristic ink tone:
+// v1 forced every pixel through brightness(0)/saturate(100%) first, which
+// erased the light-vs-dark *opaque* gray shading some icons use for detail
+// (not alpha) - fan blades and gauge markings flattened into solid
+// silhouettes. v2 dropped that but calibrated only against one sketch's
+// near-black ink (~rgb(13,13,13)); a different icon with a much lighter
+// natural ink tone (~rgb(74,74,74), no true dark anchor at all) still
+// flattened under the resulting high saturate/contrast values, which
+// amplify range-dependent behavior. This version solves against BOTH
+// tones at once (minimizes combined error) with contrast dropped entirely
+// and saturate capped low (<=5x) so the transform stays gentle enough to
+// degrade gracefully on any sketch's tonal range, at the cost of being a
+// looser match to the exact target hex than either earlier version.
 const STAMP_FILTERS = {
-  gray: "invert(40%) sepia(75%) saturate(50%) hue-rotate(183deg) contrast(140%) brightness(95%)",
-  slate: "invert(40%) sepia(100%) saturate(50%) hue-rotate(177deg) contrast(200%) brightness(90%)",
-  zinc: "invert(40%) sepia(60%) saturate(50%) hue-rotate(201deg) contrast(80%) brightness(95%)",
-  neutral: "invert(30%) sepia(60%) saturate(50%) hue-rotate(60deg) contrast(80%) brightness(120%)",
-  stone: "invert(40%) sepia(60%) saturate(50%) hue-rotate(342deg) contrast(80%) brightness(95%)",
-  red: "invert(30%) sepia(60%) saturate(1450%) hue-rotate(327deg) contrast(100%) brightness(105%)",
-  orange: "invert(40%) sepia(100%) saturate(600%) hue-rotate(348deg) contrast(100%) brightness(105%)",
-  amber: "invert(40%) sepia(75%) saturate(1000%) hue-rotate(21deg) contrast(160%) brightness(120%)",
-  yellow: "invert(40%) sepia(100%) saturate(900%) hue-rotate(30deg) contrast(200%) brightness(110%)",
-  lime: "invert(40%) sepia(100%) saturate(900%) hue-rotate(51deg) contrast(80%) brightness(120%)",
-  green: "invert(40%) sepia(90%) saturate(600%) hue-rotate(96deg) contrast(80%) brightness(120%)",
-  emerald: "invert(40%) sepia(100%) saturate(250%) hue-rotate(108deg) contrast(140%) brightness(115%)",
-  teal: "invert(40%) sepia(100%) saturate(350%) hue-rotate(126deg) contrast(100%) brightness(115%)",
-  cyan: "invert(40%) sepia(100%) saturate(350%) hue-rotate(141deg) contrast(120%) brightness(115%)",
-  sky: "invert(40%) sepia(60%) saturate(750%) hue-rotate(156deg) contrast(100%) brightness(115%)",
-  blue: "invert(30%) sepia(90%) saturate(1250%) hue-rotate(198deg) contrast(80%) brightness(110%)",
-  indigo: "invert(40%) sepia(100%) saturate(400%) hue-rotate(201deg) contrast(200%) brightness(95%)",
-  violet: "invert(30%) sepia(100%) saturate(650%) hue-rotate(225deg) contrast(100%) brightness(110%)",
-  purple: "invert(40%) sepia(60%) saturate(350%) hue-rotate(228deg) contrast(200%) brightness(105%)",
-  fuchsia: "invert(40%) sepia(75%) saturate(500%) hue-rotate(246deg) contrast(140%) brightness(95%)",
-  pink: "invert(30%) sepia(60%) saturate(850%) hue-rotate(282deg) contrast(100%) brightness(120%)",
-  rose: "invert(30%) sepia(100%) saturate(1050%) hue-rotate(318deg) contrast(100%) brightness(95%)"
+  gray: "invert(25%) sepia(65%) saturate(70%) hue-rotate(180deg) brightness(100%)",
+  slate: "invert(25%) sepia(90%) saturate(110%) hue-rotate(177deg) brightness(95%)",
+  zinc: "invert(25%) sepia(90%) saturate(30%) hue-rotate(201deg) brightness(95%)",
+  neutral: "invert(25%) sepia(50%) saturate(30%) hue-rotate(234deg) brightness(105%)",
+  stone: "invert(25%) sepia(90%) saturate(30%) hue-rotate(342deg) brightness(95%)",
+  red: "invert(25%) sepia(100%) saturate(490%) hue-rotate(318deg) brightness(110%)",
+  orange: "invert(25%) sepia(100%) saturate(490%) hue-rotate(342deg) brightness(110%)",
+  amber: "invert(25%) sepia(100%) saturate(490%) hue-rotate(348deg) brightness(110%)",
+  yellow: "invert(25%) sepia(100%) saturate(490%) hue-rotate(354deg) brightness(110%)",
+  lime: "invert(25%) sepia(100%) saturate(490%) hue-rotate(33deg) brightness(110%)",
+  green: "invert(25%) sepia(100%) saturate(330%) hue-rotate(96deg) brightness(110%)",
+  emerald: "invert(25%) sepia(100%) saturate(490%) hue-rotate(117deg) brightness(110%)",
+  teal: "invert(25%) sepia(100%) saturate(490%) hue-rotate(132deg) brightness(110%)",
+  cyan: "invert(25%) sepia(100%) saturate(490%) hue-rotate(150deg) brightness(110%)",
+  sky: "invert(25%) sepia(100%) saturate(490%) hue-rotate(156deg) brightness(110%)",
+  blue: "invert(25%) sepia(100%) saturate(490%) hue-rotate(183deg) brightness(110%)",
+  indigo: "invert(25%) sepia(100%) saturate(490%) hue-rotate(201deg) brightness(110%)",
+  violet: "invert(25%) sepia(100%) saturate(490%) hue-rotate(216deg) brightness(110%)",
+  purple: "invert(25%) sepia(100%) saturate(490%) hue-rotate(225deg) brightness(110%)",
+  fuchsia: "invert(25%) sepia(100%) saturate(490%) hue-rotate(249deg) brightness(105%)",
+  pink: "invert(25%) sepia(100%) saturate(490%) hue-rotate(288deg) brightness(110%)",
+  rose: "invert(25%) sepia(100%) saturate(490%) hue-rotate(306deg) brightness(110%)"
 };
 
 const isDarkMode = () =>

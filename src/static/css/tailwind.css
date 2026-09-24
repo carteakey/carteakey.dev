@@ -135,7 +135,7 @@
   /* Default (teal) recolor for .stamp-cobalt; overridden per-theme by
      setAccentVariables() in theme.js, which runs synchronously before
      first paint - same timing guarantee as --accent-color above. */
-  --stamp-filter: invert(40%) sepia(100%) saturate(350%) hue-rotate(126deg) contrast(100%) brightness(115%);
+  --stamp-filter: invert(25%) sepia(100%) saturate(490%) hue-rotate(132deg) brightness(110%);
 }
 
 :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
