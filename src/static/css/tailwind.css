@@ -139,6 +139,14 @@
   --accent-color: #2323e6;
 }
 
+/* Same hue, lifted lightness: #2323e6 measured genuinely hard to read as
+   body text/links on the dark theme's near-black background - verified
+   with a side-by-side contrast check, not assumed. Still reads as the
+   same rich blue/indigo, not washed out. */
+.dark {
+  --accent-color: #6d6dff;
+}
+
 :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
   outline: 2px solid var(--accent-color);
   outline-offset: 3px;
@@ -1845,10 +1853,20 @@ picture img {
     }
   }
 
+  /* Same bug class as the avatar (see .home-avatar-shell): the halftone
+     PNG's sparse/transparent areas are the photo's LIGHT tones (sky). In
+     dark mode those areas showed the page's near-black background through
+     them, flipping the photo's tonal read - the sky rendered as the
+     darkest part of the image, buildings as the brightest. Fixed backdrop
+     here too, but dark rather than light paper: reads as "night skyline,"
+     matches how the Nous reference's own hero/footer band is a fixed
+     saturated color regardless of anything else on the page, and doesn't
+     flip between the site's two themes. */
   .footer-photo-band {
     width: 100%;
     line-height: 0;
     overflow: hidden;
+    background: #0a0a1f;
   }
 
   .footer-photo-band img {
@@ -2098,7 +2116,7 @@ picture img {
   }
 
   .home-typing-line {
-    margin: 0.45rem 0 0;
+    margin: 0.95rem 0 0;
     max-width: 44rem;
     font-family: var(--font-sans);
     font-size: 1rem;
@@ -2110,6 +2128,10 @@ picture img {
   .home-typed-topic {
     display: inline-block;
     color: var(--accent-color);
+    font-family: "Press Start 2P", var(--font-monument);
+    font-size: 0.68em;
+    letter-spacing: 0;
+    vertical-align: -0.08em;
   }
 
   .dark .home-typing-line {
