@@ -2176,6 +2176,16 @@ picture img {
     }
   }
 
+  /* Press Start 2P's comma glyph carries a lot of built-in trailing
+     advance width (a pixel-grid font quirk, not extra whitespace in the
+     markup - confirmed by inspecting the raw HTML). Pull the following
+     text back in to compensate; letter-spacing on the whole span isn't
+     enough since it's this one glyph specifically, not general spacing. */
+  .home-title-comma {
+    display: inline-block;
+    margin-right: -0.35em;
+  }
+
   .home-title-accent {
     display: inline-block;
     color: var(--accent-color);
