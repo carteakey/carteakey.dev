@@ -10,7 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Blog: Published "Notes on AI (Unsorted)" (`src/posts/2026-09-25-notes-on-ai-unsorted.md`) with embedded images from the vault.
 - Lexicon: Added "Sisyphean" definition, commentary, and editorial sketch illustration (`src/lexicon/sisyphean.md`).
 - About: Added "Not writing down thoughts means starting all over." and "Goal in life is to be net positive." to Things I've Learned.
-- About & Colophon: Adopted Kepano's (@kepano, based guy) "Write once, publish everywhere / your personal site should be the source of truth" and "There are many like it, but this one is mine" as the site's foundational philosophy.
+- About: Adopted Kepano's (@kepano, based guy) "Write once, publish everywhere / your personal site should be the source of truth" and "There are many like it, but this one is mine" as the site's foundational philosophy, and linked the NEAT stack post.
+
+### Changed
+- Colophon: Kept the colophon strictly technical and craft-focused by keeping the personal writing philosophy exclusively on the About page.
 
 ## [2.7.12] - 2026-09-24
 ### Changed
