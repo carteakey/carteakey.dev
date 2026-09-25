@@ -4640,6 +4640,22 @@ picture img {
     }
   }
 
+  /* At xl+ the sidebar rails appear (.post-rail-left/-right in the
+     .post-wrap grid, ~L2791) and the article column is no longer centered
+     on the viewport, so the 100vw breakout above would paint straight
+     over them. Bleed only as far as the rail's actual edge - measured in
+     JS (post.njk) into --wide-bleed-left/-right on .post-wrap - falling
+     back to a fixed 1.5rem gutter (always empty, always safe) until that
+     measurement lands. */
+  @media (min-width: 1280px) {
+    .wide-wrap {
+      width: auto;
+      max-width: none;
+      margin-left: calc(-1 * var(--wide-bleed-left, 1.5rem));
+      margin-right: calc(-1 * var(--wide-bleed-right, 1.5rem));
+    }
+  }
+
   /* ── {% annotate %} - highlighted phrase + handwritten comment + squiggly arrow ── */
   /* Default (all viewports, any post): comment flows inline right after the highlight. */
   .note {

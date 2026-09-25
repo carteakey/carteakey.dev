@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.5] - 2026-09-25
+### Added
+- Blog: Published "Notes on AI (Unsorted)" (`src/posts/2026-09-25-notes-on-ai-unsorted.md`) with embedded images from the vault.
+- Lexicon: Added "Sisyphean" definition, commentary, and editorial sketch illustration (`src/lexicon/sisyphean.md`).
+- About: Added "Not writing down thoughts means starting all over." and "Goal in life is to be net positive." to Things I've Learned.
+- About & Colophon: Adopted Kepano's (@kepano, based guy) "Write once, publish everywhere / your personal site should be the source of truth" and "There are many like it, but this one is mine" as the site's foundational philosophy.
+
 ## [2.7.4] - 2026-09-22
 ### Added
 - Folio: Imported 17 new AI memes to the Agent Tick archive (`src/_data/ai-memes.yaml`).

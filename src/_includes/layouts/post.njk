@@ -753,6 +753,39 @@ hasEthicalAds: false
     })();
   </script>
 
+  <script>
+    (() => {
+      // Wide-table breakouts bleed past the article column at xl+, but
+      // the column isn't centered on the viewport there (see .post-wrap
+      // grid) - measure the real gap to the sidebar rails so the bleed
+      // stops at their edge instead of painting over them (see
+      // .wide-wrap's xl+ override in tailwind.css).
+      const postWrap = document.querySelector(".post-wrap");
+      const shell = document.querySelector(".post-shell");
+      const leftRail = document.querySelector(".post-rail-left");
+      const rightRail = document.querySelector(".post-rail-right");
+      if (!postWrap || !shell) return;
+
+      const SAFETY_GAP = 8; // px of breathing room before the rail card
+
+      const updateBleed = () => {
+        if (window.innerWidth < 1280) return;
+        const shellRect = shell.getBoundingClientRect();
+        if (leftRail && leftRail.offsetParent) {
+          const gap = shellRect.left - leftRail.getBoundingClientRect().right - SAFETY_GAP;
+          postWrap.style.setProperty("--wide-bleed-left", Math.max(0, gap) + "px");
+        }
+        if (rightRail && rightRail.offsetParent) {
+          const gap = rightRail.getBoundingClientRect().left - shellRect.right - SAFETY_GAP;
+          postWrap.style.setProperty("--wide-bleed-right", Math.max(0, gap) + "px");
+        }
+      };
+
+      updateBleed();
+      window.addEventListener("resize", updateBleed);
+    })();
+  </script>
+
   {% if tocHtml | trim %}
   <div class="xl:hidden mt-12">
     <section class="surface surface-padding space-y-4 text-sm text-gray-600 dark:text-gray-300">
