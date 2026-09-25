@@ -37,14 +37,24 @@ Substack subscribers want the full technical post directly in their reader/inbox
   - If the post is under ~3,000 words: Paste verbatim.
   - If the post is over ~3,500 words: Post the first ~1,500 words (the problem, architecture, and benchmark results) and add a clear button link: *"Read the complete reproduction recipe and exact build flags on carteakey.dev →"* to prevent Gmail's 102KB email clipping.
 
-### 3. Twitter / X (4–5 Tweet Thread)
-Twitter requires an extracted, high-density thread:
-- **Tweet 1 (The Hook)**: The counterintuitive benchmark or result. State it directly without throat-clearing.
+### 3. Twitter / X (Threads & X Articles)
+Since the author has X Premium (verified checkmark), there are two distinct publication paths on X:
+
+#### Path A: High-Signal Thread (Best for quick virality & direct link clicks)
+- **Tweet 1 (The Hook)**: The counterintuitive benchmark or result. State it directly without throat-clearing. Attach primary sketch or chart.
 - **Tweet 2 (The Mechanism)**: What architectural detail makes this possible (e.g. sparse n-gram SSD lookup vs. active weights in RAM).
 - **Tweet 3 (The Concrete Numbers)**: The memory tier allocation (VRAM, RAM, SSD), parameter counts, or throughput.
 - **Tweet 4 (The Tuning / Progression)**: Baseline vs. optimized numbers (+218% leap, key flags like `-ncmoe 45`).
 - **Tweet 5 (Attribution & Links)**: Canonical link to the post on `carteakey.dev` and any open-source GitHub repo/harness.
-- **Media**: Attach the primary post sketch or chart to Tweet 1.
+
+#### Path B: X Article (Best for algorithmic reach on long-form)
+- **Why use it**: X's algorithm heavily prioritizes native long-form Articles over posts containing external link previews.
+- **Workflow**:
+  1. Open X → Write → **Article**.
+  2. Paste the verbatim markdown or import the draft.
+  3. Set the cover image to the generated 1200x630 card (`src/static/img/og/<slug>-og.png`).
+  4. Conclude with canonical attribution: *"Originally published with interactive benchmark graphs and code harnesses at [carteakey.dev](canonical_url)."*
+  5. Post a short hook tweet linking to the native X Article for maximum feed pickup.
 
 ---
 
