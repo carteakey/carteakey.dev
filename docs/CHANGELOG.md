@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.12] - 2026-09-24
+### Changed
+- Notes: Refined Opus 5.5 note structure to keep only the `/wait-what` introduction and the concluding punchline on Claude's verbosity around the screenshot.
+- Syndication: Enhanced thread paragraph-to-sentence splitting in `utils/syndicate-to-x.mjs` to strictly enforce the 280-character post limit across all sub-tweets.
+
 ## [2.7.11] - 2026-09-24
 ### Changed
 - Notes: Distilled the Opus 5.5 note (`src/notes/2026-09-24-opus-5-5-and-wait-what.md`) to the author's direct verbatim take and concise human voice.

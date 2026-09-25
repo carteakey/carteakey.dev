@@ -70,34 +70,29 @@ function cleanMarkdown(text) {
     .trim()
 }
 
-function buildThread(text, canonicalUrl, maxLength = 270) {
-  const paragraphs = text.split(/\n\n+/)
+function buildThread(text, canonicalUrl, maxLength = 250) {
+  const paragraphs = text.split(/\n\n+/).filter(Boolean)
   const rawTweets = []
-  let current = ''
 
   for (const para of paragraphs) {
-    if (!current) {
-      if (para.length <= maxLength) {
-        current = para
-      } else {
-        const sentences = para.split(/(?<=[.?!])\s+/)
-        for (const sentence of sentences) {
-          if ((current + ' ' + sentence).trim().length <= maxLength) {
-            current = (current + ' ' + sentence).trim()
-          } else {
-            if (current) rawTweets.push(current)
-            current = sentence
-          }
+    if (para.length <= maxLength) {
+      rawTweets.push(para)
+    } else {
+      const sentences = para.split(/(?<=[.?!])\s+/).filter(Boolean)
+      let cur = ''
+      for (const s of sentences) {
+        if (!cur) {
+          cur = s
+        } else if ((cur + ' ' + s).trim().length <= maxLength) {
+          cur = (cur + ' ' + s).trim()
+        } else {
+          rawTweets.push(cur)
+          cur = s
         }
       }
-    } else if ((current + '\n\n' + para).length <= maxLength) {
-      current = current + '\n\n' + para
-    } else {
-      rawTweets.push(current)
-      current = para
+      if (cur) rawTweets.push(cur)
     }
   }
-  if (current) rawTweets.push(current)
 
   if (rawTweets.length === 0) {
     return [`${canonicalUrl}`]
