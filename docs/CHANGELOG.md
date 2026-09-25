@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.11] - 2026-09-24
+### Changed
+- Notes: Distilled the Opus 5.5 note (`src/notes/2026-09-24-opus-5-5-and-wait-what.md`) to the author's direct verbatim take and concise human voice.
+
 ## [2.7.10] - 2026-09-24
 ### Added
 - Syndication: Added `twitter-api-v2` integration and live OAuth 1.0a dispatch to `utils/syndicate-to-x.mjs` for thread publication, media upload, and automatic frontmatter linking.
