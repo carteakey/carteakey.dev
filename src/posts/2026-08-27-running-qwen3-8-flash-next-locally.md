@@ -12,6 +12,7 @@ tags:
   - AI
   - Self-Host
 pinned: false
+ogImage: /img/og/running-qwen3-8-flash-next-locally-og.png
 ---
 
 Qwen3.8-Flash-Next (the `qwen4exp` preview of the Qwen4 architecture) is a 125B-A6B MoE plus a **51B n-gram lookup table**. The table is not weights in the usual sense — it is hashed 3-token lookups into a giant embedding — which means it does not need to live in RAM at all. That single property lets an 88 GB quant run on a machine with 12 GB VRAM + 64 GB RAM, decoding at **19.35 to 20.65 tok/s**.

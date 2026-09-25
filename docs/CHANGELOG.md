@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Notes & Blog Posts: Added unified outbound syndication tooling (`utils/syndicate-to-x.mjs`, `npm run syndicate:note`, `npm run syndicate:post`) to preview/publish notes and blog posts as X threads or announcement tweets, with automatic canonical permalink embedding and media attachment.
 - Notes: Added manual tweet ingestion tooling (`utils/ingest-tweet.mjs`) to fetch tweets, download media to `src/static/img/notes/`, and format standard linked markdown notes.
 - UI: Added `tweet_url` external link support to single note headers and stream/list/wall card footers.
+- SEO / Social Cards: Added 1200x630 Open Graph & Twitter card generator utility (`utils/generate-og-card.mjs`, `npm run og:card`) that composites dark editorial cards with uncropped monochrome sketches and typography. Updated `base.njk` with `ogImage` support and smart `twitter:card` fallbacks.
 - Collection views: Added a shared accessible view toggle and persistent layout helper for collection pages.
 - Notes: Added stream, compact list, and masonry wall views while keeping one semantic copy of every note.
 

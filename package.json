@@ -22,7 +22,8 @@
     "syndicate": "node ./utils/syndicate-to-x.mjs",
     "syndicate:note": "node ./utils/syndicate-to-x.mjs",
     "syndicate:post": "node ./utils/syndicate-to-x.mjs",
-    "ingest:tweet": "node ./utils/ingest-tweet.mjs"
+    "ingest:tweet": "node ./utils/ingest-tweet.mjs",
+    "og:card": "node ./utils/generate-og-card.mjs"
   },
   "repository": {
     "type": "git",
