@@ -80,8 +80,8 @@
   <meta name="twitter:title" content="{{ title or metadata.title }}" />
   <meta name="twitter:description" content="{{ resolvedDescription }}" />
   <meta name="twitter:image" content="{{ socialCard | absoluteUrl(metadata.url) }}" />
-  <meta name="twitter:creator" content="@carteakey" />
-  <meta name="twitter:site" content="@carteakey" />
+  <meta name="twitter:creator" content="@krtychn" />
+  <meta name="twitter:site" content="@krtychn" />
   
   {# Additional SEO Meta Tags #}
   <meta name="author" content="{{ metadata.author.name }}" />
@@ -279,8 +279,11 @@
         <div></div>
         {% endif %}
         <div class='flex items-center gap-1 not-prose'>
-          <a class="p-1.5 border border-transparent hover:border-gray-300 dark:hover:border-gray-700 transition-all text-gray-500 dark:text-gray-400" href="https://www.linkedin.com/in/kartikeychauhan/" title="LinkedIn" aria-label="LinkedIn">{% feather "linkedin", class="w-4 h-4" %}</a>
-          <a class="p-1.5 border border-transparent hover:border-gray-300 dark:hover:border-gray-700 transition-all text-gray-500 dark:text-gray-400" href="https://github.com/carteakey" title="GitHub" aria-label="GitHub">{% feather "github", class="w-4 h-4" %}</a>
+          <a class="p-1.5 border border-transparent hover:border-gray-300 dark:hover:border-gray-700 transition-all text-gray-500 dark:text-gray-400" href="https://x.com/krtychn" target="_blank" rel="noopener noreferrer" title="X (Twitter)" aria-label="X (Twitter)">
+            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+          <a class="p-1.5 border border-transparent hover:border-gray-300 dark:hover:border-gray-700 transition-all text-gray-500 dark:text-gray-400" href="https://github.com/carteakey" target="_blank" rel="noopener noreferrer" title="GitHub" aria-label="GitHub">{% feather "github", class="w-4 h-4" %}</a>
+          <a class="p-1.5 border border-transparent hover:border-gray-300 dark:hover:border-gray-700 transition-all text-gray-500 dark:text-gray-400" href="https://www.linkedin.com/in/kartikeychauhan/" target="_blank" rel="noopener noreferrer" title="LinkedIn" aria-label="LinkedIn">{% feather "linkedin", class="w-4 h-4" %}</a>
           <span class="text-gray-300 dark:text-gray-600">|</span>
           <a class="p-1.5 border border-transparent hover:border-gray-300 dark:hover:border-gray-700 transition-all text-gray-500 dark:text-gray-400" href="{{ '/search/' | url }}" title="Search" aria-label="Search">{% feather "search", class="w-4 h-4" %}</a>
           <a class="p-1.5 border border-transparent hover:border-gray-300 dark:hover:border-gray-700 transition-all text-gray-500 dark:text-gray-400" href="{{ '/feed.xml' | url }}" title="RSS" aria-label="RSS">{% feather "rss", class="w-4 h-4" %}</a>

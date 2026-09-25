@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.9] - 2026-09-24
+### Added
+- Navigation / Footer: Added direct link to X profile (`https://x.com/krtychn`) with native SVG mark to the site footer alongside GitHub and LinkedIn, as well as to the single post author sidebar.
+- Metadata: Updated Twitter/X creator and site meta tags to `@krtychn`.
+
 ## [2.7.8] - 2026-09-24
 ### Added
 - Notes: Added a note on Claude Opus 5.5 replacing the `/wait-what` skill through higher communication density and leading directly with dollar impacts and root causes.
