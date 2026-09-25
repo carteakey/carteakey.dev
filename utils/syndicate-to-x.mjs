@@ -2,7 +2,8 @@
 import fs from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
-import yaml from 'js-yaml'
+import * as yaml from 'js-yaml'
+import { TwitterApi } from 'twitter-api-v2'
 import 'dotenv/config'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -232,15 +233,75 @@ async function main() {
   if (!hasTwitterCreds || isDryRun) {
     console.log('\n[Status] Draft ready for review / manual publishing.')
     if (!hasTwitterCreds) {
-      console.log('To enable automated 1-click posting, add Twitter API keys to .env.')
+      console.log('To enable automated 1-click posting, ensure all 4 keys are set in .env:')
+      console.log('- TWITTER_API_KEY')
+      console.log('- TWITTER_API_SECRET')
+      console.log('- TWITTER_ACCESS_TOKEN')
+      console.log('- TWITTER_ACCESS_TOKEN_SECRET')
     }
-    console.log(`To link after posting:`)
+    console.log(`To link after manual posting:`)
     console.log(`node utils/syndicate-to-x.mjs "${path.relative(REPO_ROOT, targetFile)}" --set-url <tweet_url>`)
     return
   }
 
   console.log('\nPosting live to X...')
-  // Live dispatch when credentials configured
+  const client = new TwitterApi({
+    appKey: process.env.TWITTER_API_KEY,
+    appSecret: process.env.TWITTER_API_SECRET,
+    accessToken: process.env.TWITTER_ACCESS_TOKEN,
+    accessSecret: process.env.TWITTER_ACCESS_TOKEN_SECRET,
+  })
+
+  // Upload media if present (up to 4 images for the first tweet)
+  let mediaIds = []
+  if (images.length > 0) {
+    console.log(`Uploading ${Math.min(images.length, 4)} media asset(s)...`)
+    for (const imgPath of images.slice(0, 4)) {
+      const fullImgPath = path.resolve(REPO_ROOT, imgPath)
+      try {
+        const mediaId = await client.v1.uploadMedia(fullImgPath)
+        mediaIds.push(mediaId)
+        console.log(`  Uploaded: ${imgPath} (media ID: ${mediaId})`)
+      } catch (err) {
+        console.warn(`  Warning: Failed to upload media ${imgPath}:`, err.message)
+      }
+    }
+  }
+
+  let previousTweetId = null
+  let firstTweetUrl = null
+
+  for (let i = 0; i < tweets.length; i++) {
+    const text = tweets[i]
+    const payload = { text }
+
+    if (i === 0 && mediaIds.length > 0) {
+      payload.media = { media_ids: mediaIds }
+    }
+
+    if (previousTweetId) {
+      payload.reply = { in_reply_to_tweet_id: previousTweetId }
+    }
+
+    console.log(`Publishing tweet ${i + 1}/${tweets.length}...`)
+    const result = await client.v2.tweet(payload)
+    const tweetId = result.data.id
+    previousTweetId = tweetId
+
+    if (i === 0) {
+      let handle = 'krtychn'
+      try {
+        const me = await client.v2.me()
+        if (me?.data?.username) handle = me.data.username
+      } catch (_) {}
+      firstTweetUrl = `https://x.com/${handle}/status/${tweetId}`
+    }
+  }
+
+  console.log(`\nSuccessfully syndicated to X!`)
+  console.log(`Thread URL: ${firstTweetUrl}`)
+  await updateFrontmatterWithTweetUrl(targetFile, rawContent, firstTweetUrl)
+  console.log(`Updated ${path.relative(REPO_ROOT, targetFile)} with tweet_url: "${firstTweetUrl}"`)
 }
 
 main().catch((err) => {

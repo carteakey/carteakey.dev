@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.10] - 2026-09-24
+### Added
+- Syndication: Added `twitter-api-v2` integration and live OAuth 1.0a dispatch to `utils/syndicate-to-x.mjs` for thread publication, media upload, and automatic frontmatter linking.
+
 ## [2.7.9] - 2026-09-24
 ### Added
 - Navigation / Footer: Added direct link to X profile (`https://x.com/krtychn`) with native SVG mark to the site footer alongside GitHub and LinkedIn, as well as to the single post author sidebar.
