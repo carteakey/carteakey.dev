@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - About: Adopted Kepano's (@kepano, based guy) "Write once, publish everywhere / your personal site should be the source of truth" and "There are many like it, but this one is mine" as the site's foundational philosophy, and linked the NEAT stack post.
 
 ### Changed
+- Blog: Formatted "Notes on AI (Unsorted)" as proper unordered bullet lists rather than collapsed blockquotes.
 - Colophon: Kept the colophon strictly technical and craft-focused by keeping the personal writing philosophy exclusively on the About page.
 
 ## [2.7.12] - 2026-09-24
