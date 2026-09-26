@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.14] - 2026-09-26
+### Changed
+- Guestbook: Upgraded sticky-note wall to dense masonry layout using `feed-masonry` and `feed-card` with 8px track granularity, eliminating stretched cards and uneven row gaps.
+- Guestbook: Preserved paragraph breaks in notes using `white-space: pre-line`.
+- Masonry: Enhanced `feed-masonry-script` to initialize immediately when DOM is interactive/complete and trigger layout on `document.fonts.ready`.
+
 ## [2.7.13] - 2026-09-25
 ### Added
 - Blog: Published "Notes on AI (Unsorted)" (`src/posts/2026-09-25-notes-on-ai-unsorted.md`) with embedded images from the vault.

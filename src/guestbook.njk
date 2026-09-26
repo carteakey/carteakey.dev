@@ -19,7 +19,7 @@ eleventyNavigation:
   {# ── Sticky-notes wall ── #}
   {% if guestbook.entries | length %}
   <section class="not-prose">
-    <div class="sticky-wall">
+    <div class="sticky-wall feed-masonry" data-feed-masonry style="--feed-row-height: 8px;">
       {% for entry in guestbook.entries %}
         {% set colors = {
           "yellow": { "bg": "#fef9c3", "border": "#fde047", "dark_bg": "#854d0e20", "dark_border": "#a16207" },
@@ -31,7 +31,7 @@ eleventyNavigation:
         } %}
         {% set c = colors[entry.color] or colors["yellow"] %}
         
-        <div class="sticky-note sticky-note-{{ loop.index % 6 }}"
+        <div class="sticky-note feed-card sticky-note-{{ loop.index % 6 }}"
              style="--note-bg: {{ c.bg }}; --note-border: {{ c.border }}; --note-dark-bg: {{ c.dark_bg }}; --note-dark-border: {{ c.dark_border }};">
           <div class="sticky-tape"></div>
           <p class="sticky-message">{{ entry.message }}</p>
@@ -130,12 +130,15 @@ eleventyNavigation:
   </section>
 </div>
 
+{% include "components/feed-masonry-script.njk" %}
+
 <style>
   /* ── Sticky-notes wall ── */
   .sticky-wall {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 1.5rem;
+    gap: 1.25rem;
+    align-items: start;
     padding: 1rem 0;
   }
 
@@ -154,6 +157,7 @@ eleventyNavigation:
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    align-self: start;
   }
 
   .dark .sticky-note {
@@ -210,6 +214,7 @@ eleventyNavigation:
     line-height: 1.5;
     color: #1a1a1a;
     margin: 0;
+    white-space: pre-line;
   }
 
   .dark .sticky-message {
