@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.15] - 2026-09-28
+### Added
+- Uses: Added workstation desk station mapping to CasaKey homelab: Arch-Nemesis (Steam Deck, FX505, Yeti) and Big mAc (M1, M2, M3 Pro).
+- Uses: Tagged homelab hosts with their assigned physical desk station badges.
+
 ## [2.7.14] - 2026-09-26
 ### Changed
 - Guestbook: Upgraded sticky-note wall to dense masonry layout using `feed-masonry` and `feed-card` with 8px track granularity, eliminating stretched cards and uneven row gaps.
