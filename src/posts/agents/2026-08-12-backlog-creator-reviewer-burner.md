@@ -1,6 +1,8 @@
 ---
 title: My Backlog Now Has a Creator, a Reviewer, and a Burner
 description: I turned backlog work into a three-skill loop that discovers useful work, challenges the plan, ships it, and then checks whether Done is actually true.
+image: /img/blog-sketches/unique/backlog-creator-reviewer-burner-stamp-trim.png
+imageAlt: "Monochrome pencil sketch of a stack of ticket cards inspected with a magnifying glass, a small stove burning one card, and a checkmark on the top card"
 seoDescription: "A practical Codex workflow using Backlog Creator, Reviewer, and Burner skills to discover, verify, implement, and audit work across many repositories."
 date: 2026-08-12
 authored_by: ai-assisted
@@ -62,11 +64,7 @@ The Creator's useful output is not a giant list. It is a small packet: current r
 
 The first version handed that packet directly to the Burner. After using it for real, I changed the default route:
 
-```text
-Creator -> Reviewer (pre) -> Burner -> Reviewer (post)
-                                      ^               |
-                                      |-- remediation-|
-```
+{% image_cc "./src/static/img/diagrams/backlog-creator-reviewer-burner-loop.png", "Four-step loop: Creator, then Reviewer (pre), then Burner, then Reviewer (post), with a remediation arrow from Reviewer (post) back to Burner", "sketch-draw", "The default route. Remediation loops back to the Burner until the post-review passes." %}
 
 The Reviewer gets first refusal.
 

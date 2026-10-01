@@ -16,7 +16,7 @@ A few weeks ago I came across [this post on Marginalia](https://www.marginalia.n
 
 That felt like a project.
 
-{% image_cc "./src/static/img/projects/aidar.png", "aidar - AI writing drift detector", "rounded-lg shadow-md" %}
+{% image_cc "./src/static/img/projects/aidar.png", "aidar - AI writing drift detector", "border border-surface-border" %}
 
 ## What aidar does
 

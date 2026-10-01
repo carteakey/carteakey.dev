@@ -16,7 +16,7 @@ authored_by: human
 
 I've been a fan of [WindowSwap](https://window-swap.com) for a while - the idea is simple and kind of beautiful. Someone points a camera out their window, streams it to the internet, and strangers get to borrow that view for a few minutes. A slice of someone else's world.
 
-{% image_cc "./src/static/img/windowswap-example.png", "WindowSwap - a window view with a cat", "rounded-lg shadow-md", "The inspiration. Someone's window, somewhere in the world. (Pre-recorded, not live - mine actually is.)" %}
+{% image_cc "./src/static/img/windowswap-example.png", "WindowSwap - a window view with a cat", "border border-surface-border", "The inspiration. Someone's window, somewhere in the world. (Pre-recorded, not live - mine actually is.)" %}
 
 So I built my own.
 
@@ -26,7 +26,7 @@ A **Raspberry Pi 4B** sitting on my desk with an **OV5647 camera module** (the o
 
 Getting the camera working took about ten minutes. The lens ships slightly out of focus - you have to crack the glue seal and twist the lens ring by hand until the image snaps in. Worth it.
 
-{% image_cc "./src/static/img/window-contraption.jpeg", "Pi camera contraption", "rounded-lg shadow-md", "The contraption. 3D-printed mount, ribbon cable, zip tie. Engineering." %}
+{% image_cc "./src/static/img/window-contraption.jpeg", "Pi camera contraption", "border border-surface-border", "The contraption. 3D-printed mount, ribbon cable, zip tie. Engineering." %}
 
 ## Streaming
 
@@ -48,9 +48,9 @@ Full-viewport stream, auto-hiding UI. When you move your mouse it fades in:
 
 Everything rides on a Cloudflare tunnel. No port forwarding, no exposed IP, no headache.
 
-{% image_cc "./src/static/img/window-site.png", "window.carteakey.dev live view", "rounded-lg shadow-md", "window.carteakey.dev - Toronto intersection, rainy March. Actually live, just 30 seconds off." %}
+{% image_cc "./src/static/img/window-site.png", "window.carteakey.dev live view", "border border-surface-border", "window.carteakey.dev - Toronto intersection, rainy March. Actually live, just 30 seconds off." %}
 
-{% image_cc "./src/static/img/window-live.jpeg", "Live stream on monitor", "rounded-lg shadow-md", "Live on the monitor. The actual window is right there. I use Arch btw." %}
+{% image_cc "./src/static/img/window-live.jpeg", "Live stream on monitor", "border border-surface-border", "Live on the monitor. The actual window is right there. I use Arch btw." %}
 
 ## Snapshots and Timelapse
 

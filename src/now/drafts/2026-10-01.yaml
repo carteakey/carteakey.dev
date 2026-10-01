@@ -1,0 +1,37 @@
+# DRAFT /now page for 2026-10-01. Not live: Eleventy ignores this file.
+#
+# To publish:
+#   1. The outgoing page (src/_data/nowPage.yaml, last updated 2026-06-24) is empty,
+#      so there is nothing to archive. If it has content by then, copy it to
+#      src/now/archive/YYYY-MM-DD.md first (see the note at the top of nowPage.yaml).
+#   2. Copy `lastUpdated`, `highlights`, and `updates` below into src/_data/nowPage.yaml.
+#   3. Delete the items marked CONFIRM that you do not want, and fill the OFFLINE slot.
+#
+# Everything below comes from this week's commits and posts. The reading, watching,
+# and listening sections on /now/ fill themselves from Goodreads, Letterboxd, and
+# Spotify, so they are not repeated here.
+
+lastUpdated: 2026-10-01T12:00:00-04:00
+
+highlights:
+  - >-
+    Booted Strata on the 4070 and watched Qwen3.8-Flash-Next go from 20 to 53 tok/s on the
+    same card. Wrote up why I think one-off engines might beat general runtimes:
+    <a href="/blog/local-inference/the-rise-of-overfit-inference-engines/">The Rise of Overfit Inference Engines</a>.
+  - >-
+    Late-night thought after those benchmarks, as a note:
+    <a href="/notes/science-is-compression/">science is the history of compression progress</a>.
+
+updates:
+  - >-
+    Making this site stricter with itself. Every post needs a thumbnail now, a lint blocks new
+    design drift, and I'm drawing diagrams with Qwen-Image instead of ASCII boxes.
+  - >-
+    Added a bit of life to the homepage: the halftone avatar breathes, and annotations write
+    themselves in as you scroll.
+  # CONFIRM: is CRTBench ready to mention publicly? The Mario and CRTBench posts are still drafts.
+  - >-
+    Tinkering with a benchmark of generated retro games, <a href="https://github.com/carteakey/crtbench">CRTBench</a>.
+    It started as "can a model write a Mario clone" and got out of hand.
+  # OFFLINE: add one thing that isn't a screen (a hike, a trip, a book, something from the library).
+  # The last offline entry on /now/ was Oct 2025 (Rouge Conservation Area and the Toronto libraries).

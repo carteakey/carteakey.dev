@@ -40,7 +40,7 @@ This hidden copy is only for testing post features: callouts, wide tables, and a
 
 ## Preface
 
-Over the past year I've written posts on running [gpt-oss-120b](/blog/local-inference/optimizing-gpt-oss-120b-local-inference/), [Qwen3-Coder-Next](/blog/local-inference/optimizing-qwen3-coder-next-local-inference/), [Gemma 4 26B](/blog/local-inference/running-gemma-4-26b-a4b-locally/), [Qwen3.6-35B-A3B](/blog/local-inference/running-qwen3-6-35b-a3b-locally/), and [Gemma 4 MTP](/blog/running-gemma-4-mtp-locally/) locally on consumer hardware. Each post has its own notes, failure modes, and tuning results - but the same lessons keep appearing: enable XMP, pin to P-cores, quantize your KV cache, don't trust the power profile.
+Over the past year I've written posts on running [gpt-oss-120b](/blog/local-inference/optimizing-gpt-oss-120b-local-inference/), [Qwen3-Coder-Next](/blog/local-inference/optimizing-qwen3-coder-next-local-inference/), [Gemma 4 26B](/blog/local-inference/running-gemma-4-26b-a4b-locally/), [Qwen3.6-35B-A3B](/blog/local-inference/running-qwen3-6-35b-a3b-locally/), and [Gemma 4 MTP](/blog/local-inference/running-gemma-4-mtp-locally/) locally on consumer hardware. Each post has its own notes, failure modes, and tuning results - but the same lessons keep appearing: enable XMP, pin to P-cores, quantize your KV cache, don't trust the power profile.
 
 This is my attempt at a master reference. Instead of re-discovering flags in every new model post, I want one doc to link back to. If you're hitting a performance wall, starting from scratch, or just want to understand what each knob actually does - start here.
 
@@ -1305,4 +1305,4 @@ sudo tuned-adm active
 - [Qwen3-Coder-Next 40 t/s post](/blog/local-inference/optimizing-qwen3-coder-next-local-inference/)
 - [Gemma 4 26B local post](/blog/local-inference/running-gemma-4-26b-a4b-locally/)
 - [Qwen3.6-35B-A3B local post](/blog/local-inference/running-qwen3-6-35b-a3b-locally/)
-- [Gemma 4 MTP local post](/blog/running-gemma-4-mtp-locally/)
+- [Gemma 4 MTP local post](/blog/local-inference/running-gemma-4-mtp-locally/)

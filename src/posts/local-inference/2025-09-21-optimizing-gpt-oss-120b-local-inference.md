@@ -10,7 +10,7 @@ updated: 2026-03-12
 giscusTerm: /blog/optimizing%20gpt-oss-120b-local%20inference/
 tags:
   - AI
-pinned: true
+pinned: false
 ---
 {% callout "note", "Authorship note" %}
 Parts of this post were drafted/refined with the help of gpt-oss-120b itself. How meta!

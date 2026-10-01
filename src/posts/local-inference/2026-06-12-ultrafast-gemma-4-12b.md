@@ -7,6 +7,7 @@ date: 2026-06-12
 authored_by: ai-generated
 hidden: true
 draft: false
+giscusTerm: "/blog/ultrafast-gemma-4-12b/"
 tags:
   - AI
   - Self-Host

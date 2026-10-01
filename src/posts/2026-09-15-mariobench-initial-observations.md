@@ -1,8 +1,10 @@
 ---
-title: "From MarioBench to CRTBench: can a model make a game worth playing?"
-description: "A Mario experiment grew into CRTBench: single-file retro games, blind duels, local quantized models, and the gap between working code and good game feel."
+title: "MarioBench: can a model write a Mario clone worth playing?"
+description: "Five generated Mario clones, inspected line by line: which ones actually run, which ones finish, and why the best engineering still doesn't feel like Mario."
+image: /img/blog-sketches/unique/mariobench-initial-observations-stamp-trim.png
+imageAlt: "Monochrome pencil sketch of a retro CRT television showing a pixel platformer runner, with a game controller and a cartridge in front"
 date: 2026-09-15
-updated: 2026-09-18
+updated: 2026-10-01
 authored_by: ai-assisted
 draft: true
 hidden: true
@@ -10,12 +12,12 @@ pinned: false
 featured: false
 tags:
   - AI
-  - Self-Host
+  - Games
 ---
 
 Ask a model to make a Mario clone and you get a surprisingly useful picture of how it builds software. Can it make something that runs? Do the mechanics connect? Does it finish the game it started? And does any of it actually *feel like Mario*?
 
-It started as **MarioBench**, became **PlumberBench**, and has now grown into [**CRTBench**](https://github.com/carteakey/crtbench): an experiment in generated retro games across several genres. Mario was the starting point. The broader question is whether a model can connect code, controls, sound, and presentation into something worth playing.
+It started as **MarioBench** and became **PlumberBench**. This post covers the five Mario implementations that survived. The wider retro-arcade benchmark it grew into is the follow-up: [CRTBench](/blog/crtbench-generated-retro-games/).
 
 The original prompt was almost offensively small:
 
@@ -24,51 +26,6 @@ The original prompt was almost offensively small:
 The results range from a basic platforming sketch to a pastel indie game to an elaborate arcade cabinet with three course definitions and a synthesizer. They're also a reminder that an impressive first screen can hide a lot of unfinished gameplay.
 
 My current engineering winner is Astra High. The result I find particularly interesting under its generation constraints is Qwen3.8-Flash-Next, running quantized on my own machine. Those judgments can coexist.
-
-## From a plumber to a retro arcade
-
-The [current repository](https://github.com/carteakey/crtbench/tree/c4d20a9) contains 16 recorded entries, with **14 active browser games across four tracks** and two archived entries. That is the snapshot reviewed on September 18, 2026, not a claim to cover every retro genre yet.
-
-{% wide %}
-| Track | Active entries | What makes it an interesting test |
-| --- | ---: | --- |
-| 2D platformers | 8 | Momentum, jump timing, collisions, camera movement, death, and progression |
-| 2.5D raycasters | 2 | Spatial projection, wall collision, sprite occlusion, navigation, and combat feedback |
-| Arcade mazes | 2 | Grid movement, buffered turns, enemy states, collectible logic, and readable threats |
-| Falling blocks | 2 | Rotation, placement, clearing, scoring, increasing speed, and restart behavior |
-{% endwide %}
-
-This is a useful expansion because each genre puts pressure on different parts of an implementation. A good jump arc says little about whether a raycaster sorts enemies behind walls correctly. A convincing maze screenshot doesn't tell me whether a turn registers at an intersection. A falling-block game has to keep its board consistent through rotations and line clears.
-
-The gallery lets visitors play the artifacts, inspect their recorded prompts and setups, and compare pairs in a **Blind Vibe Arena**. Matchmaking pairs games within the same genre. The surrounding arena hides model metadata until a vote, then reveals the contenders and adjusts their Elo ratings. There is also a submission form, a CLI submission helper, and a validator for metadata, file presence, selected external dependencies, and JavaScript syntax.
-
-The current Elo system is a **personal browser-local ranking**: votes and rating changes live in `localStorage`. The checked-in active entries all start at 1200 with zero matches. This is not yet an aggregated community leaderboard, and the separate hand-entered vibe scores are not duel results. Hiding labels can reduce brand cues, but distinctive games or text inside them can still give identities away; I wouldn't describe this as a controlled double-blind study.
-
-### Beyond Mario, in pictures
-
-These three images come from the repository's preview gallery. They illustrate the expanded scope; they are not evidence of completed playthroughs or verified model provenance.
-
-{% image_cc "./src/static/img/mariobench/raycaster.png", "Repository preview of Operation Wolf3D, a first-person retro raycaster", "w-full rounded-lg border border-surface-border", "Raycaster track: Operation Wolf3D. Spatial geometry and combat introduce a different set of failure modes." %}
-
-{% image_cc "./src/static/img/mariobench/maze.png", "Repository preview of Neon Phantom Maze, an arcade maze game", "w-full rounded-lg border border-surface-border", "Maze track: Neon Phantom Maze. Turning and enemy behavior matter as much as the opening screen." %}
-
-{% image_cc "./src/static/img/mariobench/blocks.png", "Repository preview of Blockfall 1989, a falling-block puzzle game", "w-full rounded-lg border border-surface-border", "Falling-block track: Blockfall 1989. Rotation, placement, and clearing have to agree about the board." %}
-
-[Browse the arcade](https://carteakey.github.io/crtbench/) or [inspect the games and metadata](https://github.com/carteakey/crtbench). I prefer linked playable artifacts here: readers can choose a game and focus its controls, while this post stays readable without several competing canvases and soundtracks.
-
-## What the community examples add
-
-The two r/LocalLLaMA threads capture why this experiment is appealing. [ChopSticksPlease reports a Qwen3.8-27B run](https://www.reddit.com/r/LocalLLaMA/comments/1wbchyj/qwen38_27b_made_mario_with_a_single_prompt_o/) using a Q4_K_XL quant on an RTX 3090, roughly 100k context, and Cline in Act mode. The post supplies a prompt, server settings, and a playable demo. [Zannix reports another Q4KM run](https://www.reddit.com/r/LocalLLaMA/comments/1w4821c/qwen_38_27b_q4km_oneshot_a_super_mario_clone/) using a 12 GB RTX 4070 Ti setup with llama.cpp RPC, 64k context, and a reported 117-minute generation.
-
-“One shot” needs a precise definition, though. In the second thread, the author says the harness used file tools and that the model wrote JavaScript tests. One user prompt can still lead to multiple tool calls and internal revisions. That is useful evidence about a workflow, but it isn't automatically equivalent to one uninterrupted, tool-free model response.
-
-CRTBench's [submission rules](https://github.com/carteakey/crtbench/blob/main/SUBMISSIONS.md) target the stricter version: one inference turn, no agentic tools, no human edits, and a self-contained artifact. The existing gallery still needs a provenance pass against that standard. My original Qwen and Gemini Full reviews below include startup repairs; some new entries link only to the subreddit homepage; and the ChopSticks entry's normalized quant and reasoning fields differ from the linked author's setup. I am treating those as unresolved records, not certified strict-track results. A schema or syntax validator cannot establish generation history.
-
-The distinction I want to preserve is **raw one-turn output, single-prompt agent workflow, and repaired artifact**. All three can teach us something. They need separate labels and comparisons.
-
-## The Mario experiment that started it
-
-The rest of these initial observations concerns the original five surviving Mario implementations. I have not extended that engineering ranking to the newer maze, puzzle, or raycaster entries.
 
 ## Why this is a useful test
 
@@ -95,7 +52,7 @@ These are the labels used in my experiment notes. This is a comparison of partic
 | Gemini 2.5 Pro, Standard | An earlier minimal platforming baseline | Overwritten by the later Gemini run; excluded from the current ranking |
 {% endwide %}
 
-The original files and experiment notes live in my [qualms repository](https://github.com/carteakey/qualms); the expanded gallery now lives in [CRTBench](https://github.com/carteakey/crtbench). The paths above identify the local artifacts used for this review; they are not a claim that every artifact has already been pushed.
+The original files and experiment notes live in my [qualms repository](https://github.com/carteakey/qualms); the expanded gallery now lives in [CRTBench](https://github.com/carteakey/crtbench).
 
 The repository also contains a more detailed prompt specifying collision behavior, camera rules, and other requirements. That is a separate test specification. I don't want to quietly apply its extra requirements to runs made with the minimal prompt.
 
@@ -103,33 +60,23 @@ The repository also contains a more detailed prompt specifying collision behavio
 
 These are browser captures of the five surviving implementations, taken near the beginning of their opening stages. They show the presentation and surrounding interface; they aren't evidence that later mechanics work. The Qwen and Gemini Full captures use the startup-patched versions discussed below.
 
-### Astra High
-
-{% image_cc "./src/static/img/mariobench/astra-high.png", "Astra High Mario tribute with a cream interface, pastel hills, floating blocks, and a wide playfield", "w-full rounded-lg border border-surface-border", "Astra High: a polished, spacious modern platformer presentation." %}
-
-### Astra Light / Super Meadow
-
-{% image_cc "./src/static/img/mariobench/astra-light.png", "Super Meadow with a dark teal interface, soft green scenery, golden coins, and a wide playfield", "w-full rounded-lg border border-surface-border", "Astra Light: the clearest indie-game reinterpretation of the prompt." %}
-
-### Gemini Full
-
-{% image_cc "./src/static/img/mariobench/gemini-full.png", "Gemini Full's tall retro playfield with blue sky, pixel HUD, green hills, and a dark arcade frame", "w-full rounded-lg border border-surface-border", "Gemini Full: a much more literal retro visual vocabulary." %}
-
-### Gemini Interactive
-
-{% image_cc "./src/static/img/mariobench/gemini-interactive.png", "Gemini Interactive's compact Mario game with a blue sky, orange ground, question block, and keyboard instructions", "w-full rounded-lg border border-surface-border", "Gemini Interactive: a compact, restrained overworld slice." %}
-
-### Qwen Gold
-
-{% image_cc "./src/static/img/mariobench/qwen-gold.png", "Qwen Gold's Super Pixel Bros arcade cabinet with a colorful marquee, scanlines, control deck, and field manual", "w-full rounded-lg border border-surface-border", "Qwen Gold: the cabinet, typography, and scanlines do a lot of the atmospheric work." %}
+{% gallery [
+  { src: "./src/static/img/mariobench/astra-high.png", alt: "Astra High Mario tribute with a cream interface, pastel hills, floating blocks, and a wide playfield", caption: "Astra High: a polished, spacious modern platformer presentation." },
+  { src: "./src/static/img/mariobench/astra-light.png", alt: "Super Meadow with a dark teal interface, soft green scenery, golden coins, and a wide playfield", caption: "Astra Light: the clearest indie-game reinterpretation of the prompt." },
+  { src: "./src/static/img/mariobench/gemini-full.png", alt: "Gemini Full's tall retro playfield with blue sky, pixel HUD, green hills, and a dark arcade frame", caption: "Gemini Full: a much more literal retro visual vocabulary." },
+  { src: "./src/static/img/mariobench/gemini-interactive.png", alt: "Gemini Interactive's compact Mario game with a blue sky, orange ground, question block, and keyboard instructions", caption: "Gemini Interactive: a compact, restrained overworld slice." },
+  { src: "./src/static/img/mariobench/qwen-gold.png", alt: "Qwen Gold's Super Pixel Bros arcade cabinet with a colorful marquee, scanlines, control deck, and field manual", caption: "Qwen Gold: the cabinet, typography, and scanlines do a lot of the atmospheric work." }
+] %}
 
 ## What was actually checked
 
 The first impressions were followed by a source review, browser startup and rendering checks for the five surviving implementations, and targeted JavaScript simulation tests. The latter exercised movement timing, selected recovery paths, and finish-state transitions, with additional probes for the suspicious mechanics found in the source.
 
+{% callout "note", "Method and limits" %}
 Those simulations used the implementations' existing functions in a Node VM with browser drawing and audio interfaces stubbed. Some tests placed the player directly at a checkpoint or flag. They establish whether those transitions work; they don't prove that a human can traverse every route to get there. Audio quality was not scored by that harness.
 
 This is an initial inspection, not a complete playthrough of every level, a blind study, or a repeated-seed benchmark. The reviewer had already seen the model labels. Ignoring those labels while judging the artifacts is useful, but it isn't the same as blinding them.
+{% endcallout %}
 
 I am also separating the raw outputs from repaired versions. Qwen's raw HTML has a duplicate `R` declaration that prevents startup. Renaming the UI binding makes it launch. The Gemini Full artifact includes a level-map initialization repair. A patched game is worth reviewing, but a successful launch after a patch shouldn't become “the original output had no bugs.”
 
@@ -177,7 +124,7 @@ Astra currently wins my engineering review. It does not automatically win my Mar
 
 Qwen wasn't a hosted model iterating through an agent repair loop. This particular Gold artifact came from **one generation pass on my machine**, using a quantized model. Other Qwen experiments exist in the run history; “one pass” describes this artifact, not an absence of earlier experiments with the model.
 
-The recorded setup used an RTX 4070 with 12 GB VRAM, 64 GB system RAM, and the AtomicChat `AD-4.27bpw-Q4_K_M-M64` quant with the large lookup table offloaded to SSD. The Gold run used a 64k context window. The [local inference setup](/blog/running-qwen3-8-flash-next-locally/) has the broader configuration history.
+The recorded setup used an RTX 4070 with 12 GB VRAM, 64 GB system RAM, and the AtomicChat `AD-4.27bpw-Q4_K_M-M64` quant with the large lookup table offloaded to SSD. The Gold run used a 64k context window. The [local inference setup](/blog/local-inference/running-qwen3-8-flash-next-locally/) has the broader configuration history.
 
 The run summary records roughly **59 minutes**, around **71 KB of HTML**, and a reported total of **60,221 tokens**. I haven't independently normalized token accounting across the different generation setups, so I wouldn't use that figure for a precise efficiency comparison yet.
 
@@ -185,31 +132,15 @@ After the small startup patch, it presents a cohesive arcade game with an ambiti
 
 The constraints don't make the bugs disappear. They do make the ambition and aesthetic coherence noteworthy. I can rank the current artifact below Astra on reliability and still find it an impressive thing to have generated locally.
 
-## What I want CRTBench to measure next
+## What comes next
 
-The next version needs a repeatable protocol and a profile of results, rather than one number that mixes everything together.
+Mario was one genre. The same question, whether a model can connect code, controls, sound, and presentation into something worth playing, now runs across platformers, raycasters, mazes, and falling-block games. That is [CRTBench](/blog/crtbench-generated-retro-games/).
 
-{% wide %}
-| Dimension | What I want to measure |
-| --- | --- |
-| Raw output success | Does the untouched file parse, start, and respond to input? |
-| Gameplay correctness | Do collisions, blocks, enemies, power-ups, death, restart, and completion work? |
-| Timing and controls | Does speed remain consistent across refresh rates? Do jump release, input buffering, pause, and focus loss behave sensibly? |
-| Reachable content | Can the player actually reach and complete the advertised stages and mechanics? |
-| Reference fidelity | How do controls, pacing, sound, art, and genre-specific mechanics compare with the intended reference? |
-| Generation constraints | What hardware, quantization, prompt, reasoning setting, elapsed time, and repair budget produced the artifact? |
-{% endwide %}
-
-I want repeated runs with the same prompt, preserved originals, and explicit repair logs. The minimal prompt and the detailed specification should have separate result sets. Every output needs a unique path; overwriting the Gemini baseline already cost this comparison a piece of evidence.
-
-Each track needs its own input scripts and completion checks. Platformers need jump and recovery tests; raycasters need navigation and occlusion checks; mazes need turning and enemy-state checks; falling-block games need rotation and board-state checks. Actual playthroughs establish reachability and expose awkward design. Human duels address another part: whether the game feels good to play. Neither approach replaces the other.
-
-That is the appeal of this benchmark for me. Within a few minutes of playing, a generated game starts revealing how well its author connected the pieces. Then, even after the pieces work, there's still the harder question of whether it made the right game.
-
-## Post history
+## Changelog
 
 | Date | Note |
 | --- | --- |
+| 2026-10-01 | Split the CRTBench material (four genre tracks, Blind Vibe Arena, community examples) into its own post. This one is now only the Mario review. |
 | 2026-09-18 | Expanded the draft around CRTBench, its four genre tracks, local blind-duel ratings, community examples, and provenance requirements. |
 | 2026-09-16 | Added browser screenshots of all five surviving implementations. |
 | 2026-09-15 | Initial draft covering five surviving artifacts, the implementation review, retro feel, and the local Qwen run. |

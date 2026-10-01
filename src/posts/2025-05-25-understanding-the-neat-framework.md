@@ -60,35 +60,9 @@ That's the entire thing. Serverless where it needs to be, static everywhere else
 
 ## Architecture Overview
 
-```
-┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
-│  Content        │    │  External APIs   │    │  Build / Deploy │
-│                 │    │                  │    │                 │
-│ • Markdown      │    │ • GitHub API     │    │ • Netlify CI    │
-│ • YAML Data     │───▶│ • Spotify API    │───▶│ • Netlify Funcs │
-│ • Netlify CMS   │    │ • Strava API     │    │ • GitHub Actions│
-└─────────────────┘    │ • OpenAI/Ollama  │    └─────────────────┘
-                       └──────────────────┘
-          │                      │                      │
-          └──────────────────────┴──────────────────────┘
-                                 ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                        NEAT Core                                │
-│                                                                 │
-│      Netlify  •  Eleventy 3.x  •  Alpine.js  •  Tailwind v4    │
-└─────────────────────────────────────────────────────────────────┘
-                                 │
-                                 ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                     Deployed Site                               │
-│                                                                 │
-│   Syntax Highlight • Giscus Comments • Upstash Redis • EXIF    │
-└─────────────────────────────────────────────────────────────────┘
-```
+Here's the sketch I drew when trying to make sense of it all:
 
-Here's the original sketch I drew when trying to make sense of it all:
-
-{% image_cc "./src/static/img/neat.png", "Handdrawn diagram of the NEAT Framework", "rounded-lg border border-gray-200 dark:border-gray-700 w-full", "The original architecture sketch. Yes, I drew this by hand. Yes, a doctor would have better handwriting. 'Utterances' has since become Giscus, and the chicken-scratch in the middle is definitely Tailwind, Alpine, and Eleventy - not a cry for help." %}
+{% image_cc "./src/static/img/neat.png", "Handdrawn diagram of the NEAT Framework", "border border-surface-border w-full", "The architecture sketch. Yes, I drew this by hand. Yes, a doctor would have better handwriting. 'Utterances' has since become Giscus, and the chicken-scratch in the middle is definitely Tailwind, Alpine, and Eleventy - not a cry for help." %}
 
 ## The Ecosystem That Grew Around It
 

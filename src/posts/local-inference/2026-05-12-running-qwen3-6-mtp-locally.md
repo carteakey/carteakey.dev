@@ -4,9 +4,10 @@ description: End-to-end Qwen3.6-35B-A3B MTP setup on llama.cpp with throughput n
 image: /img/blog-sketches/unique/running-qwen3-6-mtp-locally-stamp-trim.png
 imageAlt: "Transparent monochrome sketch of a local GPU workstation with multi-token prediction arrows"
 date: 2026-05-12
-updated: 2026-05-16
+updated: 2026-06-16
 authored_by: ai-assisted
 draft: true
+giscusTerm: "/blog/running-qwen3-6-mtp-locally/"
 tags:
   - AI
   - Self-Host
@@ -148,7 +149,7 @@ MTP performance scales massively compared to non-MTP generation due to the built
 | Date | Note |
 | --- | --- |
 | 2026-06-16 | Updated with latest comprehensive benchmark sweep results (Q4 vs Q6, Thinking vs NoThink). |
-| 2026-05-16 | Verified and updated post to reflect that Vision (multimodal) inputs are supported with MTP! |
 | 2026-05-21 | Added Q6_K benchmark results and verified PR #23269 performance gains. |
+| 2026-05-16 | Verified and updated post to reflect that Vision (multimodal) inputs are supported with MTP! |
 | 2026-05-16 | MTP PR merged into mainline. Updated flags to `--spec-type draft-mtp`. |
 | 2026-05-12 | Initial post. |

@@ -1,10 +1,13 @@
 ---
 title: Running Qwen3.8-27B locally on a 12GB VRAM card
 description: Ridge 3.7bpw, UD-IQ3_XXS, and UD-Q2_K_XL on llama.cpp with an RTX 4070 — decoding at 34–40 tok/s and a native 262k window
+image: /img/blog-sketches/unique/running-qwen3-8-27b-locally-stamp-trim.png
+imageAlt: "Monochrome pencil sketch of a graphics card holding a compact dense block of layers entirely on its board, with a tape measure showing it fits"
 date: 2026-08-19
 updated: 2026-08-19
 authored_by: ai-assisted
 draft: true
+giscusTerm: "/blog/running-qwen3-8-27b-locally/"
 tags:
   - AI
   - Self-Host
@@ -24,7 +27,7 @@ This post covers the three quantizations I settled on, the exact llama.cpp flags
 - **Best synthetic bench (IQ3_XXS)**: `tg128=36.7 tok/s` @ 262k context.
 - **Best synthetic bench (Q2_K_XL)**: `pp128=411`, `pp512=873`, `tg128=39.6 tok/s` @ 262k context.
 - **Key note**: `--fit` + `llama-bench`, not `llama-cli`. This llama.cpp build's `llama-cli --fit` hangs after generation (spins holding VRAM) and can segfault at 131k+ context; `llama-bench` and `llama-server` are stable.
-- **Head-to-head**: how this quant stacks against Qwen3.8-Flash-Next on the same box — throughput, intelligence index, and the chooser matrix — in [Qwen3.8-27B vs Qwen3.8-Flash-Next](/blog/qwen3-8-27b-vs-flash-next/).
+- **Head-to-head**: how this quant stacks against Qwen3.8-Flash-Next on the same box — throughput, intelligence index, and the chooser matrix — in [Qwen3.8-27B vs Qwen3.8-Flash-Next](/blog/local-inference/qwen3-8-27b-vs-flash-next/).
 
 ## Why these three quants?
 

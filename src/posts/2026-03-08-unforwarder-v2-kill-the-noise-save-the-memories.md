@@ -60,17 +60,7 @@ The output of memento feeds directly into unforwarder's Python classifier - down
 
 Both tools live under [wa-suite](https://github.com/carteakey/wa-suite), a parent repo with a single `pipeline.sh` that runs the full flow. One command, dry run by default.
 
-```
-WhatsApp chats
-    ├─ delete-junk-links.js        → Shorts + Facebook links, gone
-    ├─ delete-forwarded-media.js   → viral meme images/videos, gone
-    ├─ delete-patterns.js          → good morning spam, chains, gone
-    │
-    └─ download-media.js           → ~/Pictures/WhatsApp/incoming/
-              │
-              └─ unforwarder.py    → real photos → ~/Pictures/WhatsApp/
-                                     memes       → review-n-delete/
-```
+{% image_cc "./src/static/img/diagrams/unforwarder-v2-pipeline.png", "Pipeline: WhatsApp chats feed three delete passes (junk links, forwarded memes, spam chains) and a main lane of download media, then a local classifier that splits into real photos and review and delete", "sketch-draw", "The wa-suite pipeline. Deleters run on the chats first; whatever survives is downloaded and classified locally." %}
 
 ```bash
 DRY_RUN=false ./pipeline.sh

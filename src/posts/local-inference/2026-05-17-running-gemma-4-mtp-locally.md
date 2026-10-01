@@ -4,9 +4,10 @@ description: End-to-end Gemma 4 setup with official MTP assistant drafter models
 image: /img/blog-sketches/unique/running-gemma-4-mtp-locally-stamp-trim.png
 imageAlt: Transparent monochrome sketch of two network node icons connected by arrows, representing Multi-Token Prediction (MTP) speculative decoding
 date: 2026-05-17
-updated: 2026-05-20
+updated: 2026-05-21
 authored_by: ai-assisted
 draft: true
+giscusTerm: "/blog/running-gemma-4-mtp-locally/"
 tags:
   - AI
   - Self-Host

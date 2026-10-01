@@ -8,6 +8,7 @@ updated: 2026-06-24
 authored_by: ai-generated
 draft: false
 hidden: true
+giscusTerm: "/blog/the-12gb-vram-miracle-l3ms-stack/"
 tags:
   - AI
   - Self-Host
