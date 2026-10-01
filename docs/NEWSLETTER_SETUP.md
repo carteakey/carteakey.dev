@@ -28,6 +28,10 @@ Run `npm run newsletter:test -- you@example.com`. The command always writes the 
 
 Submission totals are also counted in Upstash Redis after Netlify accepts the form. Configure `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` in Netlify to enable those counters. No email address or name is sent to the tracking function; it records only the form source and aggregate date.
 
+## Moderating signups
+
+Netlify's spam filter flags some real signups, and the digest only reads verified submissions, so a flagged signup never gets an issue. Use the `approve-newsletter-submissions` skill (`.agents/skills/approve-newsletter-submissions/`) to approve the real ones and delete the rest. It needs `NETLIFY_AUTH_TOKEN` and `NETLIFY_SITE_ID` in the shell, masks emails, and never writes subscriber data to the repo.
+
 ## How it works
 
 1. **Form Submission**: When someone submits the newsletter form, Netlify automatically captures the data

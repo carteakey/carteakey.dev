@@ -52,6 +52,8 @@ documented workflow. A 1280x896 image takes ~30 s on the 4070. See
 "ComfyUI API workflow" under Part B; thumbnails may also use the built-in
 `image_gen` tool.
 
+The full stop/start procedure, orphan cleanup, and recovery steps live in the `gpu-handoff` skill; use it for any GPU job.
+
 Raw generator output stays out of the repo (`/home/kchauhan/media-output/comfyui/`).
 Only the processed PNG is committed.
 

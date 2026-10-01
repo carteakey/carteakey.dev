@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Prettier with `npm run lint` / `npm run format`, scoped to root config, `utils/`, `netlify/functions/`, and `src/_data/`.
 - `collectionArchetype` front matter on all 38 collection pages, enforced by `check:content` and documented in `docs/DESIGN_LANGUAGE.md`.
 - Legacy `/posts/llm-benchmarks/...` asset redirects in `src/_redirects`.
+- Draft skills (status noted in each): `visual-check` (headless Firefox light/dark/mobile screenshots with a tested `shoot.sh`), `dev-server`, `gpu-handoff`, `commit-batches`, `dependency-audit`, `publish-post`, and `update-now-page`.
+- `approve-newsletter-submissions` skill: approves spam-flagged newsletter signups (Netlify `ham`) so they receive the digest, then deletes the unapproved ones behind a dry run and an exact `--confirm-delete` count. Emails are masked and never written to the repo. Includes a mock-Netlify self-test.
 
 ### Changed
 - Post attachments copy once into `_site/blog` instead of being duplicated into `_site/posts`, and the copy now follows the configured output directory. Eleventy data templates such as `src/posts/posts.json` are no longer shipped as assets.
