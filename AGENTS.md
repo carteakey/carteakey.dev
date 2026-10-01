@@ -66,7 +66,7 @@ This project uses a manual versioning process. It is your responsibility to keep
 
 **Pre-commit checklist:**
 
-* `npm run check:content` and `npm run check:design` pass (a git pre-commit hook and `npm run build` run them for you; do not bypass with `--no-verify`).
+* `npm run check` passes (`check:content`, `check:design`, `check:version`, then `verify` against `_site/`). A git pre-commit hook and `npm run build` run the checks for you; do not bypass with `--no-verify`.
 * Browser tested, no console errors.
 * Shortcuts intact.
 * `versions.json` bumped correctly.
@@ -88,7 +88,7 @@ This project uses a manual versioning process. It is your responsibility to keep
 
 - Local-only Eleventy re-run exists via `npm run build:11ty`; VS Code task “Build Eleventy site” wraps that command if you prefer the task runner.
 
-- Collections: blog posts in `src/posts/*.md` (front matter `title`, `description`, `date`, optional `updated`, `hidden`, `tags`); snippets in `src/snippets`; pages like `now/` and `gallery.njk` expect matching data in `_data`. Tags must be **1–2 max**, Title Case (e.g. `AI`, `Self-Host`).
+- Collections: blog posts in `src/posts/*.md` (front matter `title`, `description`, `date`, optional `updated`, `hidden`, `tags`); snippets in `src/snippets`; pages like `now/` and `gallery.njk` expect matching data in `_data`. Tags must be **1–2 max**, Title Case (e.g. `AI`, `Self-Host`). Visibility and display flags (`hidden`, `draft`, `featured`, `pinned`) are documented in `docs/POST_FRONTMATTER.md`.
 
 - The post layout (`src/_includes/layouts/post.njk`) wires in upvotes, TOC, and Giscus. Keep `page.fileSlug` stable or update `upvotes.posts[slug]` in `src/_data/upvotes.js`.
 
@@ -119,6 +119,8 @@ This project uses a manual versioning process. It is your responsibility to keep
   - `{% remote_image "https://img.carteakey.dev/my-image.png", "Alt text", "optional-css-classes" %}`
   - `{% remote_image_cc "https://img.carteakey.dev/my-image.png", "Alt text", "optional-css-classes", "Optional visible caption" %}`
   - Also use scripts `utils/add-photo.mjs` / `utils/bulk-add-photos.mjs` to append entries to `src/_data/photos.yaml` and copy assets into `src/static/img/photography/{real|virtual}` (requires Ollama/OpenAI creds). GIFs bypass processing via `mapSrcToPublicUrl`.
+  - Post attachments are copied once into `_site/blog` by the `eleventy.after` hook, so keep post asset URLs under `/blog/...`. Legacy `/posts/...` asset URLs are kept alive by `src/_redirects`.
+  - `npm run images:optimize` losslessly recompresses PNGs in `src/static/img` (only rewrites when smaller); `npm run images:check` reports what is still compressible.
 
 - Styling lives in `src/static/css/tailwind.css` with Tailwind v4 `@theme` tokens and custom fonts copied via passthrough; regenerate CSS through the Tailwind CLI scripts rather than editing `_site/css` directly.
 - CMS editing goes through Netlify CMS (`src/admin/config.yml`); any new collection should update both the folder structure and allowed fields there.
@@ -126,6 +128,7 @@ This project uses a manual versioning process. It is your responsibility to keep
 - Build ignores: `.eleventyignore` skips `README.md`. Formatting defaults to two-space indent per `.editorconfig` / `.prettierrc`.
 
 - Hosting/automation: Netlify deploys on pushes to `main`; GitHub Action `.github/workflows/main.yml` pings `NETLIFY_BUILD_URL` nightly at 00:00 UTC to refresh dynamic data.
+- CI: `.github/workflows/build.yml` runs `pnpm run lint`, `pnpm run build`, and `pnpm run verify` on every pull request and every push to `main`. It sets no secrets on purpose: every dynamic data module must fall back cleanly when its credentials are missing.
 
 - When adding new data files, export plain functions/objects so Eleventy’s data cascade can consume them (`export default async function(data) { … }`). Stick to ESM (`type: "module"`).
 

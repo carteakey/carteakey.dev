@@ -5,6 +5,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.18] - 2026-10-01
+### Added
+- `utils/compress-pngs.mjs` (`npm run images:optimize`, `npm run images:check`): lossless PNG recompression that only rewrites a file when the result is smaller.
+- `.github/workflows/build.yml`: lint, build, and verify on every pull request and every push to `main`. It runs with no secrets so credential-free builds stay proven.
+- `utils/check-version.mjs` (`npm run check:version`): `package.json` and `versions.json` must agree. Runs in `prebuild` and the pre-commit hook.
+- `npm run check`: runs `check:content`, `check:design`, `check:version`, then `verify` against `_site/`.
+- Prettier with `npm run lint` / `npm run format`, scoped to root config, `utils/`, `netlify/functions/`, and `src/_data/`.
+- `collectionArchetype` front matter on all 38 collection pages, enforced by `check:content` and documented in `docs/DESIGN_LANGUAGE.md`.
+- Legacy `/posts/llm-benchmarks/...` asset redirects in `src/_redirects`.
+
+### Changed
+- Post attachments copy once into `_site/blog` instead of being duplicated into `_site/posts`, and the copy now follows the configured output directory. Eleventy data templates such as `src/posts/posts.json` are no longer shipped as assets.
+- `src/skills.njk` renamed to `src/skills-radar.njk` to match its `/skills-radar/` permalink.
+- Benchmark screenshots recompressed (farewell board 2.9 MB -> 1.1 MB, camping checklist 2.8 MB -> 1.1 MB, trivia 125 KB -> 32 KB) and the two space-in-URL PNGs renamed.
+- Lossless PNG pass over `src/static/img`: 389 MB -> 241 MB across 291 files, verified pixel-identical.
+- Tag hygiene: prompts, quotations, and the post template now carry 1-2 Title Case tags.
+- Completed audit docs, the resolved Nunjucks async-macro report, and the finished local LLM guide roadmap moved to `docs/history/`.
+- `CLAUDE.md` now points at `AGENTS.md`; its frontmatter reference moved to `docs/POST_FRONTMATTER.md`.
+- Removed the unused `@netlify/functions` dependency, `src/_archive/`, and the `utils/syndicate-note-to-x.mjs` shim.
+- `package.json` author email corrected to `carteakey.dev@gmail.com`.
+
+### Fixed
+- `twitter:card` fell back to `summary` on posts because the condition referenced the removed `ogImage` variable; posts now emit `summary_large_image`.
+- `utils/verify-ui.mjs` asserted pre-shared-view markup (`sm:flex-row`, `projects-collection-list`, `notes-view-*`) that no longer exists. Assertions now check the shared `feed-list-row-thumb` rows and the `collectionView` mode lists, and all 37 checks pass on a credential-free build.
+
 ## [2.7.17] - 2026-09-30
 ### Added
 - `utils/prepare-diagram.mjs`: ink-on-transparent cleanup for generated diagrams (un-mattes against white; the old `prepare-sketch.mjs` key missed Qwen's cooler paper colour and left a ~96% semi-transparent haze).

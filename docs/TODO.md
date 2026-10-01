@@ -1,5 +1,29 @@
 # Site Improvement TODO List
 
+## Repo Hardening (2026-09-30)
+
+Guardrails and cleanup from the 2026-09-30 repo review. Open follow-ups stay at the bottom.
+
+- [x] Enforce the 1-2 tag rule and Title Case across prompts, quotations, and the post template. (2026-09-30)
+- [x] Add `utils/check-content.mjs` (`npm run check:content`): tag count, tag casing, explicit `date` on permanent content, and collection archetype declarations. (2026-09-30)
+- [x] Declare `collectionArchetype` (index / wall / shelf / ledger) on all 38 collection pages and document the convention in `docs/DESIGN_LANGUAGE.md`. (2026-09-30)
+- [x] Stop duplicating post assets into `_site/posts`: attachments now ship once under `/blog/`, and legacy `/posts/...` asset URLs redirect via `src/_redirects`. (2026-09-30)
+- [x] Recompress the heavy benchmark screenshots and rename the two space-in-URL PNGs. (2026-09-30)
+- [x] Lossless PNG pass over `src/static/img` with the new `npm run images:optimize` / `images:check`: 389 MB -> 241 MB. (2026-09-30)
+- [x] Rename `src/skills.njk` to `src/skills-radar.njk` so the filename matches its `/skills-radar/` permalink. (2026-09-30)
+- [x] Add `utils/check-version.mjs` (`npm run check:version`) so `package.json` and `versions.json` cannot drift. (2026-09-30)
+- [x] Wire `utils/verify-ui.mjs` into `npm run verify`, refresh its stale view-toggle assertions, and fix the `twitter:card` regression it exposed. (2026-09-30)
+- [x] Add CI: `.github/workflows/build.yml` lints, builds, and verifies on pull requests and pushes to `main` with no secrets set. (2026-09-30)
+- [x] Archive completed audit docs, the resolved Nunjucks async-macro bug report, and the finished local LLM guide roadmap under `docs/history/`. (2026-09-30)
+- [x] `CLAUDE.md` now points at `AGENTS.md`; its unique frontmatter reference moved to `docs/POST_FRONTMATTER.md`. (2026-09-30)
+- [x] Drop dead weight: unused `@netlify/functions` dependency, `src/_archive/`, and the `utils/syndicate-note-to-x.mjs` shim. (2026-09-30)
+- [x] Add Prettier with `npm run lint` / `npm run format` scoped to root config, `utils/`, `netlify/functions/`, and `src/_data/`, then run the first pass. (2026-09-30)
+- [x] Fix the `package.json` author email to match `src/_data/metadata.yaml`. (2026-09-30)
+- [x] Review `src/_data/cartebase/*.json`: these are cartebase warehouse exports consumed by `src/_data/cartebase.js`, not API fetches, so they stay committed snapshots rather than AssetCache modules. (2026-09-30)
+- [ ] Decide whether to extend Prettier to content files (191 files outside the current lint scope) or keep the gate tooling-only.
+- [ ] Resolve the `/quotes/` (wall) vs `/quotations/` (index) overlap: both are separate nav entries covering similar ground.
+- [ ] Move the remaining heavy assets (photography JPGs, GIFs, MP4s - untouched by the PNG pass) per `docs/ideas/image-hosting-r2-worker.md`.
+
 ## Creative Features (2026-02-27)
 - [x] Add a reviews section for product reviews and buying articles, prefaced by an essay on the upper-midrange buying philosophy. (2026-06-24)
 - [x] `/colophon` - How this site is built (stack, philosophy, AI-assisted dev) ✅ 2026-02-28
@@ -11,6 +35,10 @@
 - [x] `/til` - Today I Learned collection (new type, integrated into feed) ✅ 2026-02-28
 - [x] `/reading` - Goodreads-backed reading shelf with progress bars, cover thumbnails, and manual physical-book overrides. ✅ 2026-06-25
 - [x] `/watching` - Letterboxd-synced film diary with ratings, poster thumbnails, and recent entries on `/now`. (2026-06-25)
+
+## Parked ideas
+- [ ] Move heavy images (photography, GIFs, big screenshots) to Cloudflare R2 + Worker once a trigger fires (repo near 1 GB, cold builds over ~5 min, regular photo/video). Plan and numbers: `docs/ideas/image-hosting-r2-worker.md` (2026-10-01).
+- [ ] Interactive chooser widgets in posts: `docs/ideas/interactive-chooser-articles.md`.
 
 ## Consolidated Backlog (2026-06-29)
 
