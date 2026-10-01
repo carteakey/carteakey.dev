@@ -6,7 +6,7 @@ badges:
   - badge_id: 0130df60-a873-464e-b04f-2c05a00e3b39
     title: "Microsoft Certified: Azure AI Fundamentals"
     image_path: ./src/static/img/badges/microsoft-certified-azure-ai-fundamentals.png
-    
+
   - badge_id: d18435bc-bc9f-45a3-bb5c-b6337bebdb9a
     title: "Google Data Analytics Certificate"
     image_path: ./src/static/img/badges/google-data-analytics-certificate.2.png
@@ -35,13 +35,13 @@ badges:
     title: "Coursera: Deep Learning Essentials with Keras"
     image_path: ./src/static/img/badges/deep-learning-essentials-with-keras.png
 
-# 
-# 
-# 
+#
+#
+#
 # src/static/img/badges/google-data-analytics-certificate.2.png
-# 
+#
 # src/static/img/badges/machine-learning-with-apache-spark.png
 # src/static/img/badges/machine-learning-with-python.png
 # src/static/img/badges/microsoft-certified-azure-ai-fundamentals.png
 # src/static/img/badges/microsoft-certified-azure-data-scientist-associate.png
-# 
+#

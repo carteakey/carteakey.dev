@@ -1,17 +1,15 @@
 blogroll:
-  
   - name: Simon Willison
     url: https://simonwillison.net/
     description: Co-creator of Django, writes about AI, databases, and web development
     tags: [Python, Django, AI]
- 
+
   - name: Sebastian Raschka
     url: https://sebastianraschka.com/
     description: ML researcher and educator
     tags: [ML, Python, Deep Learning]
-  
+
   - name: Eugene Yan
     url: https://eugeneyan.com/
     description: Applied ML in production
     tags: [ML, Data Science, Engineering]
- 

@@ -4,10 +4,10 @@ export default [
       "If you want to live a happy life, tie it to a goal, not to people or things.",
     author: "Albert Einstein",
   },
-{
+  {
     quote: "Everything should be made as simple as possible, but not simpler.",
     author: "Albert Einstein",
-},
+  },
   {
     quote: "History of science is the history of compression progress.",
     author: "Juergen Schmidhuber",
@@ -42,15 +42,15 @@ export default [
       "What information consumes is rather obvious: it consumes the attention of its recipients. Hence a wealth of information provides a poverty of attention.",
     author: "Herbert Simon",
   },
-{
+  {
     quote:
-        "I have a foreboding of an America in my children's or grandchildren's time -- when the United States is a service and information economy; when nearly all the manufacturing industries have slipped away to other countries; when awesome technological powers are in the hands of a very few, and no one representing the public interest can even grasp the issues; when the people have lost the ability to set their own agendas or knowledgeably question those in authority; when, clutching our crystals and nervously consulting our horoscopes, our critical faculties in decline, unable to distinguish between what feels good and what's true, we slide, almost without noticing, back into superstition and darkness...",
+      "I have a foreboding of an America in my children's or grandchildren's time -- when the United States is a service and information economy; when nearly all the manufacturing industries have slipped away to other countries; when awesome technological powers are in the hands of a very few, and no one representing the public interest can even grasp the issues; when the people have lost the ability to set their own agendas or knowledgeably question those in authority; when, clutching our crystals and nervously consulting our horoscopes, our critical faculties in decline, unable to distinguish between what feels good and what's true, we slide, almost without noticing, back into superstition and darkness...",
     author: "Carl Sagan",
-},
-{
+  },
+  {
     quote:
-        "And when the hourglass has run out, the hourglass of temporality, when the noise of secular life has grown silent and its restless or ineffectual activism has come to an end, when everything around you is still, as it is in eternity, then eternity asks you and every individual in these millions and millions about only one thing: whether you have lived in despair or not.",
-    author: "Soren Kierkegaard, \"The Sickness Unto Death\", Datalinks",
+      "And when the hourglass has run out, the hourglass of temporality, when the noise of secular life has grown silent and its restless or ineffectual activism has come to an end, when everything around you is still, as it is in eternity, then eternity asks you and every individual in these millions and millions about only one thing: whether you have lived in despair or not.",
+    author: 'Soren Kierkegaard, "The Sickness Unto Death", Datalinks',
   },
   {
     quote:
@@ -64,7 +64,7 @@ export default [
   },
   {
     quote:
-      "If a book has been in print for forty years, I can expect it to be in print for another forty years. But, and that is the main difference, if it survives another decade, then it will be expected to be in print another fifty years. This, simply, as a rule, tells you why things that have been around for a long time are not \"aging\" like persons, but \"aging\" in reverse.\n\nEvery year that passes without extinction doubles the additional life expectancy.\nThis is an indicator of some robustness.\nThe robustness of an item is proportional to its life.",
+      'If a book has been in print for forty years, I can expect it to be in print for another forty years. But, and that is the main difference, if it survives another decade, then it will be expected to be in print another fifty years. This, simply, as a rule, tells you why things that have been around for a long time are not "aging" like persons, but "aging" in reverse.\n\nEvery year that passes without extinction doubles the additional life expectancy.\nThis is an indicator of some robustness.\nThe robustness of an item is proportional to its life.',
     author: "Nassim Nicholas Taleb, Antifragile",
   },
   {
@@ -78,13 +78,11 @@ export default [
     author: "George Carlin",
   },
   {
-    quote:
-      "Never trust a thought that occurs to you indoors.",
+    quote: "Never trust a thought that occurs to you indoors.",
     author: "Friedrich Nietzsche",
   },
   {
-    quote:
-      "\"You miss 100% of the shots you don't take. - Wayne Gretzky\"",
+    quote: '"You miss 100% of the shots you don\'t take. - Wayne Gretzky"',
     author: "Michael Scott",
   },
   {
@@ -101,5 +99,5 @@ export default [
     quote:
       "We can do well in this country. We will have difficult times. We've had difficult times in the past -- and we will have difficult times in the future. It is not the end of violence; it is not the end of lawlessness; and it's not the end of disorder.\nBut the vast majority of [people] in this country want to live together, want to improve the quality of our life, and want justice for all human beings that abide in our land.\nAnd let's dedicate ourselves to what the Greeks wrote so many years ago: to tame the savageness of man and make gentle the life of this world. Let us dedicate ourselves to that, and say a prayer for our country and for our people.",
     author: "Bobby Kennedy, 1968",
-  }
+  },
 ];

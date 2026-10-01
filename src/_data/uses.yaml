@@ -423,7 +423,7 @@ homelab:
     - name: "Big mAc"
       emoji: "🍔"
       tagline: "Apple Silicon Triple-Stack"
-      description: "MacBook Pro 14\" (M3 Pro), MacBook Air (M2), and Mac Server (M1 Air). Workstation tasks, personal computing on the ultrawide, and always-on container/MCP services."
+      description: 'MacBook Pro 14" (M3 Pro), MacBook Air (M2), and Mac Server (M1 Air). Workstation tasks, personal computing on the ultrawide, and always-on container/MCP services.'
       hosts: ["M3 Pro", "M2 Air", "M1 Air"]
   hosts:
     - name: "M1 Air"

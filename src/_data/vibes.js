@@ -47,7 +47,8 @@ export default async function () {
         if (!meta?.width || !meta?.height) continue;
 
         const birth = stats.birthtime instanceof Date ? stats.birthtime : null;
-        const timestamp = birth && !Number.isNaN(birth.valueOf()) ? birth : stats.mtime;
+        const timestamp =
+          birth && !Number.isNaN(birth.valueOf()) ? birth : stats.mtime;
 
         rawEntries.push({
           url: `${urlBase}/${file}`,
@@ -65,7 +66,10 @@ export default async function () {
     rawEntries = [];
   }
 
-  const list = rawEntries.map((entry) => [entry.url, [entry.width, entry.height]]);
+  const list = rawEntries.map((entry) => [
+    entry.url,
+    [entry.width, entry.height],
+  ]);
   const feed = rawEntries.map((entry) => {
     const displayName = toDisplayName(entry.filename) || "Vibe";
     return {

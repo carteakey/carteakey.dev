@@ -9,7 +9,7 @@
   aperture: f/1.6
   iso: 32
   shutterSpeed: 1/14493s
-  date: '2025-05-25'
+  date: "2025-05-25"
   width: 1280
   height: 1190
   location: Toronto, Canada
@@ -23,7 +23,7 @@
   aperture: f/1.6
   iso: 32
   shutterSpeed: 1/14493s
-  date: '2025-06-11'
+  date: "2025-06-11"
   width: 960
   height: 1280
   location: Unknown
@@ -37,7 +37,7 @@
   aperture: f/1.6
   iso: 25
   shutterSpeed: 1/4630s
-  date: '2025-05-11'
+  date: "2025-05-11"
   width: 960
   height: 1280
   location: Unknown
@@ -51,7 +51,7 @@
   aperture: Unknown
   iso: Unknown
   shutterSpeed: Unknown
-  date: '2020-05-31'
+  date: "2020-05-31"
   width: 5262
   height: 2279
   location: Unknown
@@ -65,7 +65,7 @@
   aperture: f/1.6
   iso: 40
   shutterSpeed: 1/10101s
-  date: '2025-06-22'
+  date: "2025-06-22"
   width: 1280
   height: 840
   location: Unknown
@@ -79,7 +79,7 @@
   aperture: Unknown
   iso: Unknown
   shutterSpeed: Unknown
-  date: '2025-07-27'
+  date: "2025-07-27"
   width: 1600
   height: 1200
   location: Unknown
@@ -93,7 +93,7 @@
   aperture: f/8
   iso: 80
   shutterSpeed: 1/200s
-  date: '2011-07-07'
+  date: "2011-07-07"
   width: 4608
   height: 3456
   location: Unknown
@@ -107,7 +107,7 @@
   aperture: f/2.4
   iso: 25
   shutterSpeed: 1/217s
-  date: '2023-08-07'
+  date: "2023-08-07"
   width: 4032
   height: 3024
   location: Toronto, Canada
@@ -121,7 +121,7 @@
   aperture: Unknown
   iso: Unknown
   shutterSpeed: Unknown
-  date: '2025-07-27'
+  date: "2025-07-27"
   width: 1529
   height: 1147
   description: A lone fishing boat on an empty beach at dusk.
@@ -136,7 +136,7 @@
   aperture: f/1.7
   iso: 100
   shutterSpeed: 1/492s
-  date: '2019-10-06'
+  date: "2019-10-06"
   width: 4656
   height: 3496
   location: Mumbai, India
@@ -150,7 +150,7 @@
   aperture: f/1.87
   iso: 100
   shutterSpeed: 1/251s
-  date: '2024-10-27'
+  date: "2024-10-27"
   width: 3072
   height: 4080
   location: Markham, Ontario, Canada
@@ -164,7 +164,7 @@
   aperture: f/1.87
   iso: 100
   shutterSpeed: 1/373s
-  date: '2024-10-27'
+  date: "2024-10-27"
   width: 3072
   height: 4080
   location: Markham, Ontario, Canada
@@ -178,7 +178,7 @@
   aperture: Unknown
   iso: Unknown
   shutterSpeed: Unknown
-  date: '2019-08-25'
+  date: "2019-08-25"
   width: 1529
   height: 1147
   location: Mumbai, India
@@ -187,7 +187,7 @@
   path: /img/photography/real/cn-tower.jpg
   location: Toronto, Canada
   device: Canon EOS M50
-  date: '2024-12-26'
+  date: "2024-12-26"
   width: 1533
   height: 1675
 - title: Little robin red breast
@@ -195,7 +195,7 @@
   path: /img/photography/real/robin.jpg
   location: Markham, Canada
   device: Canon EOS M50
-  date: '2024-11-30'
+  date: "2024-11-30"
   width: 2976
   height: 1680
 - title: Dam son
@@ -203,7 +203,7 @@
   path: /img/photography/real/dam.jpg
   location: Milne Dam Conservation Park, Canada
   device: iPhone 12 Mini
-  date: '2024-10-27'
+  date: "2024-10-27"
   width: 3024
   height: 4032
 - title: Sleeping beauty
@@ -211,7 +211,7 @@
   path: /img/photography/real/caesar.jpg
   location: Noida, India
   device: OnePlus 5
-  date: '2018-11-23'
+  date: "2018-11-23"
   width: 4608
   height: 3456
 - title: Sunset drive
@@ -219,7 +219,7 @@
   path: /img/photography/real/drive.jpeg
   location: Hillcrest Village, Canada
   device: iPhone 12 Mini
-  date: '2023-11-15'
+  date: "2023-11-15"
   width: 3024
   height: 4032
 - title: Amongst the hills
@@ -227,13 +227,13 @@
   path: /img/photography/real/auli.jpg
   location: Auli, India
   device: OnePlus 5
-  date: '2019-01-09'
+  date: "2019-01-09"
   width: 6436
   height: 2486
 - title: Tutorial Boss
   category: virtual
   path: /img/photography/virtual/sekiro.png
-  date: '2019-01-09'
+  date: "2019-01-09"
   width: 2560
   height: 1080
   game: Sekiro
@@ -241,10 +241,10 @@
 - title: Son Wukong
   category: virtual
   path: /img/photography/virtual/wukong.jpg
-  date: '2025-09-09'
+  date: "2025-09-09"
   width: 2560
   height: 1080
-  game: 'Black Myth Wukong'
+  game: "Black Myth Wukong"
   platform: PC
 
 - title: The fire burns
@@ -252,7 +252,7 @@
   path: /img/photography/real/fire.jpeg
   location: Clarington, Canada
   device: iPhone 16
-  date: '2025-01-04'
+  date: "2025-01-04"
   width: 3024
   height: 4032
 - title: Downtown with someone special
@@ -260,13 +260,13 @@
   path: /img/photography/real/downtown.jpg
   location: Toronto, Canada
   device: Canon EOS M50
-  date: '2024-12-26'
+  date: "2024-12-26"
   width: 2976
   height: 1680
 - title: Erdtree
   category: virtual
   path: /img/photography/virtual/erdtree.png
-  date: '2024-11-02'
+  date: "2024-11-02"
   width: 1920
   height: 1080
   game: Elden Ring
@@ -284,7 +284,7 @@
   path: /img/photography/real/slumber.png
   location: Joshimath, India
   device: OnePlus 5
-  date: '2019-01-07'
+  date: "2019-01-07"
   width: 947
   height: 711
 - title: Twilight Waves
@@ -292,7 +292,7 @@
   path: /img/photography/real/waves.jpg
   location: Mumbai, India
   device: OnePlus 5
-  date: '2019-08-15'
+  date: "2019-08-15"
   width: 4608
   height: 3456
 - title: Himalayan Haven
@@ -300,6 +300,6 @@
   path: /img/photography/real/morning.jpg
   location: Joshimath, India
   device: OnePlus 5
-  date: '2019-01-07'
+  date: "2019-01-07"
   width: 1179
   height: 885

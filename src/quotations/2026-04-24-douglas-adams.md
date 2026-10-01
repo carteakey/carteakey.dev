@@ -2,7 +2,7 @@
 author: "Douglas Adams"
 source: "The Hitchhiker's Guide to the Galaxy"
 date: 2026-04-24 16:06:00
-tags: ["Humor", "Math", "Universe"]
+tags: ["Humor", "Math"]
 ---
 Population (of the universe): None. Although you might see people from time to time, they are most likely products of your imagination.
 

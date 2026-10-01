@@ -12,13 +12,22 @@ function normalizeFeaturedEntry(post) {
     }
     return {
       post,
-      weight: value.weight ?? value.order ?? value.priority ?? post.data?.featuredWeight ?? post.data?.featuredOrder ?? post.data?.featuredPriority,
+      weight:
+        value.weight ??
+        value.order ??
+        value.priority ??
+        post.data?.featuredWeight ??
+        post.data?.featuredOrder ??
+        post.data?.featuredPriority,
     };
   }
 
   return {
     post,
-    weight: post.data?.featuredWeight ?? post.data?.featuredOrder ?? post.data?.featuredPriority,
+    weight:
+      post.data?.featuredWeight ??
+      post.data?.featuredOrder ??
+      post.data?.featuredPriority,
   };
 }
 
@@ -29,7 +38,8 @@ function resolveDate(post) {
   const value = new Date(source).getTime();
 
   if (Number.isNaN(value)) {
-    const fallback = post.date instanceof Date ? post.date.getTime() : Date.now();
+    const fallback =
+      post.date instanceof Date ? post.date.getTime() : Date.now();
     return fallback;
   }
 

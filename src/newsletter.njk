@@ -15,10 +15,10 @@ eleventyNavigation:
   {% set pageDescription = "A quiet weekly digest of new posts about AI, data science, self-hosting, and technology. No email when there is nothing new; unsubscribe anytime." %}
   {% include "components/page-header.njk" %}
 
-  <div id="subscribeForm" class="{{ cardShell }} p-6 sm:p-8">
-    <form name="newsletter" method="POST" action="/newsletter/success/" data-netlify="true" netlify-honeypot="bot-field" class="space-y-4" data-newsletter-form data-newsletter-source="newsletter-page" data-error-target="#errorMessage">
+  <div id="subscribeForm" class="{{ cardShell }} surface-padding">
+    <form name="newsletter" method="POST" action="/newsletter/success/" data-netlify="true" netlify-honeypot="bot-field" class="space-y-3" data-newsletter-form data-newsletter-source="newsletter-page" data-error-target="#errorMessage">
       <input type="hidden" name="form-name" value="newsletter" />
-      
+
       <!-- Honeypot field for spam protection -->
       <p class="hidden">
         <label>
@@ -26,53 +26,56 @@ eleventyNavigation:
         </label>
       </p>
 
-      <div>
-        <label for="name" class="block text-sm font-medium mb-2">Name</label>
-        <input 
-          type="text" 
-          id="name" 
-          name="name" 
-          required
-          class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-sm bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 accent-field focus:outline-none"
-          placeholder="Your name"
-        />
+      <div class="grid gap-3 sm:grid-cols-2">
+        <div>
+          <label for="name" class="editorial-kicker mb-1 block">Name</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            required
+            class="w-full px-3 py-1.5 border border-gray-300 dark:border-gray-600 rounded-sm bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 accent-field focus:outline-none"
+            placeholder="Your name"
+          />
+        </div>
+        <div>
+          <label for="email" class="editorial-kicker mb-1 block">Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            required
+            class="w-full px-3 py-1.5 border border-gray-300 dark:border-gray-600 rounded-sm bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 accent-field focus:outline-none"
+            placeholder="you@example.com"
+          />
+        </div>
       </div>
 
-      <div>
-        <label for="email" class="block text-sm font-medium mb-2">Email</label>
-        <input 
-          type="email" 
-          id="email" 
-          name="email" 
-          required
-          class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-sm bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 accent-field focus:outline-none"
-          placeholder="you@example.com"
-        />
-      </div>
+      <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div class="flex items-start">
+          <input
+            type="checkbox"
+            id="consent"
+            name="consent"
+            required
+            class="mt-1 rounded accent-field"
+          />
+          <label for="consent" class="ml-2 editorial-support-compact text-gray-600 dark:text-gray-300">
+            I agree to receive a weekly digest when there is new writing.
+          </label>
+        </div>
 
-      <div class="flex items-start">
-        <input 
-          type="checkbox" 
-          id="consent" 
-          name="consent" 
-          required
-          class="mt-1 rounded accent-field"
-        />
-        <label for="consent" class="ml-2 editorial-support-compact text-gray-600 dark:text-gray-300">
-          I agree to receive a weekly digest when there is new writing.
-        </label>
+        <button
+          type="submit"
+          id="submitButton"
+          class="accent-button accent-focus flex shrink-0 items-center justify-center gap-2 rounded-sm px-5 py-2 text-sm font-medium sm:w-32"
+        >
+          <span id="submitText" data-submit-label>Subscribe</span>
+          <span id="submitLoading" class="hidden" data-submit-loading>
+            <div class="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+          </span>
+        </button>
       </div>
-
-      <button 
-        type="submit" 
-        id="submitButton"
-        class="w-32  accent-button accent-focus flex items-center justify-center gap-2 rounded-sm px-6 py-3 text-base font-medium"
-      >
-        <span id="submitText" data-submit-label>Subscribe</span>
-        <span id="submitLoading" class="hidden" data-submit-loading>
-          <div class="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-        </span>
-      </button>
     </form>
   </div>
 

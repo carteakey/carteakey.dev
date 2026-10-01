@@ -5,10 +5,8 @@ date: 2026-06-12
 category: Reasoning
 difficulty: Hard
 tags:
-  - constraint
-  - creative
-  - acrostic
-  - poetry
+  - Creative
+  - Poetry
 authored_by: human
 ---
 

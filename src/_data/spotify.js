@@ -18,7 +18,9 @@ async function fetchAccessToken() {
   let accessTokenCache = new AssetCache("token");
 
   if (!client_id || !client_secret || !refresh_token) {
-    console.warn("Spotify credentials missing, using cached token if available");
+    console.warn(
+      "Spotify credentials missing, using cached token if available",
+    );
     try {
       return await accessTokenCache.getCachedValue();
     } catch (e) {
@@ -44,7 +46,9 @@ async function fetchAccessToken() {
     });
 
     if (response.status == 204 || response.status >= 400) {
-      console.warn("Unable to fetch Spotify access token, using cached token if available");
+      console.warn(
+        "Unable to fetch Spotify access token, using cached token if available",
+      );
       try {
         accessToken = await accessTokenCache.getCachedValue();
       } catch (e) {
@@ -100,7 +104,7 @@ export default async function () {
       }
 
       const song = await response.json();
-      
+
       // Handle case when item is null (e.g., podcast episodes)
       if (!song.item) {
         throw new Error("Spotify item has no track data");
@@ -125,6 +129,6 @@ export default async function () {
           title,
         },
       };
-    }
+    },
   });
 }

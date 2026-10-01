@@ -9,7 +9,7 @@ const MANUAL_DATA_PATH = new URL("./reading-manual.yaml", import.meta.url);
 const shelves = {
   currently_reading: "currently-reading",
   read: "read",
-  want_to_read: "to-read"
+  want_to_read: "to-read",
 };
 
 function decodeXml(value = "") {
@@ -24,7 +24,9 @@ function decodeXml(value = "") {
 }
 
 function getTag(xml, tag) {
-  const match = xml.match(new RegExp(`<${tag}(?:\\s[^>]*)?>([\\s\\S]*?)<\\/${tag}>`, "i"));
+  const match = xml.match(
+    new RegExp(`<${tag}(?:\\s[^>]*)?>([\\s\\S]*?)<\\/${tag}>`, "i"),
+  );
   return decodeXml(match?.[1]);
 }
 
@@ -39,11 +41,14 @@ function parseGoodreadsFeed(xml, shelf) {
       author: getTag(item, "author_name"),
       goodreadsId,
       url: `https://www.goodreads.com/book/show/${goodreadsId}`,
-      cover: getTag(item, "book_large_image_url") || getTag(item, "book_image_url"),
+      cover:
+        getTag(item, "book_large_image_url") || getTag(item, "book_image_url"),
       ...(rating > 0 ? { rating } : {}),
-      ...(finished ? { finished: new Date(finished).toISOString().slice(0, 10) } : {}),
+      ...(finished
+        ? { finished: new Date(finished).toISOString().slice(0, 10) }
+        : {}),
       source: "goodreads",
-      shelf
+      shelf,
     };
   });
 }
@@ -56,7 +61,7 @@ async function fetchShelf(shelf) {
     fetchFn: async () => {
       const response = await fetch(
         `https://www.goodreads.com/review/list_rss/${GOODREADS_USER_ID}?shelf=${shelf}`,
-        { headers: { "User-Agent": "carteakey.dev reading shelf" } }
+        { headers: { "User-Agent": "carteakey.dev reading shelf" } },
       );
 
       if (!response.ok) {
@@ -64,13 +69,15 @@ async function fetchShelf(shelf) {
       }
 
       return parseGoodreadsFeed(await response.text(), shelf);
-    }
+    },
   });
 }
 
 function bookKey(book) {
   if (book.goodreadsId) return `goodreads:${book.goodreadsId}`;
-  return `${book.title || ""}:${book.author || ""}`.toLowerCase().replace(/[^a-z0-9]+/g, "");
+  return `${book.title || ""}:${book.author || ""}`
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "");
 }
 
 function mergeBooks(goodreadsBooks = [], manualBooks = []) {
@@ -83,7 +90,11 @@ function mergeBooks(goodreadsBooks = [], manualBooks = []) {
       continue;
     }
     const syncedBook = books.get(key) || {};
-    books.set(key, { ...syncedBook, ...manualBook, source: syncedBook.source ? "goodreads+manual" : "manual" });
+    books.set(key, {
+      ...syncedBook,
+      ...manualBook,
+      source: syncedBook.source ? "goodreads+manual" : "manual",
+    });
   }
 
   return [...books.values()];
@@ -91,23 +102,27 @@ function mergeBooks(goodreadsBooks = [], manualBooks = []) {
 
 function isInProgress(book) {
   const hasProgress = book.progress !== undefined && book.progress !== null;
-  const hasStarted = book.started !== undefined && book.started !== null && book.started !== "";
+  const hasStarted =
+    book.started !== undefined && book.started !== null && book.started !== "";
   return hasProgress || hasStarted;
 }
 
 export default async function () {
   const manual = load(await readFile(MANUAL_DATA_PATH, "utf8")) || {};
   const shelfEntries = await Promise.all(
-    Object.entries(shelves).map(async ([key, shelf]) => [key, await fetchShelf(shelf)])
+    Object.entries(shelves).map(async ([key, shelf]) => [
+      key,
+      await fetchShelf(shelf),
+    ]),
   );
 
   const shelvesData = Object.fromEntries(
-    shelfEntries.map(([key, books]) => [key, mergeBooks(books, manual[key])])
+    shelfEntries.map(([key, books]) => [key, mergeBooks(books, manual[key])]),
   );
 
   return {
     profileUrl: GOODREADS_PROFILE_URL,
     ...shelvesData,
-    in_progress: (shelvesData.currently_reading || []).filter(isInProgress)
+    in_progress: (shelvesData.currently_reading || []).filter(isInProgress),
   };
 }

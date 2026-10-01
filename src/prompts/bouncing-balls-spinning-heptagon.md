@@ -5,9 +5,8 @@ date: 2026-04-03
 category: Coding
 difficulty: Hard
 tags:
-  - physics
-  - simulation
-  - algorithms
+  - Physics
+  - Algorithms
 authored_by: human
 ---
 

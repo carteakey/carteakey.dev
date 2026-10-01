@@ -5,8 +5,8 @@ date: 2026-09-09
 category: Coding
 difficulty: Hard
 tags:
-  - game
-  - canvas
+  - Games
+  - Canvas
 authored_by: human
 ---
 

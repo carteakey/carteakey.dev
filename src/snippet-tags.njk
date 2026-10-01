@@ -8,6 +8,7 @@ layout: layouts/base.njk
 eleventyComputed:
   title: 'Snippets tagged "{{ tag }}"'
 permalink: /snippets/tags/{{ tag | slugify }}/
+collectionArchetype: ledger
 ---
 
 {% include "components/breadcrumbs.njk" %}

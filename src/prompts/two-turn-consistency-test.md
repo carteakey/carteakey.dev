@@ -5,8 +5,8 @@ date: 2026-04-25
 category: Reasoning
 difficulty: Medium
 tags:
-  - consistency
-  - multi-turn
+  - Consistency
+  - Multi-Turn
 authored_by: human
 ---
 

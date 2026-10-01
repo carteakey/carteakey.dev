@@ -1,6 +1,7 @@
 import { AssetCache } from "@11ty/eleventy-fetch";
 
-const REPOS_API = "https://api.github.com/users/carteakey/repos?sort=updated&direction=desc&per_page=100";
+const REPOS_API =
+  "https://api.github.com/users/carteakey/repos?sort=updated&direction=desc&per_page=100";
 const USER_API = "https://api.github.com/users/carteakey";
 
 export default async function () {
@@ -35,12 +36,15 @@ export default async function () {
     ]);
 
     if (!userRes.ok || !reposRes.ok) {
-      throw new Error(`GitHub API error: user=${userRes.status} repos=${reposRes.status}`);
+      throw new Error(
+        `GitHub API error: user=${userRes.status} repos=${reposRes.status}`,
+      );
     }
 
     const [user, repos] = await Promise.all([userRes.json(), reposRes.json()]);
 
-    if (!Array.isArray(repos)) throw new Error("Repos payload was not an array");
+    if (!Array.isArray(repos))
+      throw new Error("Repos payload was not an array");
 
     // Aggregate stats
     let totalStars = 0;

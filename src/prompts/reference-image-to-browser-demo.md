@@ -5,8 +5,8 @@ date: 2026-09-09
 category: Multimodal
 difficulty: Hard
 tags:
-  - vision
-  - game
+  - Vision
+  - Games
 authored_by: human
 ---
 

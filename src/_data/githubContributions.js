@@ -37,18 +37,27 @@ function streakFromDays(days, fromEnd = false) {
   const eligible = [...days];
   if (eligible.at(-1)?.count === 0) eligible.pop();
   const active = [];
-  for (let index = eligible.length - 1; index >= 0 && eligible[index].count > 0; index -= 1) {
+  for (
+    let index = eligible.length - 1;
+    index >= 0 && eligible[index].count > 0;
+    index -= 1
+  ) {
     active.unshift(eligible[index]);
   }
 
   return active.length
-    ? { length: active.length, startDate: active[0].date, endDate: active.at(-1).date }
+    ? {
+        length: active.length,
+        startDate: active[0].date,
+        endDate: active.at(-1).date,
+      }
     : null;
 }
 
 function normalizeContributions(html) {
   const days = [];
-  const cellPattern = /data-date="([^"]+)"[^>]*id="([^"]+)"[^>]*><\/td>\s*<tool-tip[^>]*for="\2"[^>]*>([^<]+)<\/tool-tip>/g;
+  const cellPattern =
+    /data-date="([^"]+)"[^>]*id="([^"]+)"[^>]*><\/td>\s*<tool-tip[^>]*for="\2"[^>]*>([^<]+)<\/tool-tip>/g;
 
   for (const match of html.matchAll(cellPattern)) {
     const countMatch = match[3].match(/([\d,]+) contributions?/);
@@ -60,7 +69,8 @@ function normalizeContributions(html) {
     });
   }
 
-  if (!days.length) throw new Error("GitHub contribution calendar contained no days");
+  if (!days.length)
+    throw new Error("GitHub contribution calendar contained no days");
 
   days.sort((a, b) => a.date.localeCompare(b.date));
   const weeksByDate = new Map();
@@ -85,7 +95,10 @@ function normalizeContributions(html) {
     weeklyAverageRounded: Number((dailyAverage * 7).toFixed(1)),
     currentStreak: streakFromDays(days, true),
     longestStreak: streakFromDays(days),
-    weeks: [...weeksByDate].map(([firstDay, contributionDays]) => ({ firstDay, contributionDays })),
+    weeks: [...weeksByDate].map(([firstDay, contributionDays]) => ({
+      firstDay,
+      contributionDays,
+    })),
   };
 }
 
@@ -101,7 +114,8 @@ export default async function () {
     const response = await fetch(API_ENDPOINT, {
       headers: { "User-Agent": "carteakey.dev (Eleventy cache)" },
     });
-    if (!response.ok) throw new Error(`GitHub responded with ${response.status}`);
+    if (!response.ok)
+      throw new Error(`GitHub responded with ${response.status}`);
 
     const normalized = normalizeContributions(await response.text());
     await cache.save(normalized, "json");

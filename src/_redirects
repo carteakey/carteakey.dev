@@ -12,6 +12,30 @@
 /blog/gemma-4-26b-qat-mtp/ /blog/local-inference/gemma-4-26b-qat-mtp/ 301!
 /blog/gemma-4-26b-qat-mtp /blog/local-inference/gemma-4-26b-qat-mtp/ 301!
 
+/blog/running-qwen3-6-mtp-locally/ /blog/local-inference/running-qwen3-6-mtp-locally/ 301!
+/blog/running-qwen3-6-mtp-locally /blog/local-inference/running-qwen3-6-mtp-locally/ 301!
+
+/blog/running-gemma-4-mtp-locally/ /blog/local-inference/running-gemma-4-mtp-locally/ 301!
+/blog/running-gemma-4-mtp-locally /blog/local-inference/running-gemma-4-mtp-locally/ 301!
+
+/blog/the-12gb-vram-miracle-l3ms-stack/ /blog/local-inference/the-12gb-vram-miracle-l3ms-stack/ 301!
+/blog/the-12gb-vram-miracle-l3ms-stack /blog/local-inference/the-12gb-vram-miracle-l3ms-stack/ 301!
+
+/blog/ultrafast-gemma-4-12b/ /blog/local-inference/ultrafast-gemma-4-12b/ 301!
+/blog/ultrafast-gemma-4-12b /blog/local-inference/ultrafast-gemma-4-12b/ 301!
+
+/blog/running-qwen3-8-27b-locally/ /blog/local-inference/running-qwen3-8-27b-locally/ 301!
+/blog/running-qwen3-8-27b-locally /blog/local-inference/running-qwen3-8-27b-locally/ 301!
+
+/blog/running-qwen3-8-flash-next-locally/ /blog/local-inference/running-qwen3-8-flash-next-locally/ 301!
+/blog/running-qwen3-8-flash-next-locally /blog/local-inference/running-qwen3-8-flash-next-locally/ 301!
+
+/blog/qwen3-8-27b-vs-flash-next/ /blog/local-inference/qwen3-8-27b-vs-flash-next/ 301!
+/blog/qwen3-8-27b-vs-flash-next /blog/local-inference/qwen3-8-27b-vs-flash-next/ 301!
+
+/blog/the-rise-of-overfit-inference-engines/ /blog/local-inference/the-rise-of-overfit-inference-engines/ 301!
+/blog/the-rise-of-overfit-inference-engines /blog/local-inference/the-rise-of-overfit-inference-engines/ 301!
+
 
 /blog/optimizing-qwen3-coder-next-local-inference/ /blog/local-inference/optimizing-qwen3-coder-next-local-inference/ 301!
 /blog/optimizing-qwen3-coder-next-local-inference /blog/local-inference/optimizing-qwen3-coder-next-local-inference/ 301!
@@ -67,3 +91,19 @@
 
 /blog/upper-midrange-is-the-place-to-be/ /reviews/upper-midrange-is-the-place-to-be/ 301!
 /blog/upper-midrange-is-the-place-to-be /reviews/upper-midrange-is-the-place-to-be/ 301!
+
+# Post assets now ship once under /blog/. Legacy /posts/ asset URLs keep working.
+/posts/llm-benchmarks/camping-gear-checklist%20-%20gpt-5.png /blog/llm-benchmarks/camping-gear-checklist-gpt-5.png 301!
+/posts/llm-benchmarks/camping-gear-checklist%20-%20gpt-oss.png /blog/llm-benchmarks/camping-gear-checklist-gpt-oss.png 301!
+/posts/llm-benchmarks/camping-gear-checklist-gpt-5.png /blog/llm-benchmarks/camping-gear-checklist-gpt-5.png 301!
+/posts/llm-benchmarks/camping-gear-checklist-gpt-oss.png /blog/llm-benchmarks/camping-gear-checklist-gpt-oss.png 301!
+/posts/llm-benchmarks/camping-gear-checklist.html /blog/llm-benchmarks/camping-gear-checklist.html 301!
+/posts/llm-benchmarks/farewell-message-board-gpt-5.png /blog/llm-benchmarks/farewell-message-board-gpt-5.png 301!
+/posts/llm-benchmarks/farewell-message-board-gpt-oss.png /blog/llm-benchmarks/farewell-message-board-gpt-oss.png 301!
+/posts/llm-benchmarks/farewell-message-board.html /blog/llm-benchmarks/farewell-message-board.html 301!
+/posts/llm-benchmarks/farewell-message-board.yaml /blog/llm-benchmarks/farewell-message-board.yaml 301!
+/posts/llm-benchmarks/trivia-quiz-game-gpt-5.png /blog/llm-benchmarks/trivia-quiz-game-gpt-5.png 301!
+/posts/llm-benchmarks/trivia-quiz-game-gpt-oss.png /blog/llm-benchmarks/trivia-quiz-game-gpt-oss.png 301!
+/posts/llm-benchmarks/trivia-quiz.html /blog/llm-benchmarks/trivia-quiz.html 301!
+/posts/llm-benchmarks/bouncing-balls.py /blog/llm-benchmarks/bouncing-balls.py 301!
+/posts/llm-benchmarks/bouncing-balls-v2.py /blog/llm-benchmarks/bouncing-balls-v2.py 301!

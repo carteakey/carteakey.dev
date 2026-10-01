@@ -1,6 +1,7 @@
 import { fetchWithFallback } from "../_utils/fetchWithFallback.js";
 
-const api_endpoint = "https://api.github.com/users/carteakey/repos?sort=updated&direction=desc&per_page=100";
+const api_endpoint =
+  "https://api.github.com/users/carteakey/repos?sort=updated&direction=desc&per_page=100";
 
 export default async function () {
   return fetchWithFallback({
@@ -19,23 +20,25 @@ export default async function () {
         throw new Error("GitHub API payload was not an array");
       }
 
-      const repos_list = repos_json.filter((r) => !r.private).map((repo) => {
-        return {
-          repo_name: repo.name,
-          repo_url: repo.html_url,
-          repo_description: repo.description,
-          repo_language: repo.language,
-          repo_stars: repo.stargazers_count,
-          repo_forks: repo.forks,
-          repo_updated: repo.updated_at,
-          repo_created: repo.created_at,
-          repo_size: repo.size,
-        };
-      });
+      const repos_list = repos_json
+        .filter((r) => !r.private)
+        .map((repo) => {
+          return {
+            repo_name: repo.name,
+            repo_url: repo.html_url,
+            repo_description: repo.description,
+            repo_language: repo.language,
+            repo_stars: repo.stargazers_count,
+            repo_forks: repo.forks,
+            repo_updated: repo.updated_at,
+            repo_created: repo.created_at,
+            repo_size: repo.size,
+          };
+        });
 
       return {
         repos: repos_list,
       };
-    }
+    },
   });
 }
