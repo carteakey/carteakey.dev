@@ -1,0 +1,39 @@
+{
+  "title": "Decode speed, RTX 4070 12GB",
+  "unit": "t/s",
+  "max": 100,
+  "step": 20,
+  "bars": [
+    {
+      "label": "27B · llama.cpp",
+      "value": 36.7,
+      "text": "36.7"
+    },
+    {
+      "label": "Flash-Next · llama.cpp",
+      "value": 20.5,
+      "text": "20.5"
+    },
+    {
+      "label": "Flash-Next · llama.cpp + MTP",
+      "value": 25.3,
+      "text": "25.3"
+    },
+    {
+      "label": "Flash-Next · Strata, steady",
+      "value": 53.2,
+      "range": [
+        53.2,
+        62.6
+      ],
+      "text": "53–63",
+      "accent": true
+    },
+    {
+      "label": "Flash-Next · Strata, burst (Q2_0)",
+      "value": 90.2,
+      "text": "90.2",
+      "accent": true
+    }
+  ]
+}
