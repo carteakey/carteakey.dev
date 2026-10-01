@@ -75,7 +75,7 @@
   {% endif %}
   
   {# Twitter Card Meta Tags #}
-  <meta name="twitter:card" content="{{ twitterCard or ('summary' if (not ogImage and image) else 'summary_large_image') }}" />
+  <meta name="twitter:card" content="{{ twitterCard or 'summary_large_image' }}" />
   <meta name="twitter:url" content="{{ resolvedCanonicalUrl }}" />
   <meta name="twitter:title" content="{{ title or metadata.title }}" />
   <meta name="twitter:description" content="{{ resolvedDescription }}" />
@@ -477,6 +477,7 @@
 
   {# Easter Eggs - loaded from external file #}
   <script defer src="/static/js/easter-eggs.js?v={{ versions.version }}"></script>
+  <script defer src="/static/js/ink.js?v={{ versions.version }}"></script>
   <script defer src="/static/js/newsletter.js?v={{ versions.version }}"></script>
   {% if monitoring.webVitalsEnabled %}
     <script
