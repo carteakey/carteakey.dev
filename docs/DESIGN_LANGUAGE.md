@@ -219,6 +219,14 @@ Rows are the safe default, not a universal mandate. Choose the shape that best e
 
 Do not force every collection into the same layout. Cohesion comes from the shared header, type roles, surfaces, metadata, spacing, and controls. Character comes from choosing the right archetype.
 
+Every collection page declares its archetype in front matter so the choice stays deliberate:
+
+```yaml
+collectionArchetype: shelf
+```
+
+`npm run check:content` verifies that each collection page declares one of the four archetypes and that the declared value still matches how the page reads. Add the new page to the list in `utils/check-content.mjs` when a collection is created.
+
 ### Multiple views
 
 Offer multiple views when the same collection supports genuinely different tasks, such as reading full notes versus scanning their titles. A toggle should not exist only as decoration.
@@ -280,6 +288,12 @@ Article-only helpers should feel like flat paper marks, not app widgets.
 - Keep blockquotes for quoted material, not generic callouts.
 
 See `docs/BLOG_POST_FEATURES.md` for the current inventory and syntax.
+
+### Sketches and diagrams in posts
+
+Spatial structure in a post (tiers, pipelines, loops, comparisons) is drawn, not typed. ASCII box art is replaced by a hand-drawn whiteboard sketch made with the `sketches` skill (`.agents/skills/sketches/`, Part B). The sketch is ink on a truly transparent background, black plus the accent blue, placed with `{% image_cc %}`, with no rounded corners, border, or shadow. Text that must stay copyable (file trees, logs, terminal output) stays a fenced block, rows and columns stay a table, and numeric series use `{% progression_chart %}`. Per-post thumbnails are a separate job with their own rules (Part A of the same skill).
+
+Charts and structured figures render through the shared `.data-card` / `.chart-*` classes: flat, square, accent-led, mono kicker, display title. Do not hand-write them in post markdown.
 
 ### Lists
 
@@ -440,6 +454,10 @@ Use this when reviewing a page after changes:
 - Did any `text-sm text-gray-500` style utility stack sneak back into core content?
 - Does the page clearly belong to an index, wall, shelf, or ledger archetype?
 - If it offers multiple views, do they serve distinct reading tasks and use the shared controls?
+
+## Enforcement
+
+The Migration Checklist above is automated where it can be. `npm run check:design` (`utils/check-design.mjs`) is a ratchet: it counts soft radii, pills, soft shadows, gradients, off-palette colours, utility text stacks, inline styles, and raw HTML in posts, compares them with `utils/design-baseline.json`, and fails on anything new. It also validates `authored_by`, changelog order and `updated` date, and the tag registry. It runs in the git pre-commit hook (`.githooks/`, enabled by `npm install`) and in `npm run build`, so a regression cannot reach a deploy. Paying down debt lowers the baseline; it never goes up without `--force` and a reason.
 
 ## One-Line Prompt Version
 

@@ -23,11 +23,21 @@ Intentionally committed implementation work is tracked in Linear: [carteakey.dev
    - Visual exceptions are welcome for authored folios and content-led experiences, but incidental control and typography drift is not.
 3. **Date Immutability**: All permanent content (posts, folios, snippets) must have an explicitly declared `date` (and optionally `updated`) in its frontmatter. Never rely on file system modification times.
 4. **2-Tag Maximum**: Every post must have **exactly 1–2 tags**. Use Title Case (e.g., `AI`, `Self-Host`, `Agents`). Never add a third tag - use a series folder for finer grouping instead.
+5. **Every Post Has a Thumbnail**: each post in `src/posts/` must set `image` and `imageAlt` in front matter, pointing at a unique, post-specific sketch in `src/static/img/blog-sketches/unique/` (`{slug}-stamp-trim.png`). Generate it with the `sketches` skill (Part A). No shared category art, no reusing another post's image. `npm run check:content` fails the build on a missing `image`, a missing `imageAlt`, or an image file that does not exist. Only the internal template is exempt.
+6. **Style Guide Is Law (No Invented Elements)**: `docs/DESIGN_LANGUAGE.md` and `docs/BLOG_POST_FEATURES.md` are binding, not suggestions.
+   - Post content uses only the existing primitives: `{% callout %}`, `{% update %}`, `{% define %}`, `{% sidenote %}`, `{% annotate %}`, `{% wide %}`, `{% analysis %}`, `{% progression_chart %}`, `{% image_cc %}`, `{% gallery %}`, Markdown tables, and fenced code. **Never** write raw `<div>`/`<svg>`/`<table>` blocks or Tailwind utility stacks (`text-sm text-stone-500 dark:...`, `rounded-*`, `shadow-*`, hardcoded teal/emerald/rose colours) inside a post.
+   - If something truly needs a new element, **stop and propose it**: add it as a named, shared component (shortcode + semantic class in `tailwind.css` + an entry in `docs/BLOG_POST_FEATURES.md`) *before* using it in a post. Do not ship one-off markup. If a repeated pattern appears twice, give it a named class.
+   - Interactivity (Alpine widgets, toggles) in a post needs an explicit reader task it serves. Default to a table.
+   - One accent colour (`--accent-color`). No per-component palettes, gradients, rounded cards, or soft shadows.
+   - **Sketches where suggested**: a spatial structure (tiers, flows, topologies, comparisons) that is currently an ASCII block gets a hand-drawn sketch via the `sketches` skill (Part B). Copyable text (trees, logs, terminal output, arithmetic) stays a fenced block; rows and columns stay a table; data stays a chart shortcode. Posts may have a thumbnail (Part A) via `image:`; the two kinds of sketch follow separate rules.
+   - Before finishing any post edit, check it against the Migration Checklist in `docs/DESIGN_LANGUAGE.md`, and run `npm run check:content`.
+7. **Design Guard (ratchet)**: `npm run check:design` fails on any *new* design drift (soft radii/shadows, gradients, off-palette colours, utility text stacks, inline styles, raw HTML in posts), invalid `authored_by`, an oldest-first or stale changelog, or an unregistered tag. Existing debt lives in `utils/design-baseline.json` and may only shrink. When you remove debt, run `node utils/check-design.mjs --update-baseline` to lock the gain in. Never raise the baseline to make a check pass: fix the markup, or use `--force` only with a stated reason in the commit message. Adding a tag deliberately means `--update-baseline --force`; first check whether an existing tag fits.
 ---
 
 ## ⚠️ Prohibited Practices
 
 * ❌ **No Legacy Code**: Do not use `var`, jQuery, or write code for Internet Explorer compatibility.
+* ❌ **Inventing Post Elements**: raw HTML/utility-class blocks in posts, or new components that are not documented in `docs/BLOG_POST_FEATURES.md` (see rule 6).
 * ❌ **Hardcoded HTML for Data**: When building lists, folios, or attributions, use YAML data files or Markdown frontmatter. Do not hardcode HTML grids or `<div>` structures in templates.
 
 ---
@@ -56,6 +66,7 @@ This project uses a manual versioning process. It is your responsibility to keep
 
 **Pre-commit checklist:**
 
+* `npm run check:content` and `npm run check:design` pass (a git pre-commit hook and `npm run build` run them for you; do not bypass with `--no-verify`).
 * Browser tested, no console errors.
 * Shortcuts intact.
 * `versions.json` bumped correctly.

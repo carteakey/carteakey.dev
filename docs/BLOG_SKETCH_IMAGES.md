@@ -1,8 +1,8 @@
 # Blog Post Images
 
-Treat post images as optional and unique per post. Shared category art was useful for exploration, but it reads repetitive in the archive and feed.
+Every post must have a thumbnail, and it must be unique to that post (enforced by `npm run check:content`). Shared category art was useful for exploration, but it reads repetitive in the archive and feed.
 
-For repeated work, use the local skill at `.agents/skills/blog-sketches/`.
+For repeated work, use the local skill at `.agents/skills/sketches/` (Part A: thumbnails).
 
 Use `image` front matter for post thumbnails, structured data, and the lead image on the post page:
 

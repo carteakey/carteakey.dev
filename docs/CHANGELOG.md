@@ -5,6 +5,44 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.17] - 2026-09-30
+### Added
+- `utils/prepare-diagram.mjs`: ink-on-transparent cleanup for generated diagrams (un-mattes against white; the old `prepare-sketch.mjs` key missed Qwen's cooler paper colour and left a ~96% semi-transparent haze).
+- Merged `sketches` skill (`.agents/skills/sketches/`) replacing `blog-sketches` and `inline-diagrams`, with separate Thumbnail (A) and Diagram (B) rules, a review rubric, and a corrected ComfyUI workflow.
+- Shared `.data-card` / `.chart-*` post primitives in `tailwind.css`.
+- AGENTS.md rule 5: the style guide is binding; no invented post elements; ASCII diagrams become sketches.
+- Hand-drawn diagrams for the overfit-engines post (regenerated), the backlog Creator/Reviewer/Burner loop, and the unforwarder v2 pipeline.
+- `src/static/js/ink.js` + CSS: three hand-drawn touches. The homepage halftone avatar breathes and swells under the cursor. `{% annotate %}` marks highlight and write themselves in on scroll. Diagrams with class `sketch-draw` wipe in left to right. All are static with no JS or `prefers-reduced-motion`.
+- `sketch-draw` class: one class for the diagram dark-mode treatment and ink wipe, replacing hand-written `dark:invert dark:hue-rotate-180`.
+- Thumbnails (Qwen-Image-2.1, monochrome, transparent, neutral gray) for the overfit-engines, backlog Creator/Reviewer/Burner, Notes on AI, Sol/Luna/Terra, Qwen3.8-27B local, 27B vs Flash-Next, and MarioBench posts.
+- `{% gallery [...] %}` shortcode and `.post-gallery` styles: a dense, uncropped masonry of post images (wall archetype), used for the MarioBench screenshots and the CRTBench genre previews. Documented in `docs/BLOG_POST_FEATURES.md`.
+- `utils/check-design.mjs` (`npm run check:design`): a ratchet lint with a baseline (`utils/design-baseline.json`) that fails on new design drift, invalid `authored_by`, oldest-first or stale changelogs, and unregistered tags. `check:content` and `check:design` now run in `prebuild` and in a git pre-commit hook (`.githooks/`, installed by `npm install`).
+- `update-skill` skill: the workflow for refreshing a vendored skill from upstream (clone, check license and local edits, replace pristine) and for recalibrating a personal-voice skill against the author's posts.
+- `humanizer` skill replaced with upstream v3.1.0 (blader/humanizer, MIT; 26 patterns in six sections, no-fabrication rule), copied directly with its LICENSE. `human-writer` skill recalibrated against 45 human-authored posts (zero em dashes, high contraction and first-person rate, about half the AI bold rate, rare `---` and conclusion headings) with a re-runnable `scripts/calibrate.py`.
+- Thumbnails are now required: AGENTS.md rule 5 and a `check:content` rule fail on a post with no `image`, no `imageAlt`, or a missing image file (the template is exempt).
+- CRTBench follow-up post (hidden draft) with its own thumbnail, split out of the MarioBench draft.
+- `sketches` skill Part C (Excalidraw: pinned `mcp-excalidraw-server@2.0.0`, headless-Firefox workflow, librsvg font caveat, `utils/chart-to-excalidraw.mjs`), plus notes on the `llama-swap` :8080 port clash and orphaned `llama-server` processes.
+
+### Changed
+- Overfit-engines post: voice pass (no em dashes, straight quotes, contractions, far less bold, no thematic breaks, sentence-case headings), blockquote-as-quote and raw-HTML caption fixed, overclaims softened, engines linked, changelog added. The IQ3_S tier and NAS-archive notes moved to the Flash-Next post.
+- MarioBench and CRTBench posts use a trailing `## Changelog` table (newest first, matching the template and other posts) instead of `{% update %}` blocks.
+- MarioBench draft now covers only the five Mario implementations. The CRTBench tracks, Blind Vibe Arena, and community examples moved to the new post. The seam heading is gone, the method hedges are one callout, and the post history uses `{% update %}`. Tags are `AI` + `Games`.
+- `progression_chart` now renders through the shared primitives: square, flat, single accent, no gradient or rainbow.
+- Replaced ~230 lines of inline Tailwind/Alpine in the Qwen 27B vs Flash-Next post with two tables.
+- Removed `rounded-*` / `shadow-*` classes from post images.
+- NEAT framework post: dropped the ASCII architecture block in favour of the existing hand-drawn sketch.
+
+### Fixed
+- Frontmatter and changelog consistency: Qwen 27B vs Flash-Next `authored_by: hybrid`, three posts whose `updated` did not match the newest changelog row, and the Flash-Next changelog's row order.
+- Feed cards: images in compact lexicon and note cards are no longer cropped by a 12rem cap; only the text after the image is clamped. Stream-card overflow is re-measured after images load. Images with no class no longer render `class="undefined"`.
+- Lexicon entries no longer show the internal `lexicon` routing tag (also hides `til` and `now`).
+- Note "Science is the History of Compression Progress": invalid `authored_by` (rendered Unclassified), 4 non-conforming tags, quote attribution, and two factual wording fixes.
+- Overfit-engines post: wrong bandwidth arithmetic (75 GB/s ÷ 0.77 GB is ~97 tok/s, not 20), double-counted cache and MTP gains, DDR5/SSD spec mismatches, a `file:///` link, and several unsourced claims now hedged.
+
+## [2.7.16] - 2026-09-29
+### Added
+- Snippets: Added missing Codex model troubleshooting for a lingering old app server, with version checks, restart commands, and model cache notes.
+
 ## [2.7.15] - 2026-09-28
 ### Added
 - Uses: Added workstation desk station mapping to CasaKey homelab: Arch-Nemesis (Steam Deck, FX505, Yeti) and Big mAc (M1, M2, M3 Pro).
