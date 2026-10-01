@@ -1,0 +1,72 @@
+---
+layout: layouts/base.njk
+---
+
+{% include "components/breadcrumbs.njk" %}
+{% set mentions = collections.all | mentionsOf(page.fileSlug) %}
+
+<div class="mx-auto w-full px-4 sm:px-6 xl:max-w-3xl xl:px-0">
+  <article class="device space-y-8">
+    <header class="space-y-2">
+      <p class="page-eyebrow">{{ kind | capitalize }}{% if station %} · {{ station }}{% endif %}</p>
+      <h1 class="!m-0">
+        {% if emoji %}<span aria-hidden="true">{{ emoji }}</span> {% endif %}{{ title }}
+      </h1>
+      {% if aka %}<p class="editorial-support-compact">aka {{ aka }}</p>{% endif %}
+      {% if description %}<p class="editorial-support">{{ description }}</p>{% endif %}
+    </header>
+
+    <section class="data-card not-prose" aria-labelledby="spec-heading">
+      <div class="data-card-head">
+        <div>
+          <p class="data-card-kicker">Spec sheet</p>
+          <h2 id="spec-heading" class="data-card-title">{{ role }}</h2>
+        </div>
+        {% if state %}<span class="data-card-badge">{{ state }}</span>{% endif %}
+      </div>
+      <dl class="device-specs">
+        {% for spec in specs %}
+          <dt>{{ spec.label }}</dt>
+          <dd>{{ spec.value }}</dd>
+        {% endfor %}
+      </dl>
+      {% if parts %}
+        <p class="data-card-foot">
+          {% for part in parts %}<strong>{{ part.name }}</strong>{% if part.note %}: {{ part.note }}{% endif %}{% if not loop.last %} · {% endif %}{% endfor %}
+        </p>
+      {% endif %}
+    </section>
+
+    <div class="prose-content space-y-4">
+      {{ content | safe }}
+    </div>
+
+    {% if log and log.length %}
+      <section class="not-prose" aria-labelledby="log-heading">
+        <h2 id="log-heading" class="editorial-title mb-3">Timeline</h2>
+        <ol class="device-log">
+          {% for entry in log %}
+            <li>
+              <time class="device-log-date">{{ entry.date }}</time>
+              <span>{{ entry.text }}</span>
+            </li>
+          {% endfor %}
+        </ol>
+      </section>
+    {% endif %}
+
+    {% if mentions.length %}
+      <section class="not-prose" aria-labelledby="mentions-heading">
+        <h2 id="mentions-heading" class="editorial-title mb-3">Mentioned in</h2>
+        <ul class="device-log">
+          {% for item in mentions %}
+            <li>
+              <time class="device-log-date" datetime="{{ item.date | htmlDateString }}">{{ item.date | readableDate }}</time>
+              <a href="{{ item.url }}">{{ item.data.title }}</a>
+            </li>
+          {% endfor %}
+        </ul>
+      </section>
+    {% endif %}
+  </article>
+</div>

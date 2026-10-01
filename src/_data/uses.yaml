@@ -451,6 +451,7 @@ homelab:
     - name: "Yeti"
       emoji: "🧠"
       station: "Arch-Nemesis"
+      device: "yeti-cachy"
       role: "GPU workstation"
       description: "Windows is currently for gaming while I move the rest of my work to CachyOS; its RTX 4070 runs Gemma 4 and Qwen 3.6 MTP locally."
   links:

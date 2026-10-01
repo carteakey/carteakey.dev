@@ -1,4 +1,4 @@
-import { readFileSync, promises as fsPromises } from "fs";
+import { readFileSync, readdirSync, promises as fsPromises } from "fs";
 import path from "path";
 import { load } from "js-yaml";
 
@@ -1748,6 +1748,79 @@ export default function (eleventyConfig) {
       `</figure>`,
     ];
     return lines.filter((line) => line.trim().length > 0).join("\n");
+  });
+
+  // ── Devices: linkable entities (src/devices/<slug>.md) ─────────────────────
+  // {% device "yeti-cachy" %} links to /devices/yeti-cachy/ with its emoji + name;
+  // {% device "yeti-cachy", "label" %} overrides the text. An unknown slug fails the
+  // build so a typo can't ship a dead link. The device page lists every post/note
+  // that uses the shortcode via the `mentionsOf` filter.
+  const DEVICES_DIR = path.resolve("src/devices");
+  const DEVICE_TAG_RE = /\{%-?\s*device\s+["']([^"']+)["']/g;
+  let deviceIndexCache = null;
+  const deviceMentionCache = new Map();
+  const loadDeviceIndex = () => {
+    if (deviceIndexCache) return deviceIndexCache;
+    const index = new Map();
+    let files = [];
+    try {
+      files = readdirSync(DEVICES_DIR).filter((f) => f.endsWith(".md"));
+    } catch {
+      /* no devices dir yet */
+    }
+    for (const file of files) {
+      const fm = readFileSync(path.join(DEVICES_DIR, file), "utf8").match(
+        /^---\r?\n([\s\S]*?)\r?\n---/,
+      );
+      const data = (fm && load(fm[1])) || {};
+      index.set(file.replace(/\.md$/, ""), {
+        name: data.title || file,
+        emoji: data.emoji || "",
+      });
+    }
+    return (deviceIndexCache = index);
+  };
+  eleventyConfig.on("eleventy.before", () => {
+    deviceIndexCache = null;
+    deviceMentionCache.clear();
+  });
+  eleventyConfig.addShortcode("device", function (slug, label) {
+    const device = loadDeviceIndex().get(slug);
+    if (!device)
+      throw new Error(`{% device "${slug}" %}: no src/devices/${slug}.md`);
+    const text = label
+      ? escapeHtml(label)
+      : `${device.emoji ? `${device.emoji} ` : ""}${escapeHtml(device.name)}`;
+    return `<a class="device-link" href="/devices/${slug}/">${text}</a>`;
+  });
+  const deviceSlugsIn = (inputPath) => {
+    if (!deviceMentionCache.has(inputPath)) {
+      let slugs = new Set();
+      if (/\.(md|njk|html)$/.test(inputPath)) {
+        try {
+          slugs = new Set(
+            [...readFileSync(inputPath, "utf8").matchAll(DEVICE_TAG_RE)].map(
+              (m) => m[1],
+            ),
+          );
+        } catch {
+          /* unreadable (virtual) template */
+        }
+      }
+      deviceMentionCache.set(inputPath, slugs);
+    }
+    return deviceMentionCache.get(inputPath);
+  };
+  eleventyConfig.addFilter("mentionsOf", function (items, slug) {
+    return (items || [])
+      .filter(
+        (item) =>
+          item.inputPath &&
+          !item.inputPath.includes("/devices/") &&
+          isVisibleContent(item) &&
+          deviceSlugsIn(item.inputPath).has(slug),
+      )
+      .sort((a, b) => b.date - a.date);
   });
 
   // Render a string as markdown. Used by the sidebar partial so `sidebar.content:`

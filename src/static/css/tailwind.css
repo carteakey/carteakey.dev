@@ -4982,6 +4982,35 @@ picture img {
 
   .data-card-scroll { width: 100%; overflow-x: auto; }
 
+  /* Devices (src/devices): inline link, spec list and timeline */
+  .device-link {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.3em;
+    padding: 0 0.4em;
+    font-family: var(--font-mono);
+    font-size: 0.82em;
+    line-height: 1.5;
+    text-decoration: none;
+    white-space: nowrap;
+    color: var(--accent-color);
+    border: 1px solid color-mix(in srgb, var(--accent-color) 35%, transparent);
+    background: color-mix(in srgb, var(--accent-color) 7%, transparent);
+    border-radius: 0.12rem;
+    transition: background-color 120ms ease, border-color 120ms ease;
+  }
+  .device-link:hover, .device-link:focus-visible {
+    background: color-mix(in srgb, var(--accent-color) 15%, transparent);
+    border-color: color-mix(in srgb, var(--accent-color) 65%, transparent);
+  }
+  .device-specs { display: grid; grid-template-columns: max-content 1fr; gap: 0.35rem 1.25rem; margin: 0; font-size: 0.85rem; }
+  .device-specs dt { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--chart-dim); padding-top: 0.15rem; }
+  .device-specs dd { margin: 0; color: var(--chart-ink); }
+  .device-log { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.5rem; font-size: 0.9rem; }
+  .device-log li { display: grid; grid-template-columns: 6.5rem 1fr; gap: 0.75rem; }
+  .device-log-date { font-family: var(--font-mono); font-size: 0.7rem; color: var(--chart-dim, rgb(120 113 108)); padding-top: 0.2rem; }
+  @media (max-width: 30rem) { .device-specs, .device-log li { grid-template-columns: 1fr; } }
+
   /* diagram_card: the image sits centred inside the frame; the card supplies the border */
   .data-card-diagram img { display: block; margin: 0 auto; max-width: 100%; height: auto; }
 

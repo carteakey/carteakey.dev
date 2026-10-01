@@ -68,7 +68,7 @@ eleventyNavigation:
       {% for host in uses.homelab.hosts %}
         <article class="border border-gray-200 bg-gray-50 p-4 dark:border-gray-800 dark:bg-gray-900">
           <div class="flex items-center justify-between gap-1">
-            <p class="font-mono text-xs font-semibold"><span aria-hidden="true">{{ host.emoji }}</span> {{ host.name }}</p>
+            <p class="font-mono text-xs font-semibold"><span aria-hidden="true">{{ host.emoji }}</span> {% if host.device %}<a class="device-link" href="/devices/{{ host.device }}/">{{ host.name }}</a>{% else %}{{ host.name }}{% endif %}</p>
             {% if host.station %}
               <span class="font-mono text-[0.55rem] uppercase tracking-wider text-gray-400 dark:text-gray-500">{{ host.station }}</span>
             {% endif %}

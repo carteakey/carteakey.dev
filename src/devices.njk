@@ -1,0 +1,29 @@
+---
+layout: layouts/base.njk
+title: Devices
+description: The machines and gear behind this site, one page each, with specs, notes and a timeline.
+permalink: /devices/
+collectionArchetype: index
+---
+
+{% include "components/breadcrumbs.njk" %}
+
+{% set pageEyebrow = "Hardware" %}
+{% set pageTitle = "Devices" %}
+{% set pageDescription = "The machines and gear behind this site. Each one gets a page with specs, notes and a timeline, and posts link back to it." %}
+{% set itemCount = collections.devices | length %}
+{% set itemLabel = "devices" %}
+
+{% include "components/page-header.njk" %}
+
+<ul class="not-prose mt-6 list-none divide-y divide-gray-200 p-0 dark:divide-gray-800">
+  {% for d in collections.devices %}
+    <li class="flex flex-wrap items-baseline gap-x-4 gap-y-1 py-3">
+      <a href="{{ d.url }}" class="font-mono text-sm font-semibold no-underline hover:underline">
+        {% if d.data.emoji %}<span aria-hidden="true">{{ d.data.emoji }}</span> {% endif %}{{ d.data.title }}
+      </a>
+      <span class="editorial-support-compact flex-1">{{ d.data.role }}</span>
+      <span class="font-mono text-[0.65rem] uppercase tracking-[0.1em] text-gray-500 dark:text-gray-400">{{ d.data.kind }} · {{ d.data.state }}</span>
+    </li>
+  {% endfor %}
+</ul>
