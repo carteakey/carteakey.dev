@@ -25,4 +25,4 @@ This skill defines the workflow for turning raw text files (like Perplexity thre
 5. **Cleanup:**
    - Delete the raw file from the `inbox/` directory once successfully ingested.
 6. **Assets:**
-   - If the new content would benefit from an illustration, prompt the user if you should run the `blog-sketches` skill.
+   - If the new content would benefit from an illustration, generate one with the `sketches` skill (Part A). Every post needs a thumbnail and `check:content` fails without one.

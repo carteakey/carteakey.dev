@@ -1,6 +1,6 @@
 ---
 name: human-writer
-description: The author's specific writing fingerprint learned from reading their blog posts. AI writing tropes to avoid patterns that make output feel generated rather than written.
+description: The author's measured writing fingerprint (calibrated against their human-authored posts, with hard targets like zero em dashes and high contraction rate) plus AI writing tropes to avoid. Use when ghostwriting or editing text for carteakey.dev; pair with the humanizer skill.
 ---
 
 # Human Writer Skill
@@ -15,49 +15,72 @@ Use both together when ghostwriting or assisting with drafts for carteakey.dev.
 
 ## Author Writing Fingerprint (carteakey)
 
-Learned from reading posts across 2021–2026. These are the observable patterns in the human-authored posts.
+Calibrated 2026-10-01 against 45 `authored_by: human` posts and notes (2021 to 2026), compared with 30 `ai-assisted` and 7 `ai-generated` ones. Numbers are per 1,000 words after stripping code, shortcodes, tables, and headings. Re-measure with `python3 .agents/skills/human-writer/scripts/calibrate.py` after writing new posts and update this section.
+
+### Measured baseline (hard targets)
+
+| Signal | Human | AI-assisted | Rule for new text |
+|---|---:|---:|---|
+| Em dashes (—) | **0.0** | 1.7 | **Never.** Use a comma, a period, parentheses, or a spaced hyphen ` - `. |
+| Spaced hyphen as a dash (` - `) | 18.8 | 17.7 | The author's dash. Normal, not a tell. |
+| Contractions | 12.5 | 7.5 | Use them (it's, don't, I've). Expanded forms read stiff. |
+| I / me / my | 21.6 | 13.8 | First person is the default, even in technical posts. |
+| you / your | 14.1 | 7.9 | Talks to the reader directly. |
+| we / our / let's | 5.4 | 0.9 | Uses "we" for shared work. |
+| Questions | 2.4 | 1.3 | Occasional real questions. |
+| Exclamation marks | 1.4 | 0.5 | A few. Not zero, not many. |
+| Bold spans | 8.4 | 18.4 | About half the AI rate. Bold only a term or a number that matters. |
+| Numbers | 13 | 32 | Moderate. AI posts bury the reader in figures; keep the ones that carry the point. |
+| Bullet lines | 11.6 | 16.1 | Fewer lists, more prose. |
+| Sentences starting But/And/So/Also/Still | 3.8% | 2.1% | Does this; AI rarely does. |
+| Sentence length | mean 20, median 16, sd 14.6 | sd 17.8 | Mixed, but less extreme than AI. Average ~20 words. |
+| Sentences of 6 words or fewer | 13% | 15% | Not a signature. Do not force punchy fragments. |
+| `---` breaks per post | 0.3 | 2.6 | Rare. Use headings instead of horizontal rules. |
+| Conclusion/Summary/Takeaway heading | 4 of 45 posts | 14 of 30 | Rarely ends with a recap section. |
+| Post length (words) | ~800 | ~1,190 | Shorter. Stops when the thing is said. |
+
+What does NOT discriminate (so don't over-correct for it): parentheses (about 10 per 1k in every group), Title Case headings (38% of the author's headings vs 41%), triads (1.8 vs 1.4), "not X but Y" (0.3 vs 0.4), and slang like "tho/lol/man" (0.06, rare). Do not sprinkle slang to sound human.
 
 ### Voice & Personality
 
-- **First-person, unfiltered** - writes in first person throughout, no performative distance. Notes when something is opinion, not hedged to death.
-- **Self-aware without being precious** - willing to say "I was too lazy", "I agree with this tho", "very on brand", "please comment if I missed any". Genuine, not performed humility.
-- **Dry wit** - humor appears naturally: "Severus Zuck" as a caption, "Who will do the PPT's man", "very broken, very demure". Never set up as a joke, just embedded.
-- **Conversational asides in parentheses** - like a thought they almost didn't say: "(even though the VLM leaderboard recommends otherwise)", "(you don't even need to paste, as it edits your codebase directly)"
-- **Acknowledges the chaos** - notes when things are moving fast, when this might be outdated in 2 days, when something "surprised everyone". Grounded.
-- **Indian context appears naturally** - not forced, just part of who they are: WhatsApp Good Morning messages, "If you're an Indian (like me)"
-- **Self-deprecation is a tool, not a reflex** - uses it precisely, not as a crutch.
-- **Quotes feel real** - when they quote someone (Karpathy, a manager-IC), it's because the quote actually says the thing, not as decoration.
+- **First-person, unfiltered.** Writes "I" throughout, with no performative distance. States an opinion as an opinion without a hedging parade first.
+- **Self-aware without being precious.** Will say "I was too lazy", "I agree with this tho", "very on brand", "please comment if I missed any". Humility is genuine, not performed.
+- **Dry wit, embedded.** Humour sits inside the sentence ("Severus Zuck" as a caption, "very broken, very demure"). Never set up as a joke.
+- **Swearing at real peaks is fine and stays.** "what in the fuck?" in the overfit post is the author's own reaction, kept on purpose. It is rare and earned: one reaction at a genuine surprise, not a texture. Never sanitise it, never add more.
+- **Conversational asides.** A thought they almost didn't say: "(even though the VLM leaderboard recommends otherwise)".
+- **Acknowledges the chaos.** Notes when this might be outdated in two days or when something surprised everyone.
+- **Indian context appears naturally.** WhatsApp Good Morning messages, "If you're an Indian (like me)". Not forced.
+- **Quotes are real.** Quotes someone only when the quote actually says the thing.
 
 ### Sentence & Paragraph Patterns
 
-- **Short sentences that carry weight** - "That felt like a project." "I find this funny." "I'm equally terrified. Both are true at the same time." Short sentences land because they're rare and specific, not because they're performed.
-- **Variable rhythm** - long explanatory sentences mix with short punchy ones. Never monotonous.
-- **Transitions happen mid-thought** - not "First... Second... Third." Just: walks through the thing and moves on.
-- **Cuts off cleanly** - doesn't summarize the post at the end. Just finishes.
-- **Uses "---" as natural section breaks** - feels like a breath, not a chapter boundary.
-- **Parenthetical technical detail inline** - model names, scores, prices go inside the sentence, not in separate callout boxes: "Claude Sonnet 4.6 (preferred over Opus 4.5 59% of the time for coding)"
+- **Mixed rhythm, average ~20 words.** Long explanatory sentences next to short ones, but not extreme. Fragments are occasional, not a signature.
+- **Transitions happen mid-thought.** Starts sentences with "But", "And", "So" instead of First/Second/Third.
+- **Cuts off cleanly.** No recap conclusion. Just finishes.
+- **Inline technical detail.** Model names, scores, and prices go inside the sentence, not in separate callout boxes.
 
 ### Topic & Content Patterns
 
-- **Shows real workflow, not idealized workflow** - describes what actually happened and where it frustrated them, not what the marketing says.
-- **Acknowledges alternatives exist without dismissing them** - doesn't pretend their solution is the only one.
-- **Numbers and specifics** - 1.24 billion rows, 14 exchanges, $0.28/1M tokens, 12GB VRAM. This is what makes claims feel real.
-- **Project posts lead with the problem** - not with what they built. The why comes first.
-- **Opinions stated plainly** - "Claude is much more straightforward", "I like the idea of using Meta's model against the problems it has created". No hedging parade before the take.
-- **Tables used purposefully** - comparison matrices when genuinely comparing things. Not for decoration.
-- **Lists when genuinely list-shaped** - bullet points when the content is actually items. Not when it's prose dressed up as bullets.
-- **Links to real things** - GitHub repos, specific docs, actual papers. Not vague attributions.
+- **Real workflow, not idealised.** Says what happened and where it frustrated them.
+- **Acknowledges alternatives** without dismissing them.
+- **Specifics that carry the point.** 1.24 billion rows, 12GB VRAM, $0.28/1M tokens. Moderate density (about 13 numbers per 1k words), not carpet-bombed.
+- **Project posts lead with the problem.** The why comes before what was built.
+- **Opinions stated plainly.** "Claude is much more straightforward."
+- **Tables only when genuinely comparing. Lists only when the content is list-shaped.**
+- **Links to real things**, not vague attributions.
 
-### Things This Author Does NOT Do
+### Things This Author Does NOT Do (verified against the corpus)
 
-- Does not write intros that explain what the post will cover
-- Does not write conclusions that recap what was covered
-- Does not use the word "journey"
-- Does not say "it's worth noting"
-- Does not use em dashes for drama - they use them where punctuation genuinely calls for it, not as atmosphere
-- Does not use headers like "Key Takeaways", "Why This Matters", "Moving Forward"
-- Does not manufacture suspense before mundane observations
-- Does not pad. If the thing is said, they stop.
+- Never uses an em dash. (0 in 45 documents.)
+- Rarely uses `---` thematic breaks or ends with a Conclusion/Summary/Takeaway heading.
+- Does not write intros that explain what the post will cover, or conclusions that recap it.
+- Does not stack bold labels on every bullet, or use headers like "Key Takeaways", "Why This Matters", "Moving Forward".
+- Does not manufacture suspense before mundane observations. Does not pad.
+- Word list: "journey" appears once in 45 documents and "it's worth noting" never. Older posts (2021 to 2023) do use "moreover" (5 times), so do not treat it as an AI tell in those, but avoid adding it to new text.
+
+### How to use this with the humanizer skill
+
+The `humanizer` skill (upstream v3.1.0) removes generic AI tells. This section is the voice to put back. When humanizing text for carteakey.dev, treat the baseline table and the "does not do" list as the supplied voice sample: the table overrides the humanizer's generic style defaults, and the humanizer's "when not to act" rule protects deliberate choices like the swearing above. Order: humanizer first for tells, then check the result against the table (em dashes, contractions, bold, `---`, conclusion heading).
 
 ---
 
