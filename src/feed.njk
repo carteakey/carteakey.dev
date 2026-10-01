@@ -98,7 +98,7 @@ permalink: /feed/
   </div>
 
   {# ── STREAM VIEW ── #}
-  <div x-show="view === 'stream'" x-cloak class="flex flex-col max-w-3xl mx-auto py-4">
+  <div x-show="view === 'stream'" x-cloak class="flex flex-col w-full py-4">
     {% for item in collections.feed %}
       {{ feedCard(item, {
         variant: 'stream',
@@ -113,6 +113,7 @@ permalink: /feed/
     {% for item in collections.feed %}
       {{ feedCard(item, {
         variant: 'list',
+        rich: true,
         outerAttrs: 'data-type="' ~ item.type ~ '" data-title="' ~ (item.title | lower | replace('"', '')) ~ '"'
       }) }}
     {% endfor %}

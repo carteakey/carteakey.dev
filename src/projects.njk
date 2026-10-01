@@ -7,6 +7,7 @@ redirect_from: /portfolio
 eleventyNavigation:
   key: Projects
   order: 4
+collectionArchetype: wall
 ---
 
 {% from "components/view-toggle.njk" import viewToggle %}
@@ -30,42 +31,27 @@ eleventyNavigation:
         <p class="editorial-support-compact mt-1">Projects in active development, playtesting, or getting ready for a public release.</p>
       </div>
 
-      <div class="grid gap-8 lg:grid-cols-2">
-        {% if projects.current | length %}
-          <div>
-            <h3 class="editorial-kicker mb-3">Currently working on</h3>
-            <div class="space-y-3">
-              {% for project in projects.current %}
-                <article class="surface surface-hover surface-padding rounded-sm">
-                  {% if project.image_path %}
-                    <div class="duotone-cobalt mb-3 overflow-hidden rounded-sm border border-gray-200 dark:border-gray-800">
-                      {% image project.image_path, project.title, "project-status-image h-32 w-full object-cover" %}
-                    </div>
-                  {% endif %}
-                  {% include "components/project-status-card.njk" %}
-                </article>
-              {% endfor %}
-            </div>
-          </div>
-        {% endif %}
-
-        {% if projects.coming_soon | length %}
-          <div>
-            <h3 class="editorial-kicker mb-3">Coming soon</h3>
-            <div class="space-y-3">
-              {% for project in projects.coming_soon %}
-                <article class="surface surface-hover surface-padding rounded-sm">
-                  {% if project.image_path %}
-                    <div class="duotone-cobalt mb-3 overflow-hidden rounded-sm border border-gray-200 dark:border-gray-800">
-                      {% image project.image_path, project.title, "project-status-image h-32 w-full object-cover" %}
-                    </div>
-                  {% endif %}
-                  {% include "components/project-status-card.njk" %}
-                </article>
-              {% endfor %}
-            </div>
-          </div>
-        {% endif %}
+      <div class="projects-collection-grid">
+        {% for project in projects.current %}
+          <article class="surface surface-hover surface-padding rounded-sm">
+            {% if project.image_path %}
+              <div class="mb-3 overflow-hidden rounded-sm border border-gray-200 dark:border-gray-800">
+                {% image project.image_path, project.title, "project-status-image h-32 w-full object-cover" %}
+              </div>
+            {% endif %}
+            {% include "components/project-status-card.njk" %}
+          </article>
+        {% endfor %}
+        {% for project in projects.coming_soon %}
+          <article class="surface surface-hover surface-padding rounded-sm">
+            {% if project.image_path %}
+              <div class="mb-3 overflow-hidden rounded-sm border border-gray-200 dark:border-gray-800">
+                {% image project.image_path, project.title, "project-status-image h-32 w-full object-cover" %}
+              </div>
+            {% endif %}
+            {% include "components/project-status-card.njk" %}
+          </article>
+        {% endfor %}
       </div>
     </section>
   {% endif %}
@@ -81,42 +67,59 @@ eleventyNavigation:
     ]) }}
   </div>
 
+  {# Grid view #}
   <div
-    class="projects-collection not-prose"
-    :class="view === 'grid' ? 'projects-collection-grid feed-masonry' : 'projects-collection-list'"
+    x-show="view === 'grid'" x-cloak
+    class="projects-collection projects-collection-grid feed-masonry not-prose"
     data-feed-masonry
     style="--feed-row-height: 16px;"
   >
     {% for project in projects.projects %}
       <article class="project-tile feed-card surface surface-hover rounded-sm group">
         {% if project.image_path %}
-          <div class="duotone-cobalt project-tile-media">
+          <div class="project-tile-media">
             {% image project.image_path, project.title, "project-tile-image h-16 w-full object-cover sm:h-20" %}
           </div>
         {% endif %}
         <div class="project-tile-body">
           <div class="flex flex-wrap items-center gap-2">
-            <a href="{% if project.url %}{{ project.url }}{% else %}{{ project.github }}{% endif %}" title="View Project" class="editorial-title-link inline-flex items-center gap-1">
+            <a href="{% if project.url %}{{ project.url }}{% else %}{{ project.github }}{% endif %}" title="View Project" class="editorial-title-link-compact title-hover inline-flex items-center gap-1">
               {{ project.title }}
               {% feather "arrow-up-right", class="w-3.5 h-3.5 opacity-40 group-hover:opacity-100 transition-opacity" %}
             </a>
-            {% for tag in project.tags %}
-              <span class="badge badge-tag badge-compact">#{{ tag }}</span>
-            {% endfor %}
           </div>
-          <p class="mt-1 editorial-support">
-            {{ project.description }}
-          </p>
-          {% if project.github %}
-            <a class="project-tile-code editorial-meta-link" title="View code for {{ project.title }}" href="{{ project.github }}">
-              {% feather "github", class="w-3.5 h-3.5" %}
-              <span>Code</span>
-            </a>
-          {% endif %}
+          <p class="mt-1 editorial-support-compact">{{ project.description }}</p>
+          <div class="flex flex-wrap items-center gap-1 mt-2">
+            {% for tag in project.tags %}<span class="badge badge-tag badge-compact">#{{ tag }}</span>{% endfor %}
+            {% if project.github %}
+              <a class="project-tile-code editorial-meta-link ml-auto" style="margin-top: 0;" title="View code for {{ project.title }}" href="{{ project.github }}">
+                {% feather "github", class="w-3.5 h-3.5" %}<span>Code</span>
+              </a>
+            {% endif %}
+          </div>
         </div>
       </article>
     {% endfor %}
   </div>
+
+  {# List view - same rows as /feed; the leading slot holds the project image instead of a date #}
+  <ul class="feed-list not-prose list-none m-0 p-0" x-show="view === 'list'" x-cloak>
+    {% for project in projects.projects %}
+      <li class="feed-list-row">
+        <span class="hidden sm:block">
+          {% if project.image_path %}{% image project.image_path, project.title, "block h-11 w-16 object-cover" %}{% endif %}
+        </span>
+        <div>
+          <a href="{% if project.url %}{{ project.url }}{% else %}{{ project.github }}{% endif %}" class="feed-list-title title-hover" style="text-decoration: none;">{{ project.title }}</a>
+          <p class="feed-list-desc">{{ project.description }}</p>
+        </div>
+        <div class="flex items-center gap-1.5 shrink-0 justify-end">
+          {% for tag in project.tags %}<span class="badge badge-tag badge-compact hidden md:inline-flex">#{{ tag }}</span>{% endfor %}
+          {% if project.github %}<a class="editorial-meta-link inline-flex items-center" title="View code for {{ project.title }}" href="{{ project.github }}">{% feather "github", class="w-3.5 h-3.5" %}</a>{% endif %}
+        </div>
+      </li>
+    {% endfor %}
+  </ul>
 
 <div class="mt-12 mb-8">
   <h2 class="editorial-kicker mb-4">GitHub Profile</h2>

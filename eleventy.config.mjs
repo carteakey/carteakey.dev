@@ -308,6 +308,18 @@ function resolveRelativeUrl(url, options = {}) {
   return `${sitePath}${suffix}`;
 }
 
+async function isEleventyDataTemplate(filePath) {
+  // Files like src/posts/posts.json configure a rendered page instead of shipping
+  // an attachment, so they must not be copied next to the post output.
+  if (!/\.json$/i.test(filePath)) return false;
+  try {
+    const parsed = JSON.parse(await fsPromises.readFile(filePath, "utf8"));
+    return Boolean(parsed && typeof parsed === "object" && (parsed.layout || parsed.permalink));
+  } catch {
+    return false;
+  }
+}
+
 async function copyPostAssets(srcDir, destDir) {
   let entries;
   try {
@@ -334,6 +346,10 @@ async function copyPostAssets(srcDir, destDir) {
       continue;
     }
 
+    if (await isEleventyDataTemplate(srcPath)) {
+      continue;
+    }
+
     await fsPromises.mkdir(path.dirname(destPath), { recursive: true });
     await fsPromises.copyFile(srcPath, destPath);
   }
@@ -351,7 +367,7 @@ async function imageShortcode(src, alt, css, zoomSrc) {
   });
 
   let imageAttributes = {
-    class: css,
+    class: css ?? "",
     alt,
     sizes: "(min-width: 768px) 720px, 100vw",
     loading: "lazy",
@@ -380,7 +396,7 @@ async function imageShortcodeWithCaptions(src, alt, css, caption) {
   });
 
   let imageAttributes = {
-    class: css,
+    class: css ?? "",
     alt,
     sizes: "(min-width: 768px) 720px, 100vw",
     loading: "lazy",
@@ -393,6 +409,38 @@ async function imageShortcodeWithCaptions(src, alt, css, caption) {
   });
 
   return wrapImageInFigure(imageMarkup, caption);
+}
+
+// {% gallery [ { src, alt, caption }, ... ] %}
+// A dense, uncropped masonry of images for a post (the "wall" archetype). Each
+// item is processed like {% image_cc %}; layout lives in `.post-gallery`.
+async function galleryShortcode(items = []) {
+  const list = Array.isArray(items) ? items : [];
+  if (!list.length) return "";
+  const figures = await Promise.all(
+    list.map(async (item) => {
+      const { src, alt = "", caption = "" } = item || {};
+      if (!src) return "";
+      const metadata = await Image(src, {
+        widths: [400, 800],
+        formats: ["avif", "webp", "jpeg"],
+        outputDir: "./_site/img/",
+      });
+      const imageMarkup = generateHTML(
+        metadata,
+        {
+          alt,
+          sizes: "(min-width: 768px) 240px, 50vw",
+          loading: "lazy",
+          decoding: "async",
+          "data-zoomable": "",
+        },
+        { whitespaceMode: "inline" }
+      );
+      return `<figure>${imageMarkup}${caption ? `<figcaption>${caption}</figcaption>` : ""}</figure>`;
+    })
+  );
+  return `<div class="post-gallery not-prose">${figures.join("")}</div>`;
 }
 
 async function generatePostThumbnailMetadata(src) {
@@ -420,7 +468,7 @@ function postThumbnailMarkup(metadata, alt, css, displayWidth = 96) {
   const width = Number(displayWidth) || 96;
 
   return generateHTML(metadata, {
-    class: css,
+    class: css ?? "",
     alt,
     sizes: `${width}px`,
     loading: "lazy",
@@ -583,6 +631,7 @@ export default function (eleventyConfig) {
   //Image Plugin
   eleventyConfig.addAsyncShortcode("image", imageShortcode);
   eleventyConfig.addAsyncShortcode("image_cc", imageShortcodeWithCaptions);
+  eleventyConfig.addAsyncShortcode("gallery", galleryShortcode);
   eleventyConfig.addAsyncShortcode("post_thumbnail", postThumbnailShortcode);
   eleventyConfig.addShortcode("post_thumbnail_markup", postThumbnailMarkup);
   eleventyConfig.addShortcode("remote_image", remoteImageShortcode);
@@ -622,7 +671,7 @@ export default function (eleventyConfig) {
 
   function filterTagList(tags) {
     return (tags || []).filter(
-      (tag) => ["all", "nav", "post", "posts", "snippets", "agent-skills", "prompts", "quotations"].indexOf(tag) === -1
+      (tag) => ["all", "nav", "post", "posts", "snippets", "agent-skills", "prompts", "quotations", "lexicon", "til", "now"].indexOf(tag) === -1
     );
   }
 
@@ -1514,7 +1563,6 @@ export default function (eleventyConfig) {
 
   // ═══════════════════════════════════════════════════════════════════════════
   // 📰 Editorial shortcodes — minimal set
-  //   {% analysis %}  boxed section with title + optional winner pill
   //   {% wide %}      full-bleed scrollable wrapper for wide tables
   //   {% callout %}   compact semantic note/warning/example/todo blocks
   //   {% update %}    dated inline update blocks
@@ -1530,7 +1578,6 @@ export default function (eleventyConfig) {
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#39;");
 
-  const normalizeSide = (side) => (String(side || "").toLowerCase() === "b" ? "b" : "a");
   const normalizeCalloutKind = (kind) => {
     const normalized = String(kind || "note").trim().toLowerCase();
     return ["note", "warning", "example", "todo", "aside"].includes(normalized) ? normalized : "note";
@@ -1541,19 +1588,6 @@ export default function (eleventyConfig) {
     const trimmed = content.replace(/^\s*\n/, "").replace(/\n\s*$/, "");
     return markdownLibrary.render(trimmed, env);
   };
-
-  // {% analysis title="Risk Comparison", winner="AAPL Lower Risk", side="a" %} markdown {% endanalysis %}
-  eleventyConfig.addPairedShortcode("analysis", function (content, opts = {}) {
-    const options = (opts && typeof opts === "object") ? opts : {};
-    const title = options.title ?? "";
-    const winner = options.winner;
-    const side = normalizeSide(options.side);
-    const winnerHtml = winner
-      ? `<span class="winner-badge" data-side="${side}">${escapeHtml(winner)}</span>`
-      : "";
-    const body = renderInnerMarkdown(content);
-    return `\n\n<section class="analysis-card" data-side="${side}">\n<header class="analysis-header"><h3 class="analysis-title">${escapeHtml(title)}</h3>${winnerHtml}</header>\n<div class="analysis-body">${body}</div>\n</section>\n\n`;
-  });
 
   // {% wide %} markdown table (or anything wide) {% endwide %}
   // Breaks out of article container; horizontally scrollable on mobile.
@@ -1637,112 +1671,81 @@ export default function (eleventyConfig) {
       };
     });
 
-    // Build smooth bezier path
-    let curvePath = `M ${points[0].x},${points[0].y}`;
-    for (let i = 0; i < points.length - 1; i++) {
-      const p0 = points[i];
-      const p1 = points[i + 1];
-      const dx = p1.x - p0.x;
-      const cx1 = (p0.x + dx * 0.45).toFixed(1);
-      const cy1 = p0.y.toFixed(1);
-      const cx2 = (p1.x - dx * 0.45).toFixed(1);
-      const cy2 = p1.y.toFixed(1);
-      curvePath += ` C ${cx1},${cy1} ${cx2},${cy2} ${p1.x},${p1.y}`;
-    }
-
-    const areaPath = `${curvePath} L ${points[points.length - 1].x},${yBottom} L ${points[0].x},${yBottom} Z`;
+    // Straight segments (measured steps, not a smooth trend)
+    const linePath = points.map((p, i) => `${i === 0 ? "M" : "L"} ${p.x},${p.y}`).join(" ");
 
     // Grid steps
     const gridStep = Math.max(1, Math.round((maxY - minY) / 5));
     const gridLines = [];
     for (let g = minY; g <= maxY; g += gridStep) {
       const gy = Number((yBottom - ((g - minY) / (maxY - minY)) * (yBottom - yTop)).toFixed(1));
-      const isBase = g === minY;
-      const dash = isBase ? "" : ' stroke-dasharray="4 4"';
+      const dash = g === minY ? "" : ' stroke-dasharray="3 4"';
       const lbl = g === maxY ? `${g} ${unit}` : `${g}`;
-      gridLines.push(`      <line x1="60" y1="${gy}" x2="760" y2="${gy}" class="chart-grid"${dash} stroke-width="1" />`);
-      gridLines.push(`      <text x="48" y="${gy + 4}" text-anchor="end" class="chart-dim">${lbl}</text>`);
+      gridLines.push(`      <line x1="60" y1="${gy}" x2="760" y2="${gy}" class="chart-grid"${dash} />`);
+      gridLines.push(`      <text x="48" y="${gy + 4}" text-anchor="end" class="chart-text">${lbl}</text>`);
     }
 
-    // Dots & Labels
+    // Dots & labels
     const dotsHtml = [];
     points.forEach((p) => {
-      if (p.highlight) {
-        dotsHtml.push(`      <circle cx="${p.x}" cy="${p.y}" r="9" fill="${p.color}" fill-opacity="0.25" />`);
-        dotsHtml.push(`      <circle cx="${p.x}" cy="${p.y}" r="5.5" fill="${p.color}" class="chart-dot-border" stroke-width="2" />`);
-        dotsHtml.push(`      <text x="${p.x}" y="${p.y - 15}" text-anchor="middle" class="chart-hl-num">${p.val}</text>`);
-        dotsHtml.push(`      <text x="${p.x}" y="255" text-anchor="middle" class="chart-hl-lbl">${p.lbl || ""}</text>`);
-        dotsHtml.push(`      <text x="${p.x}" y="270" text-anchor="middle" class="chart-hl-sub">${p.sub || ""}</text>`);
-      } else {
-        dotsHtml.push(`      <circle cx="${p.x}" cy="${p.y}" r="5" fill="${p.color}" class="chart-dot-border" stroke-width="2" />`);
-        dotsHtml.push(`      <text x="${p.x}" y="${p.y - 12}" text-anchor="middle" class="chart-main">${p.val}</text>`);
-        dotsHtml.push(`      <text x="${p.x}" y="255" text-anchor="middle" class="chart-lbl">${p.lbl || ""}</text>`);
-        dotsHtml.push(`      <text x="${p.x}" y="270" text-anchor="middle" class="chart-sub">${p.sub || ""}</text>`);
-      }
+      const hl = Boolean(p.highlight);
+      dotsHtml.push(`      <circle cx="${p.x}" cy="${p.y}" r="${hl ? 6 : 5}" class="${hl ? "chart-dot-hl" : "chart-dot"}" />`);
+      dotsHtml.push(`      <text x="${p.x}" y="${p.y - 12}" text-anchor="middle" class="${hl ? "chart-val-hl" : "chart-val"}">${p.val}</text>`);
+      dotsHtml.push(`      <text x="${p.x}" y="255" text-anchor="middle" class="chart-lbl">${p.lbl || ""}</text>`);
+      dotsHtml.push(`      <text x="${p.x}" y="270" text-anchor="middle" class="chart-text">${p.sub || ""}</text>`);
     });
 
     const lines = [
-      `<div class="not-prose my-8 overflow-hidden rounded-xl border border-stone-300/80 bg-stone-50/80 p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900/70">`,
-      `  <div class="mb-3 flex flex-wrap items-baseline justify-between gap-2 border-b border-stone-200/80 pb-3 dark:border-zinc-800">`,
+      `<figure class="data-card not-prose">`,
+      `  <div class="data-card-head">`,
       `    <div>`,
-      kicker ? `      <p class="font-mono text-[0.68rem] font-medium tracking-wider uppercase text-teal-700 dark:text-teal-400">${kicker}</p>` : ``,
-      title ? `      <h3 class="mt-0.5 text-base font-semibold text-stone-900 dark:text-zinc-100">${title}</h3>` : ``,
+      kicker ? `      <p class="data-card-kicker">${kicker}</p>` : ``,
+      title ? `      <h3 class="data-card-title">${title}</h3>` : ``,
       `    </div>`,
-      badge ? `    <div class="flex items-center gap-1.5 rounded-md bg-teal-500/10 px-2.5 py-1 text-xs font-medium text-teal-800 dark:text-teal-300"><span>${badge}</span></div>` : ``,
+      badge ? `    <span class="data-card-badge">${badge}</span>` : ``,
       `  </div>`,
-      `  <div class="w-full overflow-x-auto">`,
-      `    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 310" class="w-full min-w-[620px] h-auto font-sans" aria-label="${title || "Progression chart"}">`,
-      `      <defs>`,
-      `        <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">`,
-      `          <stop offset="0%" stop-color="#0d9488" stop-opacity="0.32" />`,
-      `          <stop offset="100%" stop-color="#0d9488" stop-opacity="0.01" />`,
-      `        </linearGradient>`,
-      `        <linearGradient id="lineGrad" x1="0" y1="0" x2="1" y2="0">`,
-      `          <stop offset="0%" stop-color="#eab308" />`,
-      `          <stop offset="25%" stop-color="#f97316" />`,
-      `          <stop offset="65%" stop-color="#0d9488" />`,
-      `          <stop offset="100%" stop-color="#059669" />`,
-      `        </linearGradient>`,
-      `        <style>`,
-      `          .chart-dim { fill: #78716c; font-size: 10px; font-family: ui-monospace, monospace; }`,
-      `          .chart-main { fill: #1c1917; font-size: 12px; font-weight: 700; font-family: ui-monospace, monospace; }`,
-      `          .chart-lbl { fill: #44403c; font-size: 11px; font-weight: 500; }`,
-      `          .chart-sub { fill: #78716c; font-size: 10px; font-family: ui-monospace, monospace; }`,
-      `          .chart-hl-num { fill: #047857; font-size: 13px; font-weight: 800; font-family: ui-monospace, monospace; }`,
-      `          .chart-hl-lbl { fill: #047857; font-size: 11px; font-weight: 700; }`,
-      `          .chart-hl-sub { fill: #059669; font-size: 10px; font-weight: 600; font-family: ui-monospace, monospace; }`,
-      `          .chart-grid { stroke: #e7e5e4; }`,
-      `          .chart-dot-border { stroke: #ffffff; }`,
-      `          .dark .chart-dim, [data-theme="dark"] .chart-dim { fill: #71717a; }`,
-      `          .dark .chart-main, [data-theme="dark"] .chart-main { fill: #f4f4f5; }`,
-      `          .dark .chart-lbl, [data-theme="dark"] .chart-lbl { fill: #d4d4d8; }`,
-      `          .dark .chart-sub, [data-theme="dark"] .chart-sub { fill: #a1a1aa; }`,
-      `          .dark .chart-hl-num, [data-theme="dark"] .chart-hl-num { fill: #34d399; }`,
-      `          .dark .chart-hl-lbl, [data-theme="dark"] .chart-hl-lbl { fill: #34d399; }`,
-      `          .dark .chart-hl-sub, [data-theme="dark"] .chart-hl-sub { fill: #6ee7b7; }`,
-      `          .dark .chart-grid, [data-theme="dark"] .chart-grid { stroke: #27272a; }`,
-      `          .dark .chart-dot-border, [data-theme="dark"] .chart-dot-border { stroke: #18181b; }`,
-      `          @media (prefers-color-scheme: dark) {`,
-      `            .chart-dim { fill: #71717a; }`,
-      `            .chart-main { fill: #f4f4f5; }`,
-      `            .chart-lbl { fill: #d4d4d8; }`,
-      `            .chart-sub { fill: #a1a1aa; }`,
-      `            .chart-hl-num { fill: #34d399; }`,
-      `            .chart-hl-lbl { fill: #34d399; }`,
-      `            .chart-hl-sub { fill: #6ee7b7; }`,
-      `            .chart-grid { stroke: #27272a; }`,
-      `            .chart-dot-border { stroke: #18181b; }`,
-      `          }`,
-      `        </style>`,
-      `      </defs>`,
+      `  <div class="data-card-scroll">`,
+      `    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 310" class="chart-svg" role="img" aria-label="${title || "Progression chart"}">`,
       ...gridLines,
-      `      <path d="${areaPath}" fill="url(#areaGrad)" />`,
-      `      <path d="${curvePath}" fill="none" stroke="url(#lineGrad)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />`,
+      `      <path d="${linePath}" class="chart-line" />`,
       ...dotsHtml,
       `    </svg>`,
       `  </div>`,
-      caption ? `  <p class="mt-3 border-t border-stone-200/60 pt-2 text-center text-[0.75rem] text-stone-500 dark:border-zinc-800 dark:text-zinc-400">${caption}</p>` : ``,
-      `</div>`,
+      caption ? `  <figcaption class="data-card-foot">${caption}</figcaption>` : ``,
+      `</figure>`,
+    ];
+    return lines.filter((line) => line.trim().length > 0).join("\n");
+  });
+
+  // {% diagram_card { src: "./src/static/img/diagrams/x.png", alt: "...", kicker: "...", title: "...", badge: "...", caption: "..." } %}
+  // Frames a hand-drawn diagram/chart image in the same card as progression_chart
+  // (kicker, title, badge, footer caption) so it can be annotated. kicker/title/
+  // badge/caption are trusted HTML, like progression_chart; alt is escaped.
+  eleventyConfig.addAsyncShortcode("diagram_card", async function (opts = {}) {
+    const { src, alt = "", kicker = "", title = "", badge = "", caption = "", css = "sketch-draw" } = opts;
+    if (!src) return "";
+    const metadata = await Image(src, {
+      widths: [400, 800, 1200, "auto"],
+      formats: ["avif", "webp", "jpeg"],
+      outputDir: "./_site/img/",
+    });
+    const imageMarkup = generateHTML(
+      metadata,
+      { class: css, alt, sizes: "(min-width: 768px) 720px, 100vw", loading: "lazy", decoding: "async", "data-zoomable": "" },
+      { whitespaceMode: "inline" },
+    );
+    const lines = [
+      `<figure class="data-card not-prose">`,
+      `  <div class="data-card-head">`,
+      `    <div>`,
+      kicker ? `      <p class="data-card-kicker">${kicker}</p>` : ``,
+      title ? `      <h3 class="data-card-title">${title}</h3>` : ``,
+      `    </div>`,
+      badge ? `    <span class="data-card-badge">${badge}</span>` : ``,
+      `  </div>`,
+      `  <div class="data-card-scroll data-card-diagram">${imageMarkup}</div>`,
+      caption ? `  <figcaption class="data-card-foot">${caption}</figcaption>` : ``,
+      `</figure>`,
     ];
     return lines.filter((line) => line.trim().length > 0).join("\n");
   });
@@ -1755,8 +1758,10 @@ export default function (eleventyConfig) {
   });
 
   eleventyConfig.on("eleventy.after", async () => {
+    // Post attachments are served from the post's own output directory. Copying
+    // them a second time under /posts/ doubled every screenshot in the deploy.
     const srcDir = path.resolve("src/posts");
-    const destDirs = [path.resolve("_site/blog"), path.resolve("_site/posts")];
+    const destDirs = [path.resolve("_site/blog")];
 
     try {
       for (const destDir of destDirs) {

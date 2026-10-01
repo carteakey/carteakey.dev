@@ -97,7 +97,7 @@
       </div>
 
       {# Right column: Content #}
-      <div class="flex-1 min-w-0 border-b border-gray-100 dark:border-gray-800/80 pb-6 group-last:border-0 group-last:pb-0">
+      <div class="flex-1 min-w-0 border-b border-gray-100 dark:border-gray-800/80 pb-4 group-last:border-0 group-last:pb-0">
         {# Title (for posts, tils, snippets, notes) #}
         {% if not (isQuotation or isVibe or isPhoto or isNow) %}
           <div class="leading-snug mb-1.5 flex items-center flex-wrap gap-2">
@@ -136,10 +136,10 @@
         {% endif %}
 
         {# Body Content #}
-        <div class="editorial-support-compact leading-relaxed site-content prose-sm max-w-none">
+        <div class="editorial-support-compact leading-relaxed site-content prose-sm max-w-none [&_img]:max-h-72 [&_img]:w-auto [&_img]:max-w-full [&_img]:object-contain">
           {% if isNote or isNow or isTil or isLexicon %}
             <div x-data="{ expanded: false, isOverflowing: false }"
-                 x-init="setTimeout(() => { if ($refs.content) isOverflowing = $refs.content.scrollHeight > 360; }, 50)">
+                 x-init="const measure = () => { if ($refs.content) isOverflowing = $refs.content.scrollHeight > 360; }; setTimeout(measure, 50); $refs.content.querySelectorAll('img').forEach(i => { if (!i.complete) i.addEventListener('load', measure, { once: true }); })">
               <div x-ref="content" :class="!expanded && isOverflowing ? 'max-h-[20rem] overflow-hidden relative' : ''">
                 {{ item.original.templateContent | safe }}
                 <div x-show="!expanded && isOverflowing" class="feed-surface-note-fade absolute bottom-0 left-0 right-0 h-24 pointer-events-none"></div>
@@ -205,17 +205,19 @@
                 {% endif %}
                 {% if item.original.templateContent %}
                   {% set previewText = item.original.templateContent | striptags | truncate(300) %}
-                  {% if previewText and previewText != item.summary %}
+                  {% if previewText and not item.summary %}
                     <p class="mt-0 text-sm leading-relaxed text-gray-500 dark:text-gray-400">{{ previewText | safe }}</p>
                   {% endif %}
                 {% endif %}
+                {% if isSnippet %}
                 <div class="mt-1.5">
-                  <a href="{{ item.url | url }}" class="text-xs font-medium transition-colors  hover:underline" style="color: var(--accent-color); text-decoration: none;">{% if isSnippet %}View Snippet{% else %}Read Post{% endif %} &rarr;</a>
+                  <a href="{{ item.url | url }}" class="text-xs font-medium transition-colors  hover:underline" style="color: var(--accent-color); text-decoration: none;">View Snippet &rarr;</a>
                 </div>
+                {% endif %}
               </div>
               {% if itemImage and item.type == 'post' %}
                 <a href="{{ item.url | url }}" class="hidden sm:block shrink-0" style="text-decoration: none;">
-                  {% post_thumbnail_markup item.imageMetadata, itemImageAlt, "stamp-cobalt block h-20 w-20 object-contain", 80 %}
+                  {% post_thumbnail_markup item.imageMetadata, itemImageAlt, "stamp-cobalt block h-16 w-16 object-contain", 64 %}
                 </a>
               {% endif %}
             </div>
@@ -228,7 +230,7 @@
 
         {# Tags #}
         {% if showTags and item.tags %}
-          <div class="flex flex-wrap gap-1.5 mt-5 not-prose">
+          <div class="flex flex-wrap gap-1.5 mt-2 not-prose">
             {% for tag in item.tags %}
               {% set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
               {% if item.type == 'tool' %}
@@ -245,15 +247,20 @@
 
   {# ── LIST VARIANT (homepage preview - single compact row) ── #}
   {% elif variant == 'list' %}
-  <li class="feed-list-row{% if extraClasses %} {{ extraClasses }}{% endif %}" {% if item.authored_by %}data-authored-by="{{ item.authored_by }}" {% endif %}{% if outerAttrs %}{{ outerAttrs | safe }}{% endif %}>
-    <span class="feed-list-date meta-text">{{ item.date | shortDate }}</span>
+  <li class="feed-list-row{% if opts.rich %} feed-list-row-thumb{% endif %}{% if extraClasses %} {{ extraClasses }}{% endif %}" {% if item.authored_by %}data-authored-by="{{ item.authored_by }}" {% endif %}{% if outerAttrs %}{{ outerAttrs | safe }}{% endif %}>
+    <span class="feed-list-date meta-text">{{ (opts.date or item.date) | shortDate }}</span>
+    {% if opts.rich %}<span class="hidden sm:block w-11 h-11">{% if item.imageMetadata %}<a href="{{ item.url | url }}" style="text-decoration: none;">{% post_thumbnail_markup item.imageMetadata, itemImageAlt, "stamp-cobalt block h-11 w-11 object-contain", 44 %}</a>{% endif %}</span>{% endif %}
+    <div>
     {% if item.url %}
       <a href="{{ item.url | url }}" class="feed-list-title title-hover">{% if item.featured %}<span style="color: rgb(245 158 11); margin-right: 0.35rem;" title="Featured" aria-label="Featured">★</span>{% endif %}{% if item.pinned %}<span class="inline-flex items-center" style="color: var(--accent-color); margin-right: 0.35rem; margin-top: -2px;" title="Pinned" aria-label="Pinned">{% feather "bookmark", class="w-3.5 h-3.5 fill-current opacity-20" %}</span>{% endif %}{{ item.title }}</a>
     {% else %}
       <span class="feed-list-title">{% if item.featured %}<span style="color: rgb(245 158 11); margin-right: 0.35rem;" title="Featured" aria-label="Featured">★</span>{% endif %}{% if item.pinned %}<span class="inline-flex items-center" style="color: var(--accent-color); margin-right: 0.35rem; margin-top: -2px;" title="Pinned" aria-label="Pinned">{% feather "bookmark", class="w-3.5 h-3.5 fill-current opacity-20" %}</span>{% endif %}{{ item.title }}</span>
     {% endif %}
+    {% if opts.rich and item.summary %}<p class="feed-list-desc">{{ item.summary }}</p>{% endif %}
+    </div>
     <div class="flex items-center gap-1.5 shrink-0 justify-end">
-      <span class="badge badge-type badge-compact {{ typeBadgeClass }}">{{ badgeLabel }}</span>
+      {% if opts.rich %}{% for tag in item.tags | default([]) | filterTagList %}<a href="/tags/{{ tag | slugify }}/" class="badge badge-tag badge-compact badge-interactive hidden md:inline-flex" style="text-decoration: none;">#{{ tag }}</a>{% endfor %}{% endif %}
+      {% if opts.showType is not defined or opts.showType %}<span class="badge badge-type badge-compact {{ typeBadgeClass }}">{{ badgeLabel }}</span>{% endif %}
       {% if item.hidden %}
         <span class="badge badge-accent badge-compact" title="Hidden local preview">Hidden</span>
       {% endif %}
@@ -266,7 +273,7 @@
   <article class="feed-card surface surface-compact rounded-sm feed-card-full{% if extraClasses %} {{ extraClasses }}{% endif %}" {% if item.authored_by %}data-authored-by="{{ item.authored_by }}" {% endif %}{% if outerAttrs %}{{ outerAttrs | safe }}{% endif %}>
     {# Header row: type dot + label + date #}
     <div class="flex items-center gap-2 mb-2.5">
-      <span class="badge badge-type badge-compact {{ typeBadgeClass }}">{{ badgeLabel }}</span>
+      {% if opts.showType is not defined or opts.showType %}<span class="badge badge-type badge-compact {{ typeBadgeClass }}">{{ badgeLabel }}</span>{% endif %}
       {% if item.hidden %}
         <span class="badge badge-accent badge-compact" title="Hidden local preview">Hidden</span>
       {% endif %}
@@ -297,18 +304,18 @@
       {% if contentToRender %}
         {% if isQuotation %}
           <div class="relative mt-2 max-h-44 overflow-hidden">
-            <div class="italic border-l-2 pl-3 py-0.5 relative text-xs leading-relaxed text-gray-600 dark:text-gray-300 max-w-none not-prose" style="border-color: var(--accent-color);">
+            <div class="italic border-l-2 pl-3 py-0.5 relative editorial-support-compact max-w-none not-prose" style="border-color: var(--accent-color);">
               <span class="absolute left-1 -top-1.5 text-2xl font-serif text-gray-400 opacity-40 leading-none">"</span>
               <div class="relative z-10">{{ contentToRender | safe }}</div>
             </div>
             <div class="feed-surface-note-fade absolute bottom-0 left-0 right-0 h-8 pointer-events-none"></div>
           </div>
           <div class="flex flex-col mt-2 shrink-0">
-            <span class="font-medium text-gray-900 dark:text-gray-100 text-[0.7rem]">
+            <span class="font-medium text-gray-900 dark:text-gray-100 text-sm">
               - {% if item.original.data.authorUrl %}<a href="{{ item.original.data.authorUrl }}" target="_blank" rel="noopener" class="hover:underline">{{ item.original.data.author }}</a>{% else %}{{ item.original.data.author }}{% endif %}
             </span>
             {% if item.original.data.source %}
-              <span class="text-[0.65rem] text-gray-500 mt-0.5 leading-snug">
+              <span class="text-xs text-gray-500 mt-0.5 leading-snug">
                 {% if item.original.data.sourceUrl %}
                   <a href="{{ item.original.data.sourceUrl }}" target="_blank" rel="noopener" class="hover:underline" style="color: inherit; text-decoration: none;">{{ item.original.data.source }}</a>
                 {% else %}
@@ -318,19 +325,19 @@
             {% endif %}
           </div>
         {% else %}
-          <div class="relative mt-2 max-h-48 overflow-hidden">
-            <div class="text-xs leading-relaxed text-gray-600 dark:text-gray-300 max-w-none not-prose">{{ contentToRender | safe }}</div>
+          <div class="feed-clamp relative mt-2">
+            <div class="editorial-support-compact max-w-none not-prose">{{ contentToRender | safe }}</div>
             <div class="feed-surface-note-fade absolute bottom-0 left-0 right-0 h-10 pointer-events-none"></div>
           </div>
           {% if item.original.data.author or item.original.data.source %}
           <div class="flex flex-col mt-2 shrink-0">
             {% if item.original.data.author %}
-            <span class="font-medium text-gray-900 dark:text-gray-100 text-[0.7rem]">
+            <span class="font-medium text-gray-900 dark:text-gray-100 text-sm">
               - {% if item.original.data.authorUrl %}<a href="{{ item.original.data.authorUrl }}" target="_blank" rel="noopener" class="hover:text-[color:var(--accent-color)] transition-colors">{{ item.original.data.author }}</a>{% else %}{{ item.original.data.author }}{% endif %}
             </span>
             {% endif %}
             {% if item.original.data.source %}
-            <span class="text-[0.65rem] text-gray-500 mt-0.5 leading-snug">
+            <span class="text-xs text-gray-500 mt-0.5 leading-snug">
               {% if item.original.data.sourceUrl %}
                 <a href="{{ item.original.data.sourceUrl }}" target="_blank" rel="noopener" class="hover:text-[color:var(--accent-color)] transition-colors" style="text-decoration: none;">{{ item.original.data.source }}</a>
               {% else %}
@@ -356,7 +363,7 @@
         <div class="mt-2 flex items-start gap-3">
           <p class="min-w-0 flex-1 editorial-support-compact m-0">{{ item.summary }}</p>
           <a href="{{ item.url | url }}" class="shrink-0" style="text-decoration: none;">
-            {% post_thumbnail_markup item.imageMetadata, itemImageAlt, "stamp-cobalt block h-24 w-24 object-contain", 96 %}
+            {% post_thumbnail_markup item.imageMetadata, itemImageAlt, "stamp-cobalt block h-16 w-16 object-contain", 64 %}
           </a>
         </div>
       {% else %}
@@ -379,4 +386,18 @@
     {% endif %}
   </article>
   {% endif %}
+{% endmacro %}
+
+{# Row for a raw Eleventy post (Writing, folder, tag pages): resolves the flat feed item so every list renders through feedCard. #}
+{% macro postListRow(post, feed, extra) %}
+  {% for item in feed %}{% if item.url == post.url %}
+    {{ feedCard(item, {
+      variant: 'list',
+      rich: true,
+      showType: false,
+      date: post.date,
+      extraClasses: (extra.extraClasses or '') ~ ((' postlist-item-active') if extra.active else ''),
+      outerAttrs: extra.outerAttrs
+    }) }}
+  {% endif %}{% endfor %}
 {% endmacro %}

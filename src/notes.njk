@@ -6,9 +6,11 @@ permalink: /notes/
 eleventyNavigation:
   key: Notes
   order: 6
+collectionArchetype: index
 ---
 
 {% from "components/view-toggle.njk" import viewToggle %}
+{% from "components/feed-card.njk" import feedCard %}
 {% include "components/breadcrumbs.njk" %}
 
 {% set pageEyebrow = "Short-form" %}
@@ -28,47 +30,27 @@ eleventyNavigation:
     ]) }}
   </div>
 
-  <div
-    class="notes-index"
-    :class="{
-      'notes-view-stream': view === 'stream',
-      'notes-view-list': view === 'list',
-      'notes-view-grid feed-masonry': view === 'grid'
-    }"
+  {# Same renderers as /feed so the three views stay consistent #}
+  <div x-show="view === 'stream'" x-cloak class="flex flex-col w-full py-4">
+    {% for item in collections.feed %}{% if item.type == 'note' %}
+      {{ feedCard(item, { variant: 'stream' }) }}
+    {% endif %}{% endfor %}
+  </div>
+
+  <ul class="feed-list" x-show="view === 'list'" x-cloak>
+    {% for item in collections.feed %}{% if item.type == 'note' %}
+      {{ feedCard(item, { variant: 'list' }) }}
+    {% endif %}{% endfor %}
+  </ul>
+
+  <div x-show="view === 'grid'" x-cloak
+    class="grid gap-3 md:grid-cols-2 lg:grid-cols-3 items-start feed-masonry"
     data-feed-masonry
     style="--feed-row-height: 16px;"
   >
-    {%- for note in collections.notes -%}
-    <article class="note-index-row note-card feed-card group">
-      <div class="note-card-inner">
-        <div class="note-card-meta">
-          <time class="note-index-date meta-text" datetime="{{ note.date | htmlDateString }}">{{ note.date | readableDate }}</time>
-        </div>
-        <div class="note-card-content">
-          {% if note.data.title %}
-            <div class="leading-snug mb-1">
-              <a href="{{ note.url }}" class="note-index-title title-hover">{{ note.data.title }}</a>
-            </div>
-          {% endif %}
-          <p class="note-card-excerpt editorial-support-compact">
-            {{ note | safeContent | plainText | truncate(180, true, '…') }}
-          </p>
-          <div class="note-index-body note-card-body site-content">
-            {{ note | safeContent | safe }}
-          </div>
-          <div class="note-card-link flex items-center justify-between">
-            <a href="{{ note.url }}" class="note-index-link">Permalink →</a>
-            {% set tUrl = note.data.tweet_url or note.data.tweetUrl %}
-            {% if tUrl %}
-              <a href="{{ tUrl }}" target="_blank" rel="noopener noreferrer" class="meta-text text-xs hover:text-[var(--accent-color)] transition-colors inline-flex items-center gap-1">
-                <span>On X ↗</span>
-              </a>
-            {% endif %}
-          </div>
-        </div>
-      </div>
-    </article>
-    {%- endfor -%}
+    {% for item in collections.feed %}{% if item.type == 'note' %}
+      {{ feedCard(item, { extraClasses: 'feed-card' }) }}
+    {% endif %}{% endfor %}
   </div>
 </div>
 

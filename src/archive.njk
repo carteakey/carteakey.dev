@@ -6,9 +6,11 @@ permalink: /blog/
 eleventyNavigation:
   key: Writing
   order: 2
+collectionArchetype: index
 ---
 
 {% from "components/authorship-badge.njk" import authorshipBadge %}
+{% from "components/feed-card.njk" import feedCard, postListRow %}
 {% include "components/breadcrumbs.njk" %}
 {% set byYear = collections.posts | countByYear %}
 {% set archiveYears = byYear | keys | sort | reverse %}
@@ -52,130 +54,36 @@ eleventyNavigation:
     {% endfor %}
   </div>
 
-{# ── LIST VIEW (default) ─────────────────────────────── #}
-<div id="blogList" class="mt-4 divide-y divide-gray-100 dark:divide-gray-800/80">
+{# ── LIST VIEW (default) — same rows as /feed, plus a one-line description ── #}
+<div id="blogList" class="mt-4">
   {% for year in archiveYears %}
-    <h2 id="year-{{ year }}" class="not-prose scroll-mt-20 editorial-kicker py-2">
-      {{ year }}
-    </h2>
+    <h2 id="year-{{ year }}" class="not-prose scroll-mt-20 editorial-kicker py-2">{{ year }}</h2>
+    <ul class="feed-list not-prose list-none m-0 p-0">
     {% for post in collections.posts %}
       {% if (post.date | date("Y")) == year %}
-        {% set rawTags = post.data.tags | default([]) %}
-        {% set filteredTags = rawTags | filterTagList %}
-        {% set searchDesc = post.data.description | default('') | lower %}
-        <article
-          class="py-3.5 group"
-          data-blog-card
-          {% if post.data.authored_by %}data-authored-by="{{ post.data.authored_by }}"{% endif %}
-          data-title="{{ post.data.title | lower }}"
-          data-tags="{{ filteredTags | join(' ') | lower }}"
-          data-body="{{ searchDesc }}"
-        >
-          <div class="flex flex-col sm:flex-row md:gap-6 sm:gap-4">
-            <div class="shrink-0 md:w-36 flex flex-col gap-1 pt-0.5">
-              <time class="meta-text text-xs text-gray-400 dark:text-gray-500" datetime="{{ post.date | htmlDateString }}">{{ post.date | readableDate }}</time>
-              <div class="hidden md:flex flex-wrap gap-1 mt-0.5">
-                {% for tag in filteredTags %}
-                  <a href="/tags/{{ tag | slugify }}/" class="badge badge-tag badge-compact badge-interactive" style="text-decoration: none;">#{{ tag }}</a>
-                {% endfor %}
-              </div>
-            </div>
-            <div class="flex-1 min-w-0">
-              <div class="{% if post.data.image %}flex items-start gap-4{% endif %}">
-                <div class="min-w-0 flex-1">
-                  <div class="flex items-baseline gap-2 leading-snug">
-                    <a href="{{ post.url }}" class="editorial-title-link title-hover min-w-0">{{ post.data.title }}</a>
-                    <div class="flex items-center gap-1.5 shrink-0">
-                      {% if post.data.featured %}
-                        <span class="inline-flex items-center text-sm" style="color: rgb(245 158 11);" title="Featured" aria-label="Featured">★</span>
-                      {% endif %}
-                      {% if post.data.pinned %}
-                        <span class="inline-flex items-center" style="color: var(--accent-color);" title="Pinned" aria-label="Pinned">{% feather "bookmark", class="w-3.5 h-3.5 fill-current opacity-20" %}</span>
-                      {% endif %}
-                      {% if post.data.hidden %}
-                        <span class="badge badge-accent badge-compact" title="Hidden local preview">Hidden</span>
-                      {% endif %}
-                      {{ authorshipBadge(post.data.authored_by, compact=true) }}
-                    </div>
-                  </div>
-                  {% if post.data.description %}
-                    <p class="editorial-support-compact mt-0.5 m-0">{{ post.data.description }}</p>
-                  {% endif %}
-                  <div class="md:hidden flex flex-wrap items-center gap-x-2 gap-y-1 mt-1.5">
-                    <span class="meta-text text-[0.65rem] text-gray-400 dark:text-gray-500">{{ post.date | readableDate }}</span>
-                    {% for tag in filteredTags %}
-                    <a href="/tags/{{ tag | slugify }}/" class="badge badge-tag badge-compact badge-interactive" style="text-decoration: none;">#{{ tag }}</a>
-                  {% endfor %}
-                </div>
-                </div>
-                {% if post.data.image %}
-                  <a href="{{ post.url }}" class="hidden sm:block shrink-0 self-start" style="text-decoration: none;">
-                    {% post_thumbnail post.data.image, post.data.imageAlt or post.data.title, "stamp-cobalt block h-20 w-20 object-contain", 80 %}
-                  </a>
-                {% endif %}
-              </div>
-            </div>
-          </div>
-        </article>
+        {% set filteredTags = post.data.tags | default([]) | filterTagList %}
+        {{ postListRow(post, collections.feed, {
+          outerAttrs: 'data-blog-card data-title="' ~ (post.data.title | lower | replace('"', '')) ~ '" data-tags="' ~ (filteredTags | join(' ') | lower) ~ '" data-body="' ~ (post.data.description | default('') | lower | replace('"', '')) ~ '"'
+        }) }}
       {% endif %}
     {% endfor %}
+    </ul>
   {% endfor %}
 </div>
 
-{# ── GRID VIEW ───────────────────────────────────────── #}
-<div id="blogGrid" class="hidden mt-4 grid gap-3 md:grid-cols-2 lg:grid-cols-3 items-start">
-  {% for post in collections.posts %}
-    {% set rawTags = post.data.tags | default([]) %}
-    {% set filteredTags = rawTags | filterTagList %}
-    {% set searchDesc = post.data.description | default('') | lower %}
-    <article
-      class="feed-card-full surface-compact"
-      data-blog-card
-      {% if post.data.authored_by %}data-authored-by="{{ post.data.authored_by }}"{% endif %}
-      data-title="{{ post.data.title | lower }}"
-      data-tags="{{ filteredTags | join(' ') | lower }}"
-      data-body="{{ searchDesc }}"
-    >
-      <div class="flex items-center gap-2 mb-2">
-        <span class="feed-list-dot bg-blue-400 shrink-0"></span>
-        <time class="meta-text text-[0.68rem] text-gray-400 dark:text-gray-500">{{ post.date | readableDate }}</time>
-        {{ authorshipBadge(post.data.authored_by, compact=true) }}
-        {% if post.data.featured %}
-          <span class="badge badge-featured badge-compact ml-auto" title="Featured" aria-label="Featured">★ Featured</span>
-        {% endif %}
-        {% if post.data.pinned %}
-          <span class="badge badge-accent badge-compact {% if not post.data.featured %}ml-auto{% endif %} flex items-center gap-1" title="Pinned" aria-label="Pinned">{% feather "bookmark", class="w-3 h-3" %} Pinned</span>
-        {% endif %}
-        {% if post.data.hidden %}
-          <span class="badge badge-accent badge-compact {% if not post.data.featured and not post.data.pinned %}ml-auto{% endif %}" title="Hidden local preview">Hidden</span>
-        {% endif %}
-      </div>
-      <h3 class="editorial-title-compact m-0">
-        <a href="{{ post.url }}" class="editorial-title-link-compact title-hover">{{ post.data.title }}</a>
-      </h3>
-      {% if post.data.description %}
-        {% if post.data.image %}
-          <div class="mt-2 flex items-start gap-3">
-            <p class="min-w-0 flex-1 editorial-support-compact m-0">{{ post.data.description }}</p>
-            <a href="{{ post.url }}" class="shrink-0" style="text-decoration: none;">
-              {% post_thumbnail post.data.image, post.data.imageAlt or post.data.title, "stamp-cobalt block h-24 w-24 object-contain", 96 %}
-            </a>
-          </div>
-        {% else %}
-          <p class="editorial-support-compact mt-1.5 m-0">{{ post.data.description }}</p>
-        {% endif %}
-      {% endif %}
-      {% if filteredTags | length %}
-        <div class="flex flex-wrap gap-1 mt-2.5">
-          {% for tag in filteredTags | head(3) %}
-            <a href="/tags/{{ tag | slugify }}/" class="badge badge-tag badge-compact badge-interactive" style="text-decoration: none;">#{{ tag }}</a>
-          {% endfor %}
-        </div>
-      {% endif %}
-    </article>
-  {% endfor %}
+{# ── GRID VIEW — same cards as /feed ─────────────────── #}
+<div id="blogGrid" class="hidden mt-4 grid gap-3 md:grid-cols-2 lg:grid-cols-3 items-start feed-masonry" data-feed-masonry style="--feed-row-height: 16px;">
+  {% for item in collections.feed %}{% if item.type == 'post' %}
+    {{ feedCard(item, {
+      extraClasses: 'feed-card',
+      showType: false,
+      outerAttrs: 'data-blog-card data-title="' ~ (item.title | lower | replace('"', '')) ~ '" data-tags="' ~ (item.tags | join(' ') | lower) ~ '" data-body="' ~ ((item.summary or '') | lower | replace('"', '')) ~ '"'
+    }) }}
+  {% endif %}{% endfor %}
 </div>
 </div>
+
+{% include "components/feed-masonry-script.njk" %}
 
 <script>
   const searchInput = document.getElementById('blogSearch');
@@ -185,7 +93,7 @@ eleventyNavigation:
     const term = e.target.value.trim().toLowerCase();
     blogCards.forEach((card) => {
       const matches = !term || ['title','tags','body'].some(k => (card.dataset[k] || '').includes(term));
-      card.closest('article').classList.toggle('hidden', !matches);
+      card.closest('article, li').classList.toggle('hidden', !matches);
     });
   });
 </script>
