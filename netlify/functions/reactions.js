@@ -1,72 +1,74 @@
-import { Redis } from '@upstash/redis'
-import { logRuntimeError } from './_runtime-log.js'
+import { Redis } from "@upstash/redis";
+import { logRuntimeError } from "./_runtime-log.js";
 
 const redis = new Redis({
   url: process.env.UPSTASH_REDIS_REST_URL,
   token: process.env.UPSTASH_REDIS_REST_TOKEN,
-})
+});
 
 const ALLOWED_REACTIONS = [
-  'thumbs_up',
-  'sparkles',
-  'rocket',
-  'lightbulb',
-  'eyes',
-]
+  "thumbs_up",
+  "sparkles",
+  "rocket",
+  "lightbulb",
+  "eyes",
+];
 
-const reactionKey = (slug) => `reactions:${slug}`
+const reactionKey = (slug) => `reactions:${slug}`;
 
 function createCountsObject(rawCounts = {}) {
-  const counts = {}
-  let total = 0
+  const counts = {};
+  let total = 0;
 
   for (const id of ALLOWED_REACTIONS) {
-    const value = Number(rawCounts[id] ?? 0)
-    counts[id] = value
-    total += value
+    const value = Number(rawCounts[id] ?? 0);
+    counts[id] = value;
+    total += value;
   }
 
-  return { counts, total }
+  return { counts, total };
 }
 
-exports.handler = async function(event) {
+exports.handler = async function (event) {
   try {
-    if (event.httpMethod === 'GET') {
-      const slug = event.queryStringParameters?.slug
+    if (event.httpMethod === "GET") {
+      const slug = event.queryStringParameters?.slug;
       if (!slug) {
-        return { statusCode: 400, body: 'Post slug is required' }
+        return { statusCode: 400, body: "Post slug is required" };
       }
 
-      const rawCounts = await redis.hgetall(reactionKey(slug))
-      const payload = createCountsObject(rawCounts)
-      return { statusCode: 200, body: JSON.stringify(payload) }
+      const rawCounts = await redis.hgetall(reactionKey(slug));
+      const payload = createCountsObject(rawCounts);
+      return { statusCode: 200, body: JSON.stringify(payload) };
     }
 
-    if (event.httpMethod === 'POST') {
-      const body = JSON.parse(event.body || '{}')
-      const slug = body.slug
-      const reaction = body.reaction
+    if (event.httpMethod === "POST") {
+      const body = JSON.parse(event.body || "{}");
+      const slug = body.slug;
+      const reaction = body.reaction;
 
       if (!slug || !reaction) {
-        return { statusCode: 400, body: 'Both slug and reaction are required' }
+        return { statusCode: 400, body: "Both slug and reaction are required" };
       }
 
       if (!ALLOWED_REACTIONS.includes(reaction)) {
-        return { statusCode: 400, body: 'Unknown reaction' }
+        return { statusCode: 400, body: "Unknown reaction" };
       }
 
-      await redis.hincrby(reactionKey(slug), reaction, 1)
-      const rawCounts = await redis.hgetall(reactionKey(slug))
-      const payload = createCountsObject(rawCounts)
-      return { statusCode: 200, body: JSON.stringify(payload) }
+      await redis.hincrby(reactionKey(slug), reaction, 1);
+      const rawCounts = await redis.hgetall(reactionKey(slug));
+      const payload = createCountsObject(rawCounts);
+      return { statusCode: 200, body: JSON.stringify(payload) };
     }
 
-    return { statusCode: 405, body: 'Method Not Allowed' }
+    return { statusCode: 405, body: "Method Not Allowed" };
   } catch (error) {
-    logRuntimeError('function:reactions', error, {
+    logRuntimeError("function:reactions", error, {
       method: event.httpMethod,
-      hasSlug: Boolean(event.queryStringParameters?.slug || event.body?.includes('"slug"'))
-    })
-    return { statusCode: 500, body: `Error: ${error.message}` }
+      hasSlug: Boolean(
+        event.queryStringParameters?.slug || event.body?.includes('"slug"'),
+      ),
+    });
+    return { statusCode: 500, body: `Error: ${error.message}` };
   }
-}
+};

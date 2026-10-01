@@ -1,0 +1,8 @@
+#!/bin/sh
+# Blocks commits that break content policy or add design drift.
+# Enabled automatically by `npm install` (package.json "prepare") via core.hooksPath.
+# Bypass only deliberately: git commit --no-verify
+set -e
+node ./utils/check-version.mjs
+node ./utils/check-content.mjs
+node ./utils/check-design.mjs

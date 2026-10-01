@@ -33,14 +33,28 @@ async function processImage(imagePath, argv) {
     const device = exifData?.Image?.Model || "Unknown";
     const make = exifData?.Image?.Make || "Unknown";
     const lens = exifData?.Photo?.LensModel || "Unknown";
-    const focalLength = exifData?.Photo?.FocalLength ? `${exifData.Photo.FocalLength}mm` : "Unknown";
-    const aperture = exifData?.Photo?.FNumber ? `f/${exifData.Photo.FNumber}` : "Unknown";
+    const focalLength = exifData?.Photo?.FocalLength
+      ? `${exifData.Photo.FocalLength}mm`
+      : "Unknown";
+    const aperture = exifData?.Photo?.FNumber
+      ? `f/${exifData.Photo.FNumber}`
+      : "Unknown";
     const iso = exifData?.Photo?.ISOSpeedRatings || "Unknown";
-    const shutterSpeed = exifData?.Photo?.ExposureTime ? `1/${Math.round(1 / exifData.Photo.ExposureTime)}s` : "Unknown";
-    const exifDate = exifData?.Photo?.DateTimeOriginal ? new Date(exifData.Photo.DateTimeOriginal) : null;
+    const shutterSpeed = exifData?.Photo?.ExposureTime
+      ? `1/${Math.round(1 / exifData.Photo.ExposureTime)}s`
+      : "Unknown";
+    const exifDate = exifData?.Photo?.DateTimeOriginal
+      ? new Date(exifData.Photo.DateTimeOriginal)
+      : null;
     const gps = exifData?.GPSInfo;
     let locationFromExif = "Unknown";
-    if (gps && gps.GPSLatitude && gps.GPSLongitude && gps.GPSLatitudeRef && gps.GPSLongitudeRef) {
+    if (
+      gps &&
+      gps.GPSLatitude &&
+      gps.GPSLongitude &&
+      gps.GPSLatitudeRef &&
+      gps.GPSLongitudeRef
+    ) {
       const lat = convertDMSToDD(gps.GPSLatitude, gps.GPSLatitudeRef);
       const lon = convertDMSToDD(gps.GPSLongitude, gps.GPSLongitudeRef);
       if (lat !== null && lon !== null) {
@@ -63,7 +77,9 @@ async function processImage(imagePath, argv) {
     description = rawDescription.replace(/Title: .*/, "").trim();
 
     if (title === "Untitled" || description.length === 0) {
-      throw new Error(`Could not parse title or description from the AI response. Raw response: ${rawDescription}`);
+      throw new Error(
+        `Could not parse title or description from the AI response. Raw response: ${rawDescription}`,
+      );
     }
 
     // Move and rename the image
@@ -87,7 +103,9 @@ async function processImage(imagePath, argv) {
       aperture,
       iso,
       shutterSpeed,
-      date: exifDate ? exifDate.toISOString().split("T")[0] : new Date().toISOString().split("T")[0],
+      date: exifDate
+        ? exifDate.toISOString().split("T")[0]
+        : new Date().toISOString().split("T")[0],
       width,
       height,
       description,
@@ -112,7 +130,9 @@ async function processImage(imagePath, argv) {
       await fs.mkdir(categoryDir, { recursive: true });
       await fs.writeFile(PHOTOS_YAML_PATH, dump(photos));
       await fs.rename(imagePath, newImagePath); // Move the file
-      console.log(`Successfully processed and moved ${title} to ${newImagePath}`);
+      console.log(
+        `Successfully processed and moved ${title} to ${newImagePath}`,
+      );
     }
     return true;
   } catch (error) {
@@ -158,7 +178,9 @@ async function main() {
 
   try {
     const files = await fs.readdir(argv.inboxDir);
-    const imageFiles = files.filter((file) => /\.(jpg|jpeg|png|webp)$/i.test(file));
+    const imageFiles = files.filter((file) =>
+      /\.(jpg|jpeg|png|webp)$/i.test(file),
+    );
 
     if (imageFiles.length === 0) {
       console.log(`No images found in ${argv.inboxDir}.`);
@@ -174,12 +196,16 @@ async function main() {
 
     console.log("\nBulk processing complete.");
   } catch (error) {
-    if (error.code === 'ENOENT') {
-      console.error(`Error: The inbox directory '${argv.inboxDir}' does not exist.`);
+    if (error.code === "ENOENT") {
+      console.error(
+        `Error: The inbox directory '${argv.inboxDir}' does not exist.`,
+      );
     } else {
       console.error("An unexpected error occurred:", error);
     }
   }
 }
 
-main().catch((error) => console.error("Critical error in main execution:", error));
+main().catch((error) =>
+  console.error("Critical error in main execution:", error),
+);

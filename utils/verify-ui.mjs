@@ -32,8 +32,11 @@ function attribute(html, selectorPattern, attributeName) {
 }
 
 function jsonLdBlocks(html) {
-  return [...html.matchAll(/<script\s+type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)]
-    .map((match) => match[1].trim());
+  return [
+    ...html.matchAll(
+      /<script\s+type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi,
+    ),
+  ].map((match) => match[1].trim());
 }
 
 async function verifyLocalImage(urlValue, label) {
@@ -49,7 +52,10 @@ async function verifyLocalImage(urlValue, label) {
   check(parsed.protocol === "https:", `${label} uses HTTPS`);
 
   if (parsed.origin === siteOrigin) {
-    const localPath = path.join(outputDir, decodeURIComponent(parsed.pathname).replace(/^\//, ""));
+    const localPath = path.join(
+      outputDir,
+      decodeURIComponent(parsed.pathname).replace(/^\//, ""),
+    );
     try {
       await access(localPath);
       check(true, `${label} exists in the built site`);
@@ -60,20 +66,64 @@ async function verifyLocalImage(urlValue, label) {
 }
 
 async function verifyMetadata(html, label) {
-  const canonical = attribute(html, /<link\b[^>]*rel=["']canonical["'][^>]*>/i, "href");
-  const ogUrl = attribute(html, /<meta\b[^>]*property=["']og:url["'][^>]*>/i, "content");
-  const ogImage = attribute(html, /<meta\b[^>]*property=["']og:image["'][^>]*>/i, "content");
-  const twitterCard = attribute(html, /<meta\b[^>]*name=["']twitter:card["'][^>]*>/i, "content");
-  const twitterUrl = attribute(html, /<meta\b[^>]*name=["']twitter:url["'][^>]*>/i, "content");
-  const twitterImage = attribute(html, /<meta\b[^>]*name=["']twitter:image["'][^>]*>/i, "content");
+  const canonical = attribute(
+    html,
+    /<link\b[^>]*rel=["']canonical["'][^>]*>/i,
+    "href",
+  );
+  const ogUrl = attribute(
+    html,
+    /<meta\b[^>]*property=["']og:url["'][^>]*>/i,
+    "content",
+  );
+  const ogImage = attribute(
+    html,
+    /<meta\b[^>]*property=["']og:image["'][^>]*>/i,
+    "content",
+  );
+  const twitterCard = attribute(
+    html,
+    /<meta\b[^>]*name=["']twitter:card["'][^>]*>/i,
+    "content",
+  );
+  const twitterUrl = attribute(
+    html,
+    /<meta\b[^>]*name=["']twitter:url["'][^>]*>/i,
+    "content",
+  );
+  const twitterImage = attribute(
+    html,
+    /<meta\b[^>]*name=["']twitter:image["'][^>]*>/i,
+    "content",
+  );
 
-  for (const [name, value] of Object.entries({ canonical, ogUrl, ogImage, twitterUrl, twitterImage })) {
-    check(Boolean(value) && URL.canParse(value) && new URL(value).protocol === "https:", `${label}: ${name} is an absolute HTTPS URL`);
+  for (const [name, value] of Object.entries({
+    canonical,
+    ogUrl,
+    ogImage,
+    twitterUrl,
+    twitterImage,
+  })) {
+    check(
+      Boolean(value) &&
+        URL.canParse(value) &&
+        new URL(value).protocol === "https:",
+      `${label}: ${name} is an absolute HTTPS URL`,
+    );
   }
 
-  check(twitterCard === "summary_large_image", `${label}: Twitter card is summary_large_image`);
-  check(canonical === ogUrl && canonical === twitterUrl, `${label}: canonical, Open Graph, and Twitter URLs agree`);
-  check(ogImage === twitterImage, `${label}: Open Graph and Twitter images agree`);
+  check(
+    twitterCard === "summary_large_image",
+    `${label}: Twitter card is summary_large_image`,
+  );
+  check(
+    canonical === ogUrl && canonical === twitterUrl,
+    `${label}: canonical, Open Graph, and Twitter URLs agree`,
+  );
+  check(
+    ogImage === twitterImage,
+    `${label}: Open Graph and Twitter images agree`,
+  );
 
   if (ogImage) {
     await verifyLocalImage(ogImage, `${label}: social image`);
@@ -86,7 +136,10 @@ async function verifyMetadata(html, label) {
       JSON.parse(block);
       check(true, `${label}: JSON-LD block ${index + 1} parses`);
     } catch (error) {
-      check(false, `${label}: JSON-LD block ${index + 1} parses (${error.message})`);
+      check(
+        false,
+        `${label}: JSON-LD block ${index + 1} parses (${error.message})`,
+      );
     }
   }
 }
@@ -99,8 +152,10 @@ async function main() {
   const easterEggs = await readOutput("static/js/easter-eggs.js");
   const collectionViews = await readOutput("static/js/collection-views.js");
   const blogRoot = path.join(outputDir, "blog");
-  const blogFiles = (await walk(blogRoot))
-    .filter((file) => file.endsWith("index.html") && file !== path.join(blogRoot, "index.html"));
+  const blogFiles = (await walk(blogRoot)).filter(
+    (file) =>
+      file.endsWith("index.html") && file !== path.join(blogRoot, "index.html"),
+  );
   let representativePost;
   let representativePath;
 
@@ -113,33 +168,80 @@ async function main() {
     }
   }
 
-  check(Boolean(representativePost), "A generated BlogPosting page is available for metadata checks");
-  check(home.includes("/static/js/easter-eggs.js"), "The shared layout loads the easter-egg script");
-  check(home.includes('src="/img/headshot-halftone.svg"'), "The home profile image uses the halftone portrait");
+  check(
+    Boolean(representativePost),
+    "A generated BlogPosting page is available for metadata checks",
+  );
+  check(
+    home.includes("/static/js/easter-eggs.js"),
+    "The shared layout loads the easter-egg script",
+  );
+  check(
+    home.includes('src="/img/headshot-halftone.svg"'),
+    "The home profile image uses the halftone portrait",
+  );
   try {
     await access(path.join(outputDir, "img/headshot-halftone.svg"));
     check(true, "The halftone portrait exists in the built site");
   } catch {
     check(false, "The halftone portrait exists in the built site");
   }
-  check(easterEggs.includes("konamiCode") && easterEggs.includes("showSecretMessage") && easterEggs.includes("sparkleMode"), "All three easter-egg triggers remain in the script");
-  check(archive.includes("sm:flex-row") && archive.includes("hidden sm:block"), "The post list keeps its responsive row and thumbnail classes");
-  check(archive.includes('id="blogList"') && archive.includes('id="blogGrid"'), "Both post list views are rendered");
-  check(projects.includes("projects-collection-grid") && projects.includes("projects-collection-list"), "Projects keeps both wall and list layouts");
-  check(projects.includes("collectionView('projects-view', 'grid'"), "Projects defaults to the project wall");
-  check(notes.includes("notes-view-stream") && notes.includes("notes-view-list") && notes.includes("notes-view-grid"), "Notes renders stream, list, and wall layouts from one collection");
-  check(notes.includes("collectionView('notes-view', 'stream'"), "Notes defaults to the reading stream");
-  check(collectionViews.includes("localStorage.setItem") && collectionViews.includes("feed:layout"), "Collection view preferences persist and relayout masonry grids");
+  check(
+    easterEggs.includes("konamiCode") &&
+      easterEggs.includes("showSecretMessage") &&
+      easterEggs.includes("sparkleMode"),
+    "All three easter-egg triggers remain in the script",
+  );
+  check(
+    archive.includes("feed-list-row") &&
+      archive.includes("feed-list-row-thumb"),
+    "The post list keeps its shared row and thumbnail classes",
+  );
+  check(
+    archive.includes('id="blogList"') && archive.includes('id="blogGrid"'),
+    "Both post list views are rendered",
+  );
+  check(
+    projects.includes("projects-collection-grid") &&
+      projects.includes("['grid', 'list']"),
+    "Projects keeps both wall and list layouts",
+  );
+  check(
+    projects.includes("collectionView('projects-view', 'grid'"),
+    "Projects defaults to the project wall",
+  );
+  check(
+    notes.includes("['stream', 'list', 'grid']"),
+    "Notes renders stream, list, and wall layouts from one collection",
+  );
+  check(
+    notes.includes("collectionView('notes-view', 'stream'"),
+    "Notes defaults to the reading stream",
+  );
+  check(
+    collectionViews.includes("localStorage.setItem") &&
+      collectionViews.includes("feed:layout"),
+    "Collection view preferences persist and relayout masonry grids",
+  );
   try {
     await access(path.join(outputDir, "hi/index.html"));
-    check(false, "The Hindi proof page remains unpublished while translation work is paused");
+    check(
+      false,
+      "The Hindi proof page remains unpublished while translation work is paused",
+    );
   } catch {
-    check(true, "The Hindi proof page remains unpublished while translation work is paused");
+    check(
+      true,
+      "The Hindi proof page remains unpublished while translation work is paused",
+    );
   }
 
   await verifyMetadata(home, "Home page");
   if (representativePost) {
-    await verifyMetadata(representativePost, `Post page (${representativePath})`);
+    await verifyMetadata(
+      representativePost,
+      `Post page (${representativePath})`,
+    );
   }
 
   for (const message of passes) {

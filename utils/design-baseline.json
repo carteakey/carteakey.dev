@@ -1,0 +1,331 @@
+{
+  "counts": {
+    "src/_includes/components/authorship-badge.njk": {
+      "inline-style": 2
+    },
+    "src/_includes/components/cartebase-charts.njk": {
+      "pill-or-circle": 3,
+      "utility-text-stack": 9,
+      "inline-style": 10
+    },
+    "src/_includes/components/copy-markdown.njk": {
+      "off-palette-colour": 1,
+      "inline-style": 1
+    },
+    "src/_includes/components/editorial-sidebar.njk": {
+      "utility-text-stack": 1
+    },
+    "src/_includes/components/ethical-ads.njk": {
+      "utility-text-stack": 3
+    },
+    "src/_includes/components/feed-card.njk": {
+      "off-palette-colour": 9,
+      "utility-text-stack": 8,
+      "inline-style": 19
+    },
+    "src/_includes/components/github-contributions.njk": {
+      "off-palette-colour": 16,
+      "utility-text-stack": 2,
+      "inline-style": 2
+    },
+    "src/_includes/components/watching-snippet.njk": {
+      "inline-style": 1
+    },
+    "src/_includes/layouts/base.njk": {
+      "inline-style": 52
+    },
+    "src/_includes/layouts/note.njk": {
+      "pill-or-circle": 1,
+      "off-palette-colour": 1,
+      "utility-text-stack": 3
+    },
+    "src/_includes/layouts/post.njk": {
+      "pill-or-circle": 1,
+      "off-palette-colour": 4,
+      "utility-text-stack": 9,
+      "inline-style": 4
+    },
+    "src/_includes/layouts/skill.njk": {
+      "pill-or-circle": 1,
+      "off-palette-colour": 1,
+      "utility-text-stack": 4,
+      "inline-style": 1
+    },
+    "src/_includes/layouts/snippet.njk": {
+      "utility-text-stack": 1
+    },
+    "src/_includes/layouts/til.njk": {
+      "pill-or-circle": 1,
+      "off-palette-colour": 1,
+      "utility-text-stack": 4,
+      "inline-style": 1
+    },
+    "src/about.njk": {
+      "utility-text-stack": 1
+    },
+    "src/archive.njk": {
+      "utility-text-stack": 1,
+      "inline-style": 2
+    },
+    "src/bookmarks.njk": {
+      "inline-style": 2
+    },
+    "src/changelog.njk": {
+      "pill-or-circle": 1,
+      "off-palette-colour": 9,
+      "utility-text-stack": 6,
+      "inline-style": 3
+    },
+    "src/cv.njk": {
+      "inline-style": 11
+    },
+    "src/feed.njk": {
+      "utility-text-stack": 1,
+      "inline-style": 1
+    },
+    "src/folio/index.njk": {
+      "off-palette-colour": 13,
+      "utility-text-stack": 7,
+      "inline-style": 3
+    },
+    "src/gallery.njk": {
+      "inline-style": 1
+    },
+    "src/games.njk": {
+      "inline-style": 1
+    },
+    "src/guestbook.njk": {
+      "pill-or-circle": 1,
+      "utility-text-stack": 3,
+      "inline-style": 2
+    },
+    "src/index.njk": {
+      "inline-style": 1
+    },
+    "src/learning.njk": {
+      "inline-style": 1
+    },
+    "src/lexicon.njk": {
+      "utility-text-stack": 1
+    },
+    "src/listening.njk": {
+      "pill-or-circle": 4,
+      "utility-text-stack": 3,
+      "inline-style": 2
+    },
+    "src/newsletter.njk": {
+      "pill-or-circle": 1,
+      "off-palette-colour": 20
+    },
+    "src/newsletter/success.njk": {
+      "off-palette-colour": 2
+    },
+    "src/notes.njk": {
+      "inline-style": 1
+    },
+    "src/now-archive.njk": {
+      "pill-or-circle": 1,
+      "utility-text-stack": 3,
+      "inline-style": 2
+    },
+    "src/now.njk": {
+      "pill-or-circle": 2,
+      "utility-text-stack": 1,
+      "inline-style": 1
+    },
+    "src/posts/2023-09-04-running-your-own-copilot-in-vscode-on-a-mac.md": {
+      "updated-without-changelog": 1
+    },
+    "src/posts/2024-03-26-my-favorite-meme.md": {
+      "updated-without-changelog": 1
+    },
+    "src/posts/2025-03-15-mounting-additional-drives-in-wsl2.md": {
+      "updated-without-changelog": 1
+    },
+    "src/posts/2025-03-22-the-unforwarder-how-i-stopped-backing-up-junk-photos.md": {
+      "updated-without-changelog": 1
+    },
+    "src/posts/2025-03-28-ghiblicize-everything-or-should-we.md": {
+      "updated-without-changelog": 1
+    },
+    "src/posts/2025-05-03-guide-to-forcing-or-blocking-windows-updates.md": {
+      "updated-without-changelog": 1
+    },
+    "src/posts/2025-05-08-quirks-of-owning-a-mac.md": {
+      "updated-without-changelog": 1
+    },
+    "src/posts/2025-08-05-between-two-worlds.md": {
+      "updated-without-changelog": 1
+    },
+    "src/posts/2026-02-12-dont-give-away-to-the-gradient-descent.md": {
+      "updated-without-changelog": 1
+    },
+    "src/posts/2026-04-16-in-search-of-the-agent-ide.md": {
+      "class-attribute": 66
+    },
+    "src/posts/2026-04-25-what-obsidian-shouldnt-be.md": {
+      "updated-without-changelog": 1
+    },
+    "src/posts/2026-05-17-battle-of-the-image-generators.md": {
+      "raw-html-block": 73,
+      "class-attribute": 214
+    },
+    "src/posts/2026-05-17-loganime-test-v1.md": {
+      "raw-html-block": 5,
+      "class-attribute": 8
+    },
+    "src/posts/agents/2026-01-02-using-claude-code-or-any-other-agent-for-data-analysis-on-databricks-draft.md": {
+      "updated-without-changelog": 1
+    },
+    "src/posts/homelab/2023-05-22-repurposing-my-laptop-as-a-home-server.md": {
+      "updated-without-changelog": 1
+    },
+    "src/posts/homelab/2024-12-28-why-one-should-self-host-in-2025.md": {
+      "updated-without-changelog": 1
+    },
+    "src/posts/homelab/2025-03-06-exposing-local-llms-to-the-internet.md": {
+      "updated-without-changelog": 1
+    },
+    "src/posts/llm-benchmarks/2025-10-04-gpt-oss-vs-gpt-5-benchmarks.md": {
+      "raw-html-block": 3
+    },
+    "src/posts/local-inference/2025-09-21-optimizing-gpt-oss-120b-local-inference.md": {
+      "updated-without-changelog": 1
+    },
+    "src/posts/local-inference/2026-02-18-optimizing-qwen3-coder-next-local-inference.md": {
+      "updated-without-changelog": 1
+    },
+    "src/posts/local-inference/2026-02-25-running-qwen-25-72b-locally.md": {
+      "missing-authored_by": 1
+    },
+    "src/posts/local-inference/2026-06-12-the-12gb-vram-miracle-l3ms-stack.md": {
+      "updated-without-changelog": 1
+    },
+    "src/posts/local-inference/2026-08-31-qwen3-8-27b-vs-flash-next.md": {
+      "updated-without-changelog": 1
+    },
+    "src/posts/meta/2026-04-30-wikibones.md": {
+      "updated-without-changelog": 1
+    },
+    "src/projects.njk": {
+      "inline-style": 4
+    },
+    "src/prompts.njk": {
+      "utility-text-stack": 2
+    },
+    "src/quotations.njk": {
+      "utility-text-stack": 3
+    },
+    "src/quotes.njk": {
+      "inline-style": 2
+    },
+    "src/reading.njk": {
+      "inline-style": 2
+    },
+    "src/reviews.njk": {
+      "utility-text-stack": 1
+    },
+    "src/search.njk": {
+      "pill-or-circle": 1,
+      "off-palette-colour": 4,
+      "utility-text-stack": 6,
+      "inline-style": 4
+    },
+    "src/skill-library.njk": {
+      "utility-text-stack": 2,
+      "inline-style": 2
+    },
+    "src/skills-radar.njk": {
+      "inline-style": 2
+    },
+    "src/snippet-tags.njk": {
+      "inline-style": 1
+    },
+    "src/snippets.njk": {
+      "off-palette-colour": 1,
+      "utility-text-stack": 2,
+      "inline-style": 3
+    },
+    "src/stats.njk": {
+      "pill-or-circle": 4,
+      "off-palette-colour": 3,
+      "utility-text-stack": 4,
+      "inline-style": 20
+    },
+    "src/status.njk": {
+      "off-palette-colour": 10
+    },
+    "src/til.njk": {
+      "utility-text-stack": 2,
+      "inline-style": 2
+    },
+    "src/uses.njk": {
+      "pill-or-circle": 3,
+      "utility-text-stack": 2
+    },
+    "src/vibes.njk": {
+      "off-palette-colour": 1
+    },
+    "src/watching.njk": {
+      "inline-style": 1
+    },
+    "src/workouts.njk": {
+      "inline-style": 2
+    }
+  },
+  "knownTags": [
+    "11ty",
+    "AI",
+    "Agents",
+    "Algorithms",
+    "Art",
+    "Canvas",
+    "Career",
+    "Coding",
+    "Consistency",
+    "Creative",
+    "Data",
+    "Design",
+    "Engineering",
+    "Ethics",
+    "Fedora",
+    "Games",
+    "Hardware",
+    "Heroku",
+    "Humor",
+    "Jekyll",
+    "Judgment",
+    "LLMs",
+    "Life",
+    "Linux",
+    "Mac",
+    "Math",
+    "Meme",
+    "Meta",
+    "Multi-Turn",
+    "Networking",
+    "Obsidian",
+    "Other",
+    "PKM",
+    "Personal",
+    "Philosophy",
+    "Photography",
+    "Physics",
+    "Poetry",
+    "Postgres",
+    "Privacy",
+    "Productivity",
+    "Psychology",
+    "RPi",
+    "Self-Host",
+    "Tooling",
+    "VLM",
+    "Vision",
+    "WSL",
+    "Web",
+    "Webdev",
+    "Windows",
+    "Workflow",
+    "iOS"
+  ]
+}

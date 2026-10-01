@@ -1,11 +1,12 @@
 {
   "name": "carteakey.dev",
-  "version": "2.7.3",
+  "version": "2.7.17",
   "description": "",
   "type": "module",
   "packageManager": "pnpm@11.5.0",
   "scripts": {
-    "prebuild": "node ./utils/clean-build.mjs",
+    "prebuild": "node ./utils/check-version.mjs && node ./utils/check-content.mjs && node ./utils/check-design.mjs && node ./utils/clean-build.mjs",
+    "prepare": "git config core.hooksPath .githooks || true",
     "build": "npm-run-all -s build:*",
     "build:11ty": "eleventy",
     "build:css": "tailwindcss -i ./src/static/css/tailwind.css -o ./_site/css/tailwind.css --minify --postcss",
@@ -16,6 +17,13 @@
     "start:11ty": "eleventy --serve",
     "start:css": "tailwindcss -i ./src/static/css/tailwind.css -o ./_site/css/tailwind.css --watch --postcss",
     "debug": "DEBUG=* eleventy",
+    "check": "npm-run-all -s check:* verify",
+    "check:content": "node ./utils/check-content.mjs",
+    "check:design": "node ./utils/check-design.mjs",
+    "check:version": "node ./utils/check-version.mjs",
+    "verify": "node ./utils/verify-ui.mjs",
+    "lint": "prettier --check \"*.{js,mjs,cjs,json}\" \"utils/**/*.{js,mjs,cjs}\" \"netlify/functions/**/*.{js,mjs}\" \"src/_data/**/*.{js,yaml}\"",
+    "format": "prettier --write \"*.{js,mjs,cjs,json}\" \"utils/**/*.{js,mjs,cjs}\" \"netlify/functions/**/*.{js,mjs}\" \"src/_data/**/*.{js,yaml}\"",
     "metrics:merge-check": "node ./utils/check-engagement-merge.mjs",
     "newsletter:test": "node ./utils/send-newsletter-test.mjs",
     "audit:lighthouse": "pnpm dlx @lhci/cli@0.15.1 autorun --config=./lighthouserc.cjs",
@@ -31,7 +39,7 @@
   },
   "author": {
     "name": "Kartikey Chauhan",
-    "email": "kartychauhan@gmail.com",
+    "email": "carteakey.dev@gmail.com",
     "url": "https://carteakey.dev/"
   },
   "dependencies": {
@@ -42,7 +50,6 @@
     "@11ty/eleventy-plugin-rss": "^3.0.0",
     "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.2",
     "@11ty/eleventy-plugin-webc": "^0.11.2",
-    "@netlify/functions": "^5.1.2",
     "@tailwindcss/cli": "^4.3.3",
     "@upstash/redis": "^1.36.2",
     "dotenv": "^17.3.1",
@@ -66,6 +73,7 @@
     "eleventy-plugin-feathericons": "^2.0.0",
     "netlify-plugin-cache": "^1.0.3",
     "postcss": "^8.5.20",
+    "prettier": "^3.9.9",
     "tailwindcss": "^4.3.3"
   }
 }

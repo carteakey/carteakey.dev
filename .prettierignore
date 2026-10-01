@@ -1,0 +1,12 @@
+_site/
+.cache/
+node_modules/
+dist/
+coverage/
+pnpm-lock.yaml
+src/static/js/vendor/
+src/static/css/vendor/
+src/_data/cartebase/
+src/static/img/
+src/static/fonts/
+inbox/

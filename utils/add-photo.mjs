@@ -35,7 +35,10 @@ async function main() {
       message: "What is the path to the image file?",
       filter: (input) => {
         // Handle paths that are quoted or have escaped spaces, e.g. from drag-and-drop
-        return input.trim().replace(/^['"]|['"]$/g, "").replace(/\\ /g, " ");
+        return input
+          .trim()
+          .replace(/^['"]|['"]$/g, "")
+          .replace(/\\ /g, " ");
       },
       validate: async (input) => {
         try {
@@ -58,14 +61,28 @@ async function main() {
   const device = exifData?.Image?.Model || "Unknown";
   const make = exifData?.Image?.Make || "Unknown";
   const lens = exifData?.Photo?.LensModel || "Unknown";
-  const focalLength = exifData?.Photo?.FocalLength ? `${exifData.Photo.FocalLength}mm` : "Unknown";
-  const aperture = exifData?.Photo?.FNumber ? `f/${exifData.Photo.FNumber}` : "Unknown";
+  const focalLength = exifData?.Photo?.FocalLength
+    ? `${exifData.Photo.FocalLength}mm`
+    : "Unknown";
+  const aperture = exifData?.Photo?.FNumber
+    ? `f/${exifData.Photo.FNumber}`
+    : "Unknown";
   const iso = exifData?.Photo?.ISOSpeedRatings || "Unknown";
-  const shutterSpeed = exifData?.Photo?.ExposureTime ? `1/${Math.round(1 / exifData.Photo.ExposureTime)}s` : "Unknown";
-  const exifDate = exifData?.Photo?.DateTimeOriginal ? new Date(exifData.Photo.DateTimeOriginal) : null;
+  const shutterSpeed = exifData?.Photo?.ExposureTime
+    ? `1/${Math.round(1 / exifData.Photo.ExposureTime)}s`
+    : "Unknown";
+  const exifDate = exifData?.Photo?.DateTimeOriginal
+    ? new Date(exifData.Photo.DateTimeOriginal)
+    : null;
   const gps = exifData?.GPSInfo;
   let locationFromExif = "Unknown";
-  if (gps && gps.GPSLatitude && gps.GPSLongitude && gps.GPSLatitudeRef && gps.GPSLongitudeRef) {
+  if (
+    gps &&
+    gps.GPSLatitude &&
+    gps.GPSLongitude &&
+    gps.GPSLatitudeRef &&
+    gps.GPSLongitudeRef
+  ) {
     const lat = convertDMSToDD(gps.GPSLatitude, gps.GPSLatitudeRef);
     const lon = convertDMSToDD(gps.GPSLongitude, gps.GPSLongitudeRef);
     if (lat !== null && lon !== null) {
@@ -93,7 +110,9 @@ async function main() {
       type: "input",
       name: "date",
       message: "What is the date of the photo (YYYY-MM-DD)?",
-      default: exifDate ? exifDate.toISOString().split("T")[0] : new Date().toISOString().split("T")[0],
+      default: exifDate
+        ? exifDate.toISOString().split("T")[0]
+        : new Date().toISOString().split("T")[0],
     },
     {
       type: "input",
@@ -134,7 +153,9 @@ async function main() {
   description = rawDescription.replace(/Title: .*/, "").trim();
 
   if (title === "Untitled" || description.length === 0) {
-    console.error("Could not parse title or description from the AI response. Aborting.");
+    console.error(
+      "Could not parse title or description from the AI response. Aborting.",
+    );
     console.log("Raw response:", rawDescription);
     return;
   }
