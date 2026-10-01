@@ -49,11 +49,7 @@ eleventyNavigation:
   </div>
   <p class="editorial-support mb-5">{{ uses.homelab.description }}</p>
   <div class="surface rounded-sm surface-padding">
-    <div class="mx-auto mb-6 w-fit border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 px-4 py-3 text-center">
-      <p class="font-mono text-xs font-semibold">🕸️ {{ uses.homelab.network.name }}</p>
-      <p class="mt-1 font-mono text-[0.65rem] text-gray-600 dark:text-gray-400">{{ uses.homelab.network.description }}</p>
-    </div>
-    <div class="mb-6 text-center font-mono text-sm text-gray-400 dark:text-gray-500" aria-hidden="true">↓</div>
+    {% image_cc "./src/static/img/diagrams/casakey-homelab-map.png", "Map of the CasaKey homelab: a Tailscale mesh connects two desks, Arch-Nemesis (Yeti, Steam Deck, FX505) and Big mAc (M3 Pro, M2 Air, M1 Air); the Raspberry Pi wakes Yeti over Wake-on-LAN and FX505 shares the Glowdesk NAS over Ethernet and NFS", "sketch-draw", "Hand-drawn map of the fleet. Cards below have the details." %}
     {% if uses.homelab.stations %}
       <div class="grid gap-4 md:grid-cols-2 mb-6">
         {% for station in uses.homelab.stations %}
