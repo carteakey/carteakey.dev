@@ -14,6 +14,8 @@ tags:
 pinned: true
 ---
 
+{% image_cc "./src/static/img/local-inference/overfit-inference-midwit-meme.webp", "Bell-curve meme. The low-IQ end and the hooded high-IQ end both say: I write inference code for my specific model and hardware. The crying midwit in the middle says: I write inference code that generalizes across all models and all hardware.", "w-full border border-surface-border my-6", "The whole post, in one meme." %}
+
 ## The surprise
 
 For a week I'd been tuning [Qwen3.8-Flash-Next](/blog/local-inference/running-qwen3-8-flash-next-locally/), a 125B-parameter MoE, on {% device "yeti-cachy" %} (my main homelab node: an i5-12600K with 64 GB DDR5 and an RTX 4070 12GB I paid $500 for). After a lot of flags and two experimental branches, `llama.cpp` reached **27 tok/s**. For an offloaded 125B model on a 12 GB card, that felt like the ceiling.
