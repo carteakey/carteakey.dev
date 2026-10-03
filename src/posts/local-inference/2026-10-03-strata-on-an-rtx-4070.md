@@ -45,7 +45,7 @@ The SSD's rated figure is for sequential reads. The n-gram table is read in smal
 
 | | Strata | llama.cpp baseline | llama.cpp MTP |
 | --- | --- | --- | --- |
-| Version / commit | engine 0.1.30, checkout [`30ec18e`](https://github.com/Niko1221/Strata/tree/30ec18ec7094550fcc594fd948220d511d80464e) + local patches | master b11241 (`1c4729414`) | b11268 (`f382a59e3`) + QSA stack + #28243 |
+| Version / commit | engine 0.1.30, checkout [`30ec18e`](https://github.com/Niko1221/Strata/tree/30ec18ec7094550fcc594fd948220d511d80464e) + local patches | master b11241 (`1c4729414`) | b11268 (`f382a59e3`) + QSA stack (incl. #29599) + #28243 |
 | Weights | [ISTA-DASLab GSQ-RCO IQ3_XXS](https://huggingface.co/ISTA-DASLab/Qwen3.8-Flash-Next-GSQ-RCO-GGUF), 3.00 bpw average | AtomicChat AD-4.27bpw | AtomicChat AD-4.27bpw + shared-Q4_K_M MTP head |
 | KV cache | k8v4, 128k preallocated | q8_0 / q8_0, 96k | q8_0 / q8_0, 16k |
 | Placement | per-expert VRAM cache | `--fit on --fit-target 512` | `-ngl 99 -ncmoe 46` |
@@ -64,7 +64,9 @@ Against my best llama.cpp setup (MTP branch, 27.06 tok/s), Strata is about **2×
 | Best sustained row (2k context) | 60.3 | 2.9× | 2.2× |
 | Peak burst, repetitive code, warm drafts | 90.2 | 4.3× | 3.3× |
 
-The 90.2 figure is a burst, not a steady state. It shows up on boilerplate where the draft head guesses almost everything right. Don't plan around it.
+The 90.2 figure is a burst, not a steady state. It comes from my 2026-09-30 head-to-head notes: one 256-token generation on a repetitive code prompt, same Strata config, 97.0% draft acceptance. I didn't keep its raw log line, so treat it as anecdotal. Don't plan around it.
+
+**Context matters here, and it cuts in Strata's favor.** Both llama.cpp numbers come from short prompts: the MTP figure in a 16k window, master in a 64k–96k window. The 53.2 is with ~60k tokens actually in context. Short prompt against short prompt, Strata's rows run 52.7–60.3 tok/s, so the ratio is still about 2–2.2×. The MTP tier also doesn't scale to long contexts on this card: in my context ladder its decode drops below master from a 32k window up. Against llama.cpp at a filled 60k context, 2× is likely conservative.
 
 {% diagram_card {
   src: "./src/static/img/diagrams/qwen38-flash-next-throughput-comparison.png",
@@ -83,16 +85,20 @@ For those CPU-resident experts, llama.cpp runs the expert matmuls on the CPU aga
 
 ### How much data moves per token
 
-The model has 48 layers with 512 routed experts each, 24,576 in total. Strata's cache holds 3,086 experts in 5.04 GiB, so one expert at this quant averages roughly 1.6–1.7 MiB (layers mix quant types, so this is approximate). [Qwen's model card](https://huggingface.co/Qwen/Qwen3.8-Flash-Next) routes 10 experts per layer, which gives:
+All sizes in this section are MiB/GiB.
 
-- 48 layers × 10 experts = **480 expert lookups per token**
-- 480 × ~1.6 MiB ≈ **770 MB of expert weights read per token**
+The model has 48 layers with 512 routed experts each, 24,576 in total. Strata's cache holds 3,086 experts in 5.04 GiB, so one expert at Strata's IQ3_XXS quant averages about 1.67 MiB (the 39.97 GiB host arena ÷ 24,576 gives the same). [Qwen's model card](https://huggingface.co/Qwen/Qwen3.8-Flash-Next) routes 10 experts per layer, which gives:
+
+- 48 layers × 10 experts = **480 expert lookups per evaluated token**
+- 480 × 1.67 MiB ≈ **800 MiB of expert weights per token at Strata's quant**
+
+llama.cpp runs AD-4.27bpw, about 1.4× more bits than IQ3_XXS's 3.00 bpw average. Scaling by that ratio puts llama.cpp at roughly **1,140 MiB per token**, or about 1,050 MiB after the four expert layers `--fit` keeps on the GPU. Both bpw figures are averages over all weights, so these are estimates, not measurements.
 
 ### The bandwidth ceiling isn't the limit
 
-If DDR5 bandwidth were the only constraint, 75 GB/s ÷ 0.77 GB per token would allow about 97 tok/s. llama.cpp measures 20.8, roughly a fifth of that.
+If DDR5 bandwidth were the only constraint, ~71,500 MiB/s (75 GB/s) ÷ ~1,100 MiB per token would allow about 65 tok/s. llama.cpp measures 20.8, roughly a third of that.
 
-So llama.cpp isn't bandwidth-bound here. The time goes elsewhere: CPU matmul throughput on six performance cores, thread synchronization at every layer, memory latency, and GPU-to-CPU handoffs between attention and experts. I haven't profiled it with `perf` or `nsys`, so that list is a set of candidates, not a breakdown.
+So llama.cpp isn't bandwidth-bound here, though by less of a margin than a single-quant estimate suggests. The time goes elsewhere: CPU matmul throughput on six performance cores, thread synchronization at every layer, memory latency, and GPU-to-CPU handoffs between attention and experts. I haven't profiled it with `perf` or `nsys`, so that list is a set of candidates, not a breakdown.
 
 This matters for the next section. Strata does move fewer bytes through DDR5, but if bytes weren't the bottleneck, that alone can't explain the speedup.
 
@@ -125,7 +131,7 @@ Between VRAM and RAM sits PCIe 4.0 x16, about 31.5 GB/s each way.
 
 Three notes on the RAM tier:
 
-- **The arena holds every expert.** 24,576 experts × ~1.6 MiB ≈ 40 GiB, so the 39.97 GiB arena is the full host copy in this run, not just the cold ones. The hot set in VRAM is a duplicate.
+- **The arena holds every expert.** 24,576 experts × 1.67 MiB ≈ 40 GiB, so the 39.97 GiB arena is the full host copy in this run, not just the cold ones. The hot set in VRAM is a duplicate.
 - **Headroom is thinner than it looks.** Total host RAM in use during real tool calls was 52.5 GB (see telemetry below), leaving about 11.5 GB for the OS and desktop.
 - **The n-gram table isn't free.** It doesn't count against RAM directly, but the pages it touches sit in the page cache. That memory is reclaimable, not free.
 
@@ -133,9 +139,14 @@ The checked-out tree also carries a local `MADV_HUGEPAGE` patch in `src/core/pin
 
 ### What the hit rate means
 
-The 71–77% hit rate is **per expert lookup, not per token**. With 480 lookups per token, a ~25% miss rate means roughly 120 misses on every token. Practically no token avoids the miss path.
+The 71–77% hit rate is **per expert lookup, not per token**. With 480 lookups per evaluated token, a ~25% miss rate means roughly 120 misses on every token. Practically no token avoids the miss path.
 
-Applying the hit rate to the ~770 MB estimate gives roughly 180–225 MB of uncached expert weights per evaluated token, against 770 MB for llama.cpp's mostly-on-CPU approach. That's accounting, not measured DDR5 traffic: MTP verification, reuse and different quant formats all complicate the comparison.
+I checked how the source counts, and two details matter:
+
+- **Lookups aren't deduplicated, but the work is.** Inside a verification window, the counter ticks once per position per routed slot. The compute, though, runs once per *distinct* expert in the window: one VRAM group, one PCIe fetch or one CPU job serves every position that routes to it. So under speculation, the expert work per generated token is smaller than 480 lookups suggests. That batch-level sharing is another real source of speedup, and it comes with any batched verification, not just Strata's.
+- **The logged hit rate is an upper bound.** In those windows, misses sent down the PCIe path count as neither hits nor misses, so they drop out of the denominator. The 60k numbers don't fully reconcile either: ~600 evaluated positions × 480 would be ~290k lookups, against 236,824 logged. I haven't pinned down that gap.
+
+Applying a 71–77% hit rate to 800 MiB gives roughly 185–230 MiB of uncached expert weights per evaluated token, a lower bound given the note above. The fair comparison is against llama.cpp's ~1,050 MiB, not Strata's own 800. About 30% of that reduction comes from the lower-bit quant alone, before any caching. All of it is accounting, not measured DDR5 traffic.
 
 A miss doesn't always stream over PCIe. The source splits miss work between a CPU pool (nine expert-pool workers in this run) and a GPU path over PCIe. At startup, a PCIe probe picked a 0.14 share of missed expert work for the GPU path in this run. PCIe also carries activations and cache refills, so traffic isn't limited to misses.
 
@@ -151,7 +162,7 @@ Strata also runs the model's own multi-token prediction head as a draft model, e
 
 Prompt-lookup speculation is enabled too; the logs record those "suffix drafts" separately (65 of 69 accepted in the 60k run). Repeated filler text in my harness flatters it.
 
-So at least three things changed at once: the expert cache, MTP, and prompt lookup. I can't yet tell you how much of the gain comes from each. The llama.cpp MTP branch got 30% from speculation alone (20.8 → 27.06), so it's plausible speculation accounts for a similar or larger share here.
+So at least three things changed at once: the expert cache, MTP, and prompt lookup. I can't yet tell you how much of the gain comes from each. The llama.cpp numbers don't help here: the MTP tier is 30% faster than master (20.8 → 27.06), but master already runs ngram-mod prompt lookup, and the MTP tier also differs in build, placement, context window and batch size. That 30% is a different setup, not speculation alone.
 
 The ablation that would settle it is Strata with the cache on and all speculation off, same quant, same prompts, same warmup. **I can't run it on this build.** The native IQ pack path requires `--spec T` with `T >= 2`, and the serving path requires an MTP runtime, so `--spec 0` doesn't give a comparable run. Until there's a verified non-speculative path, the ~2× result belongs to the complete serving setup, not to the cache.
 
@@ -183,7 +194,7 @@ The 462-token row reused 457 tokens from the previous request and read only five
 
 What I take from it:
 
-- **Decode is flat.** 53.2 tok/s at 60k against 56.8 at 462 tokens is within the run-to-run spread.
+- **Decode is flat.** 53.2 tok/s at 60k against 56.8 at 462 tokens is within the row-to-row scatter.
 - **Prefill speeds up with length.** Strata evaluates prompts in 8,192-token chunks, so short prompts never fill a chunk. Prefill climbs from 585 tok/s at 1k to 2,013 tok/s at 60k, which is 29.7 seconds for a ~60k-token synthetic context. I haven't run a real code repository through it yet.
 - **Draft acceptance holds at 70–77%** for every prompt from 3.8k tokens up.
 - **VRAM is constant because it's preallocated.** State and KV capacity are sized for 128k at startup, so usage sits at 11,710 MiB no matter how much is filled. The k8v4 quantization is what lets 128k fit; it isn't why the number is flat.
@@ -279,6 +290,6 @@ Strata is a young project from a solo developer that pins host memory and ships 
 
 | Date | Note |
 | --- | --- |
-| 2026-10-03 | Split from the original post. Fixed the hit-rate framing (per expert lookup, not per token), the 60k hit rate (73.8%, not 76.5%), the 3,779-token needle failure, the reused-prefix prefill row, the SSD bandwidth, the speedup comparison, the miss path, and the VRAM and greedy explanations. Added the cache policy, setup, quality, reproduction and limits sections. |
+| 2026-10-03 | Split from the original post. Fixed the hit-rate framing (per expert lookup, not per token), the 60k hit rate (73.8%, not 76.5%), the 3,779-token needle failure, the reused-prefix prefill row, the SSD bandwidth, the speedup comparison, the miss path, and the VRAM and greedy explanations. Added the cache policy, setup, quality, reproduction and limits sections. Recomputed bytes per token per quant in MiB (llama.cpp's DDR5 ceiling is ~65 tok/s, not 97), documented how the source counts lookups, stated the llama.cpp context lengths, sourced the 90.2 burst, and dropped the "speculation alone" claim. |
 | 2026-10-01 | Corrected the bandwidth arithmetic and removed the double-counted cache and MTP gain. |
 | 2026-09-30 | Initial post, as part of The Rise of Overfit Inference Engines. |
