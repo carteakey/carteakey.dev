@@ -4,7 +4,7 @@ description: "The 51B n-gram table on SSD via lazy mmap: 27 tok/s with MTP and u
 image: /img/blog-sketches/unique/running-qwen3-8-flash-next-locally-stamp-trim.png
 imageAlt: Transparent monochrome sketch of a GPU offloading to an NVMe SSD drive next to a token speed gauge and architecture notebook
 date: 2026-08-27
-updated: 2026-10-01
+updated: 2026-10-03
 authored_by: ai-assisted
 draft: true
 hidden: false
@@ -53,7 +53,7 @@ The active profile leaderboard at [l3ms.carteakey.dev](https://l3ms.carteakey.de
 
 ## Why this quant?
 
-Qwen3.8-Flash-Next is 177B params: 125B MoE (6B active), 51B n-gram table, 4B MTP head. The n-gram table is read ~2.7 KB per token from a 36 GB address space — a 1-in-13-million read ratio that NVMe answers in <100 µs. The experts are the opposite: ~2.5 GB of active weights per token, hopeless from disk.
+Qwen3.8-Flash-Next has about 176B parameters: a 125B MoE (6B active per token) plus a 51B n-gram table. The roughly 4B MTP head is additional and excluded from the 176B count. The n-gram table is read ~2.7 KB per token from a 36 GB address space — a 1-in-13-million read ratio that NVMe answers in <100 µs. The experts are the opposite: ~2.5 GB of active weights per token, hopeless from disk.
 
 That gives three distinct storage tiers: VRAM (dense + a couple expert layers + KV), system RAM (the other 46 MoE layers), SSD (the whole n-gram table).
 
@@ -380,6 +380,7 @@ That also means retiring the older quants to cold NAS storage. The Unsloth `UD-Q
 
 | Date | Note |
 | --- | --- |
+| 2026-10-03 | Standardized the parameter count at 176B: 125B main model plus 51B n-gram embeddings, excluding the additional MTP head. |
 | 2026-10-01 | Added the IQ3_S tier plan and the legacy-quant archive note, moved here from the overfit-engines post. |
 | 2026-09-29 | **Upstream master b11241 refresh & Unified QSA Sparsity Stack V2 (27 tok/s MTP & 3x cold prefill).** Upstream master b11241 (`1c4729414`) merged GDN RMS_NORM+SCALE CUDA fusion (#29393) and causal attention fixes (#28751), lifting prefill +20.8% (148.8 → 179.8 t/s) and peak decode to 22.11 t/s. Experimental Unified QSA Sparsity Stack V2 (`build 11268` / `f382a59e3`) merged Daniel Han PR #28243, Rhonstin #28699, Abdel Darwish #28213, Akio Nishimura #29166, and Aman Gupta #29599. MTP speculative decode surged to **25.32–27.06 tok/s** (97–100% acceptance, 2.76–2.93 tok/step) at `-ncmoe 46` under 11,025 MiB VRAM (>1.25 GB headroom). Aman Gupta's NVMe row prefetching lifted cold prefill from 32.9–49.8 t/s to **135.2 t/s** (+200% / 3x speedup). |
 | 2026-09-14 | **Upstream master refresh promoted to Gold; Vision tier & compact MTP 20.65 t/s breakthrough.** Refreshed upstream master (`b78a39a2f`, 175 commits newer) promoted to Gold serving baseline after delivering 19.35 t/s aggregate (+2.6% over old gold, +7.5% over ik_llama base, +10.9% on pathlib code) on unique 6-task corpus. Multimodal `qwen38-flash-next-vision` tier wired with `mmproj-F16.gguf` (-ncmoe 45, 16k ctx, 18.2–18.6 t/s). Compact `shared-Q4_K_M.gguf` (1.78 GB) with Daniel Han PR #28243 saves ~870 MiB VRAM, allowing `-ncmoe 45` (+1 MoE on GPU) to fit 11.78 GB VRAM and hit **20.65 t/s aggregate** (>20 t/s on every task). Diagnosed fresh-boot 10–14 t/s probe 1 decode as mmap NVMe cold page-in transient (not system swap). |

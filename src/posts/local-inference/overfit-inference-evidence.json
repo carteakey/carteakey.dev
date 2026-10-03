@@ -175,5 +175,17 @@
     "strata serve: prompt 59787 tokens = 0 reused + 59787 read in 29701 ms (2013.0 tok/s), 512 generated in 9631 ms (53.2 tok/s), drafts accepted 244 of 331, 4 checkpoints",
     "strata serve: decode expert cache hit rate: 73.8% (174835 hits / 236824 lookups)",
     "strata serve: suffix drafts: 25 windows, 65 of 69 drafts accepted"
-  ]
+  ],
+  "warm_burst": {
+    "prompt_tokens": 71,
+    "reused_tokens": 66,
+    "read_tokens": 5,
+    "completion_tokens": 256,
+    "decode_ms": 2838,
+    "decode_ts": 90.2,
+    "draft_accepted": 192,
+    "draft_n": 198,
+    "server_log_line": "strata serve: prompt 71 tokens = 66 reused + 5 read in 161 ms (31.0 tok/s), 256 generated in 2838 ms (90.2 tok/s), drafts accepted 192 of 198, 1 checkpoints",
+    "notes": "One warm-prefix burst; not a sustained benchmark. The log alone does not retain the prompt text."
+  }
 }

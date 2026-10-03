@@ -58,7 +58,7 @@ Strata isn't alone. In the past few months a handful of narrow inference engines
 | [gufo](https://github.com/gufo-org/gufo) | AMD Strix Halo (Ryzen AI MAX+ 395) | A small curated set | Custom HIP kernels, DFlash2 + MTP, continuous batching |
 {% endwide %}
 
-By normal software standards these are bad codebases: tightly coupled, unportable, fragile. In inference that's exactly why they're fast. Each picks one model and one hardware target and shapes the compute graph, memory layout and kernels around that single case.
+By normal software standards, these can look like bad codebases: tightly coupled, hard to port, built around narrow assumptions. In inference, those trade-offs are part of why they're fast. They shape the compute graph, memory layout and kernels around their chosen models and hardware.
 
 ## A prediction you can check
 

@@ -1,5 +1,5 @@
 ---
-title: "Strata on an RTX 4070: 53 tok/s from a 125B MoE at 60k Context"
+title: "Strata on an RTX 4070: 53 tok/s from a 176B Model at 60k Context"
 description: "53.2 tok/s at 60k context on a 12 GB RTX 4070: how I measured it, how the memory works, and what's still unproven."
 image: /img/blog-sketches/unique/strata-on-an-rtx-4070-stamp-trim.png
 imageAlt: "Monochrome pencil sketch of a graphics card beside a tray of cached chips, a larger chip pile, a RAM stick, and a stopwatch"
@@ -15,14 +15,21 @@ tags:
 
 Earlier this week I thought the local inference stack on {% device "yeti-cachy" %} had hit its ceiling.
 
-I'd squeezed [Qwen3.8-Flash-Next](/blog/local-inference/running-qwen3-8-flash-next-locally/) up to **20.8 tok/s** steady-state decode on upstream `llama.cpp` master, and **27.06 tok/s** with Daniel Han's MTP branch (#28243) plus Aman Gupta's NVMe `madvise` row prefetching (#29599). The model is a 125B-parameter MoE with about 6B active per token, plus a 51B n-gram embedding table that I keep on NVMe.
+I'd squeezed [Qwen3.8-Flash-Next](/blog/local-inference/running-qwen3-8-flash-next-locally/) up to **20.8 tok/s** steady-state decode on upstream `llama.cpp` master, and **27.06 tok/s** with Daniel Han's MTP branch (#28243) plus Aman Gupta's NVMe `madvise` row prefetching (#29599). The 176B count combines a 125B-parameter MoE (about 6B active per token) with a 51B n-gram embedding table that I keep on NVMe. The roughly 4B MTP head is additional and excluded from that count.
 
 Then I booted Strata:
 
 ```text
-strata serve: prompt 59787 tokens = 0 reused + 59787 read in 29701 ms (2013.0 tok/s), 512 generated in 9631 ms (53.2 tok/s), drafts accepted 244 of 331
-strata serve: decode expert cache hit rate: 73.8% (174835 hits / 236824 lookups)
+strata serve:
+  prompt: 59787 tokens (0 reused, 59787 read)
+  prefill: 29701 ms (2013.0 tok/s)
+  generated: 512 tokens in 9631 ms (53.2 tok/s)
+  drafts accepted: 244 of 331
+  decode expert cache hit rate: 73.8%
+    (174835 hits / 236824 lookups)
 ```
+
+Log excerpt reformatted for readability; values are unchanged.
 
 Same card, same box, 60k tokens of context: **53.2 tok/s decode** and **2,013 tok/s prefill**. This post is the technical write-up: how I measured it, how Strata lays out memory, and what I can and can't conclude. The broader argument about why narrow engines like this are showing up is in the companion essay, [The Rise of Overfit Inference Engines](/blog/local-inference/the-rise-of-overfit-inference-engines/).
 
@@ -64,7 +71,7 @@ Against my best llama.cpp setup (MTP branch, 27.06 tok/s), Strata is about **2×
 | Best sustained row (2k context) | 60.3 | 2.9× | 2.2× |
 | Peak burst, repetitive code, warm drafts | 90.2 | 4.3× | 3.3× |
 
-The 90.2 figure is a burst, not a steady state. It comes from my 2026-09-30 head-to-head notes: one 256-token generation on a repetitive code prompt, same Strata config, 97.0% draft acceptance. I didn't keep its raw log line, so treat it as anecdotal. Don't plan around it.
+The 90.2 figure is a burst, not a steady state. It comes from my 2026-09-30 head-to-head notes: one 256-token generation on a repetitive code prompt, same Strata config, 97.0% draft acceptance. The retained server log records 256 tokens in 2,838 ms, with 192 of 198 drafts accepted; that line is included in the evidence extract. Don't plan around it.
 
 **Context matters here, and it cuts in Strata's favor.** Both llama.cpp numbers come from short prompts: the MTP figure in a 16k window, master in a 64k–96k window. The 53.2 is with ~60k tokens actually in context. Short prompt against short prompt, Strata's rows run 52.7–60.3 tok/s, so the ratio is still about 2–2.2×. The MTP tier also doesn't scale to long contexts on this card: in my context ladder its decode drops below master from a 32k window up. Against llama.cpp at a filled 60k context, 2× is likely conservative.
 
@@ -92,21 +99,19 @@ The model has 48 layers with 512 routed experts each, 24,576 in total. Strata's 
 - 48 layers × 10 experts = **480 expert lookups per evaluated token**
 - 480 × 1.67 MiB ≈ **800 MiB of expert weights per token at Strata's quant**
 
-llama.cpp runs AD-4.27bpw, about 1.4× more bits than IQ3_XXS's 3.00 bpw average. Scaling by that ratio puts llama.cpp at roughly **1,140 MiB per token**, or about 1,050 MiB after the four expert layers `--fit` keeps on the GPU. Both bpw figures are averages over all weights, so these are estimates, not measurements.
+That's a size estimate, not measured memory traffic. GSQ-RCO uses different quant types across layers, so the bytes touched also depend on which experts are routed. Its [3.00 bpw figure](https://huggingface.co/ISTA-DASLab/Qwen3.8-Flash-Next-GSQ-RCO-GGUF#available-files) averages the transformer weights and excludes the n-gram table. I can't scale expert bytes by the ratio of that figure to llama.cpp's AD-4.27bpw label; I'd need the actual expert tensor sizes in both builds.
 
-### The bandwidth ceiling isn't the limit
+### What the bandwidth ceiling tells us
 
-If DDR5 bandwidth were the only constraint, ~71,500 MiB/s (75 GB/s) ÷ ~1,100 MiB per token would allow about 65 tok/s. llama.cpp measures 20.8, roughly a third of that.
+The theoretical DDR5 peak isn't a measurement of bandwidth available to these expert matmuls. Sparse accesses, memory latency and synchronization can keep effective throughput well below a sequential bandwidth test. A gap below that ceiling doesn't prove the workload isn't bandwidth-bound.
 
-So llama.cpp isn't bandwidth-bound here, though by less of a margin than a single-quant estimate suggests. The time goes elsewhere: CPU matmul throughput on six performance cores, thread synchronization at every layer, memory latency, and GPU-to-CPU handoffs between attention and experts. I haven't profiled it with `perf` or `nsys`, so that list is a set of candidates, not a breakdown.
-
-This matters for the next section. Strata does move fewer bytes through DDR5, but if bytes weren't the bottleneck, that alone can't explain the speedup.
+CPU matmul throughput, thread synchronization and CPU/GPU handoffs are also candidates. I haven't profiled this with `perf` or `nsys`, so I can't say which dominates. Moving fewer weights through DDR5 could help, but it doesn't by itself explain the measured speedup.
 
 ## How Strata lays out memory
 
 Strata drops layer-granular offloading. Instead of deciding which layers live on the GPU, it decides which individual experts do, drawing from all 48 layers.
 
-That works because MoE routing is uneven. On my runs, the 3,086 experts held in VRAM (about 13% of the total) served roughly three-quarters of all expert lookups.
+That works because MoE routing is uneven: a small resident set can cover much more than its share of lookups. My 3,086 cached experts are about 13% of the total, and the server reports hit ratios around 71–77%. There's a counting caveat below, so that isn't a measured share of all lookups or GPU compute.
 
 ### The cache policy
 
@@ -139,20 +144,20 @@ The checked-out tree also carries a local `MADV_HUGEPAGE` patch in `src/core/pin
 
 ### What the hit rate means
 
-The 71–77% hit rate is **per expert lookup, not per token**. With 480 lookups per evaluated token, a ~25% miss rate means roughly 120 misses on every token. Practically no token avoids the miss path.
+The reported 71–77% hit ratio is **per expert lookup, not per token**. With 480 lookups per evaluated token, a true 25% miss rate would mean about 120 misses per token on average. It wouldn't mean only one token in four encounters a miss. The logger doesn't count every lookup, though, so I can't infer the actual miss rate directly from that number.
 
 I checked how the source counts, and two details matter:
 
-- **Lookups aren't deduplicated, but the work is.** Inside a verification window, the counter ticks once per position per routed slot. The compute, though, runs once per *distinct* expert in the window: one VRAM group, one PCIe fetch or one CPU job serves every position that routes to it. So under speculation, the expert work per generated token is smaller than 480 lookups suggests. That batch-level sharing is another real source of speedup, and it comes with any batched verification, not just Strata's.
+- **Lookups aren't deduplicated, but expert jobs are grouped.** Inside a verification window, the counter ticks once per position per routed slot. Positions that route to the same expert can share a batched job and a weight fetch. Each position still needs its own matmul result; the output isn't computed once and reused. Grouping can reduce weight traffic and scheduling overhead, and batched verification can offer that benefit in other runtimes too.
 - **The logged hit rate is an upper bound.** In those windows, misses sent down the PCIe path count as neither hits nor misses, so they drop out of the denominator. The 60k numbers don't fully reconcile either: ~600 evaluated positions × 480 would be ~290k lookups, against 236,824 logged. I haven't pinned down that gap.
 
-Applying a 71–77% hit rate to 800 MiB gives roughly 185–230 MiB of uncached expert weights per evaluated token, a lower bound given the note above. The fair comparison is against llama.cpp's ~1,050 MiB, not Strata's own 800. About 30% of that reduction comes from the lower-bit quant alone, before any caching. All of it is accounting, not measured DDR5 traffic.
+Those accounting details stop me turning the logged hit ratio into a reliable MiB-per-generated-token figure. I'd need complete residency counters, routed expert sizes and verification-batch reuse, or a direct traffic measurement. Different quants add another variable to the llama.cpp comparison.
 
 A miss doesn't always stream over PCIe. The source splits miss work between a CPU pool (nine expert-pool workers in this run) and a GPU path over PCIe. At startup, a PCIe probe picked a 0.14 share of missed expert work for the GPU path in this run. PCIe also carries activations and cache refills, so traffic isn't limited to misses.
 
 ### Why this is faster
 
-Given that llama.cpp isn't bandwidth-bound, the bigger win is probably where the math happens. Three-quarters of the expert matmuls now run on the GPU instead of six CPU cores, and the per-layer CPU/GPU handoffs mostly go away. Fewer bytes over DDR5 helps, but I'd bet it's the smaller part. A profile would settle this; I haven't run one.
+My working explanation is a combination of GPU expert compute, less host weight traffic, batched expert jobs and speculation. Resident experts run on the GPU, and some missed expert work goes there too. CPU miss work remains, so the CPU/GPU handoffs haven't disappeared. The hit ratio doesn't tell me what fraction of the math runs on either device, and I can't rank these contributions without a profile and ablation.
 
 {% image_cc "./src/static/img/local-inference/strata-qwen38-flash-next-dashboard.png", "Live Strata runtime telemetry dashboard running Qwen3.8-Flash-Next on an NVIDIA GeForce RTX 4070 with 12GB VRAM", "w-full border border-surface-border my-6", "Live Strata telemetry on the RTX 4070: 67.6 tok/s decode, 1,959 tok/s prefill, 3,086 experts cached in VRAM (5.0 GB), and 52.5 GB of host RAM in use during a real agentic session." %}
 
@@ -228,7 +233,7 @@ All my sweep numbers are at temperature 0. That flatters speculative decoding, a
 
 Under greedy decoding, a draft token is accepted only if it matches the main model's top pick. That's a high bar, but drafts from the model's own MTP head clear it often.
 
-With sampling, [exact speculative sampling](https://arxiv.org/abs/2211.17192) uses rejection sampling, which keeps the output distribution identical to running the main model alone. The cost is speed: a draft is accepted with probability tied to how much the draft and main-model distributions overlap. Sampled acceptance can come out higher or lower than greedy agreement. It doesn't fall universally with temperature, though flatter distributions often overlap less. Nothing breaks; it may just get slower. I also haven't audited whether this Strata path implements exact sampled verification.
+With sampling, [exact speculative sampling](https://arxiv.org/abs/2211.17192) uses rejection sampling, which keeps the output distribution identical to running the main model alone. The cost is speed: a draft is accepted with probability tied to how much the draft and main-model distributions overlap. Sampled acceptance can come out higher or lower than greedy agreement. Temperature changes both distributions; it doesn't predict acceptance or speedup on its own. I also haven't audited whether this Strata path implements exact sampled verification.
 
 I haven't measured Strata with sampling. That's the next row to run: the 60k prompt at the server defaults (temperature 1.0, top-p 0.95, top-k 20), reporting acceptance and decode speed.
 
@@ -290,6 +295,6 @@ Strata is a young project from a solo developer that pins host memory and ships 
 
 | Date | Note |
 | --- | --- |
-| 2026-10-03 | Split from the original post. Fixed the hit-rate framing (per expert lookup, not per token), the 60k hit rate (73.8%, not 76.5%), the 3,779-token needle failure, the reused-prefix prefill row, the SSD bandwidth, the speedup comparison, the miss path, and the VRAM and greedy explanations. Added the cache policy, setup, quality, reproduction and limits sections. Recomputed bytes per token per quant in MiB (llama.cpp's DDR5 ceiling is ~65 tok/s, not 97), documented how the source counts lookups, stated the llama.cpp context lengths, sourced the 90.2 burst, and dropped the "speculation alone" claim. |
+| 2026-10-03 | Split from the original post. Fixed the hit-rate framing (per expert lookup, not per token), the 60k hit rate (73.8%, not 76.5%), the 3,779-token needle failure, the reused-prefix prefill row, the SSD bandwidth, the speedup comparison, the miss path, and the VRAM and greedy explanations. Added the cache policy, setup, quality, reproduction and limits sections. Kept the Strata weight-size estimate separate from measured traffic, removed the unsupported cross-quant bandwidth calculation and GPU-compute percentage, clarified batched expert jobs and the incomplete lookup denominator, stated the llama.cpp context lengths, preserved the raw 90.2 burst log, and dropped the "speculation alone" claim. |
 | 2026-10-01 | Corrected the bandwidth arithmetic and removed the double-counted cache and MTP gain. |
 | 2026-09-30 | Initial post, as part of The Rise of Overfit Inference Engines. |

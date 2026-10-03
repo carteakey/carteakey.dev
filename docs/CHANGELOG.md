@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.19] - 2026-10-03
+### Added
+- A separate Strata benchmark draft with the expert cache policy, corrected measurements, reproduction notes, and experimental gaps.
+
+### Fixed
+- Standardized the Flash-Next and Strata post titles at 176B parameters and clarified that this excludes the additional MTP head.
+- Corrected the Strata draft's bandwidth inference, expert hit-ratio interpretation, batched compute explanation, and sampled acceptance wording; added the retained 90.2 tok/s burst log to its evidence extract.
+- Fact-checked the overfit inference engines post against local Strata source, raw server logs, saved benchmark output, and primary references. Corrected cache semantics, memory accounting, prefix reuse, hit rates, and retrieval reporting; separated measured setup speedups from causal and quality claims.
+
+### Changed
+- Split the Strata post's opening log excerpt into short metric lines for readability.
+- Lightly softened the overfit engines essay's codebase characterization while keeping its argument about specialization.
+- Kept the overfit engines essay focused on its observation and axioms; moved technical detail and the labeled throughput comparison into the new Strata draft.
+
 ## [2.7.18] - 2026-10-01
 ### Added
 - `utils/compress-pngs.mjs` (`npm run images:optimize`, `npm run images:check`): lossless PNG recompression that only rewrites a file when the result is smaller.
