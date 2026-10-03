@@ -53,7 +53,7 @@
     "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.2",
     "@11ty/eleventy-plugin-webc": "^0.11.2",
     "@tailwindcss/cli": "^4.3.3",
-    "@upstash/redis": "^1.36.2",
+    "@upstash/redis": "^1.39.0",
     "dotenv": "^17.3.1",
     "eleventy-plugin-toc": "^1.1.5",
     "exif-reader": "^2.0.3",
