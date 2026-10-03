@@ -44,8 +44,9 @@ Flags that control visibility, display, and listing behaviour for content in `sr
 | `tags`                      | Array of tags (1–2 max); filtered through `filterTagList` to strip internal tags                                                          |
 | `author`, `source`          | Minimal attribution data used for Quotations, Lexicon, and feed cards. Replaces hardcoded HTML callouts.                                  |
 | `authored_by`               | Authorship badge: `human`, `ai-assisted`, `ai-generated`. Omit = shows **Unclassified** badge.                                            |
-| `image`                     | **Required.** Thumbnail / OG image path under `/img/blog-sketches/unique/`; unique per post. Enforced by `check:content`.                  |
+| `image`                     | **Required.** Transparent thumbnail path under `/img/blog-sketches/unique/`; unique per post. Social previews are generated as opaque derivatives. Enforced by `check:content`. |
 | `imageAlt`                  | **Required** with `image`. Describes the sketch's content.                                                                               |
+| `ogImage`                   | Optional authored social-card source. Overrides `image` for Open Graph and Twitter; transparent local sources get an opaque derivative. See `docs/BLOG_SKETCH_IMAGES.md`. |
 | `collectionArchetype`       | Declares the collection page's layout archetype: `index`, `wall`, `shelf`, or `ledger`. See `docs/DESIGN_LANGUAGE.md`.                   |
 | `fullWidth: true`           | Disables the sidebar on the post layout                                                                                                   |
 | `conversationPlacement`     | Where to show comments - `sidebar` (default) or `bottom`                                                                                  |

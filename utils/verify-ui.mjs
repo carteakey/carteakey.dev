@@ -1,5 +1,6 @@
 import { access, readFile, readdir } from "node:fs/promises";
 import path from "node:path";
+import sharp from "sharp";
 
 const outputDir = path.resolve(process.argv[2] || "_site");
 const siteOrigin = "https://carteakey.dev";
@@ -144,6 +145,55 @@ async function verifyMetadata(html, label) {
   }
 }
 
+async function verifySocialPreview(html, label) {
+  const meta = (property) =>
+    attribute(
+      html,
+      new RegExp(`<meta\\b[^>]*property=["']${property}["'][^>]*>`, "i"),
+      "content",
+    );
+  const source = meta("og:image");
+  const twitterSource = attribute(
+    html,
+    /<meta\b[^>]*name=["']twitter:image["'][^>]*>/i,
+    "content",
+  );
+  check(source === twitterSource, `${label}: social preview URLs agree`);
+  if (!source || !URL.canParse(source)) {
+    check(false, `${label}: social preview has a valid URL`);
+    return;
+  }
+  const url = new URL(source);
+  if (url.origin !== siteOrigin) return;
+  const imagePath = path.join(
+    outputDir,
+    decodeURIComponent(url.pathname).replace(/^\//, ""),
+  );
+  try {
+    const image = sharp(imagePath);
+    const metadata = await image.metadata();
+    const opaque = !metadata.hasAlpha || (await image.stats()).isOpaque;
+    check(opaque, `${label}: social preview is opaque`);
+    check(
+      Number(meta("og:image:width")) === metadata.width &&
+        Number(meta("og:image:height")) === metadata.height,
+      `${label}: social dimensions match the actual image`,
+    );
+    check(
+      !url.pathname.startsWith("/img/blog-sketches/"),
+      `${label}: social preview uses a derivative, not the raw sketch`,
+    );
+    if (/\/img\/og\/.*-[a-f0-9]{12}\.png$/.test(url.pathname)) {
+      check(
+        metadata.width === 1200 && metadata.height === 630,
+        `${label}: generated preview is 1200 × 630`,
+      );
+    }
+  } catch (error) {
+    check(false, `${label}: social preview can be read (${error.message})`);
+  }
+}
+
 async function main() {
   const home = await readOutput("index.html");
   const archive = await readOutput("blog/index.html");
@@ -162,9 +212,12 @@ async function main() {
   for (const file of blogFiles) {
     const html = await readFile(file, "utf8");
     if (html.includes('"@type": "BlogPosting"')) {
-      representativePost = html;
-      representativePath = path.relative(outputDir, file);
-      break;
+      representativePost ||= html;
+      representativePath ||= path.relative(outputDir, file);
+      await verifySocialPreview(
+        html,
+        `Post (${path.relative(outputDir, file)})`,
+      );
     }
   }
 
@@ -237,6 +290,7 @@ async function main() {
   }
 
   await verifyMetadata(home, "Home page");
+  await verifySocialPreview(home, "Home page");
   if (representativePost) {
     await verifyMetadata(
       representativePost,

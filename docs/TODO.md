@@ -72,6 +72,7 @@ This is the repository thinking space merged from `docs/TODO.md`, audit docs, te
 - [x] Add a metadata-driven support link flow with a clear test state until the external URL is chosen. (2026-07-17)
 
 ### SEO / Metadata
+- [x] Make opaque social previews automatic for transparent sketches, document the convention, and verify every built post's preview and dimensions. (2026-10-03)
 - [x] Expand BlogPosting JSON-LD with `articleBody`, `wordCount`, and `readingTime`. (2026-07-01)
 - [x] Audit and rewrite meta descriptions for 20+ posts. (2026-07-01)
 - [x] Do an internal link audit across writing, projects, and snippets. (2026-07-01)

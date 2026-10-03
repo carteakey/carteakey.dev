@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.26] - 2026-10-10
+### Changed
+- Social preview convention: retain transparent on-site sketches and automatically build uncropped, opaque 1200 × 630 previews on paper for social sharing. Documented in the contributor playbook, design language, image guide, and sketches skill.
+
+### Fixed
+- Open Graph and Twitter: transparent black sketches no longer disappear against dark preview backgrounds. Both platforms receive the same opaque image, with content-hashed URLs, alt text, and dimensions taken from the actual asset.
+- Preview verification: check every built blog post for opaque social artwork, matching platform URLs, accurate dimensions, and generated-card size.
+- Design checks: normalize both YAML dates before comparing `date` and `updated`, avoiding false changelog warnings when they are identical.
+
 ## [2.7.25] - 2026-10-08
 ### Fixed
 - Version the footer entry script and every imported scene/renderer so returning visitors receive updates despite the existing year-long asset cache. Refresh unversioned scripts and styles in the service worker while retaining offline fallback.

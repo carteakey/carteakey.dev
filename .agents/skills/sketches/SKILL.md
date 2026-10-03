@@ -62,8 +62,9 @@ Only the processed PNG is committed.
 # Part A: Thumbnails
 
 Every post needs a unique per-post sketch image. It works as a thumbnail in `/blog/`, `/feed/`
-and homepage slots, the lead image on the post page, and the OG/Twitter/JSON-LD
-image. Treat them as editorial flavor, not hero art: a small stamped sketch that
+and homepage slots, the lead image on the post page, and the JSON-LD image.
+Open Graph and Twitter use an opaque build-generated derivative (see below).
+Treat them as editorial flavor, not hero art: a small stamped sketch that
 belongs to the post, not a reusable category badge.
 
 ## Non-negotiables
@@ -285,6 +286,15 @@ remaining visible pixels to grayscale. Use the installed imagegen chroma-key hel
 ## Integration Notes
 
 - Posts must set `image` / `imageAlt` (enforced by `utils/check-content.mjs`).
+- Social previews must be opaque. Keep the thumbnail source transparent; the
+  shared `social_image_meta` shortcode automatically produces an uncropped
+  1200 × 630 PNG on paper (`#f4f3ee`) for transparent local images. Both Open
+  Graph and Twitter use this derivative, with accurate dimensions and alt text.
+  Do not put the raw transparent sketch directly in social meta tags, or rely
+  on the site's CSS inversion. Use `ogImage` only to select a custom card;
+  transparent local cards also get an opaque derivative. Generated files live in
+  `_site/img/og/`, have content-hashed URLs, and are not committed. After
+  `npm run build`, run `npm run verify` and inspect the preview itself.
 - Do not add images to many posts at once unless each one is unique.
 - Keep archive/feed density intact; do not add large framed thumbnails to lists.
 - If you need to place the image inside post content manually, use the existing

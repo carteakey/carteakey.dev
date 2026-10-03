@@ -355,6 +355,16 @@ earlier this session: the avatar briefly had duotone + grain + pixelation
 all at once). Pick the one effect that's right for that image's content -
 halftone for photos, plain grayscale for sketches - and stop there.
 
+### Social previews
+
+On-site sketch sources stay transparent. Social previews use opaque artwork:
+the shared layout composites transparent local images onto paper (`#f4f3ee`)
+at 1200 × 630, with 48px padding and no cropping. Open Graph and Twitter share
+the resulting image and its actual dimensions. CSS filters and theme classes
+cannot fix a thumbnail inside another platform. An authored `ogImage` can
+override the source; it must also render independently of the site's CSS.
+See `docs/BLOG_SKETCH_IMAGES.md` for the build and verification convention.
+
 ### Dark mode: verify, don't assume
 
 Two bugs this round, same root cause - a rule tuned by eye in one theme,

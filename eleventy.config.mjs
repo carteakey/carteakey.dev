@@ -19,6 +19,10 @@ import { feedPlugin } from "@11ty/eleventy-plugin-rss";
 import Image, { generateHTML } from "@11ty/eleventy-img";
 import "dotenv/config";
 import upvotesData from "./src/_data/upvotes.js";
+import {
+  clearSocialImageCache,
+  resolveSocialImage,
+} from "./src/_utils/socialImage.js";
 
 // Keep expensive transforms outside the clean publish directory. Eleventy Image
 // keys its output by source contents and encoding options; publish only the
@@ -675,6 +679,20 @@ export default function (eleventyConfig) {
 
   //Image Plugin
   eleventyConfig.addAsyncShortcode("image", imageShortcode);
+  eleventyConfig.on("eleventy.before", clearSocialImageCache);
+  eleventyConfig.addAsyncShortcode(
+    "social_image_meta",
+    async (source, alt, siteUrl) => {
+      const preview = await resolveSocialImage(source, siteUrl, OUTPUT_ROOT);
+      const escape = (value) => escapeHtml(String(value || ""));
+      return `<meta property="og:image" content="${escape(preview.url)}" />
+  ${preview.width ? `<meta property="og:image:width" content="${preview.width}" />` : ""}
+  ${preview.height ? `<meta property="og:image:height" content="${preview.height}" />` : ""}
+  <meta property="og:image:alt" content="${escape(alt)}" />
+  <meta name="twitter:image" content="${escape(preview.url)}" />
+  <meta name="twitter:image:alt" content="${escape(alt)}" />`;
+    },
+  );
   eleventyConfig.addAsyncShortcode("image_cc", imageShortcodeWithCaptions);
   eleventyConfig.addAsyncShortcode("gallery", galleryShortcode);
   eleventyConfig.addAsyncShortcode("post_thumbnail", postThumbnailShortcode);

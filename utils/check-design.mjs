@@ -78,6 +78,8 @@ function frontMatter(text) {
 const stripCode = (s) =>
   s.replace(/```[\s\S]*?```/g, "").replace(/`[^`\n]*`/g, "");
 const count = (s, re) => (s.match(re) || []).length;
+const dateString = (value) =>
+  value instanceof Date ? value.toISOString().slice(0, 10) : String(value);
 
 const hardErrors = []; // rules with no baseline: always fail
 const counts = {}; // { file: { rule: n } } for ratcheted rules
@@ -139,13 +141,7 @@ for (const dir of CONTENT_DIRS) {
             `${file}: changelog is oldest-first; keep it newest-first like the template`,
           );
         }
-        const updated = data.updated
-          ? String(
-              data.updated instanceof Date
-                ? data.updated.toISOString().slice(0, 10)
-                : data.updated,
-            )
-          : null;
+        const updated = data.updated ? dateString(data.updated) : null;
         if (newest && updated && updated < newest) {
           hardErrors.push(
             `${file}: updated ${updated} is older than the newest changelog row ${newest}`,
@@ -153,12 +149,7 @@ for (const dir of CONTENT_DIRS) {
         }
       } else if (
         data.updated &&
-        String(data.updated) !==
-          String(
-            data.date instanceof Date
-              ? data.date.toISOString().slice(0, 10)
-              : data.date,
-          )
+        dateString(data.updated) !== dateString(data.date)
       ) {
         add(file, "updated-without-changelog", 1);
       }
