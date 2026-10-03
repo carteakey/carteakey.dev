@@ -39,7 +39,7 @@ Flags that control visibility, display, and listing behaviour for content in `sr
 
 | Field                       | Effect                                                                                                                                   |
 | --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| `description`               | Subtitle shown below title; used as feed summary                                                                                          |
+| `description`               | Subtitle shown below title; used as feed summary. **Max 120 characters**, one sentence or two short ones. Enforced by `check:content`.     |
 | `excerpt`                   | Alternative summary fallback for feed cards                                                                                               |
 | `tags`                      | Array of tags (1–2 max); filtered through `filterTagList` to strip internal tags                                                          |
 | `author`, `source`          | Minimal attribution data used for Quotations, Lexicon, and feed cards. Replaces hardcoded HTML callouts.                                  |

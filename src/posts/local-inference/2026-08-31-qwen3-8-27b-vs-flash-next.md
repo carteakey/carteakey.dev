@@ -1,6 +1,6 @@
 ---
 title: Qwen3.8-27B vs Qwen3.8-Flash-Next — Which One to Run Locally?
-description: Head-to-head on an RTX 4070 12GB + 64 GB DDR5 box — measured throughput on llama.cpp and Strata, an estimated intelligence index (~90 vs ~74), and a decision guide for dense vs. MoE local inference.
+description: "Dense vs MoE on an RTX 4070: measured throughput on llama.cpp and Strata, estimated intelligence, and when to pick each."
 image: /img/blog-sketches/unique/qwen3-8-27b-vs-flash-next-stamp-trim.png
 imageAlt: "Monochrome pencil sketch of a balance scale weighing a compact solid block against a large hollow lattice cube"
 date: 2026-08-31

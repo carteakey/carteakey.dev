@@ -61,6 +61,7 @@ const CONTENT_DIRS = [
 
 // Tags that intentionally break Title Case casing.
 const TAG_ALLOWLIST = new Set(["11ty", "iOS"]);
+const DESCRIPTION_MAX = 120;
 
 const problems = [];
 
@@ -122,6 +123,17 @@ async function checkContentFiles() {
 
       if (!data.date) {
         problems.push(`${rel}: missing explicit \`date\` in front matter`);
+      }
+
+      // The description is the subtitle under the title and the feed summary: keep it one line.
+      if (
+        dir === "src/posts" &&
+        data.description &&
+        String(data.description).length > DESCRIPTION_MAX
+      ) {
+        problems.push(
+          `${rel}: \`description\` is ${String(data.description).length} chars (max ${DESCRIPTION_MAX})`,
+        );
       }
 
       // Every blog post needs a unique thumbnail sketch (see the `sketches` skill, Part A).

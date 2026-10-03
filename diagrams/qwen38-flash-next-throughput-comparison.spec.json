@@ -1,0 +1,36 @@
+{
+  "title": "Decode throughput \u00b7 RTX 4070 12GB",
+  "unit": "tok/s",
+  "max": 100,
+  "step": 20,
+  "bars": [
+    {
+      "label": "llama.cpp master \u00b7 AD-4.27",
+      "value": 20.8,
+      "text": "20.8 (no MTP head)"
+    },
+    {
+      "label": "llama.cpp MTP V2 \u00b7 AD-4.27",
+      "value": 27.06,
+      "text": "27.06 (16k capacity)"
+    },
+    {
+      "label": "Strata IQ3_XXS \u00b7 60k prompt",
+      "value": 53.2,
+      "text": "53.2",
+      "accent": true
+    },
+    {
+      "label": "Strata IQ3_XXS \u00b7 best row",
+      "value": 60.3,
+      "text": "60.3 (2k prompt)",
+      "accent": true
+    },
+    {
+      "label": "Strata IQ3_XXS \u00b7 warm burst",
+      "value": 90.2,
+      "text": "90.2 (repetitive code)",
+      "accent": true
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 ---
 title: What Obsidian Shouldn't Be
-description: A note-taking app becomes a weird place very quickly when you ask it to be your records system, admin dashboard, and substitute for thinking.
+description: "A note-taking app gets weird fast when you make it your records system, admin dashboard, and substitute for thinking."
 date: 2026-04-25T00:00:00.000Z
 updated: 2026-05-07T00:00:00.000Z
 image: /img/blog-sketches/unique/what-obsidian-shouldnt-be-stamp-trim.png

@@ -1,6 +1,6 @@
 ---
 title: "MarioBench: can a model write a Mario clone worth playing?"
-description: "Five generated Mario clones, inspected line by line: which ones actually run, which ones finish, and why the best engineering still doesn't feel like Mario."
+description: "Five generated Mario clones, inspected line by line: which run, which finish, and why none of them feel like Mario."
 image: /img/blog-sketches/unique/mariobench-initial-observations-stamp-trim.png
 imageAlt: "Monochrome pencil sketch of a retro CRT television showing a pixel platformer runner, with a game controller and a cartridge in front"
 date: 2026-09-15

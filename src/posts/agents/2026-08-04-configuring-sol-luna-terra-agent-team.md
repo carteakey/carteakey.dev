@@ -1,6 +1,6 @@
 ---
 title: My Sol, Luna, and Terra Agent Team Is Mostly a Price Play
-description: "How lower Luna and Terra prices shaped my Codex setup: Sol orchestrates, Luna Max carries the implementation volume, and Terra High handles focused support."
+description: "How cheaper Luna and Terra reshaped my Codex setup: Sol orchestrates, Luna Max implements, Terra High supports."
 image: /img/blog-sketches/unique/configuring-sol-luna-terra-agent-team-stamp-trim.png
 imageAlt: "Monochrome pencil sketch of a brass orrery with a sun, a moon and an earth on arms above gears, beside an open laptop"
 seoDescription: "A practical, cost-aware Codex agent setup with Sol orchestrating, Luna Max as the default workhorse, and Terra High as a read-heavy support worker."

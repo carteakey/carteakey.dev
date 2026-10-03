@@ -1,6 +1,6 @@
 ---
 title: Running Qwen3.8-27B locally on a 12GB VRAM card
-description: Ridge 3.7bpw, UD-IQ3_XXS, and UD-Q2_K_XL on llama.cpp with an RTX 4070 — decoding at 34–40 tok/s and a native 262k window
+description: "Ridge 3.7bpw, UD-IQ3_XXS, and UD-Q2_K_XL on llama.cpp with an RTX 4070: 34–40 tok/s and a native 262k window"
 image: /img/blog-sketches/unique/running-qwen3-8-27b-locally-stamp-trim.png
 imageAlt: "Monochrome pencil sketch of a graphics card holding a compact dense block of layers entirely on its board, with a tape measure showing it fits"
 date: 2026-08-19

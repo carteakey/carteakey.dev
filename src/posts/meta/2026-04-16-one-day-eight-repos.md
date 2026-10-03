@@ -1,6 +1,6 @@
 ---
 title: "One day, eight repos, $171.55"
-description: A log of what actually shipped on 2026-04-16 across my stack, what it cost, and the single line item that ate 99% of the bill.
+description: "What shipped on 2026-04-16 across my stack, what it cost, and the one line item that ate 99% of the bill."
 image: /img/blog-sketches/unique/one-day-eight-repos-stamp-trim.png
 imageAlt: "Transparent monochrome sketch of an agent coding cost ledger spanning many repositories"
 date: 2026-04-16

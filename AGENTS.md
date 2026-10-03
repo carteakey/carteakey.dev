@@ -88,7 +88,7 @@ This project uses a manual versioning process. It is your responsibility to keep
 
 - Local-only Eleventy re-run exists via `npm run build:11ty`; VS Code task “Build Eleventy site” wraps that command if you prefer the task runner.
 
-- Collections: blog posts in `src/posts/*.md` (front matter `title`, `description`, `date`, optional `updated`, `hidden`, `tags`); snippets in `src/snippets`; pages like `now/` and `gallery.njk` expect matching data in `_data`. Tags must be **1–2 max**, Title Case (e.g. `AI`, `Self-Host`). Visibility and display flags (`hidden`, `draft`, `featured`, `pinned`) are documented in `docs/POST_FRONTMATTER.md`.
+- Collections: blog posts in `src/posts/*.md` (front matter `title`, `description`, `date`, optional `updated`, `hidden`, `tags`); snippets in `src/snippets`; pages like `now/` and `gallery.njk` expect matching data in `_data`. Tags must be **1–2 max**, Title Case (e.g. `AI`, `Self-Host`). Post `description` is the subtitle and feed summary: **120 characters max**, enforced by `check:content`. Visibility and display flags (`hidden`, `draft`, `featured`, `pinned`) are documented in `docs/POST_FRONTMATTER.md`.
 
 - The post layout (`src/_includes/layouts/post.njk`) wires in upvotes, TOC, and Giscus. Keep `page.fileSlug` stable or update `upvotes.posts[slug]` in `src/_data/upvotes.js`.
 

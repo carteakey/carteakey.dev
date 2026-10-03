@@ -1,6 +1,6 @@
 ---
 title: "Local LLM Inference Optimization: The Complete Guide — V2 Layout Experiment"
-description: A hidden layout experiment for the local LLM optimization guide, testing callouts, wide tables, and an editorial sidebar before replacing the canonical post.
+description: "A hidden layout experiment for the optimization guide: callouts, wide tables, and an editorial sidebar."
 image: /img/blog-sketches/unique/local-llm-optimization-stamp-trim.png
 imageAlt: "Transparent monochrome sketch of a workstation PC tower with exposed GPU fans, monitor displaying tuning parameters, and dials measuring tokens-per-second performance"
 date: 2026-06-25

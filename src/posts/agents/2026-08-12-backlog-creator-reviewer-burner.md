@@ -1,6 +1,6 @@
 ---
 title: My Backlog Now Has a Creator, a Reviewer, and a Burner
-description: I turned backlog work into a three-skill loop that discovers useful work, challenges the plan, ships it, and then checks whether Done is actually true.
+description: "A three-skill loop that finds useful work, challenges the plan, ships it, and checks whether Done is actually true."
 image: /img/blog-sketches/unique/backlog-creator-reviewer-burner-stamp-trim.png
 imageAlt: "Monochrome pencil sketch of a stack of ticket cards inspected with a magnifying glass, a small stove burning one card, and a checkmark on the top card"
 seoDescription: "A practical Codex workflow using Backlog Creator, Reviewer, and Burner skills to discover, verify, implement, and audit work across many repositories."

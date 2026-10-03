@@ -1,6 +1,6 @@
 ---
 title: "Local LLM Inference Optimization: The Complete Guide"
-description: A practical guide to hardware, OS, and llama.cpp tuning, built from a year of experiments on a single consumer CUDA workstation.
+description: "A practical guide to hardware, OS, and llama.cpp tuning, from a year of experiments on one consumer CUDA workstation."
 image: /img/blog-sketches/unique/local-llm-optimization-stamp-trim.png
 imageAlt: "Transparent monochrome sketch of a workstation PC tower with exposed GPU fans, monitor displaying tuning parameters, and dials measuring tokens-per-second performance"
 date: 2026-06-12
