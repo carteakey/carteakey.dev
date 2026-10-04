@@ -5,11 +5,11 @@
 //             (same points shape as the {% progression_chart %} shortcode)
 import fs from "node:fs";
 const spec = JSON.parse(fs.readFileSync(process.argv[2], "utf8"));
-const AX = 400,
-  ROW = 70,
-  BAR_H = 44,
-  TOP = 70,
-  SCALE = 6;
+const AX = spec.ax ?? 400,
+  ROW = spec.row ?? 70,
+  BAR_H = spec.barH ?? 44,
+  TOP = spec.top ?? 70,
+  SCALE = spec.scale ?? 6;
 const INK = "#1e1e1e",
   ACCENT = "#1971c2",
   FILL = "#d0ebff";

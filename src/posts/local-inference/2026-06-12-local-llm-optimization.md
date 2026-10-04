@@ -4,7 +4,7 @@ description: "A practical guide to hardware, OS, and llama.cpp tuning, from a ye
 image: /img/blog-sketches/unique/local-llm-optimization-stamp-trim.png
 imageAlt: "Transparent monochrome sketch of a workstation PC tower with exposed GPU fans, monitor displaying tuning parameters, and dials measuring tokens-per-second performance"
 date: 2026-06-12
-updated: 2026-08-14
+updated: 2026-10-01
 authored_by: ai-assisted
 draft: false
 tags:
@@ -124,6 +124,12 @@ Optimization only makes sense if you know which phase is slow.
 | **Tool-call loop time** | User-visible agent latency | TTFT + tool runtime + repeated prefill |
 
 Do not optimize from a single short prompt. Short prompts hide KV cache costs, long-context VMM growth, and parallel-slot allocation. Benchmark at the context length you actually serve.
+
+Three habits that keep numbers comparable:
+
+- **Discard the warm-up.** TG has a transient on fresh load (n-gram pools, cold expert pages). Throw away the first 2–3 probes and report steady state. Use a unique prefix per PP probe, or KV reuse inflates the result.
+- **Log the system state with every run.** CPU governor/EPP, RAM MT/s, free RAM, THP, and CPU/GPU temperatures. `powersave` alone drops decode ~15–25% against `performance`, so never compare runs across governors.
+- **Check for spill.** With the model loaded, diff `/proc/<llama-server-pid>/io` `read_bytes` across a ~256-token generation. Near zero (or a few KB/token for SSD-resident tables) is healthy; tens of MB/token means hot expert pages are re-faulting from SSD and decode will drop ~35%+. Ignore zram metrics here, they churn. Run 2–3 throwaway generations first: cold page-in converges over the first 5–10 generations after load.
 
 ---
 
@@ -343,6 +349,8 @@ cat /sys/kernel/mm/transparent_hugepage/enabled
 echo always | sudo tee /sys/kernel/mm/transparent_hugepage/enabled
 ```
 
+A runtime can also opt in per allocation with `madvise(MADV_HUGEPAGE)` (2 MB pages), cutting TLB misses on large expert tables. It is part of the Strata gains above; I haven't isolated its share.
+
 #### Headless Mode
 ```bash
 # Stop desktop compositor - frees 200-400 MB RAM + compositor VRAM
@@ -533,7 +541,7 @@ Unsloth's GLM-5.2 results are a useful example because they separate "smaller" f
 
 But top-1 here is argmax-token match, not factual accuracy. 76% top-1 does not mean "wrong 24% of the time"; it means the quant picked the same next token as the reference 76% of the time. Many misses are wording, formatting, or high-entropy positions where the baseline was not that committed either.
 
-{% image_cc "./src/static/img/local-inference/quant-eval-stack.svg", "Diagram showing file size, perplexity, KL divergence, task evals, and workload tests as a quantization evaluation stack", "w-full", "My read: PPL catches obviously damaged quants, KLD catches distribution drift, and the workload still gets the final vote." %}
+{% image_cc "./src/static/img/diagrams/quant-eval-stack.png", "Diagram showing file size, perplexity, KL divergence, task evals, and workload tests as a quantization evaluation stack", "sketch-draw", "My read: PPL catches obviously damaged quants, KLD catches distribution drift, and the workload still gets the final vote." %}
 
 My reading order:
 
@@ -546,6 +554,8 @@ My reading order:
 | My workload | The real serving profile | Annoying to run, but this is the one that matters. |
 
 Unsloth's warning about calibration overfit is the important bit for local users. If the imatrix and the evaluation both look like WikiText, a quant can look great on PPL/KLD and still be worse for chat, code, or tool use. Instruct models also have chat templates, so plain text calibration can under-test the actual path you use.
+
+A concrete case: for the Qwen3.8 MoE I compared an IQ3_XXS quant (ISTA-DASLab GSQ-RCO) against a 4.27 bpw one by KLD, then by decode speed on the fit that actually loads. A bigger quant that no longer fits fast memory loses to a smaller one that does; IQ4_XS fit but was quality-lateral to the 4.27 bpw baseline (KLD 0.0836 vs 0.0842), so it bought nothing.
 
 So I would not rank quants by one number. I would shortlist by size, PPL/KLD, and maintainer trust, then run the model on my actual context length with the sampling and KV settings I plan to serve.
 
@@ -641,6 +651,8 @@ This output is what you hardcode for static placement.
 
 For a repeatable profile, derive placement once with `llama-fit-params` and save the result with the benchmark. Re-run fit after changing the model, context, backend, or available VRAM.
 
+**Dynamic expert caching** is a third option beyond static placement. Instead of fixing which experts live on the GPU, a runtime keeps the *hot* experts in VRAM and pages the rest from RAM. **Tested here** with the Strata fork (not upstream llama.cpp) on a Qwen3.8 MoE: ~3,086 hot experts resident in 12 GB cut DDR5 traffic from ~770 MB/token to under ~230 MB/token, which is the real decode bottleneck for offloaded MoE. Expect a fork-specific build and flag set; treat it as a lead for your own MoE, not a drop-in.
+
 ---
 
 ## 11. Context and KV Cache
@@ -679,6 +691,8 @@ Quantizing the KV cache halves (q8_0) or further reduces (q4_0) its VRAM footpri
 **The compounding effect**: on a 12 GB card with 64k context, switching f16 → q8_0 KV frees ~2 GB. That 2 GB lets `llama-fit-params` keep one to two additional GPU layers - translating directly to higher TG. Confirmed on Qwen3-Coder-Next: q8_0 KV at 64k unlocked 2 extra GPU layers and added ~2 t/s TG vs f16 KV.
 
 > At short bench contexts (512 tokens), the KV cache is tiny and this effect is near-zero. Always test at your real serving context length.
+
+K and V can be quantized separately. **Tested here:** `-ctk q8_0 -ctv q4_0` (K8V4) is what fits 128k context on the 12 GB card for Qwen3.8; keys are more quality-sensitive than values, so keep K at q8_0 and spend the savings on V. Validate against q8_0/q8_0 on your workload.
 
 ### 11.3 `--parallel` - Concurrent Inference Slots
 
@@ -859,6 +873,8 @@ With `--no-mmap`, the entire model loads into RAM before inference begins. No pa
 --no-mmap
 ```
 
+> **Exception: models with a huge per-layer embedding (PLE) or n-gram table.** Qwen3.8-Flash-Next carries a ~30–38 GB table that is read only a few KB per token. Keep it on SSD with mmap and `-ot "per_layer_token_embd\.weight=CPU"`. `--no-mmap` or `--mlock` forces that table into RAM and evicts the experts you actually need. Rule: the non-PLE weights must fit fast memory (RAM + VRAM); the PLE table does not have to.
+
 > **Tested here:** this removed page-fault jitter from hybrid MoE runs. The tradeoff is a longer startup and full upfront RAM allocation, so compare it on the actual server workload.
 
 ### 15.2 `--mlock`
@@ -891,6 +907,16 @@ Skips initial kernel warmup pass at startup (compiles CUDA kernels on first real
 --no-warmup   # reduces startup time; safe for persistent servers
 ```
 
+### 16.3 Multiple Models with llama-swap
+
+[llama-swap](https://github.com/mostlygeek/llama-swap) fronts several `llama-server` configs behind one OpenAI-compatible port and starts whichever model a request names.
+
+- **One model at a time on 12 GB.** Requesting a different model kills the loaded server and spawns the new one with its declared flags. A 12 GB card cannot hold two.
+- **`globalTTL: 600`** unloads idle models after 10 minutes, returning VRAM and RAM.
+- **Hot reload** edits to the YAML with `kill -HUP $(pgrep '[l]lama-swap')`. New entries load without dropping connections, and running models keep serving.
+- **Pause it for full-VRAM experiments.** Stop the unit (`systemctl --user stop llama-swap.service`) before bench ladders or OOM hunting, then start it again.
+- **Reasoning models in smoke tests:** use `max_tokens >= 64`, or the whole budget lands in `<think>` and `content` comes back empty. That is not a failure.
+
 ---
 
 ## 17. CUDA-Specific Settings [CUDA]
@@ -920,6 +946,10 @@ export GGML_CUDA_GRAPH_OPT=0    # Baseline; compare against 1 on your real workl
 `GGML_CUDA_FORCE_CUBLAS=ON` forces CUDA BLAS routines over the default GGML MMQ (mixed-precision matrix quantization) kernels.
 
 Tested on mxfp4 and Q4 models: **slower** than default. GGML MMQ has native mxfp4/Q4 paths tuned for consumer decode batch sizes (1–16 tokens). cuBLAS is optimized for large datacenter batches. Result: ~45 t/s PP regression, no TG improvement. Default build wins on consumer hardware. May be worth re-evaluating on 24+ GB cards where larger batch sizes make cuBLAS more competitive.
+
+### 17.4 Upstream Kernel Work Worth Updating For
+
+Rebuilding from current master is itself an optimization on MoE. **Tested here**, gains came from upstream work rather than flags: CUDA sparse flash attention (#28770), RMS_NORM+SCALE fusion (#29393), further kernel fusions (#28896, #28901), and NVMe `madvise` row prefetching (#29599), which gave ~3x cold-prefill throughput (135 t/s) for SSD-backed weights. Re-bench after each rebuild; don't assume a flag from an older build still applies.
 
 ---
 
@@ -1006,6 +1036,7 @@ Record acceptance rate, TG, and VRAM. Saving memory is pointless if the draft mo
 * Gemma 4 26B Baseline: 38.5 tok/s
 * Gemma 4 26B QAT + MTP: **100.60 tok/s** (2.6x speedup)
 * Gemma 4 12B QAT + MTP: **120.80 tok/s** (2.0x speedup)
+* Qwen3.8-Flash-Next (MoE, experts offloaded to RAM): plain decode ~20.7 tok/s → **25.3–27.1 tok/s** with MTP (up to ~31%), at 97–100% draft acceptance, using `--spec-draft-n-max 2 --spec-draft-p-min 0.7` and a compact 1.78 GB Q4_K_M draft head. Smaller than the dense Gemma gain because offloaded MoE is bandwidth-bound; a small draft head and a short draft length are what keep it a net win. Needs an unmerged MTP PR build.
 
 ### 19.4 n-gram Speculative Decoding
 
@@ -1075,6 +1106,8 @@ Path to the multimodal projector file:
 ```
 
 Typically 1–3 GB. Allocates in VRAM at startup alongside the model.
+
+If VRAM is the constraint, run the projector on the CPU. **Tested here** with the Strata MTMD build: a CPU vision encoder with `mmproj-F16.gguf` costs zero extra VRAM and kept all hot experts and the K8V4 cache in place (53–60 tok/s decode at 128k). Cold boot fell from ~8 minutes to ~1.8 s after adding a 512px warmup pass, so warm the vision path at startup rather than on the first image.
 
 ### 20.2 OOM Failure Modes on Constrained VRAM
 
@@ -1245,6 +1278,7 @@ sudo tuned-adm active
 
 | Date | Note |
 | --- | --- |
+| 2026-10-01 | Added Qwen3.8 MoE findings: benchmark hygiene and the `read_bytes` spill check, dynamic expert caching, K8V4 KV, the PLE/mmap exception, MTP on offloaded MoE, CPU vision encoder, `madvise` THP, llama-swap operations, upstream kernel work, and a quant-fit example. |
 | 2026-08-14 | Restored the TL;DR, problem-based reading map, complete optimization checklist, glossary, and local/cloud framing while retaining the evidence labels and corrected llama.cpp defaults from the July review. |
 | 2026-07-17 | Added evidence labels and a symptom-first path; removed generic cloud/local material; corrected current fit, batch, and flash-attention defaults; linked complete L3MS profile evidence and the separate community-run schema. |
 | 2026-06-25 | Trimmed the coding-workload section, tightened quant/QAT/iMatrix/IQ guidance with Unsloth Dynamic and ikawrakow notes, and added a compressed GLM-5.2 PPL/KLD quant-eval section. |

@@ -79,7 +79,7 @@ The single-plan approach:
 - Offers `gpt-5.3-codex-high`, head-to-head with Opus 4.7 for the best coding model today.
 - Has high limits, but verify current constraints as they are dynamic.
 
-{% image "./src/static/img/coding-agents-chatgpt-limits.png", "ChatGPT Plus limits" %}
+{% image_cc "./src/static/img/diagrams/frontier-model-cycle.png", "Cycle diagram of frontier models taking turns releasing the world's most powerful model: Gemini to OpenAI to Grok to Claude back to Gemini, with DeepSeek in the corner", "sketch-draw", "The rotating throne: why subscribing to just one provider locks you out as soon as the next lab leaps ahead." %}
 
 ## Notable Tools & Subscriptions
 

@@ -560,7 +560,7 @@ Unsloth's GLM-5.2 results are a useful example because they separate "smaller" f
 
 But top-1 here is argmax-token match, not factual accuracy. 76% top-1 does not mean "wrong 24% of the time"; it means the quant picked the same next token as the reference 76% of the time. Many misses are wording, formatting, or high-entropy positions where the baseline was not that committed either.
 
-{% image_cc "./src/static/img/local-inference/quant-eval-stack.svg", "Diagram showing file size, perplexity, KL divergence, task evals, and workload tests as a quantization evaluation stack", "w-full", "My read: PPL catches obviously damaged quants, KLD catches distribution drift, and the workload still gets the final vote." %}
+{% image_cc "./src/static/img/diagrams/quant-eval-stack.png", "Diagram showing file size, perplexity, KL divergence, task evals, and workload tests as a quantization evaluation stack", "sketch-draw", "My read: PPL catches obviously damaged quants, KLD catches distribution drift, and the workload still gets the final vote." %}
 
 My reading order:
 

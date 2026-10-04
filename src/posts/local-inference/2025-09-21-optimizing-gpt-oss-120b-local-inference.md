@@ -72,7 +72,7 @@ taskset -c 0-11 $LLAMA_CPP_CUDA_PATH \
 **gpt-oss-120b** is arguably the best **pound-for-pound** open source model right now. While OpenAI’s licensing and content‑filtering policies can be restrictive, the model is amazing for coding and agentic workloads. The MXFP4 quantization and the sparse MoE architecture are well thought-out from a consumer hardware perspective. Its little brother (or sister) **gpt-oss-20b** is great as well, and can trade blows with models much larger than it.
 
 
-{% image_cc "./src/static/img/most-attractive-quadrant.png", "Most Attractive Quadrant","", "GPT-OSS-120B and Qwen-3-30B-A3B are the most attractive local models in the current landscape" %}
+{% image_cc "./src/static/img/diagrams/gpt-oss-attractive-quadrant.png", "Scatter plot comparing model intelligence against active parameters: gpt-oss-120b and Qwen3 30B-A3B sit in the most attractive quadrant with high intelligence at only 3 to 5.5B active parameters, compared to dense giants at 32 to 64B", "sketch-draw", "The sweet spot: gpt-oss-120b and Qwen3 30B-A3B deliver frontier intelligence while activating only 3–5.5B parameters during inference." %}
 
 See https://artificialanalysis.ai/methodology/intelligence-benchmarking
 
@@ -100,7 +100,7 @@ With the magic of llama.cpp and some tinkering, I've managed to get it running o
 
 [According to reddit](https://www.reddit.com/r/LocalLLaMA/comments/162pgx9/what_do_yall_consider_acceptable_tokens_per/), 10 tok/s is the bare minimum for general use.
 
-{% image_cc "./src/static/img/acceptable-tps.png", "Acceptable TPS","", "7-10 tps is around the human reading speed as well" %}
+{% image_cc "./src/static/img/diagrams/gpt-oss-120b-acceptable-tps.png", "Bar chart of r/LocalLLaMA community poll with 903 votes on acceptable tokens per second: under 1 tok/s 15 (2%), 1 to 5 tok/s 198 (22%), 7 to 10 tok/s 257 (28%), 10 to 20 tok/s 163 (18%), over 20 tok/s 105 (12%), just results 165 (18%)", "sketch-draw", "7–10 tok/s was the clear winner in the 903-vote community poll — matching natural reading speed." %}
 
 7-10 tps is around the human reading speed as well
 
