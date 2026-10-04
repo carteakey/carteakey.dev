@@ -32,4 +32,6 @@ The current assignment for Copilot/Codex always lives in [`docs/prompt.md`](http
 5. Update `docs/CHANGELOG.md`, bump `versions.json`, clean up TODO items, and prepare a single focused commit.
 6. Summarise the batch, ask whether to continue, then push `sonnet` when it’s green.
 
+{% image_cc "./src/static/img/diagrams/copilot-codex-loop.png", "The 6-step agent workflow loop: briefing, planning, coding in src, build verification, changelog/version bump, and review batch push", "sketch-draw", "The six-step agent workflow loop: predictable batches grounded in automated guardrails." %}
+
 That rhythm is the glue-it keeps batches predictable and gives me confidence that every assist from Copilot or Codex is grounded in the same guardrails. If you want to adopt something similar, start by codifying your own prompt and instructions, then automate the hand-off so both human and agent read the same brief before each edit.

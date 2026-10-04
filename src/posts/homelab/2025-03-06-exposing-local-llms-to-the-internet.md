@@ -45,6 +45,7 @@ Instead of throwing more money into the OpenAI pit, I decided to spin up my own 
    Press Ctrl+C to exit.
    ```
 
+{% image_cc "./src/static/img/diagrams/tailscale-funnel-local-llm.png", "Tailscale Funnel architecture: public clients connect via HTTPS to the Funnel gateway, which tunnels securely to local Ollama on port 11434", "sketch-draw", "Architecture: Public clients hit the Tailscale Funnel HTTPS ingress, which securely tunnels directly to the local Ollama instance on port 11434 without open router ports." %}
 
 5. **Integrate with Blog**: Minimal coding hooks my blog directly to my locally hosted API.
 6. **ChatGPT-like Interaction via OpenWebUI**: With Ollama API running, add a front-end like OpenWebUI for a full-featured ChatGPT alternative (limited only by electricity bills!).

@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [2.7.19] - 2026-10-03
 ### Added
+- Excalidraw hand-drawn architecture and workflow diagrams (black ink with cobalt accent, transparent alpha): `diagrams/sol-luna-terra-routing.excalidraw` in `configuring-sol-luna-terra-agent-team.md`, `diagrams/tailscale-funnel-local-llm.excalidraw` in `exposing-local-llms-to-the-internet.md`, and `diagrams/copilot-codex-loop.excalidraw` in `working-with-copilot-codex.md`.
 - Excalidraw hand-drawn diagrams (black ink with cobalt accent, transparent alpha) replacing rigid screenshots, memes, and SVGs across posts: `diagrams/gpt-oss-120b-acceptable-tps.excalidraw` in `optimizing-gpt-oss-120b-local-inference.md`, `diagrams/quant-eval-stack.excalidraw` in `local-llm-optimization.md` and `local-llm-optimization-v2.md`, `diagrams/frontier-model-cycle.excalidraw` in `cost-effective-coding-agents.md`, and `diagrams/gpt-oss-attractive-quadrant.excalidraw` in `optimizing-gpt-oss-120b-local-inference.md`.
 - Dedicated single lexicon entry layout (`src/_includes/layouts/lexicon.njk`) with breadcrumbs, copy markdown, source/author attribution, and reading typography tailored to definitions and parables.
 - A separate Strata benchmark draft with the expert cache policy, corrected measurements, reproduction notes, and experimental gaps.

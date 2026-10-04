@@ -26,6 +26,8 @@ So I ended up with a very simple pecking order:
 
 I started this setup with Sol High. Once the roles settled, I dropped the coordinator to Medium and kept High as an escalation lane. The division of labour helps, but the honest reason Luna gets most of the work is price. I want Sol's expensive attention on ambiguity and decisions, not on every test fix. This is my own routing convention, tested on `codex-cli 0.146.0`.
 
+{% image_cc "./src/static/img/diagrams/sol-luna-terra-routing.png", "Codex Multi-Agent Routing diagram showing Sol Medium/High coordinating Terra High for read exploration and Luna Max for bounded code edits", "sketch-draw", "The division of labour: Sol keeps the full objective and arbitrates; Luna Max does bounded implementation at an 80% discount; Terra High explores context." %}
+
 ## The division of labour
 
 Sol stays in the main thread. It works out what I meant, where the dangerous decisions are, what can be split, and whether the pieces fit when they come back. If my prompt is fuzzy, Sol is the one I want noticing that before somebody edits twelve files.
