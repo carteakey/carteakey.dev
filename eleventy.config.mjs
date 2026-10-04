@@ -1620,8 +1620,12 @@ export default function (eleventyConfig) {
           date: entry.date,
           url: entry.url,
           summary,
+          tags: (entry.data.tags || []).filter(
+            (tag) => tag !== "lexicon",
+          ),
           original: entry,
           hidden: !!entry.data.hidden,
+          ...(entry.data.authored_by ? { authored_by: entry.data.authored_by } : {}),
         };
       });
 

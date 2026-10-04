@@ -105,9 +105,6 @@
     "src/learning.njk": {
       "inline-style": 1
     },
-    "src/lexicon.njk": {
-      "utility-text-stack": 1
-    },
     "src/listening.njk": {
       "pill-or-circle": 4,
       "utility-text-stack": 3,

@@ -1,0 +1,60 @@
+---
+layout: layouts/base.njk
+---
+
+{% include "components/breadcrumbs.njk" %}
+{% from "components/authorship-badge.njk" import authorshipBadge %}
+
+<article class="site-content note-content">
+  <header class="not-prose mb-4">
+    <div class="flex items-center gap-2 mb-1 flex-wrap">
+      <span class="badge badge-type badge-compact badge-type-lexicon">Lexicon</span>
+      <time datetime="{{ page.date | htmlDateString }}" class="meta-text">· {{ page.date | readableDate }}</time>
+      {% if tags %}
+        <div class="flex flex-wrap gap-1 items-center">
+          {% for tag in tags | filterTagList %}
+            <a href="/tags/{{ tag | slugify }}/" class="badge badge-tag badge-compact badge-interactive no-underline">#{{ tag }}</a>
+          {% endfor %}
+        </div>
+      {% endif %}
+      {% if authored_by %}
+        {{ authorshipBadge(authored_by) }}
+      {% endif %}
+    </div>
+    <h1 class="note-entry-title">{{ title }}</h1>
+    {% if description %}
+      <p class="editorial-support mt-2 mb-0">{{ description }}</p>
+    {% endif %}
+  </header>
+
+  <div class="flex justify-end mt-4 mb-2">
+    {% include "components/copy-markdown.njk" %}
+  </div>
+
+  <div class="editorial-support leading-relaxed site-content [&_img]:max-w-2xl [&_img]:mx-auto [&_img]:rounded-sm">
+    {{ content | safe }}
+  </div>
+
+  {% if author or source %}
+  <div class="mt-6 pt-4 border-t border-gray-100 dark:border-gray-800/80 not-prose flex flex-col gap-1">
+    {% if author %}
+      <div class="meta-text">
+        — {% if authorUrl %}<a href="{{ authorUrl }}" target="_blank" rel="noopener" class="title-hover">{{ author }}</a>{% else %}{{ author }}{% endif %}
+      </div>
+    {% endif %}
+    {% if source %}
+      <div class="meta-text">
+        {% if sourceUrl %}
+          <a href="{{ sourceUrl }}" target="_blank" rel="noopener" class="editorial-meta-link">{{ source }} ↗</a>
+        {% else %}
+          {{ source }}
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+  {% endif %}
+
+  <footer class="not-prose mt-8 pt-4 border-t border-gray-200 dark:border-gray-800">
+    <a href="{{ '/lexicon/' | url }}" class="note-entry-backlink">← Back to Lexicon</a>
+  </footer>
+</article>

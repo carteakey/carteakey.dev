@@ -256,10 +256,10 @@
     {% else %}
       <span class="feed-list-title">{% if item.featured %}<span style="color: rgb(245 158 11); margin-right: 0.35rem;" title="Featured" aria-label="Featured">★</span>{% endif %}{% if item.pinned %}<span class="inline-flex items-center" style="color: var(--accent-color); margin-right: 0.35rem; margin-top: -2px;" title="Pinned" aria-label="Pinned">{% feather "bookmark", class="w-3.5 h-3.5 fill-current opacity-20" %}</span>{% endif %}{{ item.title }}</span>
     {% endif %}
-    {% if opts.rich and item.summary %}<p class="feed-list-desc">{{ item.summary }}</p>{% endif %}
+    {% if (opts.rich or opts.showSummary) and item.summary %}<p class="feed-list-desc">{{ item.summary }}</p>{% endif %}
     </div>
     <div class="flex items-center gap-1.5 shrink-0 justify-end">
-      {% if opts.rich %}{% for tag in item.tags | default([]) | filterTagList %}<a href="/tags/{{ tag | slugify }}/" class="badge badge-tag badge-compact badge-interactive hidden md:inline-flex" style="text-decoration: none;">#{{ tag }}</a>{% endfor %}{% endif %}
+      {% if (opts.rich or opts.showTags) %}{% for tag in item.tags | default([]) | filterTagList %}<a href="/tags/{{ tag | slugify }}/" class="badge badge-tag badge-compact badge-interactive hidden md:inline-flex" style="text-decoration: none;">#{{ tag }}</a>{% endfor %}{% endif %}
       {% if opts.showType is not defined or opts.showType %}<span class="badge badge-type badge-compact {{ typeBadgeClass }}">{{ badgeLabel }}</span>{% endif %}
       {% if item.hidden %}
         <span class="badge badge-accent badge-compact" title="Hidden local preview">Hidden</span>
@@ -284,7 +284,7 @@
         <span class="badge badge-accent badge-compact flex items-center gap-1" title="Pinned" aria-label="Pinned">{% feather "bookmark", class="w-3 h-3" %} Pinned</span>
       {% endif %}
       {% if item.authored_by is defined %}{{ authorshipBadge(item.authored_by, compact=true) }}{% endif %}
-      <time datetime="{{ item.date | htmlDateString }}" class="meta-text text-[0.68rem] text-gray-400 dark:text-gray-500 ml-auto">{{ item.date | readableDate }}</time>
+      <time datetime="{{ item.date | htmlDateString }}" class="meta-text text-[0.78rem] text-gray-400 dark:text-gray-500 ml-auto">{{ item.date | readableDate }}</time>
     </div>
 
     {# Title #}

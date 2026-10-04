@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [2.7.19] - 2026-10-03
 ### Added
+- Dedicated single lexicon entry layout (`src/_includes/layouts/lexicon.njk`) with breadcrumbs, copy markdown, source/author attribution, and reading typography tailored to definitions and parables.
 - A separate Strata benchmark draft with the expert cache policy, corrected measurements, reproduction notes, and experimental gaps.
 
 ### Fixed
@@ -26,8 +27,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fact-checked the overfit inference engines post against local Strata source, raw server logs, saved benchmark output, and primary references. Corrected cache semantics, memory accounting, prefix reuse, hit rates, and retrieval reporting; separated measured setup speedups from causal and quality claims.
 
 ### Changed
+- Overhauled `/lexicon/` collection page (`src/lexicon.njk`) into a standard multi-view index (`list`, `stream`, `grid`) with workbench design language, eliminating raw card styling and utility text drift.
+- Updated `feed-card.njk` to support summaries and tags on compact list rows, and routed lexicon entries away from the full blog post layout.
 - Split the Strata post's opening log excerpt into short metric lines for readability.
 - Lightly softened the overfit engines essay's codebase characterization while keeping its argument about specialization.
+- Readability pass: post prose is 1.1rem (was 1.04rem). Every label, meta and caption size below 0.78rem (about 11px, previously down to 8.6px because the root is 90–92.5%) now has a 0.78rem floor, in both `tailwind.css` and template `text-[…rem]` utilities. Light-mode `text-gray-400` text is `text-gray-500` (dark mode keeps 400) for contrast; search icons are unchanged.
 - Kept the overfit engines essay focused on its observation and axioms; moved technical detail and the labeled throughput comparison into the new Strata draft.
 
 ## [2.7.18] - 2026-10-01

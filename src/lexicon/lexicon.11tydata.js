@@ -1,5 +1,5 @@
 export default {
-  layout: "layouts/post.njk",
+  layout: "layouts/lexicon.njk",
   tags: ["lexicon"],
   permalink: "/lexicon/{{ page.fileSlug }}/index.html"
 };

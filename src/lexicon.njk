@@ -9,42 +9,50 @@ eleventyNavigation:
 collectionArchetype: index
 ---
 
+{% from "components/view-toggle.njk" import viewToggle %}
+{% from "components/feed-card.njk" import feedCard %}
 {% include "components/breadcrumbs.njk" %}
 
-{% set pageEyebrow = "Lexicon" %}
+{% set pageEyebrow = "Mental Models" %}
 {% set pageTitle = "Lexicon" %}
 {% set pageDescription = "A dictionary of elaborate developer terms, parables, and mental models." %}
 {% set itemCount = collections.lexicon | length %}
 {% set itemLabel = "entries" %}
 {% include "components/page-header.njk" %}
 
-<div class="mt-8 space-y-6">
-  {% for item in collections.lexicon | reverse %}
-    <article class="surface surface-compact surface-hover rounded-sm p-4 sm:p-5">
-      <h2 class="text-xl font-bold tracking-tight text-gray-900 dark:text-white mb-2">
-        <a href="{{ item.url }}" class="no-underline hover:underline title-hover">{{ item.data.title }}</a>
-      </h2>
-      <div class="prose prose-sm dark:prose-invert max-w-none text-gray-700 dark:text-gray-300">
-        {{ item | safeContent | safe }}
-      </div>
-      {% if item.data.author or item.data.source %}
-      <div class="flex flex-col mt-4 pt-4 border-t border-gray-100 dark:border-gray-800/80 not-prose">
-        {% if item.data.author %}
-        <span class="font-medium text-gray-900 dark:text-gray-100 text-sm">
-          - {% if item.data.authorUrl %}<a href="{{ item.data.authorUrl }}" target="_blank" rel="noopener" class="hover:text-[color:var(--accent-color)] transition-colors">{{ item.data.author }}</a>{% else %}{{ item.data.author }}{% endif %}
-        </span>
-        {% endif %}
-        {% if item.data.source %}
-        <span class="text-xs text-gray-500 mt-0.5">
-          {% if item.data.sourceUrl %}
-            <a href="{{ item.data.sourceUrl }}" target="_blank" rel="noopener" class="hover:text-[color:var(--accent-color)] transition-colors">{{ item.data.source }}</a>
-          {% else %}
-            {{ item.data.source }}
-          {% endif %}
-        </span>
-        {% endif %}
-      </div>
-      {% endif %}
-    </article>
-  {% endfor %}
+<div class="not-prose" x-data="collectionView('lexicon-view', 'list', ['list', 'stream', 'grid'])">
+  <div class="collection-view-toolbar collection-view-toolbar-compact">
+    <p class="editorial-support-compact">Choose the reading rhythm that fits: a compact index, full definitions, or a wall.</p>
+    {{ viewToggle([
+      { value: "list", label: "List view", icon: "list" },
+      { value: "stream", label: "Stream view", icon: "activity" },
+      { value: "grid", label: "Wall view", icon: "grid" }
+    ]) }}
+  </div>
+
+  {# ── LIST VIEW (default compact index) ──────────────────────── #}
+  <ul class="feed-list" x-show="view === 'list'" x-cloak>
+    {% for item in collections.feed %}{% if item.type == 'lexicon' %}
+      {{ feedCard(item, { variant: 'list', showSummary: true, showTags: true }) }}
+    {% endif %}{% endfor %}
+  </ul>
+
+  {# ── STREAM VIEW (full definitions) ─────────────────────────── #}
+  <div x-show="view === 'stream'" x-cloak class="flex flex-col w-full py-4">
+    {% for item in collections.feed %}{% if item.type == 'lexicon' %}
+      {{ feedCard(item, { variant: 'stream' }) }}
+    {% endif %}{% endfor %}
+  </div>
+
+  {# ── WALL VIEW (masonry cards) ───────────────────────────────── #}
+  <div x-show="view === 'grid'" x-cloak
+    class="grid gap-3 md:grid-cols-2 lg:grid-cols-3 items-start feed-masonry"
+    data-feed-masonry
+  >
+    {% for item in collections.feed %}{% if item.type == 'lexicon' %}
+      {{ feedCard(item, { extraClasses: 'feed-card' }) }}
+    {% endif %}{% endfor %}
+  </div>
 </div>
+
+{% include "components/feed-masonry-script.njk" %}
