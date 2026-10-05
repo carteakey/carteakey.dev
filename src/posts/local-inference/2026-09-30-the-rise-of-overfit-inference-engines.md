@@ -4,7 +4,7 @@ description: "Napkin runtimes: why disposable, overfit inference engines are com
 image: /img/blog-sketches/unique/the-rise-of-overfit-inference-engines-stamp-trim.png
 imageAlt: "Monochrome pencil sketch of a graphics card with a small hand-built engine block bolted on, a crumpled napkin blueprint, and a wrench, beside a bulky unused universal engine"
 date: 2026-09-30
-updated: 2026-10-03
+updated: 2026-10-05
 authored_by: ai-assisted
 draft: false
 giscusTerm: "/blog/the-rise-of-overfit-inference-engines/"
@@ -12,9 +12,38 @@ tags:
   - AI
   - Self-Host
 pinned: true
+attribution:
+  title: "Adapted from netherreddit's argument"
+  text: "The central thesis, three reasons, stable-interface argument, hardware-community prediction, and three alternative futures are adapted from netherreddit's post. I expanded them with my RTX 4070 measurements, serving setup, console analogy, and later caveats. The original version omitted this credit. That was my mistake."
+  author: "u/netherreddit"
+  titleOfWork: "Inference Engines will become a series of one-offs"
+  url: "https://www.reddit.com/r/LocalLLaMA/comments/1wtg7zu/inference_engines_will_become_a_series_of_oneoffs/"
+sources:
+  - title: "Inference Engines will become a series of one-offs"
+    author: "u/netherreddit"
+    url: "https://www.reddit.com/r/LocalLLaMA/comments/1wtg7zu/inference_engines_will_become_a_series_of_oneoffs/"
+    contribution: "Source of the essay's central argument and much of its structure, including the three reasons, stable interfaces, hardware communities, and alternative futures."
+  - title: "Midwit meme shared in the discussion"
+    author: "u/Cautious_Chicken_604"
+    url: "https://www.reddit.com/r/LocalLLaMA/comments/1wwu6zj/comment/pdnwz1r/"
+    contribution: "Shared the image reproduced above. This credits the sharing account; the original image creator is unverified."
+  - title: "Reusable kernels and hardware recipes"
+    author: "u/1ncehost"
+    url: "https://www.reddit.com/r/LocalLLaMA/comments/1wwu6zj/comment/pdofb2i/"
+    contribution: "Related discussion of assembling kernels from libraries and sharing recipes, relevant to the parts-bin section."
+  - title: "Greedy decoding and comparison limits"
+    author: "u/FullOf_Bad_Ideas"
+    url: "https://www.reddit.com/r/LocalLLaMA/comments/1wwu6zj/comment/pdnz8oi/"
+    contribution: "Challenged the quality claim and unmatched benchmark settings. The essay and technical companion now state those limits."
+  - title: "Risks of fragmented runtimes"
+    author: "u/silenceimpaired"
+    url: "https://www.reddit.com/r/LocalLLaMA/comments/1wwu6zj/comment/pdofkj6/"
+    contribution: "Raised malware and multi-model concerns, relevant to the trust section."
 ---
 
-{% image_cc "./src/static/img/local-inference/overfit-inference-midwit-meme.webp", "Bell-curve meme. The low-IQ end and the hooded high-IQ end both say: I write inference code for my specific model and hardware. The crying midwit in the middle says: I write inference code that generalizes across all models and all hardware.", "w-full border border-surface-border my-6", "The whole post, in one meme." %}
+{% image_cc "./src/static/img/local-inference/overfit-inference-midwit-meme.webp", "Bell-curve meme. The low-IQ end and the hooded high-IQ end both say: I write inference code for my specific model and hardware. The crying midwit in the middle says: I write inference code that generalizes across all models and all hardware.", "w-full border border-surface-border my-6", "Meme shared by u/Cautious_Chicken_604 in the linked discussion; original creator unverified." %}
+
+[Meme source: u/Cautious_Chicken_604](https://www.reddit.com/r/LocalLLaMA/comments/1wwu6zj/comment/pdnwz1r/).
 
 ## The surprise
 
@@ -41,7 +70,7 @@ My unfiltered reaction was: *what in the fuck?*
 
 Quants and settings differ between the two engines, so that's a comparison of complete serving setups, not a controlled experiment. The measurements, memory layout and caveats are in the technical write-up, [Strata on an RTX 4070](/blog/local-inference/strata-on-an-rtx-4070/). This post is about what I think it means.
 
-My bet: for power users on fixed hardware, **disposable, overfit engines are going to beat general-purpose runtimes on speed**, and general runtimes will keep the portability crown.
+Building on [netherreddit's thesis](https://www.reddit.com/r/LocalLLaMA/comments/1wtg7zu/inference_engines_will_become_a_series_of_oneoffs/), my narrower bet is that for power users on fixed hardware, **disposable, overfit engines are going to beat general-purpose runtimes on speed**, and general runtimes will keep the portability crown.
 
 ## The new breed
 
@@ -69,6 +98,8 @@ When the next model generation changes its routing scheme or attention layout, a
 To make that testable: **by April 2027, at least four of the six engines above will have gone 60 days without a commit to their default branch**. I'll count upstream commits, not activity in forks, and I'll check back and report either way.
 
 ## Why now: three reasons
+
+These are netherreddit's three reasons, in the same order. I've expanded the engineering examples and qualified the claim about correctness.
 
 ### 1. Generality is a performance tax
 
@@ -116,6 +147,8 @@ For years nobody wrote console-style engines for a single PC configuration, beca
 
 ## What survives the churn
 
+Netherreddit asks which interfaces survive the churn and predicts communities around specific hardware. The router setup below is how I handle that on my own machine.
+
 If runtimes are disposable, the layers around them have to be stable. Nobody wants a new CLI, UI and SDK every time an engine dies.
 
 ### The HTTP API
@@ -149,6 +182,8 @@ If this becomes the normal way to run local models, power users take on a supply
 
 ## How general engines could win back the lead
 
+These three scenarios also come from netherreddit's post. I've expanded them here, including the connection to trust.
+
 I don't think general engines go away. Three ways they could close the gap:
 
 **Recipes as plugins.** Alongside a model file, you download a recipe for your hardware: fused kernels, an expert placement mask and a speculation schedule built for, say, an RTX 4070 with DDR5. The general engine becomes a thin, trusted host that loads it. This is the parts-bin idea run in reverse, and it would also ease the trust problem, since the host stays reviewed. It's a proposed design; I'm not aware of a project that ships this today.
@@ -173,6 +208,7 @@ One model and one machine that I measured myself, with a missing ablation and no
 
 | Date | Note |
 | --- | --- |
+| 2026-10-05 | Corrected the missing attribution to u/netherreddit for the central argument and structure. Added prominent credit, section-level acknowledgements, and sources for community contributions and the meme. |
 | 2026-10-03 | Moved the benchmarks, memory layout and reproduction details to a separate [Strata post](/blog/local-inference/strata-on-an-rtx-4070/). Reframed the headline speedup against the best llama.cpp setup (about 2×), added a checkable prediction, the parts-bin section and a trust section, softened the objective-function claim, trimmed the console analogy, updated the DwarfStar description, and dropped an unverified reference. |
 | 2026-10-01 | Corrected the bandwidth arithmetic and removed the double-counted cache and MTP gain, aligned the hardware specs, linked all six engines, hedged the unsourced claims, moved the IQ3_S and NAS-archive notes to the Flash-Next post, and tightened the prose. |
 | 2026-09-30 | Initial post. |

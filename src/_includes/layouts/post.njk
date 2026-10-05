@@ -149,12 +149,12 @@ hasEthicalAds: false
       {% if authored_by == 'ai-assisted' %}
       <div class="not-prose surface surface-compact flex items-start gap-2 text-blue-800 dark:text-blue-300" style="border-color: #bfdbfe; background: color-mix(in srgb, #3b82f6 8%, transparent);">
         {% feather "zap", class="w-4 h-4 shrink-0 mt-0.5 opacity-70" %}
-        <span class="post-status-copy"><span class="post-status-label">AI Assisted</span> - Written with AI as a creative partner. Ideas, structure, and editorial direction are mine; AI helped with drafting and wording.</span>
+        <span class="post-status-copy"><span class="post-status-label">AI Assisted</span> - Written with AI as a creative partner. AI helped with research, drafting, or wording; I edited the result. Credits for source ideas and adapted material are listed separately.</span>
       </div>
       {% elif authored_by == 'ai-generated' %}
       <div class="not-prose surface surface-compact flex items-start gap-2 text-purple-800 dark:text-purple-300" style="border-color: #ddd6fe; background: color-mix(in srgb, #7c3aed 8%, transparent);">
         {% feather "cpu", class="w-4 h-4 shrink-0 mt-0.5 opacity-70" %}
-        <span class="post-status-copy"><span class="post-status-label">AI Generated</span> - AI wrote most of the words here. The ideas, research, and editorial direction are mine - I read and verify everything before it goes up.</span>
+        <span class="post-status-copy"><span class="post-status-label">AI Generated</span> - AI wrote most of the words here. I selected and edited the material. Credits for source ideas and adapted material are listed separately.</span>
       </div>
       {% endif %}
 
@@ -215,9 +215,31 @@ hasEthicalAds: false
     </div>
 
 
+    {% if attribution %}
+      <aside class="surface surface-padding" aria-label="Source attribution">
+        <h2 class="post-panel-title">{{ attribution.title }}</h2>
+        <p class="editorial-support mt-2">{{ attribution.text }}</p>
+        <p class="editorial-support-compact mt-2"><a href="{{ attribution.url }}">{{ attribution.titleOfWork }}</a> by {{ attribution.author }}</p>
+      </aside>
+    {% endif %}
+
     <div class="post-body{% if isEditorial %} ed-prose{% endif %}">
       {{ content | safe }}
     </div>
+
+    {% if sources and sources.length %}
+      <section class="surface surface-padding" aria-labelledby="post-sources-title">
+        <h2 id="post-sources-title" class="post-panel-title">Sources and acknowledgements</h2>
+        <ul class="space-y-3 mt-3">
+          {% for reference in sources %}
+            <li>
+              <p class="editorial-support"><a href="{{ reference.url }}">{{ reference.title }}</a>{% if reference.author %} · {{ reference.author }}{% endif %}</p>
+              {% if reference.contribution %}<p class="editorial-support-compact">{{ reference.contribution }}</p>{% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+      </section>
+    {% endif %}
 
     {% if author or source %}
     <div class="flex flex-col mt-6 not-prose">

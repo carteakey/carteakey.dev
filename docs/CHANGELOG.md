@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.20] - 2026-10-05
+### Fixed
+- Credited u/netherreddit prominently and within the adapted sections of the overfit inference essay; acknowledged the meme sharing account and community feedback.
+- Removed blanket claims of original ideas and research from the AI authorship notices.
+
+### Added
+- Frontmatter-driven adaptation credit and Sources and acknowledgements in the post layout, with template examples, CMS fields, and documentation.
+- An editorial comparison documenting the substantial argument/structure overlap and the essay's additional material.
+
 ## [2.7.19] - 2026-10-03
 ### Added
 - A separate Strata benchmark draft with the expert cache policy, corrected measurements, reproduction notes, and experimental gaps.

@@ -89,3 +89,7 @@ lists every post/note that uses the shortcode under "Mentioned in".
 
 The Markdown body is free-form notes (reviews, quirks, history). The `/uses/` host card for a machine links
 to its device page via `device: <slug>` in `src/_data/uses.yaml`.
+
+## Attribution and sources
+
+`attribution` displays prominent adaptation credit before the post body; `sources` displays a contribution-specific list afterwards. See [Blog Post Editorial Features](BLOG_POST_FEATURES.md#sources-and-acknowledgements) for the schema. Related Posts is tag-based discovery and does not provide attribution.

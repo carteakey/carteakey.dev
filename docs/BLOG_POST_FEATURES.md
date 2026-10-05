@@ -116,6 +116,26 @@ sourceUrl: "https://example.com/source"
 
 This is not a source card. It renders as attribution chrome in layouts and feed cards.
 
+### Sources and acknowledgements
+
+Use `attribution` for substantial adaptation: it renders before the article body. Use `sources` for a linked list after the body. Both use frontmatter data and the existing surface/type styles. Credits remain separate from automated Related Posts, which only matches tags.
+
+```yaml
+attribution:
+  title: "Adapted from Author Name's argument"
+  text: "Name the borrowed thesis or structure and explain what you added."
+  author: "Author Name"
+  titleOfWork: "Original work title"
+  url: "https://example.com/original"
+sources:
+  - title: "Original work title"
+    author: "Author Name"
+    url: "https://example.com/original"
+    contribution: "Explain which ideas, evidence, wording, or images came from this source."
+```
+
+A source list alone is insufficient for an adapted argument: credit it prominently and in the relevant sections. Mark verbatim wording as quotation. An AI authorship badge describes the writing process; it doesn't establish ownership of the ideas or substitute for source credit. For images, distinguish the original creator from the account that shared them.
+
 ### Progression Chart
 
 Use for a measured series of values (throughput by runtime, scores over time). Renders through the shared `.data-card` and `.chart-*` classes: one accent line, straight segments, no gradient.
@@ -152,6 +172,5 @@ Use for spatial structure that would otherwise be ASCII box art. Made with the `
 
 ## Still Missing
 
-- Bibliography / further-reading block.
 - Source card shortcode for inline references that need richer metadata than frontmatter attribution.
 - Pull quote primitive.
