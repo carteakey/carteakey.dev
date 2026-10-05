@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Credited u/netherreddit prominently and within the adapted sections of the overfit inference essay; acknowledged the meme sharing account and community feedback.
 - Removed blanket claims of original ideas and research from the AI authorship notices.
 
+- Clarified the correction to reflect an independent initial thought followed by LLM-assisted research that relied heavily on the source. Added a source-verification and attribution checklist to AGENTS.md.
+
 ### Added
 - Frontmatter-driven adaptation credit and Sources and acknowledgements in the post layout, with template examples, CMS fields, and documentation.
 - An editorial comparison documenting the substantial argument/structure overlap and the essay's additional material.

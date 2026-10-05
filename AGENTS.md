@@ -34,6 +34,18 @@ Intentionally committed implementation work is tracked in Linear: [carteakey.dev
 7. **Design Guard (ratchet)**: `npm run check:design` fails on any *new* design drift (soft radii/shadows, gradients, off-palette colours, utility text stacks, inline styles, raw HTML in posts), invalid `authored_by`, an oldest-first or stale changelog, or an unregistered tag. Existing debt lives in `utils/design-baseline.json` and may only shrink. When you remove debt, run `node utils/check-design.mjs --update-baseline` to lock the gain in. Never raise the baseline to make a check pass: fix the markup, or use `--force` only with a stated reason in the commit message. Adding a tag deliberately means `--update-baseline --force`; first check whether an existing tag fits.
 ---
 
+## Research and Attribution
+
+- Preserve source URLs and author names during LLM-assisted research; don't discard citations when rewriting or proofreading.
+- Keep a brief record of your starting idea before research. Distinguish that idea, source arguments, outside evidence, and your own measurements.
+- Open and verify each source before citing it. Cite the original author or primary reference, not the LLM's summary or a search-results page.
+- Link externally sourced claims near the relevant sentence, using inline links or footnotes. Keep quotations visibly quoted.
+- If an argument, structure, analogy, or distinctive example is substantially adapted, use the documented `attribution` callout before the body and acknowledge the relevant sections. A Related Posts link or AI badge is insufficient.
+- Populate `sources` with what each source contributed. Credit reused images at the image, distinguishing creators from sharing accounts.
+- Before publishing, compare the draft against its main sources for wording and structure. Proofreading alone does not check provenance. If a source cannot be verified, remove the unsupported claim or mark the uncertainty instead of inventing a citation.
+
+---
+
 ## ⚠️ Prohibited Practices
 
 * ❌ **No Legacy Code**: Do not use `var`, jQuery, or write code for Internet Explorer compatibility.

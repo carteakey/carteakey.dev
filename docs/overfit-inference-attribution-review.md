@@ -4,7 +4,7 @@ Compared the essay at `fe4ed62` and its October 1 version at `33311bd` with [u/n
 
 ## Finding
 
-The missing attribution complaint is justified. The essay substantially adapts the original post's argument and sequence. Rewording and adding measurements did not make that framework independently original. The existing AI-assisted notice made this worse by claiming ownership of the ideas and structure.
+The missing attribution complaint is justified. The author reports having the initial thought independently and later finding validation in netherreddit's post during LLM-assisted research. Textual overlap cannot establish intent or the origin of that initial thought. The essay substantially adapts the original post's argument and sequence. Rewording and adding measurements did not make that framework independently original. The existing AI-assisted notice made this worse by claiming ownership of the ideas and structure.
 
 The initial comparison with the author's own later Reddit thread missed the actual source. The fact that the essay predates comments in that later thread says nothing about its independence from netherreddit's earlier post.
 
@@ -41,6 +41,10 @@ The source post's relative timestamp in the retrieved page was cached, so this r
 - The reusable schema is documented, included in the post template, and available in the blog CMS.
 
 The correction is local until pushed and deployed. No Reddit reply or edit was made as part of this work.
+
+## Author clarification
+
+The correction distinguishes independent initial observation from the LLM-generated draft's substantial reliance on another post. The author reports iterative editing and proofreading, with the source attribution missed rather than intentionally withheld. The public credit reflects that account while retaining specific acknowledgement of the adapted argument and structure.
 
 ## Verification
 

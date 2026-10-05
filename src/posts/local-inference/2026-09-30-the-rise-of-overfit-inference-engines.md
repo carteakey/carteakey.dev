@@ -13,8 +13,8 @@ tags:
   - Self-Host
 pinned: true
 attribution:
-  title: "Adapted from netherreddit's argument"
-  text: "The central thesis, three reasons, stable-interface argument, hardware-community prediction, and three alternative futures are adapted from netherreddit's post. I expanded them with my RTX 4070 measurements, serving setup, console analogy, and later caveats. The original version omitted this credit. That was my mistake."
+  title: "Source credit and correction"
+  text: "I was already thinking about specialized inference engines before reading netherreddit's post. It helped validate that thought. The LLM I used for research and drafting relied too heavily on its argument and structure: the three reasons, stable interfaces, hardware communities, and alternative futures. My additions include the RTX 4070 measurements, serving setup, console analogy, and later caveats. I iterated on and proofread the draft, but missed the source credit. That's my responsibility, and I've added it here."
   author: "u/netherreddit"
   titleOfWork: "Inference Engines will become a series of one-offs"
   url: "https://www.reddit.com/r/LocalLLaMA/comments/1wtg7zu/inference_engines_will_become_a_series_of_oneoffs/"
