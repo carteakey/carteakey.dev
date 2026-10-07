@@ -50,9 +50,9 @@ Guardrails and cleanup from the 2026-09-30 repo review. Open follow-ups stay at 
 - [x] Add Prettier with `npm run lint` / `npm run format` scoped to root config, `utils/`, `netlify/functions/`, and `src/_data/`, then run the first pass. (2026-09-30)
 - [x] Fix the `package.json` author email to match `src/_data/metadata.yaml`. (2026-09-30)
 - [x] Review `src/_data/cartebase/*.json`: these are cartebase warehouse exports consumed by `src/_data/cartebase.js`, not API fetches, so they stay committed snapshots rather than AssetCache modules. (2026-09-30)
-- [ ] Decide whether to extend Prettier to content files (191 files outside the current lint scope) or keep the gate tooling-only.
-- [ ] Resolve the `/quotes/` (wall) vs `/quotations/` (index) overlap: both are separate nav entries covering similar ground.
-- [ ] Move the remaining heavy assets (photography JPGs, GIFs, MP4s - untouched by the PNG pass) per `docs/ideas/image-hosting-r2-worker.md`.
+- [x] Prettier scope decision: the gate stays tooling-only. A trial pass over posts, notes, snippets, and TIL flagged 73 files and did things this site does not want: Markdown tables rewritten into wide aligned grids, `*italic*` swapped for `_italic_`, and code inside fenced blocks reformatted (a sample changed `greet('Kartikey')` to `greet("Kartikey")`). Content prose stays hand-formatted. (2026-10-07)
+- [ ] Resolve the `/quotes/` (wall) vs `/quotations/` (index) overlap. `/quotes/` renders Quote of the Day plus the curated list from `src/_data/quotes.js`; `/quotations/` lists the 5 markdown entries in `src/quotations/`. Both are top-level nav entries (orders 7 and 9). Suggested fix: fold the Quote of the Day surface into `/quotations/`, redirect `/quotes/` to it, and keep one nav entry. Needs an owner decision on which name survives. (measured 2026-10-07)
+- [ ] Move the remaining heavy assets (photography JPGs, GIFs, MP4s - untouched by the PNG pass) per `docs/ideas/image-hosting-r2-worker.md`. Heaviest today: 11.9 MB `bouncing-balls-gemma-html.gif`, 8.9 MB `bench-in-the-fall.jpg`, 7.5 MB `loganime-test-v1-preview.mp4`, 6.7 MB `red-tree-by-the-lake.jpg`. (2026-10-07)
 
 ## Creative Features (2026-02-27)
 - [x] Add a reviews section for product reviews and buying articles, prefaced by an essay on the upper-midrange buying philosophy. (2026-06-24)
@@ -67,7 +67,7 @@ Guardrails and cleanup from the 2026-09-30 repo review. Open follow-ups stay at 
 - [x] `/watching` - Letterboxd-synced film diary with ratings, poster thumbnails, and recent entries on `/now`. (2026-06-25)
 
 ## Parked ideas
-- [ ] Move heavy images (photography, GIFs, big screenshots) to Cloudflare R2 + Worker once a trigger fires (repo near 1 GB, cold builds over ~5 min, regular photo/video). Plan and numbers: `docs/ideas/image-hosting-r2-worker.md` (2026-10-01).
+- [ ] Move heavy images (photography, GIFs, big screenshots) to Cloudflare R2 + Worker once a trigger fires (repo near 1 GB, cold builds over ~5 min, regular photo/video). Plan and numbers: `docs/ideas/image-hosting-r2-worker.md` (2026-10-01). Trigger check 2026-10-07: `.git` 531 MB, `src/static/img` 244 MB after the PNG pass, `src/static/img` holds 319 PNG / 90 JPEG / 7 GIF / 3 MP4, local Eleventy build 6.6 s. No trigger fired yet; `.git` is the one that only grows.
 - [ ] Interactive chooser widgets in posts: `docs/ideas/interactive-chooser-articles.md`.
 
 ## Consolidated Backlog (2026-06-29)

@@ -84,6 +84,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Replaced the Toronto halftone footer with a self-hosted ASCII lighthouse scene by @bas3line (ascii.rest, MIT), with a build-time fallback and reduced-motion, off-screen, and hidden-tab pauses.
 - Added a restrained ASCII field-notes divider to the homepage.
+- Repo hardening follow-ups closed out with measurements recorded in `docs/TODO.md`: Prettier stays tooling-only after a content trial touched 73 posts, notes, snippets, and TIL files and rewrote Markdown tables, emphasis markers, and code inside fenced blocks; the `/quotes/` vs `/quotations/` overlap is written up with a suggested merge; the R2 image-hosting trigger check records `.git` at 531 MB and `src/static/img` at 244 MB after the PNG pass.
 
 ### Fixed
 - Preserved generated image variants in `.cache/image-output` across clean builds and Netlify deploys; CI restores that cache with a shallow checkout. Only images referenced by the current build are copied into the publish directory.
