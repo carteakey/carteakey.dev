@@ -15,7 +15,9 @@ This claim needs a note.[^source]
 [^source]: Footnotes can include **inline Markdown**.
 ```
 
-Rendered by the local Markdown-it footnote extension in `eleventy.config.mjs`.
+Rendered by the local Markdown-it footnote extension in `eleventy.config.mjs`. Citation numbers link to an end-of-post reference list with back links. Use descriptive labels and reuse a label for the same work; numbers follow first citation order. Definitions must be on one line.
+
+For bibliographic references, include the author, work title, publisher/platform, a verified publication date if known, and a direct source link. The [post template](../src/posts/1990-01-01-template.md) demonstrates quoting, paraphrasing, reusable labels, and end-of-file definitions. Keep quotations visibly quoted. Substantial adaptations still need prominent `attribution` credit; `sources` holds contribution-specific acknowledgements.
 
 ### Callouts
 

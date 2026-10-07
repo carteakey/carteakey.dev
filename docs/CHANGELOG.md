@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.21] - 2026-10-07
+### Added
+- Numbered bibliographic citation examples in the post template: a quoted passage, copyable paraphrase/reuse syntax, and an end-of-file source definition. Documented reference formatting and how citations differ from adaptation credits and acknowledgements.
+
 ## [2.7.20] - 2026-10-05
 ### Fixed
 - Credited u/netherreddit prominently and within the adapted sections of the overfit inference essay; acknowledged the meme sharing account and community feedback.
