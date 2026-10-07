@@ -4,7 +4,7 @@ description: "The 51B n-gram table on SSD via lazy mmap: 27 tok/s with MTP and u
 image: /img/blog-sketches/unique/running-qwen3-8-flash-next-locally-stamp-trim.png
 imageAlt: Transparent monochrome sketch of a GPU offloading to an NVMe SSD drive next to a token speed gauge and architecture notebook
 date: 2026-08-27
-updated: 2026-10-03
+updated: 2026-10-07
 authored_by: ai-assisted
 draft: true
 hidden: false
@@ -15,6 +15,15 @@ tags:
 pinned: false
 ogImage: /img/og/running-qwen3-8-flash-next-locally-og.png
 ---
+
+{% update "2026-10-07", "October 2026 Refresh Matrix: Native MTP, MoE LRU Cache (#29887), & Strata v0.1.40.2" %}
+A major convergence across both upstream runtimes on the identical `ISTA-DASLab IQ3_XXS` quant:
+1. **Upstream llama.cpp master (`b11475`):** Merged native MTP (#29761), halved indexer score memory (#29825), 4-head tiling (#29901), and NVMe row prefetching (#29599), reaching **17.34 t/s decode** and 586.6 t/s prefill with 11.1 GB VRAM (-344 MiB).
+2. **llama.cpp MoE LRU Cache (#29887):** Using `--moe-cache-mib 2048` dynamically caches host-offloaded experts on the GPU, leaping from 17.07 t/s to **23.92 t/s decode (+40.1% speedup)** without MTP!
+3. **Strata v0.1.40.2:** Native upstream 2MB THP (`MADV_HUGEPAGE`) and #783 sub-warp kernels advance steady decode to **56.08 tok/s** and 8k prefill to **1,999.2 tok/s** (+29.4%).
+
+Track the full chronological breakdown on the interactive [L3MS Live Evolution Tracker](https://l3ms.carteakey.dev/).
+{% endupdate %}
 
 {% update "2026-09-30", "Major Breakthrough: Strata Engine Shatters the Ceiling (Now 60–90 t/s)" %}
 We thought 27 tok/s was the hard physical limit on an RTX 4070. That assumption was wrong. By abandoning layer-granular offloading in favor of an **online dynamic expert VRAM cache** (holding 3,086 hot experts across all 48 layers in 5.04 GB VRAM) paired with a native MTP draft head, the **Strata engine** now runs `Qwen3.8-Flash-Next` on ISTA-DASLab GSQ-RCO quants at **53–63 t/s steady-state decode on real code**, **90.2 t/s peak decode**, and **2,013 t/s prefill** across context windows up to 60k tokens.
@@ -380,6 +389,7 @@ That also means retiring the older quants to cold NAS storage. The Unsloth `UD-Q
 
 | Date | Note |
 | --- | --- |
+| 2026-10-07 | **October 2026 Refresh Matrix (Native MTP, MoE LRU Cache #29887, & Strata v0.1.40.2).** Tested 7-way parity on identical ISTA IQ3_XXS quant. Upstream master b11475 (merged native MTP #29761, indexer memory halved #29825) reached 17.34 t/s with 11.1 GB VRAM. New MoE LRU cache PR #29887 (--moe-cache-mib 2048) surged decode to 23.92 t/s (+40.1% over plain offload). Strata v0.1.40.2 delivered 56.08 t/s decode and 1,999.2 t/s 8k prefill. Full live evolution tracker published on l3ms.carteakey.dev. |
 | 2026-10-03 | Standardized the parameter count at 176B: 125B main model plus 51B n-gram embeddings, excluding the additional MTP head. |
 | 2026-10-01 | Added the IQ3_S tier plan and the legacy-quant archive note, moved here from the overfit-engines post. |
 | 2026-09-29 | **Upstream master b11241 refresh & Unified QSA Sparsity Stack V2 (27 tok/s MTP & 3x cold prefill).** Upstream master b11241 (`1c4729414`) merged GDN RMS_NORM+SCALE CUDA fusion (#29393) and causal attention fixes (#28751), lifting prefill +20.8% (148.8 → 179.8 t/s) and peak decode to 22.11 t/s. Experimental Unified QSA Sparsity Stack V2 (`build 11268` / `f382a59e3`) merged Daniel Han PR #28243, Rhonstin #28699, Abdel Darwish #28213, Akio Nishimura #29166, and Aman Gupta #29599. MTP speculative decode surged to **25.32–27.06 tok/s** (97–100% acceptance, 2.76–2.93 tok/step) at `-ncmoe 46` under 11,025 MiB VRAM (>1.25 GB headroom). Aman Gupta's NVMe row prefetching lifted cold prefill from 32.9–49.8 t/s to **135.2 t/s** (+200% / 3x speedup). |

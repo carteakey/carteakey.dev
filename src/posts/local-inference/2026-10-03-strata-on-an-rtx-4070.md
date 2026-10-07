@@ -11,6 +11,15 @@ tags:
   - Self-Host
 ---
 
+{% update "2026-10-07", "Strata v0.1.40.2 Refresh & llama.cpp Parity Matrix" %}
+We refreshed to **Strata v0.1.40.2**, introducing the #783 kernel performance series (sub-warp IQ expert kernels, batched verify window, multi-token MoE router and GDN kernels) and native Linux 2 MB Transparent Huge Pages (`MADV_HUGEPAGE`), eliminating our previous local out-of-tree patch. In a standardized 7-way parity benchmark against the latest llama.cpp builds (`b11475` with native MTP, and experimental MoE LRU cache #29887) on the identical `ISTA-DASLab IQ3_XXS` quant:
+- **Strata v0.1.40.2:** Sustains **56.08 tok/s decode** with extreme uniformity (55.9–56.3 tok/s across code generation probes) and **1,999.2 tok/s prefill** at 8k context (+29.4% prefill acceleration).
+- **llama.cpp Master b11475:** Advances to **17.34 tok/s decode** (+16.3% over old b11241 gold) and 586.6 tok/s prefill, reducing VRAM by 344 MiB.
+- **llama.cpp MoE LRU Cache (#29887):** With `--moe-cache-mib 2048`, decode leaps to **23.92 tok/s** (+40.1% over standard offload) within safe 11.45 GB VRAM limits.
+
+A full live tracker of all historical decode and prefill improvements is now available on the [L3MS Evolution Tracker](https://l3ms.carteakey.dev/).
+{% endupdate %}
+
 ## Where I was
 
 Earlier this week I thought the local inference stack on {% device "yeti-cachy" %} had hit its ceiling.
@@ -295,6 +304,7 @@ Strata is a young project from a solo developer that pins host memory and ships 
 
 | Date | Note |
 | --- | --- |
+| 2026-10-07 | Upgraded to Strata v0.1.40.2 (native THP, #783 kernel perf suite). Re-evaluated on RTX 4070 against refreshed llama.cpp master b11475 (17.34 t/s) and experimental MoE LRU cache #29887 (23.92 t/s) on identical ISTA IQ3_XXS quant: Strata sustained 56.08 tok/s decode and reached 1,999.2 tok/s 8k prefill (+29.4% prefill speedup). Live evolution tracker published on l3ms.carteakey.dev. |
 | 2026-10-03 | Split from the original post. Fixed the hit-rate framing (per expert lookup, not per token), the 60k hit rate (73.8%, not 76.5%), the 3,779-token needle failure, the reused-prefix prefill row, the SSD bandwidth, the speedup comparison, the miss path, and the VRAM and greedy explanations. Added the cache policy, setup, quality, reproduction and limits sections. Kept the Strata weight-size estimate separate from measured traffic, removed the unsupported cross-quant bandwidth calculation and GPU-compute percentage, clarified batched expert jobs and the incomplete lookup denominator, stated the llama.cpp context lengths, preserved the raw 90.2 burst log, and dropped the "speculation alone" claim. |
 | 2026-10-01 | Corrected the bandwidth arithmetic and removed the double-counted cache and MTP gain. |
 | 2026-09-30 | Initial post, as part of The Rise of Overfit Inference Engines. |
