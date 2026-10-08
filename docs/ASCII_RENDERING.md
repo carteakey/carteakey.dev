@@ -10,13 +10,13 @@ This technique can also draw a silhouette, terrain, a small terminal ornament, o
 
 ## Size the cells, not just the font
 
-The column count determines the horizontal scale. A typical monospace character advances about `0.6021em`, so 200 columns need `120.42em`. The footer's container query sets `font-size: calc(100cqw / 120.42)` and `line-height: 0.6021`. This makes each cell approximately square and preserves the scene's 2:1 proportions at every width. For another font, measure its character advance; for another scene, use its column and row counts instead of copying these constants.
+The column count determines the horizontal scale. A typical monospace character advances about `0.6021em`, so 200 columns need `120.42em`. The footer's container query sets `font-size: calc(100cqw / 120.42)` and `line-height: 0.6021`. This makes each cell approximately square before presentation. The footer then deliberately scales the complete frame vertically to 40% for a compact 5:1 desktop panorama, or about 67% for a 3:1 mobile strip. This is an illustration treatment: keep square cells for diagrams whose geometry must remain accurate. For another font, measure its character advance; for another scene, use its column and row counts instead of copying these constants.
 
 Give the illustration its own explicit block width and reset figure, prose, and code-block defaults. In particular, global `figure { display: table; max-width: ... }` and `.not-prose pre { font-size: inherit }` can make a correct frame look small or clipped. The footer rules are unlayered and scoped to `.site-content .ascii-coast`, so these generic rules cannot silently override its geometry.
 
 ## Keep the scene's light direction
 
-The coast encodes brighter regions with larger dots. Light dots on its own dark ground preserve that intended brightness. Dark dots on a light background reverse the picture's visual polarity and make the moon and beam read incorrectly. The night illustration therefore keeps a dark ground in both page themes; the caption and navigation follow the page theme. A future daytime scene should use an intentionally inverted density mapping, not just inherit a text color.
+The coast encodes brighter regions with larger dots. Accent-colored dots on its own dark ground preserve that intended brightness. The footer mixes the active accent with 28% white so darker accent choices remain visible. Dark dots on a light background reverse the picture's visual polarity and make the moon and beam read incorrectly. The night illustration therefore keeps a dark ground in both page themes; the caption and navigation follow the page theme. A future daytime scene should use an intentionally inverted density mapping, not just inherit a text color.
 
 ## Render once, then play when visible
 

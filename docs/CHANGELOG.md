@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.23] - 2026-10-08
+### Changed
+- Shortened the ASCII footer into a 5:1 desktop panorama and a 3:1 mobile strip while keeping the complete frame visible.
+- Restored the active accent color to the scene, mixed with white for visibility on its dark ground in both themes.
+
 ## [2.7.22] - 2026-10-08
 ### Fixed
 - Made the ASCII footer fill the site's full content width with a complete 2:1 scene instead of inheriting capped figure widths and oversized code-block text.

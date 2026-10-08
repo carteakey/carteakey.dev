@@ -5121,10 +5121,11 @@ picture img {
 .ascii-coast-viewport {
   container-type: inline-size;
   width: 100%;
-  aspect-ratio: 2 / 1;
+  --ascii-y-scale: 0.4;
+  aspect-ratio: 5 / 1;
   overflow: hidden;
   background: #141414;
-  color: #e4e4e7;
+  color: color-mix(in srgb, var(--accent-color) 72%, white);
 }
 
 .site-content .ascii-coast .ascii-scene,
@@ -5141,6 +5142,8 @@ picture img {
   color: inherit;
   font-family: monospace;
   font-size: calc(100cqw / 120.42);
+  transform: scaleY(var(--ascii-y-scale));
+  transform-origin: top left;
   font-style: normal;
   font-weight: 400;
   line-height: 0.6021;
@@ -5165,4 +5168,11 @@ picture img {
 
 .ascii-caption a {
   color: var(--accent-color);
+}
+
+@media (max-width: 639px) {
+  .ascii-coast-viewport {
+    --ascii-y-scale: 0.666667;
+    aspect-ratio: 3 / 1;
+  }
 }
