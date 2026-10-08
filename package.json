@@ -74,7 +74,7 @@
     "@tailwindcss/typography": "^0.5.20",
     "eleventy-plugin-feathericons": "^2.0.0",
     "netlify-plugin-cache": "^1.0.3",
-    "postcss": "^8.5.20",
+    "postcss": "^8.5.28",
     "prettier": "^3.9.9",
     "tailwindcss": "^4.3.3"
   }
