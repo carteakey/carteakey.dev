@@ -42,7 +42,7 @@ jobs:
         run: pnpm run lint
 
       - name: Restore generated image cache
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: .cache/image-output
           key: images-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}-${{ github.sha }}
