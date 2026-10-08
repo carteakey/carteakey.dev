@@ -1,6 +1,6 @@
 # Rendering ASCII illustrations
 
-The footer uses the MIT-licensed [night coast](https://ascii.rest/night-coast/) scene by [@bas3line](https://github.com/bas3line/ascii). Its source and license are self-hosted under `src/static/js/vendor/ascii/`. The dots are Unicode characters, so this is character art rather than strictly seven-bit ASCII.
+The footer uses the MIT-licensed [alpine dawn](https://ascii.rest/alpine-dawn/) and [night coast](https://ascii.rest/night-coast/) scene by [@bas3line](https://github.com/bas3line/ascii). Its source and license are self-hosted under `src/static/js/vendor/ascii/`. The dots are Unicode characters, so this is character art rather than strictly seven-bit ASCII.
 
 ## How the picture is made
 
@@ -16,7 +16,9 @@ Give the illustration its own explicit block width and reset figure, prose, and 
 
 ## Keep the scene's light direction
 
-The coast encodes brighter regions with larger dots. Accent-colored dots on its own dark ground preserve that intended brightness. The footer mixes the active accent with 28% white so darker accent choices remain visible. Dark dots on a light background reverse the picture's visual polarity and make the moon and beam read incorrectly. The night illustration therefore keeps a dark ground in both page themes; the caption and navigation follow the page theme. A future daytime scene should use an intentionally inverted density mapping, not just inherit a text color.
+Both source scenes encode brighter regions with larger dots. Night mode preserves that ramp on a dark ground, mixing the active accent with 28% white for visibility. Day mode uses alpine dawn on warm paper. The shared `ascii-day.js` adapter reverses the four-character ramp (`space ↔ ●`, `· ↔ •`), so shadows receive more accent ink and sunlight remains paper.
+
+Both first frames are rendered at build time. CSS selects the daytime or nighttime pre from the page's `.dark` class, including with reduced motion. Each player observes its own element: the hidden theme stops playback and the visible theme loads lazily. Use this same pattern for another pair of scenes; preserve cell dimensions and explicitly choose the appropriate density polarity for each ground.
 
 ## Render once, then play when visible
 

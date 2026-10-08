@@ -296,11 +296,12 @@
       {# Self-hosted ascii.rest scene; first frame is rendered at build time. #}
       <figure class="ascii-coast not-prose">
         <div class="ascii-coast-viewport" aria-hidden="true">
-          <pre class="ascii-scene" data-ascii-coast>{{ ascii.coast | escape }}</pre>
+          <pre class="ascii-scene ascii-scene-day" data-ascii-dawn>{{ ascii.dawn | escape }}</pre>
+          <pre class="ascii-scene ascii-scene-night" data-ascii-coast>{{ ascii.coast | escape }}</pre>
         </div>
         <figcaption class="ascii-caption">
           <span>~ a quiet place at the edge of the internet ~</span>
-          <a href="https://ascii.rest/night-coast/" target="_blank" rel="noopener noreferrer">ASCII by @bas3line ↗</a>
+          <a href="https://ascii.rest/" target="_blank" rel="noopener noreferrer">ASCII by @bas3line ↗</a>
         </figcaption>
       </figure>
       <script type="module" src="{{ '/static/js/ascii-coast.js' | url }}"></script>

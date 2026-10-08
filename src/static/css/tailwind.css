@@ -5124,8 +5124,8 @@ picture img {
   --ascii-y-scale: 0.4;
   aspect-ratio: 5 / 1;
   overflow: hidden;
-  background: #141414;
-  color: color-mix(in srgb, var(--accent-color) 72%, white);
+  background: #faf7f0;
+  color: var(--accent-color);
 }
 
 .site-content .ascii-coast .ascii-scene,
@@ -5175,4 +5175,14 @@ picture img {
     --ascii-y-scale: 0.666667;
     aspect-ratio: 3 / 1;
   }
+}
+
+.dark .ascii-coast-viewport {
+  background: #141414;
+  color: color-mix(in srgb, var(--accent-color) 72%, white);
+}
+
+.site-content .ascii-coast .ascii-scene-night,
+.dark .site-content .ascii-coast .ascii-scene-day {
+  display: none;
 }

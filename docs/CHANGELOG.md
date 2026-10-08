@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.24] - 2026-10-08
+### Changed
+- Added an alpine dawn footer for light mode and retained the moonlit coast for dark mode, with compact sizing and the active accent in both.
+- Documented inverted character density for daytime illustrations and theme-aware playback.
+
 ## [2.7.23] - 2026-10-08
 ### Changed
 - Shortened the ASCII footer into a 5:1 desktop panorama and a 3:1 mobile strip while keeping the complete frame visible.

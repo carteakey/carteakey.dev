@@ -1,6 +1,8 @@
 import nightCoast from "../static/js/vendor/ascii/night-coast.js";
+import dayDawn from "../static/js/ascii-day.js";
 
-// Render the first frame during the build so the footer also works without JS.
+// Build both fallbacks so theme selection also works without animation.
 export default {
   coast: nightCoast()(0),
+  dawn: dayDawn()(0),
 };
