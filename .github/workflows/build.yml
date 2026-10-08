@@ -28,7 +28,7 @@ jobs:
 
       # Only the current tree is needed; old image revisions are not downloaded.
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: 22
 
