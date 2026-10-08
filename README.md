@@ -58,3 +58,7 @@ npm run start
 ---
 
 Feel free to fork, learn, or reach out if you have questions!
+
+## Build cache
+
+Responsive image variants live in `.cache/image-output`, outside the cleaned `_site` publish directory. Eleventy Image hashes the source contents and encoding options, so unchanged images are reused; only derivatives requested by the current build are published. Netlify's existing `.cache` plugin and the CI image cache retain this work between builds. A cold build still encodes every image; delete `.cache/image-output` to force re-encoding. Large Git history affects full clone time, while CI checks out only the latest tree.

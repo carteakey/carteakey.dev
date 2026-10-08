@@ -504,6 +504,20 @@ picture img {
     break-inside: avoid;
   }
 
+  /* Embedded note/lexicon artwork stays a preview in phone-sized feeds. */
+  @media (max-width: 639px) {
+    .feed-card-full .not-prose img,
+    .feed-card-stream .site-content img {
+      display: block;
+      width: auto;
+      height: auto;
+      max-width: 100%;
+      max-height: 12rem;
+      margin-inline: auto;
+      object-fit: contain;
+    }
+  }
+
   /* ═══════════════════════════════════════════════════════════════════════════
      🎨 Unified Design System Components
      ═══════════════════════════════════════════════════════════════════════════ */
@@ -1976,83 +1990,61 @@ picture img {
     }
   }
 
-  /* Day/night pair (see the day/night comment in base.njk for the full
-     reasoning). Only one <img> is ever display:block at a time (the other
-     is dark:hidden/hidden dark:block), so they don't need absolute
-     stacking - the hidden one takes no layout space. Container background
-     matches whichever is showing: light paper for the day PNG's sparse/
-     near-transparent sky areas to read against, versus the night PNG
-     which bakes its own opaque dark backdrop into the image itself. */
-  .footer-photo-band {
-    position: relative;
-    width: 100%;
-    line-height: 0;
-    overflow: hidden;
-    background: var(--zen-paper, #fbfaf6);
-  }
-
-  .dark .footer-photo-band {
-    background: #0a0a1f;
-  }
-
-  /* No display:block here - Tailwind's .hidden/.dark:block/.dark:hidden
-     utilities on the two <img> tags need to control display themselves,
-     and a same-or-higher-specificity rule setting display unconditionally
-     would silently beat them regardless of theme (which is exactly what
-     happened: both images rendered display:block at once, in both
-     themes, because this rule's specificity (class+type) beat .hidden's
-     (class only)). The parent's line-height: 0 already removes the
-     inline-image whitespace gap this would otherwise have prevented. */
-  .footer-photo-band img {
-    width: 100%;
-    height: 9rem;
-    object-fit: cover;
-  }
-
-  @media (min-width: 768px) {
-    .footer-photo-band img {
-      height: 12rem;
-    }
-  }
-
-  .footer-band-icon {
-    position: absolute;
-    top: 0.9rem;
-    right: 1.1rem;
+  /* Square character cells preserve the coast's 2:1 composition. */
+  .ascii-coast {
+    margin: 0;
+    border-top: 1px solid currentColor;
     color: var(--accent-color);
-    opacity: 0.8;
-    pointer-events: none;
   }
 
-  .footer-band-stars {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
+  .ascii-coast-viewport {
+    container-type: inline-size;
+    overflow: hidden;
   }
 
-  .footer-band-stars i {
-    position: absolute;
-    left: var(--x);
-    top: var(--y);
-    width: 2px;
-    height: 2px;
-    border-radius: 999px;
-    background: #ffffff;
-    opacity: 0.35;
-    animation: footer-star-twinkle 2.6s ease-in-out infinite;
-    animation-delay: var(--d);
+  .ascii-coast .ascii-scene,
+  .dark .ascii-coast .ascii-scene {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: inherit;
+    font-family: monospace;
+    font-size: calc(100cqw / 120.42);
+    line-height: 0.6021;
+    letter-spacing: 0;
+    white-space: pre;
+    overflow: hidden;
+    user-select: none;
   }
 
-  @keyframes footer-star-twinkle {
-    0%, 100% { opacity: 0.25; }
-    50% { opacity: 0.95; }
+  .ascii-caption {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.4rem 1rem;
+    padding: 0.65rem 0;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: inherit;
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .footer-band-stars i {
-      animation: none;
-      opacity: 0.6;
-    }
+  .ascii-caption a {
+    color: var(--accent-color);
+  }
+
+  .ascii-divider {
+    display: block;
+    margin: 1rem 0;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0;
+    color: var(--accent-color);
+    overflow: hidden;
+    white-space: nowrap;
+    user-select: none;
   }
 
   .footer-nav-heading {

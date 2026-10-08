@@ -466,3 +466,7 @@ If you need a compact instruction for later passes, use this:
 > Make this page feel like carteakey.dev: dense editorial/archive design, textured paper background, squarish flat surfaces, display font for titles, serif for support copy, mono for metadata, minimal badge clutter, and structure that reads like an index of a mind rather than a startup UI.
 
 For cleanup work, keep the same principle: converge older pages onto the shared primitives before adding page-local styling.
+
+## ASCII illustrations
+
+Use `.ascii-coast` for the shared footer landscape and `.ascii-divider` for a small section break. Keep illustrations decorative and hidden from assistive technology; navigation and content remain ordinary HTML. The footer uses the self-hosted MIT-licensed night-coast scene from [ascii.rest](https://ascii.rest/night-coast/) by [@bas3line](https://github.com/bas3line), with its license alongside the vendored module. Render the first frame during builds, use the active accent color in both themes, and animate only while visible when reduced motion is not requested. Avoid introducing extra palettes, remote runtime scripts, or animated decoration to every section.

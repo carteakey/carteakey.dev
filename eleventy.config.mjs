@@ -20,6 +20,22 @@ import Image, { generateHTML } from "@11ty/eleventy-img";
 import "dotenv/config";
 import upvotesData from "./src/_data/upvotes.js";
 
+// Keep expensive transforms outside the clean publish directory. Eleventy Image
+// keys its output by source contents and encoding options; publish only the
+// derivatives requested during this build so removed artwork cannot linger.
+const IMAGE_CACHE_DIR = "./.cache/image-output";
+const generatedImagePaths = new Set();
+
+async function cachedImage(src, options) {
+  const metadata = await Image(src, options);
+  for (const variants of Object.values(metadata)) {
+    for (const variant of variants) {
+      if (variant.outputPath) generatedImagePaths.add(variant.outputPath);
+    }
+  }
+  return metadata;
+}
+
 const IS_PRODUCTION_BUILD =
   process.env.ELEVENTY_ENV === "production" ||
   process.env.CONTEXT === "production" ||
@@ -379,10 +395,10 @@ async function imageShortcode(src, alt, css, zoomSrc) {
   if (/\.gif$/i.test(src)) {
     return buildRemoteImageMarkup(mapSrcToPublicUrl(src), alt, css);
   }
-  let metadata = await Image(src, {
+  let metadata = await cachedImage(src, {
     widths: [400, 800, 1200, "auto"],
     formats: ["avif", "webp", "jpeg"],
-    outputDir: "./_site/img/",
+    outputDir: `${IMAGE_CACHE_DIR}/`,
   });
 
   let imageAttributes = {
@@ -411,10 +427,10 @@ async function imageShortcodeWithCaptions(src, alt, css, caption) {
       caption,
     );
   }
-  let metadata = await Image(src, {
+  let metadata = await cachedImage(src, {
     widths: [400, 800, 1200, "auto"],
     formats: ["avif", "webp", "jpeg"],
-    outputDir: "./_site/img/",
+    outputDir: `${IMAGE_CACHE_DIR}/`,
   });
 
   let imageAttributes = {
@@ -443,10 +459,10 @@ async function galleryShortcode(items = []) {
     list.map(async (item) => {
       const { src, alt = "", caption = "" } = item || {};
       if (!src) return "";
-      const metadata = await Image(src, {
+      const metadata = await cachedImage(src, {
         widths: [400, 800],
         formats: ["avif", "webp", "jpeg"],
-        outputDir: "./_site/img/",
+        outputDir: `${IMAGE_CACHE_DIR}/`,
       });
       const imageMarkup = generateHTML(
         metadata,
@@ -468,7 +484,7 @@ async function galleryShortcode(items = []) {
 async function generatePostThumbnailMetadata(src) {
   const sourcePath = src.startsWith("/img/") ? `./src/static${src}` : src;
 
-  return Image(sourcePath, {
+  return cachedImage(sourcePath, {
     // One shared set covers 64px homepage images and 80/96px post cards,
     // including their high-density display sizes. Floor raised from 64 to
     // 96: these are fine line-art sketches recolored by the stamp-cobalt
@@ -479,7 +495,7 @@ async function generatePostThumbnailMetadata(src) {
     // the filter, was the inconsistency.
     widths: [96, 128, 192, 256],
     formats: ["avif", "webp", "auto"],
-    outputDir: "./_site/img/thumbnails/posts/",
+    outputDir: `${IMAGE_CACHE_DIR}/thumbnails/posts/`,
     urlPath: "/img/thumbnails/posts/",
   });
 }
@@ -671,10 +687,10 @@ export default function (eleventyConfig) {
 
   // Generate thumbnails for gallery images
   async function galleryImageShortcode(src) {
-    let metadata = await Image(src, {
+    let metadata = await cachedImage(src, {
       widths: [400], // thumbnail width
       formats: ["webp"],
-      outputDir: "./_site/img/thumbnails/",
+      outputDir: `${IMAGE_CACHE_DIR}/thumbnails/`,
       urlPath: "/img/thumbnails/",
       filenameFormat: function (id, src, width, format, options) {
         const extension = format;
@@ -1620,12 +1636,12 @@ export default function (eleventyConfig) {
           date: entry.date,
           url: entry.url,
           summary,
-          tags: (entry.data.tags || []).filter(
-            (tag) => tag !== "lexicon",
-          ),
+          tags: (entry.data.tags || []).filter((tag) => tag !== "lexicon"),
           original: entry,
           hidden: !!entry.data.hidden,
-          ...(entry.data.authored_by ? { authored_by: entry.data.authored_by } : {}),
+          ...(entry.data.authored_by
+            ? { authored_by: entry.data.authored_by }
+            : {}),
         };
       });
 
@@ -1962,10 +1978,10 @@ export default function (eleventyConfig) {
       css = "sketch-draw",
     } = opts;
     if (!src) return "";
-    const metadata = await Image(src, {
+    const metadata = await cachedImage(src, {
       widths: [400, 800, 1200, "auto"],
       formats: ["avif", "webp", "jpeg"],
-      outputDir: "./_site/img/",
+      outputDir: `${IMAGE_CACHE_DIR}/`,
     });
     const imageMarkup = generateHTML(
       metadata,
@@ -2075,6 +2091,19 @@ export default function (eleventyConfig) {
   eleventyConfig.addFilter("markdownify", function (str) {
     if (!str || typeof str !== "string") return "";
     return markdownLibrary.render(str);
+  });
+
+  eleventyConfig.on("eleventy.before", () => generatedImagePaths.clear());
+  eleventyConfig.on("eleventy.after", async (event = {}) => {
+    const outputDir = path.resolve(event?.directories?.output || "_site");
+    await Promise.all(
+      [...generatedImagePaths].map(async (source) => {
+        const relativePath = path.relative(IMAGE_CACHE_DIR, source);
+        const destination = path.join(outputDir, "img", relativePath);
+        await fsPromises.mkdir(path.dirname(destination), { recursive: true });
+        await fsPromises.copyFile(source, destination);
+      }),
+    );
   });
 
   eleventyConfig.on("eleventy.after", async (event = {}) => {

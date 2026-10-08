@@ -11,7 +11,9 @@ import sharp from "sharp";
 
 const args = process.argv.slice(2);
 const reportOnly = args[0] === "--check";
-const roots = (reportOnly ? args.slice(1) : args).length ? args.slice(reportOnly ? 1 : 0) : ["src/static/img"];
+const roots = (reportOnly ? args.slice(1) : args).length
+  ? args.slice(reportOnly ? 1 : 0)
+  : ["src/static/img"];
 
 async function* pngFiles(directory) {
   const entries = await readdir(directory, { withFileTypes: true });
@@ -49,7 +51,9 @@ for (const root of roots) {
 
     let optimized;
     try {
-      optimized = await sharp(original).png({ compressionLevel: 9, effort: 9, adaptiveFiltering: true }).toBuffer();
+      optimized = await sharp(original)
+        .png({ compressionLevel: 9, effort: 9, adaptiveFiltering: true })
+        .toBuffer();
     } catch (error) {
       console.warn(`Encode failed for ${file}: ${error.message}`);
       continue;

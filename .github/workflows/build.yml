@@ -23,7 +23,10 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
 
+      # Only the current tree is needed; old image revisions are not downloaded.
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
@@ -37,6 +40,14 @@ jobs:
 
       - name: Check formatting
         run: pnpm run lint
+
+      - name: Restore generated image cache
+        uses: actions/cache@v4
+        with:
+          path: .cache/image-output
+          key: images-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}-${{ github.sha }}
+          restore-keys: |
+            images-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}-
 
       - name: Build site
         # prebuild runs check:version, check:content, check:design, then Eleventy + Tailwind.

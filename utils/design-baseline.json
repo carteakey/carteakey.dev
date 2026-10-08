@@ -32,7 +32,7 @@
       "inline-style": 1
     },
     "src/_includes/layouts/base.njk": {
-      "inline-style": 52
+      "inline-style": 47
     },
     "src/_includes/layouts/note.njk": {
       "pill-or-circle": 1,

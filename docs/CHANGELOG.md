@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.21] - 2026-10-08
+### Changed
+- Replaced the Toronto halftone footer with a self-hosted ASCII lighthouse scene by @bas3line (ascii.rest, MIT), with a build-time fallback and reduced-motion, off-screen, and hidden-tab pauses.
+- Added a restrained ASCII field-notes divider to the homepage.
+
+### Fixed
+- Preserved generated image variants in `.cache/image-output` across clean builds and Netlify deploys; CI restores that cache with a shallow checkout. Only images referenced by the current build are copied into the publish directory.
+- Constrained embedded note and lexicon artwork in mobile feed cards while preserving the full image and desktop layout.
+- Restored the original `verification-expiring.png` from Git history so the TPS over Quality note can render again.
+- Guarded image-zoom initialization when its external script is unavailable.
+- Applied existing Prettier rules to the two files that failed CI formatting.
+
 ## [2.7.20] - 2026-10-05
 ### Fixed
 - Credited u/netherreddit prominently and within the adapted sections of the overfit inference essay; acknowledged the meme sharing account and community feedback.
