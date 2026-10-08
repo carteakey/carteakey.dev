@@ -1,7 +1,7 @@
 // Service Worker for carteakey.dev
 // Provides offline support and caching for better performance
 
-const CACHE_VERSION = 'v1';
+const CACHE_VERSION = 'v2';
 const CACHE_NAME = `carteakey-${CACHE_VERSION}`;
 
 // Assets to cache immediately on install
@@ -105,9 +105,9 @@ self.addEventListener('fetch', (event) => {
   // Apply strategies based on request type
   let strategy;
   
-  // Static assets (JS, CSS) - cache first
+  // Unversioned scripts and styles must refresh after deployments.
   if (/\.(js|css)$/.test(url.pathname)) {
-    strategy = CACHE_STRATEGIES.cacheFirst;
+    strategy = CACHE_STRATEGIES.networkFirst;
   }
   // Fonts and images - stale while revalidate
   else if (/\.(woff2?|ttf|otf|eot|png|jpg|jpeg|gif|webp|avif|svg|ico)$/.test(url.pathname)) {

@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.25] - 2026-10-08
+### Fixed
+- Version the footer entry script and every imported scene/renderer so returning visitors receive updates despite the existing year-long asset cache. Refresh unversioned scripts and styles in the service worker while retaining offline fallback.
+### Changed
+- Render footer landscapes with smooth, continuous halftone dots like the hero portrait, replacing the striped four-size character screen during playback.
+- Give daytime its own paper sky, drifting clouds, flying birds, and visible lake reflections; preserve static fallbacks and reduced-motion support.
+
 ## [2.7.24] - 2026-10-08
 ### Changed
 - Added an alpine dawn footer for light mode and retained the moonlit coast for dark mode, with compact sizing and the active accent in both.

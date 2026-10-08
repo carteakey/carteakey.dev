@@ -166,7 +166,8 @@ export default function nightCoast() {
             lit[r * CW + x] = clamp(0.5 + (d - toward) * 11 - (d - 0.6) * 1.2);
         }
     }
-    return (t, { color } = {}) => {
+    // Local extension: expose continuous coverage for the antialiased dot renderer.
+    return (t, { color, density } = {}) => {
         const beam = (t / 8) * Math.PI * 2 - 0.75; // starts out over the sea
         const cb = Math.cos(beam), sb = Math.sin(beam);
         const flash = Math.pow(Math.max(0, sb), 14) * 2.2; // pointed at us
@@ -317,6 +318,7 @@ export default function nightCoast() {
                 const level = clamp(floor + (1 - floor) * Math.pow(peak, 0.85) * 0.95) * fade;
                 const step = Math.max(0, Math.min(3, Math.round(level * 3 + BAYER[(r & 3) * 4 + (x & 3)])));
                 out[k] = DOTS[step];
+                if (density) density[k] = level;
                 if (color) {
                     const want = step ? Math.min(1, (level + 0.06) / COVER[step]) : 0;
                     const s = (0.3 + 0.7 * want) / peak;

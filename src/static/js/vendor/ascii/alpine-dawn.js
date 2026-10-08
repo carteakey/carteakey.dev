@@ -317,7 +317,8 @@ export default function alpineDawn() {
     const floor = new Float32Array(N);
     const fade = new Float32Array(N).fill(1);
     const wisp = new Float32Array(W);
-    return (t, { color } = {}) => {
+    // Local extension: daylight tones and continuous coverage for halftone rendering.
+    return (t, { color, density, daylight = false } = {}) => {
         const warm = 0.75 - 0.5 * Math.exp(-t / 60); // rose first light warming toward gold
         const line = 6 + 4 * Math.exp(-t / 70); // the sunlit line creeps down the slopes
         const drift = t * 1.1;
@@ -516,9 +517,38 @@ export default function alpineDawn() {
                 const k = r * W + x;
                 const cr = FR[k], cg = FG[k], cbl = FB[k], fl = floor[k];
                 const peak = Math.max(cr, cg, cbl, 1e-4);
-                const level = clamp(fl + (1 - fl) * Math.pow(peak, 1.1)) * fade[k];
+                let level = clamp(fl + (1 - fl) * Math.pow(peak, 1.1)) * fade[k];
+                if (daylight) {
+                    let ink;
+                    if (fg[k]) {
+                        ink = 0.88 - peak * 0.3;
+                    } else if (r >= SHORE) {
+                        // Broad moving reflections stay readable in the short panorama.
+                        const ripple = Math.sin(x * 0.16 + r * 0.75 - t * 2);
+                        ink = clamp(0.16 + (1 - peak) * 0.3 + ripple * 0.11) * fade[k];
+                    } else if (depth[k]) {
+                        ink = clamp(0.12 + (1 - peak) * 0.62);
+                    } else {
+                        // Paper sky, with wind moving the source cloud field at 4 cells/s.
+                        const cx = Math.floor(x + t * 4) % CW;
+                        ink = r < CR ? cloud[r * CW + cx] * 0.48 : 0;
+                        // Three gliding birds, with continuously moving wings.
+                        for (let bird = 0; bird < 3; bird++) {
+                            const bx = (35 + bird * 16 + t * 11) % (W + 40) - 20;
+                            const dx = x + 0.5 - bx;
+                            if (Math.abs(dx) < 5) {
+                                const by = 7 + bird * 3 + Math.sin(t * 0.7 + bird);
+                                const wing = Math.abs(dx) * (0.3 + 0.35 * Math.sin(t * 4 + bird));
+                                const distance = r + 0.5 - by + wing;
+                                ink = Math.max(ink, 0.85 * Math.exp(-distance * distance / 0.6));
+                            }
+                        }
+                    }
+                    level = 1 - ink;
+                }
                 const step = Math.max(0, Math.min(3, Math.round(level * 3 + BAYER[(r & 3) * 4 + (x & 3)])));
                 out[k] = DOTS[step];
+                if (density) density[k] = daylight ? 1 - level : level;
                 if (color) {
                     const want = step ? Math.min(1, (level + 0.06) / COVER[step]) : 0;
                     // dim cells keep some of their darkness in the colour too, so the

@@ -5119,6 +5119,7 @@ picture img {
 }
 
 .ascii-coast-viewport {
+  position: relative;
   container-type: inline-size;
   width: 100%;
   --ascii-y-scale: 0.4;
@@ -5185,4 +5186,25 @@ picture img {
 .site-content .ascii-coast .ascii-scene-night,
 .dark .site-content .ascii-coast .ascii-scene-day {
   display: none;
+}
+
+.ascii-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.ascii-scene.is-painted {
+  opacity: 0;
+}
+
+.ascii-canvas-night,
+.dark .ascii-canvas-day {
+  display: none;
+}
+
+.dark .ascii-canvas-night {
+  display: block;
 }
