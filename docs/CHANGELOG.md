@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.22] - 2026-10-08
+### Fixed
+- Made the ASCII footer fill the site's full content width with a complete 2:1 scene instead of inheriting capped figure widths and oversized code-block text.
+- Kept the night scene's dark ground and light marks in both themes; restored normal caption typography.
+
+### Added
+- A reusable ASCII animation player and a guide to frame generation, character geometry, scene contrast, performance, and reuse.
+
 ## [2.7.21] - 2026-10-08
 ### Changed
 - Replaced the Toronto halftone footer with a self-hosted ASCII lighthouse scene by @bas3line (ascii.rest, MIT), with a build-time fallback and reduced-motion, off-screen, and hidden-tab pauses.

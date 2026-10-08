@@ -1990,50 +1990,6 @@ picture img {
     }
   }
 
-  /* Square character cells preserve the coast's 2:1 composition. */
-  .ascii-coast {
-    margin: 0;
-    border-top: 1px solid currentColor;
-    color: var(--accent-color);
-  }
-
-  .ascii-coast-viewport {
-    container-type: inline-size;
-    overflow: hidden;
-  }
-
-  .ascii-coast .ascii-scene,
-  .dark .ascii-coast .ascii-scene {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    border-radius: 0;
-    background: transparent;
-    color: inherit;
-    font-family: monospace;
-    font-size: calc(100cqw / 120.42);
-    line-height: 0.6021;
-    letter-spacing: 0;
-    white-space: pre;
-    overflow: hidden;
-    user-select: none;
-  }
-
-  .ascii-caption {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 0.4rem 1rem;
-    padding: 0.65rem 0;
-    font-family: var(--font-mono);
-    font-size: 0.78rem;
-    color: inherit;
-  }
-
-  .ascii-caption a {
-    color: var(--accent-color);
-  }
-
   .ascii-divider {
     display: block;
     margin: 1rem 0;
@@ -5150,4 +5106,63 @@ picture img {
   line-height: 1.35;
   text-align: left;
   color: rgb(107 114 128);
+}
+
+/* Illustration geometry must beat the global figure/code-block rules.
+   This authored night scene keeps its own ground in either page theme. */
+.site-content .ascii-coast {
+  display: block;
+  width: 100%;
+  max-width: none;
+  margin: 1.5rem 0 0;
+  text-align: left;
+}
+
+.ascii-coast-viewport {
+  container-type: inline-size;
+  width: 100%;
+  aspect-ratio: 2 / 1;
+  overflow: hidden;
+  background: #141414;
+  color: #e4e4e7;
+}
+
+.site-content .ascii-coast .ascii-scene,
+.dark .site-content .ascii-coast .ascii-scene {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+  font-family: monospace;
+  font-size: calc(100cqw / 120.42);
+  font-style: normal;
+  font-weight: 400;
+  line-height: 0.6021;
+  letter-spacing: 0;
+  white-space: pre;
+  overflow: hidden;
+  user-select: none;
+}
+
+.ascii-caption {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.4rem 1rem;
+  margin: 0;
+  padding: 0.65rem 0;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-style: normal;
+  color: inherit;
+}
+
+.ascii-caption a {
+  color: var(--accent-color);
 }
