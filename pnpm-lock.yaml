@@ -38,8 +38,8 @@ importers:
         specifier: ^4.3.3
         version: 4.3.3
       '@upstash/redis':
-        specifier: ^1.36.2
-        version: 1.38.2
+        specifier: ^1.39.0
+        version: 1.39.0
       dotenv:
         specifier: ^17.3.1
         version: 17.4.2
@@ -717,8 +717,8 @@ packages:
   '@types/mdurl@2.0.0':
     resolution: {integrity: sha512-RGdgjQUZba5p6QEFAVx2OGb8rQDL/cPRG7GiedRzMcJ1tYnUANBncjbSB1NRGwbvjcPeikRABz2nshyPk1bhWg==}
 
-  '@upstash/redis@1.38.2':
-    resolution: {integrity: sha512-RZ+JaRCVIS+ZTGnjOnDMr+/0aqDxsBb5rV6aW+Pys4SGELwr5lwE3UbLHRCHqMQ5Ulxj0b/CFBHfbmE175Otog==}
+  '@upstash/redis@1.39.0':
+    resolution: {integrity: sha512-VwkpYTdxSfjSulQS5h16NHtg/1UEheBfvez2AeGKinAujOoGXhXCcohQRzsQ/d2g/XzbjzTVGhG8Ds8uOI0Mxg==}
 
   a-sync-waterfall@1.0.1:
     resolution: {integrity: sha512-RYTOHHdWipFUliRFMCS4X2Yn2X8M87V/OpSqWzKKOGhzqyUxzyVmhHDH9sAvG+ZuQf/TAOFsLCpMw09I1ufUnA==}
@@ -2791,7 +2791,7 @@ snapshots:
 
   '@types/mdurl@2.0.0': {}
 
-  '@upstash/redis@1.38.2':
+  '@upstash/redis@1.39.0':
     dependencies:
       uncrypto: 0.1.3
 
