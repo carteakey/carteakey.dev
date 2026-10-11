@@ -17,8 +17,9 @@ eleventyExcludeFromCollections: true
 {% include "components/page-header.njk" %}
 
 <section class="surface surface-padding not-prose">
-  <div class="flex items-start gap-3">
-    {% feather "check-circle", class="w-5 h-5 text-green-600 dark:text-green-400 mt-0.5 shrink-0" %}
+  {% from "components/halftone.njk" import halftone with context %}
+  <div class="halftone-feature">
+    {{ halftone("bottle", "square", "ashore", class="halftone-piece") }}
     <div>
       <h2 class="editorial-title-compact">You are on the list.</h2>
       <p class="editorial-support mt-2">

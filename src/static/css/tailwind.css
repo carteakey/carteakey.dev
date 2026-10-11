@@ -1973,19 +1973,6 @@ picture img {
     }
   }
 
-  .ascii-divider {
-    display: block;
-    margin: 1rem 0;
-    text-align: center;
-    font-family: var(--font-mono);
-    font-size: 0.78rem;
-    letter-spacing: 0;
-    color: var(--accent-color);
-    overflow: hidden;
-    white-space: nowrap;
-    user-select: none;
-  }
-
   .footer-nav-heading {
     margin: 0 0 0.45rem;
     font-family: var(--font-mono);
@@ -2533,25 +2520,6 @@ picture img {
     .learning-summary {
       grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.8fr);
     }
-  }
-
-  .learning-progress-track {
-    height: 0.42rem;
-    overflow: hidden;
-    border: 1px solid rgb(214 207 193 / 1);
-    background: rgb(246 241 230 / 0.8);
-  }
-
-  .dark .learning-progress-track {
-    border-color: rgb(63 63 70 / 1);
-    background: rgb(39 39 42 / 0.8);
-  }
-
-  .learning-progress-value {
-    display: block;
-    height: 100%;
-    background: var(--accent-color);
-    transition: width 0.2s ease;
   }
 
   .learning-controls {
@@ -5217,6 +5185,101 @@ picture img {
   height: 0.7rem;
   color: var(--accent-color);
 }
+
+/* @halftone-components: dot heatmaps, progress rows, dot divider (agent A) */
+
+/* Dot grids (contributions, listening heatmap): one dot per cell, in the accent ink. */
+.dot-heatmap-scroll {
+  overflow-x: auto;
+}
+
+.dot-grid {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.dot-grid circle {
+  color: var(--accent-color);
+}
+
+.dot-grid-contributions {
+  min-width: 44rem;
+  max-width: 72rem;
+}
+
+.dot-grid-heatmap {
+  min-width: 34rem;
+}
+
+.dot-grid-label {
+  fill: currentColor;
+  opacity: 0.6;
+  font-family: var(--font-mono);
+  font-size: 7px;
+}
+
+.dot-legend {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0;
+}
+
+.dot-legend svg {
+  width: 0.7rem;
+  height: 0.7rem;
+  color: var(--accent-color);
+}
+
+/* Progress as a row of dots. */
+.dot-progress {
+  display: block;
+  width: 100%;
+  max-width: 15rem;
+  height: auto;
+  margin-top: 0.5rem;
+  color: var(--accent-color);
+}
+
+.learning-summary .dot-progress {
+  margin-top: 0.75rem;
+  max-width: 20rem;
+}
+
+/* Section break: a halftone rule swelling toward a mono label. */
+.dot-divider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 1.5rem 0;
+  color: var(--accent-color);
+  user-select: none;
+}
+
+.dot-divider-rule {
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: 27rem;
+  height: auto;
+}
+
+.dot-divider-label {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+}
+
+.dot-divider > .dot-divider-rule:first-child {
+  margin-left: auto;
+}
+
+.dot-divider > .dot-divider-rule:last-child {
+  margin-right: auto;
+}
+
+/* @halftone-scenes: bottle, moon, projector page placements (agents B, C) */
 
 /* Small pieces set beside text: bonfire, coffee, vinyl. */
 .halftone-piece {

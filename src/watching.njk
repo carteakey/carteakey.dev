@@ -17,6 +17,14 @@ collectionArchetype: shelf
 {% set pageDescription = 'Recent films, ratings, and notes synced from <a href="' ~ watching.profileUrl ~ '" class="accent-link">Letterboxd</a>.' %}
 {% include "components/page-header.njk" %}
 
+{% from "components/halftone.njk" import halftone with context %}
+<section class="surface surface-padding not-prose mb-6">
+  <div class="halftone-feature">
+    {{ halftone("projector", "square", class="halftone-piece") }}
+    <p class="editorial-support">One reel at a time. Logged on Letterboxd, copied here.</p>
+  </div>
+</section>
+
 {% if watching.entries and watching.entries.length > 0 %}
 <div class="not-prose divide-y divide-gray-100 dark:divide-gray-800/80">
   {% for film in watching.entries %}

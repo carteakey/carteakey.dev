@@ -15,7 +15,15 @@ eleventyNavigation:
   {% set pageDescription = "A quiet weekly digest of new posts about AI, data science, self-hosting, and technology. No email when there is nothing new; unsubscribe anytime." %}
   {% include "components/page-header.njk" %}
 
+  {% from "components/halftone.njk" import halftone with context %}
   <div id="subscribeForm" class="{{ cardShell }} surface-padding">
+    <div class="halftone-feature mb-4">
+      {{ halftone("bottle", "square", class="halftone-piece") }}
+      <div>
+        <p class="page-eyebrow">Message in a bottle</p>
+        <h2 class="editorial-title-compact mt-1">New writing, sent when it is ready.</h2>
+      </div>
+    </div>
     <form name="newsletter" method="POST" action="/newsletter/success/" data-netlify="true" netlify-honeypot="bot-field" class="space-y-3" data-newsletter-form data-newsletter-source="newsletter-page" data-error-target="#errorMessage">
       <input type="hidden" name="form-name" value="newsletter" />
 

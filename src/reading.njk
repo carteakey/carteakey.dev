@@ -9,6 +9,7 @@ eleventyNavigation:
 collectionArchetype: shelf
 ---
 
+{% from "components/dot-progress.njk" import dotProgress %}
 {% include "components/breadcrumbs.njk" %}
 
 {% set pageTitle = "Reading" %}
@@ -47,10 +48,7 @@ collectionArchetype: shelf
             {% endif %}
           </div>
           {% if book.progress !== undefined %}
-          {# Progress bar #}
-          <div class="mt-2 h-1 bg-gray-100 dark:bg-gray-800 rounded-sm overflow-hidden w-full max-w-sm">
-            <div class="h-full rounded-sm" style="width: {{ book.progress }}%; background: var(--accent-color); transition: width 0.3s;"></div>
-          </div>
+          {{ dotProgress(book.progress, book.title ~ " progress") }}
           {% endif %}
           {% if book.notes %}
             <p class="editorial-support-compact mt-1.5 mb-0">{{ book.notes }}</p>

@@ -6,7 +6,7 @@
     "src/_includes/components/cartebase-charts.njk": {
       "pill-or-circle": 3,
       "utility-text-stack": 9,
-      "inline-style": 10
+      "inline-style": 8
     },
     "src/_includes/components/copy-markdown.njk": {
       "off-palette-colour": 1,
@@ -24,9 +24,7 @@
       "inline-style": 19
     },
     "src/_includes/components/github-contributions.njk": {
-      "off-palette-colour": 16,
-      "utility-text-stack": 2,
-      "inline-style": 2
+      "utility-text-stack": 1
     },
     "src/_includes/components/watching-snippet.njk": {
       "inline-style": 1
@@ -102,9 +100,6 @@
     "src/index.njk": {
       "inline-style": 1
     },
-    "src/learning.njk": {
-      "inline-style": 1
-    },
     "src/listening.njk": {
       "pill-or-circle": 4,
       "utility-text-stack": 3,
@@ -113,9 +108,6 @@
     "src/newsletter.njk": {
       "pill-or-circle": 1,
       "off-palette-colour": 20
-    },
-    "src/newsletter/success.njk": {
-      "off-palette-colour": 2
     },
     "src/notes.njk": {
       "inline-style": 1
@@ -217,7 +209,7 @@
       "inline-style": 2
     },
     "src/reading.njk": {
-      "inline-style": 2
+      "inline-style": 1
     },
     "src/reviews.njk": {
       "utility-text-stack": 1

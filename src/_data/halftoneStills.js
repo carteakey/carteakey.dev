@@ -42,6 +42,29 @@ const SCENES = [
   },
   { name: "coffee", module: "scenes/coffee.js", cols: 60, rows: 60, still: 2 },
   { name: "vinyl", module: "scenes/vinyl.js", cols: 72, rows: 72, still: 0.4 },
+  {
+    name: "bottle",
+    module: "scenes/bottle.js",
+    cols: 64,
+    rows: 64,
+    still: 1.5,
+  },
+  {
+    name: "bottle-ashore",
+    module: "scenes/bottle.js",
+    cols: 64,
+    rows: 64,
+    still: 1.5,
+    mode: "ashore",
+  },
+  { name: "moon", module: "scenes/moon.js", cols: 72, rows: 72, still: 0 },
+  {
+    name: "projector",
+    module: "scenes/projector.js",
+    cols: 72,
+    rows: 72,
+    still: 1.5,
+  },
 ];
 
 function toSvg(coverage, cols, rows, ink) {

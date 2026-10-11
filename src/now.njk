@@ -21,6 +21,17 @@ collectionArchetype: ledger
 ] %}
 {% include "components/page-header.njk" %}
 
+{% from "components/halftone.njk" import halftone with context %}
+<section class="surface surface-padding not-prose mb-10">
+  <div class="halftone-feature">
+    {{ halftone("moon", "square", class="halftone-piece") }}
+    <div>
+      <p class="page-eyebrow">The sky</p>
+      <p class="editorial-title-compact mt-1" data-halftone-caption="moon">{{ moonTonight.caption }}</p>
+    </div>
+  </div>
+</section>
+
 {% set hasWrittenNow = (nowPage.highlights and nowPage.highlights.length > 0) or (nowPage.updates and nowPage.updates.length > 0) %}
 {% if hasWrittenNow %}
 <section class="not-prose mb-10">

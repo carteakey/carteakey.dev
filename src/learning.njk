@@ -7,6 +7,7 @@ eleventyNavigation:
   order: 14
 collectionArchetype: index
 ---
+{% from "components/dot-progress.njk" import dotProgress %}
 {% include "components/breadcrumbs.njk" %}
 
 {% set pageEyebrow = "Local Notebook" %}
@@ -28,9 +29,7 @@ collectionArchetype: index
     <h2 id="learning-summary-title" class="editorial-title-compact"><span id="learningCompletedCount">0</span> of <span id="learningTotalCount">{{ learningPosts | length }}</span> completed</h2>
     <p id="learningProgressText" class="editorial-support-compact mt-1">0% complete</p>
   </div>
-  <div class="learning-progress-track" aria-hidden="true">
-    <span id="learningProgressBar" class="learning-progress-value" style="width: 0%"></span>
-  </div>
+  {{ dotProgress(0, "Reading list completion", "learningProgressBar") }}
 </section>
 
 <div class="learning-controls not-prose">

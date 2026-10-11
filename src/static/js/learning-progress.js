@@ -57,10 +57,22 @@
 
     if (completedCount) completedCount.textContent = String(completed)
     if (totalCount) totalCount.textContent = String(total)
-    if (progressBar) progressBar.style.width = `${percentage}%`
+    if (progressBar) setDotProgress(progressBar, percentage)
     if (progressText) progressText.textContent = `${percentage}% complete`
 
     applyDashboardFilters()
+  }
+
+  function setDotProgress(svg, percentage) {
+    const dots = Array.from(svg.querySelectorAll('[data-dot]'))
+    dots.forEach((dot, index) => {
+      const coverage = Math.min(1, Math.max(0, (percentage / 100) * dots.length - index))
+      const radius = coverage >= 1 ? 5.4 : Math.max(1.44, 5.4 * Math.sqrt(coverage))
+      dot.setAttribute('r', radius.toFixed(2))
+      if (coverage > 0) dot.removeAttribute('opacity')
+      else dot.setAttribute('opacity', '0.35')
+    })
+    svg.setAttribute('aria-valuenow', String(percentage))
   }
 
   function applyDashboardFilters() {
