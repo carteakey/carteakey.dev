@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.29] - 2026-10-10
+### Fixed
+- Dependency audit: remediated 21 of 23 GitHub Dependabot advisories across build-time tooling (including critical `shell-quote` command injection, high severity `sharp`, `source-map-js`, `brace-expansion`, and `js-yaml` advisories, and 10 `undici` advisories) via direct dependency bumps (`sharp`, `markdown-it`, `js-yaml`) and `pnpm-workspace.yaml` overrides (`undici`, `shell-quote`, `source-map-js`, `postcss-selector-parser`, `brace-expansion`, and major-version scoped `js-yaml`). The two remaining advisories (`braces <= 3.0.3` and `sprintf-js <= 1.1.3`) are build-time only with no patched releases published yet upstream.
+
 ## [2.7.28] - 2026-10-10
 ### Changed
 - The homepage renders with Nunjucks instead of WebC; it used no WebC features. `AGENTS.md` is now titled "Contributor playbook".
