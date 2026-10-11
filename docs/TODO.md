@@ -12,9 +12,10 @@ Findings from the 2026-10-10 review, roughly in priority order. Promote items to
 - [ ] Start the media move before the parked R2 trigger: `.git` is 527 MB, `src/static/img` 240 MB, `_site` 367 MB. Moving photography, GIFs, and MP4s off-repo also eases the Netlify build-minute pressure behind batched pushes. Plan: `docs/ideas/image-hosting-r2-worker.md`.
 - [ ] Add unit tests (`node:test`) for publishing logic: `hidden`/`draft` visibility, date rules, feed text normalization, tag collections. Current checks cover lint, content rules, design drift, and generated HTML, but nothing would catch a draft leaking into the feed. Depends on the config split.
 - [ ] Refresh Lighthouse data: `src/_data/lighthouse.json` is a manual run from 2025-10-04. Run `lighthouserc.cjs` on a schedule in CI, or drop the data if it is displayed.
-- [ ] Drop WebC: `src/index.njk` is the only WebC template and uses it only for `eleventy-img`'s component. Switch to the `{% image %}` shortcode and remove `@11ty/eleventy-plugin-webc`.
+- [x] Drop WebC: `src/index.njk` is the only WebC template and uses it only for `eleventy-img`'s component. Switch to the `{% image %}` shortcode and remove `@11ty/eleventy-plugin-webc`.
 - [ ] Consolidate the 20 inline `<script>` blocks in `src/_includes/layouts/base.njk` (~130 lines) into one cached, deferred module. Keep only the theme/accent bootstrap inline to avoid a flash on load. Update the `AGENTS.md` guidance on inline Alpine snippets to match.
-- [ ] Tidy docs: move one-off files (`docs/overfit-inference-*.md`, `docs/prompt.md`, `docs/instructions.md`) to `docs/history/`; fix the stale "Copilot playbook" heading in `AGENTS.md`; archive older years of `docs/CHANGELOG.md` (1,900 lines).
+- [x] Tidy docs: move one-off files (`docs/overfit-inference-*.md`, `docs/prompt.md`, `docs/instructions.md`) to `docs/history/`; fix the stale "Copilot playbook" heading in `AGENTS.md`.
+- [ ] Archive older years of `docs/CHANGELOG.md` (1,900 lines).
 
 ### Footer scene
 

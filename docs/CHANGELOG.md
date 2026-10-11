@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.28] - 2026-10-10
+### Changed
+- The homepage renders with Nunjucks instead of WebC; it used no WebC features. `AGENTS.md` is now titled "Contributor playbook".
+- "Working with Copilot and Codex" links `docs/prompt.md` and `docs/instructions.md` at a fixed commit instead of the `sonnet` branch, so the move cannot break them.
+
+### Removed
+- `@11ty/eleventy-plugin-webc`.
+- One-off docs (`prompt.md`, `instructions.md`, the two overfit-inference reviews) moved to `docs/history/`.
+
 ## [2.7.27] - 2026-10-10
 ### Changed
 - Redrew the footer as a bespoke lighthouse coast in the hero portrait's halftone: orthogonal accent dots sized `0.6 × pitch × √coverage` on a 6% tint, sampled once per displayed dot instead of resampling a 200 × 100 character field into a squashed panorama. The result is crisp in place of blurry and striped.

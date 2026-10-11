@@ -1,4 +1,4 @@
-# Copilot playbook for `carteakey.dev`
+# Contributor playbook for `carteakey.dev`
 
 You're working at the `carteakey.dev` codebase, a personal blog and portfolio site built with Eleventy, Tailwind CSS, and Alpine.js. This playbook outlines the key guidelines, practices, and workflows to follow when contributing to this project.
 

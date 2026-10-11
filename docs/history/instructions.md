@@ -41,4 +41,4 @@ These notes codify the rules I follow when pairing with Copilot/Codex on the blo
 - Use the feed, posts index, `/now`, `/stats`, and `/bookmarks` pages as sanity checks before ship.
 - When introducing new data or dynamic behaviour, favour ESM modules that export plain objects or functions.
 
-See `docs/prompt.md` for the current mission statement and `docs/TODO.md` for the active backlog.
+See `docs/history/prompt.md` for the former mission statement and `docs/TODO.md` for the active backlog.

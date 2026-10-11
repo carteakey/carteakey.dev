@@ -17,11 +17,11 @@ I have been leaning heavily on the Copilot/Codex pairing lately, so it felt righ
 
 ## The mission lives in `docs/prompt.md`
 
-The current assignment for Copilot/Codex always lives in [`docs/prompt.md`](https://github.com/carteakey/carteakey.dev/blob/sonnet/docs/prompt.md). I update that file before kicking off a work session so the agent has crisp guardrails-scope, batching rules, and how to report back. Treat it as the mission briefing: when the objective changes, the prompt changes, and every downstream action follows suit.
+The current assignment for Copilot/Codex always lives in [`docs/prompt.md`](https://github.com/carteakey/carteakey.dev/blob/f198e01/docs/prompt.md). I update that file before kicking off a work session so the agent has crisp guardrails-scope, batching rules, and how to report back. Treat it as the mission briefing: when the objective changes, the prompt changes, and every downstream action follows suit.
 
 ## The playbook is captured in `docs/instructions.md`
 
-[`docs/instructions.md`](https://github.com/carteakey/carteakey.dev/blob/sonnet/docs/instructions.md) collects the house rules: stay on `sonnet`, favour the simplest solution, keep the changelog and `versions.json` honest, and never edit `_site/` by hand. It also lists the stack and integration quirks (Eleventy 3, Tailwind 4, Alpine sprinkles, Upstash upvotes, etc.). Before any edit, I have the agent read this document so we start from the same context.
+[`docs/instructions.md`](https://github.com/carteakey/carteakey.dev/blob/f198e01/docs/instructions.md) collects the house rules: stay on `sonnet`, favour the simplest solution, keep the changelog and `versions.json` honest, and never edit `_site/` by hand. It also lists the stack and integration quirks (Eleventy 3, Tailwind 4, Alpine sprinkles, Upstash upvotes, etc.). Before any edit, I have the agent read this document so we start from the same context.
 
 ## A single flow for every task
 

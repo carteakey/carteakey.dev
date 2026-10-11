@@ -11,7 +11,6 @@ import syntaxHighlight from "@11ty/eleventy-plugin-syntaxhighlight";
 import pluginNavigation from "@11ty/eleventy-navigation";
 import eleventyPluginFeathericons from "eleventy-plugin-feathericons";
 import pluginTOC from "eleventy-plugin-toc";
-import eleventyWebcPlugin from "@11ty/eleventy-plugin-webc";
 import { EleventyRenderPlugin } from "@11ty/eleventy";
 import { EleventyHtmlBasePlugin } from "@11ty/eleventy";
 import { feedPlugin } from "@11ty/eleventy-plugin-rss";
@@ -618,15 +617,6 @@ export default function (eleventyConfig) {
         email: "carteakey.dev@gmail.com", // Updated email
       },
     },
-  });
-
-  // WebC
-  eleventyConfig.addPlugin(eleventyWebcPlugin, {
-    components: [
-      // …
-      // Add as a global WebC component
-      "npm:@11ty/eleventy-img/*.webc",
-    ],
   });
 
   // https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#valid-date-string
