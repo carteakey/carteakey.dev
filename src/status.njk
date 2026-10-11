@@ -138,4 +138,35 @@ collectionArchetype: ledger
   </div>
 </section>
 
+{# One halftone dot per recorded build, oldest on the left. Real history from
+   .cache/status-builds.json, which Netlify keeps between deploys. #}
+{% set history = status.buildHistory | reverse %}
+{% set slots = 30 %}
+{% set pad = slots - (history | length) %}
+<section class="mt-6 surface surface-padding not-prose">
+  <h2 class="editorial-kicker mb-1">Recent builds</h2>
+  <p class="editorial-support-compact">{{ status.builds.tracked }} builds tracked; {{ status.builds.cleanRate }}% finished without errors. Oldest on the left.</p>
+  <svg class="build-strip mt-3" viewBox="0 0 {{ slots * 12 }} 14" role="img" aria-label="Last {{ status.builds.tracked }} builds: {{ status.builds.cleanRate }}% without errors, {{ status.builds.quietRate }}% without warnings">
+    {% for n in range(0, pad) %}
+      <circle cx="{{ n * 12 + 6 }}" cy="7" r="0.9" fill="currentColor" opacity="0.35"></circle>
+    {% endfor %}
+    {% for build in history %}
+      {% set x = (pad + loop.index0) * 12 + 6 %}
+      {% set label = (build.timestamp | readableDate) ~ " · " ~ ((build.durationMs / 1000) | round(1)) ~ " s · " ~ build.warnings ~ " warnings · " ~ build.errors ~ " errors" %}
+      {% if build.status != "success" or build.errors > 0 %}
+        <circle cx="{{ x }}" cy="7" r="4.2" fill="none" stroke="currentColor" stroke-width="1.6"><title>{{ label }}</title></circle>
+      {% elif build.warnings > 0 %}
+        <circle cx="{{ x }}" cy="7" r="3.4" fill="currentColor"><title>{{ label }}</title></circle>
+      {% else %}
+        <circle cx="{{ x }}" cy="7" r="5.4" fill="currentColor"><title>{{ label }}</title></circle>
+      {% endif %}
+    {% endfor %}
+  </svg>
+  <p class="build-strip-legend mt-2 meta-text">
+    <span><svg viewBox="0 0 12 12" aria-hidden="true"><circle cx="6" cy="6" r="5.4" fill="currentColor"></circle></svg>clean</span>
+    <span><svg viewBox="0 0 12 12" aria-hidden="true"><circle cx="6" cy="6" r="3.4" fill="currentColor"></circle></svg>warnings</span>
+    <span><svg viewBox="0 0 12 12" aria-hidden="true"><circle cx="6" cy="6" r="4.2" fill="none" stroke="currentColor" stroke-width="1.6"></circle></svg>errors</span>
+  </p>
+</section>
+
 <p class="mt-3 editorial-support-compact not-prose">Updated during each site build. When a source is unavailable, its page may continue using the last available data.</p>

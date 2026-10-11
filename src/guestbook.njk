@@ -61,8 +61,16 @@ collectionArchetype: wall
   {# ── Submission form ── #}
   {% set cardShell = "surface" %}
   
+  {% from "components/halftone.njk" import halftone with context %}
   <section class="{{ cardShell }} p-5 sm:p-6">
-    <h2 class="editorial-title-compact">Leave a note ✍️</h2>
+    <div class="halftone-feature">
+      {{ halftone("bonfire", "square", class="halftone-piece") }}
+      <div>
+        <p class="page-eyebrow">Bonfire lit</p>
+        <h2 class="editorial-title-compact mt-1">Rest at the bonfire, leave a note</h2>
+        <p class="editorial-support-compact mt-1">Something for the next traveller who passes through.</p>
+      </div>
+    </div>
     <form
       name="guestbook"
       method="POST"

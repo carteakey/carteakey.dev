@@ -1,0 +1,9 @@
+---
+pagination:
+  data: halftoneStills
+  size: 1
+  alias: still
+permalink: "/img/halftone/{{ still.name }}-{{ still.theme }}.svg"
+eleventyExcludeFromCollections: true
+---
+{{ still.svg | safe }}

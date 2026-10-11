@@ -25,7 +25,11 @@ collectionArchetype: shelf
 {% set pageDescription = "My whole Spotify listening history, all-time - not just the last year. Pulled from <a href=\"https://github.com/carteakey/cartebase\" class=\"accent-link\">cartebase</a>. <a href=\"/data/\" class=\"accent-link\">Back to /data/ →</a>" %}
 {% include "components/page-header.njk" %}
 
-{{ cb.now_playing_strip(spotify.nowPlaying) }}
+{% from "components/halftone.njk" import halftone with context %}
+<div class="halftone-feature not-prose mb-4">
+  {{ halftone("vinyl", "square", class="halftone-piece") }}
+  <div class="min-w-0 flex-1 w-full">{{ cb.now_playing_strip(spotify.nowPlaying) }}</div>
+</div>
 
 <div class="not-prose mb-4">
   {{ cb.wrapped_card(

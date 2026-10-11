@@ -135,6 +135,8 @@ export default async function () {
       attention: summarizeAttention(eventSummary.recent),
     },
     builds: summarizeBuilds(builds),
+    // Newest first, up to 30; persisted in .cache across Netlify deploys.
+    buildHistory: builds,
     performance: {
       buildElapsedMs: currentBuild.durationMs,
       rssMb: currentBuild.rssMb,

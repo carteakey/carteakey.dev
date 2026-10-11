@@ -341,7 +341,6 @@ picture img {
     background-color: color-mix(in srgb, var(--accent-color) 85%, black);
   }
 
-  .support-coffee-icon,
   .support-method-icon {
     display: inline-flex;
     flex: none;
@@ -349,22 +348,6 @@ picture img {
     justify-content: center;
     color: var(--accent-color);
     background: color-mix(in srgb, var(--accent-color) 11%, transparent);
-  }
-
-  .support-coffee-icon {
-    position: relative;
-    width: 2rem;
-    height: 2rem;
-    border-radius: 0.6rem;
-  }
-
-  .support-coffee-heart {
-    position: absolute;
-    width: 0.65rem;
-    height: 0.65rem;
-    right: -0.2rem;
-    top: -0.2rem;
-    fill: currentColor;
   }
 
   .support-method {
@@ -5108,9 +5091,9 @@ picture img {
   color: rgb(107 114 128);
 }
 
-/* Illustration geometry must beat the global figure/code-block rules.
-   This authored night scene keeps its own ground in either page theme. */
-.site-content .ascii-coast {
+/* Halftone scenes: the hero portrait's screen, live. Unlayered so global
+   figure/img rules cannot change their geometry. See docs/HALFTONE_SCENES.md. */
+.site-content .footer-scene {
   display: block;
   width: 100%;
   max-width: none;
@@ -5118,43 +5101,149 @@ picture img {
   text-align: left;
 }
 
-.ascii-coast-viewport {
+.halftone {
   position: relative;
-  container-type: inline-size;
   width: 100%;
-  --ascii-y-scale: 0.4;
-  aspect-ratio: 5 / 1;
   overflow: hidden;
-  background: #faf7f0;
+  background: #f4f3ee;
   color: var(--accent-color);
 }
 
-.site-content .ascii-coast .ascii-scene,
-.dark .site-content .ascii-coast .ascii-scene {
-  display: block;
-  box-sizing: border-box;
-  width: 100%;
-  max-width: none;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  color: inherit;
-  font-family: monospace;
-  font-size: calc(100cqw / 120.42);
-  transform: scaleY(var(--ascii-y-scale));
-  transform-origin: top left;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 0.6021;
-  letter-spacing: 0;
-  white-space: pre;
-  overflow: hidden;
-  user-select: none;
+.dark .halftone {
+  background: #101010;
 }
 
-.ascii-caption {
+.halftone-coast {
+  aspect-ratio: 4 / 1;
+}
+
+.halftone-wide {
+  aspect-ratio: 5 / 2;
+}
+
+.halftone-square {
+  aspect-ratio: 1 / 1;
+}
+
+@media (max-width: 639px) {
+  .halftone-coast {
+    aspect-ratio: 5 / 2;
+  }
+
+  .halftone-wide {
+    aspect-ratio: 3 / 2;
+  }
+}
+
+.site-content .halftone .halftone-still {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+.site-content .halftone .halftone-still img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  margin: 0;
+  border-radius: 0;
+  object-fit: cover;
+}
+
+.site-content .halftone .halftone-still-night,
+.dark .site-content .halftone .halftone-still-day {
+  display: none;
+}
+
+.dark .site-content .halftone .halftone-still-night {
+  display: block;
+}
+
+/* The canvas fades in over the matching still, then the still steps aside. */
+.halftone-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.halftone.is-live {
+  cursor: crosshair;
+}
+
+.halftone.is-live .halftone-canvas {
+  opacity: 1;
+}
+
+.halftone.is-live .halftone-still {
+  visibility: hidden;
+  transition: visibility 0s linear 0.4s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .halftone-canvas,
+  .halftone.is-live .halftone-still {
+    transition: none;
+  }
+}
+
+/* Status: one dot per build, in the halftone's dot-size language. */
+.build-strip {
+  display: block;
+  width: 100%;
+  max-width: 32rem;
+  height: auto;
+  color: var(--accent-color);
+}
+
+.build-strip-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1rem;
+}
+
+.build-strip-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.build-strip-legend svg {
+  width: 0.7rem;
+  height: 0.7rem;
+  color: var(--accent-color);
+}
+
+/* Small pieces set beside text: bonfire, coffee, vinyl. */
+.halftone-piece {
+  width: 8.5rem;
+  flex-shrink: 0;
+}
+
+@media (min-width: 640px) {
+  .halftone-piece {
+    width: 10rem;
+  }
+}
+
+.halftone-feature {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+@media (max-width: 479px) {
+  .halftone-feature {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.footer-scene-caption {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -5167,44 +5256,6 @@ picture img {
   color: inherit;
 }
 
-.ascii-caption a {
+.footer-scene-caption a {
   color: var(--accent-color);
-}
-
-@media (max-width: 639px) {
-  .ascii-coast-viewport {
-    --ascii-y-scale: 0.666667;
-    aspect-ratio: 3 / 1;
-  }
-}
-
-.dark .ascii-coast-viewport {
-  background: #141414;
-  color: color-mix(in srgb, var(--accent-color) 72%, white);
-}
-
-.site-content .ascii-coast .ascii-scene-night,
-.dark .site-content .ascii-coast .ascii-scene-day {
-  display: none;
-}
-
-.ascii-canvas {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-}
-
-.ascii-scene.is-painted {
-  opacity: 0;
-}
-
-.ascii-canvas-night,
-.dark .ascii-canvas-day {
-  display: none;
-}
-
-.dark .ascii-canvas-night {
-  display: block;
 }

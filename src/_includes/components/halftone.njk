@@ -1,0 +1,19 @@
+{#
+  Live halftone scene with build-time stills underneath (no-JS fallback).
+  name: coast | bonfire | coffee | vinyl. shape: coast | wide | square.
+  mode: "search" for the 404 coast. Wide shapes get a phone-ratio still that
+  matches the canvas composition at that size.
+  The canvas is mounted by /static/js/halftone-scenes.js (loaded in base.njk).
+#}
+{% macro halftone(name, shape="square", mode="", class="") %}
+{% set key = name ~ (("-" ~ mode) if mode else "") %}
+{% set responsive = shape == "coast" or shape == "wide" %}
+<div class="halftone halftone-{{ shape }} {{ class }}" data-halftone="{{ name }}"{% if mode %} data-halftone-mode="{{ mode }}"{% endif %} aria-hidden="true">
+  {% for theme in ["day", "night"] %}
+  <picture class="halftone-still halftone-still-{{ theme }}">
+    {% if responsive %}<source media="(max-width: 639px)" srcset="/img/halftone/{{ key }}-m-{{ theme }}.svg?v={{ versions.version }}">{% endif %}
+    <img src="/img/halftone/{{ key }}-{{ theme }}.svg?v={{ versions.version }}" alt="" loading="lazy" decoding="async">
+  </picture>
+  {% endfor %}
+</div>
+{% endmacro %}

@@ -1,5 +1,34 @@
 # Site Improvement TODO List
 
+## Repo Review (2026-10-10)
+
+Findings from the 2026-10-10 review, roughly in priority order. Promote items to Linear when committing to them.
+
+### Site and build
+
+- [ ] Prune the page surface: ~60 top-level page templates, 35 registered in `eleventyNavigation`. Merge near-duplicates (see `/quotes/` vs `/quotations/` below) and move dormant pages to an archive or the `/more/` index instead of nav. Fewer pages means less for the design guard, `verify`, and upkeep to cover.
+- [ ] Split `eleventy.config.mjs` (2,164 lines, 81 filters/shortcodes/collections/hooks) into plugin modules, e.g. `config/filters.mjs`, `shortcodes.mjs`, `collections.mjs`, `images.mjs`. No behaviour change; makes diffs reviewable and the logic importable for tests.
+- [ ] Reduce CSS weight: one 5,239-line `src/static/css/tailwind.css` ships as 186 kB minified on every page. Split the source into `@import`ed partials (tokens, prose, components, collections, footer), audit dead selectors, and consider loading bespoke page styles (folios, footer scene) only where used.
+- [ ] Start the media move before the parked R2 trigger: `.git` is 527 MB, `src/static/img` 240 MB, `_site` 367 MB. Moving photography, GIFs, and MP4s off-repo also eases the Netlify build-minute pressure behind batched pushes. Plan: `docs/ideas/image-hosting-r2-worker.md`.
+- [ ] Add unit tests (`node:test`) for publishing logic: `hidden`/`draft` visibility, date rules, feed text normalization, tag collections. Current checks cover lint, content rules, design drift, and generated HTML, but nothing would catch a draft leaking into the feed. Depends on the config split.
+- [ ] Refresh Lighthouse data: `src/_data/lighthouse.json` is a manual run from 2025-10-04. Run `lighthouserc.cjs` on a schedule in CI, or drop the data if it is displayed.
+- [ ] Drop WebC: `src/index.njk` is the only WebC template and uses it only for `eleventy-img`'s component. Switch to the `{% image %}` shortcode and remove `@11ty/eleventy-plugin-webc`.
+- [ ] Consolidate the 20 inline `<script>` blocks in `src/_includes/layouts/base.njk` (~130 lines) into one cached, deferred module. Keep only the theme/accent bootstrap inline to avoid a flash on load. Update the `AGENTS.md` guidance on inline Alpine snippets to match.
+- [ ] Tidy docs: move one-off files (`docs/overfit-inference-*.md`, `docs/prompt.md`, `docs/instructions.md`) to `docs/history/`; fix the stale "Copilot playbook" heading in `AGENTS.md`; archive older years of `docs/CHANGELOG.md` (1,900 lines).
+
+### Footer scene
+
+Done in 2.7.27 (now in the shared `src/static/js/halftone.js`).
+
+- [x] Cursor swell lags: each redraw recomputes the scene, so the swell updates at the 15 fps scene rate. Cache the last coverage array in `src/static/js/footer-halftone.js` and redraw dots on `requestAnimationFrame` when the pointer moves.
+- [x] With reduced motion, every `pointermove` calls `still()`, which reruns the full `scene(4.2)` (5–8 ms). Reuse the cached coverage and rAF-gate the redraw.
+- [x] Read `getComputedStyle(shell).color` once in `build()` instead of every frame.
+- [x] Cache clouds: `cloud()` in `src/static/js/footer-scene.js` runs ~7 octaves of fbm per sky cell per frame (up to ~400 × 100 dots on wide screens). Refresh the cloud field every few frames or shift a precomputed strip.
+- [x] Phone still/canvas mismatch: the SVG still is composed at 4:1 and cropped to 5:2, while the canvas recomposes for 5:2, so the scene jumps when the canvas takes over. Build a 5:2 still and switch via `<picture>`/media, or fade the canvas in.
+- [x] Add `<link rel="modulepreload">` for `footer-scene.js` (with `?v=`) so it loads in parallel with `footer-halftone.js` instead of after its top-level `await import()`.
+- [x] Remove the duplicate "Foreground pines" comment and the unused `TONES.day.cloudOrb`.
+- [x] Scope `cursor: crosshair` to `.footer-scene-viewport.is-live` so it does not show without JS.
+
 ## Repo Hardening (2026-09-30)
 
 Guardrails and cleanup from the 2026-09-30 repo review. Open follow-ups stay at the bottom.

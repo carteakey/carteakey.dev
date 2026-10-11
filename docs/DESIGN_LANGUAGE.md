@@ -334,7 +334,7 @@ specific color used confidently and broadly.
 
 ### Halftone imagery
 
-Real photos (the avatar, the footer's skyline band) get a genuine halftone
+Real photos (the avatar) and the footer coast get a genuine halftone
 dot-screen in the accent color - dot *radius* modulated by the source
 photo's actual luminance, not a CSS filter approximation (a filter can fake
 a flat duotone but not true halftone; see the experimentation log for why
@@ -477,8 +477,8 @@ If you need a compact instruction for later passes, use this:
 
 For cleanup work, keep the same principle: converge older pages onto the shared primitives before adding page-local styling.
 
-## ASCII illustrations
+## Footer scene and ASCII ornaments
 
-Use `.ascii-coast` for the shared footer landscape and `.ascii-divider` for a small section break. Keep illustrations decorative and hidden from assistive technology; navigation and content remain ordinary HTML. The footer uses self-hosted MIT-licensed alpine-dawn and night-coast scenes from [ascii.rest](https://ascii.rest/) by [@bas3line](https://github.com/bas3line), with its license alongside the vendored module. Render a character fallback during builds, then draw continuous antialiased halftone circles like the hero portrait; use accent ink on paper for daytime and accent-colored light on a dark ground for nighttime, and animate only while visible when reduced motion is not requested. Avoid introducing extra palettes, remote runtime scripts, or animated decoration to every section.
+Use `.footer-scene` for the shared footer landscape and `.ascii-divider` for a small section break. Keep illustrations decorative and hidden from assistive technology; navigation and content remain ordinary HTML. The footer coast uses the hero portrait's halftone screen: orthogonal accent dots, radius `0.6 × pitch × √coverage`, on a 6% accent tint, sampled once per displayed dot (never resampled or stretched). Day is ink on paper, night is light on a dark ground, and the same coast appears in both. It animates only while visible when reduced motion is not requested, and a build-time SVG is the no-JS fallback. The same screen is used for a few small scenes with a reason to be there (bonfire on the guestbook, coffee on support, a record on listening, the searching lighthouse on 404), placed with `components/halftone.njk`, one per page region. Halftone stays one ink: the accent. Never add a second color to a scene. Avoid introducing extra palettes, remote runtime scripts, or animated decoration to every section.
 
-See [ASCII rendering](ASCII_RENDERING.md) for the reusable player, frame construction, cell sizing, contrast, and validation workflow.
+See [Halftone scenes](HALFTONE_SCENES.md) for sampling, tone, player, and validation rules.

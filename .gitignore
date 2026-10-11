@@ -22,3 +22,6 @@ src/static/img/blog-sketches/personal-reflection.png
 src/static/img/blog-sketches/photo-cleanup.png
 src/static/img/blog-sketches/platform-tinkering.png
 src/static/img/blog-sketches/site-stack.png
+
+# Local Claude Code preview config
+.claude/launch.json

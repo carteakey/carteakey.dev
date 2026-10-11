@@ -14,15 +14,15 @@ eleventyNavigation:
 {% include "components/page-header.njk" %}
 
 <div class="grid gap-4 md:grid-cols-2 not-prose">
+  {% from "components/halftone.njk" import halftone with context %}
   <section class="surface surface-padding">
-    <p class="page-eyebrow">Direct support</p>
-    <h2 class="editorial-title-compact mt-1 flex items-center gap-2">
-      <span class="support-coffee-icon" aria-hidden="true">
-        {% feather "coffee", class="w-5 h-5" %}
-        {% feather "heart", class="support-coffee-heart" %}
-      </span>
-      Buy the next coffee
-    </h2>
+    <div class="halftone-feature">
+      {{ halftone("coffee", "square", class="halftone-piece") }}
+      <div>
+        <p class="page-eyebrow">Direct support</p>
+        <h2 class="editorial-title-compact mt-1">Buy the next coffee</h2>
+      </div>
+    </div>
     {% if support.methods.length %}
       <p class="editorial-support mt-2">
         If something here saved you time, you can leave a one-off tip.

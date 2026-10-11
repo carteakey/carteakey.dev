@@ -5,6 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.27] - 2026-10-10
+### Changed
+- Redrew the footer as a bespoke lighthouse coast in the hero portrait's halftone: orthogonal accent dots sized `0.6 × pitch × √coverage` on a 6% tint, sampled once per displayed dot instead of resampling a 200 × 100 character field into a squashed panorama. The result is crisp in place of blurry and striped.
+- The same coast appears in both themes: a solid sun, gulls, and ink glitter by day; a moon, stars, a sweeping lighthouse beam, and light on the water by night. The scene carries the hero's slow breath and its cursor swell.
+- Footer stills are now build-time halftone SVGs per theme (about 27 kB gzipped) for the no-JS fallback; the caption credits ascii.rest's night coast as the inspiration.
+- The coast follows Toronto's seasons: snow on the headland, pines, roof, and peaks with falling snow (December–March); a blossoming tree shedding petals (April–May); a full canopy and fireflies over the headland at night (June–August); a thinning tree dropping leaves (September–November). Preview another season with `?season=winter`.
+- Halftone playback: the cursor swell redraws cached dots at display rate (one rAF-gated redraw, never a scene recompute, including under reduced motion); the ink color is read once per build instead of every frame; the coast's cloud field refreshes at 4 Hz, halving frame cost at 400 × 100 dots. Stills are built for each layout's ratio (desktop and phone, footer and 404) and the canvas fades in over them, so the swap no longer jumps. The footer's modules are preloaded in parallel. The crosshair cursor appears only once a scene is live.
+
+### Added
+- A shared halftone mount (`halftone.js`, `halftone-scenes.js`) and `components/halftone.njk` macro, so any page can place a live scene with build-time stills.
+- 404: the same coast with the lighthouse beam searching the bay, day or night — "You've drifted past the lighthouse."
+- Guestbook: a Souls-style bonfire, a coiled sword in the ash with flames and drifting embers — "Rest at the bonfire, leave a note."
+- Support: a steaming cup of coffee beside "Buy the next coffee".
+- Listening: a record turning at 33⅓ under its tonearm beside Now playing.
+- Status: a recent-builds strip, one halftone dot per recorded build from the persisted build history (full: clean, small: warnings, ring: errors).
+
+### Removed
+- The vendored ascii.rest scenes, the character player, and the ASCII fallback data. `docs/ASCII_RENDERING.md` became `docs/HALFTONE_SCENES.md`.
+
 ## [2.7.26] - 2026-10-10
 ### Changed
 - Social preview convention: retain transparent on-site sketches and automatically build uncropped, opaque 1200 × 630 previews on paper for social sharing. Documented in the contributor playbook, design language, image guide, and sketches skill.
