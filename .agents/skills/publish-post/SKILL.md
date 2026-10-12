@@ -46,8 +46,9 @@ was wrong by 5x). Run the steps in order; stop and report on any failure.
 
 ## 3. Voice
 
-1. Run the `humanizer` skill for generic AI tells.
-2. Check the result against the `human-writer` baseline table. Measure, do not guess:
+1. Run the `human-writer` skill:
+   - Apply **Part 2** (General Humanizer Engine) to eliminate generic AI tells, formulaic staging, and chatbot framing.
+   - Check the result against **Part 1** (Author Baseline Table). Measure, do not guess:
 
    ```sh
    python3 .agents/skills/human-writer/scripts/calibrate.py     # corpus baseline
@@ -56,8 +57,10 @@ was wrong by 5x). Run the steps in order; stop and report on any failure.
    before and after. Targets per 1k words: **0 em dashes**, ~12 contractions,
    ~21 first-person pronouns, ~8 bold. Say which signals are still far off
    (length and number density on benchmark posts are the usual ones).
-3. Deliberate voice stays. Rare, earned swearing ("what in the fuck?") is the
+2. Deliberate voice stays. Rare, earned swearing ("what in the fuck?") is the
    owner's and is not edited out.
+3. The no-fabrication rule applies to your edits: keep all facts intact; this step
+   catches the shape and tone of the prose, not its substance.
 
 ## 4. Fact-check
 

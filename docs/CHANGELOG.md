@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Normalized small text utility sizes across template files to the editorial standard `text-[0.78rem]`.
 - Removed homepage `.dot-divider` element and cleaned up related CSS.
 - Consolidated media routing and ingestion into a single unified skill (`media-import`) powered by Sortling local decision models, removing the redundant `downloads-media-router` skill and legacy Swift script.
+- Consolidated writing skills into a single unified skill (`human-writer`): combines the author's calibrated voice fingerprint (Part 1) with the upstream `blader/humanizer` v3.1.0 engine (Part 2), adding clear instructions on refreshing both sections.
 
 ## [2.7.30] - 2026-10-10
 ### Added
