@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.31] - 2026-10-12
+### Added
+- Sortling reorganization: grouped WhatsApp Unforwarder posts into `src/posts/sortling/`, added 301 redirects in `_redirects`, and added the draft post `Goodbye Unforwarder, Hello Sortling` with a hand-drawn monochrome sketch thumbnail of the Sortling mascot.
+- Dedicated `Pinned` section in `/blog/` archive list and jump navigation bar, keeping yearly sections strictly reverse-chronological.
+- `pinnedPosts` collection in `eleventy.config.mjs`.
+
+### Changed
+- Streamlined `Unforwarder v2` post to remove code filenames and implementation jargon in favor of clear user experience and rationale.
+- Cleaned up pinned indicator on feed list rows to show a crisp accent bookmark icon without redundant right-side badge clutter.
+- Normalized small text utility sizes across template files to the editorial standard `text-[0.78rem]`.
+- Removed homepage `.dot-divider` element and cleaned up related CSS.
+
 ## [2.7.30] - 2026-10-10
 ### Added
 - Live halftone scenes: message in a bottle bobbing on the coast's sea on `/newsletter` and washed ashore on `/newsletter/success`, tonight's real moon phase on `/now` ("Tonight in Toronto"), and an old reel projector with a dusty cone beam on `/watching`.
