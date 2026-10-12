@@ -565,6 +565,13 @@ export default function (eleventyConfig) {
   eleventyConfig.addGlobalData("isDev", !IS_PRODUCTION_BUILD);
   eleventyConfig.addGlobalData("currentYear", new Date().getFullYear());
   eleventyConfig.addGlobalData("showHiddenContent", SHOW_HIDDEN_CONTENT);
+  eleventyConfig.addGlobalData("memes", () => {
+    try {
+      return load(readFileSync("src/_data/ai-memes.yaml", "utf-8"));
+    } catch (_) {
+      return [];
+    }
+  });
   eleventyConfig.addGlobalData("eleventyComputed", {
     permalink: (data = {}) => {
       if (data.hidden === true && !SHOW_HIDDEN_CONTENT) {
