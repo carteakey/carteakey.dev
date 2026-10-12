@@ -1,10 +1,11 @@
 ---
-title: "Unforwarder v2: Kill the Noise, Save the Memories"
-description: From one script to a two-tool WhatsApp hygiene system - destroy the junk, preserve what matters.
+title: "Unforwarder v2: Cleaning WhatsApp at the Source"
+description: Pruning spam links, chain forwards, and chat clutter directly inside WhatsApp before saving media.
 image: /img/blog-sketches/unique/unforwarder-v2-kill-the-noise-save-the-memories-stamp-trim.png
 imageAlt: "Transparent monochrome sketch of a photo stream being filtered into trash and memories"
 date: 2026-03-08T00:00:00.000Z
 authored_by: ai-assisted
+giscusTerm: "/blog/unforwarder-v2-kill-the-noise-save-the-memories/"
 updated: 2026-03-08T00:00:00.000Z
 hidden: true
 tags:
@@ -12,80 +13,49 @@ tags:
   - VLM
 ---
 
-About a year ago I wrote about [The Unforwarder](/blog/the-unforwarder-how-i-stopped-backing-up-junk-photos/) - a 60-line Python script that used a local vision model to sort WhatsApp images into "real photos worth keeping" and "junk to delete". It worked. I was happy.
+About a year ago I wrote about [The Unforwarder](/blog/sortling/the-unforwarder-how-i-stopped-backing-up-junk-photos/), which used a local vision model to separate actual family photos from WhatsApp junk. It worked fine for what it was, but it only handled images after I had already exported them to my computer.
 
-Then I kept using WhatsApp.
+The source - WhatsApp itself - remained a mess. Every time I scrolled back through family or uncle groups, I still had to wade through YouTube Shorts links, Facebook reels, forwarded memes sent as raw media files, and the eternal parade of Good Morning graphics. My phone's camera roll was still getting polluted before I could even run the cleanup script. I wanted to clean things up right inside WhatsApp instead of waiting for a manual export.
 
-The junk doesn't stop at photos. There are YouTube Shorts links. Facebook links. Forwarded memes sent directly as media files. Good morning messages with embedded images. Uncle groups forwarding the same WhatsApp channel posts seventeen times. The noise is relentless, and it lives everywhere - not just in your camera roll backup, but in your chat history itself.
+## Cleaning at the source
 
-So I went deeper.
+WhatsApp Web connects over the desktop browser protocol. Link it once with a QR code like any browser session, and you can talk to your chats directly: reading messages, downloading media, and deleting clutter.
 
-## The Problem Gets Bigger
+Crucially, "delete for me" syncs across linked devices. When the script deletes a spam link or a chain forward, it vanishes from the phone too.
 
-The original unforwarder only solved half the problem: it cleaned up images *after* you'd already exported them from your phone. The source - WhatsApp itself - was still full of junk. Every time you scrolled through a chat, there it was. Every time WhatsApp backed something up to iCloud or Google Photos, there it went.
+## Deleting vs preserving
 
-I wanted to clean at the source.
+The cleanup has two distinct jobs: clear out junk from the chats, and save clean copies of the things worth keeping.
 
-Turns out WhatsApp Web has an unofficial but well-maintained Node.js library called [whatsapp-web.js](https://github.com/pedroslopez/whatsapp-web.js) that hooks into the same protocol as the browser client. You authenticate via QR code like any other linked device, and then you have programmatic access to your entire chat history - read messages, download media, and yes, delete messages.
+For deleting, it makes three quick passes:
+- **Junk links:** Stripping out YouTube Shorts, Facebook reels, and any spam links you add to the list.
+- **Frequently forwarded media:** WhatsApp tags messages forwarded five or more times with a little flag. If something has been passed around that much in a group, it's almost certainly not a personal memory.
+- **Text spam:** Matching obvious Good Morning greetings, motivational quotes, and religious chain forwards against a text list.
 
-Delete *for me*. Which, it turns out, syncs across all your linked devices. Tested. Confirmed.
+For preserving, another helper pulls real photos and videos into monthly folders with their original timestamps intact, skipping anything that was already flagged as forwarded. If there's a conversation worth keeping before leaving a loud group, it can also dump the full chat into readable daily notes.
 
-## Two Tools, One Purpose
+Whatever survives the chat prune gets handed over to the local vision model: keep the real memories in a safe folder, and drop the rest into a review pile.
 
-The project split naturally into two repos along a single axis: **destroy vs preserve**.
+## The pipeline
 
-{% callout "aside", "The Hindu mythology callout" %}
-In the Trimurti, Shiva destroys, Vishnu preserves, and Brahma creates and orchestrates the whole thing. So: `unforwarder` is Shiva, `memento` is Vishnu, and `wa-suite` - the parent repo that runs the pipeline - is Brahma. This parallel was noticed mid-build and could not be ignored.
-{% endcallout %}
-
-### [unforwarder](https://github.com/carteakey/wa-suite/tree/main/unforwarder) - the destroyer
-
-Kills the noise:
-
-- **`delete-junk-links.js`** - deletes YouTube Shorts and Facebook links. Extensible - add any pattern to the list.
-- **`delete-forwarded-media.js`** - deletes forwarded images and videos using WhatsApp's own `forwardingScore`. Default threshold is **≥ 5**, exactly what WhatsApp labels "Forwarded many times".
-- **`delete-patterns.js`** - deletes messages matching a custom regex list in `patterns.txt`. Ships with patterns for good morning/night, motivational spam, religious chain forwards, and "please share in 10 groups". Add your own.
-- **`unforwarder.py`** - the original. Ollama vision model classifies a folder of images: memes go to `review-n-delete/`, real photos go to `save/`.
-
-### [memento](https://github.com/carteakey/wa-suite/tree/main/memento) - the preserver
-
-Preserves what matters:
-
-- **`download-media.js`** - downloads personal photos and videos from WhatsApp to `~/Pictures/WhatsApp/YYYY-MM/` with original timestamps intact. Skips forwarded media by default. Checkpoint file ensures reruns don't re-download.
-- **`export-chat.js`** - exports any chat to a markdown file, grouped by day. Useful before leaving a group or archiving an important conversation.
-
-The output of memento feeds directly into unforwarder's Python classifier - download everything, classify locally, keep the real stuff, bin the rest.
-
-## The Pipeline
-
-Both tools live under [wa-suite](https://github.com/carteakey/wa-suite), a parent repo with a single `pipeline.sh` that runs the full flow. One command, dry run by default.
+Everything sits under a suite called [wa-suite](https://github.com/carteakey/wa-suite), tied together with a single runner script.
 
 {% image_cc "./src/static/img/diagrams/unforwarder-v2-pipeline.png", "Pipeline: WhatsApp chats feed three delete passes (junk links, forwarded memes, spam chains) and a main lane of download media, then a local classifier that splits into real photos and review and delete", "sketch-draw", "The wa-suite pipeline. Deleters run on the chats first; whatever survives is downloaded and classified locally." %}
 
-```bash
-DRY_RUN=false ./pipeline.sh
-```
+It runs in a safe dry-run mode by default, showing you what would be deleted so you don't accidentally wipe chats while tweaking patterns. Everything stays entirely local on my own machine - no cloud APIs, no external logging, and nobody else seeing personal photos or family forwards.
 
-All local. All running on my own machine. No cloud, no API key, no third party seeing my family photos or my dad's extensive collection of WhatsApp forwards.
+## Switching to Qwen VL
 
-## A Note on the Model
+The first version used Llama 3.2 Vision. For this setup I switched over to Qwen 3 VL (the 8B model) running locally in Ollama. Qwen's vision models have been getting solid community praise, and on tricky images the practical difference is noticeable.
 
-The v1 script used `llama3.2-vision`. This one runs `qwen3-vl:8b`. Qwen's vision models have become the go-to community recommendation for local image classification - [this thread](https://www.reddit.com/r/LocalLLaMA/comments/1p5retd/best_local_vlms_november_2025/) has a good breakdown if you want to pick your own. The accuracy improvement is real, particularly on edge cases: a real photo of someone at a wedding with a "Blessings from the Almighty" caption overlaid is junk. A blurry photo of your kid's first steps is not. The old model got confused. This one doesn't.
-
-The prompt hasn't changed much:
+The hardest edge cases for the old model were things like a genuine family photo with a festive greeting stamped across the bottom, or an artistic photo that looked like a wallpaper. Llama 3.2 often got confused and flagged them as junk, whereas Qwen 3 VL handles the nuance much better without needing a complicated prompt:
 
 > *"Is this image one of: social media texts, screenshots, good morning messages, super blurry images, memes, or any other forwarded content? Just answer yes or no."*
 
-Simple still wins.
+## What's next
 
-## What's Next
+Right now I still trigger the cleanup by hand whenever the clutter gets annoying. The next step is setting it up on a regular schedule in the background.
 
-The obvious missing piece is scheduling - right now you run the pipeline manually. A `launchd` job that fires it weekly, silently, in the background is the next thing on the list. Set it and forget it.
-
-After that: video classification. The meme video problem is completely unsolved. My uncle groups are prolific video producers and `unforwarder.py` only handles images. Extending the Ollama classifier to short video clips is the natural next step, though sampling frames and running them through the vision model is probably enough to get 90% of the way there.
-
-And `starred-sync.js` - a local markdown dump of all your starred messages - because WhatsApp starred is not an archive, it's a suggestion.
-
-The junk will keep coming. At least now it has somewhere to go.
+Video forwards are also still an unsolved nuisance. Uncle groups produce an endless stream of forwarded video clips that the script currently ignores because it only looks at photos. Pulling a few keyframes from each video and passing them to the vision model should solve most of that.
 
 Full code: [wa-suite](https://github.com/carteakey/wa-suite)
