@@ -16,7 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Cleaned up pinned indicator on feed list rows to show a crisp accent bookmark icon without redundant right-side badge clutter.
 - Normalized small text utility sizes across template files to the editorial standard `text-[0.78rem]`.
 - Removed homepage `.dot-divider` element and cleaned up related CSS.
-- Refined `downloads-media-router` and `media-import` skills: removed deprecated macOS Swift OCR script, auto-cleaned Sortling dry-run cache directories, and documented the global folio data cascade.
+- Consolidated media routing and ingestion into a single unified skill (`media-import`) powered by Sortling local decision models, removing the redundant `downloads-media-router` skill and legacy Swift script.
 
 ## [2.7.30] - 2026-10-10
 ### Added
