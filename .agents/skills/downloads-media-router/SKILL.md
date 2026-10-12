@@ -26,19 +26,24 @@ Do NOT guess, read files manually, or rely on fragile OCR scripts. Run `sortling
 
 ```bash
 SORTLING="${SORTLING_PATH:-$HOME/repos/sortling/sortling.py}"
-PROFILE="inbox/.sortling.json"
+# Use the repo inbox profile or the skill profile:
+PROFILE=".agents/skills/downloads-media-router/profile.json"
 
 python3 "$SORTLING" \
   --root "${SOURCE_DIR:-$HOME/Downloads}" \
   --profile-file "$PROFILE" \
   --json \
   --no-progress
+
+# Clean up Sortling's dry-run manifest directory immediately
+rm -rf "${SOURCE_DIR:-$HOME/Downloads}/_sortling"
 ```
 
 > **Rules for Sortling in this skill:**
 > - **Always dry-run:** Never pass `--apply` to `sortling.py`. Sortling generates the classification plan; this skill handles the site-specific slugs, YAML entries, and destination staging.
-> - **Local by default:** Sortling automatically routes through local decision models (`local-d3`, `local-clef`). Do not send personal downloads to hosted backends without user consent.
-> - **Fallbacks:** If no model is serving, Sortling falls back to filename keywords and flags `classifier: "keywords"` in the JSON. Inform the user if running in keyword fallback mode.
+> - **Clean up `_sortling/`:** Sortling writes a dry-run cache manifest in `<root>/_sortling/`. Always delete this directory after JSON capture.
+> - **Local by default:** Sortling automatically routes through local decision models (`local-d3`, `local-clef` via `llama-swap` on port `:8080`). Do not send personal downloads to hosted backends without user consent.
+> - **Fallbacks:** If no local model server is reachable, Sortling falls back to filename keywords and flags `classifier: "keywords"` in the JSON. Inform the user if running in keyword fallback mode.
 
 ---
 
@@ -70,10 +75,11 @@ Ask the user to confirm the routing before touching any files.
 
 #### Destination B: AI Memes Folio (`src/static/img/folio/ai-memes/`)
 - Image directory: `src/static/img/folio/ai-memes/`
-- Data file: `src/_data/ai-memes.yaml`
-- Copy image with a clean slug.
-- Read existing `src/_data/ai-memes.yaml` to find the current highest ID (e.g., `"040"`).
-- Prepend new entries at the **top** of `src/_data/ai-memes.yaml` in descending order (`"057"`, `"056"`, ...).
+- Data file: `src/_data/ai-memes.yaml` (loaded into Eleventy global `memes` data via `eleventy.config.mjs` and rendered by `src/folio/ai-memes/index.html`)
+- Copy image with a clean slug (prefer `.webp` or `.png`).
+- Read existing `src/_data/ai-memes.yaml` to find the current highest ID (e.g., `"059"`).
+- IDs are formatted as 3-digit zero-padded strings (`"060"`, `"061"`, ...).
+- Prepend new entries at the **top** of `src/_data/ai-memes.yaml` in descending order (`"061"`, `"060"`, ...).
 - YAML entry schema:
 ```yaml
 - id: "041"

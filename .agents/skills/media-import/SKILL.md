@@ -139,12 +139,12 @@ cp "inbox/vibes/some-meme.webp" "src/static/img/vibes/some-meme.webp"
 
 ### Target C: AI Memes Folio (`inbox/ai-memes/`)
 
-**Destination**: `src/_data/memes.yaml` and `src/static/img/folio/ai-memes/`
+**Destination**: `src/_data/ai-memes.yaml` and `src/static/img/folio/ai-memes/`
 
 **Rules**:
 - Copy the file to `src/static/img/folio/ai-memes/`.
-- Prepend a new YAML entry to `src/_data/memes.yaml` (newest first).
-- Increment the `id` from the previous highest card (e.g., if the highest is `"025"`, the new one is `"026"`).
+- Prepend a new YAML entry to `src/_data/ai-memes.yaml` (newest first).
+- Increment the `id` from the previous highest card (e.g., if the highest is `"059"`, the new one is `"060"` formatted as a 3-digit string).
 
 **YAML entry format**:
 ```yaml
@@ -171,7 +171,9 @@ cp "inbox/vibes/some-meme.webp" "src/static/img/vibes/some-meme.webp"
 
 Files sitting in `inbox/` root (not in a subfolder) need to be **classified first**.
 
-Ask the user: *"I found [N] unclassified files in inbox/. Where should each go?"*
+> 💡 **Recommended**: Use the `downloads-media-router` skill to automatically classify loose files with local decision models via Sortling (`sortling.py --profile-file inbox/.sortling.json --json`).
+
+Alternatively, ask the user: *"I found [N] unclassified files in inbox/. Where should each go?"*
 Show a thumbnail description and let them route to A/B/C or skip.
 
 ---
@@ -200,9 +202,9 @@ grep -c 'class="meme-card"' src/folio/ai-memes/index.html
 ## Step 4 - Commit
 
 ```bash
-git add src/_data/photos.yaml src/static/img/photography/ src/static/img/vibes/ src/static/img/folio/ai-memes/ src/folio/ai-memes/index.html
+git add src/_data/photos.yaml src/_data/ai-memes.yaml src/static/img/photography/ src/static/img/vibes/ src/static/img/folio/ai-memes/
 git commit -m "feat(inbox): import [N] photos / [N] vibes / [N] ai-memes"
-git push origin main
+# Batch pushes: Let ~5-10 commits accumulate per AGENTS.md before pushing
 ```
 
 ---
