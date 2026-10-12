@@ -18,22 +18,22 @@
               </a>
               <div class="flex flex-wrap items-center gap-1.5">
                 <span class="badge badge-tag badge-compact">{{ activity.type }}</span>
-                <time class="meta-text text-[0.65rem] text-gray-400 dark:text-gray-500">{{ activity.start_date | readableDate }}</time>
+                <time class="meta-text text-[0.78rem] text-gray-400 dark:text-gray-500">{{ activity.start_date | readableDate }}</time>
               </div>
             </div>
 
             <dl class="grid grid-cols-2 gap-2">
               <div class="flex flex-col gap-0.5">
-                <span class="meta-text text-[0.6rem] uppercase text-gray-400 dark:text-gray-500">Distance</span>
+                <span class="meta-text text-[0.78rem] uppercase text-gray-400 dark:text-gray-500">Distance</span>
                 <span class="editorial-title-compact">{{ activity.distance }} mi</span>
               </div>
               <div class="flex flex-col gap-0.5">
-                <span class="meta-text text-[0.6rem] uppercase text-gray-400 dark:text-gray-500">Time</span>
+                <span class="meta-text text-[0.78rem] uppercase text-gray-400 dark:text-gray-500">Time</span>
                 <span class="editorial-title-compact">{{ activity.moving_time }} min</span>
               </div>
               {% if activity.total_elevation_gain %}
                 <div class="flex flex-col gap-0.5">
-                  <span class="meta-text text-[0.6rem] uppercase text-gray-400 dark:text-gray-500">Elevation</span>
+                  <span class="meta-text text-[0.78rem] uppercase text-gray-400 dark:text-gray-500">Elevation</span>
                   <span class="editorial-title-compact">{{ activity.total_elevation_gain }} ft</span>
                 </div>
               {% endif %}

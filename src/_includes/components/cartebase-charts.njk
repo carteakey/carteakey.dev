@@ -4,7 +4,7 @@
 
 {% macro stat_tile(label, value, sublabel="") %}
 <div class="surface surface-compact">
-  <div class="text-[0.65rem] uppercase tracking-widest text-gray-400 dark:text-gray-500">{{ label }}</div>
+  <div class="text-[0.78rem] uppercase tracking-widest text-gray-400 dark:text-gray-500">{{ label }}</div>
   <div class="text-2xl font-semibold mt-1 text-gray-900 dark:text-gray-100 leading-tight">{{ value }}</div>
   {% if sublabel %}<div class="text-xs text-gray-400 dark:text-gray-500 mt-0.5">{{ sublabel }}</div>{% endif %}
 </div>
@@ -131,16 +131,16 @@
   <div class="absolute -top-10 -right-10 w-40 h-40 rounded-full opacity-10" style="background: var(--accent-color);"></div>
   <div class="relative {% if image %}grid md:grid-cols-[1fr_auto] gap-6 items-center{% endif %}">
     <div>
-      <div class="text-[0.65rem] uppercase tracking-[0.2em] text-gray-400 dark:text-gray-500 mb-3">{{ label }}</div>
+      <div class="text-[0.78rem] uppercase tracking-[0.2em] text-gray-400 dark:text-gray-500 mb-3">{{ label }}</div>
       <div class="{% if size == 'large' %}text-4xl md:text-6xl{% else %}text-2xl md:text-4xl{% endif %} font-bold tracking-tight leading-[0.95] mb-3 break-words" style="color: var(--accent-color);">{{ title }}</div>
       {% if subtitle %}<div class="editorial-support-compact mb-4">{{ subtitle }}</div>{% endif %}
       {% if stats | length > 0 %}
       <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mt-5 pt-4 border-t border-gray-200 dark:border-zinc-800">
         {% for s in stats %}
         <div>
-          <div class="text-[0.6rem] uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-0.5">{{ s.label }}</div>
+          <div class="text-[0.78rem] uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-0.5">{{ s.label }}</div>
           <div class="text-base md:text-lg editorial-title">{{ s.value }}</div>
-          {% if s.sub %}<div class="text-[0.65rem] text-gray-400 dark:text-gray-500 mt-0.5">{{ s.sub }}</div>{% endif %}
+          {% if s.sub %}<div class="text-[0.78rem] text-gray-400 dark:text-gray-500 mt-0.5">{{ s.sub }}</div>{% endif %}
         </div>
         {% endfor %}
       </div>
@@ -215,7 +215,7 @@
     <img src="{{ track.albumImageUrl }}" alt="" class="w-10 h-10 rounded-sm flex-shrink-0" width="40" height="40" loading="lazy">
   {% endif %}
   <div class="min-w-0 flex-1">
-    <div class="text-[0.6rem] uppercase tracking-widest" style="color: var(--accent-color);">Now playing</div>
+    <div class="text-[0.78rem] uppercase tracking-widest" style="color: var(--accent-color);">Now playing</div>
     <div class="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">{{ track.title }}</div>
     <div class="text-xs text-gray-500 dark:text-gray-400 truncate">{{ track.artist }}</div>
   </div>
@@ -247,22 +247,22 @@
 <div class="surface surface-compact">
   <div class="flex items-baseline justify-between mb-2">
     <div class="text-xl editorial-title">{{ year }}</div>
-    <div class="text-[0.65rem] uppercase tracking-widest text-gray-400">Year in review</div>
+    <div class="text-[0.78rem] uppercase tracking-widest text-gray-500 dark:text-gray-400">Year in review</div>
   </div>
   <div class="grid grid-cols-2 gap-2 text-xs mb-3">
-    <div><span class="text-gray-400">Plays</span> <div class="font-medium text-sm">{{ plays }}</div></div>
-    <div><span class="text-gray-400">Hours</span> <div class="font-medium text-sm">{{ hours }}</div></div>
-    <div><span class="text-gray-400">New artists</span> <div class="font-medium text-sm">{{ new_artists }}</div></div>
+    <div><span class="text-gray-500 dark:text-gray-400">Plays</span> <div class="font-medium text-sm">{{ plays }}</div></div>
+    <div><span class="text-gray-500 dark:text-gray-400">Hours</span> <div class="font-medium text-sm">{{ hours }}</div></div>
+    <div><span class="text-gray-500 dark:text-gray-400">New artists</span> <div class="font-medium text-sm">{{ new_artists }}</div></div>
   </div>
   {% if top_artist %}
-    <div class="text-xs text-gray-400 mt-2">Top artist</div>
+    <div class="text-xs text-gray-500 dark:text-gray-400 mt-2">Top artist</div>
     <div class="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">{{ top_artist.artist }}</div>
-    <div class="text-[0.65rem] text-gray-400">{{ top_artist.plays }} plays</div>
+    <div class="text-[0.78rem] text-gray-500 dark:text-gray-400">{{ top_artist.plays }} plays</div>
   {% endif %}
   {% if top_track %}
-    <div class="text-xs text-gray-400 mt-2">Top track</div>
+    <div class="text-xs text-gray-500 dark:text-gray-400 mt-2">Top track</div>
     <div class="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">{{ top_track.track }}</div>
-    <div class="text-[0.65rem] text-gray-400 truncate">{{ top_track.artist }} · {{ top_track.plays }} plays</div>
+    <div class="text-[0.78rem] text-gray-500 dark:text-gray-400 truncate">{{ top_track.artist }} · {{ top_track.plays }} plays</div>
   {% endif %}
 </div>
 {% endmacro %}

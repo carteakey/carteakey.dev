@@ -24,17 +24,17 @@ collectionArchetype: ledger
                 </a>
                 <div class="flex flex-wrap items-center gap-2">
                     <span class="badge badge-tag badge-compact">{{ activity.type }}</span>
-                    <time class="meta-text text-[0.65rem]" datetime="{{ activity.start_date | htmlDateString }}">{{ activity.start_date | readableDate }}</time>
+                    <time class="meta-text text-[0.78rem]" datetime="{{ activity.start_date | htmlDateString }}">{{ activity.start_date | readableDate }}</time>
                 </div>
             </header>
 
             <dl class="mt-3 mb-0 grid grid-cols-2 gap-2 text-xs">
                 <div>
-                    <dt class="meta-text text-[0.6rem] uppercase">Distance</dt>
+                    <dt class="meta-text text-[0.78rem] uppercase">Distance</dt>
                     <dd class="editorial-title-compact text-xs mt-0.5">{{ activity.distance }} mi</dd>
                 </div>
                 <div>
-                    <dt class="meta-text text-[0.6rem] uppercase">Moving Time</dt>
+                    <dt class="meta-text text-[0.78rem] uppercase">Moving Time</dt>
                     <dd class="editorial-title-compact text-xs mt-0.5">{{ activity.moving_time }} min</dd>
                 </div>
             </dl>

@@ -298,7 +298,7 @@ hasEthicalAds: false
     <div class="upvote-section mt-8 mb-4 flex items-center">
       <button id="upvoteButton" class="upvote-button post-action-button" aria-label="Upvote this post" aria-busy="false">
         {% feather "thumbs-up", class="w-4 h-4 text-gray-500 dark:text-gray-400" %}
-        <span id="upvoteCount" class="text-[0.72rem] font-medium text-gray-600 dark:text-gray-300">
+        <span id="upvoteCount" class="text-[0.78rem] font-medium text-gray-600 dark:text-gray-300">
           {{ upvotes.posts[page.fileSlug] | default(0) }}
         </span>
         <span id="upvoteLoading" class="hidden">

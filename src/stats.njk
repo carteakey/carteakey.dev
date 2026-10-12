@@ -43,21 +43,21 @@ collectionArchetype: ledger
 <div class="not-prose grid grid-cols-2 sm:grid-cols-4 divide-x divide-y sm:divide-y-0 divide-gray-200 dark:divide-gray-800 surface rounded-sm overflow-hidden mb-12">
   <div class="p-6 text-center">
     <div class="font-display text-3xl sm:text-4xl font-bold" style="color: var(--accent-color)">{{ collections.posts.length }}</div>
-    <div class="meta-text text-[0.65rem] mt-2">Posts</div>
+    <div class="meta-text text-[0.78rem] mt-2">Posts</div>
   </div>
   <div class="p-6 text-center">
     <div class="font-display text-3xl sm:text-4xl font-bold" style="color: var(--accent-color)">{{ collections.snippets.length }}</div>
-    <div class="meta-text text-[0.65rem] mt-2">Snippets</div>
+    <div class="meta-text text-[0.78rem] mt-2">Snippets</div>
   </div>
   <div class="p-6 text-center">
     <div class="font-display text-3xl sm:text-4xl font-bold" style="color: var(--accent-color)">
       {% if totalWords > 1000 %}{{ (totalWords / 1000) | round(1) }}k{% else %}{{ totalWords }}{% endif %}
     </div>
-    <div class="meta-text text-[0.65rem] mt-2">Words</div>
+    <div class="meta-text text-[0.78rem] mt-2">Words</div>
   </div>
   <div class="p-6 text-center">
     <div class="font-display text-3xl sm:text-4xl font-bold" style="color: var(--accent-color)">{{ totalUpvotes }}</div>
-    <div class="meta-text text-[0.65rem] mt-2">Upvotes</div>
+    <div class="meta-text text-[0.78rem] mt-2">Upvotes</div>
   </div>
 </div>
 
@@ -205,7 +205,7 @@ collectionArchetype: ledger
       {% for item in timeline %}
       <div class="py-2 flex items-center justify-between border-b border-gray-100 dark:border-gray-800/80 last:border-0 gap-4">
         <div class="flex items-center gap-2 min-w-0">
-          <span class="meta-text text-[0.62rem] uppercase border border-gray-200 dark:border-gray-700 px-1 py-0.5 rounded-sm shrink-0">{{ item.type }}</span>
+          <span class="meta-text text-[0.78rem] uppercase border border-gray-200 dark:border-gray-700 px-1 py-0.5 rounded-sm shrink-0">{{ item.type }}</span>
           {% if item.url %}
             <a href="{{ item.url }}" class="editorial-title-link-compact truncate" style="text-decoration:none;">{{ item.title }}</a>
           {% else %}
@@ -213,7 +213,7 @@ collectionArchetype: ledger
           {% endif %}
         </div>
         <div class="flex items-center gap-2 shrink-0">
-          <span class="meta-text text-[0.65rem] text-gray-500 whitespace-nowrap">{{ item.date | date('MMM d, Y') }}</span>
+          <span class="meta-text text-[0.78rem] text-gray-500 whitespace-nowrap">{{ item.date | date('MMM d, Y') }}</span>
           {{ authorshipBadge(item.authored_by, compact=true) }}
         </div>
       </div>

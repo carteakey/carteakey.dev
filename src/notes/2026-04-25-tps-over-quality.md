@@ -18,4 +18,4 @@ Unlike what you'd think, when you factor for quality (graphics settings in games
 
 I think I might just stick with this for a while longer.
 
-{% image "./src/static/img/vibes/verification-expiring.png", "Sad Pepe", "w-full rounded-lg shadow-md border border-surface-border" %}
+{% image "./src/static/img/notes/verification-expiring.png", "Sad Pepe", "w-full rounded-lg shadow-md border border-surface-border" %}

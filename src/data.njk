@@ -107,7 +107,7 @@ collectionArchetype: ledger
       {% for d in cartebase.bookmarks.top_domains | head(15) %}
         <div class="flex justify-between text-xs">
           <span class="text-gray-700 dark:text-gray-300 truncate">{{ d.domain }}</span>
-          <span class="text-gray-400 tabular-nums">{{ d.count | localeNumber }}</span>
+          <span class="text-gray-500 dark:text-gray-400 tabular-nums">{{ d.count | localeNumber }}</span>
         </div>
       {% endfor %}
     </div>

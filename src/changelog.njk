@@ -41,7 +41,7 @@ collectionArchetype: index
       <div class="space-y-2">
         {% if entry.sections.Added %}
         <div>
-          <span class="meta-text text-[0.65rem] font-semibold uppercase tracking-wider text-emerald-500 dark:text-emerald-400 mr-2">Added</span>
+          <span class="meta-text text-[0.78rem] font-semibold uppercase tracking-wider text-emerald-500 dark:text-emerald-400 mr-2">Added</span>
           <ul class="mt-1 space-y-0.5 list-none m-0 p-0">
             {% for item in entry.sections.Added %}
             <li class="text-sm text-gray-700 dark:text-gray-300 flex gap-2">
@@ -55,11 +55,11 @@ collectionArchetype: index
 
         {% if entry.sections.Changed %}
         <div>
-          <span class="meta-text text-[0.65rem] font-semibold uppercase tracking-wider mr-2" style="color: {% if entry.fromGit %}#9ca3af{% else %}#3b82f6{% endif %};">{% if entry.fromGit %}Commits{% else %}Changed{% endif %}</span>
+          <span class="meta-text text-[0.78rem] font-semibold uppercase tracking-wider mr-2" style="color: {% if entry.fromGit %}#9ca3af{% else %}#3b82f6{% endif %};">{% if entry.fromGit %}Commits{% else %}Changed{% endif %}</span>
           <ul class="mt-1 space-y-0.5 list-none m-0 p-0">
             {% for item in entry.sections.Changed %}
             <li class="text-sm text-gray-700 dark:text-gray-300 flex gap-2">
-              <span class="{% if entry.fromGit %}text-gray-400{% else %}text-blue-400{% endif %} shrink-0 mt-0.5">{% if entry.fromGit %}·{% else %}~{% endif %}</span>
+              <span class="{% if entry.fromGit %}text-gray-500 dark:text-gray-400{% else %}text-blue-400{% endif %} shrink-0 mt-0.5">{% if entry.fromGit %}·{% else %}~{% endif %}</span>
               <span>{{ item }}</span>
             </li>
             {% endfor %}
@@ -69,7 +69,7 @@ collectionArchetype: index
 
         {% if entry.sections.Fixed %}
         <div>
-          <span class="meta-text text-[0.65rem] font-semibold uppercase tracking-wider text-amber-500 dark:text-amber-400 mr-2">Fixed</span>
+          <span class="meta-text text-[0.78rem] font-semibold uppercase tracking-wider text-amber-500 dark:text-amber-400 mr-2">Fixed</span>
           <ul class="mt-1 space-y-0.5 list-none m-0 p-0">
             {% for item in entry.sections.Fixed %}
             <li class="text-sm text-gray-700 dark:text-gray-300 flex gap-2">

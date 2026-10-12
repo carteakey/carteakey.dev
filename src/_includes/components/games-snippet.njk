@@ -9,7 +9,7 @@
             <a href="{{ game.url }}" target="_blank" rel="noopener noreferrer" class="editorial-title-link-compact">
               {{ game.name }}
             </a>
-            <p class="meta-text text-[0.65rem] text-gray-400 dark:text-gray-500 m-0">
+            <p class="meta-text text-[0.78rem] text-gray-400 dark:text-gray-500 m-0">
               {% if game.playtime_2weeks > 0 %}{{ game.playtime_2weeks }}h last 2 weeks{% endif %}
               {% if game.playtime_forever > 0 %}{% if game.playtime_2weeks > 0 %} · {% endif %}{{ game.playtime_forever }}h total{% endif %}
             </p>

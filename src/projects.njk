@@ -145,26 +145,26 @@ collectionArchetype: wall
         <div class="grid grid-cols-4 gap-3 mb-4">
           <div class="text-center">
             <p class="editorial-title m-0">{{ githubCard.totalStars }}</p>
-            <p class="meta-text text-[0.65rem] m-0">Stars</p>
+            <p class="meta-text text-[0.78rem] m-0">Stars</p>
           </div>
           <div class="text-center">
             <p class="editorial-title m-0">{{ githubCard.totalForks }}</p>
-            <p class="meta-text text-[0.65rem] m-0">Forks</p>
+            <p class="meta-text text-[0.78rem] m-0">Forks</p>
           </div>
           <div class="text-center">
             <p class="editorial-title m-0">{{ githubCard.repoCount }}</p>
-            <p class="meta-text text-[0.65rem] m-0">Repos</p>
+            <p class="meta-text text-[0.78rem] m-0">Repos</p>
           </div>
           <div class="text-center">
             <p class="editorial-title m-0">{{ githubCard.followers }}</p>
-            <p class="meta-text text-[0.65rem] m-0">Followers</p>
+            <p class="meta-text text-[0.78rem] m-0">Followers</p>
           </div>
         </div>
 
         {# Top languages #}
         {% if githubCard.topLanguages | length %}
           <div>
-            <p class="meta-text text-[0.65rem] mb-1.5 m-0">Top Languages</p>
+            <p class="meta-text text-[0.78rem] mb-1.5 m-0">Top Languages</p>
             <div class="flex flex-wrap gap-1.5">
               {% for lang in githubCard.topLanguages %}
                 <span class="badge badge-tag badge-compact">{{ lang.name }}</span>

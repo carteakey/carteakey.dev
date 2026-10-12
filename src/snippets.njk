@@ -79,7 +79,7 @@ collectionArchetype: index
             <p class="editorial-support-compact mt-0.5 m-0">{{ snippet.data.description }}</p>
           {% endif %}
           <div class="md:hidden flex flex-wrap items-center gap-x-2 gap-y-1 mt-1.5">
-            <span class="meta-text text-[0.65rem] text-gray-400 dark:text-gray-500">{{ snippet.date | readableDate }}</span>
+            <span class="meta-text text-[0.78rem] text-gray-400 dark:text-gray-500">{{ snippet.date | readableDate }}</span>
             {% if snippet.data.language %}
               <span class="badge badge-tag badge-compact">{{ snippet.data.language }}</span>
             {% endif %}
@@ -121,7 +121,7 @@ collectionArchetype: index
     >
       <div class="flex items-center gap-2 mb-2">
         <span class="feed-list-dot bg-purple-400 shrink-0"></span>
-        <time class="meta-text text-[0.68rem] text-gray-400 dark:text-gray-500">{{ snippet.date | readableDate }}</time>
+        <time class="meta-text text-[0.78rem] text-gray-400 dark:text-gray-500">{{ snippet.date | readableDate }}</time>
         {% if snippet.data.language %}<span class="badge badge-tag badge-compact">{{ snippet.data.language }}</span>{% endif %}
         {{ authorshipBadge(snippet.data.authored_by, compact=true) }}
         <button

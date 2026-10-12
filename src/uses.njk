@@ -19,7 +19,7 @@ collectionArchetype: ledger
 <div class="not-prose mb-12 animate-enter stagger-1">
   <div class="flex items-baseline justify-between gap-4 mb-4">
     <h2 class="editorial-title">Machine snapshots</h2>
-    <span class="font-mono text-[0.65rem] uppercase tracking-[0.12em] text-gray-500 dark:text-gray-400">Fastfetch + Freeze</span>
+    <span class="font-mono text-[0.78rem] uppercase tracking-[0.12em] text-gray-500 dark:text-gray-400">Fastfetch + Freeze</span>
   </div>
   <div class="grid gap-6 lg:grid-cols-2">
     {% for machine in uses.machines %}
@@ -30,12 +30,12 @@ collectionArchetype: ledger
             <span class="w-2.5 h-2.5 rounded-full bg-[#ffbd2e]"></span>
             <span class="w-2.5 h-2.5 rounded-full bg-[#27c93f]"></span>
           </div>
-          <p class="min-w-0 flex-1 truncate text-center font-mono text-[0.65rem] font-semibold text-gray-400">{{ machine.label }}</p>
+          <p class="min-w-0 flex-1 truncate text-center font-mono text-[0.78rem] font-semibold text-gray-500 dark:text-gray-400">{{ machine.label }}</p>
         </div>
         {% image machine.image, machine.imageAlt, "block w-full h-auto" %}
         <div class="border-t border-gray-800 px-4 py-3 text-[#c0caf5]">
           <h3 class="font-mono text-xs font-semibold">{{ machine.name }}</h3>
-          <p class="mt-1 font-mono text-[0.68rem] leading-relaxed text-[#a9b1d6]">{{ machine.description }}</p>
+          <p class="mt-1 font-mono text-[0.78rem] leading-relaxed text-[#a9b1d6]">{{ machine.description }}</p>
         </div>
       </article>
     {% endfor %}
@@ -46,7 +46,7 @@ collectionArchetype: ledger
 <section class="not-prose mb-16 animate-enter stagger-2" aria-labelledby="casakey-heading">
   <div class="flex items-baseline justify-between gap-4 mb-4">
     <h2 id="casakey-heading" class="editorial-title">🏠 {{ uses.homelab.name }}</h2>
-    <span class="font-mono text-[0.65rem] uppercase tracking-[0.12em] text-gray-500 dark:text-gray-400">Homelab</span>
+    <span class="font-mono text-[0.78rem] uppercase tracking-[0.12em] text-gray-500 dark:text-gray-400">Homelab</span>
   </div>
   <p class="editorial-support mb-5">{{ uses.homelab.description }}</p>
   <div class="surface rounded-sm surface-padding">
@@ -57,7 +57,7 @@ collectionArchetype: ledger
           <div class="border border-gray-300 dark:border-gray-700 bg-gray-50/70 dark:bg-gray-900/70 p-4">
             <div class="flex items-center justify-between gap-2 mb-1.5">
               <p class="font-mono text-xs font-semibold"><span aria-hidden="true">{{ station.emoji }}</span> {{ station.name }}</p>
-              <span class="font-mono text-[0.6rem] uppercase tracking-[0.1em] text-gray-500 dark:text-gray-400">{{ station.tagline }}</span>
+              <span class="font-mono text-[0.78rem] uppercase tracking-[0.1em] text-gray-500 dark:text-gray-400">{{ station.tagline }}</span>
             </div>
             <p class="editorial-support-compact">{{ station.description }}</p>
           </div>
@@ -71,15 +71,15 @@ collectionArchetype: ledger
           <div class="flex items-center justify-between gap-1">
             <p class="font-mono text-xs font-semibold"><span aria-hidden="true">{{ host.emoji }}</span> {% if host.device %}<a class="device-link" href="/devices/{{ host.device }}/">{{ host.name }}</a>{% else %}{{ host.name }}{% endif %}</p>
             {% if host.station %}
-              <span class="font-mono text-[0.55rem] uppercase tracking-wider text-gray-400 dark:text-gray-500">{{ host.station }}</span>
+              <span class="font-mono text-[0.78rem] uppercase tracking-wider text-gray-400 dark:text-gray-500">{{ host.station }}</span>
             {% endif %}
           </div>
-          <p class="mt-2 font-mono text-[0.65rem] uppercase tracking-[0.1em] text-gray-500 dark:text-gray-400">{{ host.role }}</p>
+          <p class="mt-2 font-mono text-[0.78rem] uppercase tracking-[0.1em] text-gray-500 dark:text-gray-400">{{ host.role }}</p>
           <p class="mt-2 editorial-support-compact">{{ host.description }}</p>
         </article>
       {% endfor %}
     </div>
-    <div class="mt-5 flex flex-wrap justify-center gap-x-5 gap-y-2 font-mono text-[0.65rem] text-gray-500 dark:text-gray-400">
+    <div class="mt-5 flex flex-wrap justify-center gap-x-5 gap-y-2 font-mono text-[0.78rem] text-gray-500 dark:text-gray-400">
       {% for link in uses.homelab.links %}
         <span>{{ link }}</span>
       {% endfor %}

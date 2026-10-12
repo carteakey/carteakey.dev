@@ -167,7 +167,7 @@
             {%- for entry in navPages %}
               {% if entry.title == "About" or entry.title == "Writing" or entry.title == "Now" %}
                 <li class="px-1.5 sm:px-2 py-1 transition-all hidden sm:flex items-center">
-                  <a class="font-mono font-medium no-underline link-glow text-[0.74rem] uppercase tracking-[0.06em]" href="{{ entry.url }}">{{ entry.title }}</a>
+                  <a class="font-mono font-medium no-underline link-glow text-[0.78rem] uppercase tracking-[0.06em]" href="{{ entry.url }}">{{ entry.title }}</a>
                 </li>
               {% endif %}
             {%- endfor %}
@@ -179,7 +179,7 @@
                     href="{{ translation.url }}"
                     hreflang="{{ translation.language }}"
                     lang="{{ translation.language }}"
-                    class="font-mono text-[0.68rem] no-underline px-1 py-0.5 {% if translation.language == (language or metadata.language) %}font-bold border-b-2{% else %}opacity-60 hover:opacity-100{% endif %}"
+                    class="font-mono text-[0.78rem] no-underline px-1 py-0.5 {% if translation.language == (language or metadata.language) %}font-bold border-b-2{% else %}opacity-60 hover:opacity-100{% endif %}"
                     {% if translation.language == (language or metadata.language) %}aria-current="page"{% endif %}
                     aria-label="Read this page in {{ translation.label }}"
                     {% if translation.language == (language or metadata.language) %}style="border-color: var(--accent-color)"{% endif %}

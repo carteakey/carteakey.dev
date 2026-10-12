@@ -64,7 +64,7 @@ collectionArchetype: index
             <a href="{{ entry.data.source }}" target="_blank" rel="noopener" class="editorial-meta-link" style="text-decoration: none;">{{ entry.data.source | truncate(60, true, '…') }} ↗</a>
           {% endif %}
           <div class="md:hidden flex flex-wrap items-center gap-x-2 gap-y-1 mt-1.5">
-            <span class="meta-text text-[0.65rem] text-gray-400 dark:text-gray-500">{{ entry.date | readableDate }}</span>
+            <span class="meta-text text-[0.78rem] text-gray-400 dark:text-gray-500">{{ entry.date | readableDate }}</span>
             {% for tag in filteredTags | slice(0, 2) %}
               <span class="badge badge-tag badge-compact">{{ tag }}</span>
             {% endfor %}

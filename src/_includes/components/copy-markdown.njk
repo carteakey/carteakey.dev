@@ -1,7 +1,7 @@
 <div class="inline-flex mb-4" role="group" x-data="{ copied: false, open: false }">
   <button 
     type="button" 
-    class="inline-flex items-center gap-1.5 px-3 py-1.5 text-[0.7rem] font-medium font-mono uppercase tracking-[0.04em] text-gray-700 bg-[rgb(251,249,244)] border border-[rgb(214,207,193)] hover:text-[var(--accent-color)] dark:bg-zinc-900 dark:border-zinc-700 dark:text-gray-300 transition-colors"
+    class="inline-flex items-center gap-1.5 px-3 py-1.5 text-[0.78rem] font-medium font-mono uppercase tracking-[0.04em] text-gray-700 bg-[rgb(251,249,244)] border border-[rgb(214,207,193)] hover:text-[var(--accent-color)] dark:bg-zinc-900 dark:border-zinc-700 dark:text-gray-300 transition-colors"
     @click="
       fetch('{{ page.url }}raw.txt')
         .then(res => res.text())
@@ -21,7 +21,7 @@
   <div class="relative">
     <button 
       type="button" 
-      class="inline-flex items-center px-2 py-1.5 text-[0.7rem] font-medium text-gray-700 bg-[rgb(251,249,244)] border border-l-0 border-[rgb(214,207,193)] hover:text-[var(--accent-color)] dark:bg-zinc-900 dark:border-zinc-700 dark:text-gray-300 transition-colors h-full"
+      class="inline-flex items-center px-2 py-1.5 text-[0.78rem] font-medium text-gray-700 bg-[rgb(251,249,244)] border border-l-0 border-[rgb(214,207,193)] hover:text-[var(--accent-color)] dark:bg-zinc-900 dark:border-zinc-700 dark:text-gray-300 transition-colors h-full"
       @click="open = !open"
       @click.outside="open = false"
     >
@@ -40,7 +40,7 @@
       style="display: none;"
     >
       <div class="py-1" role="none">
-        <a href="{{ page.url }}raw.txt" target="_blank" class="flex items-center gap-2 px-4 py-2 text-[0.7rem] font-mono uppercase tracking-[0.04em] text-gray-700 hover:text-[var(--accent-color)] dark:text-gray-300 transition-colors" role="menuitem">
+        <a href="{{ page.url }}raw.txt" target="_blank" class="flex items-center gap-2 px-4 py-2 text-[0.78rem] font-mono uppercase tracking-[0.04em] text-gray-700 hover:text-[var(--accent-color)] dark:text-gray-300 transition-colors" role="menuitem">
           {% feather "external-link", class="w-3.5 h-3.5" %}
           View Raw (.txt)
         </a>

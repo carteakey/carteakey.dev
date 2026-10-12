@@ -62,12 +62,6 @@ ogLocale: en_CA
       </div>
   </section>
 
-  <div class="dot-divider" aria-hidden="true">
-    <svg class="dot-divider-rule" viewBox="0 0 {{ 36 * 12 }} 12" preserveAspectRatio="xMaxYMid meet">{% for n in range(0, 36) %}{% set t = n / 35 %}<circle cx="{{ n * 12 + 6 }}" cy="6" r="{{ (1.2 + 4.8 * (t ** 1.6)) | round(2) }}" fill="currentColor"></circle>{% endfor %}</svg>
-    <span class="dot-divider-label">field notes</span>
-    <svg class="dot-divider-rule" viewBox="0 0 {{ 36 * 12 }} 12" preserveAspectRatio="xMinYMid meet">{% for n in range(0, 36) %}{% set t = 1 - n / 35 %}<circle cx="{{ n * 12 + 6 }}" cy="6" r="{{ (1.2 + 4.8 * (t ** 1.6)) | round(2) }}" fill="currentColor"></circle>{% endfor %}</svg>
-  </div>
-
   <section class="home-newsletter-panel animate-enter stagger-3 not-prose" aria-labelledby="home-newsletter-title">
     <div>
       <p class="home-panel-kicker">Occasional notes</p>

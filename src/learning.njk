@@ -55,7 +55,7 @@ collectionArchetype: index
       data-learning-search="{{ (post.data.title ~ ' ' ~ post.data.description ~ ' ' ~ (visibleTags | join(' '))) | lower | escape }}"
     >
       <div class="min-w-0">
-        <p class="meta-text text-[0.66rem] text-gray-500 dark:text-gray-400"><span data-learning-state>Unread</span> · {{ post.date | readableDate }}</p>
+        <p class="meta-text text-[0.78rem] text-gray-500 dark:text-gray-400"><span data-learning-state>Unread</span> · {{ post.date | readableDate }}</p>
         <h2 class="editorial-title-compact mt-1"><a href="{{ post.url }}" class="title-hover no-underline">{{ post.data.title }}</a></h2>
         {% if post.data.description %}<p class="editorial-support-compact mt-1">{{ post.data.description }}</p>{% endif %}
       </div>
