@@ -252,13 +252,16 @@
     {% if opts.rich %}<span class="hidden sm:block w-11 h-11">{% if item.imageMetadata %}<a href="{{ item.url | url }}" style="text-decoration: none;">{% post_thumbnail_markup item.imageMetadata, itemImageAlt, "stamp-cobalt block h-11 w-11 object-contain", 44 %}</a>{% endif %}</span>{% endif %}
     <div>
     {% if item.url %}
-      <a href="{{ item.url | url }}" class="feed-list-title title-hover">{% if item.featured %}<span style="color: rgb(245 158 11); margin-right: 0.35rem;" title="Featured" aria-label="Featured">★</span>{% endif %}{% if item.pinned %}<span class="inline-flex items-center" style="color: var(--accent-color); margin-right: 0.35rem; margin-top: -2px;" title="Pinned" aria-label="Pinned">{% feather "bookmark", class="w-3.5 h-3.5 fill-current opacity-20" %}</span>{% endif %}{{ item.title }}</a>
+      <a href="{{ item.url | url }}" class="feed-list-title title-hover">{% if item.featured %}<span style="color: rgb(245 158 11); margin-right: 0.35rem;" title="Featured" aria-label="Featured">★</span>{% endif %}{% if item.pinned %}<span class="inline-flex items-center" style="color: var(--accent-color); margin-right: 0.35rem; margin-top: -2px;" title="Pinned" aria-label="Pinned">{% feather "bookmark", class="w-3.5 h-3.5 fill-current" %}</span>{% endif %}{{ item.title }}</a>
     {% else %}
-      <span class="feed-list-title">{% if item.featured %}<span style="color: rgb(245 158 11); margin-right: 0.35rem;" title="Featured" aria-label="Featured">★</span>{% endif %}{% if item.pinned %}<span class="inline-flex items-center" style="color: var(--accent-color); margin-right: 0.35rem; margin-top: -2px;" title="Pinned" aria-label="Pinned">{% feather "bookmark", class="w-3.5 h-3.5 fill-current opacity-20" %}</span>{% endif %}{{ item.title }}</span>
+      <span class="feed-list-title">{% if item.featured %}<span style="color: rgb(245 158 11); margin-right: 0.35rem;" title="Featured" aria-label="Featured">★</span>{% endif %}{% if item.pinned %}<span class="inline-flex items-center" style="color: var(--accent-color); margin-right: 0.35rem; margin-top: -2px;" title="Pinned" aria-label="Pinned">{% feather "bookmark", class="w-3.5 h-3.5 fill-current" %}</span>{% endif %}{{ item.title }}</span>
     {% endif %}
     {% if (opts.rich or opts.showSummary) and item.summary %}<p class="feed-list-desc">{{ item.summary }}</p>{% endif %}
     </div>
     <div class="flex items-center gap-1.5 shrink-0 justify-end">
+      {% if item.featured %}
+        <span class="badge badge-featured badge-compact" title="Featured" aria-label="Featured">★ Featured</span>
+      {% endif %}
       {% if (opts.rich or opts.showTags) %}{% for tag in item.tags | default([]) | filterTagList %}<a href="/tags/{{ tag | slugify }}/" class="badge badge-tag badge-compact badge-interactive hidden md:inline-flex" style="text-decoration: none;">#{{ tag }}</a>{% endfor %}{% endif %}
       {% if opts.showType is not defined or opts.showType %}<span class="badge badge-type badge-compact {{ typeBadgeClass }}">{{ badgeLabel }}</span>{% endif %}
       {% if item.hidden %}

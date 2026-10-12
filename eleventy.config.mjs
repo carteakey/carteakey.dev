@@ -1146,6 +1146,14 @@ export default function (eleventyConfig) {
       });
   });
 
+  eleventyConfig.addCollection("pinnedPosts", function (collectionApi) {
+    const now = new Date();
+    return collectionApi
+      .getFilteredByGlob("./src/posts/**/*.md")
+      .filter((post) => isVisibleContent(post, now) && post.data.pinned === true)
+      .sort((a, b) => b.date - a.date);
+  });
+
   // Product reviews and buying essays live outside the main writing archive.
   eleventyConfig.addCollection("reviews", function (collectionApi) {
     const now = new Date();

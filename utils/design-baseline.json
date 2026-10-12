@@ -63,7 +63,7 @@
     },
     "src/archive.njk": {
       "utility-text-stack": 1,
-      "inline-style": 2
+      "inline-style": 1
     },
     "src/bookmarks.njk": {
       "inline-style": 2
@@ -129,9 +129,6 @@
       "updated-without-changelog": 1
     },
     "src/posts/2025-03-15-mounting-additional-drives-in-wsl2.md": {
-      "updated-without-changelog": 1
-    },
-    "src/posts/2025-03-22-the-unforwarder-how-i-stopped-backing-up-junk-photos.md": {
       "updated-without-changelog": 1
     },
     "src/posts/2025-03-28-ghiblicize-everything-or-should-we.md": {
