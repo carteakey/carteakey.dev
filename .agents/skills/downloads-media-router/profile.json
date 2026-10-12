@@ -1,0 +1,9 @@
+{
+  "name": "inbox",
+  "folders": {
+    "vibes": "general memes, aesthetic illustrations, internet culture, quotes",
+    "ai-memes": "memes about AI models, agents, prompt engineering, AI labs",
+    "infographics": "architecture diagrams, benchmarks, cost charts, model timelines",
+    "nota": "personal documents, receipts, private photos"
+  }
+}

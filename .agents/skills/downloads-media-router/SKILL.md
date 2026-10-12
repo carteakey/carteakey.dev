@@ -2,8 +2,8 @@
 name: downloads-media-router
 description: >
   Batch scan, categorize, and route downloaded images and screenshots from ~/Downloads
-  (or inbox/) into carteakey.dev's four destinations: vibes gallery, AI memes folio,
-  infographics staging (imgcart / img.carteakey.dev), or NOTA (skip/preserve).
+  (or inbox/) into carteakey.dev's four destinations (vibes gallery, AI memes folio,
+  infographics staging, or NOTA) using local decision models via Sortling.
 ---
 
 # Downloads Media Router Skill
@@ -20,30 +20,42 @@ There are **4 content destinations**:
 
 ## Workflow
 
-### Step 1 — Fast OCR Scan & Metadata Extraction
+### Step 1 — Decision Model Classification with Sortling
 
-Never guess or inspect images one-by-one by hand. Use macOS's built-in `Vision` framework via the pre-bundled Swift script to extract headline text across all downloads in ~2 seconds:
+Do NOT guess, read files manually, or rely on fragile OCR scripts. Run `sortling.py` in dry-run mode with the `inbox` profile. Sortling uses local decision models (`local-d3` or `local-clef` via `llama-swap` on `:8080`) to evaluate images semantically and visually against the four buckets in under a second per image:
 
 ```bash
-swiftc -O .agents/skills/downloads-media-router/scripts/scan-downloads.swift -o /tmp/scan_dl && /tmp/scan_dl
+SORTLING="${SORTLING_PATH:-$HOME/repos/sortling/sortling.py}"
+PROFILE="inbox/.sortling.json"
+
+python3 "$SORTLING" \
+  --root "${SOURCE_DIR:-$HOME/Downloads}" \
+  --profile-file "$PROFILE" \
+  --json \
+  --no-progress
 ```
 
-This outputs each filename alongside recognized text snippets. Use `view_file` on binary images only when visual layout or memes require human inspection (e.g., textless visual memes or artwork).
+> **Rules for Sortling in this skill:**
+> - **Always dry-run:** Never pass `--apply` to `sortling.py`. Sortling generates the classification plan; this skill handles the site-specific slugs, YAML entries, and destination staging.
+> - **Local by default:** Sortling automatically routes through local decision models (`local-d3`, `local-clef`). Do not send personal downloads to hosted backends without user consent.
+> - **Fallbacks:** If no model is serving, Sortling falls back to filename keywords and flags `classifier: "keywords"` in the JSON. Inform the user if running in keyword fallback mode.
 
 ---
 
 ### Step 2 — Propose Classification Table
 
-Compile and present a breakdown table grouped by the 4 buckets before performing any copies:
+Parse the JSON output from Sortling (`records` array). Extract `file`, `target_folder`, `confidence`, and `reason`, and generate clean kebab-case slugs for proposed additions.
 
-| Destination | File | Detected Content / Purpose | Proposed Action / Slug |
+Present the proposed plan to the user in a Markdown table:
+
+| Destination | File | Confidence / Reason | Proposed Action / Slug |
 |---|---|---|---|
-| **Vibes** | `xyz.webp` | Dog meme in truck | `thug-dog-in-truck.jpg` |
-| **AI Memes** | `abc.png` | Claude rate limit cycle | `claude-rate-limit-cycle.webp` |
-| **Imgcart** | `def.png` | Homelab topology diagram | `homelab-overview-topology.png` |
-| **NOTA** | `doc.jpg` | Personal receipt / headshot | Leave untouched |
+| **Vibes** | `xyz.webp` | 89% (aesthetic illustration) | `thug-dog-in-truck.webp` |
+| **AI Memes** | `abc.png` | 93% (ai-memes: rate limit cycle) | `claude-rate-limit-cycle.webp` |
+| **Imgcart** | `def.png` | 88% (infographics: architecture) | `homelab-overview-topology.png` |
+| **NOTA / Review** | `doc.jpg` | 42% (below threshold / personal) | Leave untouched |
 
-Ask the user to approve the routing.
+Ask the user to confirm the routing before touching any files.
 
 ---
 
@@ -56,7 +68,7 @@ Ask the user to approve the routing.
 - Use lowercase kebab-case slugified filenames (e.g., `radiohead-ketchup-at-mcdonalds.webp`).
 - `src/_data/vibes.js` automatically detects all images in this folder at build time. No YAML edits required.
 
-#### Destination B: AI Memes Folio (`src/folio/agent-tick/`)
+#### Destination B: AI Memes Folio (`src/static/img/folio/ai-memes/`)
 - Image directory: `src/static/img/folio/ai-memes/`
 - Data file: `src/_data/ai-memes.yaml`
 - Copy image with a clean slug.
@@ -83,7 +95,7 @@ Ask the user to approve the routing.
 - Slugify technical filenames (e.g., `ai-startups-500m-run-rate.jpeg`, `local-models-accuracy-and-memory.png`).
 - These are prepared for direct drag-and-drop batch upload into `https://img.carteakey.dev`.
 
-#### Destination D: NOTA
+#### Destination D: NOTA & `_review`
 - Leave original files in `~/Downloads` untouched.
 - Skip personal receipts, personal tickets, headshots, sensitive screenshots, and duplicates.
 
@@ -91,32 +103,24 @@ Ask the user to approve the routing.
 
 ### Step 4 — Verification & Version Bump
 
-1. Run a site build to verify image discovery and YAML syntax:
+1. Run checks:
+   ```bash
+   npm run check:content && npm run check:design
+   ```
+2. Verify build:
    ```bash
    npm run build
    ```
-2. Bump patch version in `versions.json`:
-   ```json
-   {
-     "version": "2.6.x",
-     "releasedAt": "YYYY-MM-DD"
-   }
-   ```
-3. Add entry to `docs/CHANGELOG.md` under current date:
-   ```markdown
-   ## [2.6.x] - YYYY-MM-DD
-   ### Added
-   - Folio: Imported [N] new AI memes to the Agent Tick archive (`src/_data/ai-memes.yaml`).
-   - Vibes: Added [N] new visuals to the vibes gallery (`src/static/img/vibes/`).
-   ```
+3. Bump patch version in `package.json` and `versions.json`.
+4. Add entry to `docs/CHANGELOG.md` under the current date.
 
 ---
 
 ### Step 5 — Commit & Cleanup
 
-1. Commit changes to `main`:
+1. Commit changes following conventional commits:
    ```bash
-   git add docs/CHANGELOG.md versions.json src/_data/ai-memes.yaml src/static/img/folio/ai-memes/ src/static/img/vibes/
+   git add docs/CHANGELOG.md versions.json package.json src/_data/ai-memes.yaml src/static/img/folio/ai-memes/ src/static/img/vibes/
    git commit -m "feat(media): import [N] ai-memes to folio and [N] visuals to vibes"
    ```
 2. Clean up original imported files from `~/Downloads` (leaving NOTA files and `~/Downloads/imgcart/` intact).

@@ -12,8 +12,9 @@ lighthouse-reports/
 # Local Netlify folder
 .netlify
 .vscode/tasks.json
-.vscode/settings.json
-inbox
+inbox/*
+!inbox/manifest.yaml
+!inbox/.sortling.json
 src/static/img/blog-sketches/agent-ide.png
 src/static/img/blog-sketches/homelab.png
 src/static/img/blog-sketches/local-inference.png
