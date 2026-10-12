@@ -31,13 +31,15 @@ Once an image took a second or two and came with a real confidence score, keepin
 
 So the Unforwarder grew into **sortling**, a single Python file with no dependencies that tidies any folder you point it at. It shows you the full plan before moving anything, and every run ends with an undo command, because I don't trust anything with my files - me included.
 
+And it's not just pictures anymore. Word docs, slides and spreadsheets get read like PDFs, so an invoice lands with the other invoices whatever app made it. Zips, installers, videos and the rest get sorted by type without bothering the model at all. PDFs even work on a stock Mac with nothing installed, because sortling reads them itself.
+
 {% image_cc "./src/static/img/sortling/sortling-sorting.png", "Pixel-art wizard dropping colored cubes into document, image and leaf bins", "w-full max-w-md mx-auto", "The intended workflow" %}
 
 The rules are built around how I actually hoard files:
 
 - A screenshot of a receipt or a boarding pass is a record, so it goes into the documents folder next to the PDFs, whatever format it came in.
 - Other screenshots get grouped by topic, like chats, code, reading and shopping.
-- Memes get quarantined in their own folder, where you can browse them or bin them later. Only real junk (blurry, accidental, pitch-black photos) gets staged for deletion, and only when the model is over 85% sure.
+- Memes get quarantined in their own folder, where you can browse them or bin them later. Only real junk (blurry, accidental, pitch-black photos) gets staged for deletion, and only when the model is very sure.
 - Photos get a few broad groups like people, food and pets, since Immich already does faces and places better than I ever will.
 
 The screenshot rule wasn't the plan. The first time I pointed it at my real screenshots, every single one went to the review pile, because I'd only given it document categories. The model was right to be unsure, since most screenshots aren't documents. They got their own folders after that, and now most of them land somewhere sensible.
@@ -46,7 +48,11 @@ The screenshot rule wasn't the plan. The first time I pointed it at my real scre
 
 ## Does it work?
 
-I made a small test set of receipts, a scanned lab report, stock photos of dogs and food, a caption meme, a "share with 10 friends" quote card and, of course, a Good Morning card. Both models I tried got 45 of 47 right. The miss was a photo I'd darkened to look like a pocket shot: it only scored 46% on junk, so it got filed as a photo instead of staged for deletion. The Good Morning card went straight to memes on both. Some things are universal.
+I made a test set of receipts, a scanned lab report, stock photos of dogs and food, a caption meme, a "share with 10 friends" quote card and, of course, a Good Morning card. The Good Morning card went straight to memes on every run. Some things are universal.
+
+The misses taught me the most useful thing about these models: ask the concrete question. A photo I'd darkened to look like a pocket shot only scored 46% on "is this junk?", so it got filed as a photo. Asking "is this photo unusable, too dark or blurry to see?" instead got 90%, while the good photos stayed under 5%. The same thing happened with one of my real screenshots, a CN Tower order confirmation. The model kept calling it "a screenshot", which, fair enough, it is. Asking "is this a record worth keeping?" got 98%, and now it files with the other receipts.
+
+After a few rounds of that, the faster of the two models I use gets all 85 test files right, including 15 of my actual screenshots, and the other gets 82.
 
 If you only have a regular chat model, there's a slower mode that uses one and explains every file in a sentence, though its confidence is just whatever the model claims. The way I like to run it is both. The fast model sorts everything, and only the handful of files it's unsure about get a second look from the chat model, so you pay the slow price on a few files instead of all of them.
 
@@ -56,10 +62,4 @@ I couldn't resist giving it some personality. While it works, a little pixel wiz
 
 {% image_cc "./src/static/img/sortling/sortling-sleeping.png", "Pixel-art wizard asleep against a pile of boxes", "w-full max-w-sm mx-auto", "Waiting for a model to load" %}
 
-## What happens to the Unforwarder
-
-It's next in line for retirement. The WhatsApp pipeline is switching to sortling's photos mode, so the memes folder takes over from the old review-and-delete pile, and real photos carry on to Immich like before. The scripts that delete forwards and spam links inside WhatsApp itself stay, since sortling only sorts files.
-
-{# TODO: once wa-suite has switched, rewrite this section in the past tense #}
-
-If you know of a meme-classification model, I don't need it anymore. The code's at [carteakey/sortling](https://github.com/carteakey/sortling) if your Downloads folder needs an intervention.
+If you know of a meme-classification model, I don't need it anymore. [Version 0.3.0](https://github.com/carteakey/sortling/releases/tag/v0.3.0) is up at [carteakey/sortling](https://github.com/carteakey/sortling) if your Downloads folder needs an intervention.
