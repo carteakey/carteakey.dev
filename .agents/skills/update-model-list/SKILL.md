@@ -41,29 +41,66 @@ Use third-party sources only when official sources do not provide enough informa
 
 ## Scope
 
-Research the most relevant current models for:
+Research and maintain the most relevant, current models for:
 
-- Agentic software development
-- Autonomous repository work
-- Code generation, debugging, refactoring
-- Terminal and tool use
-- Long-running coding tasks
-- Code review
-- Local or open-weight coding agents
+- Agentic software development and autonomous repository work
+- Code generation, architecture, debugging, and multi-file refactoring
+- Terminal and tool use in agent loops
+- High-TPS daily drivers and rapid subagent loops (e.g. Antigravity, Gemini CLI, Claude Code, Codex)
+- Long-running autonomous tasks and multi-agent coordination
+- Local or open-weight inference on consumer hardware (e.g. Strata, llama.cpp, llama-swap)
 
-Also research coding products and subscriptions such as:
+Also research and audit coding services, subscriptions, and tools:
 
-- ChatGPT and Codex
-- Claude Code
-- Cursor
-- GitHub Copilot
-- Windsurf
-- Google coding products
-- OpenRouter
-- Hosted open-model providers
-- Other major coding-agent services
+- ChatGPT and Codex (OpenAI)
+- Claude Code and Claude Workspaces (Anthropic)
+- Antigravity and Gemini CLI (Google DeepMind)
+- Cursor, Windsurf, and Copilot
+- OpenRouter and hosted open-weight providers
 
-Do not include every available model. Include models that are currently important, competitive, widely used, unusually good value, or useful for a distinct coding use case.
+Do not include every available model. Include only models that are currently important, competitive, widely used, unusually good value, or serve a distinct agentic use case.
+
+## Generational Auditing & Zero-Zombie Rules
+
+The tier list must always reflect the **active frontier generation**. It is an authored, high-signal editorial tool, never an additive graveyard of past releases.
+
+### 1. Generational Wave Checks (Mandatory Per Provider)
+Before editing the roster, systematically audit each provider's active generation:
+- **OpenAI**: Flagship line is `GPT-6` / `GPT-6.1` (`GPT-6 Astra` in S+, `GPT-6.1 Sol` in S, `GPT-6 Luna` in B). Note that `GPT-6 Terra` does not exist; avoid confusing with legacy 5.6 Terra. When `GPT-6` is active, immediately purge all legacy `GPT-5.x` models. Never leave previous generation variants lingering in the tiers.
+- **Anthropic**: Flagship line is `Claude 5.5` (`Claude Opus 5.5`, `Claude Sonnet 5.5`, `Claude Haiku 5.5`) alongside reasoning frontier `Claude Fable 5.1`. Purge legacy `Opus 5`, `Sonnet 5`, `Haiku 4.5`, and older `Fable 5`.
+- **Google DeepMind**: Flagship high-TPS line is `Gemini 3.8` (e.g. `Gemini 3.8 Flash`). Purge superseded `Gemini 3.6` and `3.5` iterations.
+- **Alibaba**: Flagship line is `Qwen 3.8` (`Qwen3.8-Flash-Next`, `Qwen3.8-27B`). Purge older `Qwen 3.7` and `3.6` generations.
+- **Zhipu / Z.ai**: Flagship open model is `GLM-5.3`. Purge `GLM-5.2` and older checkpoints.
+- **Moonshot AI**: Flagship open frontier model is `Kimi K3`. Purge `Kimi K2.7 Code` and predecessors.
+- **DeepSeek**: Flagship generation is `DeepSeek V4` (`DeepSeek V4 Pro`, `DeepSeek V4 Flash`).
+
+### 2. Cross-Repository Ground Truth Checks
+Always check the repository's own ground truth before finalizing rankings:
+- Inspect `src/snippets/` for live developer tooling and catalog fixes (e.g. `codex-missing-models-old-app-server.md` tracking `GPT-6.1 Sol`).
+- Inspect `src/notes/` for active author feedback on model speed, lingo, and workflow ergonomics (e.g. `tps-over-quality.md`, `opus-5-5-and-wait-what.md`, `recursive-self-improvement-in-small-models.md`).
+- Inspect `src/posts/local-inference/` and `src/_data/uses.yaml` for real homelab benchmarks on consumer hardware (`yeti-cachy`: RTX 4070 12GB VRAM, DDR5 hugepages, Strata / llama-swap).
+
+### 3. Strict Pruning Protocol
+- **Immediate Predecessor Replacement**: When a point release or major generation ships (e.g. GPT-6 Luna replacing GPT-5.6 Luna; Sonnet 5.5 replacing Sonnet 5), replace it cleanly. Do not keep both unless they serve genuinely distinct, active developer tasks.
+- **Eliminate Stale Previews**: Drop unreleased or non-production previews once general production models exist.
+- **Prune Dead Tiers**: If a tier (e.g. Tier C or D) has no active models, remove it entirely from `tiers`. The UI should remain dense, squarish, and focused.
+
+### 4. Triangulation Against Public Benchmarks (Artificial Analysis Intelligence Index)
+Always cross-reference and calibrate the tier list against major public composite benchmarks, particularly the **Artificial Analysis Intelligence Index** (e.g. v4.3.2, 10-evaluation composite including Terminal-Bench 4.0, AA-Briefcase, GDPval, etc.):
+- **Benchmark Ground Truth Check**: Check composite scores as an objective anchor:
+  - `Claude Opus 5.5`: 58 (max effort with fallback)
+  - `Claude Sonnet 5.5`: 56 (max effort with fallback)
+  - `Claude Fable 5.1`: 53 (max effort with fallback)
+  - `GPT-6 Astra`: 53 (max effort)
+  - `GPT-6.1 Sol`: 52 (max effort)
+  - `GLM-5.3-Flash`: 42
+  - `Gemini 3.8 Flash`: 41 (high effort)
+  - `Qwen3.8-Flash-Next`: 40
+  - `DeepSeek V4.1 Flash`: 39
+  - `Qwen3.8 27B`: 34
+- **Availability Filter**: Public benchmarks test unreleased lab models (e.g. `Gemini 4 Argon` at 53 marked "Not publicly available"). Do NOT rank unreleased models until they have generally available APIs or downloadable weights.
+- **Reasoning Effort & Latency Tradeoffs**: High scores on max effort (e.g. Opus 5.5 with fallback at 58) carry high latency and token cost. Daily drivers (S Tier) like Sonnet 5.5 (56) and Gemini 3.8 Flash (41) often deliver vastly superior developer velocity in interactive IDE/CLI loops than max-effort models.
+- **Editorial Divergence Rationale**: When editorial ranking departs from raw composite score order (e.g., placing Gemini 3.8 Flash in S tier due to unmatched TPS and Antigravity tooling, or ranking GLM-5.3 Flash prominently in A tier), document the specific developer workflow reasoning.
 
 ## Editorial Ranking Rules
 

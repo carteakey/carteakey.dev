@@ -33,6 +33,7 @@ const COLLECTION_PAGES = {
   "src/listening.njk": "shelf",
   "src/reading.njk": "shelf",
   "src/watching.njk": "shelf",
+  "src/ai.njk": "ledger",
   "src/blogroll.njk": "ledger",
   "src/bookmarks.njk": "ledger",
   "src/data.njk": "ledger",

@@ -1,0 +1,321 @@
+---
+layout: layouts/base.njk
+title: AI Ecosystem & Workbench
+description: How I use AI in practice — daily driver subscriptions, local inference hardware, model rankings, and research series.
+permalink: /ai/
+eleventyNavigation:
+  key: AI
+  order: 14
+collectionArchetype: ledger
+---
+
+{% include "components/breadcrumbs.njk" %}
+
+{% set pageEyebrow = "Workbench · Ledger" %}
+{% set pageTitle = "AI Ecosystem" %}
+{% set pageDescription = "How I actually use AI across engineering, writing, and local systems: the paid subscriptions, daily-driver runtimes, consumer homelab specs, and curated research clusters." %}
+{% set pageMetaLabel = "Updated" %}
+{% set pageMeta = "Oct 14, 2026" %}
+{% set pageBadges = [
+  { label: "18 Models Ranked", href: "/folio/model-tier-list/" },
+  { label: "RTX 4070 12GB Node", href: "/devices/yeti-cachy/" },
+  { label: "Local-First" }
+] %}
+{% set pageActions = [
+  { label: "Model Tier List →", href: "/folio/model-tier-list/", accent: true }
+] %}
+{% include "components/page-header.njk" %}
+
+{# ── 1. Active Subscriptions & Operating Stack (Ledger) ── #}
+<section class="not-prose mb-12 animate-enter stagger-1" aria-labelledby="subscriptions-heading">
+  <div class="flex items-baseline justify-between gap-4 mb-4">
+    <h2 id="subscriptions-heading" class="editorial-title">Operating Stack & Subscriptions</h2>
+    <span class="font-mono text-[0.78rem] uppercase tracking-[0.12em] text-gray-500 dark:text-gray-400">~$40 / mo Active Budget</span>
+  </div>
+  <p class="editorial-support mb-4">
+    I rely on a lean dual-subscription core ($20 Claude + $20 ChatGPT/Codex) paired with Google AI Pro for high-TPS velocity, OpenCode Go as a utility router, and local 125B MoE execution for zero-retention privacy and offline experiments.
+  </p>
+
+  <div class="surface rounded-sm overflow-hidden border border-surface-border">
+    <div class="overflow-x-auto">
+      <table class="w-full text-left border-collapse text-xs md:text-sm font-sans">
+        <thead>
+          <tr class="border-b border-surface-border bg-stone-100/60 dark:bg-stone-900/60 font-mono text-[0.78rem] uppercase tracking-wider text-stone-600 dark:text-stone-400">
+            <th class="py-2.5 px-3 md:px-4 font-semibold">Service</th>
+            <th class="py-2.5 px-3 md:px-4 font-semibold">Cost</th>
+            <th class="py-2.5 px-3 md:px-4 font-semibold">Primary Role</th>
+            <th class="py-2.5 px-3 md:px-4 font-semibold">Active Models & Tiers</th>
+            <th class="py-2.5 px-3 md:px-4 font-semibold">Daily Harness</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-surface-border font-serif">
+          <tr class="hover:bg-stone-50/50 dark:hover:bg-stone-900/40 transition-colors">
+            <td class="py-3 px-3 md:px-4 font-mono font-semibold text-stone-900 dark:text-stone-100">
+              ChatGPT Plus & Codex
+            </td>
+            <td class="py-3 px-3 md:px-4 font-mono text-stone-600 dark:text-stone-400">
+              $20 / mo
+            </td>
+            <td class="py-3 px-3 md:px-4 text-stone-700 dark:text-stone-300">
+              Complex multi-file refactoring, autonomous repo migrations, deep bug root-cause investigation
+            </td>
+            <td class="py-3 px-3 md:px-4 font-mono text-[0.8rem]">
+              <strong class="font-semibold text-stone-900 dark:text-stone-100">GPT-6 Astra</strong> <span class="meta-text">(S+)</span>, 
+              GPT-6.1 Sol <span class="meta-text">(S)</span>, 
+              GPT-6 Luna <span class="meta-text">(B)</span>
+            </td>
+            <td class="py-3 px-3 md:px-4 font-mono text-[0.8rem] text-stone-600 dark:text-stone-400">
+              Codex CLI & IDE
+            </td>
+          </tr>
+          <tr class="hover:bg-stone-50/50 dark:hover:bg-stone-900/40 transition-colors">
+            <td class="py-3 px-3 md:px-4 font-mono font-semibold text-stone-900 dark:text-stone-100">
+              Claude Pro
+            </td>
+            <td class="py-3 px-3 md:px-4 font-mono text-stone-600 dark:text-stone-400">
+              $20 / mo
+            </td>
+            <td class="py-3 px-3 md:px-4 text-stone-700 dark:text-stone-300">
+              Interactive pair-programming partner, architecture design, editorial prose, clean code review
+            </td>
+            <td class="py-3 px-3 md:px-4 font-mono text-[0.8rem]">
+              <strong class="font-semibold text-stone-900 dark:text-stone-100">Claude Sonnet 5.5</strong> <span class="meta-text">(S)</span>, 
+              Claude Opus 5.5 <span class="meta-text">(S+)</span>, 
+              Claude Haiku 5.5 <span class="meta-text">(B)</span>
+            </td>
+            <td class="py-3 px-3 md:px-4 font-mono text-[0.8rem] text-stone-600 dark:text-stone-400">
+              Claude Code & Desktop
+            </td>
+          </tr>
+          <tr class="hover:bg-stone-50/50 dark:hover:bg-stone-900/40 transition-colors">
+            <td class="py-3 px-3 md:px-4 font-mono font-semibold text-stone-900 dark:text-stone-100 flex items-center gap-1.5">
+              <span>Google AI Pro</span>
+              <span class="badge badge-accent text-[0.65rem] py-0 px-1 font-mono uppercase">Favorite</span>
+            </td>
+            <td class="py-3 px-3 md:px-4 font-mono text-stone-600 dark:text-stone-400">
+              Included / Dev
+            </td>
+            <td class="py-3 px-3 md:px-4 text-stone-700 dark:text-stone-300">
+              High-TPS skill loops, repeated refactoring iterations, low-latency subagent calls, Antigravity tasks
+            </td>
+            <td class="py-3 px-3 md:px-4 font-mono text-[0.8rem]">
+              <strong class="font-semibold text-stone-900 dark:text-stone-100">Gemini 3.8 Flash</strong> <span class="meta-text">(S Tier Daily Driver)</span>
+            </td>
+            <td class="py-3 px-3 md:px-4 font-mono text-[0.8rem] text-stone-600 dark:text-stone-400">
+              Antigravity CLI & Gemini CLI
+            </td>
+          </tr>
+          <tr class="hover:bg-stone-50/50 dark:hover:bg-stone-900/40 transition-colors">
+            <td class="py-3 px-3 md:px-4 font-mono font-semibold text-stone-900 dark:text-stone-100">
+              OpenCode Go
+            </td>
+            <td class="py-3 px-3 md:px-4 font-mono text-stone-600 dark:text-stone-400">
+              PAYG / API
+            </td>
+            <td class="py-3 px-3 md:px-4 text-stone-700 dark:text-stone-300">
+              Utility routing, testing alternative open-weight models, high-volume automation
+            </td>
+            <td class="py-3 px-3 md:px-4 font-mono text-[0.8rem]">
+              GLM-5.3 <span class="meta-text">(A)</span>, 
+              GLM-5.3 Flash <span class="meta-text">(A)</span>, 
+              DeepSeek V4 Pro <span class="meta-text">(A)</span>, 
+              Grok 4.5 <span class="meta-text">(S)</span>
+            </td>
+            <td class="py-3 px-3 md:px-4 font-mono text-[0.8rem] text-stone-600 dark:text-stone-400">
+              Terminal agents
+            </td>
+          </tr>
+          <tr class="hover:bg-stone-50/50 dark:hover:bg-stone-900/40 transition-colors">
+            <td class="py-3 px-3 md:px-4 font-mono font-semibold text-stone-900 dark:text-stone-100">
+              Homelab Local Node
+            </td>
+            <td class="py-3 px-3 md:px-4 font-mono text-stone-600 dark:text-stone-400">
+              $0 / Offline
+            </td>
+            <td class="py-3 px-3 md:px-4 text-stone-700 dark:text-stone-300">
+              Zero-data-retention development, private codebase reasoning, offline fallback, inference benchmarks
+            </td>
+            <td class="py-3 px-3 md:px-4 font-mono text-[0.8rem]">
+              <strong class="font-semibold text-stone-900 dark:text-stone-100">Qwen3.8-Flash-Next</strong> <span class="meta-text">(125B MoE, A)</span>, 
+              Qwen3.8-27B <span class="meta-text">(B)</span>
+            </td>
+            <td class="py-3 px-3 md:px-4 font-mono text-[0.8rem] text-stone-600 dark:text-stone-400">
+              Strata & llama.cpp on :8080
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+{# ── 2. Homelab Node Spec Snapshot ── #}
+<section class="not-prose mb-12 animate-enter stagger-2" aria-labelledby="homelab-heading">
+  <div class="flex items-baseline justify-between gap-4 mb-4">
+    <h2 id="homelab-heading" class="editorial-title">Local Rig Snapshot (yeti-cachy)</h2>
+    <a href="/devices/yeti-cachy/" class="accent-link text-xs font-mono uppercase tracking-wider">Device Spec Details →</a>
+  </div>
+  <p class="editorial-support mb-4">
+    My primary local inference workstation. By combining dynamic expert activation pinning with Transparent Huge Pages and PCIe 4.0 PLE table offloads, it runs a 125B MoE at 60–90 tokens/second on a single 12 GB consumer card.
+  </p>
+
+  <div class="surface rounded-sm p-4 md:p-6 border border-surface-border font-mono text-xs leading-relaxed">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-y-3 gap-x-6">
+      <div class="flex justify-between border-b border-surface-border/60 pb-1.5">
+        <span class="text-stone-500">Host Hardware:</span>
+        <span class="text-stone-900 dark:text-stone-100 font-semibold">Intel Core i5-12600K (10c/16t)</span>
+      </div>
+      <div class="flex justify-between border-b border-surface-border/60 pb-1.5">
+        <span class="text-stone-500">System Memory:</span>
+        <span class="text-stone-900 dark:text-stone-100 font-semibold">64 GB DDR5-5600 (MADV_HUGEPAGE)</span>
+      </div>
+      <div class="flex justify-between border-b border-surface-border/60 pb-1.5">
+        <span class="text-stone-500">Acceleration GPU:</span>
+        <span class="text-stone-900 dark:text-stone-100 font-semibold">NVIDIA RTX 4070 (12 GB GDDR6X)</span>
+      </div>
+      <div class="flex justify-between border-b border-surface-border/60 pb-1.5">
+        <span class="text-stone-500">Storage / Offload:</span>
+        <span class="text-stone-900 dark:text-stone-100 font-semibold">2 TB PCIe 4.0 NVMe (29 GB PLE offload)</span>
+      </div>
+      <div class="flex justify-between border-b border-surface-border/60 pb-1.5">
+        <span class="text-stone-500">Operating System:</span>
+        <span class="text-stone-900 dark:text-stone-100 font-semibold">CachyOS Linux (Kernel 6.16-cachy)</span>
+      </div>
+      <div class="flex justify-between border-b border-surface-border/60 pb-1.5">
+        <span class="text-stone-500">Serving Multiplexer:</span>
+        <span class="text-stone-900 dark:text-stone-100 font-semibold">llama-swap (port 8080)</span>
+      </div>
+      <div class="flex justify-between border-b border-surface-border/60 pb-1.5">
+        <span class="text-stone-500">Primary Local Model:</span>
+        <span class="text-stone-900 dark:text-stone-100 font-semibold">Qwen3.8-Flash-Next (125B MoE, 60k ctx)</span>
+      </div>
+      <div class="flex justify-between border-b border-surface-border/60 pb-1.5">
+        <span class="text-stone-500">Fallback Local Model:</span>
+        <span class="text-stone-900 dark:text-stone-100 font-semibold">Qwen3.8-27B (Dense Q4_K_M)</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+{# ── 3. Core Hubs & Curated Series (Bento / Wall Cards) ── #}
+<section class="not-prose mb-12 animate-enter stagger-3" aria-labelledby="hubs-heading">
+  <div class="flex items-baseline justify-between gap-4 mb-4">
+    <h2 id="hubs-heading" class="editorial-title">Curated Portals & Series</h2>
+    <span class="font-mono text-[0.78rem] uppercase tracking-[0.12em] text-gray-500 dark:text-gray-400">Deep Dives</span>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <a href="/folio/model-tier-list/" class="surface surface-padding surface-hover rounded-sm block no-underline border border-surface-border group">
+      <div class="flex items-center justify-between gap-2 mb-2">
+        <span class="editorial-kicker">Interactive Folio</span>
+        <span class="meta-text group-hover:text-[var(--accent-color)] transition-colors">Open Folio →</span>
+      </div>
+      <h3 class="editorial-title text-base group-hover:text-[var(--accent-color)] transition-colors mb-2">
+        Agentic Coding Model Tier List
+      </h3>
+      <p class="editorial-support-compact">
+        A rigorously pruned, 18-model ranking across S+, S, A, and B tiers with real public API list pricing, cache ratios, and live task cost estimation.
+      </p>
+    </a>
+
+    <a href="/blog/local-inference/" class="surface surface-padding surface-hover rounded-sm block no-underline border border-surface-border group">
+      <div class="flex items-center justify-between gap-2 mb-2">
+        <span class="editorial-kicker">Post Cluster · 14 Articles</span>
+        <span class="meta-text group-hover:text-[var(--accent-color)] transition-colors">Explore Cluster →</span>
+      </div>
+      <h3 class="editorial-title text-base group-hover:text-[var(--accent-color)] transition-colors mb-2">
+        Local Inference Engineering
+      </h3>
+      <p class="editorial-support-compact">
+        Engineering notes on squeezing 125B MoE architectures into 12 GB consumer VRAM: K8V4 caches, PLE offloads, overfit inference engines, and Strata.
+      </p>
+    </a>
+
+    <a href="/blog/agents/" class="surface surface-padding surface-hover rounded-sm block no-underline border border-surface-border group">
+      <div class="flex items-center justify-between gap-2 mb-2">
+        <span class="editorial-kicker">Post Cluster · 8 Articles</span>
+        <span class="meta-text group-hover:text-[var(--accent-color)] transition-colors">Explore Cluster →</span>
+      </div>
+      <h3 class="editorial-title text-base group-hover:text-[var(--accent-color)] transition-colors mb-2">
+        Autonomous Coding Agents
+      </h3>
+      <p class="editorial-support-compact">
+        Hands-on workflows with Astra/Sol/Luna multi-agent orchestration, Claude Code terminal execution, Copilot Codex setups, and burner reviewers.
+      </p>
+    </a>
+
+    <a href="/prompts/" class="surface surface-padding surface-hover rounded-sm block no-underline border border-surface-border group">
+      <div class="flex items-center justify-between gap-2 mb-2">
+        <span class="editorial-kicker">Reference Archive</span>
+        <span class="meta-text group-hover:text-[var(--accent-color)] transition-colors">View Prompts →</span>
+      </div>
+      <h3 class="editorial-title text-base group-hover:text-[var(--accent-color)] transition-colors mb-2">
+        Evaluation Prompts & Benchmarks
+      </h3>
+      <p class="editorial-support-compact">
+        A collection of repeatable prompts, CRTBench single-file retro game benchmarks, and qualitative reasoning tests for local and cloud models.
+      </p>
+    </a>
+  </div>
+</section>
+
+{# ── 4. Recent AI Field Notes & Dispatches ── #}
+<section class="not-prose mb-12 animate-enter stagger-4" aria-labelledby="feed-heading">
+  <div class="flex items-baseline justify-between gap-4 mb-4">
+    <h2 id="feed-heading" class="editorial-title">Latest AI Notes & Dispatches</h2>
+    <a href="/tags/ai/" class="accent-link text-xs font-mono uppercase tracking-wider">All AI Writing ({% set aiPosts = collections['AI'] or [] %}{{ aiPosts.length }} items) →</a>
+  </div>
+
+  <div class="surface rounded-sm border border-surface-border divide-y divide-surface-border font-serif">
+    {% set aiEntries = (collections['AI'] or []) | reverse %}
+    {% for item in aiEntries.slice(0, 5) %}
+      <article class="p-4 md:p-5 hover:bg-stone-50/50 dark:hover:bg-stone-900/40 transition-colors">
+        <div class="flex items-baseline justify-between gap-2 mb-1 flex-wrap">
+          <span class="meta-text">
+            {{ item.data.tags[0] or 'AI' }} · {{ item.date | readableDate }}
+          </span>
+          {% if item.data.authored_by %}
+            <span class="meta-text">authored: {{ item.data.authored_by }}</span>
+          {% endif %}
+        </div>
+        <h3 class="editorial-title text-base mb-1.5">
+          <a href="{{ item.url }}" class="no-underline text-stone-900 dark:text-stone-100 hover:text-[var(--accent-color)] transition-colors">
+            {{ item.data.title }}
+          </a>
+        </h3>
+        {% if item.data.description %}
+          <p class="editorial-support-compact">
+            {{ item.data.description }}
+          </p>
+        {% endif %}
+      </article>
+    {% endfor %}
+  </div>
+</section>
+
+{# ── 5. The Authorship & Local-First Ethos ── #}
+<section class="not-prose mb-8 animate-enter stagger-5" aria-labelledby="philosophy-heading">
+  <div class="flex items-baseline justify-between gap-4 mb-3">
+    <h2 id="philosophy-heading" class="editorial-title">Transparency & Authorship Policy</h2>
+    <span class="font-mono text-[0.78rem] uppercase tracking-[0.12em] text-gray-500 dark:text-gray-400">Guiding Rules</span>
+  </div>
+  <div class="surface rounded-sm p-4 md:p-6 border border-surface-border editorial-support leading-relaxed">
+    <p class="mb-3">
+      This site is an authored personal workbench, not an automated content mill. I use AI aggressively as a research amplifier, coding co-pilot, and terminal partner, but under strict boundaries:
+    </p>
+    <ul class="list-disc pl-5 space-y-2 font-serif text-stone-600 dark:text-stone-300">
+      <li>
+        <strong>Explicit Frontmatter Badges:</strong> Every note, post, and guide carries an immutable <code>authored_by</code> property (<code>human</code>, <code>ai-assisted</code>, or <code>ai-generated</code>) displayed in the entry metadata.
+      </li>
+      <li>
+        <strong>Reader-Controlled AI Filter:</strong> The top navigation bar includes an interactive filter widget (<a href="/static/js/ai-filter.js" class="accent-link"><code>ai-filter.js</code></a>) allowing you to toggle between All content, Hide AI-generated, and Human-written only.
+      </li>
+      <li>
+        <strong>Zero Em Dashes & High Contraction Fingerprint:</strong> All prose is calibrated against my measured human writing fingerprint to eradicate robotic cadence, synthetic corporate framing, and chatbot residue.
+      </li>
+      <li>
+        <strong>Local-First & Compression:</strong> Whenever possible, private code and experimental workflows stay on consumer silicon. Constraints are the only reason computing advances.
+      </li>
+    </ul>
+  </div>
+</section>
