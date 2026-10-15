@@ -12,7 +12,6 @@ const COLLECTION_PAGES = {
   "src/archive.njk": "index",
   "src/blog/folder.njk": "index",
   "src/changelog.njk": "index",
-  "src/learning.njk": "index",
   "src/lexicon.njk": "index",
   "src/notes.njk": "index",
   "src/now-archive.njk": "index",

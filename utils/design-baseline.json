@@ -29,12 +29,6 @@
     "src/_includes/layouts/base.njk": {
       "inline-style": 45
     },
-    "src/_includes/layouts/post.njk": {
-      "pill-or-circle": 1,
-      "off-palette-colour": 4,
-      "utility-text-stack": 9,
-      "inline-style": 4
-    },
     "src/about.njk": {
       "utility-text-stack": 1
     },

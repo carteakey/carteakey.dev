@@ -44,67 +44,32 @@ hasEthicalAds: false
 {% set showSidebar = not fullWidth %}
 {% set tocHtml = (content | toc) | default('') %}
 {% set conversationPlacement = conversationPlacement or 'sidebar' %}
-{% set showAds = false %}
 {% set isEditorial = (theme == 'editorial') %}
 {% set edPair = pair or 'teal-rose' %}
 
-{# Reading progress: thin accent bar tracking scroll position through the
-   post body specifically (not the whole page - the sidebar/footer
-   shouldn't count toward "done reading"). Function over form: helps orient
-   in long technical posts, no visual weight beyond a 2px line. #}
 <div class="reading-progress" aria-hidden="true"><div id="readingProgressBar" class="reading-progress-bar"></div></div>
 
 <div class="post-wrap relative"{% if isEditorial %} data-pair="{{ edPair }}"{% endif %}>
-  {# Left Sidebar - Author Card (or editorial meta-sidebar) #}
-  {% if showSidebar %}
+  {# Left Gutter Rail - reserved for editorial meta-sidebar or sidenotes; no redundant author bio box #}
+  {% if showSidebar and isEditorial and sidebar %}
   <aside class="hidden xl:block post-rail post-rail-left">
     <div class="post-rail-inner sticky top-24 space-y-4">
-      {% if isEditorial and sidebar %}
-        {% include "components/editorial-sidebar.njk" %}
-      {% endif %}
-      {# Author Card #}
-      <section class="surface surface-padding post-side-card not-prose">
-        <a href="/about" class="block group">
-          <div class="relative w-20 h-20 mb-3">
-            {% image "./src/static/img/headshot.png", "{{ metadata.author.name }}", "relative w-20 h-20 rounded-[0.18rem] object-cover border border-gray-200 dark:border-gray-700 transition-all shadow-sm", "./src/static/img/headshot-zoom.jpg" %}
-          </div>
-        </a>
-        <p class="post-side-kicker">About the author</p>
-        <a href="/about" class="post-side-name">
-          {{ metadata.author.name }}
-        </a>
-        <p class="post-side-copy">Data analyst from Toronto. I write about analytics, local AI, homelabs, side projects, and whatever else catches my eye.</p>
-        <div class="post-side-links">
-          <a href="https://x.com/krtychn" target="_blank" rel="noopener noreferrer" title="X (Twitter)" aria-label="X (Twitter)">
-            <svg class="w-4 h-4 fill-current inline-block" viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-          </a>
-          <a href="https://github.com/carteakey" target="_blank" rel="noopener noreferrer" title="GitHub" aria-label="GitHub">
-            {% feather "github", class="w-4 h-4" %}
-          </a>
-          <a href="https://www.linkedin.com/in/kartikeychauhan/" target="_blank" rel="noopener noreferrer" title="LinkedIn" aria-label="LinkedIn">
-            {% feather "linkedin", class="w-4 h-4" %}
-          </a>
-          <a href="mailto:{{ metadata.author.email }}" title="Email" aria-label="Email">
-            {% feather "mail", class="w-4 h-4" %}
-          </a>
-        </div>
-      </section>
+      {% include "components/editorial-sidebar.njk" %}
     </div>
   </aside>
   {% endif %}
 
-  {# Right Sidebar - TOC & Comments #}
-
+  {# Right Sidebar - Sticky Outline & Comment Pointer #}
   {% if showSidebar %}
-  <aside class="hidden xl:block post-rail post-rail-right text-sm text-gray-600 dark:text-gray-300">
+  <aside class="hidden xl:block post-rail post-rail-right">
     <div class="post-rail-inner sticky top-24 space-y-4">
       {% if tocHtml | trim %}
       <section class="surface surface-padding">
         <p class="post-panel-title flex items-center gap-2">
-          {% feather "list", class="w-5 h-5 opacity-70" %}
+          {% feather "list", class="w-4 h-4 opacity-70" %}
           Outline
         </p>
-        <div class="toc-list mt-4 max-h-[60vh] overflow-y-auto pr-1 space-y-2">
+        <div class="toc-list mt-3 max-h-[60vh] overflow-y-auto pr-1 space-y-2">
           {{ tocHtml | safe }}
         </div>
       </section>
@@ -120,80 +85,72 @@ hasEthicalAds: false
     <header class="post-header space-y-2.5">
       {% set primaryTag = (tags | filterTagList)[0] %}
       {% if primaryTag %}
-        {# Small pixel-accent category tag above the title, echoing the
-           homepage's small-pixel-word + big-serif-lead rhythm (inverted:
-           there it's lead-then-accent inline, here it's accent-then-lead
-           stacked). Universal - works for any title regardless of length
-           or content, so the title itself never needs the pixel
-           treatment (that hurts readability on arbitrary long titles,
-           per direct feedback - the touch lives beside the title, not
-           inside it). #}
         <p class="post-title-eyebrow">[{{ primaryTag }}]</p>
       {% endif %}
       <h1 class="post-title">{{ title }}</h1>
 
-      {% if isDraft %}
-      <div class="surface surface-compact">
-        <div class="flex items-start gap-2.5">
-          <div class="post-status-copy flex-1">
-            {% if hidden %}
-            <span class="post-status-label">Hidden local preview:</span> This page has <code>hidden: true</code>. It is rendered only in local/dev builds and is excluded from production output.
-            {% else %}
-            <span class="post-status-label">Draft:</span> This post is a work in progress - it may be incomplete or change. I publish drafts early because it's less stressful than waiting for perfect.
-            {% endif %}
-          </div>
-        </div>
-      </div>
-      {% endif %}
-
-      {% if authored_by == 'ai-assisted' %}
-      <div class="not-prose surface surface-compact flex items-start gap-2 text-blue-800 dark:text-blue-300" style="border-color: #bfdbfe; background: color-mix(in srgb, #3b82f6 8%, transparent);">
-        {% feather "zap", class="w-4 h-4 shrink-0 mt-0.5 opacity-70" %}
-        <span class="post-status-copy"><span class="post-status-label">AI Assisted</span> - Written with AI as a creative partner. AI helped with research, drafting, or wording; I edited the result. Credits for source ideas and adapted material are listed separately.</span>
-      </div>
-      {% elif authored_by == 'ai-generated' %}
-      <div class="not-prose surface surface-compact flex items-start gap-2 text-purple-800 dark:text-purple-300" style="border-color: #ddd6fe; background: color-mix(in srgb, #7c3aed 8%, transparent);">
-        {% feather "cpu", class="w-4 h-4 shrink-0 mt-0.5 opacity-70" %}
-        <span class="post-status-copy"><span class="post-status-label">AI Generated</span> - AI wrote most of the words here. I selected and edited the material. Credits for source ideas and adapted material are listed separately.</span>
-      </div>
-      {% endif %}
-
-
       {% if description %}
-        <p class="post-dek">
-          {{ description }}
-        </p>
+        <p class="post-dek">{{ description }}</p>
       {% endif %}
 
-      <div class="post-meta-row text-sm text-gray-600 dark:text-gray-400">
+      {# Single Monospace Metadata Ledger Bar #}
+      <div class="post-meta-row not-prose pt-1">
         <div class="post-meta-primary">
           <time datetime="{{ page.date | htmlDateString }}" class="post-meta-chip">
-            {% feather "calendar", class="w-4 h-4 opacity-60" %}
+            {% feather "calendar", class="w-3.5 h-3.5 opacity-60" %}
             {{ page.date | readableDate }}
           </time>
+          {% if updated %}
+            <span class="post-meta-chip">
+              · Updated <time datetime="{{ updated | htmlDateString }}">{{ updated | readableDate }}</time>
+            </span>
+          {% endif %}
           <span class="post-meta-chip">
-            {% feather "clock", class="w-4 h-4 opacity-60" %}
+            {% feather "clock", class="w-3.5 h-3.5 opacity-60" %}
             {{ content | readingTime }}
           </span>
-          <span id="viewCount" class="post-meta-chip">
-            {% feather "eye", class="w-4 h-4 opacity-60" %}
-            <span id="viewCountNumber">-</span> views
-          </span>
           {{ authorshipBadge(authored_by) }}
+          {% set visibleTags = tags | filterTagList %}
+          {% for tag in visibleTags %}
+            {% set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
+            <a href="{{ tagUrl | url }}" class="badge badge-tag badge-compact badge-interactive no-underline">
+              #{{ tag }}
+            </a>
+          {% endfor %}
         </div>
 
-        {% set visibleTags = tags | filterTagList %}
-        {% if visibleTags.length %}
-          <div class="post-meta-secondary">
-            {% for tag in visibleTags %}
-              {% set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
-              <a href="{{ tagUrl | url }}" class="badge badge-tag badge-interactive text-xs">
-                #{{ tag }}
-              </a>
-            {% endfor %}
-          </div>
-        {% endif %}
+        <div class="post-meta-secondary">
+          {% include "components/copy-markdown.njk" %}
+        </div>
       </div>
+
+      {% if isDraft %}
+      <div class="surface surface-compact not-prose">
+        <div class="post-status-copy">
+          {% if hidden %}
+          <span class="post-status-label">Hidden local preview:</span> This page has <code>hidden: true</code>. It is rendered only in local/dev builds and is excluded from production output.
+          {% else %}
+          <span class="post-status-label">Draft:</span> This post is a work in progress - it may be incomplete or change. I publish drafts early because it's less stressful than waiting for perfect.
+          {% endif %}
+        </div>
+      </div>
+      {% endif %}
+
+      {% if authored_by == 'ai-assisted' or authored_by == 'ai-generated' %}
+      <details class="not-prose surface surface-compact">
+        <summary class="meta-text cursor-pointer select-none flex items-center gap-1.5">
+          {% feather "zap", class="w-3.5 h-3.5 opacity-70" %}
+          <span>{% if authored_by == 'ai-assisted' %}AI-Assisted authorship note{% else %}AI-Generated authorship note{% endif %}</span>
+        </summary>
+        <p class="editorial-support-compact mt-2 mb-0">
+          {% if authored_by == 'ai-assisted' %}
+            Written with AI as a creative partner. AI helped with research, drafting, or wording; I edited and verified the result. Credits for source ideas and adapted material are listed separately.
+          {% else %}
+            AI wrote most of the words here. I selected, structured, and edited the material. Credits for source ideas and adapted material are listed separately.
+          {% endif %}
+        </p>
+      </details>
+      {% endif %}
 
       {% if image %}
         <figure class="not-prose mt-2 flex justify-center">
@@ -210,16 +167,24 @@ hasEthicalAds: false
 
     <hr class="divider-gradient" />
 
-    <div class="flex justify-end mt-3 mb-1">
-      {% include "components/copy-markdown.njk" %}
-    </div>
-
+    {# Mobile / Tablet Table of Contents (placed before the prose rather than below comments) #}
+    {% if tocHtml | trim %}
+    <details class="not-prose surface surface-compact xl:hidden my-3">
+      <summary class="post-panel-title cursor-pointer select-none flex items-center gap-2">
+        {% feather "list", class="w-4 h-4 opacity-70" %}
+        <span>Outline</span>
+      </summary>
+      <div class="toc-list mt-3 max-h-[45vh] overflow-y-auto pr-1 space-y-1.5">
+        {{ tocHtml | safe }}
+      </div>
+    </details>
+    {% endif %}
 
     {% if attribution %}
-      <aside class="surface surface-padding" aria-label="Source attribution">
+      <aside class="surface surface-padding not-prose" aria-label="Source attribution">
         <h2 class="post-panel-title">{{ attribution.title }}</h2>
         <p class="editorial-support mt-2">{{ attribution.text }}</p>
-        <p class="editorial-support-compact mt-2"><a href="{{ attribution.url }}">{{ attribution.titleOfWork }}</a> by {{ attribution.author }}</p>
+        <p class="editorial-support-compact mt-2"><a href="{{ attribution.url }}" class="accent-link">{{ attribution.titleOfWork }}</a> by {{ attribution.author }}</p>
       </aside>
     {% endif %}
 
@@ -228,107 +193,34 @@ hasEthicalAds: false
     </div>
 
     {% if sources and sources.length %}
-      <section class="surface surface-padding" aria-labelledby="post-sources-title">
+      <section class="surface surface-padding not-prose" aria-labelledby="post-sources-title">
         <h2 id="post-sources-title" class="post-panel-title">Sources and acknowledgements</h2>
-        <ul class="space-y-3 mt-3">
+        <ul class="space-y-3 mt-3 list-none m-0 p-0">
           {% for reference in sources %}
             <li>
-              <p class="editorial-support"><a href="{{ reference.url }}">{{ reference.title }}</a>{% if reference.author %} · {{ reference.author }}{% endif %}</p>
-              {% if reference.contribution %}<p class="editorial-support-compact">{{ reference.contribution }}</p>{% endif %}
+              <p class="editorial-support m-0"><a href="{{ reference.url }}" class="accent-link">{{ reference.title }}</a>{% if reference.author %} · {{ reference.author }}{% endif %}</p>
+              {% if reference.contribution %}<p class="editorial-support-compact m-0 mt-0.5">{{ reference.contribution }}</p>{% endif %}
             </li>
           {% endfor %}
         </ul>
       </section>
     {% endif %}
 
-    {% if author or source %}
-    <div class="flex flex-col mt-6 not-prose">
-      {% if author %}
-      <span class="font-medium text-gray-900 dark:text-gray-100 text-sm">
-        - {% if authorUrl %}<a href="{{ authorUrl }}" target="_blank" rel="noopener" class="hover:text-[color:var(--accent-color)] transition-colors">{{ author }}</a>{% else %}{{ author }}{% endif %}
-      </span>
-      {% endif %}
-      {% if source %}
-      <span class="text-xs text-gray-500 mt-0.5">
-        {% if sourceUrl %}
-          <a href="{{ sourceUrl }}" target="_blank" rel="noopener" class="hover:text-[color:var(--accent-color)] transition-colors">{{ source }}</a>
-        {% else %}
-          {{ source }}
-        {% endif %}
-      </span>
-      {% endif %}
-    </div>
-    {% endif %}
-
-    {% if updated %}
-      <p class="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
-        Updated <time datetime="{{ updated | htmlDateString }}">{{ updated | readableDate }}</time>
-      </p>
-    {% endif %}
-
-    <section class="learning-post-panel not-prose" data-learning-panel>
-      <div>
-        <p class="post-panel-title">Reading tracker</p>
-        <p class="editorial-support-compact mt-1"><span data-learning-state>Unread</span> · saved only in this browser</p>
+    {# Quiet End-of-Post Upvote Bar #}
+    <div class="upvote-section not-prose mt-8 pt-4 border-t border-gray-200 dark:border-gray-800 flex items-center justify-between gap-4 flex-wrap">
+      <div class="flex items-center gap-2">
+        <button id="upvoteButton" class="upvote-button post-action-button" aria-label="Upvote this post" aria-busy="false">
+          {% feather "thumbs-up", class="w-4 h-4 opacity-75" %}
+          <span id="upvoteCount" class="meta-text font-semibold">
+            {{ upvotes.posts[page.fileSlug] | default(0) }}
+          </span>
+          <span id="upvoteLoading" class="hidden">
+            <span class="inline-block animate-spin h-3.5 w-3.5 border-b-2 border-[color:var(--accent-color)]"></span>
+          </span>
+        </button>
+        <span id="upvoteMessage" class="editorial-support-compact hidden">Thanks for the upvote.</span>
       </div>
-      <button
-        type="button"
-        class="learning-toggle accent-focus"
-        data-learning-toggle
-        data-learning-id="{{ page.url }}"
-        data-learning-title="{{ title | escape }}"
-        aria-pressed="false"
-      >
-        {% feather "check", class="w-3.5 h-3.5" %}
-        <span data-learning-label>Mark as read</span>
-      </button>
-    </section>
-    <p id="learningLiveStatus" class="sr-only" aria-live="polite"></p>
-    <script defer src="/static/js/learning-progress.js?v={{ versions.version }}"></script>
-
-    {% set reactionOptions = [
-      { id: 'thumbs_up', emoji: '👍', label: 'Helpful' },
-      { id: 'sparkles', emoji: '✨', label: 'Delightful' },
-      { id: 'rocket', emoji: '🚀', label: 'Shipped it' },
-      { id: 'lightbulb', emoji: '💡', label: 'Interesting idea' },
-      { id: 'eyes', emoji: '👀', label: 'Watching this' }
-    ] %}
-
-    <!-- Upvote Section -->
-    <div class="upvote-section mt-8 mb-4 flex items-center">
-      <button id="upvoteButton" class="upvote-button post-action-button" aria-label="Upvote this post" aria-busy="false">
-        {% feather "thumbs-up", class="w-4 h-4 text-gray-500 dark:text-gray-400" %}
-        <span id="upvoteCount" class="text-[0.78rem] font-medium text-gray-600 dark:text-gray-300">
-          {{ upvotes.posts[page.fileSlug] | default(0) }}
-        </span>
-        <span id="upvoteLoading" class="hidden">
-          <div class="animate-spin rounded-full h-3.5 w-3.5 border-b-2" style="border-color: var(--accent-color);"></div>
-        </span>
-      </button>
-      <span id="upvoteMessage" class="ml-2 text-sm text-gray-500 dark:text-gray-400 hidden">Thanks for your upvote!</span>
-    </div>
-
-    <div id="postReactions" class="hidden mt-6" data-slug="{{ page.fileSlug }}">
-      <h2 class="post-panel-title flex items-center gap-2">
-        {% feather "smile", class="w-4 h-4" %}
-        React to this post
-      </h2>
-      <div class="mt-3 flex flex-wrap gap-2">
-        {% for reaction in reactionOptions %}
-          <button
-            type="button"
-            class="reaction-button px-3 py-2 text-sm"
-            data-reaction="{{ reaction.id }}"
-            aria-label="{{ reaction.label }}"
-            title="{{ reaction.label }}"
-          >
-            <span class="text-xl" aria-hidden="true">{{ reaction.emoji }}</span>
-            <span class="sr-only">{{ reaction.label }}</span>
-            <span class="text-sm font-semibold text-gray-700 dark:text-gray-200" data-reaction-count="{{ reaction.id }}">0</span>
-          </button>
-        {% endfor %}
-      </div>
-      <p id="reactionMessage" class="mt-2 text-sm text-gray-500 dark:text-gray-400 hidden"></p>
+      {% include "components/copy-markdown.njk" %}
     </div>
 
     <script>
@@ -337,38 +229,22 @@ hasEthicalAds: false
         const upvoteCount = document.getElementById('upvoteCount');
         const upvoteMessage = document.getElementById('upvoteMessage');
         const upvoteLoading = document.getElementById('upvoteLoading');
-        const viewCountNumber = document.getElementById('viewCountNumber');
         const postSlug = '{{ page.fileSlug }}';
         const storageKey = `upvote_${postSlug}`;
         const viewStorageKey = `viewed_${postSlug}`;
-        
-        // Check if user has viewed this post in this session
         const hasViewed = sessionStorage.getItem(viewStorageKey) === 'true';
-        
-        // Function to fetch current counts and optionally track view
+
         async function fetchCounts(trackView = false) {
           try {
             upvoteButton.setAttribute('aria-busy', 'true');
             upvoteLoading.classList.remove('hidden');
             upvoteCount.classList.add('opacity-50');
-            
             const url = `/.netlify/functions/upvote?slug=${encodeURIComponent(postSlug)}${trackView ? '&trackView=true' : ''}`;
-            const response = await fetch(url, {
-              method: 'GET'
-            });
+            const response = await fetch(url, { method: 'GET' });
             if (!response.ok) throw new Error('Failed to fetch count');
             const data = await response.json();
             upvoteCount.textContent = data.count;
-            
-            // Update view count display
-            if (viewCountNumber && data.views !== undefined) {
-              viewCountNumber.textContent = data.views.toLocaleString();
-            }
-            
-            // Mark as viewed in this session
-            if (trackView) {
-              sessionStorage.setItem(viewStorageKey, 'true');
-            }
+            if (trackView) sessionStorage.setItem(viewStorageKey, 'true');
           } catch (error) {
             console.error('Error fetching counts:', error);
           } finally {
@@ -378,31 +254,20 @@ hasEthicalAds: false
           }
         }
 
-        // Fetch current count on page load, track view if first time this session
         await fetchCounts(!hasViewed);
-        
-        // Check if user has already upvoted this post
         let hasUpvoted = localStorage.getItem(storageKey) === 'true';
-        
-        // If user has already upvoted, style the button accordingly
-        if (hasUpvoted) {
-          upvoteButton.classList.add('upvoted');
-          upvoteButton.querySelector('svg').style.color = 'var(--accent-color)';
-          upvoteButton.querySelector('svg').style.removeProperty('color');
-        }
-        
+        if (hasUpvoted) upvoteButton.classList.add('upvoted');
+
         upvoteButton.addEventListener('click', async function() {
           if (hasUpvoted) {
-            // Already upvoted - do nothing
-            upvoteMessage.textContent = 'You already upvoted this post!';
+            upvoteMessage.textContent = 'Already upvoted.';
             upvoteMessage.classList.remove('hidden');
             setTimeout(() => {
               upvoteMessage.classList.add('hidden');
-              upvoteMessage.textContent = 'Thanks for your upvote!';
+              upvoteMessage.textContent = 'Thanks for the upvote.';
             }, 3000);
             return;
           }
-
           try {
             upvoteButton.setAttribute('aria-busy', 'true');
             upvoteButton.disabled = true;
@@ -410,49 +275,19 @@ hasEthicalAds: false
             upvoteCount.classList.add('opacity-50');
             const response = await fetch('/.netlify/functions/upvote', {
               method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              },
+              headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ slug: postSlug })
             });
-            
-            if (!response.ok) {
-              throw new Error('Network response was not ok');
-            }
-            
+            if (!response.ok) throw new Error('Network response was not ok');
             const data = await response.json();
-            
-            // Update count immediately from response
             upvoteCount.textContent = data.count;
-            
-            // Update view count display if present
-            if (viewCountNumber && data.views !== undefined) {
-              viewCountNumber.textContent = data.views.toLocaleString();
-            }
-            
-            // Save upvote state to localStorage and update local state
             localStorage.setItem(storageKey, 'true');
             hasUpvoted = true;
-            
-            // Style the button as upvoted
             upvoteButton.classList.add('upvoted');
-            upvoteButton.querySelector('svg').style.color = 'var(--accent-color)';
-            upvoteButton.querySelector('svg').style.removeProperty('color');
-            
-            // Show thank you message
             upvoteMessage.classList.remove('hidden');
-            setTimeout(() => {
-              upvoteMessage.classList.add('hidden');
-            }, 3000);
-            
+            setTimeout(() => upvoteMessage.classList.add('hidden'), 3000);
           } catch (error) {
             console.error('Error upvoting:', error);
-            upvoteMessage.textContent = 'Error upvoting. Please try again.';
-            upvoteMessage.classList.remove('hidden');
-            setTimeout(() => {
-              upvoteMessage.classList.add('hidden');
-              upvoteMessage.textContent = 'Thanks for your upvote!';
-            }, 3000);
           } finally {
             upvoteLoading.classList.add('hidden');
             upvoteCount.classList.remove('opacity-50');
@@ -460,128 +295,6 @@ hasEthicalAds: false
             upvoteButton.disabled = false;
           }
         });
-
-        const reactionOptions = {{ reactionOptions | dump | safe }};
-        const reactionsContainer = document.getElementById('postReactions');
-
-        if (reactionsContainer) {
-          const reactionButtons = Array.from(reactionsContainer.querySelectorAll('[data-reaction]'));
-          const reactionMessage = document.getElementById('reactionMessage');
-          const reactionStorageKey = `reactions_${postSlug}`;
-          const reactionMap = new Map(reactionOptions.map(option => [option.id, option]));
-
-          let storedReactions = [];
-          try {
-            const raw = localStorage.getItem(reactionStorageKey);
-            if (raw) {
-              const parsed = JSON.parse(raw);
-              if (Array.isArray(parsed)) {
-                storedReactions = parsed;
-              }
-            }
-          } catch (_) {
-            storedReactions = [];
-          }
-
-          const activeReactions = new Set(storedReactions);
-
-          function showReactionMessage(text, isError = false) {
-            if (!reactionMessage) return;
-            reactionMessage.textContent = text;
-            reactionMessage.classList.remove('hidden');
-            if (isError) {
-              reactionMessage.classList.add('text-red-500');
-            } else {
-              reactionMessage.classList.remove('text-red-500');
-            }
-            setTimeout(() => {
-              reactionMessage.classList.add('hidden');
-            }, 3000);
-          }
-
-          function setButtonState(button, isActive) {
-            if (isActive) {
-              button.style.borderColor = 'var(--accent-color)';
-              button.style.backgroundColor = 'color-mix(in srgb, var(--accent-color) 15%, transparent)';
-              button.classList.remove('border-gray-200', 'dark:border-gray-700', 'text-gray-600', 'dark:text-gray-300');
-            } else {
-              button.style.borderColor = '';
-              button.style.backgroundColor = '';
-              button.classList.add('border-gray-200', 'dark:border-gray-700', 'text-gray-600', 'dark:text-gray-300');
-            }
-          }
-
-          function updateButtonStates() {
-            reactionButtons.forEach((button) => {
-              const id = button.dataset.reaction;
-              setButtonState(button, activeReactions.has(id));
-            });
-          }
-
-          function updateReactionCounts(counts) {
-            reactionOptions.forEach((option) => {
-              const countEl = reactionsContainer.querySelector(`[data-reaction-count="${option.id}"]`);
-              if (countEl) {
-                const count = counts && typeof counts[option.id] !== 'undefined' ? counts[option.id] : 0;
-                countEl.textContent = count;
-              }
-            });
-          }
-
-          async function fetchReactionCounts() {
-            try {
-              const response = await fetch(`/.netlify/functions/reactions?slug=${encodeURIComponent(postSlug)}`);
-              if (!response.ok) {
-                throw new Error('Failed to fetch reactions');
-              }
-              const data = await response.json();
-              updateReactionCounts(data.counts);
-            } catch (error) {
-              console.error('Error fetching reactions:', error);
-            }
-          }
-
-          reactionButtons.forEach((button) => {
-            button.addEventListener('click', async () => {
-              const reactionId = button.dataset.reaction;
-              const config = reactionMap.get(reactionId);
-              if (!config) return;
-
-              if (activeReactions.has(reactionId)) {
-                showReactionMessage(`You already reacted with ${config.emoji}.`);
-                return;
-              }
-
-              try {
-                const response = await fetch('/.netlify/functions/reactions', {
-                  method: 'POST',
-                  headers: {
-                    'Content-Type': 'application/json'
-                  },
-                  body: JSON.stringify({ slug: postSlug, reaction: reactionId })
-                });
-
-                if (!response.ok) {
-                  throw new Error('Failed to save reaction');
-                }
-
-                const data = await response.json();
-                updateReactionCounts(data.counts);
-
-                activeReactions.add(reactionId);
-                localStorage.setItem(reactionStorageKey, JSON.stringify(Array.from(activeReactions)));
-                updateButtonStates();
-                showReactionMessage(`Thanks for reacting with ${config.emoji}!`);
-              } catch (error) {
-                console.error('Error saving reaction:', error);
-                showReactionMessage('Something went wrong. Please try again.', true);
-              }
-            });
-          });
-
-          await fetchReactionCounts();
-          updateButtonStates();
-        }
       });
     </script>
 
@@ -589,7 +302,6 @@ hasEthicalAds: false
       {%- set currentTags = tags | filterTagList %}
       {%- set relatedPosts = [] %}
 
-      {# Find related posts based on shared tags #}
       {%- for post in collections.posts %}
         {%- if post.url != page.url %}
           {%- set postTags = post.data.tags | filterTagList %}
@@ -605,7 +317,6 @@ hasEthicalAds: false
         {%- endif %}
       {%- endfor %}
 
-      {# Sort by score and take top 3 #}
       {%- set sortedRelated = relatedPosts | sort(attribute='score') | reverse %}
 
       {%- set currentFolder = null %}
@@ -618,12 +329,11 @@ hasEthicalAds: false
       {%- endfor %}
 
       {%- if currentFolder %}
-        <hr class="my-8" />
-        <section class="series-callout">
-          <div class="not-prose surface surface-padding text-sm text-gray-800 dark:text-gray-300 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <section class="series-callout not-prose mt-6">
+          <div class="surface surface-padding flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div class="flex items-center gap-3">
-              {% feather "folder", class="w-5 h-5 shrink-0 opacity-70 text-gray-500" %}
-              <span>This post is part of the <strong>{{ currentFolder.name }}</strong> series.</span>
+              {% feather "folder", class="w-4 h-4 shrink-0 opacity-70" %}
+              <span class="editorial-support m-0">Part of the <strong>{{ currentFolder.name }}</strong> series.</span>
             </div>
             <a href="{{ currentFolder.url | url }}" class="post-series-link">
               View all {{ currentFolder.posts.length }} posts {% feather "arrow-right", class="w-3.5 h-3.5" %}
@@ -633,26 +343,24 @@ hasEthicalAds: false
       {%- endif %}
 
       {%- if sortedRelated.length > 0 %}
-        {%- if not currentFolder %}
-        <hr class="my-8" />
-        {%- endif %}
-        <section class="related-posts mt-8">
+        <section class="related-posts not-prose mt-6">
           <h3 class="post-panel-title mb-3 flex items-center gap-2">
             {% feather "link", class="w-4 h-4" %}
-            Related Posts
+            Related Writing
           </h3>
           <div class="space-y-2">
             {%- for item in sortedRelated | head(3) %}
               <div class="border-l-2 border-gray-300 dark:border-gray-600 pl-3 py-1">
-                <a href="{{ item.post.url | url }}" class="font-medium accent-link" style="text-decoration:none;">
+                <a href="{{ item.post.url | url }}" class="editorial-title-link-compact title-hover no-underline">
                   {{ item.post.data.title }}
                 </a>
-                <p class="text-gray-600 dark:text-gray-300 text-sm mt-0.5">{{ item.post.data.description }}</p>
+                {% if item.post.data.description %}
+                  <p class="editorial-support-compact m-0 mt-0.5">{{ item.post.data.description }}</p>
+                {% endif %}
               </div>
             {%- endfor %}
           </div>
         </section>
-        <hr class="my-8" />
       {%- endif %}
 
       {%- if currentFolder %}
@@ -663,7 +371,7 @@ hasEthicalAds: false
         {%- set previousPost = collections.posts | getPreviousCollectionItem(page) %}
       {%- endif %}
       {%- if nextPost or previousPost %}
-        <nav aria-label="Post navigation" class="flex flex-col gap-0 text-sm not-prose">
+        <nav aria-label="Post navigation" class="flex flex-col gap-0 not-prose mt-6">
           {%- if nextPost %}
             <a class="post-nav-link title-hover" href="{{ nextPost.url | url }}">
               <span class="post-nav-kicker">{% if currentFolder %}Next in Series{% else %}Next{% endif %} →</span>
@@ -684,9 +392,8 @@ hasEthicalAds: false
       {{ commentPointer({ variant: 'inline' }) | safe }}
     {% endif %}
 
-    <div class="comments" id="post-comments">
+    <div class="comments mt-8" id="post-comments">
       <script>
-        // load giscus with proper theme
         const getTheme = window.localStorage && window.localStorage.getItem("theme");
         const theme = getTheme === "dark" ? "dark" : "light";
         
@@ -709,7 +416,6 @@ hasEthicalAds: false
         
         document.querySelector("div.comments").appendChild(script);
 
-        // Handle theme changes
         const mutationObserver = new MutationObserver((mutationsList) => {
           mutationsList.forEach((mutation) => {
             if (mutation.attributeName === "class") {
@@ -749,11 +455,6 @@ hasEthicalAds: false
       window.addEventListener("scroll", update, { passive: true });
       window.addEventListener("resize", update);
 
-      // TOC scrollspy: highlight the current section's link in the sticky
-      // desktop outline as headings pass through the top of the reading
-      // area. Scoped to .toc-list (desktop sidebar only) - the mobile
-      // outline isn't persistently visible while scrolling, so there's
-      // nothing for it to orient against.
       const tocLinks = document.querySelectorAll(".toc-list a[href^='#']");
       if (tocLinks.length) {
         const linksById = new Map();
@@ -780,18 +481,13 @@ hasEthicalAds: false
 
   <script>
     (() => {
-      // Wide-table breakouts bleed past the article column at xl+, but
-      // the column isn't centered on the viewport there (see .post-wrap
-      // grid) - measure the real gap to the sidebar rails so the bleed
-      // stops at their edge instead of painting over them (see
-      // .wide-wrap's xl+ override in tailwind.css).
       const postWrap = document.querySelector(".post-wrap");
       const shell = document.querySelector(".post-shell");
       const leftRail = document.querySelector(".post-rail-left");
       const rightRail = document.querySelector(".post-rail-right");
       if (!postWrap || !shell) return;
 
-      const SAFETY_GAP = 8; // px of breathing room before the rail card
+      const SAFETY_GAP = 8;
 
       const updateBleed = () => {
         if (window.innerWidth < 1280) return;
@@ -799,6 +495,8 @@ hasEthicalAds: false
         if (leftRail && leftRail.offsetParent) {
           const gap = shellRect.left - leftRail.getBoundingClientRect().right - SAFETY_GAP;
           postWrap.style.setProperty("--wide-bleed-left", Math.max(0, gap) + "px");
+        } else {
+          postWrap.style.setProperty("--wide-bleed-left", "14rem");
         }
         if (rightRail && rightRail.offsetParent) {
           const gap = rightRail.getBoundingClientRect().left - shellRect.right - SAFETY_GAP;
@@ -810,15 +508,4 @@ hasEthicalAds: false
       window.addEventListener("resize", updateBleed);
     })();
   </script>
-
-  {% if tocHtml | trim %}
-  <div class="xl:hidden mt-12">
-    <section class="surface surface-padding space-y-4 text-sm text-gray-600 dark:text-gray-300">
-      <p class="post-panel-title my-0">Outline</p>
-      <div class="max-h-[50vh] overflow-y-auto pr-1 space-y-2">
-        {{ tocHtml | safe }}
-      </div>
-    </section>
-  </div>
-  {% endif %}
 </div>
