@@ -15,9 +15,6 @@
     "src/_includes/components/editorial-sidebar.njk": {
       "utility-text-stack": 1
     },
-    "src/_includes/components/ethical-ads.njk": {
-      "utility-text-stack": 3
-    },
     "src/_includes/components/feed-card.njk": {
       "off-palette-colour": 9,
       "utility-text-stack": 8,
@@ -30,12 +27,7 @@
       "inline-style": 1
     },
     "src/_includes/layouts/base.njk": {
-      "inline-style": 47
-    },
-    "src/_includes/layouts/note.njk": {
-      "pill-or-circle": 1,
-      "off-palette-colour": 1,
-      "utility-text-stack": 3
+      "inline-style": 45
     },
     "src/_includes/layouts/post.njk": {
       "pill-or-circle": 1,
@@ -43,21 +35,8 @@
       "utility-text-stack": 9,
       "inline-style": 4
     },
-    "src/_includes/layouts/snippet.njk": {
-      "utility-text-stack": 1
-    },
-    "src/_includes/layouts/til.njk": {
-      "pill-or-circle": 1,
-      "off-palette-colour": 1,
-      "utility-text-stack": 4,
-      "inline-style": 1
-    },
     "src/about.njk": {
       "utility-text-stack": 1
-    },
-    "src/archive.njk": {
-      "utility-text-stack": 1,
-      "inline-style": 1
     },
     "src/bookmarks.njk": {
       "inline-style": 2
@@ -70,10 +49,6 @@
     },
     "src/cv.njk": {
       "inline-style": 11
-    },
-    "src/feed.njk": {
-      "utility-text-stack": 1,
-      "inline-style": 1
     },
     "src/folio/index.njk": {
       "off-palette-colour": 13,
@@ -102,9 +77,6 @@
     "src/newsletter.njk": {
       "pill-or-circle": 1,
       "off-palette-colour": 20
-    },
-    "src/notes.njk": {
-      "inline-style": 1
     },
     "src/now-archive.njk": {
       "pill-or-circle": 1,
@@ -188,7 +160,7 @@
       "updated-without-changelog": 1
     },
     "src/projects.njk": {
-      "inline-style": 4
+      "inline-style": 3
     },
     "src/quotes.njk": {
       "inline-style": 2
@@ -211,14 +183,6 @@
     "src/skills-radar.njk": {
       "inline-style": 2
     },
-    "src/snippet-tags.njk": {
-      "inline-style": 1
-    },
-    "src/snippets.njk": {
-      "off-palette-colour": 1,
-      "utility-text-stack": 2,
-      "inline-style": 3
-    },
     "src/stats.njk": {
       "pill-or-circle": 4,
       "off-palette-colour": 3,
@@ -227,10 +191,6 @@
     },
     "src/status.njk": {
       "off-palette-colour": 10
-    },
-    "src/til.njk": {
-      "utility-text-stack": 2,
-      "inline-style": 2
     },
     "src/uses.njk": {
       "pill-or-circle": 3,

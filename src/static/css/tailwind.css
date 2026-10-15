@@ -4764,15 +4764,12 @@ picture img {
     outline-offset: -2px;
   }
 
-  html[data-ai-filter="all"] .nav-dropdown-item[data-ai-filter-option="all"],
-  html[data-ai-filter="no-generated"] .nav-dropdown-item[data-ai-filter-option="no-generated"],
-  html[data-ai-filter="human-only"] .nav-dropdown-item[data-ai-filter-option="human-only"] {
+  html[data-ai-filter="all"] [data-ai-filter-option="all"],
+  html[data-ai-filter="no-generated"] [data-ai-filter-option="no-generated"],
+  html[data-ai-filter="human-only"] [data-ai-filter-option="human-only"],
+  html:not([data-ai-filter]) [data-ai-filter-option="all"] {
     color: var(--accent-color);
-    background: color-mix(in srgb, var(--accent-color) 14%, transparent);
-  }
-
-  html:not([data-ai-filter]) .nav-dropdown-item[data-ai-filter-option="all"] {
-    color: var(--accent-color);
+    border-color: color-mix(in srgb, var(--accent-color) 45%, transparent);
     background: color-mix(in srgb, var(--accent-color) 14%, transparent);
   }
 

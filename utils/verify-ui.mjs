@@ -200,7 +200,6 @@ async function main() {
   const notes = await readOutput("notes/index.html");
   const projects = await readOutput("projects/index.html");
   const easterEggs = await readOutput("static/js/easter-eggs.js");
-  const collectionViews = await readOutput("static/js/collection-views.js");
   const blogRoot = path.join(outputDir, "blog");
   const blogFiles = (await walk(blogRoot)).filter(
     (file) =>
@@ -247,34 +246,22 @@ async function main() {
   );
   check(
     archive.includes("feed-list-row") &&
-      archive.includes("feed-list-row-thumb"),
-    "The post list keeps its shared row and thumbnail classes",
-  );
-  check(
-    archive.includes('id="blogList"') && archive.includes('id="blogGrid"'),
-    "Both post list views are rendered",
+      archive.includes("feed-list-row-thumb") &&
+      archive.includes('id="blogList"') &&
+      !archive.includes('id="blogGrid"'),
+    "Writing renders its single canonical Index layout with thumbnails and no duplicate grid DOM",
   );
   check(
     projects.includes("projects-collection-grid") &&
-      projects.includes("['grid', 'list']"),
-    "Projects keeps both wall and list layouts",
+      !projects.includes("collectionView("),
+    "Projects renders its single canonical Wall layout without duplicate list DOM",
   );
   check(
-    projects.includes("collectionView('projects-view', 'grid'"),
-    "Projects defaults to the project wall",
-  );
-  check(
-    notes.includes("['stream', 'list', 'grid']"),
-    "Notes renders stream, list, and wall layouts from one collection",
-  );
-  check(
-    notes.includes("collectionView('notes-view', 'stream'"),
-    "Notes defaults to the reading stream",
-  );
-  check(
-    collectionViews.includes("localStorage.setItem") &&
-      collectionViews.includes("feed:layout"),
-    "Collection view preferences persist and relayout masonry grids",
+    notes.includes("feed-card-stream") &&
+      notes.includes('data-log-type="snippet"') &&
+      notes.includes('data-log-type="til"') &&
+      notes.includes('data-log-type="quotation"'),
+    "Notes renders the unified Log stream with type filter pills",
   );
   try {
     await access(path.join(outputDir, "hi/index.html"));

@@ -60,12 +60,10 @@ const setAiFilter = (value) => {
 window.setAiFilter = setAiFilter;
 
 document.addEventListener("DOMContentLoaded", () => {
-  document
-    .getElementById("aiFilterToggle")
-    ?.addEventListener("click", (event) => {
-      const option = event.target.closest("[data-ai-filter-option]");
-      if (option) setAiFilter(option.dataset.aiFilterOption);
-    });
+  document.addEventListener("click", (event) => {
+    const option = event.target.closest("[data-ai-filter-option]");
+    if (option) setAiFilter(option.dataset.aiFilterOption);
+  });
   updateAiFilterNotice();
 });
 

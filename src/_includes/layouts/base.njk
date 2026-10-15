@@ -31,7 +31,6 @@
   <script src="/static/js/ai-filter.js?v={{ versions.version }}"></script>
   
   <script defer src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-  <script defer src="/static/js/collection-views.js?v={{ versions.version }}"></script>
   <script defer src="/static/js/alpine.min.js?v={{ versions.version }}"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -198,26 +197,6 @@
               <a class="font-medium no-underline inline-flex items-center justify-center p-1.5 border border-transparent hover:border-gray-300 dark:hover:border-gray-700 transition-colors" href="{{ '/more/' | url }}" title="More pages" aria-label="More pages" style="color: var(--accent-color)">
                 {% feather "compass", class="w-4 h-4" %}
               </a>
-            </li>
-
-            <li class="flex items-center relative" x-data="{ open: false }" @keydown.escape="open = false" @click.outside="open = false">
-              <button type="button" @click="open = !open" :aria-expanded="open.toString()"
-                class="ai-filter-trigger font-medium no-underline inline-flex items-center justify-center p-1.5 border border-transparent hover:border-gray-300 dark:hover:border-gray-700 transition-colors"
-                style="color: var(--accent-color)" title="Filter content by authorship" aria-label="Filter content by authorship">
-                {% feather "filter", class="w-4 h-4" %}
-              </button>
-              <div id="aiFilterToggle" x-show="open" x-transition.opacity.duration.100ms @click="open = false"
-                class="nav-dropdown-menu" role="group" aria-label="AI content filter" style="display: none;">
-                <button type="button" data-ai-filter-option="all" class="nav-dropdown-item" aria-label="Show all content">
-                  {% feather "eye", class="w-3.5 h-3.5" %} All content
-                </button>
-                <button type="button" data-ai-filter-option="no-generated" class="nav-dropdown-item" aria-label="Hide AI-generated content">
-                  {% feather "zap", class="w-3.5 h-3.5" %} Hide AI-generated
-                </button>
-                <button type="button" data-ai-filter-option="human-only" class="nav-dropdown-item" aria-label="Show only human-written content">
-                  {% feather "edit-2", class="w-3.5 h-3.5" %} Human-written only
-                </button>
-              </div>
             </li>
 
             <li class="flex items-center">

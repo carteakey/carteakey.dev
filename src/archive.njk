@@ -10,42 +10,34 @@ collectionArchetype: index
 ---
 
 {% from "components/authorship-badge.njk" import authorshipBadge %}
-{% from "components/feed-card.njk" import feedCard, postListRow %}
+{% from "components/feed-card.njk" import postListRow %}
 {% include "components/breadcrumbs.njk" %}
 {% set byYear = collections.posts | countByYear %}
 {% set archiveYears = byYear | keys | sort | reverse %}
 {% set pageEyebrow = "Long-form Writing" %}
 {% set pageTitle = "Writing" %}
-{% set pageDescription = "Writing, tutorials, and thoughts on tech, tools, and whatever else stays with me long enough to write down." %}
+{% set pageDescription = "Essays, engineering deep dives, tutorials, and series." %}
 {% set itemCount = collections.posts | length %}
 {% set itemLabel = "posts" %}
 
-<div x-data="{ viewMode: 'list' }">
+<div>
   {% include "components/page-header.njk" %}
 
-  <div class="flex items-baseline justify-between mb-2 gap-3 flex-wrap">
-    <div class="flex items-center gap-2">
-      <div class="relative">
-        {% feather "search", class="w-3.5 h-3.5 text-gray-400 absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" %}
-        <input
-          type="text"
-          id="blogSearch"
-          placeholder="Search..."
-          class="rounded-md border border-gray-200 dark:border-gray-700 bg-transparent py-1.5 pl-8 pr-3 text-sm accent-field accent-focus focus:outline-none dark:text-gray-100 w-40 placeholder:text-gray-400"
-        >
-      </div>
-      <div class="view-toggle" x-data="{ viewMode: 'list' }">
-        <button type="button" title="List view" :class="{ 'active': viewMode === 'list' }" @click="viewMode = 'list'; document.getElementById('blogGrid').classList.add('hidden'); document.getElementById('blogList').classList.remove('hidden');">
-          {% feather "list", class="w-4 h-4" %}
-        </button>
-        <button type="button" title="Grid view" :class="{ 'active': viewMode === 'grid' }" @click="viewMode = 'grid'; document.getElementById('blogList').classList.add('hidden'); document.getElementById('blogGrid').classList.remove('hidden');">
-          {% feather "grid", class="w-4 h-4" %}
-        </button>
-      </div>
+  <div class="not-prose flex items-center justify-between mb-3 gap-3 flex-wrap">
+    <div class="relative">
+      {% feather "search", class="w-3.5 h-3.5 text-gray-400 absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" %}
+      <input
+        type="search"
+        id="blogSearch"
+        placeholder="Search essays..."
+        aria-label="Search essays"
+        class="rounded-sm border border-gray-200 dark:border-gray-700 bg-transparent py-1.5 pl-8 pr-3 text-sm accent-field accent-focus focus:outline-none w-48"
+      >
     </div>
+    {% include "components/authorship-filter.njk" %}
   </div>
 
-  <div class="not-prose mb-3 flex flex-wrap items-center gap-1.5">
+  <div class="not-prose mb-4 flex flex-wrap items-center gap-1.5">
     <span class="editorial-kicker">Jump to</span>
     {% if collections.pinnedPosts.length > 0 %}
       <a href="#pinned-posts" class="badge badge-accent badge-compact badge-interactive flex items-center gap-1 no-underline">
@@ -59,56 +51,42 @@ collectionArchetype: index
     {% endfor %}
   </div>
 
-{# ── LIST VIEW (default) — same rows as /feed, plus a one-line description ── #}
-<div id="blogList" class="mt-4">
-  {% if collections.pinnedPosts.length > 0 %}
-    <h2 id="pinned-posts" class="not-prose scroll-mt-20 editorial-kicker py-2 flex items-center gap-1.5">
-      {% feather "bookmark", class="w-3.5 h-3.5" %} Pinned
-    </h2>
-    <ul class="feed-list not-prose list-none m-0 p-0 mb-6">
-    {% for post in collections.pinnedPosts %}
-      {% set filteredTags = post.data.tags | default([]) | filterTagList %}
-      {{ postListRow(post, collections.feed, {
-        outerAttrs: 'data-blog-card data-title="' ~ (post.data.title | lower | replace('"', '')) ~ '" data-tags="' ~ (filteredTags | join(' ') | lower) ~ '" data-body="' ~ (post.data.description | default('') | lower | replace('"', '')) ~ '"'
-      }) }}
-    {% endfor %}
-    </ul>
-  {% endif %}
-
-  {% for year in archiveYears %}
-    <h2 id="year-{{ year }}" class="not-prose scroll-mt-20 editorial-kicker py-2">{{ year }}</h2>
-    <ul class="feed-list not-prose list-none m-0 p-0">
-    {% for post in collections.posts | sortByDate %}
-      {% if not post.data.pinned and (post.date | date("Y")) == year %}
+  <div id="blogList" class="mt-4">
+    {% if collections.pinnedPosts.length > 0 %}
+      <h2 id="pinned-posts" class="not-prose scroll-mt-20 editorial-kicker py-2 flex items-center gap-1.5">
+        {% feather "bookmark", class="w-3.5 h-3.5" %} Pinned
+      </h2>
+      <ul class="feed-list not-prose list-none m-0 p-0 mb-6">
+      {% for post in collections.pinnedPosts %}
         {% set filteredTags = post.data.tags | default([]) | filterTagList %}
         {{ postListRow(post, collections.feed, {
           outerAttrs: 'data-blog-card data-title="' ~ (post.data.title | lower | replace('"', '')) ~ '" data-tags="' ~ (filteredTags | join(' ') | lower) ~ '" data-body="' ~ (post.data.description | default('') | lower | replace('"', '')) ~ '"'
         }) }}
-      {% endif %}
+      {% endfor %}
+      </ul>
+    {% endif %}
+
+    {% for year in archiveYears %}
+      <h2 id="year-{{ year }}" class="not-prose scroll-mt-20 editorial-kicker py-2">{{ year }}</h2>
+      <ul class="feed-list not-prose list-none m-0 p-0">
+      {% for post in collections.posts | sortByDate %}
+        {% if not post.data.pinned and (post.date | date("Y")) == year %}
+          {% set filteredTags = post.data.tags | default([]) | filterTagList %}
+          {{ postListRow(post, collections.feed, {
+            outerAttrs: 'data-blog-card data-title="' ~ (post.data.title | lower | replace('"', '')) ~ '" data-tags="' ~ (filteredTags | join(' ') | lower) ~ '" data-body="' ~ (post.data.description | default('') | lower | replace('"', '')) ~ '"'
+          }) }}
+        {% endif %}
+      {% endfor %}
+      </ul>
     {% endfor %}
-    </ul>
-  {% endfor %}
+  </div>
 </div>
-
-{# ── GRID VIEW — same cards as /feed ─────────────────── #}
-<div id="blogGrid" class="hidden mt-4 grid gap-3 md:grid-cols-2 lg:grid-cols-3 items-start feed-masonry" data-feed-masonry style="--feed-row-height: 16px;">
-  {% for item in collections.feed %}{% if item.type == 'post' %}
-    {{ feedCard(item, {
-      extraClasses: 'feed-card',
-      showType: false,
-      outerAttrs: 'data-blog-card data-title="' ~ (item.title | lower | replace('"', '')) ~ '" data-tags="' ~ (item.tags | join(' ') | lower) ~ '" data-body="' ~ ((item.summary or '') | lower | replace('"', '')) ~ '"'
-    }) }}
-  {% endif %}{% endfor %}
-</div>
-</div>
-
-{% include "components/feed-masonry-script.njk" %}
 
 <script>
   const searchInput = document.getElementById('blogSearch');
   const blogCards = Array.from(document.querySelectorAll('[data-blog-card]'));
 
-  searchInput.addEventListener('input', (e) => {
+  searchInput?.addEventListener('input', (e) => {
     const term = e.target.value.trim().toLowerCase();
     blogCards.forEach((card) => {
       const matches = !term || ['title','tags','body'].some(k => (card.dataset[k] || '').includes(term));

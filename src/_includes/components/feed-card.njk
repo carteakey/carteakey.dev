@@ -80,7 +80,7 @@
 
   {# ── STREAM VARIANT (lifestream style) ── #}
   {% if variant == 'stream' %}
-  <article class="feed-card-stream{% if extraClasses %} {{ extraClasses }}{% endif %} group py-1.5" {% if item.authored_by %}data-authored-by="{{ item.authored_by }}" {% endif %}{% if outerAttrs %}{{ outerAttrs | safe }}{% endif %}>
+  <article {% if item.original and item.original.fileSlug %}id="{{ item.original.fileSlug }}" {% endif %}class="feed-card-stream{% if extraClasses %} {{ extraClasses }}{% endif %} group py-1.5" {% if item.authored_by %}data-authored-by="{{ item.authored_by }}" {% endif %}{% if outerAttrs %}{{ outerAttrs | safe }}{% endif %}>
     <div class="flex flex-col md:flex-row md:gap-8">
       {# Left column: Date & Type #}
       <div class="shrink-0 md:w-28 pt-1 flex flex-row md:flex-col gap-3 md:gap-1.5 items-center md:items-start mb-3 md:mb-0">
