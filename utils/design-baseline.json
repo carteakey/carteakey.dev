@@ -52,9 +52,6 @@
     "src/gallery.njk": {
       "inline-style": 1
     },
-    "src/games.njk": {
-      "inline-style": 1
-    },
     "src/guestbook.njk": {
       "pill-or-circle": 1,
       "utility-text-stack": 3,
@@ -68,16 +65,6 @@
     "src/newsletter.njk": {
       "pill-or-circle": 1,
       "off-palette-colour": 20
-    },
-    "src/now-archive.njk": {
-      "pill-or-circle": 1,
-      "utility-text-stack": 3,
-      "inline-style": 2
-    },
-    "src/now.njk": {
-      "pill-or-circle": 2,
-      "utility-text-stack": 1,
-      "inline-style": 1
     },
     "src/posts/2023-09-04-running-your-own-copilot-in-vscode-on-a-mac.md": {
       "updated-without-changelog": 1
@@ -183,10 +170,6 @@
     "src/status.njk": {
       "off-palette-colour": 10
     },
-    "src/uses.njk": {
-      "pill-or-circle": 3,
-      "utility-text-stack": 2
-    },
     "src/vibes.njk": {
       "off-palette-colour": 1
     },
@@ -194,7 +177,7 @@
       "inline-style": 1
     },
     "src/workouts.njk": {
-      "inline-style": 2
+      "inline-style": 1
     }
   },
   "knownTags": [

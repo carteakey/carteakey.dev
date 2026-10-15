@@ -15,6 +15,7 @@ collectionArchetype: shelf
 {% set pageTitle = "Reading" %}
 {% set pageDescription = 'Books I\'m reading, have read, and want to read. Synced from <a href="' ~ reading.profileUrl ~ '" class="accent-link">Goodreads</a>, with a few manual additions.' %}
 {% include "components/page-header.njk" %}
+{% include "components/now-subnav.njk" %}
 
 {% if reading.in_progress and reading.in_progress.length > 0 %}
 <section class="not-prose mb-8">

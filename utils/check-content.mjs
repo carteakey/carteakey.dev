@@ -41,7 +41,6 @@ const COLLECTION_PAGES = {
   "src/stats.njk": "ledger",
   "src/status.njk": "ledger",
   "src/tags-list.njk": "ledger",
-  "src/tools.njk": "ledger",
   "src/uses.njk": "ledger",
   "src/workouts.njk": "ledger",
 };

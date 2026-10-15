@@ -11,6 +11,7 @@ collectionArchetype: index
 {% set pageTitle = "Now Archive" %}
 {% set pageDescription = "Past snapshots of <a href=\"/now/\" class=\"title-hover\">what I was up to</a>." %}
 {% include "components/page-header.njk" %}
+{% include "components/now-subnav.njk" %}
 
 {% set archiveEntries = collections.nowArchive | reverse %}
 {% if archiveEntries %}
@@ -21,13 +22,12 @@ collectionArchetype: index
   <ul class="list-none m-0 p-0 space-y-8 pl-7">
     {% for entry in archiveEntries %}
     <li class="relative">
-      {# dot #}
-      <div class="absolute -left-7 top-1.5 w-3 h-3 rounded-full border-2 border-white dark:border-zinc-950" style="background: var(--accent-color);"></div>
+      <div class="absolute -left-7 top-1.5 w-3 h-3 border-2 border-white dark:border-zinc-950 bg-[color:var(--accent-color)]"></div>
       <div class="flex items-baseline gap-3 mb-2">
-        <time class="meta-text text-xs text-gray-400 dark:text-gray-500 font-semibold">{{ entry.data.archiveDate | readableDate }}</time>
-        <a href="{{ entry.url }}" class="editorial-meta-link" style="text-decoration:none;">permalink →</a>
+        <time class="meta-line font-semibold">{{ entry.data.archiveDate | readableDate }}</time>
+        <a href="{{ entry.url }}" class="editorial-meta-link no-underline">permalink →</a>
       </div>
-      <div class="text-sm text-gray-700 dark:text-gray-300 site-content prose-sm [&_img]:max-h-48 [&_img]:w-auto [&_img]:rounded [&_img]:my-2">
+      <div class="site-content prose-sm [&_img]:max-h-48 [&_img]:w-auto [&_img]:my-2">
         {{ entry | safeContent | safe }}
       </div>
     </li>
@@ -35,5 +35,5 @@ collectionArchetype: index
   </ul>
 </div>
 {% else %}
-<p class="text-sm text-gray-500 dark:text-gray-400">No archive entries yet.</p>
+<p class="editorial-support-compact">No archive entries yet.</p>
 {% endif %}

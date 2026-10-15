@@ -1,0 +1,21 @@
+{% set nowTabs = [
+  { label: "Now", href: "/now/" },
+  { label: "Reading", href: "/reading/" },
+  { label: "Watching", href: "/watching/" },
+  { label: "Listening", href: "/listening/" },
+  { label: "Games", href: "/games/" },
+  { label: "Now Archive", href: "/now/archive/" }
+] %}
+<nav aria-label="Now & Media Shelves Navigation" class="not-prose surface surface-compact mb-6 flex flex-wrap items-center justify-between gap-2">
+  <span class="editorial-kicker">Now & Shelves</span>
+  <div class="flex flex-wrap items-center gap-3">
+    {% for tab in nowTabs %}
+      {% set isCurrent = (page.url == tab.href) %}
+      <a
+        href="{{ tab.href | url }}"
+        {% if isCurrent %}aria-current="page"{% endif %}
+        class="meta-text no-underline {% if isCurrent %}font-bold border-b-2 border-[color:var(--accent-color)]{% else %}opacity-75 hover:opacity-100 title-hover{% endif %}"
+      >{{ tab.label }}</a>
+    {% endfor %}
+  </div>
+</nav>

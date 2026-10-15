@@ -131,3 +131,7 @@
 /feed /notes/ 301!
 /learning/ /blog/ 301!
 /learning /blog/ 301!
+/tools/ /uses/#tools 301!
+/tools /uses/#tools 301!
+/devices/ /uses/#hardware 301!
+/devices /uses/#hardware 301!

@@ -9,6 +9,7 @@ eleventyNavigation:
 collectionArchetype: ledger
 ---
 
+{% from "components/dot-progress.njk" import dotProgress %}
 {% include "components/breadcrumbs.njk" %}
 
 {% set pageEyebrow = "Right Now" %}
@@ -20,6 +21,7 @@ collectionArchetype: ledger
   { href: "/now/archive/", label: "Past updates →", accent: true }
 ] %}
 {% include "components/page-header.njk" %}
+{% include "components/now-subnav.njk" %}
 
 {% from "components/halftone.njk" import halftone with context %}
 <section class="surface surface-padding not-prose mb-10">
@@ -85,12 +87,12 @@ collectionArchetype: ledger
                 <span class="editorial-support-compact"> - {{ book.author }}</span>
               </div>
               {% if book.progress !== undefined %}
-              <span class="meta-text text-xs text-gray-500 dark:text-gray-400 shrink-0">{{ book.progress }}%</span>
+              <span class="meta-line shrink-0">{{ book.progress }}%</span>
               {% endif %}
             </div>
             {% if book.progress !== undefined %}
-            <div class="mt-1.5 h-1 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden max-w-xs">
-              <div class="h-full rounded-full" style="width: {{ book.progress }}%; background: var(--accent-color);"></div>
+            <div class="mt-1.5 max-w-xs">
+              {{ dotProgress(book.progress) }}
             </div>
             {% endif %}
           </div>

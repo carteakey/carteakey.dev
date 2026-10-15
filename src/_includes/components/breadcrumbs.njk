@@ -53,6 +53,10 @@
       {% set label = "Quotes" %}
     {% elif segment == "archive" %}
       {% set label = "Archive" %}
+    {% elif segment == "ai" %}
+      {% set label = "AI" %}
+    {% elif segment == "devices" %}
+      {% set label = "Uses (Hardware)" %}
     {% endif %}
     
     {# For post pages, use the actual title if available #}
@@ -61,6 +65,9 @@
     {% endif %}
     
     {% set crumbUrl = currentPath + '/' %}
+    {% if segment == "devices" and not loop.last %}
+      {% set crumbUrl = '/uses/#hardware' %}
+    {% endif %}
 
     {% set breadcrumbItems = (breadcrumbItems.push({
       label: label,
