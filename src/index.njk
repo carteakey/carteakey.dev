@@ -4,9 +4,10 @@ description: Personal workbench and writing index of Kartikey Chauhan. Senior Da
 language: en
 ogLocale: en_CA
 ---
-{% from "components/feed-card.njk" import feedCard %}
+{% from "components/feed-card.njk" import postListRow %}
+{% from "components/authorship-badge.njk" import authorshipBadge %}
 
-{% set feedItems = collections.feed | head(15) %}
+{% set logTypes = ['note', 'snippet', 'til', 'quotation'] %}
 
 <div class="home-index-shell not-prose">
   <section class="home-intro-grid animate-enter">
@@ -18,9 +19,6 @@ ogLocale: en_CA
       <div>
         <p class="home-eyebrow">ANALYTICS / LOCAL AI / HOMELABS / INTERNET ARCHIVES</p>
         <h1 class="home-title"><span class="home-title-lead">Hi<span class="home-title-comma">,</span> I’m</span> <span class="home-title-accent">Kartikey.</span></h1>
-        <p class="home-typing-line" aria-live="polite">
-          I write about <span id="homeTypedTopic" class="home-typed-topic">local AI.</span>
-        </p>
         <p class="home-dek">
           Data analyst in Toronto. I write about analytics, local AI, homelabs, personal systems, and internet archives.
         </p>
@@ -29,37 +27,128 @@ ogLocale: en_CA
         </p>
 
         <div class="home-link-row">
-          <a href="/about">About</a>
-          <a href="/now">Now</a>
-          <a href="/projects">Projects</a>
-          <a href="/cv">CV</a>
-          <a href="/feed/">Feed</a>
-          <a href="/support/">Support</a>
+          <a href="/about/">About</a>
+          <a href="/now/">Now</a>
+          <a href="/ai/">AI</a>
+          <a href="/projects/">Projects</a>
+          <a href="/blog/">Writing</a>
+          <a href="/notes/">Log</a>
+          <a href="/cv/">CV</a>
           <a href="https://github.com/carteakey" target="_blank" rel="noopener">GitHub ↗</a>
         </div>
       </div>
     </div>
-
   </section>
 
   <section class="home-recent-panel home-recent-panel-primary animate-enter stagger-1">
-      <div class="home-panel-head">
-        <p class="home-panel-kicker">From the workbench</p>
-        <a href="/feed/" class="home-panel-link">All updates →</a>
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+
+      {# ── Left Column (7 cols): Flagship Series, Folios & Essays ── #}
+      <div class="lg:col-span-7 space-y-6">
+        <div>
+          <div class="home-panel-head">
+            <p class="home-panel-kicker">Research Series & Folios</p>
+            <a href="/ai/" class="home-panel-link">AI Workbench →</a>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            <a href="/blog/local-inference/" class="surface surface-compact surface-hover block no-underline group">
+              <div class="flex items-center justify-between gap-2">
+                <span class="editorial-kicker">Series · 14 Posts</span>
+                <span class="meta-text">→</span>
+              </div>
+              <p class="editorial-title-compact mt-1 mb-0.5 title-hover">Local Inference on 12GB VRAM</p>
+              <p class="editorial-support-compact m-0">125B MoE offloading, Strata dynamic expert caches, and llama.cpp benchmarks.</p>
+            </a>
+            <a href="/folio/model-tier-list/" class="surface surface-compact surface-hover block no-underline group">
+              <div class="flex items-center justify-between gap-2">
+                <span class="editorial-kicker">Interactive Folio</span>
+                <span class="meta-text">→</span>
+              </div>
+              <p class="editorial-title-compact mt-1 mb-0.5 title-hover">Coding & Agent Model Tier List</p>
+              <p class="editorial-support-compact m-0">18 active frontier and open-weight models ranked with API pricing math.</p>
+            </a>
+            <a href="/blog/agents/" class="surface surface-compact surface-hover block no-underline group">
+              <div class="flex items-center justify-between gap-2">
+                <span class="editorial-kicker">Series · 8 Posts</span>
+                <span class="meta-text">→</span>
+              </div>
+              <p class="editorial-title-compact mt-1 mb-0.5 title-hover">Autonomous Coding Agents</p>
+              <p class="editorial-support-compact m-0">Multi-agent orchestration, Claude Code, Codex CLI, and burner reviewers.</p>
+            </a>
+            <a href="/blog/sortling/" class="surface surface-compact surface-hover block no-underline group">
+              <div class="flex items-center justify-between gap-2">
+                <span class="editorial-kicker">Series · 3 Posts</span>
+                <span class="meta-text">→</span>
+              </div>
+              <p class="editorial-title-compact mt-1 mb-0.5 title-hover">Sortling & Media Triage</p>
+              <p class="editorial-support-compact m-0">Killing junk WhatsApp forwards and routing media with local vision models.</p>
+            </a>
+          </div>
+        </div>
+
+        <div>
+          <div class="home-panel-head">
+            <p class="home-panel-kicker">Essays & Long-form Writing</p>
+            <a href="/blog/" class="home-panel-link">All {{ collections.posts | length }} essays →</a>
+          </div>
+
+          <ul class="feed-list list-none m-0 p-0">
+            {% for post in collections.pinnedPosts | head(3) %}
+              {{ postListRow(post, collections.feed, {}) }}
+            {% endfor %}
+            {% set recentCount = 0 %}
+            {% for post in collections.posts | sortByDate %}
+              {% if not post.data.pinned and recentCount < 6 %}
+                {% set recentCount = recentCount + 1 %}
+                {{ postListRow(post, collections.feed, {}) }}
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </div>
       </div>
 
-      <div
-        class="home-feed-grid grid gap-3 md:grid-cols-2 lg:grid-cols-3 items-start feed-masonry"
-        data-feed-masonry
-        style="--feed-row-height: 16px;"
-      >
-        {% for item in feedItems %}
-          {{ feedCard(item, {
-            extraClasses: 'feed-card',
-            showTags: false
-          }) }}
-        {% endfor %}
+      {# ── Right Column (5 cols): The Live Lab Log ── #}
+      <div class="lg:col-span-5">
+        <div class="home-panel-head">
+          <p class="home-panel-kicker">The Lab Log · Notes, Code & TIL</p>
+          <a href="/notes/" class="home-panel-link">Full log →</a>
+        </div>
+
+        <div class="surface divide-y divide-gray-200/70 dark:divide-gray-800/70">
+          {% set logShown = 0 %}
+          {% for item in collections.feed %}
+            {% if item.type in logTypes and logShown < 9 %}
+              {% set logShown = logShown + 1 %}
+              <article class="p-3.5 group" {% if item.authored_by %}data-authored-by="{{ item.authored_by }}"{% endif %}>
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="badge badge-type badge-compact badge-type-{{ item.type }}">
+                    {% if item.type == 'note' %}Note{% elif item.type == 'snippet' %}Snippet{% elif item.type == 'til' %}TIL{% else %}Quote{% endif %}
+                  </span>
+                  <time datetime="{{ item.date | htmlDateString }}" class="meta-text">{{ item.date | shortDate }}</time>
+                  {% if item.authored_by is defined %}{{ authorshipBadge(item.authored_by, compact=true) }}{% endif %}
+                </div>
+                {% if item.type == 'quotation' %}
+                  <a href="{{ item.url | url }}" class="block no-underline">
+                    <p class="editorial-support-compact italic m-0 line-clamp-2">{{ item.original.templateContent | striptags | trim }}</p>
+                    <span class="meta-text block mt-1">- {{ item.original.data.author }}</span>
+                  </a>
+                {% else %}
+                  <a href="{{ item.url | url }}" class="editorial-title-link-compact title-hover block no-underline">
+                    {{ item.title }}
+                  </a>
+                  {% if item.summary %}
+                    <p class="editorial-support-compact mt-0.5 m-0 line-clamp-2">{{ item.summary }}</p>
+                  {% elif item.original and item.original.templateContent %}
+                    <p class="editorial-support-compact mt-0.5 m-0 line-clamp-2">{{ item.original.templateContent | striptags | trim | truncate(140) }}</p>
+                  {% endif %}
+                {% endif %}
+              </article>
+            {% endif %}
+          {% endfor %}
+        </div>
       </div>
+
+    </div>
   </section>
 
   <section class="home-newsletter-panel animate-enter stagger-3 not-prose" aria-labelledby="home-newsletter-title">
@@ -110,27 +199,3 @@ ogLocale: en_CA
     <blockquote class="home-quote">{{ qotd.quote }}</blockquote>
   </section>
 </div>
-
-<script src="/static/js/typeit.min.js?v={{ versions.version }}"></script>
-<script>
-  (() => {
-    const topic = document.getElementById('homeTypedTopic');
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    if (!topic || reduceMotion || typeof TypeIt === 'undefined') return;
-
-    topic.textContent = '';
-
-    new TypeIt(topic, {
-      strings: ['local AI.', 'analytics.', 'homelabs.', 'personal systems.', 'internet archives.'],
-      breakLines: false,
-      speed: 54,
-      deleteSpeed: 28,
-      nextStringDelay: [1350, 450],
-      loop: true,
-      cursorChar: '▌',
-      waitUntilVisible: true
-    }).go();
-  })();
-</script>
-{% include "components/feed-masonry-script.njk" %}

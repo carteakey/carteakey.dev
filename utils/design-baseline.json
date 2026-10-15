@@ -66,9 +66,6 @@
       "utility-text-stack": 3,
       "inline-style": 2
     },
-    "src/index.njk": {
-      "inline-style": 1
-    },
     "src/listening.njk": {
       "pill-or-circle": 4,
       "utility-text-stack": 3,
