@@ -16,8 +16,8 @@ pinned: false
 ---
 
 I run both flagship siblings from Alibaba's Qwen3.8 generation on the same homelab machine:
-1. **The Dense Workhorse**: [Qwen3.8-27B](/blog/local-inference/running-qwen3-8-27b-locally/) — a 27B dense hybrid model packed entirely into 10.17 GiB of VRAM.
-2. **The 176B Sparse Behemoth**: [Qwen3.8-Flash-Next](/blog/local-inference/running-qwen3-8-flash-next-locally/) — a 125B MoE + 51B Per-Layer Embedding (PLE) table sprawling across VRAM, host DDR5 RAM, and Gen4 NVMe.
+1. **The Dense Model**: [Qwen3.8-27B](/blog/local-inference/running-qwen3-8-27b-locally/) — a 27B dense hybrid model packed entirely into 10.17 GiB of VRAM.
+2. **The 176B Sparse MoE**: [Qwen3.8-Flash-Next](/blog/local-inference/running-qwen3-8-flash-next-locally/) — a 125B MoE + 51B Per-Layer Embedding (PLE) table sprawling across VRAM, host DDR5 RAM, and Gen4 NVMe.
 
 They consume roughly the same electrical power under load, but on a 12 GB GPU, they cannot co-exist in memory simultaneously. Only one can claim the default slot behind [llama-swap](https://github.com/mostlygeek/llama-swap).
 
@@ -58,7 +58,7 @@ All tests were recorded on my primary homelab workstation ({% device "yeti-cachy
 
 ## 3. Measured Head-to-Head
 
-| Metric / Dimension | Qwen3.8-27B (UD-IQ3_XXS) | Qwen3.8-Flash-Next (`llama.cpp` AD-4.27bpw) | Qwen3.8-Flash-Next (Strata Platinum IQ3_XXS) |
+| Metric / Dimension | Qwen3.8-27B (UD-IQ3_XXS) | Qwen3.8-Flash-Next (`llama.cpp` AD-4.27bpw) | Qwen3.8-Flash-Next (Strata IQ3_XXS) |
 | :--- | :---: | :---: | :---: |
 | **Model Footprint** | 10.17 GiB (pure VRAM) | 88 GiB (split RAM+VRAM+NVMe) | 75.8 GiB (split RAM+VRAM+NVMe) |
 | **Prompt Processing (Prefill)** | **~1,160 t/s** (pp4096, pure GPU) | ~200 t/s (cold), ~385 t/s (warm) | **1,138–2,013 t/s** (MMQ chunks) |
@@ -155,7 +155,7 @@ When this head-to-head was first benchmarked on stock `llama.cpp`, the trade-off
 In September 2026, the rise of [bare-metal, overfit inference engines](/blog/local-inference/the-rise-of-overfit-inference-engines/)—specifically **Strata** and **StrataGP**—completely upended that balance:
 
 1. **Dynamic Expert Caching**: Instead of offloading all 512 experts of 3 layers to VRAM and leaving 45 layers on CPU, Strata keeps the top **3,086 hottest experts across all 48 layers in VRAM**. GPU hit rates reach 70–75%.
-2. **Transparent Huge Pages (`MADV_HUGEPAGE`)**: Eliminates host memory TLB misses by collapsing 10.5 million 4 KB page entries into 2 MB hugepages.
+2. **Transparent Huge Pages (`MADV_HUGEPAGE`)**: Backs host memory with 2 MB huge pages so the CPU caches address lookups instead of stalling on DDR5 page tables.
 3. **Speculative MTP Drafting**: Verifies multi-token draft predictions on the GPU with 70–97% acceptance.
 
 ### The New Reality:
@@ -170,7 +170,7 @@ Yes—and its role is now sharply defined:
 * **The Zero-Footprint Workhorse**: The 27B claims zero bytes of system RAM. You can render 3D scenes, compile massive codebases, or run memory-heavy IDEs without worrying about model thrashing.
 * **The Full 262k Horizon**: If you need to search a 250,000-token codebase in a single pass without loading 50 GB into DDR5, the 27B handles it effortlessly inside VRAM.
 
-For everything else, Flash-Next has taken the throne.
+For everything else, Flash-Next on Strata is now the primary daily driver.
 
 ---
 

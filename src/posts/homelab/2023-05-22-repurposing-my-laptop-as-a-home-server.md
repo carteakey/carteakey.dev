@@ -42,7 +42,7 @@ The best option is going all Linux.
 
 Can't go wrong with Ubuntu server or Debian. There are Fedora, RHEL, and others as well. If you're new, better to go with Ubuntu server, its popularity has the advantage that any problems you face will likely have been faced by someone else already and would have discussed it in an online forum. 
 
-Moreover, docker has changed the game and introduced another abstraction, where your base OS (as long as it's Linux) starts mattering less and less.
+Moreover, Docker provides an abstraction where your base OS (as long as it's Linux) starts mattering less and less.
 
 ## Dockerize everything.
 

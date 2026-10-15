@@ -5,16 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [2.7.32] - 2026-10-14
+## [2.7.32] - 2026-10-15
 ### Added
 - Author `/ai/` ecosystem hub (ledger archetype) linking subscriptions, homelab hardware specs, active model rankings, and research series.
 - Self-referencing against the Artificial Analysis Intelligence Index v4.3.2 in `models.yaml` and `update-model-list` skill.
 - Note on Georgi Gerganov dogfooding Qwen3.8-Flash-Next on llama.cpp.
+- Optional local `Humanizer-12B` probe script (`probe_humanizer.py`) in `human-writer` skill and R2 image-hosting architecture notes (`docs/ideas/image-hosting-r2-worker.md`).
 
 ### Changed
 - Calibrated model rankings: added GPT-6 Astra (Tier S+ #1), Claude Fable 5.1 (Tier S+ #3), Gemini 3.8 Flash (Tier S #2), GLM-5.3 Flash (Tier A #2); moved GPT-6.1 Sol to Tier S #3; removed discontinued GPT-6 Terra.
 - Added `/ai/` links to footer Explore section and `...More` directory.
-- Updated local inference posts with Strata v0.1.44.1 refresh benchmarks.
+- Updated local inference posts with Strata v0.1.44.1 refresh benchmarks, ISTA-DASLab GSQ-RCO quant ladder, and plain engine/model labels instead of artificial tier names.
 
 ## [2.7.31] - 2026-10-12
 ### Added

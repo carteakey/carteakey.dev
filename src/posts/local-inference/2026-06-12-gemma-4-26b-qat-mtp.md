@@ -4,7 +4,7 @@ description: "Local benchmarks comparing Gemma 4 26B under standard, QAT, MTP, a
 image: /img/blog-sketches/unique/gemma-4-26b-qat-mtp-stamp-trim.png
 imageAlt: Transparent monochrome sketch of a speedometer showing a high rate of speed next to a dual-fan graphics card
 date: 2026-06-12
-authored_by: ai-generated
+authored_by: ai-assisted
 draft: false
 tags:
   - AI
@@ -12,7 +12,7 @@ tags:
 pinned: false
 ---
 
-Google's release of the QAT (Quantization-Aware Training) variants of Gemma 4 has changed the game for local inference on consumer hardware. By combining **QAT** with **MTP (Multi-Token Prediction)**, we can now run the heavy Gemma 4 26B MoE model at over **100 tokens/second** on a single 12GB GPU.
+Quantization-Aware Training (QAT) solves an old problem for local models: fitting inside 12 GB VRAM without the usual precision hit of post-training 4-bit quants. Paired with Multi-Token Prediction (MTP), the 26B MoE reaches over **100 tokens/second** on an RTX 4070.
 
 {% image "./src/static/img/speed.gif", "Gemma 4 26B speed test animation" %}
 
@@ -34,23 +34,23 @@ Here is a performance breakdown comparing various configurations on a consumer R
 1. **The VRAM Fitting Advantage (QAT Only)**:
    The standard `UD-Q5_K_XL` baseline model is ~18 GB, which exceeds the 12GB VRAM of the RTX 4070. By using the QAT `UD-Q4_K_XL` variant (~14.2 GB), far more layers are offloaded directly to the GPU using llama.cpp's `--fit on` mechanism. This optimization drives speed from **38.5 tok/s** up to **69.0 tok/s** without losing the training-aware accuracy of the quant.
 2. **MTP Scaling (QAT + MTP)**:
-   Combining the lighter QAT model with the MTP assistant draft model (`mtp-gemma-4-26B-A4B-it.gguf` ~460MB) allows the GPU to verify draft tokens in parallel. Because the draft model fits entirely in VRAM, the speed hits a blazing **100.6 tok/s**!
+   Combining the lighter QAT model with the MTP assistant draft model (`mtp-gemma-4-26B-A4B-it.gguf` ~460MB) allows the GPU to verify draft tokens in parallel. Because the draft model fits entirely in VRAM, decode throughput reaches **100.6 tok/s**.
 3. **Draft Settings**:
    For the MoE 26B variant, pushing `--spec-draft-n-max` beyond `2` introduces compute overhead that degrades throughput on 12GB cards. Sticking to `n-max 2` provides the optimal acceptance-rate-to-overhead ratio.
 
-## Why QAT Changes the Game: Q4 QAT vs. Q8
+## How QAT works: Q4 QAT vs. Q8
 
 Normally, dropping down to a 4-bit model from 8-bit or full 16-bit precision introduces a noticeable penalty in perplexity, reasoning, and coding accuracy. However, Quantization-Aware Training (QAT) bypasses this penalty:
 
 - **VRAM Reduction**: A 4-bit QAT model (`UD-Q4_K_XL` at ~14.2 GB) offers a **~70% memory reduction** compared to FP16 and **~40% memory reduction** compared to Q8, fitting within consumer 12GB VRAM cards with space to spare.
 - **Accuracy Recovery**: Unlike standard Post-Training Quantization (PTQ) which quantizes weights *after* the model is fully trained, QAT introduces quantization rounding noise directly *during* the training/fine-tuning phase. This allows the neural network to adapt its remaining parameters to the low-bit constraints, routing around the reduced resolution.
-- **Intelligence-Per-Byte**: By training the model to expect low-bit rounding, the resulting 4-bit QAT model achieves benchmark performance and accuracy that is virtually indistinguishable from a standard 8-bit (`Q8_0`) quantization, giving you 8-bit intelligence at a 4-bit VRAM footprint.
+- **Quality retention**: By training the model to expect low-bit rounding, the resulting 4-bit QAT model achieves benchmark performance and accuracy that is virtually indistinguishable from a standard 8-bit (`Q8_0`) quantization, giving you 8-bit intelligence at a 4-bit VRAM footprint.
 
 ## Testing the QAT Compromise: Upcoming Benchmarks
 
-While the performance gains of QAT are massive, throughput numbers only tell half the story. Several reports in the local LLM community (such as discussions on r/LocalLLaMA) suggest that flat QAT models might exhibit subtle reasoning and constraint-following regressions when compared to standard dynamic/mixed-precision quantizations (like `Q4_K_M` or Unsloth's `UD-Q4_K_XL`). This is particularly noticeable on highly precise, multi-constraint tasks like complex programming, structured SVG generation, or creative writing under strict formatting rules.
+While the performance gains of QAT are substantial, throughput numbers only tell half the story. Several reports in the local LLM community suggest that flat QAT models might exhibit subtle reasoning and constraint-following regressions when compared to standard dynamic/mixed-precision quantizations (like `Q4_K_M` or Unsloth's `UD-Q4_K_XL`). This is particularly noticeable on highly precise, multi-constraint tasks like complex programming, structured SVG generation, or creative writing under strict formatting rules.
 
-To evaluate whether this blazing throughput comes with a qualitative penalty, I will be running comparative accuracy benchmarks between:
+To evaluate whether this speed comes with a qualitative penalty, I will be running comparative accuracy benchmarks between:
 1. Standard dynamic/mixed-precision quants (`UD-Q5_K_XL` and `Q4_K_M`).
 2. The flat QAT variants (`UD-Q4_K_XL`).
 

@@ -52,6 +52,10 @@ Intentionally committed implementation work is tracked in Linear: [carteakey.dev
 * ❌ **No Legacy Code**: Do not use `var`, jQuery, or write code for Internet Explorer compatibility.
 * ❌ **Inventing Post Elements**: raw HTML/utility-class blocks in posts, or new components that are not documented in `docs/BLOG_POST_FEATURES.md` (see rule 6).
 * ❌ **Hardcoded HTML for Data**: When building lists, folios, or attributions, use YAML data files or Markdown frontmatter. Do not hardcode HTML grids or `<div>` structures in templates.
+* ❌ **No Marketing Hype or Tier Branding**:
+  - All posts must pass through the `human-writer` skill, even when declared `authored_by: ai-assisted` or `ai-generated`.
+  - Never invent artificial tier names like "Platinum tier", "Gold tier", or "Gold master". Describe setups plainly by engine and model (e.g. `Strata (dynamic expert cache)`, `llama.cpp plain master`, `llama.cpp + MTP draft`).
+  - Avoid AI-generated marketing tropes: "game-changer", "changed the game", "blazing", "holy grail", "shatters the ceiling", or "takes the throne". State measured numbers (tok/s, prefill, VRAM) directly with natural skepticism.
 
 ---
 

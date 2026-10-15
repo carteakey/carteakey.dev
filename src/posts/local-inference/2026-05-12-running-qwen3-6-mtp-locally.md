@@ -25,7 +25,7 @@ pinned: false
 
 **Update (May 16, 2026)**: The MTP support PR has officially been merged into the `llama.cpp` mainline master branch! You no longer need to check out a custom PR branch, and the flag has been officially renamed to `--spec-type draft-mtp`.
 
-Qwen 3.6 introduces Multi-Token Prediction (MTP) for speculative decoding natively integrated into the model, driving massive latency improvements in local setups.
+Qwen 3.6 introduces Multi-Token Prediction (MTP) for speculative decoding natively integrated into the model, delivering lower latency and higher generation throughput in local setups.
 
 This post covers my setup running Qwen3.6-35B-A3B MTP on a 12GB VRAM RTX 4070 using llama.cpp, with real-world throughput numbers compared to its non-MTP baseline.
 
@@ -45,14 +45,13 @@ Speculative decoding circumvents this by decoupling generation from verification
 
 There are several ways to generate these draft tokens:
 - **N-gram**: Uses and matches strings already in the context. Extremely fast but only good for repetitive text like code.
-- **Draft model**: Uses a tiny model (e.g. 0.8B) of the same family to quickly generate draft tokens for a larger model (e.g. 35B). Fairly easy to implement but acceptance rates vary wildly based on how well the models align.
-- **Eagle3**: SOTA speculative decoding bolted onto an existing model, though it requires expensive training of a custom draft head.
-- **DFlash**: Similar to Eagle3 but uses an experimental block diffusion model for prediction. 
-- **MTP (Multi-Token Prediction)**: The holy grail. The full model itself is pre-trained with auxiliary heads specifically to output draft tokens alongside its actual prediction. 
+- **Draft model**: Uses a tiny model (e.g. 0.8B) of the same family to quickly generate draft tokens for a larger model (e.g. 35B). Fairly easy to implement but acceptance rates vary based on how well the models align.
+- **Eagle3 / DFlash**: Trains an auxiliary head or small block diffusion module to predict future tokens.
+- **MTP (Multi-Token Prediction)**: Native speculative prediction. The model is pre-trained with auxiliary output heads specifically to produce candidate draft tokens during each forward pass, requiring no separate external model.
 
 ## Current MTP Landscape
 
-MTP is rapidly becoming table stakes for new local inference architectures. Here is a brief look at the current ecosystem of native MTP models:
+Native MTP is becoming standard across modern open-weight MoE architectures. Here is a brief look at the current ecosystem of native MTP models:
 - DeepSeekv3 OG
 - DeepSeekv3.2/4
 - Qwen3.5+

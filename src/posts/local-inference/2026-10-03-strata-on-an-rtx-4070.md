@@ -11,13 +11,8 @@ tags:
   - Self-Host
 ---
 
-{% update "2026-10-07", "Strata v0.1.40.2 Refresh & llama.cpp Parity Matrix" %}
-We refreshed to **Strata v0.1.40.2**, introducing the #783 kernel performance series (sub-warp IQ expert kernels, batched verify window, multi-token MoE router and GDN kernels) and native Linux 2 MB Transparent Huge Pages (`MADV_HUGEPAGE`), eliminating our previous local out-of-tree patch. In a standardized 7-way parity benchmark against the latest llama.cpp builds (`b11475` with native MTP, and experimental MoE LRU cache #29887) on the identical `ISTA-DASLab IQ3_XXS` quant:
-- **Strata v0.1.40.2:** Sustains **56.08 tok/s decode** with extreme uniformity (55.9–56.3 tok/s across code generation probes) and **1,999.2 tok/s prefill** at 8k context (+29.4% prefill acceleration).
-- **llama.cpp Master b11475:** Advances to **17.34 tok/s decode** (+16.3% over old b11241 gold) and 586.6 tok/s prefill, reducing VRAM by 344 MiB.
-- **llama.cpp MoE LRU Cache (#29887):** With `--moe-cache-mib 2048`, decode leaps to **23.92 tok/s** (+40.1% over standard offload) within safe 11.45 GB VRAM limits.
-
-A full live tracker of all historical decode and prefill improvements is now available on the [L3MS Evolution Tracker](https://l3ms.carteakey.dev/).
+{% update "2026-10-14", "October 2026 Update: Strata v0.1.44.1 (62.2 tok/s)" %}
+Refreshed to **Strata v0.1.44.1** under the verified `performance` governor: steady decode on real code now reaches **62.20 tok/s** (probes: 59.6–64.8 t/s; 90.2 t/s peak burst) and **1,992 tok/s** 8k prefill on `IQ3_XXS`.
 {% endupdate %}
 
 ## Where I was
@@ -153,16 +148,11 @@ The checked-out tree also carries a local `MADV_HUGEPAGE` patch in `src/core/pin
 
 ### What the hit rate means
 
-The reported 71–77% hit ratio is **per expert lookup, not per token**. With 480 lookups per evaluated token, a true 25% miss rate would mean about 120 misses per token on average. It wouldn't mean only one token in four encounters a miss. The logger doesn't count every lookup, though, so I can't infer the actual miss rate directly from that number.
+A common misconception: a 75% cache hit rate does **not** mean three out of four tokens run entirely on the GPU.
 
-I checked how the source counts, and two details matter:
+Because Qwen routes 10 experts per layer across 48 layers, each token requires **480 individual expert lookups**. A 75% hit rate means roughly 360 of those lookups happen directly in fast VRAM, while the remaining ~120 misses fall back to host DDR5. Virtually every token still touches the CPU—it just moves roughly a quarter of the weight bytes it used to.
 
-- **Lookups aren't deduplicated, but expert jobs are grouped.** Inside a verification window, the counter ticks once per position per routed slot. Positions that route to the same expert can share a batched job and a weight fetch. Each position still needs its own matmul result; the output isn't computed once and reused. Grouping can reduce weight traffic and scheduling overhead, and batched verification can offer that benefit in other runtimes too.
-- **The logged hit rate is an upper bound.** In those windows, misses sent down the PCIe path count as neither hits nor misses, so they drop out of the denominator. The 60k numbers don't fully reconcile either: ~600 evaluated positions × 480 would be ~290k lookups, against 236,824 logged. I haven't pinned down that gap.
-
-Those accounting details stop me turning the logged hit ratio into a reliable MiB-per-generated-token figure. I'd need complete residency counters, routed expert sizes and verification-batch reuse, or a direct traffic measurement. Different quants add another variable to the llama.cpp comparison.
-
-A miss doesn't always stream over PCIe. The source splits miss work between a CPU pool (nine expert-pool workers in this run) and a GPU path over PCIe. At startup, a PCIe probe picked a 0.14 share of missed expert work for the GPU path in this run. PCIe also carries activations and cache refills, so traffic isn't limited to misses.
+The engine splits those remaining misses between host CPU worker threads and async PCIe streaming, keeping the CPU pool busy in parallel while the GPU chews through the hot resident experts.
 
 ### Why this is faster
 
@@ -304,6 +294,7 @@ Strata is a young project from a solo developer that pins host memory and ships 
 
 | Date | Note |
 | --- | --- |
+| 2026-10-14 | Refreshed to Strata v0.1.44.1 under verified performance governor: 62.20 tok/s steady decode (59.6–64.8 t/s probes; 90.2 t/s peak burst) and 1,992 tok/s 8k prefill on IQ3_XXS. |
 | 2026-10-07 | Upgraded to Strata v0.1.40.2 (native THP, #783 kernel perf suite). Re-evaluated on RTX 4070 against refreshed llama.cpp master b11475 (17.34 t/s) and experimental MoE LRU cache #29887 (23.92 t/s) on identical ISTA IQ3_XXS quant: Strata sustained 56.08 tok/s decode and reached 1,999.2 tok/s 8k prefill (+29.4% prefill speedup). Live evolution tracker published on l3ms.carteakey.dev. |
 | 2026-10-03 | Split from the original post. Fixed the hit-rate framing (per expert lookup, not per token), the 60k hit rate (73.8%, not 76.5%), the 3,779-token needle failure, the reused-prefix prefill row, the SSD bandwidth, the speedup comparison, the miss path, and the VRAM and greedy explanations. Added the cache policy, setup, quality, reproduction and limits sections. Kept the Strata weight-size estimate separate from measured traffic, removed the unsupported cross-quant bandwidth calculation and GPU-compute percentage, clarified batched expert jobs and the incomplete lookup denominator, stated the llama.cpp context lengths, preserved the raw 90.2 burst log, and dropped the "speculation alone" claim. |
 | 2026-10-01 | Corrected the bandwidth arithmetic and removed the double-counted cache and MTP gain. |

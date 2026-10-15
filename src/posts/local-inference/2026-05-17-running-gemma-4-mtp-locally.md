@@ -33,7 +33,7 @@ This post covers the setup for Gemma 4 using the official assistant drafter mode
 
 ## The Gemma 4 MTP Advantage
 
-Google recently released dedicated small assistant models specifically trained on Gemma 4's distribution to act as high-accuracy drafters. Unlike Qwen 3.6 which integrates MTP heads into the main weight file, Gemma 4 uses a separate, lightweight drafter model that shares activations with the target model.
+Google released small companion models (~0.4B) to act as speculative drafters for Gemma 4. Unlike Qwen (which embeds MTP heads directly into the main model weights), Gemma uses a separate small model file to generate candidate tokens for the base model to verify.
 
 ### How it works
 
