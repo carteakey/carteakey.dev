@@ -1,6 +1,6 @@
 {
   "tags": ["prompts"],
   "layout": "layouts/post.njk",
-  "permalink": "/prompts/{{ title | slugify }}/",
+  "permalink": "/ai/prompts/{{ title | slugify }}/",
   "fullWidth": false
 }

@@ -43,12 +43,6 @@
       "utility-text-stack": 9,
       "inline-style": 4
     },
-    "src/_includes/layouts/skill.njk": {
-      "pill-or-circle": 1,
-      "off-palette-colour": 1,
-      "utility-text-stack": 4,
-      "inline-style": 1
-    },
     "src/_includes/layouts/snippet.njk": {
       "utility-text-stack": 1
     },
@@ -196,12 +190,6 @@
     "src/projects.njk": {
       "inline-style": 4
     },
-    "src/prompts.njk": {
-      "utility-text-stack": 2
-    },
-    "src/quotations.njk": {
-      "utility-text-stack": 3
-    },
     "src/quotes.njk": {
       "inline-style": 2
     },
@@ -218,8 +206,7 @@
       "inline-style": 4
     },
     "src/skill-library.njk": {
-      "utility-text-stack": 2,
-      "inline-style": 2
+      "utility-text-stack": 1
     },
     "src/skills-radar.njk": {
       "inline-style": 2

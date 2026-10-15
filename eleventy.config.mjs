@@ -1618,7 +1618,7 @@ export default function (eleventyConfig) {
           type: "quotation",
           title: `Quotation from ${entry.data.author}`,
           date: entry.date,
-          url: `/quotations/#${entry.fileSlug}`,
+          url: `/notes/#${entry.fileSlug}`,
           summary,
           original: entry,
           hidden: !!entry.data.hidden,

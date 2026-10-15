@@ -10,6 +10,7 @@ collectionArchetype: ledger
 ---
 
 {% include "components/breadcrumbs.njk" %}
+{% include "components/ai-subnav.njk" %}
 
 {% set pageEyebrow = "Workbench · Ledger" %}
 {% set pageTitle = "AI Ecosystem" %}
@@ -244,7 +245,7 @@ collectionArchetype: ledger
       </p>
     </a>
 
-    <a href="/prompts/" class="surface surface-padding surface-hover rounded-sm block no-underline border border-surface-border group">
+    <a href="/ai/prompts/" class="surface surface-padding surface-hover rounded-sm block no-underline border border-surface-border group">
       <div class="flex items-center justify-between gap-2 mb-2">
         <span class="editorial-kicker">Reference Archive</span>
         <span class="meta-text group-hover:text-[var(--accent-color)] transition-colors">View Prompts →</span>
@@ -254,6 +255,19 @@ collectionArchetype: ledger
       </h3>
       <p class="editorial-support-compact">
         A collection of repeatable prompts, CRTBench single-file retro game benchmarks, and qualitative reasoning tests for local and cloud models.
+      </p>
+    </a>
+
+    <a href="/ai/skills/" class="surface surface-padding surface-hover rounded-sm block no-underline border border-surface-border group md:col-span-2">
+      <div class="flex items-center justify-between gap-2 mb-2">
+        <span class="editorial-kicker">Agent Workflows</span>
+        <span class="meta-text group-hover:text-[var(--accent-color)] transition-colors">Browse Skills →</span>
+      </div>
+      <h3 class="editorial-title text-base group-hover:text-[var(--accent-color)] transition-colors mb-2">
+        Reusable Agent Skill Library
+      </h3>
+      <p class="editorial-support-compact">
+        Agent instruction files (`SKILL.md`) I write, calibrate, and keep around for coding workflows, voice fingerprinting, and local inference handoffs.
       </p>
     </a>
   </div>
