@@ -5,6 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.8.0] - 2026-10-15
+### Added
+- **Declutter Project (`docs/DECLUTTER_PLAN.md`)**: architectural consolidation of content taxonomy, layout surfaces, and collection navigation across the site.
+- Shared domain sub-navigation ledger rails: `ai-subnav.njk` (`/ai/`, `/folio/model-tier-list/`, `/ai/skills/`, `/ai/prompts/`, `/devices/yeti-cachy/`), `about-subnav.njk` (`/about/`, `/cv/`, `/uses/`, `/data/`, `/workouts/`, `/colophon/`), and `now-subnav.njk` (`/now/`, `/reading/`, `/watching/`, `/listening/`, `/games/`, `/now/archive/`).
+- Inline `authorship-filter.njk` segmented pill control (`All · Human · AI`) inside the `/blog/` and `/notes/` collection toolbars.
+- Deferred `/static/js/workbench.js` bundle replacing inline `<script>` blocks in `base.njk`.
+
+### Changed
+- **Nested `/ai/` Ecosystem**: moved `/skills/` to `/ai/skills/` and `/prompts/` to `/ai/prompts/` with 301 redirects in `_redirects`.
+- **Unified Short-Form Log (`/notes/`)**: merged `Notes`, `Code Snippets`, `TIL`, and markdown `Quotations` into a single chronological stream at `/notes/` with instant filter pills (`?type=note|snippet|til|quotation`) while preserving standalone `/quotes/` (Quote of the Day + curated quotes wall).
+- **2-Column Workbench Homepage (`/`)**: replaced the 3-column JS masonry wall and TypeIt hero animation with an architectural split between Research Series & Pinned/Recent Essays (left) and a Live Lab Log ticker (right).
+- **Post Layout Declutter (`post.njk`)**: removed the left-gutter author bio card, compressed pre-post metadata into a single monospace ledger rail (`date · reading time · authorship badge · tags · Copy .md`) with a disclosure for AI authorship notes, moved mobile TOC above prose, and simplified the post footer to upvote + Giscus comments + related posts.
+- **Single-Archetype Collections**: retired duplicate multi-view DOM rendering (`List/Grid/Stream/Compact`) across `/blog/`, `/notes/`, `/projects/`, and `/lexicon/`.
+- **4-Column `/more/` Directory & Consolidated `/uses/`**: redesigned `/more/` into a 4-column `.surface` ledger and folded `/tools/` and `/devices/` index pages into `#tools` and `#hardware` sections on `/uses/`.
+- **Design Guard Ratchet**: eliminated 209 baseline design violations across 20 files (`744 -> 535`), bringing `base.njk`, `post.njk`, `feed-card.njk`, `note.njk`, `til.njk`, `snippet.njk`, `folio/index.njk`, `changelog.njk`, `uses.njk`, `now.njk`, and `now-archive.njk` to 0 violations.
+
+### Removed
+- Retired standalone collection indexes (`src/feed.njk`, `src/snippets.njk`, `src/snippet-tags.njk`, `src/til.njk`, `src/quotations.njk`, `src/tools.njk`, `src/devices.njk`, `src/learning.njk`) with 301 redirects in `src/_redirects`.
+- Retired `view-toggle.njk`, `collection-views.js`, `feed-masonry-script.njk`, `learning-progress.js`, `ethical-ads.njk`, the top-navbar AI filter dropdown, and the 5-emoji post reaction bar.
+
 ## [2.7.32] - 2026-10-15
 ### Added
 - Author `/ai/` ecosystem hub (ledger archetype) linking subscriptions, homelab hardware specs, active model rankings, and research series.

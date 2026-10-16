@@ -23,17 +23,16 @@ collectionArchetype: index
   <ul class="list-none m-0 p-0 space-y-8 pl-7">
     {% for entry in changelog %}
     <li class="relative">
-      {# timeline dot - smaller/gray for git history entries #}
-      <div class="absolute -left-7 top-1.5 w-3 h-3 rounded-full border-2 border-white dark:border-zinc-950" style="background: {% if entry.fromGit %}#9ca3af{% else %}var(--accent-color){% endif %};"></div>
+      <div class="absolute -left-7 top-1.5 w-3 h-3 border-2 border-white dark:border-zinc-950 {% if entry.fromGit %}bg-gray-400 dark:bg-gray-600{% else %}bg-[color:var(--accent-color)]{% endif %}"></div>
 
       <div class="flex flex-wrap items-baseline gap-3 mb-2">
         {% if entry.fromGit %}
           <span class="font-mono font-semibold editorial-support-compact">{{ entry.version }}</span>
-          <span class="meta-text text-xs text-gray-400 dark:text-gray-600">git history</span>
+          <span class="meta-line">git history</span>
         {% else %}
-          <span class="font-mono font-semibold text-sm text-gray-900 dark:text-gray-100" style="color: var(--accent-color);">v{{ entry.version }}</span>
+          <span class="editorial-title-sm text-[color:var(--accent-color)]">v{{ entry.version }}</span>
           {% if entry.date %}
-            <time class="meta-text text-xs text-gray-400 dark:text-gray-500">{{ entry.date }}</time>
+            <time class="meta-line">{{ entry.date }}</time>
           {% endif %}
         {% endif %}
       </div>
@@ -41,11 +40,11 @@ collectionArchetype: index
       <div class="space-y-2">
         {% if entry.sections.Added %}
         <div>
-          <span class="meta-text text-[0.78rem] font-semibold uppercase tracking-wider text-emerald-500 dark:text-emerald-400 mr-2">Added</span>
+          <span class="editorial-kicker mr-2">Added</span>
           <ul class="mt-1 space-y-0.5 list-none m-0 p-0">
             {% for item in entry.sections.Added %}
-            <li class="text-sm text-gray-700 dark:text-gray-300 flex gap-2">
-              <span class="text-emerald-400 shrink-0 mt-0.5">+</span>
+            <li class="editorial-support-compact flex gap-2">
+              <span class="meta-line shrink-0 mt-0.5">+</span>
               <span>{{ item }}</span>
             </li>
             {% endfor %}
@@ -55,11 +54,11 @@ collectionArchetype: index
 
         {% if entry.sections.Changed %}
         <div>
-          <span class="meta-text text-[0.78rem] font-semibold uppercase tracking-wider mr-2" style="color: {% if entry.fromGit %}#9ca3af{% else %}#3b82f6{% endif %};">{% if entry.fromGit %}Commits{% else %}Changed{% endif %}</span>
+          <span class="editorial-kicker mr-2">{% if entry.fromGit %}Commits{% else %}Changed{% endif %}</span>
           <ul class="mt-1 space-y-0.5 list-none m-0 p-0">
             {% for item in entry.sections.Changed %}
-            <li class="text-sm text-gray-700 dark:text-gray-300 flex gap-2">
-              <span class="{% if entry.fromGit %}text-gray-500 dark:text-gray-400{% else %}text-blue-400{% endif %} shrink-0 mt-0.5">{% if entry.fromGit %}·{% else %}~{% endif %}</span>
+            <li class="editorial-support-compact flex gap-2">
+              <span class="meta-line shrink-0 mt-0.5">{% if entry.fromGit %}·{% else %}~{% endif %}</span>
               <span>{{ item }}</span>
             </li>
             {% endfor %}
@@ -69,11 +68,11 @@ collectionArchetype: index
 
         {% if entry.sections.Fixed %}
         <div>
-          <span class="meta-text text-[0.78rem] font-semibold uppercase tracking-wider text-amber-500 dark:text-amber-400 mr-2">Fixed</span>
+          <span class="editorial-kicker mr-2">Fixed</span>
           <ul class="mt-1 space-y-0.5 list-none m-0 p-0">
             {% for item in entry.sections.Fixed %}
-            <li class="text-sm text-gray-700 dark:text-gray-300 flex gap-2">
-              <span class="text-amber-400 shrink-0 mt-0.5">⚑</span>
+            <li class="editorial-support-compact flex gap-2">
+              <span class="meta-line shrink-0 mt-0.5">⚑</span>
               <span>{{ item }}</span>
             </li>
             {% endfor %}
@@ -83,11 +82,11 @@ collectionArchetype: index
 
         {% if entry.sections.Removed %}
         <div>
-          <span class="editorial-kicker text-red-500 dark:text-red-400 mr-2">Removed</span>
+          <span class="editorial-kicker mr-2">Removed</span>
           <ul class="mt-1 space-y-0.5 list-none m-0 p-0">
             {% for item in entry.sections.Removed %}
             <li class="editorial-support-compact flex gap-2">
-              <span class="text-red-400 shrink-0 mt-0.5">−</span>
+              <span class="meta-line shrink-0 mt-0.5">−</span>
               <span>{{ item }}</span>
             </li>
             {% endfor %}

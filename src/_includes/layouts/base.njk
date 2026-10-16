@@ -125,7 +125,7 @@
 {% set showReadingFrame = false %}
 <body class="bg-[#fbfaf6] dark:bg-[#141414] font-sans text-sm">
   {# Skip to main content link for accessibility #}
-  <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:rounded-sm focus:font-semibold focus:text-black" style="background: var(--accent-color);">
+  <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:font-semibold focus:text-black bg-[color:var(--accent-color)]">
     Skip to main content
   </a>
   
@@ -139,21 +139,20 @@
         <div class="flex flex-row w-full justify-between items-center gap-4">
 
           {# Site title - same on desktop and mobile, consistent font #}
-          <a class="no-underline hover:no-underline font-mono font-bold text-[0.84rem] uppercase tracking-[0.08em] group flex items-center shrink-0" href="{{ '/' | url }}" style="color: var(--accent-color)">
+          <a class="no-underline hover:no-underline font-mono font-bold text-[0.84rem] uppercase tracking-[0.08em] group flex items-center shrink-0 text-[color:var(--accent-color)]" href="{{ '/' | url }}">
             carteakey.dev
           </a>
 
           <ul class="list-none m-0 p-0 flex items-center gap-2">
-            {# Mobile: hamburger menu for the primary links hidden below sm - previously
-               About/Writing/Now had no mobile access point at all except the footer. #}
+            {# Mobile: hamburger menu for the primary links hidden below sm #}
             <li class="flex items-center relative sm:hidden" x-data="{ open: false }" @keydown.escape="open = false" @click.outside="open = false">
               <button type="button" @click="open = !open" :aria-expanded="open.toString()"
-                class="font-medium no-underline inline-flex items-center justify-center p-1.5 border border-transparent hover:border-gray-300 dark:hover:border-gray-700 transition-colors"
-                style="color: var(--accent-color)" title="Menu" aria-label="Main menu">
+                class="font-medium no-underline inline-flex items-center justify-center p-1.5 border border-transparent hover:border-gray-300 dark:hover:border-gray-700 transition-colors text-[color:var(--accent-color)]"
+                title="Menu" aria-label="Main menu">
                 {% feather "menu", class="w-4 h-4" %}
               </button>
-              <div x-show="open" x-transition.opacity.duration.100ms @click="open = false"
-                class="nav-dropdown-menu" role="menu" aria-label="Main menu" style="display: none;">
+              <div x-show="open" x-cloak x-transition.opacity.duration.100ms @click="open = false"
+                class="nav-dropdown-menu" role="menu" aria-label="Main menu">
                 {%- for entry in navPages %}
                   {% if entry.title == "About" or entry.title == "Writing" or entry.title == "Now" %}
                     <a href="{{ entry.url }}" class="nav-dropdown-item" role="menuitem">{{ entry.title }}</a>
@@ -178,29 +177,28 @@
                     href="{{ translation.url }}"
                     hreflang="{{ translation.language }}"
                     lang="{{ translation.language }}"
-                    class="font-mono text-[0.78rem] no-underline px-1 py-0.5 {% if translation.language == (language or metadata.language) %}font-bold border-b-2{% else %}opacity-60 hover:opacity-100{% endif %}"
+                    class="font-mono text-[0.78rem] no-underline px-1 py-0.5 {% if translation.language == (language or metadata.language) %}font-bold border-b-2 border-[color:var(--accent-color)]{% else %}opacity-60 hover:opacity-100{% endif %}"
                     {% if translation.language == (language or metadata.language) %}aria-current="page"{% endif %}
                     aria-label="Read this page in {{ translation.label }}"
-                    {% if translation.language == (language or metadata.language) %}style="border-color: var(--accent-color)"{% endif %}
                   >{{ translation.shortLabel or translation.language | upper }}</a>
                 {% endfor %}
               </li>
             {% endif %}
 
             <li class="flex items-center">
-              <a class="font-medium no-underline inline-flex items-center justify-center p-1.5 border border-transparent hover:border-gray-300 dark:hover:border-gray-700 transition-colors" href="{{ '/search/' | url }}" title="Search" aria-label="Search" style="color: var(--accent-color)">
+              <a class="font-medium no-underline inline-flex items-center justify-center p-1.5 border border-transparent hover:border-gray-300 dark:hover:border-gray-700 transition-colors text-[color:var(--accent-color)]" href="{{ '/search/' | url }}" title="Search" aria-label="Search">
                 {% feather "search", class="w-4 h-4" %}
               </a>
             </li>
 
             <li class="flex items-center">
-              <a class="font-medium no-underline inline-flex items-center justify-center p-1.5 border border-transparent hover:border-gray-300 dark:hover:border-gray-700 transition-colors" href="{{ '/more/' | url }}" title="More pages" aria-label="More pages" style="color: var(--accent-color)">
+              <a class="font-medium no-underline inline-flex items-center justify-center p-1.5 border border-transparent hover:border-gray-300 dark:hover:border-gray-700 transition-colors text-[color:var(--accent-color)]" href="{{ '/more/' | url }}" title="More pages" aria-label="More pages">
                 {% feather "compass", class="w-4 h-4" %}
               </a>
             </li>
 
             <li class="flex items-center">
-              <button id="toggleDarkMode" class="font-medium text-xs p-1.5 transition-all border border-transparent hover:border-gray-300 dark:hover:border-gray-700 focus-ring inline-flex items-center justify-center" aria-label="Toggle dark mode" style="color: var(--accent-color)">
+              <button id="toggleDarkMode" class="font-medium text-xs p-1.5 transition-all border border-transparent hover:border-gray-300 dark:hover:border-gray-700 focus-ring inline-flex items-center justify-center text-[color:var(--accent-color)]" aria-label="Toggle dark mode">
                 {% feather "moon" , class="block dark:hidden w-4 h-4" %}
                 {% feather "sun" , class="hidden dark:block w-4 h-4"%}
               </button>
@@ -222,24 +220,6 @@
 
         {{ content | safe }}
 
-          <script>
-            document
-              .getElementById("toggleDarkMode")
-              .addEventListener("click", function () {
-                if (isDarkMode()) {
-                  localStorage.theme = "light";
-                  document.documentElement.classList.remove("dark");
-                } else {
-                  localStorage.theme = "dark";
-                  document.documentElement.classList.add("dark");
-                }
-                switchPrismTheme();
-                if (typeof window.syncThemeColorMeta === "function") {
-                  window.syncThemeColorMeta();
-                }
-              });
-
-          </script>
       </main>
 
       <footer class="not-prose flex w-full pt-3 pb-2 flex-col md:flex-row justify-between items-center gap-3 border-t border-gray-300/80 dark:border-gray-700 mt-6">
@@ -394,46 +374,17 @@
         {# Made with love section #}
         <div class="mt-4 footer-smallprint flex items-center justify-between flex-wrap gap-2">
           <span>Made with ❤️ · <a href="https://www.11ty.dev/" target="_blank" rel="noopener">Eleventy</a> + <a href="https://tailwindcss.com/" target="_blank" rel="noopener">Tailwind</a> · <a href="/colophon/">Colophon</a> · © {{ metadata.author.name }} {{ currentYear }}</span>
-          <button onclick="document.getElementById('shortcuts-overlay').style.display='flex'" title="Keyboard shortcuts" class="footer-shortcuts-button">? shortcuts</button>
+          <button type="button" onclick="window.toggleShortcutsOverlay && window.toggleShortcutsOverlay(true)" title="Keyboard shortcuts" class="footer-shortcuts-button">? shortcuts</button>
         </div>
       </div>
     </div>
   </div>
 
   {# Medium Zoom for click-to-zoom images #}
-  <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js"></script>
-  <script>
-    if (typeof mediumZoom === 'function') {
-      mediumZoom('[data-zoomable]', { background: 'rgba(0,0,0,0.85)' });
-    }
-  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js"></script>
+  <script defer src="/static/js/workbench.js?v={{ versions.version }}"></script>
 
-  {# Code block copy buttons #}
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      document.querySelectorAll('pre[class*="language-"]').forEach((pre) => {
-        const code = pre.querySelector('code');
-        if (!code) return;
-        const btn = document.createElement('button');
-        btn.className = 'copy-code-btn';
-        btn.title = 'Copy code';
-        btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
-        btn.addEventListener('click', async () => {
-          try {
-            await navigator.clipboard.writeText(code.textContent);
-            btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
-            setTimeout(() => {
-              btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
-            }, 2000);
-          } catch { btn.textContent = '!'; }
-        });
-        pre.style.position = 'relative';
-        pre.appendChild(btn);
-      });
-    });
-  </script>
-
-  {# Easter Eggs - loaded from external file #}
+  {# Easter Eggs & interactive scripts - loaded from external files #}
   <script defer src="/static/js/easter-eggs.js?v={{ versions.version }}"></script>
   <script defer src="/static/js/ink.js?v={{ versions.version }}"></script>
   <script defer src="/static/js/newsletter.js?v={{ versions.version }}"></script>
@@ -452,68 +403,36 @@
     </a>
   {% endif %}
 
-  {# Service Worker Registration for Offline Support #}
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/static/js/sw.js')
-          .then(registration => {
-            // Service worker registered successfully
-          })
-          .catch(error => {
-            console.warn('Service worker registration failed:', error);
-          });
-      });
-    }
-  </script>
-
   {# ── Keyboard shortcuts ── #}
-  <div id="shortcuts-overlay" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.5);backdrop-filter:blur(2px);" onclick="document.getElementById('shortcuts-overlay').style.display='none'">
-    <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--bg,#fff);border:1px solid #e5e7eb;border-radius:0.75rem;padding:1.5rem 2rem;min-width:300px;max-width:380px;" onclick="event.stopPropagation()" class="dark:bg-zinc-900 dark:border-zinc-700">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
-        <span style="font-weight:600;font-size:0.875rem;">Keyboard Shortcuts</span>
-        <button onclick="document.getElementById('shortcuts-overlay').style.display='none'" style="color:#9ca3af;font-size:1rem;background:none;border:none;cursor:pointer;">✕</button>
+  <div id="shortcuts-overlay" class="hidden fixed inset-0 z-50 items-center justify-center bg-black/50 p-4 not-prose" onclick="window.toggleShortcutsOverlay && window.toggleShortcutsOverlay(false)">
+    <div class="surface surface-padding w-full max-w-sm" onclick="event.stopPropagation()">
+      <div class="flex items-center justify-between mb-4 pb-2 border-b border-gray-200 dark:border-gray-800">
+        <span class="editorial-title-sm">Keyboard Shortcuts</span>
+        <button type="button" onclick="window.toggleShortcutsOverlay && window.toggleShortcutsOverlay(false)" class="meta-line cursor-pointer" aria-label="Close shortcuts">✕</button>
       </div>
-      <table style="width:100%;border-collapse:collapse;font-size:0.8rem;">
-        <tr><td style="padding:0.25rem 0;color:#6b7280;" colspan="2">Navigation</td></tr>
-        <tr><td style="padding:0.2rem 0;white-space:nowrap;"><kbd style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:3px;padding:1px 5px;font-size:0.7rem;font-family:monospace;">H</kbd></td><td style="padding:0.2rem 0 0.2rem 1rem;color:#374151;" class="dark:text-gray-300">Home</td></tr>
-        <tr><td style="padding:0.2rem 0;white-space:nowrap;"><kbd style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:3px;padding:1px 5px;font-size:0.7rem;font-family:monospace;">B</kbd></td><td style="padding:0.2rem 0 0.2rem 1rem;color:#374151;" class="dark:text-gray-300">Writing</td></tr>
-        <tr><td style="padding:0.2rem 0;white-space:nowrap;"><kbd style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:3px;padding:1px 5px;font-size:0.7rem;font-family:monospace;">F</kbd></td><td style="padding:0.2rem 0 0.2rem 1rem;color:#374151;" class="dark:text-gray-300">Feed</td></tr>
-        <tr><td style="padding:0.2rem 0;white-space:nowrap;"><kbd style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:3px;padding:1px 5px;font-size:0.7rem;font-family:monospace;">S</kbd></td><td style="padding:0.2rem 0 0.2rem 1rem;color:#374151;" class="dark:text-gray-300">Snippets</td></tr>
-        <tr><td style="padding:0.2rem 0;white-space:nowrap;"><kbd style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:3px;padding:1px 5px;font-size:0.7rem;font-family:monospace;">N</kbd></td><td style="padding:0.2rem 0 0.2rem 1rem;color:#374151;" class="dark:text-gray-300">Now</td></tr>
-        <tr><td style="padding:0.2rem 0;white-space:nowrap;"><kbd style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:3px;padding:1px 5px;font-size:0.7rem;font-family:monospace;">T</kbd></td><td style="padding:0.2rem 0 0.2rem 1rem;color:#374151;" class="dark:text-gray-300">TIL</td></tr>
-        <tr><td style="padding:0.2rem 0;white-space:nowrap;"><kbd style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:3px;padding:1px 5px;font-size:0.7rem;font-family:monospace;">R</kbd></td><td style="padding:0.2rem 0 0.2rem 1rem;color:#374151;" class="dark:text-gray-300">Reading</td></tr>
-        <tr><td style="padding:0.25rem 0;color:#6b7280;padding-top:0.75rem;" colspan="2">Site</td></tr>
-        <tr><td style="padding:0.2rem 0;white-space:nowrap;"><kbd style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:3px;padding:1px 5px;font-size:0.7rem;font-family:monospace;">/</kbd></td><td style="padding:0.2rem 0 0.2rem 1rem;color:#374151;" class="dark:text-gray-300">Search</td></tr>
-        <tr><td style="padding:0.2rem 0;white-space:nowrap;"><kbd style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:3px;padding:1px 5px;font-size:0.7rem;font-family:monospace;">D</kbd></td><td style="padding:0.2rem 0 0.2rem 1rem;color:#374151;" class="dark:text-gray-300">Toggle dark mode</td></tr>
-        <tr><td style="padding:0.2rem 0;"><kbd style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:3px;padding:1px 5px;font-size:0.7rem;font-family:monospace;">?</kbd></td><td style="padding:0.2rem 0 0.2rem 1rem;color:#374151;" class="dark:text-gray-300">This overlay</td></tr>
-      </table>
+      <div class="space-y-3">
+        <div>
+          <p class="kicker mb-1.5">Navigation</p>
+          <dl class="grid grid-cols-[3rem_1fr] gap-y-1.5 items-center m-0">
+            <dt><kbd class="badge badge-tag badge-compact">H</kbd></dt><dd class="m-0 editorial-support-compact">Home</dd>
+            <dt><kbd class="badge badge-tag badge-compact">B</kbd></dt><dd class="m-0 editorial-support-compact">Writing (/blog/)</dd>
+            <dt><kbd class="badge badge-tag badge-compact">L</kbd></dt><dd class="m-0 editorial-support-compact">The Log (/notes/)</dd>
+            <dt><kbd class="badge badge-tag badge-compact">A</kbd></dt><dd class="m-0 editorial-support-compact">AI Workbench (/ai/)</dd>
+            <dt><kbd class="badge badge-tag badge-compact">N</kbd></dt><dd class="m-0 editorial-support-compact">Now (/now/)</dd>
+            <dt><kbd class="badge badge-tag badge-compact">U</kbd></dt><dd class="m-0 editorial-support-compact">Uses & Fleet (/uses/)</dd>
+            <dt><kbd class="badge badge-tag badge-compact">R</kbd></dt><dd class="m-0 editorial-support-compact">Reading (/reading/)</dd>
+          </dl>
+        </div>
+        <div class="pt-2 border-t border-gray-200 dark:border-gray-800">
+          <p class="kicker mb-1.5">Workbench</p>
+          <dl class="grid grid-cols-[3rem_1fr] gap-y-1.5 items-center m-0">
+            <dt><kbd class="badge badge-tag badge-compact">/</kbd></dt><dd class="m-0 editorial-support-compact">Search</dd>
+            <dt><kbd class="badge badge-tag badge-compact">D</kbd></dt><dd class="m-0 editorial-support-compact">Toggle dark mode</dd>
+            <dt><kbd class="badge badge-tag badge-compact">?</kbd></dt><dd class="m-0 editorial-support-compact">Toggle this overlay</dd>
+          </dl>
+        </div>
+      </div>
     </div>
   </div>
-  <script>
-  (function() {
-    const nav = { h:'/', b:'/blog/', f:'/feed/', s:'/snippets/', n:'/now/', t:'/til/', r:'/reading/' };
-    document.addEventListener('keydown', function(e) {
-      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.isContentEditable) return;
-      // No modifier keys - bare letter shortcuts only (allow Shift for ? key)
-      if (e.ctrlKey || e.metaKey || e.altKey) return;
-      if (e.shiftKey && e.key !== '?') return;
-      const k = e.key.toLowerCase();
-      if (nav[k]) { window.location.href = nav[k]; return; }
-      if (k === 'd') { document.getElementById('toggleDarkMode')?.click(); return; }
-      if (k === '/') { e.preventDefault(); window.location.href = '/search/'; return; }
-      if (e.key === '?') {
-        const o = document.getElementById('shortcuts-overlay');
-        o.style.display = o.style.display === 'none' ? 'flex' : 'none';
-        return;
-      }
-      if (e.key === 'Escape') { document.getElementById('shortcuts-overlay').style.display = 'none'; }
-    });
-  })();
-  </script>
-
-  {% if hasEthicalAds and metadata.ethicalAds and metadata.ethicalAds.publisher %}
-    <script async src="https://media.ethicalads.io/media/client/ethicalads.min.js"></script>
-  {% endif %}
 </body>
 </html>

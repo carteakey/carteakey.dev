@@ -15,19 +15,11 @@
     "src/_includes/components/editorial-sidebar.njk": {
       "utility-text-stack": 1
     },
-    "src/_includes/components/feed-card.njk": {
-      "off-palette-colour": 9,
-      "utility-text-stack": 8,
-      "inline-style": 19
-    },
     "src/_includes/components/github-contributions.njk": {
       "utility-text-stack": 1
     },
     "src/_includes/components/watching-snippet.njk": {
       "inline-style": 1
-    },
-    "src/_includes/layouts/base.njk": {
-      "inline-style": 45
     },
     "src/about.njk": {
       "utility-text-stack": 1
@@ -35,19 +27,8 @@
     "src/bookmarks.njk": {
       "inline-style": 2
     },
-    "src/changelog.njk": {
-      "pill-or-circle": 1,
-      "off-palette-colour": 9,
-      "utility-text-stack": 6,
-      "inline-style": 3
-    },
     "src/cv.njk": {
       "inline-style": 11
-    },
-    "src/folio/index.njk": {
-      "off-palette-colour": 13,
-      "utility-text-stack": 7,
-      "inline-style": 3
     },
     "src/gallery.njk": {
       "inline-style": 1
