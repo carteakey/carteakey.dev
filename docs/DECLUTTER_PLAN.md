@@ -206,3 +206,67 @@ flowchart TD
 | **Phase 4** | **Module 5**: Post Layout Declutter (2-col asymmetric, 1-line meta rail, mobile TOC, prune widgets) | 3 files | `npm run check` + visual check long-form post |
 | **Phase 5** | **Module 6**: Slashpage Ledger Rooms (`/uses` + `/tools` + `/devices`, `/now` media spread, `/about` rail) | 6 files | `npm run check` + redirect verification |
 | **Phase 6** | **Module 7**: Design Baseline Paydown + `base.njk` script extraction + CSS/Config split | 12 files | `node utils/check-design.mjs --update-baseline` + `npm run check` |
+
+---
+
+## Cherry-Pick & File-by-File Inventory (`main..declutter`)
+
+Total diff across `main..declutter`: **51 files changed (`+1,366 / -2,551` lines, net `-1,185` lines)**.
+
+### 1. Commit Log on `declutter` (Oldest → Newest)
+| Commit | Summary | Key Files Touched |
+| :--- | :--- | :--- |
+| `6b982c4` | `docs(plan): add modular declutter project architecture and checklist` | `docs/DECLUTTER_PLAN.md` |
+| `f57172a` | `feat(ia): nest skills and prompts under /ai/, redesign /more/ into 4-col ledger, and fold quotations into log` | `src/ai.njk`, `src/skill-library.njk`, `src/skill-library/skill-library.json`, `src/prompts.njk`, `src/prompts/prompts.json`, `src/more.njk`, `src/quotations.njk` (deleted), `eleventy.config.mjs`, `src/_redirects` |
+| `cb785bf` | `feat(collections): unify short-form log at /notes/, retire multi-view toggles, and move authorship filter inline` | `src/notes.njk`, `src/archive.njk`, `src/projects.njk`, `src/lexicon.njk`, `src/_includes/components/authorship-filter.njk`, `src/static/js/ai-filter.js`, `src/_includes/layouts/{base,note,til,snippet}.njk`, deleted `src/{snippets,snippet-tags,til}.njk`, `view-toggle.njk`, `collection-views.js`, `ethical-ads.njk` |
+| `a1850fc` | `feat(home): replace 3-col masonry and TypeIt with 2-col architectural index and live lab log` | `src/index.njk` |
+| `c0d1ca5` | `feat(post): declutter post layout, compress metadata rail, retire learning tracker (Module 5)` | `src/_includes/layouts/post.njk`, deleted `src/learning.njk` & `src/static/js/learning-progress.js` |
+| `fcae285` | `feat(ia): consolidate slashpages into cohesive ledger rooms and fold tools/devices into uses (Module 6)` | `src/uses.njk`, `src/now.njk`, `src/now-archive.njk`, `src/games.njk`, `src/workouts.njk`, `src/_includes/components/breadcrumbs.njk`, deleted `src/tools.njk` & `src/devices.njk` |
+| `840389a` | `chore(declutter): ratchet design baseline to 535, extract workbench.js, bump v2.8.0 (Module 7)` | `src/_includes/layouts/base.njk`, `src/static/js/workbench.js`, `src/_includes/components/feed-card.njk`, `src/folio/index.njk`, `src/changelog.njk`, `utils/design-baseline.json`, `docs/CHANGELOG.md`, `package.json`, `versions.json` |
+| `6e58c0c` | `fix(declutter): restore masonry feed, remove product subnavs & jargon, make authorship filter page-local` | `src/index.njk`, `src/feed.njk`, `src/ai.njk`, `src/more.njk`, `src/notes.njk`, `src/static/js/ai-filter.js`, `src/_includes/components/feed-card.njk` |
+
+---
+
+### 2. File-by-File Inventory by Feature Area (for Granular Checkout / Cherry-Picking)
+
+You can pull individual files from `declutter` onto `main` at any time via `git checkout declutter -- <paths>`:
+
+#### A. Categorized `/more/` Directory (Standalone)
+- `git checkout declutter -- src/more.njk`
+- **What it does**: Replaces the 41-item alphabetical `<ul>` with a 4-box `.surface` directory (`Writing`, `AI & Code`, `Life & Media`, `About & Site`).
+
+#### B. Homepage 2-Column Top Split (`Writing` + `Notes`) + Masonry Feed Below
+- `git checkout declutter -- src/index.njk`
+- **What it does**: Drops the `typeit.min.js` hero script, adds a 2-column top section (`Writing` on the left `lg:col-span-7`, `Notes` on the right `lg:col-span-5`), and keeps the 3-column `From the feed` masonry grid directly below it.
+
+#### C. Unified `/notes/` Stream (Notes + Code Snippets + TIL + Quotations)
+- `git checkout declutter -- src/notes.njk eleventy.config.mjs src/_includes/layouts/note.njk src/_includes/layouts/til.njk src/_includes/layouts/snippet.njk`
+- `git rm src/snippets.njk src/snippet-tags.njk src/til.njk src/quotations.njk`
+- **What it does**: Merges short-form entries into `/notes/` with instant filter pills (`All · Notes · Code Snippets · TIL · Quotations`, synced with `?type=`) while keeping individual `/snippets/{slug}/` and `/til/{slug}/` permalinks and standalone `/quotes/` intact.
+
+#### D. Page-Local Authorship Filter (`All · Human · AI`)
+- `git checkout declutter -- src/_includes/components/authorship-filter.njk src/static/js/ai-filter.js src/static/css/tailwind.css`
+- **What it does**: Moves the AI authorship filter out of the global navbar dropdown into an inline segmented pill on `/blog/`, `/notes/`, and `/feed/`, and scopes the filter to the current page load only (clearing `localStorage["aiFilter"]` so filtering on one page never hides items across the rest of the site).
+
+#### E. Post Reading Experience Declutter (`post.njk`, `-425 lines`, 0 design violations)
+- `git checkout declutter -- src/_includes/layouts/post.njk`
+- `git rm src/learning.njk src/static/js/learning-progress.js`
+- **What it does**:
+  - Removes the Left Author Bio Card while keeping the 3-column `.post-wrap` CSS grid so prose stays centered and left/right sidenotes remain in the margins.
+  - Compresses pre-post metadata into a single monospace line (`date · updated · reading time · authorship badge · #tags · Copy .md`) with a `<details>` disclosure for AI authorship notes.
+  - Moves the mobile Table of Contents (`xl:hidden`) above `.post-body` inside a `<details>` block.
+  - Removes the browser-local `Reading tracker / Mark as read` widget and the `#postReactions` 5-emoji bar, keeping the single Upvote button + Giscus comments + Related posts.
+
+#### F. Consolidated `/uses/` (Folding `/devices/` and `/tools/` Indexes)
+- `git checkout declutter -- src/uses.njk src/_includes/components/breadcrumbs.njk`
+- `git rm src/tools.njk src/devices.njk`
+- **What it does**: Folds the `/devices/` hardware table (`#hardware`) and `/tools/` personal software list (`#tools`) into `/uses/` while keeping individual `/devices/{slug}/` spec sheets intact, and eliminates all 5 design violations in `src/uses.njk`.
+
+#### G. Nested `/ai/` (`/ai/skills/` & `/ai/prompts/`)
+- `git checkout declutter -- src/ai.njk src/skill-library.njk src/skill-library/skill-library.json src/_includes/layouts/skill.njk src/prompts.njk src/prompts/prompts.json`
+- **What it does**: Moves `/skills/` → `/ai/skills/` and `/prompts/` → `/ai/prompts/`, removes the duplicated hardware table and promo cards on `/ai/`, and embeds inline 2-column lists of Prompts and Skills directly on `/ai/`.
+
+#### H. `base.njk` Inline Script Extraction & Design Baseline Ratchet (`744 → 535 violations`)
+- `git checkout declutter -- src/_includes/layouts/base.njk src/static/js/workbench.js src/_includes/components/feed-card.njk src/folio/index.njk src/changelog.njk src/now.njk src/now-archive.njk src/games.njk src/workouts.njk utils/design-baseline.json`
+- **What it does**: Extracts the inline `<script>` blocks at the bottom of `base.njk` into deferred `/static/js/workbench.js`, replaces the 38 inline `style="..."` attributes in `#shortcuts-overlay` with semantic `.surface` classes, and cleans **209 design-baseline violations across 20 files** (`base.njk`, `post.njk`, `feed-card.njk`, `note.njk`, `til.njk`, `snippet.njk`, `folio/index.njk`, `changelog.njk`, `uses.njk`, `now.njk`, `now-archive.njk` all at 0 violations).
+
