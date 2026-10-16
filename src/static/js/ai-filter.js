@@ -1,24 +1,24 @@
-// Authorship Filter - reader-controlled AI content toggle
+// Authorship Filter - page-local AI content toggle
 // Modes: "all" (everything) | "no-generated" (human + AI-assisted) | "human-only" (no AI)
-// Applies a data-ai-filter attribute on <html>; CSS in tailwind.css hides
-// [data-authored-by] items that the current mode excludes.
+// Applies a data-ai-filter attribute on <html> for the current page only.
 
-const AI_FILTER_KEY = "aiFilter";
 const AI_FILTERS = ["all", "no-generated", "human-only"];
+let currentAiFilter = "all";
 
-const getAiFilter = () => {
-  const value = localStorage[AI_FILTER_KEY];
-  return AI_FILTERS.includes(value) ? value : "all";
-};
+try {
+  localStorage.removeItem("aiFilter");
+} catch {
+  // ignore storage errors
+}
+
+const getAiFilter = () => currentAiFilter;
 
 const applyAiFilter = (value) => {
   document.documentElement.dataset.aiFilter = value;
 };
 
-// Apply saved filter immediately to prevent filtered content flashing in
-applyAiFilter(getAiFilter());
+applyAiFilter("all");
 
-// Anything that is not explicitly "ai-*" is treated as human/unclassified
 window.aiFilterAllows = (author) => {
   const filter = getAiFilter();
   if (filter === "all") return true;
@@ -50,8 +50,8 @@ const updateAiFilterNotice = () => {
 };
 
 const setAiFilter = (value) => {
-  if (!AI_FILTERS.includes(value) || value === getAiFilter()) return;
-  localStorage[AI_FILTER_KEY] = value;
+  if (!AI_FILTERS.includes(value) || value === currentAiFilter) return;
+  currentAiFilter = value;
   applyAiFilter(value);
   document.dispatchEvent(new CustomEvent("aifilterchange", { detail: { filter: value } }));
   updateAiFilterNotice();
@@ -64,7 +64,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const option = event.target.closest("[data-ai-filter-option]");
     if (option) setAiFilter(option.dataset.aiFilterOption);
   });
-  updateAiFilterNotice();
 });
 
 document.addEventListener("aifilterchange", updateAiFilterNotice);

@@ -19,6 +19,7 @@ const COLLECTION_PAGES = {
   "src/reviews.njk": "index",
   "src/search.njk": "index",
   "src/tags.njk": "index",
+  "src/feed.njk": "wall",
   "src/folio/index.njk": "wall",
   "src/gallery.njk": "wall",
   "src/guestbook.njk": "wall",

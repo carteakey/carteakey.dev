@@ -22,7 +22,6 @@ collectionArchetype: ledger
 {% set pageMeta = "Updated " ~ (cartebase.summary.last_updated | split('T'))[0] %}
 {% set pageDescription = "A scrollable dashboard generated from <a href=\"https://github.com/carteakey/cartebase\" class=\"accent-link\">cartebase</a>, a Dogsheep-style SQLite warehouse of my personal data, spanning <strong>" ~ startYear ~ "–" ~ endYear ~ "</strong>. Inspired by <a href=\"https://howisfelix.today/\" class=\"accent-link\">howisFelix.today</a>. Finance, health, shopping, and private domains are deliberately excluded." %}
 {% include "components/page-header.njk" %}
-{% include "components/about-subnav.njk" %}
 
 <div class="not-prose grid grid-cols-2 md:grid-cols-4 gap-3 mb-10">
   {{ cb.stat_tile("Spotify plays", cartebase.summary.plays_total | localeNumber, "since " + startYear) }}

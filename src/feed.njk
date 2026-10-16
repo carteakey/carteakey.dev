@@ -1,0 +1,69 @@
+---
+layout: layouts/base.njk
+title: Feed
+description: Everything published on the site in one masonry wall - posts, notes, snippets, photos, vibes, and quotes.
+eleventyNavigation:
+  key: Feed
+  order: 10
+permalink: /feed/
+collectionArchetype: wall
+---
+
+{% from "components/feed-card.njk" import feedCard %}
+{% include "components/breadcrumbs.njk" %}
+
+{% set pageTitle = "Feed" %}
+{% set pageDescription = "Posts, notes, snippets, photos, vibes, quotations, and /now updates in one masonry wall." %}
+{% set itemCount = collections.feed.length %}
+{% set itemLabel = "items" %}
+
+<div class="not-prose" x-data="{ typeFilter: '', query: '' }">
+  {% include "components/page-header.njk" %}
+
+  <div class="flex flex-wrap items-center justify-between gap-3 mb-5 pb-3 border-b border-gray-200 dark:border-gray-800">
+    <div class="flex flex-wrap gap-1.5">
+      <button @click="typeFilter = ''; $nextTick(() => window.dispatchEvent(new Event('resize')))" :class="{ 'active': typeFilter === '' }" class="badge badge-filter badge-compact" type="button">
+        All ({{ collections.feed.length }})
+      </button>
+      <button @click="typeFilter = 'post'; $nextTick(() => window.dispatchEvent(new Event('resize')))" :class="{ 'active': typeFilter === 'post' }" class="badge badge-filter badge-compact" type="button">Posts</button>
+      <button @click="typeFilter = 'note'; $nextTick(() => window.dispatchEvent(new Event('resize')))" :class="{ 'active': typeFilter === 'note' }" class="badge badge-filter badge-compact" type="button">Notes</button>
+      <button @click="typeFilter = 'snippet'; $nextTick(() => window.dispatchEvent(new Event('resize')))" :class="{ 'active': typeFilter === 'snippet' }" class="badge badge-filter badge-compact" type="button">Snippets</button>
+      <button @click="typeFilter = 'til'; $nextTick(() => window.dispatchEvent(new Event('resize')))" :class="{ 'active': typeFilter === 'til' }" class="badge badge-filter badge-compact" type="button">TIL</button>
+      <button @click="typeFilter = 'photo'; $nextTick(() => window.dispatchEvent(new Event('resize')))" :class="{ 'active': typeFilter === 'photo' }" class="badge badge-filter badge-compact" type="button">Photos</button>
+      <button @click="typeFilter = 'vibe'; $nextTick(() => window.dispatchEvent(new Event('resize')))" :class="{ 'active': typeFilter === 'vibe' }" class="badge badge-filter badge-compact" type="button">Vibes</button>
+      <button @click="typeFilter = 'quotation'; $nextTick(() => window.dispatchEvent(new Event('resize')))" :class="{ 'active': typeFilter === 'quotation' }" class="badge badge-filter badge-compact" type="button">Quotations</button>
+    </div>
+
+    <div class="flex flex-wrap items-center gap-3">
+      {% include "components/authorship-filter.njk" %}
+      <div class="relative">
+        {% feather "search", class="w-3.5 h-3.5 opacity-50 absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" %}
+        <input
+          type="search"
+          x-model="query"
+          @input="$nextTick(() => window.dispatchEvent(new Event('resize')))"
+          placeholder="Search feed..."
+          aria-label="Search feed"
+          class="border border-gray-200 dark:border-gray-700 bg-transparent py-1 pl-8 pr-3 accent-field accent-focus focus:outline-none w-44"
+        >
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="home-feed-grid grid gap-3 md:grid-cols-2 lg:grid-cols-3 items-start feed-masonry"
+    data-feed-masonry
+  >
+    {% for item in collections.feed %}
+      {% set searchText = ((item.title or '') ~ ' ' ~ (item.summary or '') ~ ' ' ~ ((item.tags or []) | join(' '))) | lower | escape %}
+      {% set outerAttrs %}data-feed-type="{{ item.type }}" data-search="{{ searchText }}" x-show="(typeFilter === '' || typeFilter === '{{ item.type }}') && (query.trim() === '' || $el.dataset.search.includes(query.toLowerCase().trim()))"{% endset %}
+      {{ feedCard(item, {
+        variant: 'full',
+        extraClasses: 'feed-card',
+        outerAttrs: outerAttrs
+      }) }}
+    {% endfor %}
+  </div>
+</div>
+
+{% include "components/feed-masonry-script.njk" %}

@@ -68,7 +68,7 @@
     h: "/",
     b: "/blog/",
     l: "/notes/",
-    f: "/notes/",
+    f: "/feed/",
     s: "/notes/?type=snippet",
     n: "/now/",
     t: "/notes/?type=til",

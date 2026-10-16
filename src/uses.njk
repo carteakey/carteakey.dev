@@ -15,17 +15,6 @@ collectionArchetype: ledger
 {% set itemLabel = "hosts & devices" %}
 
 {% include "components/page-header.njk" %}
-{% include "components/about-subnav.njk" %}
-
-{# ── Section Jump Rail ── #}
-<nav aria-label="Uses sections" class="not-prose mb-8 pb-3 border-b border-gray-200 dark:border-gray-800 flex flex-wrap items-center gap-x-5 gap-y-2">
-  <span class="kicker">Sections</span>
-  <a href="#homelab" class="meta-line no-underline hover:underline">CasaKey Homelab</a>
-  <a href="#hardware" class="meta-line no-underline hover:underline">Devices ({{ collections.devices | length }})</a>
-  <a href="#software" class="meta-line no-underline hover:underline">Software & Gear</a>
-  <a href="#tools" class="meta-line no-underline hover:underline">Personal Tools ({{ tools.tools | length }})</a>
-  <a href="#changelog" class="meta-line no-underline hover:underline">Changelog</a>
-</nav>
 
 {# ── Machine snapshots ── #}
 <div class="not-prose mb-12">

@@ -11,7 +11,6 @@ collectionArchetype: index
 {% set pageTitle = "Now Archive" %}
 {% set pageDescription = "Past snapshots of <a href=\"/now/\" class=\"title-hover\">what I was up to</a>." %}
 {% include "components/page-header.njk" %}
-{% include "components/now-subnav.njk" %}
 
 {% set archiveEntries = collections.nowArchive | reverse %}
 {% if archiveEntries %}

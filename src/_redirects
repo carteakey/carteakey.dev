@@ -127,8 +127,6 @@
 /snippets /notes/?type=snippet 301!
 /til/ /notes/?type=til 301!
 /til /notes/?type=til 301!
-/feed/ /notes/ 301!
-/feed /notes/ 301!
 /learning/ /blog/ 301!
 /learning /blog/ 301!
 /tools/ /uses/#tools 301!

@@ -8,7 +8,6 @@ collectionArchetype: index
 
 {% from "components/authorship-badge.njk" import authorshipBadge %}
 {% include "components/breadcrumbs.njk" %}
-{% include "components/ai-subnav.njk" %}
 
 {% set promptsList = collections.prompts | reverse %}
 {% set totalCount = promptsList | length %}
@@ -20,7 +19,6 @@ collectionArchetype: index
 {% endfor %}
 {% set categories = categories | sort %}
 
-{% set pageEyebrow = "AI Ecosystem · Evaluation Archive" %}
 {% set pageTitle = title %}
 {% set pageDescription = "Test prompts for evaluating local and remote language models across coding, writing, multimodal, and reasoning tasks." %}
 {% set itemCount = totalCount %}

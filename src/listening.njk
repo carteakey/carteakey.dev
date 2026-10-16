@@ -24,7 +24,6 @@ collectionArchetype: shelf
 {% set pageMeta = "Updated " ~ (listening.last_updated | split('T'))[0] %}
 {% set pageDescription = "My whole Spotify listening history, all-time - not just the last year. Pulled from <a href=\"https://github.com/carteakey/cartebase\" class=\"accent-link\">cartebase</a>. <a href=\"/data/\" class=\"accent-link\">Back to /data/ →</a>" %}
 {% include "components/page-header.njk" %}
-{% include "components/now-subnav.njk" %}
 
 {% from "components/halftone.njk" import halftone with context %}
 <div class="halftone-feature not-prose mb-4">

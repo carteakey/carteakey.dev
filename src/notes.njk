@@ -1,7 +1,7 @@
 ---
 layout: layouts/base.njk
-title: Notes & Log
-description: Short notes, code snippets, TIL discoveries, and saved quotations in one chronological stream.
+title: Notes
+description: Short notes, code snippets, TILs, and saved quotations.
 permalink: /notes/
 eleventyNavigation:
   key: Notes
@@ -28,9 +28,8 @@ collectionArchetype: index
   {% endif %}
 {% endfor %}
 
-{% set pageEyebrow = "Workbench Stream · The Log" %}
-{% set pageTitle = "Notes & Log" %}
-{% set pageDescription = "Short observations, reusable code snippets, Today I Learned discoveries, and annotated quotations in one chronological stream." %}
+{% set pageTitle = "Notes" %}
+{% set pageDescription = "Short thoughts, code snippets, Today I Learned notes, and saved quotations." %}
 {% set itemCount = logCount %}
 {% set itemLabel = "entries" %}
 {% include "components/page-header.njk" %}

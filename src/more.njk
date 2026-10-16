@@ -1,7 +1,7 @@
 ---
 layout: layouts/base.njk
 title: ...More
-description: A categorized directory of everything on this workbench.
+description: A categorized directory of everything on this site.
 permalink: /more/
 eleventyNavigation:
   key: ...More
@@ -11,69 +11,65 @@ collectionArchetype: ledger
 
 {% include "components/breadcrumbs.njk" %}
 
-{% set pageEyebrow = "Site Directory · Ledger" %}
 {% set pageTitle = "More" %}
-{% set pageDescription = "A categorized map of every room, archive, and shelf on this site - inspired by <a href=\"https://slashpages.net\" target=\"_blank\" rel=\"noopener\" class=\"accent-link\">slashpages.net</a>." %}
+{% set pageDescription = "A directory of everything on this site, inspired by <a href=\"https://slashpages.net\" target=\"_blank\" rel=\"noopener\" class=\"accent-link\">slashpages.net</a>." %}
 {% include "components/page-header.njk" %}
 
 {% set directoryGroups = [
   {
-    kicker: "01 · Writing & Canon",
-    title: "Essays, Notes & Reference",
+    title: "Writing",
     items: [
-      { path: "/blog/", desc: "Long-form essays, engineering guides, and series" },
-      { path: "/notes/", desc: "The Log: short notes, code snippets, TILs, and saved passages" },
-      { path: "/folio/", desc: "Interactive themed web pages and deep-dive artifacts" },
-      { path: "/reviews/", desc: "Product reviews and upper-midrange buying notes" },
-      { path: "/lexicon/", desc: "Small glossary of mental models and terms" },
-      { path: "/tags/", desc: "Topic index across all writing" },
-      { path: "/search/", desc: "Instant full-text search across essays and notes" }
+      { path: "/blog/", desc: "Posts, guides, and series" },
+      { path: "/notes/", desc: "Short notes, code snippets, TILs, and saved quotations" },
+      { path: "/feed/", desc: "Everything in one masonry wall" },
+      { path: "/folio/", desc: "Standalone themed pages and visual essays" },
+      { path: "/reviews/", desc: "Product reviews and buying notes" },
+      { path: "/lexicon/", desc: "Personal glossary of terms and ideas" },
+      { path: "/tags/", desc: "Browse all posts by topic" },
+      { path: "/search/", desc: "Full-text search across posts and notes" }
     ]
   },
   {
-    kicker: "02 · AI & Homelab",
-    title: "Models, Silicon & Agents",
+    title: "AI & Code",
     items: [
-      { path: "/ai/", desc: "AI workbench: subscriptions, local stack, and workflow" },
+      { path: "/ai/", desc: "How I use AI: subscriptions, local stack, prompts, and skills" },
       { path: "/folio/model-tier-list/", desc: "Ranked coding & agentic models with pricing math" },
-      { path: "/ai/skills/", desc: "Reusable SKILL.md agent instruction library" },
-      { path: "/ai/prompts/", desc: "Evaluation prompts and local LLM benchmarks" },
-      { path: "/devices/yeti-cachy/", desc: "RTX 4070 12GB + 64GB DDR5 local inference node" },
-      { path: "/status/", desc: "Build-time integration health and API telemetry" }
+      { path: "/ai/prompts/", desc: "Evaluation prompts and local LLM tests" },
+      { path: "/ai/skills/", desc: "Reusable SKILL.md agent instructions" },
+      { path: "/projects/", desc: "Open-source tools and side projects" },
+      { path: "/devices/yeti-cachy/", desc: "RTX 4070 12GB + 64GB DDR5 local inference rig" }
     ]
   },
   {
-    kicker: "03 · Shelves & Media",
-    title: "Inputs, Culture & Curation",
+    title: "Life & Media",
     items: [
       { path: "/now/", desc: "What I'm focused on right now (plus /now/archive)" },
-      { path: "/reading/", desc: "Goodreads-synced reading shelf and progress" },
-      { path: "/watching/", desc: "Letterboxd film diary and ratings" },
-      { path: "/listening/", desc: "Spotify listening history and top rotation" },
-      { path: "/games/", desc: "Steam library and currently playing shelf" },
-      { path: "/gallery/", desc: "Real and virtual photography archive" },
-      { path: "/vibes/", desc: "Saved visual fragments, memes, and internet artifacts" },
-      { path: "/quotes/", desc: "Quote of the Day and curated lines" },
-      { path: "/bookmarks/", desc: "Curated reading list from around the web" },
-      { path: "/blogroll/", desc: "Independent blogs and personal sites I follow" }
+      { path: "/reading/", desc: "Books I'm reading and have read (Goodreads)" },
+      { path: "/watching/", desc: "Recent films and ratings (Letterboxd)" },
+      { path: "/listening/", desc: "All-time Spotify listening history" },
+      { path: "/games/", desc: "Recently played games (Steam)" },
+      { path: "/gallery/", desc: "Real and virtual photography" },
+      { path: "/vibes/", desc: "Saved visual fragments and internet finds" },
+      { path: "/quotes/", desc: "Quote of the Day and favorite lines" },
+      { path: "/bookmarks/", desc: "Saved links from around the web" },
+      { path: "/blogroll/", desc: "Blogs and personal sites I follow" }
     ]
   },
   {
-    kicker: "04 · Workbench & Meta",
-    title: "Person, Hardware & Site",
+    title: "About & Site",
     items: [
-      { path: "/about/", desc: "Who I am and what this site is" },
-      { path: "/uses/", desc: "Hardware, software, and published utilities" },
-      { path: "/projects/", desc: "Open-source tools and side projects I've built" },
-      { path: "/cv/", desc: "Curriculum vitae and professional background" },
+      { path: "/about/", desc: "Who I am and what I do" },
+      { path: "/cv/", desc: "Curriculum vitae and work history" },
+      { path: "/uses/", desc: "Hardware, homelab fleet, software, and utilities" },
       { path: "/skills-radar/", desc: "Data and engineering skills radar" },
-      { path: "/data/", desc: "My life in data: scrollable warehouse ledger" },
-      { path: "/workouts/", desc: "Hevy-synced strength training ledger" },
-      { path: "/guestbook/", desc: "Sign the public guestbook" },
-      { path: "/newsletter/", desc: "Subscribe to occasional email dispatches" },
-      { path: "/colophon/", desc: "How this site is built and maintained" },
-      { path: "/changelog/", desc: "Versioned release history of carteakey.dev" },
-      { path: "/stats/", desc: "Writing metrics and archive telemetry" }
+      { path: "/data/", desc: "My life in data (cartebase)" },
+      { path: "/workouts/", desc: "Recent workouts from Strava" },
+      { path: "/guestbook/", desc: "Sign the guestbook" },
+      { path: "/newsletter/", desc: "Weekly email digest" },
+      { path: "/colophon/", desc: "How this site is built" },
+      { path: "/changelog/", desc: "Site release history" },
+      { path: "/stats/", desc: "Writing stats" },
+      { path: "/status/", desc: "Live API integration status" }
     ]
   }
 ] %}
@@ -82,8 +78,7 @@ collectionArchetype: ledger
   {% for group in directoryGroups %}
     <section class="surface surface-padding flex flex-col justify-between">
       <div>
-        <p class="editorial-kicker">{{ group.kicker }}</p>
-        <h2 class="editorial-title-compact mt-1 mb-3">{{ group.title }}</h2>
+        <h2 class="editorial-title-compact mb-3">{{ group.title }}</h2>
         <ul class="divide-y divide-gray-200/70 dark:divide-gray-800/70 m-0 p-0 list-none">
           {% for item in group.items %}
             <li class="py-2 flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1">
