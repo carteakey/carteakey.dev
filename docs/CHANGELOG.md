@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.38] - 2026-10-16
+### Added
+- Hidden font lab at `/lab/fonts/` (noindex, kept out of collections, sitemaps, and search). Any page takes `?font=<id>` to preview a type direction, which persists for the tab until `?font=off`. Variants live in `src/_data/fontLab.yaml`: Fraunces titles, Aile + Fraunces, Etoile headings + Aile content, Etoile everywhere, and Ioskeley everywhere.
+
+## [2.7.37] - 2026-10-16
+### Fixed
+- Light mode paper grain was nearly invisible (the same noise that reads on the dark background is under 1% contrast on the paper colour). Light mode now uses a grayscale, higher-contrast grain matched to dark mode by perceived lightness; dark mode is unchanged.
+
+## [2.7.36] - 2026-10-16
+### Changed
+- Header: the compass icon is now a plain "More" link beside About, Writing, and Now (also in the mobile menu). The global funnel dropdown is gone.
+- Authorship filter now lives on `/blog/`, `/feed/`, and `/search/` as an `All · No AI-gen · Human only` control next to search. It only hides items on those pages, so nothing vanishes elsewhere without a visible control.
+
+### Fixed
+- The "items hidden" notice no longer counts the inactive list or grid copy on `/blog/` and `/feed/`.
+
 ## [2.7.35] - 2026-10-16
 ### Added
 - Font: Installed and integrated Ioskeley Mono (`v2.1.0`) as the site-wide default monospace and code font, with preloading and updated colophon attribution.

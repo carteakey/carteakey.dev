@@ -1,0 +1,7 @@
+{# Page-local authorship filter. Hides [data-authored-by] items inside the
+   nearest [data-ai-filter-scope]; the choice is remembered in this browser. #}
+<div class="authorship-filter" role="group" aria-label="Filter by authorship" data-ai-filter-group>
+  <button type="button" data-ai-filter-option="all" title="Show everything">All</button>
+  <button type="button" data-ai-filter-option="no-generated" title="Hide AI-generated items">No AI-gen</button>
+  <button type="button" data-ai-filter-option="human-only" title="Show only human-written items">Human only</button>
+</div>

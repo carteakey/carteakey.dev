@@ -20,7 +20,7 @@ collectionArchetype: index
 {% set itemCount = collections.posts | length %}
 {% set itemLabel = "posts" %}
 
-<div x-data="{ viewMode: 'list' }">
+<div x-data="{ viewMode: 'list' }" data-ai-filter-scope>
   {% include "components/page-header.njk" %}
 
   <div class="flex items-baseline justify-between mb-2 gap-3 flex-wrap">
@@ -34,6 +34,7 @@ collectionArchetype: index
           class="rounded-md border border-gray-200 dark:border-gray-700 bg-transparent py-1.5 pl-8 pr-3 text-sm accent-field accent-focus focus:outline-none dark:text-gray-100 w-40 placeholder:text-gray-400"
         >
       </div>
+      {% include "components/authorship-filter.njk" %}
       <div class="view-toggle" x-data="{ viewMode: 'list' }">
         <button type="button" title="List view" :class="{ 'active': viewMode === 'list' }" @click="viewMode = 'list'; document.getElementById('blogGrid').classList.add('hidden'); document.getElementById('blogList').classList.remove('hidden');">
           {% feather "list", class="w-4 h-4" %}

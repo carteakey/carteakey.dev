@@ -30,6 +30,30 @@
 
   <script src="/static/js/theme.js?v={{ versions.version }}" data-asset-version="{{ versions.version }}"></script>
   <script src="/static/js/ai-filter.js?v={{ versions.version }}"></script>
+  {# Font lab (/lab/fonts/): ?font=<id> swaps font roles for this browser tab; ?font=off resets. #}
+  <script>
+    (() => {
+      const labels = { {% for v in fontLab.variants %}{{ v.id | dump | safe }}: {{ v.label | dump | safe }}{% if not loop.last %}, {% endif %}{% endfor %} };
+      let id = new URLSearchParams(location.search).get("font");
+      try {
+        if (id === "off") { sessionStorage.removeItem("fontLab"); id = null; }
+        else if (id) sessionStorage.setItem("fontLab", id);
+        else id = sessionStorage.getItem("fontLab");
+      } catch (error) {}
+      if (!id || !Object.hasOwn(labels, id)) return;
+      const link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.href = `/lab/fonts/${id}.css`;
+      document.head.appendChild(link);
+      document.addEventListener("DOMContentLoaded", () => {
+        const bar = document.createElement("div");
+        bar.className = "font-lab-banner";
+        bar.innerHTML = `Font lab · <b></b> · <a href="/lab/fonts/">variants</a> · <a href="?font=off">turn off</a>`;
+        bar.querySelector("b").textContent = labels[id];
+        document.body.appendChild(bar);
+      });
+    })();
+  </script>
   
   <script defer src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <script defer src="/static/js/collection-views.js?v={{ versions.version }}"></script>
@@ -161,6 +185,7 @@
                     <a href="{{ entry.url }}" class="nav-dropdown-item" role="menuitem">{{ entry.title }}</a>
                   {% endif %}
                 {%- endfor %}
+                <a href="{{ '/more/' | url }}" class="nav-dropdown-item" role="menuitem">More</a>
               </div>
             </li>
 
@@ -172,6 +197,9 @@
                 </li>
               {% endif %}
             {%- endfor %}
+            <li class="px-1.5 sm:px-2 py-1 transition-all hidden sm:flex items-center">
+              <a class="font-mono font-medium no-underline link-glow text-[0.78rem] uppercase tracking-[0.06em]" href="{{ '/more/' | url }}">More</a>
+            </li>
 
             {% if translations and translations.length > 1 %}
               <li class="flex items-center gap-1 border-l border-gray-300 dark:border-gray-700 pl-2" aria-label="Language">
@@ -195,31 +223,7 @@
               </a>
             </li>
 
-            <li class="flex items-center">
-              <a class="font-medium no-underline inline-flex items-center justify-center p-1.5 border border-transparent hover:border-gray-300 dark:hover:border-gray-700 transition-colors" href="{{ '/more/' | url }}" title="More pages" aria-label="More pages" style="color: var(--accent-color)">
-                {% feather "compass", class="w-4 h-4" %}
-              </a>
-            </li>
 
-            <li class="flex items-center relative" x-data="{ open: false }" @keydown.escape="open = false" @click.outside="open = false">
-              <button type="button" @click="open = !open" :aria-expanded="open.toString()"
-                class="ai-filter-trigger font-medium no-underline inline-flex items-center justify-center p-1.5 border border-transparent hover:border-gray-300 dark:hover:border-gray-700 transition-colors"
-                style="color: var(--accent-color)" title="Filter content by authorship" aria-label="Filter content by authorship">
-                {% feather "filter", class="w-4 h-4" %}
-              </button>
-              <div id="aiFilterToggle" x-show="open" x-transition.opacity.duration.100ms @click="open = false"
-                class="nav-dropdown-menu" role="group" aria-label="AI content filter" style="display: none;">
-                <button type="button" data-ai-filter-option="all" class="nav-dropdown-item" aria-label="Show all content">
-                  {% feather "eye", class="w-3.5 h-3.5" %} All content
-                </button>
-                <button type="button" data-ai-filter-option="no-generated" class="nav-dropdown-item" aria-label="Hide AI-generated content">
-                  {% feather "zap", class="w-3.5 h-3.5" %} Hide AI-generated
-                </button>
-                <button type="button" data-ai-filter-option="human-only" class="nav-dropdown-item" aria-label="Show only human-written content">
-                  {% feather "edit-2", class="w-3.5 h-3.5" %} Human-written only
-                </button>
-              </div>
-            </li>
 
             <li class="flex items-center">
               <button id="toggleDarkMode" class="font-medium text-xs p-1.5 transition-all border border-transparent hover:border-gray-300 dark:hover:border-gray-700 focus-ring inline-flex items-center justify-center" aria-label="Toggle dark mode" style="color: var(--accent-color)">

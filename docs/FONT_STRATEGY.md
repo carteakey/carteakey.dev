@@ -39,3 +39,7 @@ git restore --source=7e1bd37^ -- src/static/fonts/Geist/Geist\[wght\].woff2
 Before restoring a family, verify the intended page usage, check its license/source, and add a focused preload only if it is needed above the fold. Do not restore the entire historical bundle for a single page.
 
 When changing typography, verify the home page, a prose-heavy post, and a code-heavy page at narrow and wide viewports. Check that no font request returns 404 and that fallback text remains readable while fonts load.
+
+## Font lab
+
+`/lab/fonts/` (hidden, noindex, excluded from collections) previews alternative type directions on real pages via `?font=<id>`; `?font=off` resets. Variants live in `src/_data/fontLab.yaml` and build to `/lab/fonts/<id>.css`. Their Iosevka Aile and Etoile files load from jsDelivr only while a variant is active in that tab, so they are not a production dependency.

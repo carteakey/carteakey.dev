@@ -1,0 +1,38 @@
+---
+layout: layouts/base.njk
+title: Font lab
+description: Try a type direction on real pages before committing to it.
+permalink: /lab/fonts/
+hidden: true
+eleventyExcludeFromCollections: true
+collectionArchetype: ledger
+---
+
+{% set pageEyebrow = "Hidden workbench" %}
+{% set pageTitle = "Font lab" %}
+{% set pageDescription = "Each variant swaps the site's font roles on the real pages. Pick one and it follows you around the site until you turn it off. Fonts load from jsDelivr only while a variant is active." %}
+{% set itemCount = fontLab.variants | length %}
+{% set itemLabel = "variants" %}
+{% include "components/page-header.njk" %}
+
+<table class="font-lab-table">
+  <thead>
+    <tr><th>Variant</th><th>What changes</th><th>Try it on</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><b>Current site</b></td>
+      <td>No override.</td>
+      <td>{% for s in fontLab.samples %}<a href="{{ s.url }}?font=off">{{ s.label }}</a>{% if not loop.last %} · {% endif %}{% endfor %}</td>
+    </tr>
+    {% for v in fontLab.variants %}
+    <tr>
+      <td><b>{{ v.label }}</b><br><code>{{ v.id }}</code></td>
+      <td>{{ v.note }}</td>
+      <td>{% for s in fontLab.samples %}<a href="{{ s.url }}?font={{ v.id }}">{{ s.label }}</a>{% if not loop.last %} · {% endif %}{% endfor %}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<p class="editorial-support">Add a variant in <code>src/_data/fontLab.yaml</code>. Any page takes <code>?font=&lt;id&gt;</code>; <code>?font=off</code> resets.</p>
