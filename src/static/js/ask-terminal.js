@@ -535,12 +535,17 @@
       );
     },
     "/upgrade": () => {
-      const p = el("span");
-      p.append("There is no Max plan. There is a ");
-      const a = el("a", "", "newsletter");
+      const row = append(bullet("agentcart Max", "$1,000,000/mo"));
+      sub(row, "✓ 20× more questions than the free plan");
+      sub(row, "✓ priority queue (you skip nobody; nobody else is on Max)");
+      sub(row, "✓ a cart that pretends to have opinions with more confidence");
+      sub(row, "✓ Kartikey's GPU, warm and waiting, fans optional");
+      const pay = el("span");
+      pay.append("Payment is accepted in ");
+      const a = el("a", "", "newsletter subscriptions");
       a.href = "/newsletter/";
-      p.append(a, ", though.");
-      sub(append(bullet("Upgrade", null, { dim: true })), p);
+      pay.append(a, ". Exchange rate: one subscription = one million dollars.");
+      sub(row, pay);
     },
   };
 
@@ -589,6 +594,32 @@
       .replace(" ", "")
       .toLowerCase();
 
+  function showLimit(resetAt) {
+    box(
+      [
+        {
+          text: `You've hit your limit · resets ${timeFmt(resetAt || Date.now() + 3 * 3600e3)}`,
+        },
+        {
+          text: "/upgrade to agentcart Max ($1,000,000/mo) for 20× more usage.",
+          dim: true,
+        },
+      ],
+      true,
+    );
+    usage.textContent = "limit reached";
+  }
+
+  function showDown() {
+    box([
+      "Sorry, the inference you have reached is not in service.",
+      {
+        text: "Every route failed: the free tiers are busy and Kartikey's GPU is off or busy. Try again later.",
+        dim: true,
+      },
+    ]);
+  }
+
   async function ask(q) {
     const ctrl = new AbortController();
     state.busy = ctrl;
@@ -634,16 +665,7 @@
             },
           ]);
         } else {
-          box(
-            [
-              {
-                text: `You've hit your limit · resets ${timeFmt(body.resetAt || Date.now() + 3 * 3600e3)}`,
-              },
-              { text: "/upgrade to increase your usage limit.", dim: true },
-            ],
-            true,
-          );
-          usage.textContent = "limit reached";
+          showLimit(body.resetAt);
         }
         return;
       }
@@ -775,13 +797,7 @@
             showContext();
           } else if (ev.t === "down") {
             spin.stop();
-            box([
-              "Sorry, the inference you have reached is not in service.",
-              {
-                text: "Every route failed: the free tiers are busy and Kartikey's GPU is off or busy. Try again later.",
-                dim: true,
-              },
-            ]);
+            showDown();
           } else if (ev.t === "error") {
             spin.stop();
             finishAnswer();
@@ -941,6 +957,24 @@
   screen.addEventListener("mouseup", () => {
     if (!window.getSelection()?.toString()) input.focus();
   });
+
+  // ?preview=limit|queue|down shows those screens without a backend, since
+  // locally there is no Upstash and so no limit or queue to hit.
+  const preview = new URLSearchParams(location.search).get("preview");
+  if (preview === "limit") showLimit();
+  else if (preview === "down") showDown();
+  else if (preview === "queue") {
+    const spin = spinner();
+    logo.busy();
+    [3, 2, 1].forEach((pos, i) =>
+      setTimeout(() => spin.set(`Queue position: #${pos}`), i * 1800),
+    );
+    setTimeout(() => {
+      spin.stop();
+      logo.idle();
+      notice("Your turn. (Preview: no question was sent.)");
+    }, 5400);
+  }
 
   input.focus({ preventScroll: true });
 })();

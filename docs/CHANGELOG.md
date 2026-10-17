@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Header: the agentcart mascot as a 16px pixel icon between search and the theme toggle, blinking every few seconds (faster on hover). Shown only while hidden content is on, until `/ask/` ships.
 - agentcart personality: the prompt is now deadpan and self-aware (jokes about its $0.00 salary and free-tier life) while facts stay cited from excerpts only. Small talk ("hey", "huh interesting") skips the `Search()` call and gets a quip.
 - agentcart extras: `/compact` and `/doctor` commands; hidden `/coffee` (HTTP 418, TEA stack), `/tea`, `/sudo` and `/vim` (every way out is wrong except Esc). A cold-start line after 5 s on the local hop ("Loading gemma into 12 GB of VRAM… yeti's fans are spinning up"), decode tok/s in the answer footer, a "Context left until auto-compact" meter that compacts for real near zero, and the mascot falls asleep after a minute idle ("zZz") until you type.
+- agentcart usage limit now pitches agentcart Max at $1,000,000/mo; `/upgrade` lists its benefits and accepts payment in newsletter subscriptions. `?preview=limit|queue|down` shows those screens without a backend (local builds have no Upstash, so no limit or queue to hit).
 
 ### Fixed
 - "Notes on AI (Unsorted)" post: fixed typos, spelling slips (`capabilties`, `withold`, `unsucessful`, `langauge`, `artciles`, `liek`, `paralel`, `othwreise`, `magntiude`, `myselves`, `Claudisms`), capitalization, and run-on punctuation while keeping the raw Nat-style bulleted brain-dump voice intact.
