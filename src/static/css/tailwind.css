@@ -2885,11 +2885,12 @@ picture img {
   }
 
   /* End-of-post byline, like a magazine author note. */
+  /* The halftone needs ~6rem before the dots resolve into a face; smaller reads as static. */
   .post-byline {
     display: grid;
-    grid-template-columns: 3.5rem minmax(0, 1fr);
+    grid-template-columns: 4.5rem minmax(0, 1fr);
     gap: 0.9rem;
-    align-items: start;
+    align-items: center;
     margin-top: 2rem;
     padding-top: 1rem;
     border-top: 1px solid rgb(214 207 193 / 0.95);
@@ -2901,9 +2902,21 @@ picture img {
 
   .post-byline-avatar img {
     display: block;
-    width: 3.5rem;
-    height: 3.5rem;
+    width: 4.5rem;
+    height: 4.5rem;
     object-fit: cover;
+  }
+
+  @media (min-width: 640px) {
+    .post-byline {
+      grid-template-columns: 6rem minmax(0, 1fr);
+      gap: 1rem;
+    }
+
+    .post-byline-avatar img {
+      width: 6rem;
+      height: 6rem;
+    }
   }
 
   .post-byline-kicker {
@@ -3409,6 +3422,15 @@ picture img {
   .dark .site-content h5,
   .dark .site-content h6 {
     color: rgb(249 250 251);
+  }
+
+  /* Markdown section headings (no class) share the Fraunces title voice with
+     posts; classed component headings such as card titles keep their own face. */
+  .site-content h2:not([class]),
+  .site-content h3:not([class]) {
+    font-family: var(--font-monument);
+    font-variation-settings: "opsz" 72;
+    letter-spacing: -0.01em;
   }
 
   .site-content h1 {
