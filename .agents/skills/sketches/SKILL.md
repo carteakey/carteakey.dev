@@ -31,6 +31,16 @@ sketches; C is exact, data-driven Excalidraw (Part C below).
 
 ## Shared setup: GPU and ComfyUI
 
+**Current route (2026-10): llama-swap serves ComfyUI itself** as the reserved model
+id `comfyui_auto`, at `http://127.0.0.1:8080/comfyui/` (send the llama-swap API key
+as `Authorization: Bearer ...`; it is in the unit's `api-key.conf` drop-in). A
+request swaps the LLM out and ComfyUI in, so do **not** stop llama-swap. Use the
+workflow under "ComfyUI API workflow" with `COMFY = "http://127.0.0.1:8080/comfyui"`
+plus that header, and fetch outputs from `/comfyui/view`. The first call can take
+about 90 s while the swap happens. The manual procedure below is the fallback if
+that route is down.
+
+
 Qwen-Image-2.1 INT8 needs ~11.3 GB VRAM. The RTX 4070 (12 GB) cannot hold it
 alongside the LLM server (Strata ~11.5 GB). **Stopping `llama-swap` interrupts
 anything the user is serving, so ask before doing it.**
