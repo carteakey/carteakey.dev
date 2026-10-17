@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.41] - 2026-10-16
+### Changed
+- Notes & Lexicon: Removed verbose explanatory subtitle ("Choose the reading rhythm that fits...") and right-aligned the view toggle toolbar cleanly.
+- AI page (`/ai/`): Removed redundant "AI Writing" section and post links to keep the page focused strictly on subscriptions, daily stack, prompts, and skills.
+
 ## [2.7.40] - 2026-10-16
 ### Fixed
 - Post byline: the halftone avatar is larger (6rem on desktop, 4.5rem on phones) and vertically centred, so it reads as a face instead of static.

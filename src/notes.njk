@@ -21,8 +21,7 @@ collectionArchetype: index
 {% include "components/page-header.njk" %}
 
 <div class="not-prose" x-data="collectionView('notes-view', 'stream', ['stream', 'list', 'grid'])">
-  <div class="collection-view-toolbar collection-view-toolbar-compact">
-    <p class="editorial-support-compact">Choose the reading rhythm that fits: full notes, a compact index, or a wall.</p>
+  <div class="flex items-center justify-end mb-4">
     {{ viewToggle([
       { value: "stream", label: "Stream view", icon: "activity" },
       { value: "list", label: "List view", icon: "list" },

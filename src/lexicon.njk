@@ -21,8 +21,7 @@ collectionArchetype: index
 {% include "components/page-header.njk" %}
 
 <div class="not-prose" x-data="collectionView('lexicon-view', 'list', ['list', 'stream', 'grid'])">
-  <div class="collection-view-toolbar collection-view-toolbar-compact">
-    <p class="editorial-support-compact">Choose the reading rhythm that fits: a compact index, full definitions, or a wall.</p>
+  <div class="flex items-center justify-end mb-4">
     {{ viewToggle([
       { value: "list", label: "List view", icon: "list" },
       { value: "stream", label: "Stream view", icon: "activity" },

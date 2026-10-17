@@ -1,7 +1,7 @@
 ---
 layout: layouts/base.njk
 title: AI
-description: How I use AI in practice - subscriptions, local models, evaluation prompts, skills, and writing.
+description: How I use AI in practice - subscriptions, local models, evaluation prompts, and skills.
 permalink: /ai/
 eleventyNavigation:
   key: AI
@@ -9,7 +9,6 @@ eleventyNavigation:
 collectionArchetype: ledger
 ---
 
-{% from "components/feed-card.njk" import postListRow %}
 {% include "components/breadcrumbs.njk" %}
 
 {% set pageTitle = "AI" %}
@@ -149,26 +148,4 @@ collectionArchetype: ledger
     </div>
 
   </div>
-</section>
-
-{# ── 3. AI Writing ── #}
-<section class="not-prose mb-8" aria-labelledby="ai-writing-heading">
-  <div class="flex flex-wrap items-baseline justify-between gap-4 mb-3">
-    <div class="flex flex-wrap items-baseline gap-3">
-      <h2 id="ai-writing-heading" class="editorial-title m-0">AI Writing</h2>
-      <span class="meta-line">
-        Series:
-        <a href="/blog/local-inference/" class="accent-link">Local Inference</a> ·
-        <a href="/blog/agents/" class="accent-link">Coding Agents</a>
-      </span>
-    </div>
-    <a href="/tags/ai/" class="home-panel-link">All AI posts ({% set aiPosts = collections['AI'] or [] %}{{ aiPosts.length }}) →</a>
-  </div>
-
-  <ul class="feed-list list-none m-0 p-0">
-    {% set aiEntries = (collections['AI'] or []) | reverse %}
-    {% for post in aiEntries | head(8) %}
-      {{ postListRow(post, collections.feed, {}) }}
-    {% endfor %}
-  </ul>
 </section>
