@@ -37,6 +37,74 @@
     menuIdx: 0,
   };
 
+  // ── Mascot: a block-art cart with eyes. Blinks when idle, rolls its
+  // wheels while waiting, looks pleased once words arrive. ──────────────
+  const logo = (() => {
+    const node = root.querySelector("[data-logo]");
+    const EYES = {
+      open: " ▐  ▌ ",
+      shut: " ▂  ▂ ",
+      busy: " ▗  ▖ ",
+      happy: " ▀  ▀ ",
+    };
+    const WHEELS = ["   ▝▘  ▝▘", "   ▘▝  ▘▝"];
+    const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let eyes = EYES.open;
+    let wheel = 0;
+    let roll = null;
+    let blink = null;
+    const draw = () => {
+      if (node)
+        node.textContent = `▗▄\n  █▀▀▀▀▀▀█\n  █${eyes}█\n  ▜▄▄▄▄▄▄▛\n${WHEELS[wheel]}`;
+    };
+    const scheduleBlink = () => {
+      clearTimeout(blink);
+      if (still) return;
+      blink = setTimeout(
+        () => {
+          if (eyes === EYES.open) {
+            eyes = EYES.shut;
+            draw();
+            setTimeout(() => {
+              if (eyes === EYES.shut) eyes = EYES.open;
+              draw();
+            }, 140);
+          }
+          scheduleBlink();
+        },
+        2500 + Math.random() * 4000,
+      );
+    };
+    const stopRoll = () => {
+      clearInterval(roll);
+      roll = null;
+    };
+    draw();
+    scheduleBlink();
+    return {
+      busy() {
+        eyes = EYES.busy;
+        if (!still && !roll)
+          roll = setInterval(() => {
+            wheel = 1 - wheel;
+            draw();
+          }, 180);
+        draw();
+      },
+      happy() {
+        stopRoll();
+        eyes = EYES.happy;
+        draw();
+      },
+      idle() {
+        stopRoll();
+        eyes = EYES.open;
+        draw();
+        scheduleBlink();
+      },
+    };
+  })();
+
   // ── DOM helpers ───────────────────────────────────────────────────────
   const el = (tag, cls, text) => {
     const node = document.createElement(tag);
@@ -402,6 +470,7 @@
     const ctrl = new AbortController();
     state.busy = ctrl;
     input.disabled = true;
+    logo.busy();
     const spin = spinner();
     let toolRow = null;
     let answerRow = null;
@@ -518,19 +587,20 @@
             );
           } else if (ev.t === "delta") {
             if (!answerRow) {
-              if (thinkStart != null) {
-                const t = placeBeforeSpinner(
-                  el("div", "term-row term-bullet is-dim"),
-                );
-                t.append(
-                  el("span", "term-glyph", "✻"),
-                  el(
-                    "span",
-                    "term-tool-arg",
-                    `Thought for ${Math.max(1, Math.round(spin.elapsed() - thinkStart))}s`,
-                  ),
-                );
-              }
+              // Always shown. Without reasoning tokens it is the whole wait
+              // before the first word, which is what it feels like anyway.
+              const thought = placeBeforeSpinner(
+                el("div", "term-row term-bullet is-dim"),
+              );
+              thought.append(
+                el("span", "term-glyph", "✻"),
+                el(
+                  "span",
+                  "term-tool-arg",
+                  `Thought for ${Math.max(1, Math.round(spin.elapsed() - (thinkStart ?? 0)))}s`,
+                ),
+              );
+              logo.happy();
               answerRow = placeBeforeSpinner(el("div", "term-row term-bullet"));
               answerBody = el("div", "term-answer term-caret");
               answerRow.append(el("span", "term-glyph", "⏺"), answerBody);
@@ -596,6 +666,7 @@
       spin.stop();
       finishAnswer();
       state.busy = null;
+      logo.idle();
       input.disabled = false;
       input.focus();
     }

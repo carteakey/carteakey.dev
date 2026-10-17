@@ -5988,7 +5988,8 @@ picture img {
 }
 
 /* Welcome banner */
-.term-welcome { border: 1px solid var(--term-accent); padding: 0.6rem 0.9rem; margin-bottom: 1rem; max-width: 44rem; }
+.term-welcome { display: grid; grid-template-columns: auto 1fr; gap: 1.6rem; align-items: center; border: 1px solid var(--term-accent); padding: 0.7rem 1.1rem; margin-bottom: 1rem; max-width: 46rem; }
+.term-logo { margin: 0; padding: 0; background: none; border: 0; color: var(--term-accent); font: inherit; line-height: 1.15; user-select: none; }
 .term-welcome b { color: var(--term-accent); font-weight: 600; }
 .term-welcome p { margin: 0; }
 .term-tips { color: var(--term-dim); margin: 0 0 1.1rem; }
@@ -5999,13 +6000,13 @@ picture img {
 .term-row { margin: 0 0 0.9rem; white-space: pre-wrap; word-break: break-word; }
 .term-user { color: var(--term-dim); border-left: 2px solid var(--term-faint); padding-left: 0.6rem; }
 .term-user::before { content: "> "; color: var(--term-dim); }
-.term-bullet { display: grid; grid-template-columns: 1.4em 1fr; }
+.term-bullet { display: grid; grid-template-columns: 1.4em minmax(0, 1fr); }
 .term-bullet > .term-glyph { color: var(--term-accent); }
 .term-bullet.is-dim > .term-glyph { color: var(--term-dim); }
 .term-bullet.is-busy > .term-glyph { animation: term-blink 1s steps(2, start) infinite; }
 .term-tool-name { font-weight: 600; }
 .term-tool-arg { color: var(--term-dim); }
-.term-sub { display: grid; grid-template-columns: 1.4em 1.6em 1fr; color: var(--term-dim); }
+.term-sub { display: grid; grid-template-columns: 1.4em 1.6em minmax(0, 1fr); color: var(--term-dim); }
 .term-bullet > .term-sub { grid-column: 1 / -1; }
 .term-sub > .term-elbow { color: var(--term-faint); }
 .term-sub.is-fail { text-decoration: line-through; text-decoration-color: var(--term-faint); }
@@ -6028,7 +6029,7 @@ picture img {
 .term-caret::after { content: "▍"; color: var(--term-accent); animation: term-blink 1s steps(2, start) infinite; }
 
 /* Spinner line */
-.term-spinner { display: grid; grid-template-columns: 1.4em 1fr; color: var(--term-accent); margin: 0 0 0.9rem; }
+.term-spinner { display: grid; grid-template-columns: 1.4em minmax(0, 1fr); color: var(--term-accent); margin: 0 0 0.9rem; }
 .term-spinner .term-spin-text { color: var(--term-fg); }
 .term-spinner .term-spin-meta { color: var(--term-dim); }
 
@@ -6076,4 +6077,5 @@ picture img {
   .term-cite { grid-template-columns: 2.6em 1fr; }
   .term-cite-k { display: none; }
   .term-status .term-status-right { display: none; }
+  .term-welcome { gap: 1rem; padding: 0.6rem 0.7rem; }
 }
