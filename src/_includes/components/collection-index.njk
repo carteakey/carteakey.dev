@@ -1,0 +1,138 @@
+{#
+  Shared collection engine: toolbar, grouping and views for one entry in
+  src/_data/collectionViews.yaml. Every row and card renders through feedCard.
+
+  Usage (after the page header):
+  {% set collectionKey = "notes" %}
+  {% include "components/collection-index.njk" %}
+
+  The first view in the entry is the default. It renders without x-cloak so the
+  page reads before JavaScript; the others stay cloaked until Alpine runs.
+#}
+{% from "components/feed-card.njk" import feedCard %}
+{% from "components/view-toggle.njk" import viewToggle %}
+
+{% set cv = collectionViews[collectionKey] %}
+{% set cvViews = cv.views %}
+{% set cvRow = cv.row or {} %}
+{% set cvFilters = cv.filters or [] %}
+{% set cvItems = collections.feed | collectionItems(cv) %}
+{% set cvGroups = cvItems | collectionGroups(cv) %}
+
+<div
+  class="collection-index not-prose"
+  data-collection-index
+  {% if 'authorship' in cvFilters %}data-ai-filter-scope{% endif %}
+  x-data="collectionView('{{ collectionKey }}-view', '{{ cvViews[0] }}', ['{{ cvViews | join("', '") | safe }}'])"
+>
+  {% if cv.search or cvFilters.length or cvViews.length > 1 %}
+    <div class="collection-toolbar">
+      <div class="collection-toolbar-group">
+        {% if cv.search %}
+          <label class="collection-search">
+            {% feather "search", class="collection-search-icon" %}
+            <input type="search" data-collection-search placeholder="Search..." aria-label="Search {{ itemLabel or 'items' }}" class="collection-search-input accent-field accent-focus">
+          </label>
+        {% endif %}
+        {% if 'authorship' in cvFilters %}
+          {% include "components/authorship-filter.njk" %}
+        {% endif %}
+        {% if 'saved' in cvFilters %}
+          <button type="button" data-collection-saved class="snippet-filter-button accent-focus" aria-pressed="false">
+            {% feather "bookmark", class="w-3.5 h-3.5" %}
+            <span>Saved</span>
+            <span data-collection-saved-count class="snippet-filter-count">0</span>
+          </button>
+        {% endif %}
+      </div>
+      {% if cvViews.length > 1 %}
+        {{ viewToggle(cvViews | viewToggleOptions) }}
+      {% endif %}
+    </div>
+  {% endif %}
+
+  {% if 'type' in cvFilters %}
+    <div class="collection-facets" role="group" aria-label="Filter by type">
+      <button type="button" class="badge badge-filter badge-compact active" data-collection-facet="" aria-pressed="true">All ({{ cvItems.length }})</button>
+      {% for type in cv.types %}
+        {% set typeCount = cvItems | selectattr("type", "equalto", type) | length %}
+        {% if typeCount %}
+          <button type="button" class="badge badge-filter badge-compact" data-collection-facet="{{ type }}" aria-pressed="false">{{ type | collectionTypeLabel }}</button>
+        {% endif %}
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  {% if cv.jump and cvGroups.length > 1 and 'list' in cvViews %}
+    <nav class="collection-jump" aria-label="Jump to" x-show="view === 'list'"{% if cvViews[0] != 'list' %} x-cloak{% endif %}>
+      <span class="editorial-kicker">Jump to</span>
+      {% for group in cvGroups %}
+        {% if group.kind == 'pinned' %}
+          <a href="#{{ group.id }}" class="badge badge-accent badge-compact badge-interactive no-underline inline-flex items-center gap-1">{% feather "bookmark", class="w-3 h-3" %} {{ group.label }}</a>
+        {% else %}
+          <a href="#{{ group.id }}" class="badge badge-tag badge-compact badge-interactive no-underline">{{ group.label }}</a>
+        {% endif %}
+      {% endfor %}
+    </nav>
+  {% endif %}
+
+  {% for v in cvViews %}
+    {% set cloak = '' if loop.first else ' x-cloak' %}
+
+    {% if v == 'stream' %}
+      <div class="collection-stream" data-collection-view x-show="view === 'stream'"{{ cloak | safe }}>
+        {% for item in cvItems %}
+          {% set attrs = 'data-collection-item data-type="' ~ item.type ~ '" data-search="' ~ (item | collectionSearchText) ~ '"' %}
+          {% if cv.anchors and item.original %}{% set attrs = attrs ~ ' id="' ~ item.original.fileSlug ~ '"' %}{% endif %}
+          {{ feedCard(item, { variant: 'stream', showType: cvRow.showType, date: item | collectionDate(cv), outerAttrs: attrs }) }}
+        {% endfor %}
+      </div>
+
+    {% elif v == 'list' %}
+      <div class="collection-list" data-collection-view x-show="view === 'list'"{{ cloak | safe }}>
+        {% for group in cvGroups %}
+          {% if group.label %}
+            <h2 id="{{ group.id }}" class="collection-group-heading editorial-kicker" data-collection-group-heading>
+              {% if group.kind == 'pinned' %}{% feather "bookmark", class="w-3.5 h-3.5" %}{% endif %}
+              {{ group.label }}
+            </h2>
+          {% endif %}
+          <ul class="feed-list collection-group" data-collection-group>
+            {% for item in group.items %}
+              {{ feedCard(item, {
+                variant: 'list',
+                rich: cvRow.rich,
+                showType: cvRow.showType,
+                showSummary: cvRow.showSummary,
+                showTags: cvRow.showTags,
+                showAuthorship: cvRow.showAuthorship,
+                date: item | collectionDate(cv),
+                dateFormat: 'MMM d' if group.kind == 'year' else cvRow.dateFormat,
+                saveable: 'saved' in cvFilters,
+                outerAttrs: 'data-collection-item data-type="' ~ item.type ~ '" data-search="' ~ (item | collectionSearchText) ~ '"'
+              }) }}
+            {% endfor %}
+          </ul>
+        {% endfor %}
+      </div>
+
+    {% elif v == 'grid' %}
+      <div class="collection-wall feed-masonry" data-collection-view data-feed-masonry x-show="view === 'grid'"{{ cloak | safe }}>
+        {% for item in cvItems %}
+          {{ feedCard(item, {
+            extraClasses: 'feed-card',
+            showType: cvRow.showType,
+            date: item | collectionDate(cv),
+            outerAttrs: 'data-collection-item data-type="' ~ item.type ~ '" data-search="' ~ (item | collectionSearchText) ~ '"'
+          }) }}
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endfor %}
+
+  <p class="collection-empty editorial-support-compact" data-collection-empty hidden>Nothing matches.</p>
+</div>
+
+{% if 'grid' in cvViews %}{% include "components/feed-masonry-script.njk" %}{% endif %}
+<script defer src="/static/js/collection-index.js?v={{ versions.version }}"></script>
+{% if 'saved' in cvFilters %}<script defer src="/static/js/snippet-favorites.js?v={{ versions.version }}"></script>{% endif %}

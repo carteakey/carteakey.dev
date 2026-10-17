@@ -1,0 +1,325 @@
+# Collection view registry: one entry per page that declares
+# `collectionArchetype`. Every entry records a deliberate decision, including
+# pages that stay bespoke. `npm run check:collections` fails when a page is
+# missing here, when an entry points at nothing, or when the archetypes disagree.
+#
+# engine: true   rendered by components/collection-index.njk; the page sets
+#                `collectionKey` to this entry's key and includes it.
+# engine: false  the page owns its layout; `why` says what the engine would lose.
+#
+# Engine fields
+#   types    feed item types to show (collections.feed)
+#   views    stream | list | grid; the first is the default. One view = no toggle
+#   sort     feed (pinned, then updated date) | published (pinned, then publish date)
+#   group    none | year | alpha; groups apply to the list view
+#   jump     show Jump-to pills for the groups
+#   search   live search over title, summary, tags and language
+#   filters  authorship | saved | type
+#   row      options passed to feedCard (rich, showType, showSummary, showTags,
+#            showAuthorship, dateFormat)
+#   anchors  give each item id="<fileSlug>" so /feed links can deep-link into the page
+#   why      the reason for this shape; read it before changing the entry
+
+# ── Engine pages ──────────────────────────────────────────────────────────────
+
+blog:
+  page: src/archive.njk
+  archetype: index
+  engine: true
+  types: [post]
+  views: [list, grid]
+  sort: published
+  group: year
+  jump: true
+  search: true
+  filters: [authorship]
+  row: { rich: true, showType: false, showSummary: true, showTags: true }
+  why: >-
+    The reference index. 70+ long posts need year groups, jump pills and search
+    to stay scannable; the wall exists because the thumbnails make browsing by
+    picture a different task from scanning titles.
+
+feed:
+  page: src/feed.njk
+  archetype: index
+  engine: true
+  types: [post, snippet, note, til, folio, now, photo, quotation, lexicon, tool]
+  views: [stream, list, grid]
+  search: true
+  filters: [authorship, type]
+  row: { rich: true }
+  why: >-
+    Everything in one timeline. Stream reads short items inline, list scans the
+    whole history, and the wall suits the photos and mixed sizes. Type chips
+    narrow a mixed collection; nothing else on the site needs them.
+
+notes:
+  page: src/notes.njk
+  archetype: index
+  engine: true
+  types: [note]
+  views: [stream, list]
+  row: { showType: false, showSummary: true, showTags: true }
+  why: >-
+    Notes are short enough to read inline, so stream is the default; list is for
+    finding an old note by title. No wall: at this size it repeats the stream in
+    columns. No search: the collection fits on one screen of titles.
+
+lexicon:
+  page: src/lexicon.njk
+  archetype: index
+  engine: true
+  types: [lexicon]
+  views: [stream]
+  row: { showType: false }
+  why: >-
+    A glossary is a page of definitions you read, so the full-definition stream
+    is the only view. A handful of entries needs no toggle, wall or search;
+    revisit (alpha groups + list) if it grows past a screen.
+
+snippets:
+  page: src/snippets.njk
+  archetype: index
+  engine: true
+  types: [snippet]
+  views: [list]
+  search: true
+  filters: [saved]
+  row:
+    { showType: false, showSummary: true, showTags: true, showAuthorship: true }
+  why: >-
+    People come here to find one snippet, which is a scanning task: list only.
+    Search and Saved serve that task. The old grid duplicated the list as cards
+    without serving a different reader task.
+
+til:
+  page: src/til.njk
+  archetype: index
+  engine: true
+  types: [til]
+  views: [list]
+  row: { showType: false, showSummary: true, showTags: true }
+  why: >-
+    Titles carry each TIL, so a list is enough. Search returns when there are
+    more entries than fit on a screen.
+
+quotations:
+  page: src/quotations.njk
+  archetype: index
+  engine: true
+  types: [quotation]
+  views: [stream]
+  anchors: true
+  row: { showType: false }
+  why: >-
+    A quotation is its text; a list row would reduce it to "Quotation from X".
+    Stream shows the words, and anchors keep /feed links to /quotations/#slug working.
+
+# ── Bespoke pages (engine: false) ────────────────────────────────────────────
+
+projects:
+  page: src/projects.njk
+  archetype: wall
+  engine: false
+  why: >-
+    Driven by projects.yaml, not feed items: rows lead with a project image
+    instead of a date. Already uses the shared toggle, collectionView() and
+    masonry; only the item markup is its own.
+
+blog-folder:
+  page: src/blog/folder.njk
+  archetype: index
+  engine: false
+  why: A series page is a short, ordered reading path for one folder, not an archive.
+
+tags:
+  page: src/tags.njk
+  archetype: index
+  engine: false
+  why: Generated per tag across mixed content; a plain list of matches with no controls.
+
+reviews:
+  page: src/reviews.njk
+  archetype: index
+  engine: false
+  why: A verdict ledger; rows carry price, rating and verdict that feed rows do not have.
+
+changelog:
+  page: src/changelog.njk
+  archetype: index
+  engine: false
+  why: Release notes read top to bottom; version headings are the structure.
+
+devices:
+  page: src/devices.njk
+  archetype: index
+  engine: false
+  why: A directory of machines, each with its own page of specs and timeline; not dated content.
+
+learning:
+  page: src/learning.njk
+  archetype: index
+  engine: false
+  why: A private, browser-local reading tracker for site guides; per-reader state, not a collection.
+
+now-archive:
+  page: src/now-archive.njk
+  archetype: index
+  engine: false
+  why: A dated archive of /now snapshots; each entry links out, nothing to filter.
+
+prompts:
+  page: src/prompts.njk
+  archetype: index
+  engine: false
+  why: Benchmark prompts that are read and copied whole; date order means nothing here.
+
+search:
+  page: src/search.njk
+  archetype: index
+  engine: false
+  why: Site search UI with its own index and result rendering.
+
+folio:
+  page: src/folio/index.njk
+  archetype: wall
+  engine: false
+  why: A few authored zines shown as feature cards; each is a designed object.
+
+gallery:
+  page: src/gallery.njk
+  archetype: wall
+  engine: false
+  why: Photo masonry with a PhotoSwipe lightbox; images are the content.
+
+guestbook:
+  page: src/guestbook.njk
+  archetype: wall
+  engine: false
+  why: Sticky-note wall of visitor messages with its own entry form.
+
+quotes:
+  page: src/quotes.njk
+  archetype: wall
+  engine: false
+  why: Quote of the day plus a data-driven wall; not feed items.
+
+vibes:
+  page: src/vibes.njk
+  archetype: wall
+  engine: false
+  why: A client-side canvas with shuffle; the layout is the point.
+
+games:
+  page: src/games.njk
+  archetype: shelf
+  engine: false
+  why: Cover-led shelf from Steam data; equal-sized media matters more than text.
+
+listening:
+  page: src/listening.njk
+  archetype: shelf
+  engine: false
+  why: Spotify listening summary; top artists, albums and tracks are ranked, not dated.
+
+reading:
+  page: src/reading.njk
+  archetype: shelf
+  engine: false
+  why: Currently reading with progress, then a cover shelf from Goodreads.
+
+watching:
+  page: src/watching.njk
+  archetype: shelf
+  engine: false
+  why: Letterboxd diary with poster thumbnails.
+
+ai:
+  page: src/ai.njk
+  archetype: ledger
+  engine: false
+  why: An operating ledger of subscriptions, stack, prompts and skills.
+
+bookmarks:
+  page: src/bookmarks.njk
+  archetype: ledger
+  engine: false
+  why: Saved links ledger.
+
+data:
+  page: src/data.njk
+  archetype: ledger
+  engine: false
+  why: A dashboard generated from cartebase; charts, not items.
+
+font-lab:
+  page: src/lab/fonts.njk
+  archetype: ledger
+  engine: false
+  why: Hidden type specimen lab.
+
+now:
+  page: src/now.njk
+  archetype: ledger
+  engine: false
+  why: The current snapshot; sections, not items.
+
+page-list:
+  page: src/page-list.njk
+  archetype: ledger
+  engine: false
+  why: Generated page directory.
+
+skill-library:
+  page: src/skill-library.njk
+  archetype: ledger
+  engine: false
+  why: Agent skills reference with install details.
+
+skills-radar:
+  page: src/skills-radar.njk
+  archetype: ledger
+  engine: false
+  why: Radar visual of skills; a diagram, not a list.
+
+snippet-tags:
+  page: src/snippet-tags.njk
+  archetype: ledger
+  engine: false
+  why: Generated per-tag snippet listings.
+
+stats:
+  page: src/stats.njk
+  archetype: ledger
+  engine: false
+  why: Site statistics; charts and numbers.
+
+status:
+  page: src/status.njk
+  archetype: ledger
+  engine: false
+  why: Health summary of the external data sources behind the site.
+
+tags-list:
+  page: src/tags-list.njk
+  archetype: ledger
+  engine: false
+  why: Tag directory with counts.
+
+tools:
+  page: src/tools.njk
+  archetype: ledger
+  engine: false
+  why: Tools ledger from tools.yaml.
+
+uses:
+  page: src/uses.njk
+  archetype: ledger
+  engine: false
+  why: Gear and software ledger.
+
+workouts:
+  page: src/workouts.njk
+  archetype: ledger
+  engine: false
+  why: Workout log ledger.

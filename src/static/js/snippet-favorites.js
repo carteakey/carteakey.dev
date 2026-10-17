@@ -1,15 +1,20 @@
+// Saved snippets: bookmark buttons on snippet rows plus the "Saved" toolbar
+// filter. Filtering goes through the collection engine (collection-index.js)
+// so search and Saved combine in one pass.
 (() => {
   const STORAGE_KEY = 'carteakey.snippetFavorites.v1'
-  const cards = Array.from(document.querySelectorAll('[data-snippet-card]'))
-  const searchInput = document.getElementById('snippetSearch')
-  const filterButton = document.getElementById('snippetFavoritesFilter')
-  const count = document.getElementById('snippetFavoritesCount')
-  const emptyState = document.getElementById('snippetEmptyState')
-  const status = document.getElementById('snippetFavoriteStatus')
+  const filterButton = document.querySelector('[data-collection-saved]')
+  const root = filterButton?.closest('[data-collection-index]')
+  if (!root?.collectionFilters) return
 
-  if (!cards.length || !searchInput || !filterButton) return
+  const count = root.querySelector('[data-collection-saved-count]')
+  const buttons = Array.from(root.querySelectorAll('[data-snippet-favorite]'))
+  const validIds = new Set(buttons.map((button) => button.dataset.snippetId))
+  const status = document.createElement('p')
+  status.className = 'sr-only'
+  status.setAttribute('aria-live', 'polite')
+  root.append(status)
 
-  const validIds = new Set(cards.map((card) => card.dataset.snippetId))
   let favoritesOnly = false
   let favorites = loadFavorites()
 
@@ -24,11 +29,13 @@
   }
 
   function saveFavorites() {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify([...favorites]))
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify([...favorites]))
+    } catch {}
   }
 
-  function syncButtons() {
-    for (const button of document.querySelectorAll('[data-snippet-favorite]')) {
+  function sync() {
+    for (const button of buttons) {
       const isFavorite = favorites.has(button.dataset.snippetId)
       button.setAttribute('aria-pressed', String(isFavorite))
       button.classList.toggle('is-favorite', isFavorite)
@@ -38,34 +45,21 @@
     count.textContent = String(favorites.size)
     filterButton.setAttribute('aria-pressed', String(favoritesOnly))
     filterButton.classList.toggle('is-active', favoritesOnly)
+
+    root.collectionFilters.set(
+      'saved',
+      favoritesOnly
+        ? (item) => favorites.has(item.querySelector('[data-snippet-favorite]')?.dataset.snippetId)
+        : null,
+    )
   }
-
-  function applyFilters() {
-    const term = searchInput.value.trim().toLowerCase()
-    const matchingIds = new Set()
-
-    for (const card of cards) {
-      const matchesSearch = !term || ['title', 'tags', 'language', 'body']
-        .some((key) => (card.dataset[key] || '').includes(term))
-      const matchesFavorite = !favoritesOnly || favorites.has(card.dataset.snippetId)
-      const visible = matchesSearch && matchesFavorite
-
-      card.classList.toggle('hidden', !visible)
-      if (visible) matchingIds.add(card.dataset.snippetId)
-    }
-
-    emptyState?.classList.toggle('hidden', matchingIds.size > 0)
-  }
-
-  searchInput.addEventListener('input', applyFilters)
 
   filterButton.addEventListener('click', () => {
     favoritesOnly = !favoritesOnly
-    syncButtons()
-    applyFilters()
+    sync()
   })
 
-  document.addEventListener('click', (event) => {
+  root.addEventListener('click', (event) => {
     const button = event.target.closest('[data-snippet-favorite]')
     if (!button) return
 
@@ -81,11 +75,9 @@
     }
 
     saveFavorites()
-    syncButtons()
-    applyFilters()
+    sync()
   })
 
   saveFavorites()
-  syncButtons()
-  applyFilters()
+  sync()
 })()

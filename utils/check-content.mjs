@@ -7,47 +7,14 @@ import { load } from "js-yaml";
 
 const ARCHETYPES = ["index", "wall", "shelf", "ledger"];
 
-// Collection pages must declare which archetype they follow.
-const COLLECTION_PAGES = {
-  "src/archive.njk": "index",
-  "src/blog/folder.njk": "index",
-  "src/changelog.njk": "index",
-  "src/learning.njk": "index",
-  "src/lexicon.njk": "index",
-  "src/notes.njk": "index",
-  "src/now-archive.njk": "index",
-  "src/prompts.njk": "index",
-  "src/quotations.njk": "index",
-  "src/reviews.njk": "index",
-  "src/search.njk": "index",
-  "src/snippets.njk": "index",
-  "src/tags.njk": "index",
-  "src/til.njk": "index",
-  "src/folio/index.njk": "wall",
-  "src/gallery.njk": "wall",
-  "src/guestbook.njk": "wall",
-  "src/projects.njk": "wall",
-  "src/quotes.njk": "wall",
-  "src/vibes.njk": "wall",
-  "src/games.njk": "shelf",
-  "src/listening.njk": "shelf",
-  "src/reading.njk": "shelf",
-  "src/watching.njk": "shelf",
-  "src/ai.njk": "ledger",
-  "src/bookmarks.njk": "ledger",
-  "src/data.njk": "ledger",
-  "src/now.njk": "ledger",
-  "src/page-list.njk": "ledger",
-  "src/skill-library.njk": "ledger",
-  "src/skills-radar.njk": "ledger",
-  "src/snippet-tags.njk": "ledger",
-  "src/stats.njk": "ledger",
-  "src/status.njk": "ledger",
-  "src/tags-list.njk": "ledger",
-  "src/tools.njk": "ledger",
-  "src/uses.njk": "ledger",
-  "src/workouts.njk": "ledger",
-};
+// Collection pages must declare which archetype they follow. The expected
+// archetype per page lives in src/_data/collectionViews.yaml (see
+// utils/check-collections.mjs for the rest of the registry rules).
+const COLLECTION_PAGES = Object.fromEntries(
+  Object.values(
+    load(await readFile("src/_data/collectionViews.yaml", "utf8")),
+  ).map((entry) => [entry.page, entry.archetype]),
+);
 
 // Permanent content must carry an explicit `date` and 1-2 Title Case tags.
 const CONTENT_DIRS = [

@@ -1206,14 +1206,133 @@ picture img {
     margin-bottom: 1rem;
   }
 
-  .collection-view-toolbar-compact {
+  /* Collection engine (components/collection-index.njk) */
+  .collection-toolbar {
+    display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    padding-bottom: 0.75rem;
-    border-bottom: 1px solid rgb(229 223 211 / 0.95);
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
   }
 
-  .dark .collection-view-toolbar-compact {
-    border-bottom-color: rgb(39 39 42 / 0.9);
+  .collection-toolbar-group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 0;
+  }
+
+  .collection-search {
+    position: relative;
+    display: block;
+  }
+
+  .collection-search-icon {
+    position: absolute;
+    left: 0.6rem;
+    top: 50%;
+    width: 0.875rem;
+    height: 0.875rem;
+    transform: translateY(-50%);
+    color: rgb(156 163 175);
+    pointer-events: none;
+  }
+
+  .collection-search-input {
+    width: 10rem;
+    padding: 0.375rem 0.75rem 0.375rem 2rem;
+    border: 1px solid rgb(214 207 193 / 1);
+    border-radius: 0.125rem;
+    background: transparent;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+
+  .collection-search-input::placeholder {
+    color: rgb(156 163 175);
+  }
+
+  .collection-search-input:focus {
+    outline: none;
+  }
+
+  .dark .collection-search-input {
+    border-color: rgb(63 63 70 / 1);
+    color: rgb(243 244 246);
+  }
+
+  .collection-facets,
+  .collection-jump {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.375rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .collection-group-heading {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding-block: 0.5rem;
+    scroll-margin-top: 5rem;
+  }
+
+  .collection-group {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .collection-group + .collection-group-heading {
+    margin-top: 2rem;
+  }
+
+  /* With no toolbar, the page header's rule already sits above the first row. */
+  .collection-index > .collection-list:first-child > .collection-group:first-child {
+    border-top: 0;
+  }
+
+  .collection-stream {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding-block: 1rem;
+  }
+
+  .collection-wall {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    align-items: start;
+    gap: 0.75rem;
+  }
+
+  @media (min-width: 768px) {
+    .collection-wall {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .collection-wall {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .collection-empty {
+    padding-block: 2rem;
+    text-align: center;
+  }
+
+  [data-filtered-out] {
+    display: none !important;
+  }
+
+  /* Non-default views stay hidden until Alpine takes over (and without JS). */
+  .collection-index [x-cloak] {
+    display: none !important;
   }
 
   .projects-collection-grid {

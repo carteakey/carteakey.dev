@@ -251,8 +251,10 @@ async function main() {
     "The post list keeps its shared row and thumbnail classes",
   );
   check(
-    archive.includes('id="blogList"') && archive.includes('id="blogGrid"'),
-    "Both post list views are rendered",
+    archive.includes('class="collection-list"') &&
+      archive.includes("collection-wall feed-masonry") &&
+      archive.includes("collectionView('blog-view', 'list'"),
+    "Writing renders its list and wall views through the collection engine",
   );
   check(
     projects.includes("projects-collection-grid") &&
@@ -264,8 +266,9 @@ async function main() {
     "Projects defaults to the project wall",
   );
   check(
-    notes.includes("['stream', 'list', 'grid']"),
-    "Notes renders stream, list, and wall layouts from one collection",
+    notes.includes("['stream', 'list']") &&
+      notes.includes("data-collection-index"),
+    "Notes renders stream and list layouts through the collection engine",
   );
   check(
     notes.includes("collectionView('notes-view', 'stream'"),

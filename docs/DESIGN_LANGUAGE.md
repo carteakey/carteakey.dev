@@ -245,19 +245,31 @@ Every collection page declares its archetype in front matter so the choice stays
 collectionArchetype: shelf
 ```
 
-`npm run check:content` verifies that each collection page declares one of the four archetypes and that the declared value still matches how the page reads. Add the new page to the list in `utils/check-content.mjs` when a collection is created.
+Every collection page also has an entry in `src/_data/collectionViews.yaml`, the collection registry. The entry records the archetype, the page's views and controls, and a one-line `why`, so each shape is visibly a decision, including pages that stay bespoke (`engine: false`). `npm run check:content` verifies that each registered page declares the matching archetype; `npm run check:collections` fails when a page declares `collectionArchetype` without a registry entry, or when an entry is incomplete. Add the entry when a collection is created, and read the `why` before changing one.
+
+### Collection engine
+
+Feed-backed index pages (Writing, Feed, Notes, Lexicon, Snippets, TIL, Quotations) render through one engine, `components/collection-index.njk`. The page sets `collectionKey` and includes it after the page header; its registry entry decides everything else:
+
+- **Views** — any of `stream`, `list`, `grid`; the first is the default. One view means no toggle.
+- **Rows and cards** — always `feedCard` (`list`, `stream`, or the default card). Writing's list row is the reference row: mono date, optional stamp, title, one-line summary, tags docked right.
+- **Grouping** — `year` (sticky year headings, pinned first) or `alpha`, with optional Jump-to pills. Groups apply to the list view.
+- **Controls** — search on the left with page filters (`authorship`, `saved`, `type`), the view toggle on the right. Filters register with `static/js/collection-index.js` and apply in one pass, so search, type, and Saved combine; headings with no matching rows hide, and an empty state appears.
+- **Grid** — always the shared masonry (`feed-masonry-script.njk`).
+
+Size the controls to the collection. Search, year groups, and jump pills earn their place on long archives; a page that fits on one screen gets none of them. Pages whose items are not feed items (Projects) or whose layout is the content (Folio, Gallery, Vibes, shelves, ledgers) stay bespoke but still reuse the toggle, `collectionView()`, and masonry where they have views.
 
 ### Multiple views
 
 Offer multiple views when the same collection supports genuinely different tasks, such as reading full notes versus scanning their titles. A toggle should not exist only as decoration.
 
-- Use the shared `viewToggle` macro and `collectionView()` helper.
+- Use the collection engine, or the shared `viewToggle` macro and `collectionView()` helper on bespoke pages.
 - Name modes by behavior: `stream`, `list`, and `grid`/`wall`.
 - Pick a deliberate default that expresses the page: Projects opens as a wall; Notes opens as a stream.
-- Persist the reader's choice in `localStorage`.
-- Render one semantic copy of each item and change layout with container classes when practical. Do not duplicate full content merely to support another view.
+- Persist the reader's choice in `localStorage` (`<collectionKey>-view`).
+- Each view renders its own copy of the items, because a list row and a card are too different to share markup. Keep the copies cheap: summaries in rows and cards, full bodies only in the stream.
 - Every view must work at mobile width and without relying on hover.
-- Masonry is progressive enhancement: the underlying CSS grid and source order must remain readable before JavaScript runs.
+- The default view must read before JavaScript runs; non-default views carry `x-cloak`. Masonry is progressive enhancement over a plain CSS grid in source order.
 
 ### Post pages
 
@@ -442,7 +454,7 @@ When building or redesigning a page:
 4. If a new repeated pattern appears twice, give it a named class.
 5. Do not solve typography with raw utility chains unless the element is truly one-off and non-editorial.
 6. Start collection pages from one of the four documented archetypes: index, wall, shelf, or ledger.
-7. Reuse `components/page-header.njk`, `components/view-toggle.njk`, `.surface`, and the editorial type primitives before adding page-local equivalents.
+7. Reuse `components/page-header.njk`, `components/collection-index.njk`, `components/view-toggle.njk`, `.surface`, and the editorial type primitives before adding page-local equivalents. Register the page in `src/_data/collectionViews.yaml`.
 8. Record intentional exceptions in the template or this document. A visually different folio is character; an unexplained one-off control is drift.
 
 ## Shared Primitives

@@ -167,6 +167,7 @@ This is the repository thinking space merged from `docs/TODO.md`, audit docs, te
 - [x] Carry the same typography treatment into post support chrome like breadcrumbs, notices, outline/sidebar copy, and comment prompts. (2026-04-24)
 - [x] Bring the Recent Activity block and notes pages into the same editorial type system so they stop reading like leftover UI surfaces. (2026-04-24)
 - [x] Write down the new design language as an explicit style guide so later passes stop depending on implied taste and one-off instructions. (2026-04-24)
+- [x] Shared collection engine and registry (`src/_data/collectionViews.yaml`) for the feed-backed index pages, with `check:collections` so every collection page's shape is recorded. (2026-10-16)
 - [x] Define enforceable collection-page archetypes, make Projects a masonry wall, and give Notes stream, list, and wall views through shared controls. (2026-09-19)
 - [x] Introduce reusable editorial typography primitives and use them to clean up the archive, footer mega nav, and `/now/` page in one sweep. (2026-04-24)
 - [x] Rewrite the colophon around the new archive/workbench language, document the redesign history, and add a migration-process doc for future cleanup passes. (2026-04-24)

@@ -659,6 +659,97 @@ export default function (eleventyConfig) {
     return dateTime.isValid ? dateTime.toFormat(format) : "";
   });
 
+  // Collection engine (components/collection-index.njk, configured per page in
+  // src/_data/collectionViews.yaml).
+  const collectionDate = (item, config) =>
+    config.sort === "published" && item.original?.date
+      ? item.original.date
+      : item.date;
+
+  eleventyConfig.addFilter("collectionItems", (feed, config) => {
+    const types = [].concat(config.types || []);
+    const items = (feed || []).filter((item) => types.includes(item.type));
+    if (config.sort !== "published") return items;
+    return [...items].sort(
+      (a, b) =>
+        (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0) ||
+        collectionDate(b, config) - collectionDate(a, config),
+    );
+  });
+
+  eleventyConfig.addFilter("collectionDate", collectionDate);
+
+  // Groups for the list view: pinned first, then year or first letter.
+  eleventyConfig.addFilter("collectionGroups", (items, config) => {
+    if (!config.group || config.group === "none") {
+      return [{ id: null, kind: null, label: null, items }];
+    }
+    const groups = new Map();
+    for (const item of items) {
+      let id, kind, label;
+      if (item.pinned) {
+        [id, kind, label] = ["pinned", "pinned", "Pinned"];
+      } else if (config.group === "year") {
+        const year = String(collectionDate(item, config).getFullYear());
+        [id, kind, label] = [`year-${year}`, "year", year];
+      } else {
+        const letter = (item.title || "#").charAt(0).toUpperCase();
+        [id, kind, label] = [
+          `letter-${letter.toLowerCase()}`,
+          "letter",
+          letter,
+        ];
+      }
+      if (!groups.has(id)) groups.set(id, { id, kind, label, items: [] });
+      groups.get(id).items.push(item);
+    }
+    const ordered = [...groups.values()];
+    if (config.group === "alpha") {
+      ordered.sort((a, b) =>
+        a.kind === "pinned"
+          ? -1
+          : b.kind === "pinned"
+            ? 1
+            : a.label.localeCompare(b.label),
+      );
+    }
+    return ordered;
+  });
+
+  eleventyConfig.addFilter("collectionSearchText", (item) =>
+    [item.title, item.summary, item.language, ...(item.tags || [])]
+      .filter(Boolean)
+      .join(" ")
+      .toLowerCase()
+      .replace(/[&<>"]/g, ""),
+  );
+
+  const TYPE_LABELS = {
+    post: "Posts",
+    snippet: "Snippets",
+    note: "Notes",
+    til: "TIL",
+    folio: "Folio",
+    now: "Now",
+    photo: "Photos",
+    quotation: "Quotations",
+    lexicon: "Lexicon",
+    tool: "Tools",
+  };
+  eleventyConfig.addFilter(
+    "collectionTypeLabel",
+    (type) => TYPE_LABELS[type] || type,
+  );
+
+  const VIEW_OPTIONS = {
+    stream: { value: "stream", label: "Stream view", icon: "activity" },
+    list: { value: "list", label: "List view", icon: "list" },
+    grid: { value: "grid", label: "Wall view", icon: "grid" },
+  };
+  eleventyConfig.addFilter("viewToggleOptions", (views) =>
+    (views || []).map((view) => VIEW_OPTIONS[view]),
+  );
+
   // Archive-specific date filters
   eleventyConfig.addFilter("archiveTitle", (dateInput) => {
     return `Now (${archiveDateTime(dateInput).toFormat("MMM d, yyyy")})`;
@@ -1159,7 +1250,9 @@ export default function (eleventyConfig) {
     const now = new Date();
     return collectionApi
       .getFilteredByGlob("./src/posts/**/*.md")
-      .filter((post) => isVisibleContent(post, now) && post.data.pinned === true)
+      .filter(
+        (post) => isVisibleContent(post, now) && post.data.pinned === true,
+      )
       .sort((a, b) => b.date - a.date);
   });
 
@@ -1455,6 +1548,8 @@ export default function (eleventyConfig) {
           url: snippet.url,
           summary,
           readingTime: snippet.data.readingTime,
+          tags: (snippet.data.tags || []).filter((tag) => tag !== "snippets"),
+          language: snippet.data.language ?? null,
           original: snippet,
           hidden: !!snippet.data.hidden,
           authored_by: snippet.data.authored_by ?? null,
@@ -1602,6 +1697,7 @@ export default function (eleventyConfig) {
           date: entry.date,
           url: entry.url,
           summary,
+          tags: (entry.data.tags || []).filter((tag) => tag !== "til"),
           original: entry,
           hidden: !!entry.data.hidden,
         };
