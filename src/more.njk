@@ -70,16 +70,16 @@ collectionArchetype: index
   }
 ] %}
 
-{% set totalRoutes = 0 %}
+{% set totalPages = 0 %}
 {% for group in directoryGroups %}
-  {% set totalRoutes = totalRoutes + group.items.length %}
+  {% set totalPages = totalPages + group.items.length %}
 {% endfor %}
 
 {% set pageEyebrow = "Site Index" %}
 {% set pageTitle = "More" %}
 {% set pageDescription = "A categorized directory of everything on this site, inspired by <a href=\"https://slashpages.net\" target=\"_blank\" rel=\"noopener\" class=\"accent-link\">slashpages.net</a>." %}
-{% set itemCount = totalRoutes %}
-{% set itemLabel = "routes" %}
+{% set itemCount = totalPages %}
+{% set itemLabel = "pages" %}
 {% include "components/page-header.njk" %}
 
 <div class="space-y-10 not-prose mt-6">
@@ -87,7 +87,7 @@ collectionArchetype: index
     <section aria-labelledby="section-{{ group.title | slugify }}">
       <div class="flex items-baseline justify-between border-b border-gray-200 dark:border-gray-800 pb-1.5 mb-3">
         <h2 id="section-{{ group.title | slugify }}" class="editorial-kicker">{{ group.title }}</h2>
-        <span class="meta-line">{{ group.items.length }} routes</span>
+        <span class="meta-line">{{ group.items.length }} pages</span>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-1.5">
         {% for item in group.items %}
