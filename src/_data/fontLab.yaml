@@ -13,38 +13,26 @@ samples:
     url: /blog/local-inference/the-rise-of-overfit-inference-engines/
 
 variants:
-  - id: fraunces-titles
-    label: Fraunces titles
-    note: Jakarta body; Fraunces on every page title, post title, and post heading.
-    css: |
-      .page-header-title, .post-title, .post-body h2, .post-body h3 {
-        font-family: "Fraunces", ui-serif, Georgia, serif !important;
-        font-variation-settings: "opsz" 72;
-        letter-spacing: -0.01em;
-      }
-
-  - id: aile
-    label: Aile + Fraunces
-    note: Iosevka Aile for body and card titles, Fraunces for page and post titles.
-    fonts: [iosevka-aile]
-    mono: true
+  - id: jakarta
+    label: Previous site (Jakarta)
+    note: The look before 2.7.39. Plus Jakarta Sans body and page titles, Fraunces on post titles only.
+    fonts: [plus-jakarta-sans]
     css: |
       :root {
-        --font-sans: "Iosevka Aile", ui-sans-serif, sans-serif;
-        --font-serif: "Iosevka Aile", ui-sans-serif, sans-serif;
-        --font-display: "Iosevka Aile", ui-sans-serif, sans-serif;
+        --font-sans: "Plus Jakarta Sans", ui-sans-serif, sans-serif;
+        --font-serif: "Plus Jakarta Sans", ui-sans-serif, sans-serif;
+        --font-display: "Plus Jakarta Sans", ui-sans-serif, sans-serif;
       }
-      .page-header-title, .post-title, .post-body h2, .post-body h3 {
-        font-family: "Fraunces", ui-serif, Georgia, serif !important;
-        font-variation-settings: "opsz" 72;
-        letter-spacing: -0.01em;
+      .page-header-title, .post-body h2, .post-body h3 {
+        font-family: "Plus Jakarta Sans", ui-sans-serif, sans-serif !important;
+        font-variation-settings: normal;
+        letter-spacing: 0;
       }
 
   - id: etoile-aile
     label: Etoile headings + Aile content
     note: Iosevka Etoile for page, post, card, and list titles; Iosevka Aile for everything you read.
     fonts: [iosevka-aile, iosevka-etoile]
-    mono: true
     css: |
       :root {
         --font-sans: "Iosevka Aile", ui-sans-serif, sans-serif;
@@ -60,7 +48,6 @@ variants:
     label: Etoile everywhere
     note: Iosevka Etoile (slab serif) for body and titles.
     fonts: [iosevka-etoile]
-    mono: true
     css: |
       :root {
         --font-sans: "Iosevka Etoile", ui-serif, serif;
@@ -75,7 +62,6 @@ variants:
   - id: ioskeley-all
     label: Ioskeley everywhere
     note: Ioskeley Mono for every role, for comparison.
-    mono: true
     css: |
       :root {
         --font-sans: "Ioskeley Mono", ui-monospace, monospace;

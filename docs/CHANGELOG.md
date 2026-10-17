@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.39] - 2026-10-16
+### Changed
+- Typography: Iosevka Aile is now the body, card, and list title face, and Fraunces now sets every page title and post `h2`/`h3`, matching the "Aile + Fraunces" font lab variant. Iosevka Aile is self-hosted and subset to about 33 KB per weight (from about 1.2 MB upstream); the 400 weight is preloaded instead of Plus Jakarta Sans.
+- Font lab: "Current site" now describes Aile + Fraunces; added a `jakarta` variant to compare against the previous look.
+
+### Removed
+- Plus Jakarta Sans font files and `@font-face` rules.
+
 ## [2.7.38] - 2026-10-16
 ### Added
 - Hidden font lab at `/lab/fonts/` (noindex, kept out of collections, sitemaps, and search). Any page takes `?font=<id>` to preview a type direction, which persists for the tab until `?font=off`. Variants live in `src/_data/fontLab.yaml`: Fraunces titles, Aile + Fraunces, Etoile headings + Aile content, Etoile everywhere, and Ioskeley everywhere.

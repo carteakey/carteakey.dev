@@ -12,10 +12,4 @@ eleventyExcludeFromCollections: true
 @import url("https://cdn.jsdelivr.net/npm/@fontsource/{{ pkg }}@5.3.0/700.css");
 {%- endfor %}
 /* Font lab variant: {{ variant.label }} */
-{%- if variant.mono %}
-@font-face { font-family: "Ioskeley Mono"; src: url("/static/fonts/ioskeley-mono/IoskeleyMono-Regular.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
-@font-face { font-family: "Ioskeley Mono"; src: url("/static/fonts/ioskeley-mono/IoskeleyMono-Italic.woff2") format("woff2"); font-weight: 400; font-style: italic; font-display: swap; }
-@font-face { font-family: "Ioskeley Mono"; src: url("/static/fonts/ioskeley-mono/IoskeleyMono-Bold.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: swap; }
-:root { --font-mono: "Ioskeley Mono", ui-monospace, monospace; }
-{%- endif %}
 {{ variant.css | safe }}
