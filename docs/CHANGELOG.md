@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.48] - 2026-10-17
+### Changed
+- About random facts moved from `randomFacts.js` to `src/_data/randomFacts.yaml` with an `enabled` flag per fact. The five existing facts stay enabled; about 30 drafted candidates (from posts, the Between Two Worlds speech, public data, the vault, and repos) are stored disabled with their source, ready to switch on.
+
 ## [2.7.47] - 2026-10-17
 ### Added
 - Charts: `{% chart %}` renders every data figure as SVG at build time (`utils/charts.mjs`). Types: line, bars, ranked rows, heatmap, waffle, small multiples, steps and sparkline. The grammar is "ink and dots": grey context, one accent, halftone fills, Fraunces notes on a hand-drawn leader, and a footer with source, n and range plus a collapsible data table and query. Documented in `docs/BLOG_POST_FEATURES.md`.

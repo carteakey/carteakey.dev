@@ -1,0 +1,117 @@
+# Random facts for the "Random fact" box on /about/. One enabled fact is picked
+# at random on each build. Flip `enabled` to choose what can show.
+# Note: the repo is public, so disabled entries are still readable on GitHub.
+# `source` records where each fact came from; `note` flags overlaps with /about/.
+
+- text: "My favorite movie is The Thing (1982) by John Carpenter."
+  enabled: true
+  note: Repeats the Movies line on /about/.
+- text: "I can (and will) rewatch the Dark Knight trilogy at any time."
+  enabled: true
+  note: Repeats the Movies line on /about/.
+- text: "I've spent more hours in Bloodborne than I'd like to admit."
+  enabled: true
+  note: Overlaps the Gaming line on /about/.
+- text: "My favorite album of all time is OK Computer by Radiohead."
+  enabled: true
+- text: "Elden Ring has eaten 233 hours of my Steam library."
+  enabled: true
+  source: Steam data (/data/)
+
+# Moving to Canada (from the Between Two Worlds speech, a hidden post)
+- text: "I landed in Canada in November 2023 wearing my 'warmest' jacket from Delhi. By the time I reached the taxi, I was sure I'd made a life-altering mistake."
+  enabled: false
+  source: Between Two Worlds
+- text: "My first real Canadian test was a double-double at Tim Hortons."
+  enabled: false
+  source: Between Two Worlds
+- text: "I once spent ten minutes hunting for coriander in a Canadian grocery store. Turns out it's called cilantro here."
+  enabled: false
+  source: Between Two Worlds
+- text: "Paneer became a luxury item when I moved to Canada, and I'm still not over it."
+  enabled: false
+  source: Between Two Worlds
+- text: "Friends here taught me how to say Toronto properly. It's 'Trawno'."
+  enabled: false
+  source: Between Two Worlds
+- text: "My family back home teases me about my emerging Canadian accent."
+  enabled: false
+  source: Between Two Worlds
+- text: "My parents have presented PowerPoint slides of potential arranged-marriage matches."
+  enabled: false
+  source: Between Two Worlds
+  note: Involves family; your call.
+
+# From published posts
+- text: "I always end up working on this site's code instead of writing posts for it."
+  enabled: false
+  source: Moving my site from Jekyll to Eleventy, part II
+- text: "Reddit is my guilty pleasure, so I only use it in a browser, to make it worse on purpose."
+  enabled: false
+  source: Dumbing Down My iPhone
+- text: "My gaming habit is the only reason I own an NVIDIA GPU. Now it runs my local models."
+  enabled: false
+  source: The Unforwarder
+- text: "I keep a local model around for when the AI winter comes."
+  enabled: false
+  source: Optimizing gpt-oss-120b local inference
+- text: "My favorite meme is the IQ bell curve. I have one for note-taking, data tools, Linux, and LLM evals."
+  enabled: false
+  source: My Favorite Meme
+- text: "I restored a 1950s photo of my grandfather with an image model and named the project after Baumgartner Restoration."
+  enabled: false
+  source: Personal Braumgartner Restoration
+
+# From my own data (already public on /data/ and /listening/)
+- text: "Radiohead is almost 7% of everything I've played on Spotify since 2016. Fake Plastic Trees alone has 360 plays."
+  enabled: false
+  source: Spotify data
+- text: "My most-played album isn't OK Computer. It's The Bends."
+  enabled: false
+  source: Spotify data
+- text: "I've spent about 3,000 hours on Spotify since 2016."
+  enabled: false
+  source: Spotify data
+- text: "I own 146 games on Steam and have played about half of them."
+  enabled: false
+  source: Steam data
+- text: "Reddit narrowly beats Google as the site I visit most."
+  enabled: false
+  source: Browsing data
+
+# From the vault (private notes; would become public if enabled)
+- text: "I keep a scored ranking of Radiohead songs. Paranoid Android and Weird Fishes/Arpeggi are tied at the top."
+  enabled: false
+  source: Vault, Radiohead Ranking
+- text: "The Scientist is #1 in my Coldplay spreadsheet. Yes, I have a Coldplay spreadsheet."
+  enabled: false
+  source: Vault, Coldplay Ranking
+- text: "My cooking repertoire has a 'Super Lazy' tier. Maggi lives there."
+  enabled: false
+  source: Vault, Dishes I Can Make
+- text: "Most of my cooking goes through an Instant Pot: dal tadka, baingan bharta, bhindi masala."
+  enabled: false
+  source: Vault, Instant Pot recipes
+- text: "My Obsidian vault's welcome note greets me as 'Overseer'."
+  enabled: false
+  source: Vault, WELCOME, OVERSEER
+- text: "Once I work out a game's mechanics, it turns into content for me, and I'd rather go build something."
+  enabled: false
+  source: Vault, Gaming & Emulation
+- text: "I read 'Let Down' as an uplifting song, not a sad one."
+  enabled: false
+  source: Vault, You Know Where You Are With
+- text: "I once wrote a track-by-track review of The Local Train's 'Alas Ka Pedh'. The title means 'tree of laziness'."
+  enabled: false
+  source: Vault, Album Review
+- text: "Hobbies I'm actively pursuing, according to my own notes: gym, gaming, self-hosting, cooking, and overthinking."
+  enabled: false
+  source: Vault, Hobbies
+
+# From repos
+- text: "There's a Batocera box under my TV called Glowdesk, and it has its own repo."
+  enabled: false
+  source: crt-cabinet
+- text: "I'm making a pixel game about the eighteen days of the Kurukshetra War, where you play as Arjuna."
+  enabled: false
+  source: Eighteen Dawns
