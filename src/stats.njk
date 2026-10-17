@@ -231,29 +231,51 @@ collectionArchetype: ledger
 </div>
 
 {# ── Lighthouse ── #}
-{{ cb.section_header("Lighthouse", "Continuous audit scores", "activity") }}
+{# Monthly LHCI run (lighthouserc.cjs), appended by utils/lighthouse-history.mjs. #}
+{% if lighthouse.runs and lighthouse.runs.length %}
+{% set lhLatest = lighthouse.runs | last %}
+{% set lhHead = lhLatest.pages[lighthouse.headline] %}
+{% set lhLabels = { performance: "Performance", accessibility: "Accessibility", bestPractices: "Best Practices", seo: "SEO" } %}
+{{ cb.section_header("Lighthouse", "Monthly audit, homepage headline", "activity") }}
 
-<div class="not-prose mb-12">
-  <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8">
-    {% for m in [
-      { label: "Performance", val: lighthouse.metrics.performance },
-      { label: "Accessibility", val: lighthouse.metrics.accessibility },
-      { label: "Best Practices", val: lighthouse.metrics.bestPractices },
-      { label: "SEO", val: lighthouse.metrics.seo }
-    ] %}
-    <div class="flex items-center gap-3 py-2.5 border-b border-gray-100 dark:border-gray-800/80">
-      <span class="editorial-support w-28 shrink-0">{{ m.label }}</span>
-      <div class="flex-1 h-2 bg-gray-100 dark:bg-gray-800 rounded-sm overflow-hidden">
-        <div class="h-full rounded-sm" style="width: {{ m.val | default(0) }}%; background: var(--accent-color);"></div>
-      </div>
-      <span class="editorial-title-compact w-8 text-right">{{ m.val | default(0) }}</span>
-    </div>
+<div class="not-prose mb-4">
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+    {% for key, label in lhLabels %}
+      {% set lhSeries = [] %}
+      {% for run in lighthouse.runs %}
+        {% if run.pages[lighthouse.headline] %}
+          {% set _ = lhSeries.push({ date: run.date, score: run.pages[lighthouse.headline][key] }) %}
+        {% endif %}
+      {% endfor %}
+      {{ cb.stat_tile(label, lhHead[key], "homepage", chartSvg({ type: "spark", data: lhSeries, x: "date", y: "score" }) if lhSeries.length > 1 else "") }}
     {% endfor %}
   </div>
-  {% if lighthouse.updatedAt %}
-  <p class="editorial-support-compact mt-3">{{ lighthouse.updatedAt }} · {{ lighthouse.source }}</p>
-  {% endif %}
 </div>
+
+<div class="table-scroll mb-3" role="region" aria-label="Lighthouse scores by page" tabindex="0">
+<table>
+  <thead>
+    <tr><th>Page</th><th>Perf</th><th>A11y</th><th>Best</th><th>SEO</th><th>LCP</th><th>CLS</th><th>TBT</th></tr>
+  </thead>
+  <tbody>
+    {% for path, page in lhLatest.pages %}
+    <tr>
+      {% set lhSlug = path | replace(r/\/$/, "") | split("/") | last %}
+      <td><a href="{{ path | url }}" title="{{ path }}">{{ path if path.length < 24 else "…/" + (lhSlug | truncate(22, true, "…")) }}</a></td>
+      <td>{{ page.performance }}</td>
+      <td>{{ page.accessibility }}</td>
+      <td>{{ page.bestPractices }}</td>
+      <td>{{ page.seo }}</td>
+      <td>{{ (page.lcp / 1000) | round(1) }} s</td>
+      <td>{{ page.cls }}</td>
+      <td>{{ page.tbt }} ms</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+<p class="not-prose editorial-support-compact mb-12">{{ lhLatest.date }} · {{ lhLatest.source }} · mobile emulation, median of three runs, {{ lighthouse.runs.length }} run{% if lighthouse.runs.length != 1 %}s{% endif %} on record.</p>
+{% endif %}
 
 {# ── Top tags ── #}
 {{ cb.section_header("Top tags", "Most frequent taxonomy", "tag") }}

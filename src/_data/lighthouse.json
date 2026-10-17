@@ -1,10 +1,47 @@
 {
-  "updatedAt": "2025-10-04",
-  "source": "Manual Lighthouse run on Chrome DevTools",
-  "metrics": {
-    "performance": 94,
-    "accessibility": 95,
-    "bestPractices": 100,
-    "seo": 91
-  }
+  "headline": "/",
+  "runs": [
+    {
+      "date": "2026-10-17",
+      "source": "Lighthouse CI, local run (Chromium 1248)",
+      "pages": {
+        "/": {
+          "performance": 56,
+          "accessibility": 91,
+          "bestPractices": 100,
+          "seo": 92,
+          "lcp": 9481,
+          "cls": 0.119,
+          "tbt": 50
+        },
+        "/blog/": {
+          "performance": 54,
+          "accessibility": 91,
+          "bestPractices": 100,
+          "seo": 92,
+          "lcp": 7997,
+          "cls": 0,
+          "tbt": 328
+        },
+        "/now/": {
+          "performance": 61,
+          "accessibility": 83,
+          "bestPractices": 100,
+          "seo": 92,
+          "lcp": 7761,
+          "cls": 0,
+          "tbt": 103
+        },
+        "/blog/local-inference/optimizing-gpt-oss-120b-local-inference/": {
+          "performance": 57,
+          "accessibility": 87,
+          "bestPractices": 96,
+          "seo": 92,
+          "lcp": 15261,
+          "cls": 0,
+          "tbt": 164
+        }
+      }
+    }
+  ]
 }

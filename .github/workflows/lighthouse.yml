@@ -5,8 +5,9 @@ on:
   schedule:
     - cron: '15 8 1 * *'
 
+# Writes the run back to src/_data/lighthouse.json for /stats/.
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   lighthouse:
@@ -26,8 +27,29 @@ jobs:
       - name: Enable pnpm
         run: corepack enable
 
+      # Failing assertions are recorded, not fatal: the history still gets the row.
       - name: Run Lighthouse CI
+        id: lhci
+        continue-on-error: true
         run: pnpm dlx @lhci/cli@0.15.1 autorun --config=./lighthouserc.cjs
+
+      - name: Record history and summarize failing audits
+        run: node utils/lighthouse-history.mjs >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Commit history
+        run: |
+          git diff --quiet -- src/_data/lighthouse.json && exit 0
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/_data/lighthouse.json
+          git commit -m "data(lighthouse): monthly audit $(date -u +%Y-%m-%d)"
+          git pull --rebase origin main
+          git push origin HEAD:main
+
+      # The history is recorded either way; a failed assertion still turns the run red.
+      - name: Fail on Lighthouse assertions
+        if: steps.lhci.outcome == 'failure'
+        run: exit 1
 
       - name: Upload Lighthouse reports
         if: always()

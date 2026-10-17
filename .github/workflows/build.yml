@@ -56,3 +56,19 @@ jobs:
 
       - name: Verify built output
         run: pnpm run verify
+
+      # Warn-only Lighthouse pass on the built site (lighthouserc.ci.cjs). It
+      # catches a heavier bundle or a new accessibility failure in the diff; the
+      # monthly workflow grades production.
+      - name: Lighthouse on built site
+        continue-on-error: true
+        run: pnpm dlx @lhci/cli@0.15.1 autorun --config=./lighthouserc.ci.cjs
+
+      - name: Upload Lighthouse reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-ci-${{ github.run_number }}
+          path: lighthouse-reports/
+          if-no-files-found: ignore
+          retention-days: 14

@@ -11,11 +11,12 @@ Findings from the 2026-10-10 review, roughly in priority order. Promote items to
 - [ ] Reduce CSS weight: one 5,239-line `src/static/css/tailwind.css` ships as 186 kB minified on every page. Split the source into `@import`ed partials (tokens, prose, components, collections, footer), audit dead selectors, and consider loading bespoke page styles (folios, footer scene) only where used.
 - [ ] Start the media move before the parked R2 trigger: `.git` is 527 MB, `src/static/img` 240 MB, `_site` 367 MB. Moving photography, GIFs, and MP4s off-repo also eases the Netlify build-minute pressure behind batched pushes. Plan: `docs/ideas/image-hosting-r2-worker.md`.
 - [ ] Add unit tests (`node:test`) for publishing logic: `hidden`/`draft` visibility, date rules, feed text normalization, tag collections. Current checks cover lint, content rules, design drift, and generated HTML, but nothing would catch a draft leaking into the feed. Depends on the config split.
-- [ ] Refresh Lighthouse data: `src/_data/lighthouse.json` is a manual run from 2025-10-04. Run `lighthouserc.cjs` on a schedule in CI, or drop the data if it is displayed.
+- [x] Refresh Lighthouse data: the monthly workflow now appends each run to `src/_data/lighthouse.json` for `/stats/`. (2026-10-17)
+- [ ] Lighthouse fixes from the 2026-10-17 run: mobile LCP is 8–15 s (fonts are 680–870 KB per page), homepage CLS 0.119, contrast and touch-target failures, a `<dl>` structure error on `/now/`, an unnamed button on posts, and skipped heading levels.
 - [x] Drop WebC: `src/index.njk` is the only WebC template and uses it only for `eleventy-img`'s component. Switch to the `{% image %}` shortcode and remove `@11ty/eleventy-plugin-webc`.
 - [ ] Consolidate the 20 inline `<script>` blocks in `src/_includes/layouts/base.njk` (~130 lines) into one cached, deferred module. Keep only the theme/accent bootstrap inline to avoid a flash on load. Update the `AGENTS.md` guidance on inline Alpine snippets to match.
 - [x] Tidy docs: move one-off files (`docs/overfit-inference-*.md`, `docs/prompt.md`, `docs/instructions.md`) to `docs/history/`; fix the stale "Copilot playbook" heading in `AGENTS.md`.
-- [ ] Archive older years of `docs/CHANGELOG.md` (1,900 lines).
+- [x] Archive older years of `docs/CHANGELOG.md`: `/changelog/` now groups by month with written summaries and folds the releases, so the file stays whole. (2026-10-17)
 
 ### Footer scene
 

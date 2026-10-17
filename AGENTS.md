@@ -75,6 +75,7 @@ This project uses a manual versioning process. It is your responsibility to keep
 
    * Add a new entry under the current date.
    * Use SemVer headings and clear sections `Added`, `Changed`, `Fixed`.
+   * `/changelog/` groups releases by month under a short written summary in `src/_data/changelogSummaries.yaml`. Add the month's entry when a new month starts, and update it when the month's direction changes.
 
 ```
 ## [1.2.3] - 2025-09-11

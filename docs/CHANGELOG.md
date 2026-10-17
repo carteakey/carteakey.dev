@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [2.8.3] - 2026-10-17
+## [2.8.4] - 2026-10-17
 ### Added
 - Stats: a publishing-rhythm heatmap (posts, notes and snippets by year and month), titled with the busiest month.
 
@@ -15,6 +15,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Compact authorship badge tooltips are right-aligned, so a badge at the end of a row no longer widens the page (horizontal scroll on `/stats/`).
 - Heatmaps with 16 or fewer columns draw at a fixed scale instead of stretching to full width.
 - "Has My Photography Gotten Better?" draft: sample-photo paragraph rewritten in the author's voice without an em dash, and alt text no longer guesses places or species.
+
+## [2.8.3] - 2026-10-17
+### Added
+- `/changelog/`: grouped by month. Each month shows a short written summary (`src/_data/changelogSummaries.yaml`) and a count line; its releases sit underneath in a collapsible block, with only the newest month open. Entries render inline Markdown, and nested bullets show under their parent.
+- Lighthouse history: `utils/lighthouse-history.mjs` appends each monthly run (representative of three, per page: four scores plus LCP, CLS, TBT) to `src/_data/lighthouse.json` and writes a digest of failing audits to the job summary. The monthly workflow commits the file back. Seeded with a real run from today.
+- `lighthouserc.ci.cjs`: a warn-only Lighthouse pass on the built `_site/` in the build workflow, with byte, TBT and CLS budgets set just above today's numbers.
+
+### Changed
+- `/stats/` Lighthouse: the latest run as tiles (sparklines appear once there are two runs) and a per-page table, replacing the 2025-10-04 manual desktop figures. Scores are mobile emulation, so they read lower.
+- `lighthouserc.cjs`: three runs per URL, adds the gpt-oss post, and warns on LCP, CLS and TBT.
+
+### Fixed
+- Changelog parser: the section regex ended in `\z`, which JavaScript reads as the letter z, so any entry containing a "z" was cut mid-word and the rest of its section dropped (539 of 935 entries rendered).
+- Changelog git history: the cutoff used the newest CHANGELOG date instead of the oldest, so git months duplicated documented ones.
 
 ## [2.8.2] - 2026-10-17
 ### Added

@@ -24,6 +24,14 @@ Localhost is never sampled. Live verification therefore requires a Netlify deplo
 
 ## Monthly synthetic audit
 
-`.github/workflows/lighthouse.yml` runs Lighthouse CI against the homepage, writing archive, and Now page on the first day of each month. It can also be started manually. HTML and JSON reports are retained as GitHub Actions artifacts for 90 days.
+`.github/workflows/lighthouse.yml` runs Lighthouse CI (`lighthouserc.cjs`) against the homepage, writing archive, Now page, and the gpt-oss post on the first day of each month. It can also be started manually. Each URL gets three runs; LHCI marks the median as representative. HTML and JSON reports are retained as GitHub Actions artifacts for 90 days.
 
-Run the same audit locally with `pnpm audit:lighthouse`. The command audits the deployed production site, not the local build.
+After the run, `utils/lighthouse-history.mjs` appends the representative scores, LCP, CLS, and TBT per page to `src/_data/lighthouse.json` and the workflow commits it back to `main`, so `/stats/` shows the latest run and a sparkline per category. The same script writes a digest of failing audits to the job summary: start fixes there. Failing assertions don't stop the history from being recorded.
+
+Scores are mobile emulation with simulated throttling, so they run lower than a desktop DevTools run. The old 2025-10-04 manual figures (94/95/100/91) were desktop and aren't comparable; they were dropped.
+
+Run the same audit locally with `pnpm audit:lighthouse`, then `node utils/lighthouse-history.mjs --source "..."` to record it. Without Chrome installed, point `CHROME_PATH` at Playwright's Chromium (`~/.cache/ms-playwright/chromium-*/chrome-linux64/chrome`). The command audits the deployed production site, not the local build.
+
+## Build-time Lighthouse
+
+`.github/workflows/build.yml` also runs `lighthouserc.ci.cjs` against the built `_site/` on every pull request and push to `main`. It is warn-only: CI has no secrets, so pages render fallback data. Its budgets (JS, CSS, font and total bytes, TBT, CLS) sit just above the 2026-10-17 measurements and work as a ratchet: lower them as fixes land, never raise one to quiet a warning.

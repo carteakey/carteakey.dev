@@ -1,0 +1,66 @@
+# Month summaries for /changelog/, keyed YYYY-MM. One to three sentences in
+# plain voice: what the month was about, not every entry. Months without a
+# summary show only the generated counts. src/_data/changelog.js reads this.
+
+2026-10: >-
+  Charts moved to one build-time SVG renderer, so `/data/` and `/listening/` dropped Chart.js,
+  and `/stats/` caught up. Most collection pages now run on one shared engine with a registry
+  of why each page looks the way it does. Halftone scenes replaced the ASCII ones, Ioskeley
+  Mono became the mono face, bookmarks absorbed the blogroll and got an 88×31 shelf, and this
+  page went monthly with Lighthouse history on `/stats/`.
+
+2026-09: >-
+  The month the style guide got teeth: the `check:design` ratchet, required post thumbnails,
+  and one sketches skill for thumbnails and diagrams. Notes picked up X syndication and tweet
+  ingestion, and the Uses page got a machine grid.
+
+2026-08: >-
+  A quieter month. A weekly new-post digest for the newsletter, a changelog table inside posts,
+  guestbook verification, and a refreshed Agent IDE tier list.
+
+2026-07: >-
+  Projects got current and upcoming sections with artwork, and support and newsletter got proper
+  pages. Behind the scenes: content-versioned assets, fewer font files, split sitemaps, a monthly
+  Lighthouse workflow and a denser `/status/` page.
+
+2026-06: >-
+  The busiest month by releases. `/status/`, `/reviews/`, `/watching/` from Letterboxd and
+  `/reading/` from Goodreads all arrived, `/now/` moved to a YAML source with archives, and most
+  posts got their thumbnail sketch.
+
+2026-05: >-
+  A visual reset: flatter bone-white paper, tighter homepage sections, smaller hero images, and
+  sketches for the remaining posts.
+
+2026-04: >-
+  The post toolkit and the design language guide. Callouts, updates, definitions and footnotes
+  became shortcodes, `docs/BLOG_POST_FEATURES.md` started, and the first sketch thumbnails
+  landed. Also the prompt library and a CV redesign.
+
+2026-03: >-
+  Folios started with Radiohead and the Agent Tick meme wall. Search got filters and sort, the
+  blog archive got year jumps, and the data modules stopped dumping tokens into build logs.
+
+2026-02: >-
+  A lot of new pages at once: notes, TIL, reading, colophon, guestbook, skills and this
+  changelog. The stats page was redesigned, and keyboard shortcuts moved to Ctrl/Cmd.
+
+2026-01: >-
+  The glassmorphism and gradient phase, most of which was later removed. The more lasting
+  additions were view counts, a service worker, `/uses/`, tag filtering on `/blog/` and
+  self-hosted Alpine.
+
+2025-10: >-
+  Everything moved onto one shared card shell. The guestbook, a unified activity feed,
+  microposts, blog folders and post reactions arrived, along with the first post about letting
+  AI work on the site.
+
+2025-09: >-
+  The unified `/feed/`, a bookmarks page, and a stats page with Lighthouse and upvote numbers.
+
+2025-01: >-
+  The first versioned releases: search, related posts, reading time, structured data,
+  breadcrumbs and the newsletter page.
+
+2022-10: >-
+  The site moved from Jekyll to an Eleventy starter, along with its posts and the about page.

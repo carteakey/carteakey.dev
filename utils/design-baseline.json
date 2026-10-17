@@ -189,7 +189,7 @@
     "src/stats.njk": {
       "pill-or-circle": 4,
       "utility-text-stack": 4,
-      "inline-style": 11
+      "inline-style": 10
     },
     "src/status.njk": {
       "off-palette-colour": 10

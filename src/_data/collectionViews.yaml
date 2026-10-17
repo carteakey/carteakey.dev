@@ -176,7 +176,7 @@ changelog:
   page: src/changelog.njk
   archetype: index
   engine: false
-  why: Release notes read top to bottom; version headings are the structure.
+  why: Months are the structure. A written summary stays visible and the releases fold into a native <details> (newest month open, no JS), so the page scans by month without hiding the detail.
 
 devices:
   page: src/devices.njk
@@ -329,7 +329,7 @@ stats:
   page: src/stats.njk
   archetype: ledger
   engine: false
-  why: Site statistics; charts and numbers.
+  why: Site statistics; charts and numbers. Lighthouse shows the latest monthly run per page from src/_data/lighthouse.json.
 
 status:
   page: src/status.njk
