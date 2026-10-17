@@ -113,3 +113,11 @@
 /posts/llm-benchmarks/trivia-quiz.html /blog/llm-benchmarks/trivia-quiz.html 301!
 /posts/llm-benchmarks/bouncing-balls.py /blog/llm-benchmarks/bouncing-balls.py 301!
 /posts/llm-benchmarks/bouncing-balls-v2.py /blog/llm-benchmarks/bouncing-balls-v2.py 301!
+
+# Nested AI subpages redirects
+/skills/ /ai/skills/ 301!
+/skills /ai/skills/ 301!
+/skills/:splat /ai/skills/:splat 301!
+/prompts/ /ai/prompts/ 301!
+/prompts /ai/prompts/ 301!
+/prompts/:splat /ai/prompts/:splat 301!

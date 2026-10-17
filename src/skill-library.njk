@@ -1,19 +1,15 @@
 ---
 layout: layouts/base.njk
-title: Skills
+title: Agent Skills Library
 description: Agent skill files I use, write, and find worth keeping.
-permalink: /skills/
-eleventyNavigation:
-  key: Skills
-  order: 6
+permalink: /ai/skills/
 collectionArchetype: ledger
 ---
 
 {% include "components/breadcrumbs.njk" %}
 
-{% set pageEyebrow = "Agent Workflows" %}
 {% set pageTitle = "Skills" %}
-{% set pageDescription = "Reusable agent instructions from Skillrex and useful corners of the internet—with a link to the original file and the notes I wish came with it." %}
+{% set pageDescription = "Reusable agent instructions from Skillrex and useful corners of the internet - with a link to the original file and the notes I wish came with it." %}
 {% set itemCount = collections.agentSkills | length %}
 {% set itemLabel = "skills" %}
 
@@ -34,13 +30,13 @@ collectionArchetype: ledger
       <article class="py-4 group" data-skill-card data-title="{{ skill.data.title | lower }}" data-tags="{{ filteredTags | join(' ') | lower }}" data-source="{{ skill.data.sourceName | default('') | lower }}" data-body="{{ skill.data.description | default('') | lower }} {{ searchExcerpt }}">
         <div class="flex flex-col md:flex-row md:gap-6">
           <div class="shrink-0 md:w-36 flex flex-col gap-1 pt-0.5">
-            <time class="meta-text text-xs text-gray-400 dark:text-gray-500" datetime="{{ skill.date | htmlDateString }}">{{ skill.date | readableDate }}</time>
-            {% if skill.data.sourceName %}<span class="meta-text text-[0.78rem] text-gray-400 dark:text-gray-500">{{ skill.data.sourceName }}</span>{% endif %}
+            <time class="meta-text" datetime="{{ skill.date | htmlDateString }}">{{ skill.date | readableDate }}</time>
+            {% if skill.data.sourceName %}<span class="meta-text">{{ skill.data.sourceName }}</span>{% endif %}
           </div>
           <div class="flex-1 min-w-0">
             <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-              <a href="{{ skill.url }}" class="editorial-title-link title-hover" style="text-decoration: none;">{{ skill.data.title }}</a>
-              <a href="{{ skill.data.fileUrl }}" target="_blank" rel="noopener" class="editorial-meta-link inline-flex items-center gap-1" style="text-decoration: none;">SKILL.md {% feather "external-link", class="w-3 h-3" %}</a>
+              <a href="{{ skill.url }}" class="editorial-title-link title-hover no-underline">{{ skill.data.title }}</a>
+              <a href="{{ skill.data.fileUrl }}" target="_blank" rel="noopener" class="editorial-meta-link inline-flex items-center gap-1 no-underline">SKILL.md {% feather "external-link", class="w-3 h-3" %}</a>
             </div>
             {% if skill.data.description %}<p class="editorial-support-compact mt-1 mb-0">{{ skill.data.description }}</p>{% endif %}
             {% if filteredTags | length %}

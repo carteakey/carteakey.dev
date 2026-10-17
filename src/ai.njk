@@ -1,7 +1,7 @@
 ---
 layout: layouts/base.njk
-title: AI Ecosystem & Workbench
-description: How I use AI in practice — daily driver subscriptions, local inference hardware, model rankings, and research series.
+title: AI
+description: How I use AI in practice - subscriptions, local models, evaluation prompts, skills, and writing.
 permalink: /ai/
 eleventyNavigation:
   key: AI
@@ -9,139 +9,84 @@ eleventyNavigation:
 collectionArchetype: ledger
 ---
 
+{% from "components/feed-card.njk" import postListRow %}
 {% include "components/breadcrumbs.njk" %}
 
-{% set pageEyebrow = "Workbench · Ledger" %}
-{% set pageTitle = "AI Ecosystem" %}
-{% set pageDescription = "How I actually use AI across engineering, writing, and local systems: the paid subscriptions, daily-driver runtimes, consumer homelab specs, and curated research clusters." %}
-{% set pageMetaLabel = "Updated" %}
-{% set pageMeta = "Oct 14, 2026" %}
-{% set pageBadges = [
-  { label: "18 Models Ranked", href: "/folio/model-tier-list/" },
-  { label: "RTX 4070 12GB Node", href: "/devices/yeti-cachy/" },
-  { label: "Local-First" }
-] %}
+{% set pageTitle = "AI" %}
+{% set pageDescription = "How I actually use AI across engineering, writing, and local systems: my active subscriptions, local inference models on my <a href=\"/devices/yeti-cachy/\" class=\"accent-link\">RTX 4070 rig</a>, evaluation prompts, and skills." %}
 {% set pageActions = [
   { label: "Model Tier List →", href: "/folio/model-tier-list/", accent: true }
 ] %}
 {% include "components/page-header.njk" %}
 
-{# ── 1. Active Subscriptions & Operating Stack (Ledger) ── #}
-<section class="not-prose mb-12 animate-enter stagger-1" aria-labelledby="subscriptions-heading">
-  <div class="flex items-baseline justify-between gap-4 mb-4">
-    <h2 id="subscriptions-heading" class="editorial-title">Operating Stack & Subscriptions</h2>
-    <span class="font-mono text-[0.78rem] uppercase tracking-[0.12em] text-gray-500 dark:text-gray-400">~$40 / mo Active Budget</span>
+{# ── 1. Active Subscriptions & Operating Stack ── #}
+<section class="not-prose mb-12" aria-labelledby="subscriptions-heading">
+  <div class="flex items-baseline justify-between gap-4 mb-3">
+    <h2 id="subscriptions-heading" class="editorial-title">Subscriptions & Daily Stack</h2>
+    <span class="meta-line">~$40 / mo + Local</span>
   </div>
-  <p class="editorial-support mb-4">
-    I rely on a lean dual-subscription core ($20 Claude + $20 ChatGPT/Codex) paired with Google AI Pro for high-TPS velocity, OpenCode Go as a utility router, and local 125B MoE execution for zero-retention privacy and offline experiments.
-  </p>
 
-  <div class="surface rounded-sm overflow-hidden border border-surface-border">
+  <div class="surface overflow-hidden">
     <div class="overflow-x-auto">
       <table class="w-full text-left border-collapse text-xs md:text-sm font-sans">
         <thead>
-          <tr class="border-b border-surface-border bg-stone-100/60 dark:bg-stone-900/60 font-mono text-[0.78rem] uppercase tracking-wider text-stone-600 dark:text-stone-400">
+          <tr class="border-b border-gray-200 dark:border-gray-800 bg-stone-100/60 dark:bg-stone-900/60 font-mono text-[0.78rem] uppercase tracking-wider text-stone-600 dark:text-stone-400">
             <th class="py-2.5 px-3 md:px-4 font-semibold">Service</th>
             <th class="py-2.5 px-3 md:px-4 font-semibold">Cost</th>
-            <th class="py-2.5 px-3 md:px-4 font-semibold">Primary Role</th>
-            <th class="py-2.5 px-3 md:px-4 font-semibold">Active Models & Tiers</th>
-            <th class="py-2.5 px-3 md:px-4 font-semibold">Daily Harness</th>
+            <th class="py-2.5 px-3 md:px-4 font-semibold">Role</th>
+            <th class="py-2.5 px-3 md:px-4 font-semibold">Models</th>
+            <th class="py-2.5 px-3 md:px-4 font-semibold">Harness</th>
           </tr>
         </thead>
-        <tbody class="divide-y divide-surface-border font-serif">
-          <tr class="hover:bg-stone-50/50 dark:hover:bg-stone-900/40 transition-colors">
-            <td class="py-3 px-3 md:px-4 font-mono font-semibold text-stone-900 dark:text-stone-100">
-              ChatGPT Plus & Codex
-            </td>
-            <td class="py-3 px-3 md:px-4 font-mono text-stone-600 dark:text-stone-400">
-              $20 / mo
-            </td>
-            <td class="py-3 px-3 md:px-4 text-stone-700 dark:text-stone-300">
-              Complex multi-file refactoring, autonomous repo migrations, deep bug root-cause investigation
-            </td>
+        <tbody class="divide-y divide-gray-200 dark:divide-gray-800">
+          <tr>
+            <td class="py-3 px-3 md:px-4 font-mono font-semibold">ChatGPT Plus & Codex</td>
+            <td class="py-3 px-3 md:px-4 meta-text">$20 / mo</td>
+            <td class="py-3 px-3 md:px-4 editorial-support-compact">Multi-file refactoring, repo migrations, root-cause debugging</td>
             <td class="py-3 px-3 md:px-4 font-mono text-[0.8rem]">
-              <strong class="font-semibold text-stone-900 dark:text-stone-100">GPT-6 Astra</strong> <span class="meta-text">(S+)</span>, 
-              GPT-6.1 Sol <span class="meta-text">(S)</span>, 
-              GPT-6 Luna <span class="meta-text">(B)</span>
+              <strong>GPT-6 Astra</strong> <span class="meta-text">(S+)</span>, GPT-6.1 Sol <span class="meta-text">(S)</span>, GPT-6 Luna <span class="meta-text">(B)</span>
             </td>
-            <td class="py-3 px-3 md:px-4 font-mono text-[0.8rem] text-stone-600 dark:text-stone-400">
-              Codex CLI & IDE
-            </td>
+            <td class="py-3 px-3 md:px-4 meta-text">Codex CLI</td>
           </tr>
-          <tr class="hover:bg-stone-50/50 dark:hover:bg-stone-900/40 transition-colors">
-            <td class="py-3 px-3 md:px-4 font-mono font-semibold text-stone-900 dark:text-stone-100">
-              Claude Pro
-            </td>
-            <td class="py-3 px-3 md:px-4 font-mono text-stone-600 dark:text-stone-400">
-              $20 / mo
-            </td>
-            <td class="py-3 px-3 md:px-4 text-stone-700 dark:text-stone-300">
-              Interactive pair-programming partner, architecture design, editorial prose, clean code review
-            </td>
+          <tr>
+            <td class="py-3 px-3 md:px-4 font-mono font-semibold">Claude Pro</td>
+            <td class="py-3 px-3 md:px-4 meta-text">$20 / mo</td>
+            <td class="py-3 px-3 md:px-4 editorial-support-compact">Pair programming, architecture design, code review</td>
             <td class="py-3 px-3 md:px-4 font-mono text-[0.8rem]">
-              <strong class="font-semibold text-stone-900 dark:text-stone-100">Claude Sonnet 5.5</strong> <span class="meta-text">(S)</span>, 
-              Claude Opus 5.5 <span class="meta-text">(S+)</span>, 
-              Claude Haiku 5.5 <span class="meta-text">(B)</span>
+              <strong>Claude Sonnet 5.5</strong> <span class="meta-text">(S)</span>, Claude Opus 5.5 <span class="meta-text">(S+)</span>, Claude Fable 5.1 <span class="meta-text">(S+)</span>
             </td>
-            <td class="py-3 px-3 md:px-4 font-mono text-[0.8rem] text-stone-600 dark:text-stone-400">
-              Claude Code & Desktop
-            </td>
+            <td class="py-3 px-3 md:px-4 meta-text">Claude Code</td>
           </tr>
-          <tr class="hover:bg-stone-50/50 dark:hover:bg-stone-900/40 transition-colors">
-            <td class="py-3 px-3 md:px-4 font-mono font-semibold text-stone-900 dark:text-stone-100 flex items-center gap-1.5">
-              <span>Google AI Pro</span>
-              <span class="badge badge-accent text-[0.65rem] py-0 px-1 font-mono uppercase">Favorite</span>
+          <tr>
+            <td class="py-3 px-3 md:px-4 font-mono font-semibold">
+              Google AI Pro <span class="badge badge-accent badge-compact ml-1">Favorite</span>
             </td>
-            <td class="py-3 px-3 md:px-4 font-mono text-stone-600 dark:text-stone-400">
-              Included / Dev
-            </td>
-            <td class="py-3 px-3 md:px-4 text-stone-700 dark:text-stone-300">
-              High-TPS skill loops, repeated refactoring iterations, low-latency subagent calls, Antigravity tasks
-            </td>
+            <td class="py-3 px-3 md:px-4 meta-text">Included</td>
+            <td class="py-3 px-3 md:px-4 editorial-support-compact">Fast skill loops, rapid iterations, Antigravity tasks</td>
             <td class="py-3 px-3 md:px-4 font-mono text-[0.8rem]">
-              <strong class="font-semibold text-stone-900 dark:text-stone-100">Gemini 3.8 Flash</strong> <span class="meta-text">(S Tier Daily Driver)</span>
+              <strong>Gemini 3.8 Flash</strong> <span class="meta-text">(S)</span>
             </td>
-            <td class="py-3 px-3 md:px-4 font-mono text-[0.8rem] text-stone-600 dark:text-stone-400">
-              Antigravity CLI & Gemini CLI
-            </td>
+            <td class="py-3 px-3 md:px-4 meta-text">Antigravity CLI</td>
           </tr>
-          <tr class="hover:bg-stone-50/50 dark:hover:bg-stone-900/40 transition-colors">
-            <td class="py-3 px-3 md:px-4 font-mono font-semibold text-stone-900 dark:text-stone-100">
-              OpenCode Go
-            </td>
-            <td class="py-3 px-3 md:px-4 font-mono text-stone-600 dark:text-stone-400">
-              PAYG / API
-            </td>
-            <td class="py-3 px-3 md:px-4 text-stone-700 dark:text-stone-300">
-              Utility routing, testing alternative open-weight models, high-volume automation
-            </td>
+          <tr>
+            <td class="py-3 px-3 md:px-4 font-mono font-semibold">OpenCode Go</td>
+            <td class="py-3 px-3 md:px-4 meta-text">PAYG</td>
+            <td class="py-3 px-3 md:px-4 editorial-support-compact">Testing open-weight models and utility routing</td>
             <td class="py-3 px-3 md:px-4 font-mono text-[0.8rem]">
-              GLM-5.3 <span class="meta-text">(A)</span>, 
-              GLM-5.3 Flash <span class="meta-text">(A)</span>, 
-              DeepSeek V4 Pro <span class="meta-text">(A)</span>, 
-              Grok 4.5 <span class="meta-text">(S)</span>
+              GLM-5.3 <span class="meta-text">(A)</span>, GLM-5.3 Flash <span class="meta-text">(A)</span>, DeepSeek V4 Pro <span class="meta-text">(A)</span>
             </td>
-            <td class="py-3 px-3 md:px-4 font-mono text-[0.8rem] text-stone-600 dark:text-stone-400">
-              Terminal agents
-            </td>
+            <td class="py-3 px-3 md:px-4 meta-text">Terminal</td>
           </tr>
-          <tr class="hover:bg-stone-50/50 dark:hover:bg-stone-900/40 transition-colors">
-            <td class="py-3 px-3 md:px-4 font-mono font-semibold text-stone-900 dark:text-stone-100">
-              Homelab Local Node
+          <tr>
+            <td class="py-3 px-3 md:px-4 font-mono font-semibold">
+              <a href="/devices/yeti-cachy/" class="accent-link">Local Node (yeti-cachy)</a>
             </td>
-            <td class="py-3 px-3 md:px-4 font-mono text-stone-600 dark:text-stone-400">
-              $0 / Offline
-            </td>
-            <td class="py-3 px-3 md:px-4 text-stone-700 dark:text-stone-300">
-              Zero-data-retention development, private codebase reasoning, offline fallback, inference benchmarks
-            </td>
+            <td class="py-3 px-3 md:px-4 meta-text">$0 / Local</td>
+            <td class="py-3 px-3 md:px-4 editorial-support-compact">Offline coding, local benchmarks, RTX 4070 12GB + 64GB DDR5</td>
             <td class="py-3 px-3 md:px-4 font-mono text-[0.8rem]">
-              <strong class="font-semibold text-stone-900 dark:text-stone-100">Qwen3.8-Flash-Next</strong> <span class="meta-text">(125B MoE, A)</span>, 
-              Qwen3.8-27B <span class="meta-text">(B)</span>
+              <strong>Qwen3.8-Flash-Next</strong> <span class="meta-text">(125B MoE)</span>, Qwen3.8-27B
             </td>
-            <td class="py-3 px-3 md:px-4 font-mono text-[0.8rem] text-stone-600 dark:text-stone-400">
-              Strata & llama.cpp on :8080
-            </td>
+            <td class="py-3 px-3 md:px-4 meta-text">Strata & llama.cpp</td>
           </tr>
         </tbody>
       </table>
@@ -149,173 +94,81 @@ collectionArchetype: ledger
   </div>
 </section>
 
-{# ── 2. Homelab Node Spec Snapshot ── #}
-<section class="not-prose mb-12 animate-enter stagger-2" aria-labelledby="homelab-heading">
-  <div class="flex items-baseline justify-between gap-4 mb-4">
-    <h2 id="homelab-heading" class="editorial-title">Local Rig Snapshot (yeti-cachy)</h2>
-    <a href="/devices/yeti-cachy/" class="accent-link text-xs font-mono uppercase tracking-wider">Device Spec Details →</a>
-  </div>
-  <p class="editorial-support mb-4">
-    My primary local inference workstation. By combining dynamic expert activation pinning with Transparent Huge Pages and PCIe 4.0 PLE table offloads, it runs a 125B MoE at 60–90 tokens/second on a single 12 GB consumer card.
-  </p>
+{# ── 2. Nested Prompts & Skills ── #}
+<section class="not-prose mb-12" aria-label="Prompts and Skills">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-  <div class="surface rounded-sm p-4 md:p-6 border border-surface-border font-mono text-xs leading-relaxed">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-y-3 gap-x-6">
-      <div class="flex justify-between border-b border-surface-border/60 pb-1.5">
-        <span class="text-stone-500">Host Hardware:</span>
-        <span class="text-stone-900 dark:text-stone-100 font-semibold">Intel Core i5-12600K (10c/16t)</span>
+    {# Evaluation Prompts (/ai/prompts/) #}
+    <div>
+      <div class="flex items-baseline justify-between gap-4 mb-3">
+        <h2 class="editorial-title">Prompts</h2>
+        <a href="/ai/prompts/" class="home-panel-link">All {{ collections.prompts | length }} prompts →</a>
       </div>
-      <div class="flex justify-between border-b border-surface-border/60 pb-1.5">
-        <span class="text-stone-500">System Memory:</span>
-        <span class="text-stone-900 dark:text-stone-100 font-semibold">64 GB DDR5-5600 (MADV_HUGEPAGE)</span>
-      </div>
-      <div class="flex justify-between border-b border-surface-border/60 pb-1.5">
-        <span class="text-stone-500">Acceleration GPU:</span>
-        <span class="text-stone-900 dark:text-stone-100 font-semibold">NVIDIA RTX 4070 (12 GB GDDR6X)</span>
-      </div>
-      <div class="flex justify-between border-b border-surface-border/60 pb-1.5">
-        <span class="text-stone-500">Storage / Offload:</span>
-        <span class="text-stone-900 dark:text-stone-100 font-semibold">2 TB PCIe 4.0 NVMe (29 GB PLE offload)</span>
-      </div>
-      <div class="flex justify-between border-b border-surface-border/60 pb-1.5">
-        <span class="text-stone-500">Operating System:</span>
-        <span class="text-stone-900 dark:text-stone-100 font-semibold">CachyOS Linux (Kernel 6.16-cachy)</span>
-      </div>
-      <div class="flex justify-between border-b border-surface-border/60 pb-1.5">
-        <span class="text-stone-500">Serving Multiplexer:</span>
-        <span class="text-stone-900 dark:text-stone-100 font-semibold">llama-swap (port 8080)</span>
-      </div>
-      <div class="flex justify-between border-b border-surface-border/60 pb-1.5">
-        <span class="text-stone-500">Primary Local Model:</span>
-        <span class="text-stone-900 dark:text-stone-100 font-semibold">Qwen3.8-Flash-Next (125B MoE, 60k ctx)</span>
-      </div>
-      <div class="flex justify-between border-b border-surface-border/60 pb-1.5">
-        <span class="text-stone-500">Fallback Local Model:</span>
-        <span class="text-stone-900 dark:text-stone-100 font-semibold">Qwen3.8-27B (Dense Q4_K_M)</span>
+      <div class="surface divide-y divide-gray-200 dark:divide-gray-800">
+        {% for prompt in collections.prompts | reverse | head(5) %}
+          <article class="p-3.5">
+            <div class="flex items-baseline justify-between gap-2">
+              <a href="{{ prompt.url }}" class="editorial-title-link-compact title-hover no-underline">{{ prompt.data.title }}</a>
+              {% if prompt.data.category %}<span class="badge badge-tag badge-compact shrink-0">{{ prompt.data.category }}</span>{% endif %}
+            </div>
+            {% if prompt.data.description %}
+              <p class="editorial-support-compact mt-1 m-0 line-clamp-2">{{ prompt.data.description }}</p>
+            {% endif %}
+          </article>
+        {% endfor %}
       </div>
     </div>
-  </div>
-</section>
 
-{# ── 3. Core Hubs & Curated Series (Bento / Wall Cards) ── #}
-<section class="not-prose mb-12 animate-enter stagger-3" aria-labelledby="hubs-heading">
-  <div class="flex items-baseline justify-between gap-4 mb-4">
-    <h2 id="hubs-heading" class="editorial-title">Curated Portals & Series</h2>
-    <span class="font-mono text-[0.78rem] uppercase tracking-[0.12em] text-gray-500 dark:text-gray-400">Deep Dives</span>
-  </div>
-
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-    <a href="/folio/model-tier-list/" class="surface surface-padding surface-hover rounded-sm block no-underline border border-surface-border group">
-      <div class="flex items-center justify-between gap-2 mb-2">
-        <span class="editorial-kicker">Interactive Folio</span>
-        <span class="meta-text group-hover:text-[var(--accent-color)] transition-colors">Open Folio →</span>
+    {# Agent Skills (/ai/skills/) #}
+    <div>
+      <div class="flex items-baseline justify-between gap-4 mb-3">
+        <h2 class="editorial-title">Skills</h2>
+        <a href="/ai/skills/" class="home-panel-link">Skills page →</a>
       </div>
-      <h3 class="editorial-title text-base group-hover:text-[var(--accent-color)] transition-colors mb-2">
-        Agentic Coding Model Tier List
-      </h3>
-      <p class="editorial-support-compact">
-        A rigorously pruned, 18-model ranking across S+, S, A, and B tiers with real public API list pricing, cache ratios, and live task cost estimation.
-      </p>
-    </a>
-
-    <a href="/blog/local-inference/" class="surface surface-padding surface-hover rounded-sm block no-underline border border-surface-border group">
-      <div class="flex items-center justify-between gap-2 mb-2">
-        <span class="editorial-kicker">Post Cluster · 14 Articles</span>
-        <span class="meta-text group-hover:text-[var(--accent-color)] transition-colors">Explore Cluster →</span>
-      </div>
-      <h3 class="editorial-title text-base group-hover:text-[var(--accent-color)] transition-colors mb-2">
-        Local Inference Engineering
-      </h3>
-      <p class="editorial-support-compact">
-        Engineering notes on squeezing 125B MoE architectures into 12 GB consumer VRAM: K8V4 caches, PLE offloads, overfit inference engines, and Strata.
-      </p>
-    </a>
-
-    <a href="/blog/agents/" class="surface surface-padding surface-hover rounded-sm block no-underline border border-surface-border group">
-      <div class="flex items-center justify-between gap-2 mb-2">
-        <span class="editorial-kicker">Post Cluster · 8 Articles</span>
-        <span class="meta-text group-hover:text-[var(--accent-color)] transition-colors">Explore Cluster →</span>
-      </div>
-      <h3 class="editorial-title text-base group-hover:text-[var(--accent-color)] transition-colors mb-2">
-        Autonomous Coding Agents
-      </h3>
-      <p class="editorial-support-compact">
-        Hands-on workflows with Astra/Sol/Luna multi-agent orchestration, Claude Code terminal execution, Copilot Codex setups, and burner reviewers.
-      </p>
-    </a>
-
-    <a href="/prompts/" class="surface surface-padding surface-hover rounded-sm block no-underline border border-surface-border group">
-      <div class="flex items-center justify-between gap-2 mb-2">
-        <span class="editorial-kicker">Reference Archive</span>
-        <span class="meta-text group-hover:text-[var(--accent-color)] transition-colors">View Prompts →</span>
-      </div>
-      <h3 class="editorial-title text-base group-hover:text-[var(--accent-color)] transition-colors mb-2">
-        Evaluation Prompts & Benchmarks
-      </h3>
-      <p class="editorial-support-compact">
-        A collection of repeatable prompts, CRTBench single-file retro game benchmarks, and qualitative reasoning tests for local and cloud models.
-      </p>
-    </a>
-  </div>
-</section>
-
-{# ── 4. Recent AI Field Notes & Dispatches ── #}
-<section class="not-prose mb-12 animate-enter stagger-4" aria-labelledby="feed-heading">
-  <div class="flex items-baseline justify-between gap-4 mb-4">
-    <h2 id="feed-heading" class="editorial-title">Latest AI Notes & Dispatches</h2>
-    <a href="/tags/ai/" class="accent-link text-xs font-mono uppercase tracking-wider">All AI Writing ({% set aiPosts = collections['AI'] or [] %}{{ aiPosts.length }} items) →</a>
-  </div>
-
-  <div class="surface rounded-sm border border-surface-border divide-y divide-surface-border font-serif">
-    {% set aiEntries = (collections['AI'] or []) | reverse %}
-    {% for item in aiEntries.slice(0, 5) %}
-      <article class="p-4 md:p-5 hover:bg-stone-50/50 dark:hover:bg-stone-900/40 transition-colors">
-        <div class="flex items-baseline justify-between gap-2 mb-1 flex-wrap">
-          <span class="meta-text">
-            {{ item.data.tags[0] or 'AI' }} · {{ item.date | readableDate }}
-          </span>
-          {% if item.data.authored_by %}
-            <span class="meta-text">authored: {{ item.data.authored_by }}</span>
-          {% endif %}
+      {% if collections.agentSkills | length %}
+        <div class="surface divide-y divide-gray-200 dark:divide-gray-800">
+          {% for skill in collections.agentSkills | reverse | head(5) %}
+            <article class="p-3.5">
+              <div class="flex items-baseline justify-between gap-2">
+                <a href="{{ skill.url }}" class="editorial-title-link-compact title-hover no-underline">{{ skill.data.title }}</a>
+                {% if skill.data.sourceName %}<span class="meta-text shrink-0">{{ skill.data.sourceName }}</span>{% endif %}
+              </div>
+              {% if skill.data.description %}
+                <p class="editorial-support-compact mt-1 m-0 line-clamp-2">{{ skill.data.description }}</p>
+              {% endif %}
+            </article>
+          {% endfor %}
         </div>
-        <h3 class="editorial-title text-base mb-1.5">
-          <a href="{{ item.url }}" class="no-underline text-stone-900 dark:text-stone-100 hover:text-[var(--accent-color)] transition-colors">
-            {{ item.data.title }}
-          </a>
-        </h3>
-        {% if item.data.description %}
-          <p class="editorial-support-compact">
-            {{ item.data.description }}
+      {% else %}
+        <div class="surface surface-padding">
+          <p class="editorial-support-compact m-0">
+            Reusable <code>SKILL.md</code> instruction files I write and use for agent workflows, voice calibration, and local GPU handoffs. Browse published skills on <a href="/ai/skills/" class="accent-link">/ai/skills/</a>.
           </p>
-        {% endif %}
-      </article>
-    {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+
   </div>
 </section>
 
-{# ── 5. The Authorship & Local-First Ethos ── #}
-<section class="not-prose mb-8 animate-enter stagger-5" aria-labelledby="philosophy-heading">
-  <div class="flex items-baseline justify-between gap-4 mb-3">
-    <h2 id="philosophy-heading" class="editorial-title">Transparency & Authorship Policy</h2>
-    <span class="font-mono text-[0.78rem] uppercase tracking-[0.12em] text-gray-500 dark:text-gray-400">Guiding Rules</span>
+{# ── 3. AI Writing ── #}
+<section class="not-prose mb-8" aria-labelledby="ai-writing-heading">
+  <div class="flex flex-wrap items-baseline justify-between gap-4 mb-3">
+    <div class="flex flex-wrap items-baseline gap-3">
+      <h2 id="ai-writing-heading" class="editorial-title m-0">AI Writing</h2>
+      <span class="meta-line">
+        Series:
+        <a href="/blog/local-inference/" class="accent-link">Local Inference</a> ·
+        <a href="/blog/agents/" class="accent-link">Coding Agents</a>
+      </span>
+    </div>
+    <a href="/tags/ai/" class="home-panel-link">All AI posts ({% set aiPosts = collections['AI'] or [] %}{{ aiPosts.length }}) →</a>
   </div>
-  <div class="surface rounded-sm p-4 md:p-6 border border-surface-border editorial-support leading-relaxed">
-    <p class="mb-3">
-      This site is an authored personal workbench, not an automated content mill. I use AI aggressively as a research amplifier, coding co-pilot, and terminal partner, but under strict boundaries:
-    </p>
-    <ul class="list-disc pl-5 space-y-2 font-serif text-stone-600 dark:text-stone-300">
-      <li>
-        <strong>Explicit Frontmatter Badges:</strong> Every note, post, and guide carries an immutable <code>authored_by</code> property (<code>human</code>, <code>ai-assisted</code>, or <code>ai-generated</code>) displayed in the entry metadata.
-      </li>
-      <li>
-        <strong>Reader-Controlled AI Filter:</strong> The top navigation bar includes an interactive filter widget (<a href="/static/js/ai-filter.js" class="accent-link"><code>ai-filter.js</code></a>) allowing you to toggle between All content, Hide AI-generated, and Human-written only.
-      </li>
-      <li>
-        <strong>Zero Em Dashes & High Contraction Fingerprint:</strong> All prose is calibrated against my measured human writing fingerprint to eradicate robotic cadence, synthetic corporate framing, and chatbot residue.
-      </li>
-      <li>
-        <strong>Local-First & Compression:</strong> Whenever possible, private code and experimental workflows stay on consumer silicon. Constraints are the only reason computing advances.
-      </li>
-    </ul>
-  </div>
+
+  <ul class="feed-list list-none m-0 p-0">
+    {% set aiEntries = (collections['AI'] or []) | reverse %}
+    {% for post in aiEntries | head(8) %}
+      {{ postListRow(post, collections.feed, {}) }}
+    {% endfor %}
+  </ul>
 </section>

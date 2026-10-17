@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.33] - 2026-10-16
+### Changed
+- Nested agent skills (`/skills/` -> `/ai/skills/`) and prompt library (`/prompts/` -> `/ai/prompts/`) under `/ai/` route.
+- Streamlined `/ai/` ecosystem hub layout with clean two-column skills and prompts directory and subscriptions table.
+- Added 301 backwards-compatibility redirects for `/skills/` and `/prompts/` routes in `_redirects`.
+- Updated breadcrumbs navigation to label the `ai` path segment cleanly as `AI`.
+
 ## [2.7.32] - 2026-10-15
 ### Added
 - Author `/ai/` ecosystem hub (ledger archetype) linking subscriptions, homelab hardware specs, active model rankings, and research series.
