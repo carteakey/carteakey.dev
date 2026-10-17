@@ -8,7 +8,13 @@ layout: layouts/base.njk
 <div class="mx-auto w-full px-4 sm:px-6 xl:max-w-3xl xl:px-0">
   <article class="device space-y-8">
     <header class="space-y-2">
-      <p class="page-eyebrow">{{ kind | capitalize }}{% if station %} · {{ station }}{% endif %}</p>
+      <div class="flex items-center justify-between gap-2 flex-wrap">
+        <p class="page-eyebrow !mb-0">{{ kind | capitalize }}{% if station %} · {{ station }}{% endif %}</p>
+        <span class="post-meta-chip" data-view-counter data-view-slug="device:{{ page.fileSlug }}">
+          {% feather "eye", class="w-3.5 h-3.5 opacity-60" %}
+          <span data-view-count>-</span> views
+        </span>
+      </div>
       <h1 class="!m-0">
         {% if emoji %}<span aria-hidden="true">{{ emoji }}</span> {% endif %}{{ title }}
       </h1>

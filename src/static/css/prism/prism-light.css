@@ -6,7 +6,7 @@ code[class*="language-"],
 pre[class*="language-"] {
   color: #24292e;
   background: none;
-  font-family: var(--font-mono, 'JetBrains Mono', 'Fira Code', Consolas, monospace);
+  font-family: var(--font-mono, 'Ioskeley Mono', 'JetBrains Mono', 'Fira Code', Consolas, monospace);
   font-size: 0.82rem;
   text-align: left;
   white-space: pre;

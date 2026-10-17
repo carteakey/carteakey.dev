@@ -31,13 +31,13 @@ collectionArchetype: index
   </div>
 
   {# Same renderers as /feed so the three views stay consistent #}
-  <div x-show="view === 'stream'" x-cloak class="flex flex-col w-full py-4">
+  <div x-show="view === 'stream'" x-cloak class="flex flex-col w-full max-w-4xl mx-auto py-4">
     {% for item in collections.feed %}{% if item.type == 'note' %}
       {{ feedCard(item, { variant: 'stream' }) }}
     {% endif %}{% endfor %}
   </div>
 
-  <ul class="feed-list" x-show="view === 'list'" x-cloak>
+  <ul class="feed-list max-w-4xl mx-auto" x-show="view === 'list'" x-cloak>
     {% for item in collections.feed %}{% if item.type == 'note' %}
       {{ feedCard(item, { variant: 'list' }) }}
     {% endif %}{% endfor %}

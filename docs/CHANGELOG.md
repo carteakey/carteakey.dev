@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.35] - 2026-10-16
+### Added
+- Font: Installed and integrated Ioskeley Mono (`v2.1.0`) as the site-wide default monospace and code font, with preloading and updated colophon attribution.
+- View counters: Standardized view counter markup and hydration across all content pages (posts, snippets, notes, lexicon, TILs, agent skills, and devices) via shared `.post-meta-chip` and namespaced Redis counter keys.
+
+### Fixed
+- Content width: Constrained full-width content pages (single notes, single lexicon entries, and single TIL entries) to `.note-content` (`52rem`), and constrained stream/list layouts on `/notes/` and `/lexicon/` while preserving the full 3-column wall grid.
+
 ## [2.7.34] - 2026-10-16
 ### Changed
 - Post pages: replaced the left-rail "About the author" card with an end-of-post byline using the halftone avatar, so it also shows on mobile.

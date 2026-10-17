@@ -10,6 +10,10 @@ layout: layouts/base.njk
     <div class="flex items-center gap-2 mb-1 flex-wrap">
       <span class="badge badge-type badge-compact badge-type-lexicon">Lexicon</span>
       <time datetime="{{ page.date | htmlDateString }}" class="meta-text">· {{ page.date | readableDate }}</time>
+      <span class="post-meta-chip" data-view-counter data-view-slug="lexicon:{{ page.fileSlug }}">
+        {% feather "eye", class="w-3.5 h-3.5 opacity-60" %}
+        <span data-view-count>-</span> views
+      </span>
       {% if tags %}
         <div class="flex flex-wrap gap-1 items-center">
           {% for tag in tags | filterTagList %}

@@ -9,6 +9,10 @@ layout: layouts/base.njk
     <div class="flex flex-wrap items-center gap-2 mb-2">
       <span class="badge badge-type badge-compact">Agent skill</span>
       <time datetime="{{ page.date | htmlDateString }}" class="meta-text">· {{ page.date | readableDate }}</time>
+      <span class="post-meta-chip" data-view-counter data-view-slug="skill:{{ page.fileSlug }}">
+        {% feather "eye", class="w-3.5 h-3.5 opacity-60" %}
+        <span data-view-count>-</span> views
+      </span>
       {% if sourceName %}<span class="meta-text">· {{ sourceName }}</span>{% endif %}
     </div>
     <h1 class="editorial-title mt-1 mb-2">{{ title }}</h1>

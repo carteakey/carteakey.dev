@@ -1,0 +1,6 @@
+{% macro viewCounter(slug, id = "", track = true) %}
+<span {% if id %}id="{{ id }}" {% endif %}class="post-meta-chip" data-view-counter data-view-slug="{{ slug }}"{% if not track %} data-view-handled="true"{% endif %}>
+  {% feather "eye", class="w-3.5 h-3.5 opacity-60" %}
+  <span {% if id %}id="{{ id }}Number" {% endif %}data-view-count>-</span> views
+</span>
+{% endmacro %}

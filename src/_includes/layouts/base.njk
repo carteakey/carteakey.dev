@@ -7,6 +7,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
   <link rel="manifest" href="/site.webmanifest" />
   <link rel="preload" href="/static/fonts/plus-jakarta-sans/PlusJakartaSans[wght].woff2?v={{ versions.version }}" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/static/fonts/ioskeley-mono/IoskeleyMono-Regular.woff2?v={{ versions.version }}" as="font" type="font/woff2" crossorigin />
 
   {# Fraunces: monumental display serif, used sparingly for hero headlines #}
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -528,6 +529,41 @@
         return;
       }
       if (e.key === 'Escape') { document.getElementById('shortcuts-overlay').style.display = 'none'; }
+    });
+  })();
+  </script>
+
+  {# ── Standardized View Counter Client ── #}
+  <script>
+  (function() {
+    document.addEventListener('DOMContentLoaded', function () {
+      const counters = document.querySelectorAll('[data-view-counter]');
+      counters.forEach(async function (el) {
+        if (el.dataset.viewHandled === 'true') return;
+        const slug = el.dataset.viewSlug;
+        if (!slug) return;
+        el.dataset.viewHandled = 'true';
+
+        const countEl = el.querySelector('[data-view-count]');
+        if (!countEl) return;
+
+        const viewStorageKey = 'viewed_' + slug;
+        const hasViewed = sessionStorage.getItem(viewStorageKey) === 'true';
+
+        try {
+          const res = await fetch('/.netlify/functions/upvote?slug=' + encodeURIComponent(slug) + (hasViewed ? '' : '&trackView=true'));
+          if (!res.ok) return;
+          const data = await res.json();
+          if (data && data.views !== undefined) {
+            countEl.textContent = Number(data.views).toLocaleString();
+            if (!hasViewed) {
+              sessionStorage.setItem(viewStorageKey, 'true');
+            }
+          }
+        } catch (err) {
+          // graceful fallback
+        }
+      });
     });
   })();
   </script>

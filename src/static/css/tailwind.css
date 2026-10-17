@@ -13,10 +13,59 @@
   --font-display: var(--font-plus-jakarta-sans);
   --font-monument: var(--font-fraunces);
   --font-fraunces: 'Fraunces', ui-serif, Georgia, 'Times New Roman', serif;
-  --font-mono: var(--font-jetbrains-mono);
+  --font-mono: var(--font-ioskeley-mono);
+  --font-ioskeley-mono: 'Ioskeley Mono', 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
   --font-jetbrains-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
 
   --animate-spin-slow: spin 7s linear infinite;
+}
+
+@font-face {
+  font-family: "Ioskeley Mono";
+  src: url("/static/fonts/ioskeley-mono/IoskeleyMono-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Ioskeley Mono";
+  src: url("/static/fonts/ioskeley-mono/IoskeleyMono-Italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Ioskeley Mono";
+  src: url("/static/fonts/ioskeley-mono/IoskeleyMono-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Ioskeley Mono";
+  src: url("/static/fonts/ioskeley-mono/IoskeleyMono-SemiBold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Ioskeley Mono";
+  src: url("/static/fonts/ioskeley-mono/IoskeleyMono-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Ioskeley Mono";
+  src: url("/static/fonts/ioskeley-mono/IoskeleyMono-BoldItalic.woff2") format("woff2");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
 }
 
 @font-face {
@@ -2725,7 +2774,8 @@ picture img {
     align-items: center;
   }
 
-  .post-meta-chip {
+  .post-meta-chip,
+  .meta-chip {
     display: inline-flex;
     align-items: center;
     gap: 0.35rem;
@@ -2736,7 +2786,8 @@ picture img {
     color: rgb(82 82 91 / 1);
   }
 
-  .dark .post-meta-chip {
+  .dark .post-meta-chip,
+  .dark .meta-chip {
     color: rgb(161 161 170 / 1);
   }
 
@@ -3499,6 +3550,13 @@ picture img {
     display: block;
   }
 
+  .note-content {
+    max-width: 52rem;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+  }
+
   .note-content picture {
     max-width: min(100%, 34rem);
   }
@@ -3877,8 +3935,8 @@ picture img {
     text-decoration: none;
   }
 
-  /* Re-enable underlines for links inside feed card note/now previews */
-  .site-content .feed-card-full .not-prose a {
+  /* Re-enable underlines for external links inside feed card note/now previews */
+  .site-content .feed-card-full .not-prose a:not(.device-link):not([href^="/"]):not([href^="https://carteakey.dev/"]) {
     text-decoration: underline;
     text-underline-offset: 2px;
     text-decoration-thickness: 1px;
@@ -4715,26 +4773,80 @@ picture img {
 
   .data-card-scroll { width: 100%; overflow-x: auto; }
 
-  /* Devices (src/devices): inline link, spec list and timeline */
-  .device-link {
-    display: inline-flex;
-    align-items: baseline;
-    gap: 0.3em;
-    padding: 0 0.4em;
+  /* Devices (src/devices) and internal site links: inline backlink chip visual identity */
+  .device-link,
+  .site-content :is(p, li, blockquote, td, th) a.device-link,
+  .site-content :is(p, li, blockquote, td, th) a.device-link:visited,
+  .site-content :is(.post-body, .note-content, .snippet-content, .device .prose-content, .editorial-callout-body, .feed-card-full .site-content)
+    :is(p, li, blockquote, td, th)
+    a:is([href^="/"], [href^="https://carteakey.dev/"]):not([class]),
+  .site-content :is(.post-body, .note-content, .snippet-content, .device .prose-content, .editorial-callout-body, .feed-card-full .site-content)
+    :is(p, li, blockquote, td, th)
+    a:is([href^="/"], [href^="https://carteakey.dev/"]):not([class]):visited {
+    padding: 0.05em 0.4em;
     font-family: var(--font-mono);
     font-size: 0.82em;
     line-height: 1.5;
     text-decoration: none;
-    white-space: nowrap;
     color: var(--accent-color);
     border: 1px solid color-mix(in srgb, var(--accent-color) 35%, transparent);
     background: color-mix(in srgb, var(--accent-color) 7%, transparent);
     border-radius: 0.12rem;
-    transition: background-color 120ms ease, border-color 120ms ease;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+    transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease;
   }
-  .device-link:hover, .device-link:focus-visible {
+  .device-link {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.3em;
+    white-space: nowrap;
+  }
+  .device-link:hover,
+  .device-link:focus-visible,
+  .site-content :is(p, li, blockquote, td, th) a.device-link:hover,
+  .site-content :is(p, li, blockquote, td, th) a.device-link:focus-visible,
+  .site-content :is(.post-body, .note-content, .snippet-content, .device .prose-content, .editorial-callout-body, .feed-card-full .site-content)
+    :is(p, li, blockquote, td, th)
+    a:is([href^="/"], [href^="https://carteakey.dev/"]):not([class]):hover,
+  .site-content :is(.post-body, .note-content, .snippet-content, .device .prose-content, .editorial-callout-body, .feed-card-full .site-content)
+    :is(p, li, blockquote, td, th)
+    a:is([href^="/"], [href^="https://carteakey.dev/"]):not([class]):focus-visible {
+    color: var(--accent-color);
+    text-decoration: none;
     background: color-mix(in srgb, var(--accent-color) 15%, transparent);
     border-color: color-mix(in srgb, var(--accent-color) 65%, transparent);
+  }
+  .site-content :is(.post-body, .note-content, .snippet-content, .device .prose-content, .editorial-callout-body, .feed-card-full .site-content)
+    :is(p, li, blockquote, td, th)
+    a:is([href^="/"], [href^="https://carteakey.dev/"]):not([class])::before {
+    content: "[[";
+    opacity: 0.55;
+    margin-right: 0.1em;
+  }
+  .site-content :is(.post-body, .note-content, .snippet-content, .device .prose-content, .editorial-callout-body, .feed-card-full .site-content)
+    :is(p, li, blockquote, td, th)
+    a:is([href^="/"], [href^="https://carteakey.dev/"]):not([class])::after {
+    content: "]]";
+    opacity: 0.55;
+    margin-left: 0.1em;
+  }
+  .site-content :is(.post-body, .note-content, .snippet-content, .device .prose-content, .editorial-callout-body, .feed-card-full .site-content)
+    :is(p, li, blockquote, td, th)
+    a:is([href^="/"], [href^="https://carteakey.dev/"]):not([class]) code {
+    background: transparent;
+    border: none;
+    padding: 0;
+    color: inherit;
+    font-size: inherit;
+  }
+  .site-content :is(.post-body, .note-content, .snippet-content, .device .prose-content, .editorial-callout-body, .feed-card-full .site-content)
+    :is(p, li, blockquote, td, th)
+    a[href^="http"]:not([href^="https://carteakey.dev/"]):not([class])::after {
+    content: " ↗";
+    font-family: var(--font-mono);
+    font-size: 0.76em;
+    opacity: 0.65;
   }
   .device-specs { display: grid; grid-template-columns: max-content 1fr; gap: 0.35rem 1.25rem; margin: 0; font-size: 0.85rem; }
   .device-specs dt { font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--chart-dim); padding-top: 0.15rem; }

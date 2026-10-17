@@ -148,9 +148,9 @@ hasEthicalAds: false
             {% feather "clock", class="w-4 h-4 opacity-60" %}
             {{ content | readingTime }}
           </span>
-          <span id="viewCount" class="post-meta-chip">
+          <span id="viewCount" class="post-meta-chip" data-view-counter data-view-handled="true" data-view-slug="{{ page.fileSlug }}">
             {% feather "eye", class="w-4 h-4 opacity-60" %}
-            <span id="viewCountNumber">-</span> views
+            <span id="viewCountNumber" data-view-count>-</span> views
           </span>
           {{ authorshipBadge(authored_by) }}
         </div>
