@@ -716,8 +716,16 @@ export default function (eleventyConfig) {
     return ordered;
   });
 
+  // Title, summary, tags and the start of the body (the old Snippets search
+  // matched a 160-character excerpt, so commands inside a snippet are findable).
   eleventyConfig.addFilter("collectionSearchText", (item) =>
-    [item.title, item.summary, item.language, ...(item.tags || [])]
+    [
+      item.title,
+      item.summary,
+      item.language,
+      ...(item.tags || []),
+      stripHtmlToText(item.original?.templateContent || "").slice(0, 160),
+    ]
       .filter(Boolean)
       .join(" ")
       .toLowerCase()

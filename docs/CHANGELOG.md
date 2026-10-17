@@ -9,11 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Collection engine (`components/collection-index.njk`): Writing, Feed, Notes, Lexicon, Snippets, TIL, and Quotations now share one toolbar, grouping, and view renderer built from the Writing list. Every row and card goes through `feedCard`; grids use the shared masonry.
 - Collection registry (`src/_data/collectionViews.yaml`): each collection page's views, controls, and a one-line reason, including the 35 pages that stay bespoke. `npm run check:collections` fails when a page declares `collectionArchetype` without an entry; `check:content` now reads its archetype list from the same file.
-- `static/js/collection-index.js`: search, type chips, and Saved snippets filter in one pass, hide year headings with no matches, and show an empty state.
+- `static/js/collection-index.js`: search, type chips, authorship, and Saved snippets filter in one pass, hide year headings with no matches, and show an empty state.
 
 ### Changed
 - Snippets: Writing-style rows (newest first, tags, authorship badge, Saved) with the grid view removed; the old page listed oldest first.
-- Notes: stream and list only (wall removed). Lexicon, TIL, and Quotations: a single view with no toggle; TIL and Quotations drop search at their current size.
+- Notes: stream and list only (wall removed). Lexicon, TIL, and Quotations: a single view with no toggle; TIL and Quotations drop search at their current size. TIL rows no longer show a source link (entry pages still do; no TIL sets one today).
+- Collection search matches title, summary, tags, language, and the first 160 characters of the body on every engine page (Feed previously searched titles only).
 - Writing and Feed: the view toggle moved to the right of the toolbar and now persists (`blog-view`; Feed keeps `feed-view`). Wall cards and stream entries show the same date the list sorts by.
 - Feed type chips now cover every type with items (TIL, Folio, and Now added); Feed declares `collectionArchetype: index`.
 - Snippet and TIL feed items carry their tags; snippet tags link to `/snippets/tags/`.

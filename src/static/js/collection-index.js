@@ -1,8 +1,9 @@
 // Collection engine filters (components/collection-index.njk).
-// Search, type facets and page filters (e.g. Saved snippets) register a
-// predicate on the collection root; one pass applies them all, hides empty
-// group headings, and shows the empty state. The authorship filter stays in
-// CSS (ai-filter.js) and is independent of this pass.
+// Search, type facets, authorship and page filters (e.g. Saved snippets)
+// register a predicate on the collection root; one pass applies them all,
+// hides empty group headings, and shows the empty state. ai-filter.js still
+// hides authorship-filtered rows in CSS; the predicate here only keeps
+// headings and the empty state in step with it.
 
 (() => {
   const initCollection = (root) => {
@@ -58,6 +59,16 @@
         }
         root.collectionFilters.set("type", type ? (item) => item.dataset.type === type : null);
       });
+    }
+
+    if (root.hasAttribute("data-ai-filter-scope") && window.aiFilterAllows) {
+      const syncAuthorship = () =>
+        root.collectionFilters.set(
+          "authorship",
+          window.getAiFilter() === "all" ? null : (item) => !item.dataset.authoredBy || window.aiFilterAllows(item.dataset.authoredBy),
+        );
+      document.addEventListener("aifilterchange", syncAuthorship);
+      syncAuthorship();
     }
 
     // Switching views changes which copy is on screen; recount the empty state.
