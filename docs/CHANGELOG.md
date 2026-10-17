@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `/ask/corpus.json` (`utils/ask-corpus.mjs`): heading-sized chunks of published posts, notes, snippets, TILs, lexicon, prompts, reviews and device specs, with an inverted index. Hidden and future-dated pages are excluded even when `SHOW_HIDDEN` is on.
 - agentcart: the About page is indexed and its opening chunks are pinned for questions about Kartikey ("who is kartikey" used to find nothing). The local Gemma hop runs with thinking off (`ASK_LOCAL_THINKING=1` to keep it), after a 42-token answer took 30 s.
 - agentcart mascot: a block-character cart with eyes in the welcome box. It blinks when idle, rolls its wheels while waiting and looks pleased when the answer starts (static under reduced motion). "✻ Thought for Ns" now shows on every answer, timing the wait before the first word when the model sends no reasoning tokens. Answer rows no longer overflow on phones.
+- Header: the agentcart mascot as a 16px pixel icon between search and the theme toggle, blinking every few seconds (faster on hover). Shown only while hidden content is on, until `/ask/` ships.
 
 ### Fixed
 - "Notes on AI (Unsorted)" post: fixed typos, spelling slips (`capabilties`, `withold`, `unsucessful`, `langauge`, `artciles`, `liek`, `paralel`, `othwreise`, `magntiude`, `myselves`, `Claudisms`), capitalization, and run-on punctuation while keeping the raw Nat-style bulleted brain-dump voice intact.

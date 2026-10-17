@@ -6079,3 +6079,10 @@ picture img {
   .term-status .term-status-right { display: none; }
   .term-welcome { gap: 1rem; padding: 0.6rem 0.7rem; }
 }
+
+/* agentcart nav icon (base.njk): the mascot at 16px, blinking now and then. */
+.nav-ask { display: inline-flex; align-items: center; justify-content: center; color: var(--accent-color); }
+.nav-ask-eye { transform-box: fill-box; transform-origin: center; animation: nav-ask-blink 5.5s infinite; }
+.nav-ask:hover .nav-ask-eye { animation-duration: 0.9s; }
+@keyframes nav-ask-blink { 0%, 94%, 100% { transform: scaleY(1); } 96% { transform: scaleY(0.2); } }
+@media (prefers-reduced-motion: reduce) { .nav-ask-eye { animation: none; } }
