@@ -1,9 +1,9 @@
 {
   "counts": {
     "src/_includes/components/cartebase-charts.njk": {
-      "pill-or-circle": 3,
-      "utility-text-stack": 9,
-      "inline-style": 8
+      "pill-or-circle": 1,
+      "utility-text-stack": 8,
+      "inline-style": 4
     },
     "src/_includes/components/copy-markdown.njk": {
       "off-palette-colour": 1,
@@ -56,9 +56,6 @@
       "utility-text-stack": 1,
       "inline-style": 1
     },
-    "src/bookmarks.njk": {
-      "inline-style": 2
-    },
     "src/changelog.njk": {
       "pill-or-circle": 1,
       "off-palette-colour": 9,
@@ -92,9 +89,7 @@
       "inline-style": 1
     },
     "src/listening.njk": {
-      "pill-or-circle": 4,
-      "utility-text-stack": 3,
-      "inline-style": 2
+      "utility-text-stack": 1
     },
     "src/newsletter.njk": {
       "pill-or-circle": 1,

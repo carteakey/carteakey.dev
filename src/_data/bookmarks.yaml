@@ -1,19 +1,53 @@
-bookmarks:
-  - title: "Steph Ango"
-    url: "https://stephango.com"
-    description: "Ideas, essays, and projects by Steph Ango."
-    category: "Writing"
-    tags:
-      - design
-      - writing
-      - personal
-    date: 2026-03-01
+blogroll:
+  - name: "Simon Willison"
+    url: "https://simonwillison.net/"
+    description: "Co-creator of Django; writes extensively on AI, LLM tooling, databases, and web development."
+    tags: [AI, Python, Web]
+  - name: "Sebastian Raschka"
+    url: "https://sebastianraschka.com/"
+    description: "Machine learning researcher and educator; author of Ahead of AI and Build an LLM from Scratch."
+    tags: [ML, LLMs, Deep Learning]
+  - name: "Eugene Yan"
+    url: "https://eugeneyan.com/"
+    description: "Applied machine learning in production, LLM systems, engineering craft, and recommender systems."
+    tags: [ML, System Design]
+  - name: "Steph Ango"
+    url: "https://stephango.com/"
+    description: "CEO of Obsidian; essays on design, tools for thought, intentional writing, and building personal software."
+    tags: [Design, Writing, Tools]
+
+artifacts:
   - title: "The Grug Brained Developer"
     url: "https://grugbrain.dev/"
-    description: "A layman's guide to thinking like the self-aware smol brained developer"
-    category: "Development"
-    tags:
-      - programming
-      - philosophy
-      - humor
-    date: 2024-01-15
+    description: "A layman's guide to thinking like the self-aware smol brained developer. Simplicity and reality over unnecessary complexity."
+    tags: [Programming, Philosophy, Humor]
+  - title: "Dan Luu's Blog"
+    url: "https://danluu.com/"
+    description: "Deep, rigorous hardware and software benchmarks, systems performance investigations, and empirical engineering."
+    tags: [Systems, Performance, Hardware]
+  - title: "Gwern Branwen"
+    url: "https://gwern.net/"
+    description: "Monumental, deeply researched long-form essays, blinded self-experiments, and early machine learning forecasting."
+    tags: [Research, Essays, Culture]
+  - title: "Fabrice Bellard"
+    url: "https://bellard.org/"
+    description: "Prolific software author behind FFmpeg, QEMU, QuickJS, TinyCC, and LLM implementations on modest hardware."
+    tags: [Systems, Compilers, Legend]
+
+webrings:
+  - name: "Fediring"
+    url: "https://fediring.net/"
+    description: "A webring connecting personal blogs and independent creators across the fediverse and indie web."
+    tags: [IndieWeb, Fediverse]
+  - name: "Geekring"
+    url: "https://geekring.net/"
+    description: "A ring connecting technology, open source, Linux, and homelab sites."
+    tags: [OpenSource, Homelab]
+  - name: "HTML Energy"
+    url: "https://html.energy/"
+    description: "A celebration of hand-crafted HTML, small personal websites, and the joy of simple hypertext."
+    tags: [SmallWeb, Minimal]
+  - name: "Bucket Fish Webring"
+    url: "https://webring.bucketfish.me/"
+    description: "A curated webring for developer blogs and personal homepages across the open internet."
+    tags: [PersonalSites, Community]

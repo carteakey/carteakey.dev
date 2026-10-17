@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.45] - 2026-10-16
+### Changed
+- `/now/`: first written update since June (site type refresh, Strata benchmarks, GPU clock cap, L3MS, Sortling, Glowdesk). The outgoing page had no written items, only activity feeds, so there was nothing to archive.
+- Bookmarks: Merged `/blogroll/` into `/bookmarks/` with dedicated sections for Personal Blogs (RSS feeds), Classic Essays & Artifacts, and Webrings (Fediring, Geekring, HTML Energy, Bucket Fish); added 301 backwards-compatibility redirects.
+
 ## [2.7.44] - 2026-10-16
 ### Added
 - Note: "Taking Care of the Silicon You Already Own" (`src/notes/2026-10-16-gpu-longevity-and-clock-capping.md`) logging 1 Hz NVML telemetry across RTX 4070 power and clock boost profiles during local LLM decode.

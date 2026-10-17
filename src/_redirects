@@ -121,3 +121,8 @@
 /prompts/ /ai/prompts/ 301!
 /prompts /ai/prompts/ 301!
 /prompts/:splat /ai/prompts/:splat 301!
+
+# Merged Blogroll into Bookmarks
+/blogroll/ /bookmarks/#blogroll 301!
+/blogroll /bookmarks/#blogroll 301!
+/blogroll/* /bookmarks/#blogroll 301!
