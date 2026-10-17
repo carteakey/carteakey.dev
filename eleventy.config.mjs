@@ -650,6 +650,15 @@ export default function (eleventyConfig) {
     }
   });
 
+  // Curated data lists (bookmarks, projects, uses, quotes, now items, random facts):
+  // an entry with `enabled: false` stays in the data file as a draft but never renders.
+  // Entries without the flag, including plain strings, are enabled.
+  eleventyConfig.addFilter("enabled", (items) =>
+    Array.isArray(items)
+      ? items.filter((item) => !(item && typeof item === "object" && item.enabled === false))
+      : items,
+  );
+
   eleventyConfig.addFilter("readableDate", (dateObj) => {
     const dateTime = dateTimeFromInput(dateObj);
     return dateTime.isValid ? dateTime.toFormat("MMM d, yyyy") : "";
@@ -947,7 +956,13 @@ export default function (eleventyConfig) {
 
   eleventyConfig.addFilter("date", function (date, format) {
     if (!date) return "";
-    const dateObj = typeof date === "string" ? new Date(date) : date;
+    // "now" is the build time ("now" | date("Y")); new Date("now") is Invalid Date.
+    const dateObj =
+      date === "now"
+        ? new Date()
+        : typeof date === "string"
+          ? new Date(date)
+          : date;
 
     // Simple date formatting - extend as needed
     if (format === 'MMMM d, yyyy "at" h:mm a') {
@@ -1136,6 +1151,28 @@ export default function (eleventyConfig) {
   });
 
   // Count posts in a given year+month (both strings like "2026", "2")
+  // Year x month counts for a publishing heatmap: newest year first, Jan-Dec columns.
+  eleventyConfig.addFilter("countByYearMonth", function (...lists) {
+    const counts = {};
+    for (const item of lists.flat()) {
+      if (!item?.date) continue;
+      const d = new Date(item.date);
+      const yr = d.getFullYear();
+      counts[yr] ??= Array(12).fill(0);
+      counts[yr][d.getMonth()] += 1;
+    }
+    const rows = Object.keys(counts).sort().reverse();
+    const matrix = rows.map((yr) => counts[yr]);
+    let peak = { year: "", month: 0, count: 0 };
+    rows.forEach((yr, ri) =>
+      matrix[ri].forEach((c, mi) => {
+        if (c > peak.count) peak = { year: yr, month: mi, count: c };
+      }),
+    );
+    const cols = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+    return { rows, cols, matrix, peak: { ...peak, label: `${cols[peak.month]} ${peak.year}` } };
+  });
+
   eleventyConfig.addFilter("countInYearMonth", function (posts, year, month) {
     if (!Array.isArray(posts)) return 0;
     return posts.filter((p) => {

@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.8.2] - 2026-10-17
+### Added
+- Shared `enabled` filter: any entry in bookmarks, projects, uses, quotes, now highlights and updates, or random facts can carry `enabled: false` to stay in its data file as a draft without rendering. Entries without the flag keep showing, so no data file changed. Counts (bookmarks, projects, uses categories) respect the flag. Now-page items accept plain strings or `{ text, enabled }`.
+
 ## [2.8.1] - 2026-10-17
 ### Added
 - Bookmarks: 88×31 retro button shelf featuring Fediring and Geekring webring buttons, classic web buttons ("Viewable with Any Browser", "NeoCities"), and a custom pixel-drawn 88×31 button for `carteakey.dev`.

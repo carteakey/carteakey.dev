@@ -15,7 +15,7 @@ collectionArchetype: wall
 {% set pageEyebrow = "Things I Build" %}
 {% set pageTitle = "Projects" %}
 {% set pageDescription = "A running list of personal projects, current builds, upcoming releases, and the code that powers them." %}
-{% set itemCount = projects.projects | length %}
+{% set itemCount = projects.projects | enabled | length %}
 {% set itemLabel = "public projects" %}
 {% set pageActions = [{ href: "https://github.com/carteakey?tab=repositories", label: "Browse GitHub", external: true, accent: true }] %}
 
@@ -24,7 +24,7 @@ collectionArchetype: wall
 <div class="mx-auto" x-data="collectionView('projects-view', 'grid', ['grid', 'list'])">
   <p class="editorial-support mb-8">Here are some of my personal projects, including the things currently taking up my evenings.</p>
 
-  {% if projects.current | length or projects.coming_soon | length %}
+  {% if projects.current | enabled | length or projects.coming_soon | enabled | length %}
     <section class="mb-12" aria-labelledby="current-work-heading">
       <div class="mb-4">
         <h2 id="current-work-heading" class="editorial-kicker">Current work</h2>
@@ -32,7 +32,7 @@ collectionArchetype: wall
       </div>
 
       <div class="projects-collection-grid">
-        {% for project in projects.current %}
+        {% for project in projects.current | enabled %}
           <article class="surface surface-hover surface-padding rounded-sm">
             {% if project.image_path %}
               <div class="mb-3 overflow-hidden rounded-sm border border-gray-200 dark:border-gray-800">
@@ -42,7 +42,7 @@ collectionArchetype: wall
             {% include "components/project-status-card.njk" %}
           </article>
         {% endfor %}
-        {% for project in projects.coming_soon %}
+        {% for project in projects.coming_soon | enabled %}
           <article class="surface surface-hover surface-padding rounded-sm">
             {% if project.image_path %}
               <div class="mb-3 overflow-hidden rounded-sm border border-gray-200 dark:border-gray-800">
@@ -74,7 +74,7 @@ collectionArchetype: wall
     data-feed-masonry
     style="--feed-row-height: 16px;"
   >
-    {% for project in projects.projects %}
+    {% for project in projects.projects | enabled %}
       <article class="project-tile feed-card surface surface-hover rounded-sm group">
         {% if project.image_path %}
           <div class="project-tile-media">
@@ -104,7 +104,7 @@ collectionArchetype: wall
 
   {# List view - same rows as /feed; the leading slot holds the project image instead of a date #}
   <ul class="feed-list not-prose list-none m-0 p-0" x-show="view === 'list'" x-cloak>
-    {% for project in projects.projects %}
+    {% for project in projects.projects | enabled %}
       <li class="feed-list-row">
         <span class="hidden sm:block">
           {% if project.image_path %}{% image project.image_path, project.title, "block h-11 w-16 object-cover" %}{% endif %}

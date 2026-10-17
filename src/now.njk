@@ -32,23 +32,25 @@ collectionArchetype: ledger
   </div>
 </section>
 
-{% set hasWrittenNow = (nowPage.highlights and nowPage.highlights.length > 0) or (nowPage.updates and nowPage.updates.length > 0) %}
+{% set nowHighlights = nowPage.highlights | enabled %}
+{% set nowUpdates = nowPage.updates | enabled %}
+{% set hasWrittenNow = (nowHighlights and nowHighlights.length > 0) or (nowUpdates and nowUpdates.length > 0) %}
 {% if hasWrittenNow %}
 <section class="not-prose mb-10">
   <h2 class="editorial-kicker mb-3">Written Now</h2>
   <div class="surface surface-padding">
-    {% if nowPage.highlights and nowPage.highlights.length > 0 %}
+    {% if nowHighlights and nowHighlights.length > 0 %}
     <ul class="now-log">
-      {% for item in nowPage.highlights %}
-      <li>{{ item | safe }}</li>
+      {% for item in nowHighlights %}
+      <li>{{ (item.text if item.text else item) | safe }}</li>
       {% endfor %}
     </ul>
     {% endif %}
 
-    {% if nowPage.updates and nowPage.updates.length > 0 %}
-    <ul class="now-log{% if nowPage.highlights and nowPage.highlights.length > 0 %} mt-4{% endif %}">
-      {% for item in nowPage.updates %}
-      <li>{{ item | safe }}</li>
+    {% if nowUpdates and nowUpdates.length > 0 %}
+    <ul class="now-log{% if nowHighlights and nowHighlights.length > 0 %} mt-4{% endif %}">
+      {% for item in nowUpdates %}
+      <li>{{ (item.text if item.text else item) | safe }}</li>
       {% endfor %}
     </ul>
     {% endif %}

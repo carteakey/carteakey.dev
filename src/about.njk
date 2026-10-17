@@ -6,7 +6,7 @@ eleventyNavigation:
   key: About
   order: 1
 ---
-{% set fact = (randomFacts | selectattr("enabled") | random).text %}
+{% set fact = (randomFacts | enabled | random).text %}
 {% set pageEyebrow = "Profile" %}
 {% set pageTitle = "About" %}
 {% set pageDescription = "Data analyst in Toronto. I spend my days with product and growth data, and my nights with self-hosted servers, local LLMs, and side projects." %}

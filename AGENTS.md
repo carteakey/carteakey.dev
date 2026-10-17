@@ -54,6 +54,7 @@ Intentionally committed implementation work is tracked in Linear: [carteakey.dev
 * ❌ **No Legacy Code**: Do not use `var`, jQuery, or write code for Internet Explorer compatibility.
 * ❌ **Inventing Post Elements**: raw HTML/utility-class blocks in posts, or new components that are not documented in `docs/BLOG_POST_FEATURES.md` (see rule 6).
 * ❌ **Hardcoded HTML for Data**: When building lists, folios, or attributions, use YAML data files or Markdown frontmatter. Do not hardcode HTML grids or `<div>` structures in templates.
+  - Curated lists (bookmarks, projects, uses, quotes, now highlights and updates, random facts) support `enabled: false` on any entry: it stays in the file as a draft and never renders. Loop through the shared `enabled` filter (`{% for x in list | enabled %}`, and `| enabled | length` for counts) in any new template that renders such a list. Now-page items may be plain strings or `{ text, enabled }`. The repo is public, so a disabled entry is still readable on GitHub.
 * ❌ **No Marketing Hype or Tier Branding**:
   - All posts must pass through the `human-writer` skill, even when declared `authored_by: ai-assisted` or `ai-generated`.
   - Never invent artificial tier names like "Platinum tier", "Gold tier", or "Gold master". Describe setups plainly by engine and model (e.g. `Strata (dynamic expert cache)`, `llama.cpp plain master`, `llama.cpp + MTP draft`).

@@ -40,7 +40,7 @@ collectionArchetype: wall
           data-feed-masonry
           style="--feed-row-height: 16px;"
         >
-            {% for quote in quotes %}
+            {% for quote in quotes | enabled %}
             <article class="feed-card surface surface-compact surface-hover rounded-sm">
                 <blockquote class="m-0">
                     <p class="editorial-support-compact italic m-0">"{{ quote.quote | replace('\n', '<br>') | safe }}"</p>

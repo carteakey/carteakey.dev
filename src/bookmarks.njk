@@ -11,9 +11,9 @@ collectionArchetype: ledger
 
 {% include "components/breadcrumbs.njk" %}
 
-{% set blogrollCount = bookmarks.blogroll | length %}
-{% set readsCount = bookmarks.artifacts | length %}
-{% set webringsCount = bookmarks.webrings | length %}
+{% set blogrollCount = bookmarks.blogroll | enabled | length %}
+{% set readsCount = bookmarks.artifacts | enabled | length %}
+{% set webringsCount = bookmarks.webrings | enabled | length %}
 {% set totalCount = blogrollCount + readsCount + webringsCount %}
 
 {% set pageEyebrow = "Curated Web" %}
@@ -47,7 +47,7 @@ collectionArchetype: ledger
     <p class="editorial-support mb-6">Writers, engineers, and researchers whose RSS feeds I follow regularly for high-signal ideas.</p>
 
     <div class="grid gap-4 md:grid-cols-2">
-      {% for site in bookmarks.blogroll %}
+      {% for site in bookmarks.blogroll | enabled %}
         {% set domain = site.url | domainFromUrl %}
         <article class="surface surface-hover surface-padding flex flex-col justify-between h-full">
           <div>
@@ -83,7 +83,7 @@ collectionArchetype: ledger
     <p class="editorial-support mb-6">Standalone pieces, engineering philosophies, and software landmarks worth revisiting.</p>
 
     <div class="grid gap-4 md:grid-cols-2">
-      {% for item in bookmarks.artifacts %}
+      {% for item in bookmarks.artifacts | enabled %}
         {% set domain = item.url | domainFromUrl %}
         <article class="surface surface-hover surface-padding flex flex-col justify-between h-full">
           <div>
@@ -119,7 +119,7 @@ collectionArchetype: ledger
     <p class="editorial-support mb-6">Decentralized rings connecting personal homepages, indie developers, and minimal hand-crafted web spaces.</p>
 
     <div class="grid gap-4 md:grid-cols-2">
-      {% for ring in bookmarks.webrings %}
+      {% for ring in bookmarks.webrings | enabled %}
         <article class="surface surface-hover surface-padding flex flex-col justify-between h-full">
           <div>
             <div class="flex items-start justify-between gap-3">
@@ -168,7 +168,7 @@ collectionArchetype: ledger
           </p>
           <div class="flex flex-wrap items-center gap-2.5 pt-1">
             {# Webring buttons #}
-            {% for ring in bookmarks.webrings %}
+            {% for ring in bookmarks.webrings | enabled %}
               {% if ring.button %}
                 <a href="{{ ring.url }}" target="_blank" rel="noopener noreferrer" class="inline-block" title="{{ ring.name }} Webring">
                   <img src="{{ ring.button }}" alt="{{ ring.name }}" width="88" height="31" class="micro-button pixelated" loading="lazy">
@@ -176,7 +176,7 @@ collectionArchetype: ledger
               {% endif %}
             {% endfor %}
             {# Retro buttons #}
-            {% for btn in bookmarks.retro_buttons %}
+            {% for btn in bookmarks.retro_buttons | enabled %}
               <a href="{{ btn.url }}" target="_blank" rel="noopener noreferrer" class="inline-block" title="{{ btn.name }}">
                 <img src="{{ btn.image }}" alt="{{ btn.alt }}" width="88" height="31" class="micro-button pixelated" loading="lazy">
               </a>
