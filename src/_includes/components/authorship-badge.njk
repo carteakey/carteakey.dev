@@ -1,32 +1,28 @@
 {% macro authorshipBadge(authored_by, compact=false) %}
   {% if authored_by == 'human' %}
-    {% set color = "#16a34a" %}
     {% set icon = "edit-2" %}
     {% set label = "Human" %}
     {% set title = "Human - Written without AI assistance" %}
   {% elif authored_by == 'ai-assisted' %}
-    {% set color = "#2563eb" %}
     {% set icon = "zap" %}
     {% set label = "AI Assisted" %}
     {% set title = "AI Assisted - Written with AI as a creative partner" %}
   {% elif authored_by == 'ai-generated' %}
-    {% set color = "#7c3aed" %}
     {% set icon = "cpu" %}
     {% set label = "AI Generated" %}
     {% set title = "AI Generated - Primarily created by AI with human oversight" %}
   {% else %}
-    {% set color = "#6b7280" %}
     {% set icon = "help-circle" %}
     {% set label = "Unclassified" %}
     {% set title = "Unclassified - Authorship not yet tagged" %}
   {% endif %}
 
   {% if compact %}
-    <span class="authorship-badge-compact badge badge-compact badge-status inline-flex items-center justify-center w-fit flex-none align-middle" data-tooltip="{{ title }}" style="--badge-accent: {{ color }};">
+    <span class="authorship-badge-compact badge badge-compact badge-status inline-flex items-center justify-center w-fit flex-none align-middle" data-tooltip="{{ title }}">
       {% feather icon, class="w-2.5 h-2.5" %}
     </span>
   {% else %}
-    <span class="badge badge-compact badge-status inline-flex items-center gap-0.5 align-middle" title="{{ title }}" style="--badge-accent: {{ color }};">
+    <span class="badge badge-compact badge-status inline-flex items-center gap-0.5 align-middle" title="{{ title }}">
       {% feather icon, class="w-2.5 h-2.5 inline" %} {{ label }}
     </span>
   {% endif %}

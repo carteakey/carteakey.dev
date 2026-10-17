@@ -82,6 +82,7 @@ collectionArchetype: index
       {% if not post.data.pinned and (post.date | date("Y")) == year %}
         {% set filteredTags = post.data.tags | default([]) | filterTagList %}
         {{ postListRow(post, collections.feed, {
+          dateFormat: 'MMM d',
           outerAttrs: 'data-blog-card data-title="' ~ (post.data.title | lower | replace('"', '')) ~ '" data-tags="' ~ (filteredTags | join(' ') | lower) ~ '" data-body="' ~ (post.data.description | default('') | lower | replace('"', '')) ~ '"'
         }) }}
       {% endif %}

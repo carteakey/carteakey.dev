@@ -55,40 +55,13 @@ hasEthicalAds: false
 <div class="reading-progress" aria-hidden="true"><div id="readingProgressBar" class="reading-progress-bar"></div></div>
 
 <div class="post-wrap relative"{% if isEditorial %} data-pair="{{ edPair }}"{% endif %}>
-  {# Left Sidebar - Author Card (or editorial meta-sidebar) #}
+  {# Left Sidebar - editorial meta-sidebar; kept empty otherwise so the prose column stays centred #}
   {% if showSidebar %}
   <aside class="hidden xl:block post-rail post-rail-left">
     <div class="post-rail-inner sticky top-24 space-y-4">
       {% if isEditorial and sidebar %}
         {% include "components/editorial-sidebar.njk" %}
       {% endif %}
-      {# Author Card #}
-      <section class="surface surface-padding post-side-card not-prose">
-        <a href="/about" class="block group">
-          <div class="relative w-20 h-20 mb-3">
-            {% image "./src/static/img/headshot.png", "{{ metadata.author.name }}", "relative w-20 h-20 rounded-[0.18rem] object-cover border border-gray-200 dark:border-gray-700 transition-all shadow-sm", "./src/static/img/headshot-zoom.jpg" %}
-          </div>
-        </a>
-        <p class="post-side-kicker">About the author</p>
-        <a href="/about" class="post-side-name">
-          {{ metadata.author.name }}
-        </a>
-        <p class="post-side-copy">Data analyst from Toronto. I write about analytics, local AI, homelabs, side projects, and whatever else catches my eye.</p>
-        <div class="post-side-links">
-          <a href="https://x.com/krtychn" target="_blank" rel="noopener noreferrer" title="X (Twitter)" aria-label="X (Twitter)">
-            <svg class="w-4 h-4 fill-current inline-block" viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-          </a>
-          <a href="https://github.com/carteakey" target="_blank" rel="noopener noreferrer" title="GitHub" aria-label="GitHub">
-            {% feather "github", class="w-4 h-4" %}
-          </a>
-          <a href="https://www.linkedin.com/in/kartikeychauhan/" target="_blank" rel="noopener noreferrer" title="LinkedIn" aria-label="LinkedIn">
-            {% feather "linkedin", class="w-4 h-4" %}
-          </a>
-          <a href="mailto:{{ metadata.author.email }}" title="Email" aria-label="Email">
-            {% feather "mail", class="w-4 h-4" %}
-          </a>
-        </div>
-      </section>
     </div>
   </aside>
   {% endif %}
@@ -264,6 +237,25 @@ hasEthicalAds: false
       <p class="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
         Updated <time datetime="{{ updated | htmlDateString }}">{{ updated | readableDate }}</time>
       </p>
+    {% endif %}
+
+    {% if not author %}
+    <footer class="post-byline not-prose">
+      <a href="/about" class="post-byline-avatar" aria-hidden="true" tabindex="-1">
+        <img src="{{ '/img/headshot-halftone.svg' | url }}" alt="" width="56" height="56" loading="lazy" decoding="async">
+      </a>
+      <div>
+        <p class="post-byline-kicker">About the author</p>
+        <a href="/about" class="post-byline-name">{{ metadata.author.name }}</a>
+        <p class="post-byline-copy">Data analyst in Toronto. I write about analytics, local AI, homelabs, side projects, and whatever else catches my eye.</p>
+        <div class="post-byline-links">
+          <a href="https://x.com/krtychn" target="_blank" rel="noopener noreferrer">X</a>
+          <a href="https://github.com/carteakey" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="https://www.linkedin.com/in/kartikeychauhan/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          <a href="mailto:{{ metadata.author.email }}">Email</a>
+        </div>
+      </div>
+    </footer>
     {% endif %}
 
     <section class="learning-post-panel not-prose" data-learning-panel>

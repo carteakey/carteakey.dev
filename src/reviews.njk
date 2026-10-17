@@ -10,7 +10,6 @@ eleventyNavigation:
 collectionArchetype: index
 ---
 
-{% from "components/authorship-badge.njk" import authorshipBadge %}
 {% include "components/breadcrumbs.njk" %}
 
 {% set pageEyebrow = "Things Considered" %}
@@ -34,7 +33,6 @@ collectionArchetype: index
           <div class="mt-1.5 flex flex-wrap gap-1">
             <span class="badge badge-accent badge-compact">{{ entry.data.kind | default("Review") }}</span>
             {% if entry.data.category %}<span class="badge badge-tag badge-compact">{{ entry.data.category }}</span>{% endif %}
-            {{ authorshipBadge(entry.data.authored_by, compact=true) }}
           </div>
         </div>
         <div class="min-w-0 flex-1">

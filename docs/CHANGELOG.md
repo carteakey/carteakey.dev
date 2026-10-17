@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.34] - 2026-10-16
+### Changed
+- Post pages: replaced the left-rail "About the author" card with an end-of-post byline using the halftone avatar, so it also shows on mobile.
+- Type badges (Post, Note, Snippet, Lexicon, and so on) are now one neutral style; the accent is kept for state (Pinned, Hidden, Featured). Featured star and authorship badges use the accent instead of amber, green, blue, and purple.
+- Authorship badges now appear only on single post, note, TIL, and snippet pages, not on feed cards, list rows, or the reviews list. `data-authored-by` stays, so the authorship filter still works.
+- Homepage dek no longer repeats the typewriter's topic list.
+
+### Fixed
+- `/blog/` rows under a year heading show the day (`Oct 14`) instead of an ambiguous `Oct 26`; other lists show `Oct ’26`.
+- `shortDate` used local time and could print the day before the date shown on cards.
+
+### Removed
+- Floating Subscribe button, which covered body text on mobile. The homepage subscribe block and `/newsletter/` remain.
+
 ## [2.7.33] - 2026-10-16
 ### Changed
 - Nested agent skills (`/skills/` -> `/ai/skills/`) and prompt library (`/prompts/` -> `/ai/prompts/`) under `/ai/` route.

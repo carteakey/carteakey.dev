@@ -1,41 +1,42 @@
 ---
 layout: layouts/home.njk
 title: Uses
-description: A list of hardware, software, and tools I use for work and personal projects.
-underConstruction: true
+description: Hardware, homelab fleet, software, and personal tools I use for work and projects.
 eleventyNavigation:
   key: Uses
   order: 11
 collectionArchetype: ledger
 ---
 
-<h1>Uses</h1>
-<p class="text-gray-600 dark:text-gray-300 mb-8">
-  A living list of the hardware, software, and services I actually use. Inspired by
-  <a href="https://uses.tech/" class="accent-link" target="_blank" rel="noopener">uses.tech</a>.
-</p>
+{% set pageEyebrow = "Workbench & Fleet" %}
+{% set pageTitle = "Uses" %}
+{% set pageDescription = "A living ledger of the hardware, CasaKey homelab fleet, daily software, and personal utilities I run. Inspired by uses.tech." %}
+{% set itemCount = collections.devices | length %}
+{% set itemLabel = "hosts & devices" %}
+
+{% include "components/page-header.njk" %}
 
 {# ── Machine snapshots ── #}
-<div class="not-prose mb-12 animate-enter stagger-1">
+<div class="not-prose mb-12">
   <div class="flex items-baseline justify-between gap-4 mb-4">
     <h2 class="editorial-title">Machine snapshots</h2>
-    <span class="font-mono text-[0.78rem] uppercase tracking-[0.12em] text-gray-500 dark:text-gray-400">Fastfetch + Freeze</span>
+    <span class="meta-line">Fastfetch + Freeze</span>
   </div>
   <div class="grid gap-6 lg:grid-cols-2">
     {% for machine in uses.machines %}
-      <article class="surface rounded-sm overflow-hidden border border-gray-800 bg-[#1e1e1e] dark:bg-[#1a1b26]">
-        <div class="flex items-center gap-2 px-3 py-2 bg-[#2d2d2d] dark:bg-[#16161e] border-b border-gray-800">
+      <article class="surface overflow-hidden">
+        <div class="flex items-center gap-2 px-3 py-2 border-b border-gray-200 dark:border-gray-800">
           <div class="flex gap-1.5 shrink-0" aria-hidden="true">
-            <span class="w-2.5 h-2.5 rounded-full bg-[#ff5f56]"></span>
-            <span class="w-2.5 h-2.5 rounded-full bg-[#ffbd2e]"></span>
-            <span class="w-2.5 h-2.5 rounded-full bg-[#27c93f]"></span>
+            <span class="w-2 h-2 border border-gray-400 dark:border-gray-600"></span>
+            <span class="w-2 h-2 border border-gray-400 dark:border-gray-600"></span>
+            <span class="w-2 h-2 border border-gray-400 dark:border-gray-600"></span>
           </div>
-          <p class="min-w-0 flex-1 truncate text-center font-mono text-[0.78rem] font-semibold text-gray-500 dark:text-gray-400">{{ machine.label }}</p>
+          <p class="min-w-0 flex-1 truncate text-center meta-line">{{ machine.label }}</p>
         </div>
         {% image machine.image, machine.imageAlt, "block w-full h-auto" %}
-        <div class="border-t border-gray-800 px-4 py-3 text-[#c0caf5]">
-          <h3 class="font-mono text-xs font-semibold">{{ machine.name }}</h3>
-          <p class="mt-1 font-mono text-[0.78rem] leading-relaxed text-[#a9b1d6]">{{ machine.description }}</p>
+        <div class="border-t border-gray-200 dark:border-gray-800 px-4 py-3">
+          <h3 class="editorial-title-sm">{{ machine.name }}</h3>
+          <p class="mt-1 editorial-support-compact">{{ machine.description }}</p>
         </div>
       </article>
     {% endfor %}
@@ -43,43 +44,42 @@ collectionArchetype: ledger
 </div>
 
 {# ── CasaKey homelab ── #}
-<section class="not-prose mb-16 animate-enter stagger-2" aria-labelledby="casakey-heading">
+<section id="homelab" class="not-prose mb-14 scroll-mt-20" aria-labelledby="casakey-heading">
   <div class="flex items-baseline justify-between gap-4 mb-4">
     <h2 id="casakey-heading" class="editorial-title">🏠 {{ uses.homelab.name }}</h2>
-    <span class="font-mono text-[0.78rem] uppercase tracking-[0.12em] text-gray-500 dark:text-gray-400">Homelab</span>
+    <span class="meta-line">Homelab</span>
   </div>
   <p class="editorial-support mb-5">{{ uses.homelab.description }}</p>
-  <div class="surface rounded-sm surface-padding">
+  <div class="surface surface-padding">
     {% image_cc "./src/static/img/diagrams/casakey-homelab-map.png", "Map of the CasaKey homelab: a Tailscale mesh connects two desks, Arch-Nemesis (Yeti, Steam Deck, FX505) and Big mAc (M3 Pro, M2 Air, M1 Air); the Raspberry Pi wakes Yeti over Wake-on-LAN and FX505 shares the Glowdesk NAS over Ethernet and NFS", "sketch-draw", "Hand-drawn map of the fleet. Cards below have the details." %}
     {% if uses.homelab.stations %}
       <div class="grid gap-4 md:grid-cols-2 mb-6">
         {% for station in uses.homelab.stations %}
-          <div class="border border-gray-300 dark:border-gray-700 bg-gray-50/70 dark:bg-gray-900/70 p-4">
+          <div class="surface-flat p-4">
             <div class="flex items-center justify-between gap-2 mb-1.5">
-              <p class="font-mono text-xs font-semibold"><span aria-hidden="true">{{ station.emoji }}</span> {{ station.name }}</p>
-              <span class="font-mono text-[0.78rem] uppercase tracking-[0.1em] text-gray-500 dark:text-gray-400">{{ station.tagline }}</span>
+              <p class="editorial-title-sm"><span aria-hidden="true">{{ station.emoji }}</span> {{ station.name }}</p>
+              <span class="meta-line">{{ station.tagline }}</span>
             </div>
             <p class="editorial-support-compact">{{ station.description }}</p>
           </div>
         {% endfor %}
       </div>
-      <div class="mb-6 text-center font-mono text-sm text-gray-400 dark:text-gray-500" aria-hidden="true">↓</div>
     {% endif %}
     <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
       {% for host in uses.homelab.hosts %}
-        <article class="border border-gray-200 bg-gray-50 p-4 dark:border-gray-800 dark:bg-gray-900">
+        <article class="surface-flat p-4">
           <div class="flex items-center justify-between gap-1">
-            <p class="font-mono text-xs font-semibold"><span aria-hidden="true">{{ host.emoji }}</span> {% if host.device %}<a class="device-link" href="/devices/{{ host.device }}/">{{ host.name }}</a>{% else %}{{ host.name }}{% endif %}</p>
+            <p class="editorial-title-sm"><span aria-hidden="true">{{ host.emoji }}</span> {% if host.device %}<a class="device-link" href="/devices/{{ host.device }}/">{{ host.name }}</a>{% else %}{{ host.name }}{% endif %}</p>
             {% if host.station %}
-              <span class="font-mono text-[0.78rem] uppercase tracking-wider text-gray-400 dark:text-gray-500">{{ host.station }}</span>
+              <span class="meta-line">{{ host.station }}</span>
             {% endif %}
           </div>
-          <p class="mt-2 font-mono text-[0.78rem] uppercase tracking-[0.1em] text-gray-500 dark:text-gray-400">{{ host.role }}</p>
+          <p class="mt-2 meta-line">{{ host.role }}</p>
           <p class="mt-2 editorial-support-compact">{{ host.description }}</p>
         </article>
       {% endfor %}
     </div>
-    <div class="mt-5 flex flex-wrap justify-center gap-x-5 gap-y-2 font-mono text-[0.78rem] text-gray-500 dark:text-gray-400">
+    <div class="mt-5 flex flex-wrap justify-center gap-x-5 gap-y-2 meta-line">
       {% for link in uses.homelab.links %}
         <span>{{ link }}</span>
       {% endfor %}
@@ -87,23 +87,47 @@ collectionArchetype: ledger
   </div>
 </section>
 
-{# ── Main categories in multi-column text layout ── #}
-<div class="not-prose animate-enter stagger-3">
+{# ── Hardware & Devices Ledger (folded from /devices/) ── #}
+<section id="hardware" class="not-prose mb-14 scroll-mt-20" aria-labelledby="hardware-heading">
+  <div class="flex items-baseline justify-between gap-4 mb-3">
+    <h2 id="hardware-heading" class="editorial-title">🖥️ Devices & Hardware Spec Sheets</h2>
+    <span class="meta-line">{{ collections.devices | length }} machines</span>
+  </div>
+  <p class="editorial-support mb-4">Each machine and peripheral has a dedicated spec sheet with components, notes, and a hardware timeline.</p>
+  <ul class="surface divide-y divide-gray-200 dark:divide-gray-800 list-none p-0 m-0">
+    {% for d in collections.devices %}
+      <li class="flex flex-wrap items-baseline gap-x-4 gap-y-1 px-4 py-3">
+        <a href="{{ d.url }}" class="editorial-title-sm no-underline hover:underline">
+          {% if d.data.emoji %}<span aria-hidden="true">{{ d.data.emoji }}</span> {% endif %}{{ d.data.title }}
+        </a>
+        <span class="editorial-support-compact flex-1">{{ d.data.role }}</span>
+        <span class="meta-line">{{ d.data.kind }} · {{ d.data.state }}</span>
+      </li>
+    {% endfor %}
+  </ul>
+</section>
+
+{# ── Main software & gear categories in multi-column text layout ── #}
+<section id="software" class="not-prose mb-14 scroll-mt-20" aria-labelledby="software-heading">
+  <div class="flex items-baseline justify-between gap-4 mb-6">
+    <h2 id="software-heading" class="editorial-title">🧰 Software, Peripherals & Stack</h2>
+    <span class="meta-line">{{ uses.categories | length }} categories</span>
+  </div>
   <div class="grid md:grid-cols-2 gap-x-12 gap-y-12">
     {% for category in uses.categories %}
       <section>
-        <h2 class="editorial-title mb-4 flex items-center gap-2">
+        <h3 class="editorial-title mb-4 flex items-center gap-2">
           <span>{{ category.emoji }}</span> {{ category.name }}
-        </h2>
+        </h3>
         <div class="space-y-4">
           {% for item in category.items %}
             <div class="group">
               <div class="flex items-baseline gap-2">
                 <span class="opacity-80">{{ item.emoji }}</span>
                 {% if item.link %}
-                  <a href="{{ item.link }}" target="_blank" rel="noopener" class="editorial-title link-accent decoration-dotted underline-offset-4">{{ item.name }}</a>
+                  <a href="{{ item.link }}" target="_blank" rel="noopener" class="editorial-title-sm link-accent decoration-dotted underline-offset-4">{{ item.name }}</a>
                 {% else %}
-                  <span class="editorial-title">{{ item.name }}</span>
+                  <span class="editorial-title-sm">{{ item.name }}</span>
                 {% endif %}
               </div>
               {% if item.description %}
@@ -115,20 +139,52 @@ collectionArchetype: ledger
       </section>
     {% endfor %}
   </div>
-</div>
+</section>
+
+{# ── Personal Software & Tools (folded from /tools/) ── #}
+<section id="tools" class="not-prose mb-14 scroll-mt-20" aria-labelledby="tools-heading">
+  <div class="flex items-baseline justify-between gap-4 mb-3">
+    <h2 id="tools-heading" class="editorial-title">🔧 Personal Tools & Utilities</h2>
+    <span class="meta-line">{{ tools.tools | length }} published</span>
+  </div>
+  <p class="editorial-support mb-4">Small software utilities and CLI tools I have built and published for specific, niche workflows.</p>
+  <ul class="surface divide-y divide-gray-200 dark:divide-gray-800 list-none p-0 m-0">
+    {% for tool in tools.tools %}
+      <li class="group flex items-start gap-4 px-4 py-3.5">
+        <div class="flex-1 min-w-0">
+          <div class="flex flex-wrap items-center gap-2">
+            <a href="{% if tool.url %}{{ tool.url }}{% else %}{{ tool.github }}{% endif %}" title="View Tool" class="editorial-title-link inline-flex items-center gap-1">
+              {{ tool.title }}
+              {% feather "arrow-up-right", class="w-3.5 h-3.5 opacity-40 group-hover:opacity-100 transition-opacity" %}
+            </a>
+            {% for tag in tool.tags %}
+              <span class="badge badge-tag badge-compact">#{{ tag }}</span>
+            {% endfor %}
+          </div>
+          <p class="mt-1 editorial-support-compact">{{ tool.description }}</p>
+        </div>
+        {% if tool.github %}
+          <a class="mt-1 shrink-0 meta-line no-underline hover:underline" title="View Code" href="{{ tool.github }}">
+            {% feather "github", class="w-4 h-4" %}
+          </a>
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+</section>
 
 {# ── Retired section ── #}
-<div class="not-prose mt-16 animate-enter stagger-3">
+<div class="not-prose mt-14">
   <h2 class="editorial-title mb-4 flex items-center gap-2">
     <span>🪦</span> Retired
   </h2>
   <div class="grid md:grid-cols-2 gap-x-12 gap-y-4">
     {% for item in uses.retired %}
-      <div class="opacity-60 hover:opacity-100 transition-opacity duration-300">
+      <div class="opacity-70 hover:opacity-100 transition-opacity duration-300">
         <div class="flex items-baseline gap-2">
           <span>{{ item.emoji }}</span>
-          <span class="editorial-title line-through decoration-1">{{ item.name }}</span>
-          <span class="text-xs font-mono bg-gray-200 dark:bg-gray-800 px-1.5 py-0.5 rounded">{{ item.retired_date }}</span>
+          <span class="editorial-title-sm line-through decoration-1">{{ item.name }}</span>
+          <span class="badge badge-tag badge-compact">{{ item.retired_date }}</span>
         </div>
         {% if item.description %}
           <p class="editorial-support-compact ml-7 mt-0.5">{{ item.description }}</p>
@@ -139,25 +195,16 @@ collectionArchetype: ledger
 </div>
 
 {# ── Changelog section ── #}
-<div class="not-prose mt-16 animate-enter stagger-4">
+<div id="changelog" class="not-prose mt-14 scroll-mt-20">
   <h2 class="editorial-title mb-4 flex items-center gap-2">
-    <span>📋</span> Changelog
+    <span>📋</span> Uses Changelog
   </h2>
-  <div class="surface surface-padding rounded-sm space-y-3">
+  <div class="surface surface-padding space-y-3">
     {% for entry in uses.changelog %}
-      <div class="flex flex-col sm:flex-row gap-1 sm:gap-4 text-sm group">
-        <span class="font-mono text-xs text-gray-400 dark:text-gray-500 shrink-0 sm:pt-0.5 sm:w-20">{{ entry.date }}</span>
-        <span class="text-gray-700 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-gray-100 transition-colors">{{ entry.change }}</span>
+      <div class="flex flex-col sm:flex-row gap-1 sm:gap-4 group">
+        <span class="meta-line shrink-0 sm:pt-0.5 sm:w-20">{{ entry.date }}</span>
+        <span class="editorial-support-compact">{{ entry.change }}</span>
       </div>
     {% endfor %}
   </div>
-</div>
-
-<div class="mt-12 surface surface-padding rounded-sm not-prose">
-  <h3 class="editorial-title mb-2">
-    ❓ Want to know more?
-  </h3>
-  <p class="editorial-support-compact">
-    Feel free to <a href="mailto:{{ metadata.author.email }}" class="accent-link">reach out</a> if you have questions about any of these tools or want recommendations for your own setup.
-  </p>
 </div>

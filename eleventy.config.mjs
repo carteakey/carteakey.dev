@@ -653,8 +653,9 @@ export default function (eleventyConfig) {
     const dateTime = dateTimeFromInput(dateObj);
     return dateTime.isValid ? dateTime.toFormat("MMM d, yyyy") : "";
   });
-  eleventyConfig.addFilter("shortDate", (dateObj) => {
-    return DateTime.fromJSDate(dateObj).toFormat("MMM yy");
+  eleventyConfig.addFilter("shortDate", (dateObj, format = "MMM ’yy") => {
+    const dateTime = dateTimeFromInput(dateObj);
+    return dateTime.isValid ? dateTime.toFormat(format) : "";
   });
 
   // Archive-specific date filters

@@ -1,8 +1,5 @@
 {
   "counts": {
-    "src/_includes/components/authorship-badge.njk": {
-      "inline-style": 2
-    },
     "src/_includes/components/cartebase-charts.njk": {
       "pill-or-circle": 3,
       "utility-text-stack": 9,
