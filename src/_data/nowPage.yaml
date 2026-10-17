@@ -4,8 +4,14 @@
 #
 # The reading section is populated separately from Goodreads plus
 # src/_data/reading-manual.yaml.
-lastUpdated: 2026-06-24T12:00:00-04:00
+lastUpdated: 2026-10-16T12:00:00-04:00
 
 highlights: []
 
-updates: []
+updates:
+  - 'Gave this site another coat of paint: Iosevka Aile for reading and Fraunces for titles, picked in a font lab that swaps fonts on the live pages.'
+  - 'Still squeezing big models into a 12 GB RTX 4070. <a href="/blog/local-inference/strata-on-an-rtx-4070/">Strata</a> got Qwen3.8-Flash-Next to 53 tok/s at 60k context.'
+  - '<a href="/notes/gpu-longevity-and-clock-capping/">Capped the 4070</a> at 165 W and 2610 MHz to help it last: 6 °C cooler, no tok/s lost.'
+  - 'Pushing L3MS, my keyboard-first local model workbench, toward a real release.'
+  - 'Sortling, the little wizard that sorts my WhatsApp media, just learned to tell illustrations apart.'
+  - 'Setting up Glowdesk, a Batocera retro box under the TV.'
