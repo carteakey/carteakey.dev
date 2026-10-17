@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.36] - 2026-10-16
+### Fixed
+- Light mode paper grain was nearly invisible (the same noise that reads on the dark background is under 1% contrast on the paper colour). Light mode now uses a grayscale, higher-contrast grain matched to dark mode by perceived lightness; dark mode is unchanged.
+
 ## [2.7.35] - 2026-10-16
 ### Changed
 - Header: the compass icon is now a plain "More" link beside About, Writing, and Now (also in the mobile menu). The global funnel dropdown is gone.
