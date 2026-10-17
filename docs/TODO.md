@@ -395,7 +395,7 @@ After: https://carteakey.dev
 - [x] Sync Goodreads shelves into `/reading` and `/now` while preserving manual books, notes, and Kindle progress overrides; archive the outgoing `/now` page before every refresh. (2026-06-24)
 
 **agentcart (`/ask/`)** — see `docs/AGENTCART.md`
-- [ ] Set Netlify env: `ASK_OPENROUTER_API_KEY`, `ASK_NVIDIA_API_KEY`, `LOCAL_LLM_URL` + `LOCAL_LLM_TOKEN`. Confirm the NVIDIA model id. Until then the page says the cart is unplugged.
+- [ ] Switch it on: follow the go-live checklist in `docs/AGENTCART.md` (tunnel, Netlify env vars, NVIDIA model id, redeploy, smoke test). Until then the page says the cart is unplugged.
 - [ ] Confirm whether Netlify caps the total length of a streamed edge response under real traffic.
 - [ ] Local hop can evict whatever model is loaded on llama-swap. Check running models first, or pin the model in a group.
 - [ ] Idea: hero prompt line (`> ask agentcart anything_`) that opens `/ask/?q=`.

@@ -2,6 +2,21 @@
 
 A terminal on the site that answers questions about carteakey.dev from its published pages, styled after a coding-agent CLI. A block-art shopping cart with eyes is the mascot; it also lives in the header as a blinking 16px icon.
 
+## Go-live checklist
+
+The page and code are deployed (v2.9.0, 2026-10-17); the cart stays "unplugged" until these are done.
+
+- [ ] **Tunnel llama-swap** (L3MS, `:8080`) to a public HTTPS URL. Netlify can't reach `localhost`. The method from "Exposing local LLMs to the internet" works; keep llama-swap's API key on, so the tunnel isn't an open proxy.
+- [ ] **Set Netlify env vars** (Site settings → Environment variables, or `netlify env:set`):
+  - `ASK_OPENROUTER_API_KEY`: a separate OpenRouter key, not the QOTD one
+  - `ASK_NVIDIA_API_KEY`: from build.nvidia.com
+  - `LOCAL_LLM_URL`: the tunnel URL ending in `/v1`
+  - `LOCAL_LLM_TOKEN`: the `LLAMA_SWAP_API_KEY` value
+- [ ] **Check the NVIDIA model id.** The default `nvidia/nemotron-3-super-120b-a12b` is a guess; set `ASK_NVIDIA_MODELS` if the catalogue says otherwise.
+- [ ] **Redeploy**, since edge functions pick up env changes on a new deploy (Deploys → Trigger deploy, or wait for the nightly build).
+- [ ] **Smoke test on production:** ask "who is kartikey" and a benchmark question. Watch for the fallback lines and the footer's provider. Ask 13 times from one IP to see the usage limit, and run `/doctor`.
+- [ ] **Watch the first days:** whether long answers get cut off (an unverified total stream cap on edge responses), whether the local hop evicts a model you're using, and the daily count in Upstash (`ask:day:YYYY-MM-DD`).
+
 ## Pieces
 
 | File | Role |
