@@ -2,8 +2,15 @@
 //
 // Edge, not a serverless function, on purpose: Netlify cuts streamed
 // serverless responses at 10 s, which a free-model fallback chain blows
-// through. Edge functions are limited on CPU time, not on time spent
-// waiting for a model.
+// through. Edge functions get 50 ms of CPU per request (waiting on a model
+// doesn't count) and a 40 s response-header timeout, which this meets by
+// returning the stream's headers at once. Whether Netlify caps the total
+// length of a streamed edge body is unverified: check under real traffic.
+// https://docs.netlify.com/build/edge-functions/limits/
+//
+// Switched off unless a hop is configured with ASK_* / LOCAL_LLM_* keys
+// (deliberately not the shared OPENROUTER_API_KEY QOTD builds with): with
+// none set, /api/ask is a 404 and never touches Redis.
 //
 // Request:  POST /api/ask { q, history: [{ role, content }] }
 // Response: NDJSON stream of events, one per line:
@@ -26,7 +33,7 @@ const env = (key) =>
 const PROVIDERS = {
   openrouter: () => ({
     base: env("OPENROUTER_API_URL") || "https://openrouter.ai/api/v1",
-    key: env("OPENROUTER_API_KEY"),
+    key: env("ASK_OPENROUTER_API_KEY"), // not the shared key QOTD builds with
     models: list(env("ASK_OPENROUTER_MODELS")) || [
       "google/gemma-4-31b-it:free",
       "nvidia/nemotron-3.5-lightning:free",
@@ -40,7 +47,7 @@ const PROVIDERS = {
   }),
   nvidia: () => ({
     base: env("NVIDIA_API_URL") || "https://integrate.api.nvidia.com/v1",
-    key: env("NVIDIA_API_KEY"),
+    key: env("ASK_NVIDIA_API_KEY"),
     models: list(env("ASK_NVIDIA_MODELS")) || [
       "nvidia/nemotron-3-super-120b-a12b",
     ],
@@ -354,6 +361,11 @@ function route() {
 
 // ── Handler ─────────────────────────────────────────────────────────────
 export default async function handler(request, context) {
+  // No configured hop means agentcart isn't switched on for this deploy:
+  // behave as if the endpoint doesn't exist, and don't touch Redis.
+  const hops = route();
+  if (!hops.length) return json({ error: "not found" }, 404);
+
   if (request.method !== "POST") return json({ error: "POST only" }, 405);
 
   let body;
@@ -424,7 +436,7 @@ export default async function handler(request, context) {
         }
 
         let opened = null;
-        for (const { name, hop, model } of route()) {
+        for (const { name, hop, model } of hops) {
           try {
             opened = await openStream(hop, model, messages, request.signal);
             send({ t: "meta", provider: name, model });
