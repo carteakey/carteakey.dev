@@ -1,0 +1,541 @@
+{
+  "last_updated": "2026-10-17T03:44:15Z",
+  "photos": 10384,
+  "screenshots": 746,
+  "placeholder_excluded": 3881,
+  "scored_total": 11130,
+  "mean": 0.427,
+  "mean_with_screenshots": 0.4055,
+  "median": 0.4414,
+  "p99": 0.6841,
+  "yearly": [
+    {
+      "year": "2011",
+      "photos": 1,
+      "mean": 0.3994,
+      "screenshots": 0,
+      "mean_with_screenshots": 0.3994
+    },
+    {
+      "year": "2016",
+      "photos": 5,
+      "mean": 0.2984,
+      "screenshots": 0,
+      "mean_with_screenshots": 0.2984
+    },
+    {
+      "year": "2019",
+      "photos": 2,
+      "mean": 0.4524,
+      "screenshots": 0,
+      "mean_with_screenshots": 0.4524
+    },
+    {
+      "year": "2020",
+      "photos": 3,
+      "mean": 0.4482,
+      "screenshots": 0,
+      "mean_with_screenshots": 0.4482
+    },
+    {
+      "year": "2021",
+      "photos": 94,
+      "mean": 0.4551,
+      "screenshots": 1,
+      "mean_with_screenshots": 0.4528
+    },
+    {
+      "year": "2022",
+      "photos": 1404,
+      "mean": 0.4696,
+      "screenshots": 9,
+      "mean_with_screenshots": 0.4679
+    },
+    {
+      "year": "2023",
+      "photos": 1529,
+      "mean": 0.4218,
+      "screenshots": 26,
+      "mean_with_screenshots": 0.4171
+    },
+    {
+      "year": "2024",
+      "photos": 1647,
+      "mean": 0.4092,
+      "screenshots": 112,
+      "mean_with_screenshots": 0.3918
+    },
+    {
+      "year": "2025",
+      "photos": 4897,
+      "mean": 0.427,
+      "screenshots": 448,
+      "mean_with_screenshots": 0.3994
+    },
+    {
+      "year": "2026",
+      "photos": 802,
+      "mean": 0.3959,
+      "screenshots": 150,
+      "mean_with_screenshots": 0.3493
+    }
+  ],
+  "monthly": [
+    {
+      "month": "2022-01",
+      "photos": 39,
+      "mean": 0.4243
+    },
+    {
+      "month": "2022-02",
+      "photos": 59,
+      "mean": 0.3944
+    },
+    {
+      "month": "2022-03",
+      "photos": 362,
+      "mean": 0.4811
+    },
+    {
+      "month": "2022-04",
+      "photos": 66,
+      "mean": 0.4214
+    },
+    {
+      "month": "2022-05",
+      "photos": 93,
+      "mean": 0.4576
+    },
+    {
+      "month": "2022-06",
+      "photos": 34,
+      "mean": 0.4678
+    },
+    {
+      "month": "2022-07",
+      "photos": 31,
+      "mean": 0.4319
+    },
+    {
+      "month": "2022-08",
+      "photos": 60,
+      "mean": 0.4648
+    },
+    {
+      "month": "2022-09",
+      "photos": 43,
+      "mean": 0.4611
+    },
+    {
+      "month": "2022-10",
+      "photos": 431,
+      "mean": 0.4953
+    },
+    {
+      "month": "2022-11",
+      "photos": 49,
+      "mean": 0.4387
+    },
+    {
+      "month": "2022-12",
+      "photos": 137,
+      "mean": 0.4595
+    },
+    {
+      "month": "2023-01",
+      "photos": 59,
+      "mean": 0.4459
+    },
+    {
+      "month": "2023-02",
+      "photos": 64,
+      "mean": 0.4633
+    },
+    {
+      "month": "2023-03",
+      "photos": 87,
+      "mean": 0.3882
+    },
+    {
+      "month": "2023-04",
+      "photos": 108,
+      "mean": 0.4387
+    },
+    {
+      "month": "2023-05",
+      "photos": 111,
+      "mean": 0.4396
+    },
+    {
+      "month": "2023-06",
+      "photos": 144,
+      "mean": 0.4568
+    },
+    {
+      "month": "2023-07",
+      "photos": 171,
+      "mean": 0.4005
+    },
+    {
+      "month": "2023-08",
+      "photos": 155,
+      "mean": 0.5079
+    },
+    {
+      "month": "2023-09",
+      "photos": 45,
+      "mean": 0.3777
+    },
+    {
+      "month": "2023-10",
+      "photos": 133,
+      "mean": 0.3679
+    },
+    {
+      "month": "2023-11",
+      "photos": 209,
+      "mean": 0.4136
+    },
+    {
+      "month": "2023-12",
+      "photos": 243,
+      "mean": 0.3857
+    },
+    {
+      "month": "2024-01",
+      "photos": 73,
+      "mean": 0.3712
+    },
+    {
+      "month": "2024-02",
+      "photos": 433,
+      "mean": 0.39
+    },
+    {
+      "month": "2024-03",
+      "photos": 115,
+      "mean": 0.3915
+    },
+    {
+      "month": "2024-04",
+      "photos": 141,
+      "mean": 0.4344
+    },
+    {
+      "month": "2024-05",
+      "photos": 156,
+      "mean": 0.4396
+    },
+    {
+      "month": "2024-06",
+      "photos": 83,
+      "mean": 0.4238
+    },
+    {
+      "month": "2024-07",
+      "photos": 201,
+      "mean": 0.4139
+    },
+    {
+      "month": "2024-08",
+      "photos": 122,
+      "mean": 0.4021
+    },
+    {
+      "month": "2024-09",
+      "photos": 123,
+      "mean": 0.3727
+    },
+    {
+      "month": "2024-10",
+      "photos": 100,
+      "mean": 0.4594
+    },
+    {
+      "month": "2024-11",
+      "photos": 73,
+      "mean": 0.435
+    },
+    {
+      "month": "2024-12",
+      "photos": 27,
+      "mean": 0.4532
+    },
+    {
+      "month": "2025-01",
+      "photos": 166,
+      "mean": 0.3874
+    },
+    {
+      "month": "2025-02",
+      "photos": 100,
+      "mean": 0.399
+    },
+    {
+      "month": "2025-03",
+      "photos": 189,
+      "mean": 0.3775
+    },
+    {
+      "month": "2025-04",
+      "photos": 350,
+      "mean": 0.4365
+    },
+    {
+      "month": "2025-05",
+      "photos": 327,
+      "mean": 0.4001
+    },
+    {
+      "month": "2025-06",
+      "photos": 704,
+      "mean": 0.4667
+    },
+    {
+      "month": "2025-07",
+      "photos": 268,
+      "mean": 0.4663
+    },
+    {
+      "month": "2025-08",
+      "photos": 496,
+      "mean": 0.4603
+    },
+    {
+      "month": "2025-09",
+      "photos": 304,
+      "mean": 0.4113
+    },
+    {
+      "month": "2025-10",
+      "photos": 301,
+      "mean": 0.3867
+    },
+    {
+      "month": "2025-11",
+      "photos": 750,
+      "mean": 0.4022
+    },
+    {
+      "month": "2025-12",
+      "photos": 942,
+      "mean": 0.4321
+    },
+    {
+      "month": "2026-01",
+      "photos": 233,
+      "mean": 0.3849
+    },
+    {
+      "month": "2026-02",
+      "photos": 214,
+      "mean": 0.3999
+    },
+    {
+      "month": "2026-03",
+      "photos": 224,
+      "mean": 0.3947
+    },
+    {
+      "month": "2026-04",
+      "photos": 131,
+      "mean": 0.4112
+    }
+  ],
+  "month_of_year": [
+    {
+      "month": "Jan",
+      "photos": 570,
+      "mean": 0.3929,
+      "lighting": -0.1155
+    },
+    {
+      "month": "Feb",
+      "photos": 870,
+      "mean": 0.3991,
+      "lighting": -0.1445
+    },
+    {
+      "month": "Mar",
+      "photos": 977,
+      "mean": 0.4224,
+      "lighting": -0.1082
+    },
+    {
+      "month": "Apr",
+      "photos": 796,
+      "mean": 0.431,
+      "lighting": -0.0748
+    },
+    {
+      "month": "May",
+      "photos": 687,
+      "mean": 0.4232,
+      "lighting": -0.0654
+    },
+    {
+      "month": "Jun",
+      "photos": 965,
+      "mean": 0.4616,
+      "lighting": -0.0181
+    },
+    {
+      "month": "Jul",
+      "photos": 671,
+      "mean": 0.4322,
+      "lighting": -0.0691
+    },
+    {
+      "month": "Aug",
+      "photos": 833,
+      "mean": 0.4609,
+      "lighting": -0.0429
+    },
+    {
+      "month": "Sep",
+      "photos": 515,
+      "mean": 0.4033,
+      "lighting": -0.1069
+    },
+    {
+      "month": "Oct",
+      "photos": 965,
+      "mean": 0.4401,
+      "lighting": -0.0722
+    },
+    {
+      "month": "Nov",
+      "photos": 1081,
+      "mean": 0.4083,
+      "lighting": -0.1134
+    },
+    {
+      "month": "Dec",
+      "photos": 1349,
+      "mean": 0.427,
+      "lighting": -0.1133
+    }
+  ],
+  "favorites": [
+    {
+      "group": "Favourited",
+      "photos": 101,
+      "mean": 0.4853
+    },
+    {
+      "group": "Not favourited",
+      "photos": 10283,
+      "mean": 0.4264
+    }
+  ],
+  "cameras": [
+    {
+      "camera": "iPhone 16",
+      "photos": 5393,
+      "mean": 0.4271
+    },
+    {
+      "camera": "iPhone 12 mini",
+      "photos": 4498,
+      "mean": 0.4318
+    },
+    {
+      "camera": "iPad (10th generation)",
+      "photos": 103,
+      "mean": 0.3502
+    },
+    {
+      "camera": "Ray-Ban Meta Smart Glasses 2",
+      "photos": 97,
+      "mean": 0.3016
+    }
+  ],
+  "histogram": [
+    {
+      "bucket": "0.00",
+      "count": 152
+    },
+    {
+      "bucket": "0.05",
+      "count": 88
+    },
+    {
+      "bucket": "0.10",
+      "count": 132
+    },
+    {
+      "bucket": "0.15",
+      "count": 201
+    },
+    {
+      "bucket": "0.20",
+      "count": 368
+    },
+    {
+      "bucket": "0.25",
+      "count": 610
+    },
+    {
+      "bucket": "0.30",
+      "count": 958
+    },
+    {
+      "bucket": "0.35",
+      "count": 1339
+    },
+    {
+      "bucket": "0.40",
+      "count": 1667
+    },
+    {
+      "bucket": "0.45",
+      "count": 1824
+    },
+    {
+      "bucket": "0.50",
+      "count": 1394
+    },
+    {
+      "bucket": "0.55",
+      "count": 921
+    },
+    {
+      "bucket": "0.60",
+      "count": 493
+    },
+    {
+      "bucket": "0.65",
+      "count": 170
+    },
+    {
+      "bucket": "0.70",
+      "count": 50
+    },
+    {
+      "bucket": "0.75",
+      "count": 11
+    },
+    {
+      "bucket": "0.80",
+      "count": 5
+    },
+    {
+      "bucket": "0.85",
+      "count": 1
+    },
+    {
+      "bucket": "0.90",
+      "count": 0
+    },
+    {
+      "bucket": "0.95",
+      "count": 0
+    }
+  ],
+  "sql": {
+    "filter": "media_type = 'photo' AND overall_aesthetic_score IS NOT NULL AND overall_aesthetic_score != 0.5 AND COALESCE(is_hidden, 0) = 0 AND COALESCE(is_trashed, 0) = 0 AND date_created IS NOT NULL",
+    "yearly": "SELECT substr(datetime(date_created, COALESCE(timezone_offset_seconds, 0) || ' seconds'), 1, 4) AS year, SUM(COALESCE(is_screenshot, 0) = 0) AS photos, AVG(CASE WHEN COALESCE(is_screenshot, 0) = 0 THEN overall_aesthetic_score END) AS mean, SUM(COALESCE(is_screenshot, 0)) AS screenshots, AVG(overall_aesthetic_score) AS mean_with_screenshots FROM photos_assets WHERE media_type = 'photo' AND overall_aesthetic_score IS NOT NULL AND overall_aesthetic_score != 0.5 AND COALESCE(is_hidden, 0) = 0 AND COALESCE(is_trashed, 0) = 0 AND date_created IS NOT NULL GROUP BY year ORDER BY year",
+    "monthly": "SELECT substr(datetime(date_created, COALESCE(timezone_offset_seconds, 0) || ' seconds'), 1, 7) AS month, COUNT(*), AVG(overall_aesthetic_score) FROM photos_assets WHERE media_type = 'photo' AND overall_aesthetic_score IS NOT NULL AND overall_aesthetic_score != 0.5 AND COALESCE(is_hidden, 0) = 0 AND COALESCE(is_trashed, 0) = 0 AND date_created IS NOT NULL AND COALESCE(is_screenshot, 0) = 0 AND datetime(date_created, COALESCE(timezone_offset_seconds, 0) || ' seconds') >= '2022-01-01' GROUP BY month ORDER BY month",
+    "month_of_year": "SELECT CAST(substr(datetime(date_created, COALESCE(timezone_offset_seconds, 0) || ' seconds'), 6, 2) AS INTEGER) AS m, COUNT(*), AVG(overall_aesthetic_score), AVG(pleasant_lighting_score) FROM photos_assets WHERE media_type = 'photo' AND overall_aesthetic_score IS NOT NULL AND overall_aesthetic_score != 0.5 AND COALESCE(is_hidden, 0) = 0 AND COALESCE(is_trashed, 0) = 0 AND date_created IS NOT NULL AND COALESCE(is_screenshot, 0) = 0 AND datetime(date_created, COALESCE(timezone_offset_seconds, 0) || ' seconds') >= '2022-01-01' GROUP BY m ORDER BY m"
+  }
+}

@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.44] - 2026-10-16
+### Added
+- Note: "Taking Care of the Silicon You Already Own" (`src/notes/2026-10-16-gpu-longevity-and-clock-capping.md`) logging 1 Hz NVML telemetry across RTX 4070 power and clock boost profiles during local LLM decode.
+- Snippet: "Persistent NVIDIA Power and Clock Cap on Linux and Windows" (`src/snippets/nvidia-gpu-power-and-clock-cap.md`) with systemd oneshot unit and live profile switching commands.
+- Hardware log: Updated Yeti device log with 165 W / 2610 MHz tuning entry.
+- Data: Updated cartebase photo aesthetics metrics snapshot.
+
 ## [2.7.43] - 2026-10-16
 ### Added
 - Guidelines: a "Protected Personality" section in `docs/DESIGN_LANGUAGE.md` and rule 7 in `AGENTS.md` list the elements cleanups must route around (pixel name and typewriter, halftone avatar, footer scene, masonry home feed, sketches, post toys, grain, the type trio, the jokes in the copy, the slashpages). Removing one needs an explicit request.

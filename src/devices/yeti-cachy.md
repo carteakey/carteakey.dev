@@ -25,6 +25,8 @@ log:
     text: Named and mapped as part of the Arch-Nemesis desk on the CasaKey homelab map.
   - date: "2026-09-30"
     text: Strata brings Qwen3.8-Flash-Next to 53–63 t/s steady decode, up to 90.2 t/s burst.
+  - date: "2026-10-16"
+    text: Locked RTX 4070 to 165 W and 2610 MHz max boost via nvidia-tuning.service (-6 °C, -15% avg load power, zero tok/s loss).
 ---
 
 The 12 GB card is the constraint that shapes everything here. Models either fit in VRAM (the dense 27B, about 10 GiB) or lean on the 64 GB of host RAM and the NVMe drive (the 176B Flash-Next, streamed through an expert cache).
