@@ -10,6 +10,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Bookmarks: 88×31 retro button shelf featuring Fediring and Geekring webring buttons, classic web buttons ("Viewable with Any Browser", "NeoCities"), and a custom pixel-drawn 88×31 button for `carteakey.dev`.
 - Bookmarks: Interactive one-click copyable HTML embed box for the `carteakey.dev` 88×31 button so other sites can link back.
 - CSS: Added `.pixelated` and `.micro-button` utility classes for crisp integer pixel scaling and subtle button hover states.
+- Post: added high vs low sample photos gallery to "Has My Photography Gotten Better?" draft, contrasting outdoor scenery with utility snapshots without including people.
+- Skill `dataviz`: comprehensive documentation for build-time SVG charts (`{% chart %}`, `chartSvg()`, `utils/charts.mjs`), "ink and dots" grammar, and all 8 chart types.
+
+### Changed
+- Stats: brought `/stats/` to visual parity with `/data/` and `/listening/` using `cb.stat_tile` with sparklines, build-time SVG bar chart for posts per year, and design tokens for authorship and Lighthouse metrics (ratcheting design baseline down 12 items).
+
+### Fixed
+- Shortcuts: Replaced inline styles on the keyboard shortcuts overlay with semantic classes (`.shortcuts-dialog-*`, `.shortcuts-kbd`) conforming to the dense `.surface` design language. Fixed dark mode where the container stayed white while title text rendered white-on-white. Added redirects from `/shortcuts` and `/shortcuts/` to `/#shortcuts` and hooked hash/query handling so visiting directly opens the overlay.
 
 ## [2.8.0] - 2026-10-17
 ### Added

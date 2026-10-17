@@ -129,6 +129,17 @@ The 12 mini actually comes out slightly ahead. Whatever the score rewards, it is
 
 Six in ten photos land between 0.35 and 0.55, and the top 1% start at {{ pa.p99 }}. Photos' own scene labels on the top 40 lean towards sky, water, winter and parks. I filtered out anything labelled with people or documents before looking, so that list says as much about my filter as about the model.
 
+To see what the model actually rewards versus penalizes when people are filtered out:
+
+{% gallery [
+  { src: "./src/static/img/cartebase/sample-high-lake-rocks.jpg", alt: "Lake Ontario shore with rocks, calm water, and blue horizon", caption: "Score 0.728 · sky and water" },
+  { src: "./src/static/img/cartebase/sample-high-autumn-canopy.jpg", alt: "Autumn forest trail with yellow maple foliage and fallen leaves", caption: "Score 0.743 · park and foliage" },
+  { src: "./src/static/img/cartebase/sample-low-display-case.jpg", alt: "Electronics packaging boxes under scratched retail glass", caption: "Score 0.095 · scratched glass snapshot" },
+  { src: "./src/static/img/cartebase/sample-low-pier-birds.jpg", alt: "Pelicans and gulls perched on a distant concrete dock over water", caption: "Score 0.120 · washed-out pier snapshot" }
+] %}
+
+The high scorers are classic postcard compositions: clean horizon lines, balanced lighting, high contrast, and saturated natural palettes like autumn canopies or shore rocks. The bottom tier isn't just bad photos; it's mostly utilitarian record-keeping. The camera is being used as a scanner or visual notepad—snapping product boxes through scratched glass display cases or grabbing a quick reference across a hazy dock.
+
 That's useful even if the score can't tell me whether I've improved. I'm using it to shortlist photos for the [gallery](/gallery/). The score proposes and I pick. The ones that make it carry their score in the caption, so you can disagree with Apple too.
 
 ## Caveats

@@ -27,7 +27,7 @@
       "inline-style": 1
     },
     "src/_includes/layouts/base.njk": {
-      "inline-style": 44
+      "inline-style": 6
     },
     "src/_includes/layouts/note.njk": {
       "pill-or-circle": 1,
@@ -51,12 +51,6 @@
     },
     "src/about.njk": {
       "utility-text-stack": 1
-    },
-    "src/changelog.njk": {
-      "pill-or-circle": 1,
-      "off-palette-colour": 9,
-      "utility-text-stack": 6,
-      "inline-style": 3
     },
     "src/cv.njk": {
       "inline-style": 11
@@ -194,9 +188,8 @@
     },
     "src/stats.njk": {
       "pill-or-circle": 4,
-      "off-palette-colour": 3,
       "utility-text-stack": 4,
-      "inline-style": 20
+      "inline-style": 11
     },
     "src/status.njk": {
       "off-palette-colour": 10
