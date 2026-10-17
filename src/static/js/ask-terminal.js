@@ -35,7 +35,9 @@
     sentIdx: -1,
     busy: null, // AbortController while a request is in flight
     menuIdx: 0,
+    vim: false, // inside the /vim easter egg
   };
+  const context = root.querySelector("[data-context]");
 
   // ── Mascot: a block-art cart with eyes. Blinks when idle, rolls its
   // wheels while waiting, looks pleased once words arrive. ──────────────
@@ -53,9 +55,31 @@
     let wheel = 0;
     let roll = null;
     let blink = null;
+    let nap = null; // idle timer before it dozes off
+    let zzz = null; // snore animation
+    let snore = "";
     const draw = () => {
       if (node)
-        node.textContent = `▗▄\n  █▀▀▀▀▀▀█\n  █${eyes}█\n  ▜▄▄▄▄▄▄▛\n${WHEELS[wheel]}`;
+        node.textContent = `▗▄       ${snore}\n  █▀▀▀▀▀▀█\n  █${eyes}█\n  ▜▄▄▄▄▄▄▛\n${WHEELS[wheel]}`;
+    };
+    const wake = () => {
+      clearInterval(zzz);
+      zzz = null;
+      snore = "";
+    };
+    const scheduleNap = () => {
+      clearTimeout(nap);
+      nap = setTimeout(() => {
+        clearTimeout(blink);
+        eyes = EYES.shut;
+        snore = "z";
+        if (!still)
+          zzz = setInterval(() => {
+            snore = snore === "z" ? "zZ" : snore === "zZ" ? "zZz" : "z";
+            draw();
+          }, 900);
+        draw();
+      }, 60000);
     };
     const scheduleBlink = () => {
       clearTimeout(blink);
@@ -66,7 +90,7 @@
             eyes = EYES.shut;
             draw();
             setTimeout(() => {
-              if (eyes === EYES.shut) eyes = EYES.open;
+              if (eyes === EYES.shut && !snore) eyes = EYES.open;
               draw();
             }, 140);
           }
@@ -81,8 +105,21 @@
     };
     draw();
     scheduleBlink();
+    scheduleNap();
     return {
+      // Any keypress: open the eyes if it was asleep, restart the nap timer.
+      poke() {
+        if (snore) {
+          wake();
+          eyes = EYES.open;
+          draw();
+          scheduleBlink();
+        }
+        scheduleNap();
+      },
       busy() {
+        wake();
+        clearTimeout(nap);
         eyes = EYES.busy;
         if (!still && !roll)
           roll = setInterval(() => {
@@ -101,6 +138,7 @@
         eyes = EYES.open;
         draw();
         scheduleBlink();
+        scheduleNap();
       },
     };
   })();
@@ -149,6 +187,13 @@
     parent.append(row);
     scroll();
     return row;
+  }
+
+  // A lone "  ⎿  text" line for one-line replies (vim, unknown command).
+  function notice(text) {
+    const row = el("div", "term-row");
+    sub(row, text);
+    return append(row);
   }
 
   function box(lines, accent = false) {
@@ -312,6 +357,30 @@
     };
   }
 
+  // ── Context meter ─────────────────────────────────────────────────────
+  // Only the last few turns go back to the model anyway, so "auto-compact"
+  // is real in spirit: past the budget, older turns are dropped.
+  const CONTEXT_BUDGET = 6000; // rough tokens, chars / 4
+  const contextLeft = () => {
+    const used = state.history.reduce((n, m) => n + m.content.length, 0) / 4;
+    return Math.max(0, 100 - Math.round((used / CONTEXT_BUDGET) * 100));
+  };
+  const showContext = () => {
+    if (context)
+      context.textContent = `Context left until auto-compact: ${contextLeft()}%`;
+  };
+  function compact(auto) {
+    const before = state.history.length;
+    state.history = state.history.slice(-2);
+    const row = append(
+      bullet(auto ? "Auto-compacting conversation…" : "Compact", null, {
+        dim: true,
+      }),
+    );
+    sub(row, `Compacted. (It was ${before} messages. You're fine.)`);
+    showContext();
+  }
+
   // ── Commands ──────────────────────────────────────────────────────────
   const COMMANDS = {
     "/help": [
@@ -331,6 +400,7 @@
           .forEach((n) => n.remove());
         state.history = [];
         state.lastHits = [];
+        showContext();
       },
     ],
     "/sources": [
@@ -400,6 +470,39 @@
         );
       },
     ],
+    "/compact": [
+      "Summarise the conversation to free up context",
+      () => compact(false),
+    ],
+    "/doctor": [
+      "Check the terminal's health",
+      async () => {
+        const row = append(bullet("Doctor"));
+        const pause = () => new Promise((r) => setTimeout(r, 260));
+        let corpus = "✗ corpus: unreachable";
+        try {
+          const res = await fetch("/ask/corpus.json", { method: "HEAD" });
+          const kb = Math.round(
+            Number(res.headers.get("content-length")) / 1024,
+          );
+          corpus = res.ok
+            ? `✓ corpus: /ask/corpus.json${kb ? ` (${kb} KB)` : ""}`
+            : `✗ corpus: HTTP ${res.status}`;
+        } catch {}
+        for (const line of [
+          "✓ terminal: renders, mostly",
+          corpus,
+          "✓ openrouter: free, therefore busy",
+          "✓ nvidia: nemotron, probably awake",
+          "✓ yeti: fans audible",
+          "✓ wallet: $0.00 (stable)",
+          "✓ cart: eyes open",
+        ]) {
+          await pause();
+          sub(row, line);
+        }
+      },
+    ],
     "/exit": [
       "Leave the terminal",
       () => {
@@ -408,6 +511,29 @@
     ],
   };
   const HIDDEN_COMMANDS = {
+    "/coffee": () => {
+      const row = append(bullet("Coffee", null, { dim: true }));
+      sub(row, "HTTP 418: I'm a teapot.");
+      sub(row, "This site runs on the TEA stack: Tailwind, Eleventy, Alpine.");
+    },
+    "/tea": () =>
+      sub(append(bullet("Tea")), "Steeping… ✓ Done. Still no coffee."),
+    "/sudo": () => {
+      const row = append(bullet("sudo", null, { dim: true }));
+      sub(
+        row,
+        "visitor is not in the sudoers file. This incident will be reported.",
+      );
+      sub(row, "(It won't. There's no one to report it to.)");
+    },
+    "/vim": () => {
+      state.vim = true;
+      hint.textContent = "-- NORMAL --";
+      sub(
+        append(bullet("vim", null, { dim: true })),
+        "You are now in vim. Good luck.",
+      );
+    },
     "/upgrade": () => {
       const p = el("span");
       p.append("There is no Max plan. There is a ");
@@ -422,10 +548,7 @@
     const name = line.split(/\s+/)[0].toLowerCase();
     const cmd = COMMANDS[name]?.[1] || HIDDEN_COMMANDS[name];
     if (cmd) return cmd();
-    sub(
-      append(bullet(null, null, { dim: true })),
-      `Unknown command: ${name}. Try /help.`,
-    );
+    notice(`Unknown command: ${name}. Try /help.`);
   }
 
   function renderMenu() {
@@ -479,6 +602,8 @@
     let hits = [];
     let meta = null;
     let thinkStart = null;
+    let firstWordAt = null;
+    let coldStart = null; // timer for the "loading gemma" joke
 
     const finishAnswer = () => answerBody?.classList.remove("term-caret");
     const placeBeforeSpinner = (node) => {
@@ -570,6 +695,15 @@
               return;
             }
             spin.set(`Queue position: #${ev.pos}`);
+          } else if (ev.t === "try") {
+            // llama-swap may need to load the model: make the wait a bit.
+            clearTimeout(coldStart);
+            if (ev.provider === "local")
+              coldStart = setTimeout(() => {
+                if (meta) return;
+                spin.set("Loading gemma into 12 GB of VRAM");
+                spin.note("yeti's fans are spinning up");
+              }, 5000);
           } else if (ev.t === "route") {
             sub(
               toolRow || placeBeforeSpinner(bullet("Route")),
@@ -578,6 +712,7 @@
             );
           } else if (ev.t === "meta") {
             meta = ev;
+            clearTimeout(coldStart);
             spin.set(null);
             spin.note(ev.provider === "local" ? "on yeti" : ev.provider);
           } else if (ev.t === "think") {
@@ -601,6 +736,7 @@
                 ),
               );
               logo.happy();
+              firstWordAt = performance.now();
               answerRow = placeBeforeSpinner(el("div", "term-row term-bullet"));
               answerBody = el("div", "term-answer term-caret");
               answerRow.append(el("span", "term-glyph", "⏺"), answerBody);
@@ -616,9 +752,17 @@
               .pop()
               .replace(/:free$/, "");
             const where = meta?.provider === "local" ? "yeti" : meta?.provider;
+            // tok/s over the streaming part only, like a decode benchmark.
+            const genSecs = firstWordAt
+              ? (performance.now() - firstWordAt) / 1000
+              : 0;
+            const tps =
+              genSecs > 0.2
+                ? ` · ${(ev.tokens / genSecs).toFixed(1)} tok/s`
+                : "";
             sub(
               answerRow || append(bullet(null)),
-              `${model} via ${where} · ${ev.tokens} tok · ${(ev.ms / 1000).toFixed(1)}s`,
+              `${model} via ${where} · ${ev.tokens} tok · ${(ev.ms / 1000).toFixed(1)}s${tps}`,
             );
             if (ev.limit)
               usage.textContent = `${Math.max(ev.limit - ev.used, 0)}/${ev.limit} left this session`;
@@ -627,6 +771,8 @@
               { role: "user", content: q },
               { role: "assistant", content: answer },
             );
+            if (contextLeft() <= 5) compact(true);
+            showContext();
           } else if (ev.t === "down") {
             spin.stop();
             box([
@@ -646,8 +792,7 @@
     } catch (err) {
       finishAnswer();
       if (err.name === "AbortError") {
-        const row = append(bullet(null, null, { dim: true }));
-        sub(row, "Interrupted by user");
+        notice("Interrupted by user");
         if (answer)
           state.history.push(
             { role: "user", content: q },
@@ -663,6 +808,7 @@
         ]);
       }
     } finally {
+      clearTimeout(coldStart);
       spin.stop();
       finishAnswer();
       state.busy = null;
@@ -681,8 +827,32 @@
     state.sent.push(value);
     state.sentIdx = -1;
     append(el("div", "term-row term-user", value));
-    if (value.startsWith("/")) runCommand(value);
+    if (state.vim) vimSays(value);
+    else if (value.startsWith("/")) runCommand(value);
     else ask(value);
+    scroll(true);
+  }
+
+  // /vim: every way out is the wrong way, except Esc.
+  function vimSays(value) {
+    const replies = {
+      ":q": "E37: No write since last change (add ! to override)",
+      ":q!": "E5000: You can't quit a website. (Esc works. Don't tell anyone.)",
+      ":wq": "E212: Can't open file for writing: it's a website",
+      ":x": "E212: Can't open file for writing: still a website",
+      ":help": "E149: Sorry, no help for vim. Nobody has ever been helped.",
+    };
+    const reply =
+      replies[value.trim()] ||
+      (value.startsWith(":")
+        ? `E492: Not an editor command: ${value.slice(1)}`
+        : "-- INSERT -- is not supported. Nothing is.");
+    notice(reply);
+  }
+  function leaveVim() {
+    state.vim = false;
+    hint.textContent = "? for shortcuts";
+    notice("Escaped vim. Few do.");
     scroll(true);
   }
 
@@ -699,6 +869,7 @@
   });
 
   input.addEventListener("keydown", (e) => {
+    logo.poke();
     const matches = menu.hidden ? [] : renderMenu();
 
     if (e.key === "?" && !input.value) {
@@ -729,7 +900,8 @@
     }
     if (e.key === "Escape") {
       e.preventDefault();
-      if (!menu.hidden) menu.hidden = true;
+      if (state.vim) leaveVim();
+      else if (!menu.hidden) menu.hidden = true;
       else input.value = "";
       autosize();
       return;
