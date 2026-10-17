@@ -14,4 +14,4 @@ updates:
   - '<a href="/notes/gpu-longevity-and-clock-capping/">Capped the 4070</a> at 165 W and 2610 MHz to help it last: 6 °C cooler, no tok/s lost.'
   - 'Pushing L3MS, my keyboard-first local model workbench, toward a real release.'
   - 'Sortling, the little wizard that sorts my WhatsApp media, just learned to tell illustrations apart.'
-  - 'Setting up Glowdesk, a Batocera retro box under the TV.'
+  - 'Setting up <a href="/devices/glowdesk/">Glowdesk</a>, a Batocera retro box under the TV.'

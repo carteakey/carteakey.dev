@@ -444,9 +444,11 @@ homelab:
       description: "Monitoring, notifications, and fleet control."
 
     - name: "Glowdesk"
-      emoji: "💾"
-      role: "NAS"
-      description: "Shared storage for media and the archive."
+      emoji: "🕹️"
+      station: "Living Room"
+      device: "glowdesk"
+      role: "Retro arcade console (ex-NAS)"
+      description: "Dedicated Batocera v43.1 box under the TV with an HP ProDesk 600 G1 SFF and NVIDIA Quadro P600, running a curated 2,000+ title retro library after retiring from NAS duty."
 
     - name: "Yeti"
       emoji: "🧠"
