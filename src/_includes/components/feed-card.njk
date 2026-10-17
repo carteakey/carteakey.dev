@@ -27,6 +27,7 @@
   {% set isLexicon = item.type == 'lexicon' %}
   {% set isTool = item.type == 'tool' %}
   {% set tagBase = '/snippets/tags/' if isSnippet else '/tags/' %}
+  {% set isPostLike = item.type == 'post' or item.type == 'review' %}
 
   {# Type color dot classes #}
   {% set dotColor = "bg-gray-400" %}
@@ -35,6 +36,10 @@
   {% if item.type == 'post' %}
     {% set dotColor = "bg-blue-400" %}
     {% set badgeLabel = "Post" %}
+    {% set typeBadgeClass = "badge-type-post" %}
+  {% elif item.type == 'review' %}
+    {% set dotColor = "bg-blue-400" %}
+    {% set badgeLabel = "Review" %}
     {% set typeBadgeClass = "badge-type-post" %}
   {% elif isSnippet %}
     {% set dotColor = "bg-purple-400" %}
@@ -195,8 +200,8 @@
                 <figcaption class="px-3 py-2 text-xs text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-800/50 border-t border-gray-200 dark:border-gray-700 m-0">{{ item.summary }}</figcaption>
               {% endif %}
             </figure>
-          {% elif item.type == 'post' or isSnippet %}
-            <div class="{% if itemImage and item.type == 'post' %}flex items-start gap-3{% endif %}">
+          {% elif isPostLike or isSnippet %}
+            <div class="{% if itemImage and isPostLike %}flex items-start gap-3{% endif %}">
               <div class="min-w-0 flex-1">
                 {% if item.summary %}
                   <p class="mt-0 mb-1.5 font-medium text-gray-800 dark:text-gray-200">{{ item.summary }}</p>
@@ -213,7 +218,7 @@
                 </div>
                 {% endif %}
               </div>
-              {% if itemImage and item.type == 'post' %}
+              {% if itemImage and isPostLike %}
                 <a href="{{ item.url | url }}" class="hidden sm:block shrink-0" style="text-decoration: none;">
                   {% post_thumbnail_markup item.imageMetadata, itemImageAlt, "stamp-cobalt block h-16 w-16 object-contain", 64 %}
                 </a>
@@ -263,6 +268,8 @@
       {% if (opts.rich or opts.showTags) %}{% for tag in item.tags | default([]) | filterTagList %}<a href="{{ tagBase }}{{ tag | slugify }}/" class="badge badge-tag badge-compact badge-interactive hidden md:inline-flex" style="text-decoration: none;">#{{ tag }}</a>{% endfor %}{% endif %}
       {% if opts.showType is not defined or opts.showType %}<span class="badge badge-type badge-compact {{ typeBadgeClass }}">{{ badgeLabel }}</span>{% endif %}
       {% if item.language %}<span class="badge badge-tag badge-compact">{{ item.language }}</span>{% endif %}
+      {% if item.pricePaid %}<span class="meta-text hidden md:inline">Paid {{ item.pricePaid }}</span>{% endif %}
+      {% if item.rating %}<span class="badge badge-accent badge-compact">{{ item.rating }}/10</span>{% endif %}
       {% if opts.showAuthorship and item.authored_by %}
         {% from "components/authorship-badge.njk" import authorshipBadge %}
         <span class="hidden sm:inline-flex">{{ authorshipBadge(item.authored_by, compact=true) }}</span>
@@ -369,7 +376,7 @@
         {% endif %}
       </figure>
     {% elif item.summary and showSummary %}
-      {% if itemImage and item.type == 'post' %}
+      {% if itemImage and isPostLike %}
         <div class="mt-2 flex items-start gap-3">
           <p class="min-w-0 flex-1 editorial-support-compact m-0">{{ item.summary }}</p>
           <a href="{{ item.url | url }}" class="shrink-0" style="text-decoration: none;">

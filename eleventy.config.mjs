@@ -718,13 +718,25 @@ export default function (eleventyConfig) {
 
   // Title, summary, tags and the start of the body (the old Snippets search
   // matched a 160-character excerpt, so commands inside a snippet are findable).
+  // A page can render before an item's own content does (Eleventy then throws
+  // on templateContent); those items are searchable by metadata only.
+  const bodyExcerpt = (item) => {
+    try {
+      return stripHtmlToText(item.original?.templateContent || "").slice(
+        0,
+        160,
+      );
+    } catch {
+      return "";
+    }
+  };
   eleventyConfig.addFilter("collectionSearchText", (item) =>
     [
       item.title,
       item.summary,
       item.language,
       ...(item.tags || []),
-      stripHtmlToText(item.original?.templateContent || "").slice(0, 160),
+      bodyExcerpt(item),
     ]
       .filter(Boolean)
       .join(" ")
@@ -734,6 +746,7 @@ export default function (eleventyConfig) {
 
   const TYPE_LABELS = {
     post: "Posts",
+    review: "Reviews",
     snippet: "Snippets",
     note: "Notes",
     til: "TIL",
@@ -1539,6 +1552,36 @@ export default function (eleventyConfig) {
         }),
     );
 
+    const reviews = await Promise.all(
+      collectionApi
+        .getFilteredByGlob("./src/reviews/**/*.md")
+        .filter((review) => isVisibleContent(review, now))
+        .map(async (review) => {
+          const image = review.data.image ?? null;
+          return {
+            type: "review",
+            title: review.data.title,
+            date: review.date,
+            url: review.url,
+            summary: review.data.description
+              ? truncate(stripHtmlToText(review.data.description))
+              : null,
+            tags: review.data.tags || [],
+            kind: review.data.kind ?? null,
+            rating: review.data.rating ?? null,
+            pricePaid: review.data.pricePaid ?? null,
+            hidden: !!review.data.hidden,
+            authored_by: review.data.authored_by ?? null,
+            image,
+            imageAlt: review.data.imageAlt ?? review.data.title,
+            imageMetadata: image
+              ? await generatePostThumbnailMetadata(image)
+              : null,
+            original: review,
+          };
+        }),
+    );
+
     const snippets = collectionApi
       .getFilteredByTag("snippets")
       .filter((snippet) => isVisibleContent(snippet, now))
@@ -1798,6 +1841,7 @@ export default function (eleventyConfig) {
 
     const combined = [
       ...posts,
+      ...reviews,
       ...snippets,
       ...notes,
       ...tilEntries,

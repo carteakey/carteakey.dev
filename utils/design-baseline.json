@@ -52,10 +52,6 @@
     "src/about.njk": {
       "utility-text-stack": 1
     },
-    "src/archive.njk": {
-      "utility-text-stack": 1,
-      "inline-style": 1
-    },
     "src/changelog.njk": {
       "pill-or-circle": 1,
       "off-palette-colour": 9,
@@ -64,10 +60,6 @@
     },
     "src/cv.njk": {
       "inline-style": 11
-    },
-    "src/feed.njk": {
-      "utility-text-stack": 1,
-      "inline-style": 1
     },
     "src/folio/index.njk": {
       "off-palette-colour": 13,
@@ -94,9 +86,6 @@
     "src/newsletter.njk": {
       "pill-or-circle": 1,
       "off-palette-colour": 20
-    },
-    "src/notes.njk": {
-      "inline-style": 1
     },
     "src/now-archive.njk": {
       "pill-or-circle": 1,
@@ -182,17 +171,11 @@
     "src/projects.njk": {
       "inline-style": 4
     },
-    "src/quotations.njk": {
-      "utility-text-stack": 3
-    },
     "src/quotes.njk": {
       "inline-style": 2
     },
     "src/reading.njk": {
       "inline-style": 1
-    },
-    "src/reviews.njk": {
-      "utility-text-stack": 1
     },
     "src/search.njk": {
       "pill-or-circle": 1,
@@ -209,11 +192,6 @@
     "src/snippet-tags.njk": {
       "inline-style": 1
     },
-    "src/snippets.njk": {
-      "off-palette-colour": 1,
-      "utility-text-stack": 2,
-      "inline-style": 3
-    },
     "src/stats.njk": {
       "pill-or-circle": 4,
       "off-palette-colour": 3,
@@ -222,10 +200,6 @@
     },
     "src/status.njk": {
       "off-palette-colour": 10
-    },
-    "src/til.njk": {
-      "utility-text-stack": 2,
-      "inline-style": 2
     },
     "src/vibes.njk": {
       "off-palette-colour": 1

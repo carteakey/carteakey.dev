@@ -43,7 +43,20 @@ feed:
   page: src/feed.njk
   archetype: index
   engine: true
-  types: [post, snippet, note, til, folio, now, photo, quotation, lexicon, tool]
+  types:
+    [
+      post,
+      review,
+      snippet,
+      note,
+      til,
+      folio,
+      now,
+      photo,
+      quotation,
+      lexicon,
+      tool,
+    ]
   views: [stream, list, grid]
   search: true
   filters: [authorship, type]
@@ -115,6 +128,19 @@ quotations:
     A quotation is its text; a list row would reduce it to "Quotation from X".
     Stream shows the words, and anchors keep /feed links to /quotations/#slug working.
 
+reviews:
+  page: src/reviews.njk
+  archetype: index
+  engine: true
+  types: [review]
+  views: [list]
+  row: { rich: true, showType: false, showSummary: true, showTags: true }
+  why: >-
+    Reviews read like posts (stamp, title, one-line summary), so they use the
+    Writing row; price paid and rating sit with the tags when a review sets
+    them. The house-philosophy note stays above as page copy. One list, no
+    search, until there are enough reviews to scan.
+
 # ── Bespoke pages (engine: false) ────────────────────────────────────────────
 
 projects:
@@ -125,6 +151,14 @@ projects:
     Driven by projects.yaml, not feed items: rows lead with a project image
     instead of a date. Already uses the shared toggle, collectionView() and
     masonry; only the item markup is its own.
+
+more:
+  page: src/more.njk
+  archetype: index
+  engine: false
+  why: >-
+    A categorized directory of site pages, not dated content; its groups are
+    authored in the template.
 
 blog-folder:
   page: src/blog/folder.njk
@@ -137,12 +171,6 @@ tags:
   archetype: index
   engine: false
   why: Generated per tag across mixed content; a plain list of matches with no controls.
-
-reviews:
-  page: src/reviews.njk
-  archetype: index
-  engine: false
-  why: A verdict ledger; rows carry price, rating and verdict that feed rows do not have.
 
 changelog:
   page: src/changelog.njk
@@ -184,7 +212,10 @@ folio:
   page: src/folio/index.njk
   archetype: wall
   engine: false
-  why: A few authored zines shown as feature cards; each is a designed object.
+  why: >-
+    A few authored zines shown as feature cards, each in its own colours; the
+    per-folio palette is deliberate character, not drift, so it stays outside
+    the engine and the one-accent rule.
 
 gallery:
   page: src/gallery.njk
@@ -251,6 +282,12 @@ data:
   archetype: ledger
   engine: false
   why: A dashboard generated from cartebase; charts, not items.
+
+chart-lab:
+  page: src/lab/charts.njk
+  archetype: ledger
+  engine: false
+  why: Hidden chart grammar lab on cartebase data; a specimen page.
 
 font-lab:
   page: src/lab/fonts.njk

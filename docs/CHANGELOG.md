@@ -7,8 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [2.8.0] - 2026-10-17
 ### Added
-- Collection engine (`components/collection-index.njk`): Writing, Feed, Notes, Lexicon, Snippets, TIL, and Quotations now share one toolbar, grouping, and view renderer built from the Writing list. Every row and card goes through `feedCard`; grids use the shared masonry.
-- Collection registry (`src/_data/collectionViews.yaml`): each collection page's views, controls, and a one-line reason, including the 35 pages that stay bespoke. `npm run check:collections` fails when a page declares `collectionArchetype` without an entry; `check:content` now reads its archetype list from the same file.
+- Collection engine (`components/collection-index.njk`): Writing, Feed, Notes, Lexicon, Snippets, TIL, Quotations, and Reviews now share one toolbar, grouping, and view renderer built from the Writing list. Every row and card goes through `feedCard`; grids use the shared masonry.
+- Collection registry (`src/_data/collectionViews.yaml`): each collection page's views, controls, and a one-line reason, including the 34 pages that stay bespoke (Folio keeps its per-folio colours on purpose). `npm run check:collections` fails when a page declares `collectionArchetype` without an entry; `check:content` now reads its archetype list from the same file.
 - `static/js/collection-index.js`: search, type chips, authorship, and Saved snippets filter in one pass, hide year headings with no matches, and show an empty state.
 
 ### Changed
@@ -18,9 +18,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Writing and Feed: the view toggle moved to the right of the toolbar and now persists (`blog-view`; Feed keeps `feed-view`). Wall cards and stream entries show the same date the list sorts by.
 - Feed type chips now cover every type with items (TIL, Folio, and Now added); Feed declares `collectionArchetype: index`.
 - Snippet and TIL feed items carry their tags; snippet tags link to `/snippets/tags/`.
+- Reviews: Writing-style rows with the review's stamp; rating and price paid show beside the tags when set. The house-philosophy note stays above the list.
 
 ### Fixed
 - Feed no longer scrolls sideways at phone width (the toolbar overflowed by 93px).
+- Reviews are now feed items, so a review appears on its tag pages (`/tags/reviews/`, `/tags/hobbies/` listed nothing for it) and in `/feed/` with a Reviews chip.
 - Engine pages read before JavaScript: only the default view renders until Alpine loads, instead of every view at once.
 
 ## [2.7.48] - 2026-10-17

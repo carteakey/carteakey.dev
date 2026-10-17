@@ -249,7 +249,7 @@ Every collection page also has an entry in `src/_data/collectionViews.yaml`, the
 
 ### Collection engine
 
-Feed-backed index pages (Writing, Feed, Notes, Lexicon, Snippets, TIL, Quotations) render through one engine, `components/collection-index.njk`. The page sets `collectionKey` and includes it after the page header; its registry entry decides everything else:
+Feed-backed index pages (Writing, Feed, Notes, Lexicon, Snippets, TIL, Quotations, Reviews) render through one engine, `components/collection-index.njk`. The page sets `collectionKey` and includes it after the page header; its registry entry decides everything else:
 
 - **Views** — any of `stream`, `list`, `grid`; the first is the default. One view means no toggle.
 - **Rows and cards** — always `feedCard` (`list`, `stream`, or the default card). Writing's list row is the reference row: mono date, optional stamp, title, one-line summary, tags docked right.
