@@ -2588,6 +2588,146 @@ picture img {
     font-size: 0.9rem;
   }
 
+  /* /changelog/: months on a timeline, written summary visible, releases folded. */
+  .changelog {
+    position: relative;
+    margin: 0;
+    padding: 0 0 0 1.75rem;
+    list-style: none;
+  }
+
+  .changelog::before {
+    content: "";
+    position: absolute;
+    top: 0.5rem;
+    bottom: 0.5rem;
+    left: 0.4rem;
+    width: 1px;
+    background: rgb(229 231 235 / 1);
+  }
+
+  .changelog-month {
+    position: relative;
+    margin-bottom: 2.25rem;
+  }
+
+  .changelog-month::before {
+    content: "";
+    position: absolute;
+    top: 0.3rem;
+    left: -1.75rem;
+    width: 0.75rem;
+    height: 0.75rem;
+    border: 2px solid #fbfaf6;
+    border-radius: 50%;
+    background: var(--accent-color);
+  }
+
+  .changelog-month-git::before {
+    background: rgb(156 163 175 / 1);
+  }
+
+  .changelog-month-title {
+    margin: 0 0 0.35rem;
+    scroll-margin-top: 5rem;
+  }
+
+  .changelog-summary {
+    margin: 0 0 0.5rem;
+    max-width: 42rem;
+  }
+
+  .changelog-count {
+    cursor: pointer;
+    font-size: 0.78rem;
+  }
+
+  .changelog-count:hover {
+    color: var(--accent-color);
+  }
+
+  .changelog-versions {
+    margin: 0.9rem 0 0;
+    padding: 0 0 0 0.9rem;
+    border-left: 1px solid rgb(229 231 235 / 1);
+    list-style: none;
+  }
+
+  .changelog-version + .changelog-version {
+    margin-top: 1.4rem;
+  }
+
+  .changelog-version-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.75rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .changelog-version-num {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--accent-color);
+  }
+
+  .changelog-section + .changelog-section {
+    margin-top: 0.5rem;
+  }
+
+  .changelog-items,
+  .changelog-subitems {
+    margin: 0.25rem 0 0;
+    padding: 0;
+    list-style: none;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: rgb(55 65 81 / 1);
+  }
+
+  .changelog-items > li {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .changelog-items > li + li {
+    margin-top: 0.15rem;
+  }
+
+  .changelog-subitems {
+    padding-left: 0.9rem;
+    list-style: "– ";
+  }
+
+  .changelog-mark {
+    flex-shrink: 0;
+    width: 0.8rem;
+    font-family: var(--font-mono);
+    color: rgb(156 163 175 / 1);
+  }
+
+  .changelog-items code {
+    font-size: 0.8em;
+  }
+
+  .dark .changelog::before {
+    background: rgb(39 39 42 / 1);
+  }
+
+  .dark .changelog-versions {
+    border-color: rgb(39 39 42 / 1);
+  }
+
+  .dark .changelog-month::before {
+    border-color: #141414;
+  }
+
+  .dark .changelog-items,
+  .dark .changelog-subitems {
+    color: rgb(212 212 216 / 1);
+  }
+
   .learning-toggle {
     display: inline-flex;
     flex-shrink: 0;
@@ -2908,7 +3048,7 @@ picture img {
 
   /* Section headings share the Fraunces title voice; h4-h6 stay in Aile. */
   .post-body h2,
-  .post-body h3:not(.data-card-title) {
+  .post-body h3:not(:where(.data-card-title)) {
     font-family: var(--font-monument);
     font-variation-settings: "opsz" 72;
     letter-spacing: -0.01em;
@@ -2925,7 +3065,7 @@ picture img {
   }
 
   /* Not inside chart figures: they set their own type. */
-  .post-body :is(p, li):not(.data-card *) {
+  .post-body :is(p, li):not(:where(.data-card *)) {
     font-size: 1.04rem;
     line-height: 1.58;
   }

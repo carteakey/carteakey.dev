@@ -392,10 +392,10 @@ function heatmap(opts) {
   let body = "";
   cols.forEach((c, ci) => {
     if (ci % (opts.colEvery || 3) === 0)
-      body += `<text class="dot-grid-label" x="${left + ci * pitch + pitch / 2}" y="9" text-anchor="middle" fill="${DIM}">${esc(c)}</text>`;
+      body += `<text class="dot-grid-label" x="${left + ci * pitch + pitch / 2}" y="9" text-anchor="middle" fill="${DIM}" font-family="${FONT_MONO}" font-size="7">${esc(c)}</text>`;
   });
   matrix.forEach((row, ri) => {
-    body += `<text class="dot-grid-label" x="0" y="${top + ri * pitch + pitch / 2 + 3}" fill="${DIM}">${esc(rows[ri])}</text>`;
+    body += `<text class="dot-grid-label" x="0" y="${top + ri * pitch + pitch / 2 + 3}" fill="${DIM}" font-family="${FONT_MONO}" font-size="7">${esc(rows[ri])}</text>`;
     row.forEach((raw, ci) => {
       const v = num(raw);
       const x = left + ci * pitch + (pitch - cell) / 2;
@@ -411,10 +411,10 @@ function heatmap(opts) {
     });
   });
   const legendSq = steps
-    .map((o) => `<svg viewBox="0 0 10 10" class="chart-heat-sq-key"><rect width="10" height="10" class="heat-cell" fill="${ACCENT}" fill-opacity="${o}"/></svg>`)
+    .map((o) => `<svg viewBox="0 0 10 10" width="10" height="10" class="chart-heat-sq-key" display="none"><rect width="10" height="10" class="heat-cell" fill="${ACCENT}" fill-opacity="${o}"/></svg>`)
     .join("");
   const legendDot = steps
-    .map((o) => `<svg viewBox="0 0 10 10" class="chart-heat-dot-key"><circle cx="5" cy="5" r="${r1(Math.sqrt(o) * 5)}" class="chart-heat-dot" fill="${ACCENT}"/></svg>`)
+    .map((o) => `<svg viewBox="0 0 10 10" width="10" height="10" class="chart-heat-dot-key"><circle cx="5" cy="5" r="${r1(Math.sqrt(o) * 5)}" class="chart-heat-dot" fill="${ACCENT}"/></svg>`)
     .join("");
   const svg = `<div class="dot-heatmap-scroll"><svg xmlns="http://www.w3.org/2000/svg" class="dot-grid dot-grid-heatmap" viewBox="0 0 ${vw} ${vh}" role="img" aria-label="${esc(opts.title || "Heatmap")}">${body}</svg><p class="heat-legend" aria-hidden="true">Fewer ${legendSq}${legendDot} More</p></div>`;
   const table = {
