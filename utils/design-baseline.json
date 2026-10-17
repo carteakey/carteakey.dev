@@ -27,7 +27,7 @@
       "inline-style": 1
     },
     "src/_includes/layouts/base.njk": {
-      "inline-style": 47
+      "inline-style": 44
     },
     "src/_includes/layouts/note.njk": {
       "pill-or-circle": 1,

@@ -1,7 +1,8 @@
 // Authorship Filter - reader-controlled AI content toggle
 // Modes: "all" (everything) | "no-generated" (human + AI-assisted) | "human-only" (no AI)
 // Applies a data-ai-filter attribute on <html>; CSS in tailwind.css hides
-// [data-authored-by] items that the current mode excludes.
+// [data-authored-by] items inside a [data-ai-filter-scope] (the pages that show
+// the filter control), so nothing disappears on pages without one.
 
 const AI_FILTER_KEY = "aiFilter";
 const AI_FILTERS = ["all", "no-generated", "human-only"];
@@ -35,8 +36,9 @@ const updateAiFilterNotice = () => {
   const filter = getAiFilter();
   if (filter === "all") return;
 
-  const hidden = Array.from(document.querySelectorAll("[data-authored-by]")).filter(
-    (el) => !window.aiFilterAllows(el.dataset.authoredBy) && el.offsetParent === null
+  const hidden = Array.from(document.querySelectorAll("[data-ai-filter-scope] [data-authored-by]")).filter(
+    // Count only items in the view on screen; inactive list/grid copies have a hidden parent.
+    (el) => !window.aiFilterAllows(el.dataset.authoredBy) && el.parentElement?.getClientRects().length > 0
   ).length;
   if (!hidden) return;
 
@@ -60,12 +62,10 @@ const setAiFilter = (value) => {
 window.setAiFilter = setAiFilter;
 
 document.addEventListener("DOMContentLoaded", () => {
-  document
-    .getElementById("aiFilterToggle")
-    ?.addEventListener("click", (event) => {
-      const option = event.target.closest("[data-ai-filter-option]");
-      if (option) setAiFilter(option.dataset.aiFilterOption);
-    });
+  document.addEventListener("click", (event) => {
+    const option = event.target.closest("[data-ai-filter-group] [data-ai-filter-option]");
+    if (option) setAiFilter(option.dataset.aiFilterOption);
+  });
   updateAiFilterNotice();
 });
 

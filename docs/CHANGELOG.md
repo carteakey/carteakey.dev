@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.35] - 2026-10-16
+### Changed
+- Header: the compass icon is now a plain "More" link beside About, Writing, and Now (also in the mobile menu). The global funnel dropdown is gone.
+- Authorship filter now lives on `/blog/`, `/feed/`, and `/search/` as an `All · No AI-gen · Human only` control next to search. It only hides items on those pages, so nothing vanishes elsewhere without a visible control.
+
+### Fixed
+- The "items hidden" notice no longer counts the inactive list or grid copy on `/blog/` and `/feed/`.
+
 ## [2.7.34] - 2026-10-16
 ### Changed
 - Post pages: replaced the left-rail "About the author" card with an end-of-post byline using the halftone avatar, so it also shows on mobile.

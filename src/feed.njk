@@ -17,7 +17,7 @@ permalink: /feed/
 {% set itemCount = collections.feed.length %}
 {% set itemLabel = "items" %}
 
-<div class="not-prose" x-data="feedPage()">
+<div class="not-prose" x-data="feedPage()" data-ai-filter-scope>
   {% include "components/page-header.njk" %}
 
   <div class="flex items-baseline justify-between mb-3 gap-3 flex-wrap">
@@ -31,6 +31,7 @@ permalink: /feed/
           class="rounded-sm border border-gray-200 dark:border-gray-700 bg-transparent py-1.5 pl-8 pr-3 text-sm accent-field accent-focus focus:outline-none dark:text-gray-100 w-40 placeholder:text-gray-400"
         >
       </div>
+      {% include "components/authorship-filter.njk" %}
       <div class="view-toggle">
         <button type="button" @click="view = 'stream'" :class="{ 'active': view === 'stream' }" title="Stream view">
           {% feather "activity", class="w-4 h-4" %}
