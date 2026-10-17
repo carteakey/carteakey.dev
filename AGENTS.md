@@ -129,6 +129,8 @@ This project uses a manual versioning process. It is your responsibility to keep
 
 - Required env secrets: Spotify (`SPOTIFY_CLIENT_ID/SECRET/REFRESH_TOKEN`), Steam (`STEAM_API_KEY/STEAM_USER_ID`), Upstash (`UPSTASH_REDIS_REST_URL/TOKEN`), OpenAI (`OPENAI_API_KEY`), OpenRouter (`OPENROUTER_API_KEY`, optional model/site vars), Ollama (`OLLAMA_API_URL`). Load them locally via `.env` before running data-dependent builds.
 
+- agentcart (`/ask/`, `netlify/edge-functions/ask.js`): the site's terminal Q&A. Its env vars (`ASK_*`, `LOCAL_LLM_*`), routing, limits, corpus rules and local testing live in [`docs/AGENTCART.md`](./docs/AGENTCART.md). New public content is indexed automatically on the next build; hidden pages never are.
+
 
 - Netlify Function `netlify/functions/upvote.js` powers the upvote widget; GET returns counts, POST increments. Local changes should preserve method handling and JSON payload structure.
 

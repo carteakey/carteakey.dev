@@ -669,6 +669,18 @@
         }
         return;
       }
+      if (res.status === 404) {
+        // The edge function answers 404 when no model route is configured.
+        spin.stop();
+        box([
+          "agentcart is unplugged right now.",
+          {
+            text: "No model routes are configured. The cart is resting.",
+            dim: true,
+          },
+        ]);
+        return;
+      }
       if (!res.ok || !res.body)
         throw new Error(`${res.status} ${res.statusText}`);
 
@@ -818,7 +830,7 @@
         box([
           `API Error: Connection error. (${err.message})`,
           {
-            text: "Locally, the edge function only runs under `netlify dev`.",
+            text: "Locally, run `node utils/ask-dev-server.mjs` (see docs/AGENTCART.md).",
             dim: true,
           },
         ]);

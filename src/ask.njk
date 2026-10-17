@@ -3,11 +3,10 @@ layout: layouts/base.njk
 title: agentcart
 description: A terminal you can ask about this site. Answers come only from published pages, with citations.
 permalink: /ask/
-hidden: true
 eleventyExcludeFromCollections: true
 ---
 {#
-  agentcart POC. hidden: true keeps it local-only until it ships.
+  agentcart. Operating notes: docs/AGENTCART.md.
   Backend: netlify/edge-functions/ask.js (POST /api/ask, NDJSON stream).
   Corpus: src/ask-corpus.njk -> /ask/corpus.json (utils/ask-corpus.mjs).
 #}

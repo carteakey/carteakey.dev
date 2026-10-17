@@ -394,10 +394,10 @@ After: https://carteakey.dev
 **Next Up: Content Polish & New Pages** 🎨
 - [x] Sync Goodreads shelves into `/reading` and `/now` while preserving manual books, notes, and Kindle progress overrides; archive the outgoing `/now` page before every refresh. (2026-06-24)
 
-**agentcart (`/ask/`) — from POC to shipped**
-- [ ] Set Netlify env: `ASK_OPENROUTER_API_KEY` (a separate key, so visitors can't burn QOTD's free quota), `ASK_NVIDIA_API_KEY`, `LOCAL_LLM_URL` + `LOCAL_LLM_TOKEN` (tunnel to llama-swap), optional `ASK_ROUTE`, `ASK_LIMIT`, `ASK_GLOBAL_DAILY`, `ASK_MAX_PARALLEL`. Confirm the NVIDIA model id (`ASK_NVIDIA_MODELS`). With none set, `/api/ask` is a 404.
-- [ ] Local hop can evict whatever model is loaded on llama-swap (e.g. mid-benchmark). Check llama-swap's running models before routing local, or pin the model in a group.
-- [ ] Run once under `npx netlify-cli dev` to exercise the real Deno edge runtime (`Netlify.env.get`); so far only tested under Node with a mock model.
-- [ ] Try it under `netlify dev` against live models, then drop `hidden: true` from `src/ask.njk` and add a nav entry / shortcut.
-- [ ] Idea: an opt-in `ask-notes/` folder of behind-the-scenes notes for the corpus. Anything indexed can be quoted back verbatim, so treat it as public-but-unlisted.
-- [ ] Retrieval: weak matches on off-topic queries; consider embeddings (embeddinggemma on L3MS at build time) if BM25 misses too often.
+**agentcart (`/ask/`)** — see `docs/AGENTCART.md`
+- [ ] Set Netlify env: `ASK_OPENROUTER_API_KEY`, `ASK_NVIDIA_API_KEY`, `LOCAL_LLM_URL` + `LOCAL_LLM_TOKEN`. Confirm the NVIDIA model id. Until then the page says the cart is unplugged.
+- [ ] Confirm whether Netlify caps the total length of a streamed edge response under real traffic.
+- [ ] Local hop can evict whatever model is loaded on llama-swap. Check running models first, or pin the model in a group.
+- [ ] Idea: hero prompt line (`> ask agentcart anything_`) that opens `/ask/?q=`.
+- [ ] Idea: opt-in `ask-notes/` folder of behind-the-scenes notes (public-but-unlisted, since anything indexed can be quoted back).
+- [ ] Retrieval: consider embeddings (embeddinggemma on L3MS at build time) if BM25 misses too often.
