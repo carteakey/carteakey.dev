@@ -388,6 +388,8 @@ function heatmap(opts) {
   const top = 14;
   const steps = [0.16, 0.34, 0.54, 0.76, 1];
   const vw = left + cols.length * pitch + 2;
+  // Few columns (e.g. Jan-Dec): draw at a fixed scale instead of stretching to full width.
+  const compact = cols.length <= 16;
   const vh = top + matrix.length * pitch + 2;
   let body = "";
   cols.forEach((c, ci) => {
@@ -416,7 +418,7 @@ function heatmap(opts) {
   const legendDot = steps
     .map((o) => `<svg viewBox="0 0 10 10" width="10" height="10" class="chart-heat-dot-key"><circle cx="5" cy="5" r="${r1(Math.sqrt(o) * 5)}" class="chart-heat-dot" fill="${ACCENT}"/></svg>`)
     .join("");
-  const svg = `<div class="dot-heatmap-scroll"><svg xmlns="http://www.w3.org/2000/svg" class="dot-grid dot-grid-heatmap" viewBox="0 0 ${vw} ${vh}" role="img" aria-label="${esc(opts.title || "Heatmap")}">${body}</svg><p class="heat-legend" aria-hidden="true">Fewer ${legendSq}${legendDot} More</p></div>`;
+  const svg = `<div class="dot-heatmap-scroll"><svg xmlns="http://www.w3.org/2000/svg" class="dot-grid dot-grid-heatmap${compact ? " dot-grid-compact" : ""}" viewBox="0 0 ${vw} ${vh}"${compact ? ` width="${Math.round(vw * 2)}"` : ""} role="img" aria-label="${esc(opts.title || "Heatmap")}">${body}</svg><p class="heat-legend" aria-hidden="true">Fewer ${legendSq}${legendDot} More</p></div>`;
   const table = {
     head: ["", ...cols],
     rows: matrix.map((row, ri) => [rows[ri], ...row.map((v) => fmt(v))]),

@@ -49,7 +49,7 @@ collectionArchetype: ledger
 <div class="not-prose grid grid-cols-2 md:grid-cols-4 gap-3 mb-10">
   {{ cb.stat_tile("Posts", collections.posts.length | localeNumber, "since " ~ (years | last), chartSvg({ type: "spark", data: postsPerYearData, x: "year", y: "count" })) }}
   {{ cb.stat_tile("Words", (totalWords | numberString), (avgWords | numberString) ~ " avg / post") }}
-  {{ cb.stat_tile("Snippets", collections.snippets.length | localeNumber, (collections.snippets | map('data.language') | uniq | length) ~ " languages") }}
+  {{ cb.stat_tile("Snippets", collections.snippets.length | localeNumber, (collections.notes.length | localeNumber) ~ " notes") }}
   {{ cb.stat_tile("Upvotes", totalUpvotes | localeNumber, "all-time total") }}
 </div>
 
@@ -113,8 +113,8 @@ collectionArchetype: ledger
       </div>
 
       <div class="py-2.5 flex items-baseline justify-between">
-        <span class="editorial-support">Snippet languages</span>
-        <span class="editorial-title-compact">{{ collections.snippets | map('data.language') | uniq | length }}</span>
+        <span class="editorial-support">Notes</span>
+        <span class="editorial-title-compact">{{ collections.notes.length | localeNumber }}</span>
       </div>
 
       <div class="py-2.5 flex items-baseline justify-between">
@@ -124,7 +124,7 @@ collectionArchetype: ledger
 
       <div class="py-2.5 flex items-baseline justify-between">
         <span class="editorial-support">Last build</span>
-        <span class="meta-text">{{ page.date | readableDate }} · {{ page.date | date('h:mm a') }}</span>
+        <span class="meta-text">{{ "now" | date('MMM d, yyyy') }} · {{ "now" | date('h:mm a') }}</span>
       </div>
     </div>
   </div>
@@ -188,6 +188,24 @@ collectionArchetype: ledger
 </div>
 
 {# ── Recent writings timeline ── #}
+{% set rhythm = collections.posts | countByYearMonth(collections.notes, collections.snippets) %}
+<div class="mb-12">
+  {% chart {
+    type: "heatmap",
+    matrix: rhythm.matrix,
+    rows: rhythm.rows,
+    cols: rhythm.cols,
+    colEvery: 1,
+    colSuffix: "",
+    unit: "pieces",
+    kicker: "Archive · posts, notes and snippets by month",
+    title: "Busiest month: " ~ rhythm.peak.label ~ ", with " ~ rhythm.peak.count ~ " pieces",
+    caption: "Bigger dot = more published that month.",
+    source: "carteakey.dev collections",
+    n: collections.posts.length + collections.notes.length + collections.snippets.length
+  } %}
+</div>
+
 {{ cb.section_header("Recent writings", "Latest posts, snippets and notes with authorship", "clock") }}
 
 {% set timeline = collections.posts | writingsTimeline(collections.snippets, collections.notes, 12) %}

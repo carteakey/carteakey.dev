@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.8.3] - 2026-10-17
+### Added
+- Stats: a publishing-rhythm heatmap (posts, notes and snippets by year and month), titled with the busiest month.
+
+### Fixed
+- Stats: "Posts this year" and "Posts this month" always read 0, because `"now" | date(...)` parsed "now" as an invalid date. The `date` filter now treats "now" as the build time, and "Last build" shows the real build time instead of the template file's date.
+- Stats: the Snippets tile said "1 languages" (no snippet sets `language`); it now shows the notes count, and the inventory row is Notes.
+- Compact authorship badge tooltips are right-aligned, so a badge at the end of a row no longer widens the page (horizontal scroll on `/stats/`).
+- Heatmaps with 16 or fewer columns draw at a fixed scale instead of stretching to full width.
+- "Has My Photography Gotten Better?" draft: sample-photo paragraph rewritten in the author's voice without an em dash, and alt text no longer guesses places or species.
+
 ## [2.8.2] - 2026-10-17
 ### Added
 - Shared `enabled` filter: any entry in bookmarks, projects, uses, quotes, now highlights and updates, or random facts can carry `enabled: false` to stay in its data file as a draft without rendering. Entries without the flag keep showing, so no data file changed. Counts (bookmarks, projects, uses categories) respect the flag. Now-page items accept plain strings or `{ text, enabled }`.
