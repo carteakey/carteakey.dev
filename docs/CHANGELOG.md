@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Streamlined `/ai/` ecosystem hub layout with clean two-column skills and prompts directory and subscriptions table.
 - Added 301 backwards-compatibility redirects for `/skills/` and `/prompts/` routes in `_redirects`.
 - Updated breadcrumbs navigation to label the `ai` path segment cleanly as `AI`.
+- Cleaned up footer navigation: removed top-level Prompts and Skills links in favor of unified `/ai/` link under Explore.
 
 ## [2.7.32] - 2026-10-15
 ### Added
