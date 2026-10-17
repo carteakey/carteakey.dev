@@ -3,4 +3,5 @@ export default [
   "I can (and will) rewatch the Dark Knight trilogy at any time.",
   "I've spent more hours in Bloodborne than I'd like to admit.",
   "My favorite album of all time is Ok Computer by Radiohead",
+  "Elden Ring has eaten 233 hours of my Steam library.",
 ];

@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.46] - 2026-10-17
+### Changed
+- About: added a random fact ("Elden Ring has eaten 233 hours of my Steam library.").
+
 ## [2.7.45] - 2026-10-16
 ### Changed
 - `/now/`: first written update since June (site type refresh, Strata benchmarks, GPU clock cap, L3MS, Sortling, Glowdesk). The outgoing page had no written items, only activity feeds, so there was nothing to archive.
