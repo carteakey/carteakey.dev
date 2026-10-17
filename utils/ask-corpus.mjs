@@ -35,7 +35,13 @@ export function tokenize(text) {
   ).filter((t) => !STOPWORDS.has(t) && t.length < 40);
 }
 
+// Hand-written pages outside the collections. Their Nunjucks tags are
+// stripped like shortcodes, so keep this to prose-heavy pages.
+const SOURCE_PAGES = [["/about.njk", "page"]];
+
 function kindOf(inputPath = "") {
+  const page = SOURCE_PAGES.find(([file]) => inputPath.endsWith(file));
+  if (page) return page[1];
   const hit = SOURCE_DIRS.find(([dir]) => inputPath.includes(dir));
   return hit ? hit[1] : null;
 }
@@ -106,7 +112,7 @@ export function buildAskCorpus(items, now = new Date()) {
   for (const item of items) {
     const kind = kindOf(item.inputPath);
     if (!kind || !item.url || seen.has(item.url)) continue;
-    if (!String(item.inputPath).endsWith(".md")) continue;
+    if (kind !== "page" && !String(item.inputPath).endsWith(".md")) continue;
     if (item.data?.hidden === true || item.data?.eleventyExcludeFromCollections)
       continue;
     if (item.date && item.date > now) continue;
@@ -120,7 +126,11 @@ export function buildAskCorpus(items, now = new Date()) {
         item.data?.title ||
         item.fileSlug,
       k: kind,
-      d: item.date ? item.date.toISOString().slice(0, 10) : null,
+      // Hand-written pages have no declared date, only a file mtime.
+      d:
+        item.date && kind !== "page"
+          ? item.date.toISOString().slice(0, 10)
+          : null,
       g: (item.data?.tags || []).filter(
         (t) => !["posts", "notes", "snippets", "til"].includes(t),
       ),
@@ -143,9 +153,11 @@ export function buildAskCorpus(items, now = new Date()) {
         x: facts.filter(Boolean).join("\n"),
       });
     }
-    for (const s of chunkPage(
-      cleanMarkdown(item.rawInput || item.page?.rawInput || ""),
-    )) {
+    const raw = item.rawInput || item.page?.rawInput || "";
+    // The About page's one-line bio lives in a {% set %} that cleaning drops.
+    const lede = raw.match(/pageDescription\s*=\s*"([^"]+)"/)?.[1];
+    if (lede) chunks.push({ doc: docId, h: "", x: lede });
+    for (const s of chunkPage(cleanMarkdown(raw))) {
       chunks.push({ doc: docId, h: s.heading, x: s.text });
     }
   }

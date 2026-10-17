@@ -60,6 +60,13 @@ const PROVIDERS = {
     key: env("LOCAL_LLM_TOKEN"),
     models: [env("LOCAL_LLM_MODEL") || "gemma-4-26b-qat-mtp"],
     ttfb: 30000,
+    // Thinking turned a 42-token answer into a 30 s wait. Grounded short
+    // answers don't need it; ASK_LOCAL_THINKING=1 turns it back on.
+    body: {
+      chat_template_kwargs: {
+        enable_thinking: env("ASK_LOCAL_THINKING") === "1",
+      },
+    },
   }),
 };
 
@@ -180,14 +187,16 @@ const STOPWORDS = new Set(
     "was we were what when where which who why will with you your about just more most also " +
     "any all some such very would should could been being he she his her did done use used " +
     "tell know think like get got say says said write wrote written post posts blog site page " +
-    "please explain show give anything something thing things much many way " +
-    "kartikey carteakey"
+    "please explain show give anything something thing things much many way"
   ).split(" "),
 );
 const tokenize = (text) =>
   (
     text.toLowerCase().match(/[a-z0-9][a-z0-9.+_-]*[a-z0-9]|[a-z0-9]/g) || []
   ).filter((t) => !STOPWORDS.has(t) && t.length < 40);
+
+const ABOUT_PERSON =
+  /\b(kartikey|carteakey|who|he|him|his|author|owner|job|career|living|background|resume|cv|based|lives?)\b/i;
 
 function search(corpus, query) {
   const N = corpus.chunks.length;
@@ -209,6 +218,23 @@ function search(corpus, query) {
   const ranked = [...scores.entries()].sort((a, b) => b[1] - a[1]);
   // Relative cutoff: a strong match drags weak ones out of the excerpts.
   const floor = Math.max(1.5, (ranked[0]?.[1] || 0) * 0.35);
+  // Questions about the person rarely share words with the About page ("I'm
+  // a data analyst" never says "Kartikey"), so pin its opening chunks.
+  if (ABOUT_PERSON.test(query)) {
+    const about = corpus.docs.findIndex((d) => d.u === "/about/");
+    const pinned = corpus.chunks
+      .map((c, i) => [i, c])
+      .filter(([, c]) => c.doc === about)
+      .slice(0, 2)
+      .map(([i]) => [i, Infinity]);
+    const ids = new Set(pinned.map(([i]) => i));
+    ranked.splice(
+      0,
+      ranked.length,
+      ...pinned,
+      ...ranked.filter(([i]) => !ids.has(i)),
+    );
+  }
   return ranked
     .filter(([i, s]) => {
       const d = corpus.chunks[i].doc;
@@ -276,6 +302,7 @@ async function openStream(hop, model, messages, outerSignal) {
       stream: true,
       temperature: 0.3,
       max_tokens: 900,
+      ...hop.body,
     }),
   }).catch((err) => {
     clearTimeout(timer);
