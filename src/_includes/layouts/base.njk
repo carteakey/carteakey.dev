@@ -514,25 +514,25 @@
   </script>
 
   {# ── Keyboard shortcuts ── #}
-  <div id="shortcuts-overlay" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.5);backdrop-filter:blur(2px);" onclick="document.getElementById('shortcuts-overlay').style.display='none'">
-    <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--bg,#fff);border:1px solid #e5e7eb;border-radius:0.75rem;padding:1.5rem 2rem;min-width:300px;max-width:380px;" onclick="event.stopPropagation()" class="dark:bg-zinc-900 dark:border-zinc-700">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
-        <span style="font-weight:600;font-size:0.875rem;">Keyboard Shortcuts</span>
-        <button onclick="document.getElementById('shortcuts-overlay').style.display='none'" style="color:#9ca3af;font-size:1rem;background:none;border:none;cursor:pointer;">✕</button>
+  <div id="shortcuts-overlay" class="shortcuts-dialog-backdrop" onclick="document.getElementById('shortcuts-overlay').style.display='none'">
+    <div class="shortcuts-dialog" onclick="event.stopPropagation()">
+      <div class="shortcuts-dialog-header">
+        <h2 class="shortcuts-dialog-title">Keyboard Shortcuts</h2>
+        <button onclick="document.getElementById('shortcuts-overlay').style.display='none'" class="shortcuts-dialog-close" aria-label="Close keyboard shortcuts">✕</button>
       </div>
-      <table style="width:100%;border-collapse:collapse;font-size:0.8rem;">
-        <tr><td style="padding:0.25rem 0;color:#6b7280;" colspan="2">Navigation</td></tr>
-        <tr><td style="padding:0.2rem 0;white-space:nowrap;"><kbd style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:3px;padding:1px 5px;font-size:0.7rem;font-family:monospace;">H</kbd></td><td style="padding:0.2rem 0 0.2rem 1rem;color:#374151;" class="dark:text-gray-300">Home</td></tr>
-        <tr><td style="padding:0.2rem 0;white-space:nowrap;"><kbd style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:3px;padding:1px 5px;font-size:0.7rem;font-family:monospace;">B</kbd></td><td style="padding:0.2rem 0 0.2rem 1rem;color:#374151;" class="dark:text-gray-300">Writing</td></tr>
-        <tr><td style="padding:0.2rem 0;white-space:nowrap;"><kbd style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:3px;padding:1px 5px;font-size:0.7rem;font-family:monospace;">F</kbd></td><td style="padding:0.2rem 0 0.2rem 1rem;color:#374151;" class="dark:text-gray-300">Feed</td></tr>
-        <tr><td style="padding:0.2rem 0;white-space:nowrap;"><kbd style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:3px;padding:1px 5px;font-size:0.7rem;font-family:monospace;">S</kbd></td><td style="padding:0.2rem 0 0.2rem 1rem;color:#374151;" class="dark:text-gray-300">Snippets</td></tr>
-        <tr><td style="padding:0.2rem 0;white-space:nowrap;"><kbd style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:3px;padding:1px 5px;font-size:0.7rem;font-family:monospace;">N</kbd></td><td style="padding:0.2rem 0 0.2rem 1rem;color:#374151;" class="dark:text-gray-300">Now</td></tr>
-        <tr><td style="padding:0.2rem 0;white-space:nowrap;"><kbd style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:3px;padding:1px 5px;font-size:0.7rem;font-family:monospace;">T</kbd></td><td style="padding:0.2rem 0 0.2rem 1rem;color:#374151;" class="dark:text-gray-300">TIL</td></tr>
-        <tr><td style="padding:0.2rem 0;white-space:nowrap;"><kbd style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:3px;padding:1px 5px;font-size:0.7rem;font-family:monospace;">R</kbd></td><td style="padding:0.2rem 0 0.2rem 1rem;color:#374151;" class="dark:text-gray-300">Reading</td></tr>
-        <tr><td style="padding:0.25rem 0;color:#6b7280;padding-top:0.75rem;" colspan="2">Site</td></tr>
-        <tr><td style="padding:0.2rem 0;white-space:nowrap;"><kbd style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:3px;padding:1px 5px;font-size:0.7rem;font-family:monospace;">/</kbd></td><td style="padding:0.2rem 0 0.2rem 1rem;color:#374151;" class="dark:text-gray-300">Search</td></tr>
-        <tr><td style="padding:0.2rem 0;white-space:nowrap;"><kbd style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:3px;padding:1px 5px;font-size:0.7rem;font-family:monospace;">D</kbd></td><td style="padding:0.2rem 0 0.2rem 1rem;color:#374151;" class="dark:text-gray-300">Toggle dark mode</td></tr>
-        <tr><td style="padding:0.2rem 0;"><kbd style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:3px;padding:1px 5px;font-size:0.7rem;font-family:monospace;">?</kbd></td><td style="padding:0.2rem 0 0.2rem 1rem;color:#374151;" class="dark:text-gray-300">This overlay</td></tr>
+      <table class="shortcuts-table">
+        <tr><td class="shortcuts-dialog-section" colspan="2">Navigation</td></tr>
+        <tr><td class="shortcuts-table-key"><kbd class="shortcuts-kbd">H</kbd></td><td class="shortcuts-table-desc">Home</td></tr>
+        <tr><td class="shortcuts-table-key"><kbd class="shortcuts-kbd">B</kbd></td><td class="shortcuts-table-desc">Writing</td></tr>
+        <tr><td class="shortcuts-table-key"><kbd class="shortcuts-kbd">F</kbd></td><td class="shortcuts-table-desc">Feed</td></tr>
+        <tr><td class="shortcuts-table-key"><kbd class="shortcuts-kbd">S</kbd></td><td class="shortcuts-table-desc">Snippets</td></tr>
+        <tr><td class="shortcuts-table-key"><kbd class="shortcuts-kbd">N</kbd></td><td class="shortcuts-table-desc">Now</td></tr>
+        <tr><td class="shortcuts-table-key"><kbd class="shortcuts-kbd">T</kbd></td><td class="shortcuts-table-desc">TIL</td></tr>
+        <tr><td class="shortcuts-table-key"><kbd class="shortcuts-kbd">R</kbd></td><td class="shortcuts-table-desc">Reading</td></tr>
+        <tr><td class="shortcuts-dialog-section" colspan="2">Site</td></tr>
+        <tr><td class="shortcuts-table-key"><kbd class="shortcuts-kbd">/</kbd></td><td class="shortcuts-table-desc">Search</td></tr>
+        <tr><td class="shortcuts-table-key"><kbd class="shortcuts-kbd">D</kbd></td><td class="shortcuts-table-desc">Toggle dark mode</td></tr>
+        <tr><td class="shortcuts-table-key"><kbd class="shortcuts-kbd">?</kbd></td><td class="shortcuts-table-desc">This overlay</td></tr>
       </table>
     </div>
   </div>
@@ -555,6 +555,14 @@
       }
       if (e.key === 'Escape') { document.getElementById('shortcuts-overlay').style.display = 'none'; }
     });
+    const checkOverlay = function() {
+      if (window.location.hash === '#shortcuts' || new URLSearchParams(window.location.search).has('shortcuts')) {
+        const o = document.getElementById('shortcuts-overlay');
+        if (o) o.style.display = 'flex';
+      }
+    };
+    checkOverlay();
+    window.addEventListener('hashchange', checkOverlay);
   })();
   </script>
 
