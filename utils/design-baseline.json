@@ -37,7 +37,7 @@
     "src/_includes/layouts/post.njk": {
       "pill-or-circle": 1,
       "off-palette-colour": 4,
-      "utility-text-stack": 9,
+      "utility-text-stack": 8,
       "inline-style": 4
     },
     "src/_includes/layouts/snippet.njk": {

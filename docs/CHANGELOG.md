@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Notes & Lexicon: Removed verbose explanatory subtitle ("Choose the reading rhythm that fits...") and right-aligned the view toggle toolbar cleanly.
 - AI page (`/ai/`): Removed redundant "AI Writing" section and post links to keep the page focused strictly on subscriptions, daily stack, prompts, and skills.
+- More page (`/more/`): Redesigned as a continuous editorial directory with four subtle section kickers (Writing, Homelab & Code, Media & Life, Site & Meta) and high-density two-column route rows.
 
 ## [2.7.40] - 2026-10-16
 ### Fixed

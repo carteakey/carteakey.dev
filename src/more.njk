@@ -1,63 +1,103 @@
 ---
 layout: layouts/home.njk
 title: ...More
-description: A sitemap of everything on this site.
+description: A categorized directory of everything on this site.
 permalink: /more/
 eleventyNavigation:
   key: ...More
   order: 8
+collectionArchetype: index
 ---
 
+{% set directoryGroups = [
+  {
+    title: "Writing",
+    items: [
+      { path: "/blog/", desc: "Essays, long-form posts, and deep dives" },
+      { path: "/notes/", desc: "Short field notes, updates, and micro-thoughts" },
+      { path: "/feed/", desc: "Chronological stream across all writing and media" },
+      { path: "/snippets/", desc: "Reusable code snippets and configuration files" },
+      { path: "/til/", desc: "Today I Learned bite-sized technical findings" },
+      { path: "/folio/", desc: "Themed web folios, visual essays, and obsessions" },
+      { path: "/reviews/", desc: "Hardware, everyday carry, and gear reviews" },
+      { path: "/lexicon/", desc: "Personal glossary of terms and mental models" },
+      { path: "/quotations/", desc: "Passages, excerpts, and words worth saving" },
+      { path: "/tags/", desc: "Topic and category index across all writing" }
+    ]
+  },
+  {
+    title: "Homelab & Code",
+    items: [
+      { path: "/ai/", desc: "AI stack, active subscriptions, and local models" },
+      { path: "/ai/prompts/", desc: "Test prompts for evaluating language models" },
+      { path: "/ai/skills/", desc: "Reusable SKILL.md agent instruction files" },
+      { path: "/projects/", desc: "Open-source builds, tools, and side quests" },
+      { path: "/devices/", desc: "Hardware spec sheets and machine timelines" },
+      { path: "/uses/", desc: "Workbench ledger: CasaKey fleet, software, and gear" },
+      { path: "/status/", desc: "Build-time health status of external API services" }
+    ]
+  },
+  {
+    title: "Media & Life",
+    items: [
+      { path: "/now/", desc: "What I'm focused on right now (+ /now/archive)" },
+      { path: "/reading/", desc: "Bookshelf, progress, and logs via Goodreads" },
+      { path: "/watching/", desc: "Film diary and movie ratings via Letterboxd" },
+      { path: "/listening/", desc: "All-time Spotify listening history and stats" },
+      { path: "/games/", desc: "Recently played games and hours via Steam" },
+      { path: "/workouts/", desc: "Fitness logs, running, and training via Strava" },
+      { path: "/gallery/", desc: "Real-world and in-game photography" },
+      { path: "/vibes/", desc: "Saved visual fragments, internet finds, and memes" },
+      { path: "/quotes/", desc: "Rotating Quote of the Day and memorable lines" },
+      { path: "/data/", desc: "My life in data: personal tracking dashboard" }
+    ]
+  },
+  {
+    title: "Site & Meta",
+    items: [
+      { path: "/about/", desc: "Who I am, background, and personal principles" },
+      { path: "/cv/", desc: "Curriculum vitae and professional background" },
+      { path: "/skills-radar/", desc: "Visual chart of data and engineering skills" },
+      { path: "/blogroll/", desc: "Feeds, blogs, and personal sites I follow" },
+      { path: "/bookmarks/", desc: "Curated links and reading list from around the web" },
+      { path: "/guestbook/", desc: "Visitor log and signable guestbook" },
+      { path: "/newsletter/", desc: "Weekly email digest of new posts and notes" },
+      { path: "/colophon/", desc: "How this site is built, hosted, and styled" },
+      { path: "/changelog/", desc: "Site release history and version log" },
+      { path: "/stats/", desc: "Writing stats, word counts, and posting velocity" },
+      { path: "/page-list/", desc: "Machine-readable flat list of all HTML pages" }
+    ]
+  }
+] %}
+
+{% set totalRoutes = 0 %}
+{% for group in directoryGroups %}
+  {% set totalRoutes = totalRoutes + group.items.length %}
+{% endfor %}
+
+{% set pageEyebrow = "Site Index" %}
 {% set pageTitle = "More" %}
-{% set pageDescription = "A sitemap of everything on this site - inspired by <a href=\"https://slashpages.net\" target=\"_blank\" rel=\"noopener\" class=\"title-hover\">slashpages.net</a>." %}
+{% set pageDescription = "A categorized directory of everything on this site, inspired by <a href=\"https://slashpages.net\" target=\"_blank\" rel=\"noopener\" class=\"accent-link\">slashpages.net</a>." %}
+{% set itemCount = totalRoutes %}
+{% set itemLabel = "routes" %}
 {% include "components/page-header.njk" %}
 
-<h3>All Pages</h3>
-
-<ul>
-  <li><a href="/about/">/about</a> - who am I?</li>
-  <li><a href="/ai/">/ai</a> - AI stack, subscriptions, local inference hardware, and model rankings</li>
-  <li><a href="/blog/">/blog</a> - writing archive, posts, and essays</li>
-  <li><a href="/blogroll/">/blogroll</a> - blogs and sites I follow</li>
-  <li><a href="/bookmarks/">/bookmarks</a> - curated reading list</li>
-  <li><a href="/changelog/">/changelog</a> - site changelog</li>
-  <li><a href="/colophon/">/colophon</a> - how this site is built</li>
-  <li><a href="/cv/">/cv</a> - my curriculum vitae</li>
-  <li><a href="/data/">/data</a> - my life in data - a scrollable dashboard from cartebase</li>
-  <li><a href="/feed/">/feed</a> - all posts, snippets, and mini blogs</li>
-  <li><a href="/folio/">/folio</a> - themed web pages for things I obsess over</li>
-  <li><a href="/gallery/">/gallery</a> - photo gallery</li>
-  <li><a href="/games/">/games</a> - games I'm currently playing</li>
-  <li><a href="/guestbook/">/guestbook</a> - sign my guestbook</li>
-  <li><a href="/lexicon/">/lexicon</a> - small glossary of terms and concepts</li>
-  <li><a href="/listening/">/listening</a> - full Spotify listening history, wrapped</li>
-  <li><a href="/more/">/more</a> - this full site inventory</li>
-  <li><a href="/newsletter/">/newsletter</a> - subscribe to updates</li>
-  <li><a href="/notes/">/notes</a> - short notes and micro posts</li>
-  <li><a href="/now/">/now</a> - what I'm up to, now</li>
-  <li><a href="/now/archive/">/now/archive</a> - timeline of past /now updates</li>
-  <li><a href="/page-list/">/page-list</a> - raw list of all URLs</li>
-  <li><a href="/projects/">/projects</a> - things I've built</li>
-  <li><a href="/ai/prompts/">/ai/prompts</a> - prompt library for testing language models</li>
-  <li><a href="/quotations/">/quotations</a> - words worth saving</li>
-  <li><a href="/quotes/">/quotes</a> - quotes I like</li>
-  <li><a href="/reading/">/reading</a> - my reading shelf</li>
-  <li><a href="/reviews/">/reviews</a> - product reviews and buying notes</li>
-  <li><a href="/search/">/search</a> - search posts and snippets</li>
-  <li><a href="/ai/skills/">/ai/skills</a> - reusable agent skill files and notes</li>
-  <li><a href="/skills-radar/">/skills-radar</a> - data skills radar chart</li>
-  <li><a href="/snippets/">/snippets</a> - code snippets and quick notes</li>
-  <li><a href="/status/">/status</a> - build-time integration health</li>
-  <li><a href="/stats/">/stats</a> - site statistics and metrics</li>
-  <li><a href="/tags/">/tags</a> - all tags used across the site</li>
-  <li><a href="/til/">/til</a> - today I learned</li>
-  <li><a href="/tools/">/tools</a> - small tools and utilities I've published</li>
-  <li><a href="/uses/">/uses</a> - tools, software, and hardware I use</li>
-  <li><a href="/vibes/">/vibes</a> - random images/memes I like</li>
-  <li><a href="/watching/">/watching</a> - my film diary</li>
-  <li><a href="/workouts/">/workouts</a> - my fitness journey</li>
-</ul>
-
-<hr>
-
-<p><em>Learn more about these pages on <a href="https://slashpages.net">slashpages.net</a>.</em></p>
+<div class="space-y-10 not-prose mt-6">
+  {% for group in directoryGroups %}
+    <section aria-labelledby="section-{{ group.title | slugify }}">
+      <div class="flex items-baseline justify-between border-b border-gray-200 dark:border-gray-800 pb-1.5 mb-3">
+        <h2 id="section-{{ group.title | slugify }}" class="editorial-kicker">{{ group.title }}</h2>
+        <span class="meta-line">{{ group.items.length }} routes</span>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-1.5">
+        {% for item in group.items %}
+          <div class="flex items-baseline gap-2 py-0.5 min-w-0">
+            <a href="{{ item.path | url }}" class="font-mono text-[0.78rem] font-semibold accent-link shrink-0">{{ item.path }}</a>
+            <span class="meta-line text-xs opacity-40 shrink-0">·</span>
+            <span class="editorial-support-compact truncate sm:overflow-visible">{{ item.desc }}</span>
+          </div>
+        {% endfor %}
+      </div>
+    </section>
+  {% endfor %}
+</div>
