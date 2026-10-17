@@ -8,13 +8,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [2.8.4] - 2026-10-17
 ### Added
 - Stats: a publishing-rhythm heatmap (posts, notes and snippets by year and month), titled with the busiest month.
+- Devices: added dedicated device page for `glowdesk` (`/devices/glowdesk/`), documenting the living room TV retro console (HP ProDesk 600 G1 SFF, Quadro P600, Batocera v43.1, ex-MergerFS NAS), with backlinks from `/uses/` and `/now/`.
+- Posts: updated Strata local inference posts with October 16 Thinking Mode sampling benchmarks (-4.9% decode throughput penalty vs greedy decode, draft acceptance 68.9% → 55.7%).
 
 ### Fixed
+- Shortcuts: replaced inline styles on the keyboard shortcuts overlay with semantic classes (`.shortcuts-dialog-*`, `.shortcuts-kbd`) conforming to the dense `.surface` design language. Fixed dark mode where the container stayed white while title text rendered white-on-white. Added redirects from `/shortcuts` and `/shortcuts/` to `/#shortcuts` and hooked hash/query handling so visiting directly opens the overlay.
 - Stats: "Posts this year" and "Posts this month" always read 0, because `"now" | date(...)` parsed "now" as an invalid date. The `date` filter now treats "now" as the build time, and "Last build" shows the real build time instead of the template file's date.
 - Stats: the Snippets tile said "1 languages" (no snippet sets `language`); it now shows the notes count, and the inventory row is Notes.
 - Compact authorship badge tooltips are right-aligned, so a badge at the end of a row no longer widens the page (horizontal scroll on `/stats/`).
 - Heatmaps with 16 or fewer columns draw at a fixed scale instead of stretching to full width.
 - "Has My Photography Gotten Better?" draft: sample-photo paragraph rewritten in the author's voice without an em dash, and alt text no longer guesses places or species.
+- QOTD: Fixed OpenRouter quote generation by supporting automatic fallback across candidate models (including free-tier models when paid credits run out) with timeouts, preventing unhandled re-throws, and replacing the hardcoded static fallback quote with a random pull from the user's curated quotes list (`src/_data/quotes.js`). Stale legacy fallback cache entries are bypassed.
 
 ## [2.8.3] - 2026-10-17
 ### Added

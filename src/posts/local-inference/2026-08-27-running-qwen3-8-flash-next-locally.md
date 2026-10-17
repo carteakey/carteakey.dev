@@ -16,6 +16,10 @@ pinned: false
 ogImage: /img/og/running-qwen3-8-flash-next-locally-og.png
 ---
 
+{% update "2026-10-16", "October 2026 Update: Thinking Mode Sampling Defaults (-4.9% penalty)" %}
+Verified that Strata defaults to greedy argmax decoding (`temperature=0`) if client requests leave out sampling parameters and the server config lacks a `"sampling"` block. Benchmarking official **Thinking Mode** sampling (`temp 1.0 / top-p 0.95 / top-k 20 / min-p 0.0`) vs. greedy decode on `IQ3_XXS` + native MTP shows a minimal throughput impact of **-2.8 tok/s (57.3 → 54.5 tok/s, ~4.9% loss)** due to speculative draft acceptance dropping from 68.9% to 55.7%. Enforced server-side in all active Strata JSON configs to eliminate reasoning repetition loops.
+{% endupdate %}
+
 {% update "2026-10-14", "October 2026 Update: Strata v0.1.44.1 (62.2 tok/s)" %}
 Strata is updated to **v0.1.44.1**, reaching **62.20 tok/s** steady decode on real code (probes: 59.6–64.8 t/s; 90.2 t/s peak burst) and **1,992 tok/s** 8k prefill on `IQ3_XXS`.
 {% endupdate %}

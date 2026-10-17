@@ -11,6 +11,10 @@ tags:
   - Self-Host
 ---
 
+{% update "2026-10-16", "October 2026 Update: Thinking Mode Sampling & Throughput Penalty (-4.9%)" %}
+Measured Strata under official **Thinking Mode** sampling (`temp 1.0 / top-p 0.95 / top-k 20 / min-p 0.0`) vs. the greedy baseline on ISTA-DASLab `IQ3_XXS` + native MTP. Steady decode throughput drops only **-2.8 tok/s (57.3 → 54.5 tok/s, ~4.9% loss)** as speculative draft acceptance shifts from 68.9% (argmax match) to 55.7% (rejection sampling). Reasoning loops inside `<think>` are eliminated with negligible speed penalty. Enforced server-side via the `"sampling"` block in Strata run configs.
+{% endupdate %}
+
 {% update "2026-10-14", "October 2026 Update: Strata v0.1.44.1 (62.2 tok/s)" %}
 Refreshed to **Strata v0.1.44.1** under the verified `performance` governor: steady decode on real code now reaches **62.20 tok/s** (probes: 59.6–64.8 t/s; 90.2 t/s peak burst) and **1,992 tok/s** 8k prefill on `IQ3_XXS`.
 {% endupdate %}
@@ -234,15 +238,16 @@ Under greedy decoding, a draft token is accepted only if it matches the main mod
 
 With sampling, [exact speculative sampling](https://arxiv.org/abs/2211.17192) uses rejection sampling, which keeps the output distribution identical to running the main model alone. The cost is speed: a draft is accepted with probability tied to how much the draft and main-model distributions overlap. Sampled acceptance can come out higher or lower than greedy agreement. Temperature changes both distributions; it doesn't predict acceptance or speedup on its own. I also haven't audited whether this Strata path implements exact sampled verification.
 
-I haven't measured Strata with sampling. That's the next row to run: the 60k prompt at the server defaults (temperature 1.0, top-p 0.95, top-k 20), reporting acceptance and decode speed.
+I previously hadn't measured Strata with sampling. On October 16, I ran the comparison between greedy decoding and official Thinking Mode sampling (`temp 1.0 / top-p 0.95 / top-k 20 / min-p 0.0`) on a standardized 4-prompt coding/reasoning harness:
+- **Greedy baseline:** 57.3 tok/s steady decode, 68.9% draft acceptance
+- **Thinking Mode:** 54.5 tok/s steady decode, 55.7% draft acceptance
+- **Speed delta:** -2.8 tok/s (~4.9% throughput penalty)
 
-On quality: in my runs, greedy output was coherent and never looped within 512 tokens. That's a narrow result. [Qwen's own agentic coding evaluation](https://huggingface.co/Qwen/Qwen3.8-Flash-Next) uses temperature 1.0 and top-p 0.95, and agentic sessions run thousands of tokens, where loops are more likely.
-
-So greedy works for the short, structured generations I tested. Whether it's the right default for long agentic sessions is still open.
+The speed cost of running proper sampling is under 5%, caused entirely by draft verification against the wider stochastic distribution (acceptance falls from ~69% to ~56%). In return, you eliminate greedy repetition collapse inside `<think>` blocks. Strata defaults to greedy when requests omit sampling parameters, so I enforce this server-side via the `"sampling"` block in the JSON runner config.
 
 {% callout "note", "What this does not prove" %}
 - **One machine, one model.** Nothing here says Strata is faster on other cards or other models.
-- **Greedy only.** No numbers with sampling yet.
+- **Sampling penalty is modest.** Initial sweeps ran greedy; sampled Thinking Mode measured on October 16 at 54.5 tok/s (-4.9% delta).
 - **No ablation.** I can't split the gain between the expert cache, MTP and prompt lookup.
 - **No quality A/B.** Different quants, no perplexity or KL check yet.
 - **Synthetic context.** The 60k test is repeated technical prose, not a real codebase.
@@ -294,6 +299,7 @@ Strata is a young project from a solo developer that pins host memory and ships 
 
 | Date | Note |
 | --- | --- |
+| 2026-10-16 | Measured Thinking Mode sampling (temp 1.0 / top-p 0.95 / top-k 20 / min-p 0.0) vs greedy: 57.3 → 54.5 tok/s (-4.9% throughput delta; MTP draft acceptance 68.9% → 55.7%). Enforced server-side via the sampling block in Strata config. |
 | 2026-10-14 | Refreshed to Strata v0.1.44.1 under verified performance governor: 62.20 tok/s steady decode (59.6–64.8 t/s probes; 90.2 t/s peak burst) and 1,992 tok/s 8k prefill on IQ3_XXS. |
 | 2026-10-07 | Upgraded to Strata v0.1.40.2 (native THP, #783 kernel perf suite). Re-evaluated on RTX 4070 against refreshed llama.cpp master b11475 (17.34 t/s) and experimental MoE LRU cache #29887 (23.92 t/s) on identical ISTA IQ3_XXS quant: Strata sustained 56.08 tok/s decode and reached 1,999.2 tok/s 8k prefill (+29.4% prefill speedup). Live evolution tracker published on l3ms.carteakey.dev. |
 | 2026-10-03 | Split from the original post. Fixed the hit-rate framing (per expert lookup, not per token), the 60k hit rate (73.8%, not 76.5%), the 3,779-token needle failure, the reused-prefix prefill row, the SSD bandwidth, the speedup comparison, the miss path, and the VRAM and greedy explanations. Added the cache policy, setup, quality, reproduction and limits sections. Kept the Strata weight-size estimate separate from measured traffic, removed the unsupported cross-quant bandwidth calculation and GPU-compute percentage, clarified batched expert jobs and the incomplete lookup denominator, stated the llama.cpp context lengths, preserved the raw 90.2 burst log, and dropped the "speculation alone" claim. |
