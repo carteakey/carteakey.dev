@@ -179,9 +179,33 @@ collectionArchetype: wall
 
 <div class="mt-12 mb-8">
   <h2 class="editorial-kicker mb-4">GitHub Activity</h2>
+  <div class="not-prose mb-8">
+    {% chart {
+      type: "line",
+      data: githubHistory.monthly,
+      x: "month",
+      y: "cumulative",
+      count: "count",
+      countLabel: "this month",
+      area: true,
+      unit: "commits",
+      xLabel: "Month",
+      yLabel: "Cumulative commits",
+      kicker: "GitHub · cumulative commits since June 2018",
+      title: (githubHistory.totalCount | localeNumber) ~ " contributions since 2018, accelerating sharply in 2026",
+      source: "GitHub · @carteakey",
+      n: githubHistory.totalCount,
+      range: "Jun 2018 – " ~ githubHistory.latestMonthLabel,
+      notes: [
+        { at: "2026-02", text: "2026 surge begins\n376 in one month", dx: -150, dy: -20 },
+        { at: "2024-03", text: "Passed 1,000 commits", dx: -120, dy: -35 }
+      ]
+    } %}
+  </div>
+
   <div class="not-prose">
     <p class="editorial-support mb-4">
-      My contribution activity on GitHub over the past year.
+      Contribution rhythm across the past 52 weeks.
     </p>
     <div class="surface surface-padding rounded-sm not-prose">
       {% include "components/github-contributions.njk" %}

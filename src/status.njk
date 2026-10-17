@@ -106,7 +106,7 @@ collectionArchetype: ledger
         {{ serviceRow(
           "GitHub contributions",
           contributionsState,
-          githubContributions.totalCount ~ " contributions tracked",
+          githubContributions.totalCount ~ " tracked (past year); " ~ (githubHistory.totalCount | localeNumber) ~ " all-time",
           "/projects/"
         ) }}
         {{ serviceRow(
