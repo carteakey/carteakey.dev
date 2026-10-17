@@ -1,12 +1,12 @@
-{# Cartebase dashboard chart + tile macros. Relies on Chart.js v4 being loaded
-   before any chart macro is rendered (include the CDN <script> near the top
-   of the page). Each macro emits an IIFE so vars don't collide. #}
+{# Cartebase dashboard tiles and cards. Charts are {% chart %} shortcodes
+   (utils/charts.mjs); stat_tile takes an optional sparkline from chartSvg(). #}
 
-{% macro stat_tile(label, value, sublabel="") %}
+{% macro stat_tile(label, value, sublabel="", spark="") %}
 <div class="surface surface-compact">
   <div class="text-[0.78rem] uppercase tracking-widest text-gray-400 dark:text-gray-500">{{ label }}</div>
   <div class="text-2xl font-semibold mt-1 text-gray-900 dark:text-gray-100 leading-tight">{{ value }}</div>
   {% if sublabel %}<div class="text-xs text-gray-400 dark:text-gray-500 mt-0.5">{{ sublabel }}</div>{% endif %}
+  {% if spark %}{{ spark | safe }}{% endif %}
 </div>
 {% endmacro %}
 
@@ -17,118 +17,6 @@
     <h2 class="editorial-title m-0">{{ title }}</h2>
   </div>
   {% if sub %}<span class="text-xs text-gray-400 dark:text-gray-500">{{ sub }}</span>{% endif %}
-</div>
-{% endmacro %}
-
-{% macro line_chart(id, labels, data, label="", height=220) %}
-<div class="surface p-3" style="height: {{ height }}px;">
-  <canvas id="{{ id }}"></canvas>
-</div>
-<script>
-(function(){
-  const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent-color').trim() || '#14b8a6';
-  const ctx = document.getElementById('{{ id }}').getContext('2d');
-  new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: {{ labels | dump | safe }},
-      datasets: [{
-        label: {{ label | dump | safe }},
-        data: {{ data | dump | safe }},
-        borderColor: accent,
-        backgroundColor: accent + '22',
-        borderWidth: 1.5,
-        pointRadius: 0,
-        tension: 0.25,
-        fill: true,
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      interaction: { intersect: false, mode: 'index' },
-      scales: {
-        y: { beginAtZero: true, grid: { color: 'rgba(128,128,128,0.1)' }, ticks: { color: 'rgba(128,128,128,0.9)', font: { size: 10 } } },
-        x: { grid: { display: false }, ticks: { color: 'rgba(128,128,128,0.9)', font: { size: 10 }, maxTicksLimit: 12, autoSkip: true } }
-      },
-      plugins: { legend: { display: false } }
-    }
-  });
-})();
-</script>
-{% endmacro %}
-
-{% macro bar_chart(id, labels, data, label="", horizontal=false, height=260) %}
-<div class="surface p-3" style="height: {{ height }}px;">
-  <canvas id="{{ id }}"></canvas>
-</div>
-<script>
-(function(){
-  const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent-color').trim() || '#14b8a6';
-  const ctx = document.getElementById('{{ id }}').getContext('2d');
-  new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: {{ labels | dump | safe }},
-      datasets: [{
-        label: {{ label | dump | safe }},
-        data: {{ data | dump | safe }},
-        backgroundColor: accent + 'cc',
-        borderColor: accent,
-        borderWidth: 0,
-        borderRadius: 2,
-      }]
-    },
-    options: {
-      indexAxis: '{{ 'y' if horizontal else 'x' }}',
-      responsive: true,
-      maintainAspectRatio: false,
-      scales: {
-        x: { grid: { display: {{ 'true' if horizontal else 'false' }}, color: 'rgba(128,128,128,0.1)' }, ticks: { color: 'rgba(128,128,128,0.9)', font: { size: 10 } } },
-        y: { grid: { display: {{ 'false' if horizontal else 'true' }}, color: 'rgba(128,128,128,0.1)' }, ticks: { color: 'rgba(128,128,128,0.9)', font: { size: 10 } } }
-      },
-      plugins: { legend: { display: false } }
-    }
-  });
-})();
-</script>
-{% endmacro %}
-
-{% macro heatmap(matrix, rowLabels=None, colLabels=None) %}
-{# matrix is 2D list (rows x cols). Square cells in the accent hue, five steps light to dark by sqrt(v / max). #}
-{% set rows = rowLabels or ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"] %}
-{% set cols = colLabels or ["0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23"] %}
-{% set maxVal = 0 %}
-{% for row in matrix %}{% for v in row %}{% if v > maxVal %}{% set maxVal = v %}{% endif %}{% endfor %}{% endfor %}
-{% set pitch = 14 %}
-{% set cell = 12 %}
-{% set left = 30 %}
-{% set top = 14 %}
-{% set steps = [0.16, 0.34, 0.54, 0.76, 1] %}
-
-<div class="surface p-3 dot-heatmap-scroll">
-  <svg class="dot-grid dot-grid-heatmap" viewBox="0 0 {{ left + cols | length * pitch + 2 }} {{ top + matrix | length * pitch + 2 }}" role="img" aria-label="Plays by weekday and hour; darker squares mean more plays">
-    {% for c in cols %}
-      {% if loop.index0 % 3 == 0 %}<text class="dot-grid-label" x="{{ left + loop.index0 * pitch + pitch / 2 }}" y="9" text-anchor="middle">{{ c }}</text>{% endif %}
-    {% endfor %}
-    {% for row in matrix %}
-      {% set ri = loop.index0 %}
-      <text class="dot-grid-label" x="0" y="{{ top + ri * pitch + pitch / 2 + 3 }}">{{ rows[ri] }}</text>
-      {% for v in row %}
-        {% set x = left + loop.index0 * pitch + (pitch - cell) / 2 %}
-        {% set y = top + ri * pitch + (pitch - cell) / 2 %}
-        {% if v > 0 and maxVal > 0 %}
-          {% set step = ((v / maxVal) ** 0.5 * 4.999) | int %}
-          <rect x="{{ x }}" y="{{ y }}" width="{{ cell }}" height="{{ cell }}" class="heat-cell" fill-opacity="{{ steps[step] }}"><title>{{ rows[ri] }} {{ cols[loop.index0] }}:00 UTC: {{ v }} plays</title></rect>
-        {% else %}
-          <rect x="{{ x + 0.25 }}" y="{{ y + 0.25 }}" width="{{ cell - 0.5 }}" height="{{ cell - 0.5 }}" class="heat-cell-empty"><title>{{ rows[ri] }} {{ cols[loop.index0] }}:00 UTC: no plays</title></rect>
-        {% endif %}
-      {% endfor %}
-    {% endfor %}
-  </svg>
-  <p class="heat-legend" aria-hidden="true">Fewer
-    {% for o in steps %}<svg viewBox="0 0 10 10"><rect width="10" height="10" class="heat-cell" fill-opacity="{{ o }}"/></svg>{% endfor %}
-    More</p>
 </div>
 {% endmacro %}
 
@@ -161,59 +49,6 @@
 </div>
 {% endmacro %}
 
-{% macro stacked_area(id, labels, series, height=320) %}
-<div class="surface p-3" style="height: {{ height }}px;">
-  <canvas id="{{ id }}"></canvas>
-</div>
-<script>
-(function(){
-  const palette = ['#14b8a6','#f59e0b','#ec4899','#6366f1','#22c55e','#8b5cf6','#f97316','#06b6d4','#eab308','#0ea5e9','#d946ef','#f43f5e'];
-  const otherColor = '#e5e7eb';
-  const rawSeries = {{ series | dump | safe }};
-  const datasets = rawSeries.map((s, i) => {
-    const label = s.artist || s.label;
-    const isOther = label === 'Other';
-    const color = isOther ? otherColor : palette[i % palette.length];
-    return {
-      label: label,
-      data: s.data,
-      borderColor: isOther ? color : color,
-      backgroundColor: isOther ? color + '66' : color + 'dd',
-      borderWidth: 0.5,
-      pointRadius: 0,
-      fill: true,
-      tension: 0.25,
-    };
-  });
-  const ctx = document.getElementById('{{ id }}').getContext('2d');
-  new Chart(ctx, {
-    type: 'line',
-    data: { labels: {{ labels | dump | safe }}, datasets },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      interaction: { mode: 'index', intersect: false },
-      scales: {
-        y: {
-          stacked: true, min: 0, max: 100,
-          ticks: { callback: v => v + '%', color: 'rgba(128,128,128,0.9)', font: { size: 10 } },
-          grid: { color: 'rgba(128,128,128,0.1)' }
-        },
-        x: {
-          grid: { display: false },
-          ticks: { color: 'rgba(128,128,128,0.9)', font: { size: 10 } }
-        }
-      },
-      plugins: {
-        legend: { position: 'bottom', labels: { color: 'rgba(128,128,128,0.95)', font: { size: 10 }, boxWidth: 10, padding: 8 } },
-        tooltip: { callbacks: { label: (ctx) => `${ctx.dataset.label}: ${ctx.parsed.y.toFixed(1)}%` } }
-      }
-    }
-  });
-})();
-</script>
-{% endmacro %}
-
 {% macro now_playing_strip(track) %}
 {% if track %}
 <div class="flex items-center gap-3 p-3 surface mb-4">
@@ -230,23 +65,6 @@
   {% endif %}
 </div>
 {% endif %}
-{% endmacro %}
-
-{% macro share_bars(items, key_name, key_count, total, limit=10) %}
-<div class="space-y-1.5 not-prose">
-  {% for item in items | head(limit) %}
-    {% set pct = (item[key_count] * 100 / total) | round(2) %}
-    <div class="relative">
-      <div class="flex items-baseline justify-between text-sm mb-0.5">
-        <span class="font-medium text-gray-900 dark:text-gray-100 truncate pr-2">{{ loop.index }}. {{ item[key_name] }}</span>
-        <span class="text-xs text-gray-500 dark:text-gray-400 tabular-nums shrink-0">{{ item[key_count] | localeNumber }} · {{ pct }}%</span>
-      </div>
-      <div class="h-1.5 bg-gray-100 dark:bg-zinc-800 rounded-full overflow-hidden">
-        <div class="h-full rounded-full" style="width: {{ pct }}%; background: var(--accent-color);"></div>
-      </div>
-    </div>
-  {% endfor %}
-</div>
 {% endmacro %}
 
 {% macro year_card(year, top_artist, top_track, plays, hours, new_artists) %}

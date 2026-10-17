@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import fs from "fs/promises";
+import { readFileSync } from "fs";
 import path from "path";
 import sharp from "sharp";
 import { load, dump } from "js-yaml";
@@ -26,7 +27,17 @@ async function processImage(imagePath, argv) {
     // Get image metadata
     const image = sharp(imagePath);
     const metadata = await image.metadata();
-    const { width, height, exif } = metadata;
+    const { exif } = metadata;
+    // With --max-edge the file is re-encoded upright and smaller, without
+    // metadata (so no GPS ships); record the dimensions it will have.
+    const upright = (metadata.orientation || 1) >= 5;
+    const srcW = upright ? metadata.height : metadata.width;
+    const srcH = upright ? metadata.width : metadata.height;
+    const scale = argv.maxEdge
+      ? Math.min(1, argv.maxEdge / Math.max(srcW, srcH))
+      : 1;
+    const width = Math.round(srcW * scale);
+    const height = Math.round(srcH * scale);
     const exifReader = (await import("exif-reader")).default;
     const exifData = exif ? exifReader(exif) : {};
 
@@ -83,7 +94,7 @@ async function processImage(imagePath, argv) {
     }
 
     // Move and rename the image
-    const imageExt = path.extname(imagePath);
+    const imageExt = argv.maxEdge ? ".jpeg" : path.extname(imagePath);
     const imageName = `${slugify(title)}${imageExt}`;
     const categoryDir = path.join(IMAGE_DIR, argv.category);
     const newImagePath = path.join(categoryDir, imageName);
@@ -111,6 +122,13 @@ async function processImage(imagePath, argv) {
       description,
     };
 
+    // --meta: extra fields from a cartebase manifest, keyed by file stem (osxphotos --filename "{uuid}").
+    const extra = argv.meta?.photos?.[path.parse(imagePath).name];
+    if (extra) {
+      newPhoto.aestheticScore = extra.aesthetic;
+      newPhoto.source = "cartebase-top-aesthetic";
+    }
+
     if (argv.category === "real") {
       newPhoto.location = locationFromExif;
     } else if (argv.category === "virtual") {
@@ -129,7 +147,21 @@ async function processImage(imagePath, argv) {
     } else {
       await fs.mkdir(categoryDir, { recursive: true });
       await fs.writeFile(PHOTOS_YAML_PATH, dump(photos));
-      await fs.rename(imagePath, newImagePath); // Move the file
+      if (argv.maxEdge) {
+        await sharp(imagePath)
+          .rotate()
+          .resize({
+            width: argv.maxEdge,
+            height: argv.maxEdge,
+            fit: "inside",
+            withoutEnlargement: true,
+          })
+          .jpeg({ quality: 85, mozjpeg: true })
+          .toFile(newImagePath);
+        await fs.unlink(imagePath);
+      } else {
+        await fs.rename(imagePath, newImagePath); // Move the file
+      }
       console.log(
         `Successfully processed and moved ${title} to ${newImagePath}`,
       );
@@ -173,6 +205,17 @@ async function main() {
       alias: "d",
       type: "boolean",
       description: "Run the script without saving changes",
+    })
+    .option("max-edge", {
+      type: "number",
+      description:
+        "Resize to this long edge and re-encode as JPEG without metadata (drops GPS)",
+    })
+    .option("meta", {
+      type: "string",
+      description:
+        "cartebase manifest.json; adds aestheticScore to matching photos",
+      coerce: (file) => JSON.parse(readFileSync(file, "utf-8")),
     })
     .help().argv;
 

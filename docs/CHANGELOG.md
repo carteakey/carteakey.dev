@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.47] - 2026-10-17
+### Added
+- Charts: `{% chart %}` renders every data figure as SVG at build time (`utils/charts.mjs`). Types: line, bars, ranked rows, heatmap, waffle, small multiples, steps and sparkline. The grammar is "ink and dots": grey context, one accent, halftone fills, Fraunces notes on a hand-drawn leader, and a footer with source, n and range plus a collapsible data table and query. Documented in `docs/BLOG_POST_FEATURES.md`.
+- `/lab/charts/` (hidden): every chart type on real cartebase data, with `?chart=plain|ink|dots` variants that follow you around the site.
+- Draft post (hidden) "Has My Photography Gotten Better? Asking Apple's Aesthetic Score", the first in a new `cartebase` series.
+- Skill `aesthetic-gallery-import`: shortlist top-scoring Apple Photos via cartebase, export with osxphotos, pick by hand, import to `/gallery/`.
+- Gallery: `aestheticScore` shows in the lightbox caption, and the intro says how many photos were shortlisted this way.
+- `bulk-add-photos.mjs`: `--max-edge` (resize, re-encode without metadata, so no GPS ships) and `--meta` (merge a cartebase manifest).
+
+### Changed
+- `/data/` and `/listening/` use `{% chart %}` instead of Chart.js. The rainbow stacked area is replaced by small multiples, and the bar lists by ranked rows. Stat tiles get sparklines. `/data/` adds the Apple aesthetic score distribution.
+- `{% progression_chart %}` now renders through the same renderer (same options).
+- Post body paragraph and h3 styles no longer apply inside chart figures.
+
 ## [2.7.46] - 2026-10-17
 ### Changed
 - About: added a random fact ("Elden Ring has eaten 233 hours of my Steam library.").

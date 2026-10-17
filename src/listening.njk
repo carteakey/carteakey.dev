@@ -10,8 +10,6 @@ collectionArchetype: shelf
 {% include "components/breadcrumbs.njk" %}
 {% import "components/cartebase-charts.njk" as cb %}
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
-
 {% set listening = cartebase.listening %}
 {% set topArtist = listening.top_artists_all_time[0] %}
 {% set topAlbum = listening.top_albums_all_time[0] %}
@@ -19,6 +17,7 @@ collectionArchetype: shelf
 {% set allYears = listening.yearly %}
 {% set totalPlays = listening.plays_total %}
 {% set totalMinutes = listening.minutes_total %}
+{% set peakMonth = listening.plays_per_month | sort(true, false, "plays") | first %}
 
 {% set pageTitle = "Listening, wrapped" %}
 {% set pageMeta = "Updated " ~ (listening.last_updated | split('T'))[0] %}
@@ -75,57 +74,22 @@ collectionArchetype: shelf
 </div>
 
 {{ cb.section_header("Top artists", "All time, top 10 with share of total plays", "star") }}
-<div class="not-prose">
-  {{ cb.share_bars(listening.top_artists_all_time, "artist", "plays", totalPlays, limit=10) }}
-</div>
+{% chart { type: "rank", data: listening.top_artists_all_time, x: "artist", y: "plays", total: totalPlays, limit: 10, unit: "plays", source: "cartebase · spotify_listening_history", n: totalPlays } %}
 
 {{ cb.section_header("Top albums", "All time, top 10", "disc") }}
-<div class="not-prose space-y-1.5">
-  {% for a in listening.top_albums_all_time | head(10) %}
-    {% set pct = (a.plays * 100 / totalPlays) | round(2) %}
-    <div>
-      <div class="flex items-baseline justify-between text-sm mb-0.5">
-        <span class="font-medium text-gray-900 dark:text-gray-100 truncate pr-2">{{ loop.index }}. {{ a.album }} <span class="text-gray-400 font-normal text-xs">· {{ a.artist }}</span></span>
-        <span class="text-xs text-gray-500 dark:text-gray-400 tabular-nums shrink-0">{{ a.plays | localeNumber }} · {{ pct }}%</span>
-      </div>
-      <div class="h-1.5 bg-gray-100 dark:bg-zinc-800 rounded-full overflow-hidden">
-        <div class="h-full rounded-full" style="width: {{ pct }}%; background: var(--accent-color);"></div>
-      </div>
-    </div>
-  {% endfor %}
-</div>
+{% chart { type: "rank", data: listening.top_albums_all_time, x: "album", y: "plays", sub: "artist", total: totalPlays, limit: 10, unit: "plays" } %}
 
 {{ cb.section_header("Top tracks", "All time, top 10", "play") }}
-<div class="not-prose space-y-1.5">
-  {% for t in listening.top_tracks_all_time | head(10) %}
-    {% set pct = (t.plays * 100 / totalPlays) | round(2) %}
-    <div>
-      <div class="flex items-baseline justify-between text-sm mb-0.5">
-        <span class="font-medium text-gray-900 dark:text-gray-100 truncate pr-2">{{ loop.index }}. {{ t.track }} <span class="text-gray-400 font-normal text-xs">· {{ t.artist }}</span></span>
-        <span class="text-xs text-gray-500 dark:text-gray-400 tabular-nums shrink-0">{{ t.plays | localeNumber }} · {{ pct }}%</span>
-      </div>
-      <div class="h-1.5 bg-gray-100 dark:bg-zinc-800 rounded-full overflow-hidden">
-        <div class="h-full rounded-full" style="width: {{ pct }}%; background: var(--accent-color);"></div>
-      </div>
-    </div>
-  {% endfor %}
-</div>
+{% chart { type: "rank", data: listening.top_tracks_all_time, x: "track", y: "plays", sub: "artist", total: totalPlays, limit: 10, unit: "plays" } %}
 
 {{ cb.section_header("Plays over time", "Monthly", "trending-up") }}
-<div class="not-prose">
-  {{ cb.line_chart("chart_l_plays_per_month", listening.plays_per_month | map('month'), listening.plays_per_month | map('plays'), "Plays", height=220) }}
-</div>
+{% chart { type: "line", data: listening.plays_per_month, x: "month", y: "plays", area: true, unit: "plays", title: "Busiest month: " ~ peakMonth.month, notes: [{ at: peakMonth.month, text: (peakMonth.plays | localeNumber) ~ " plays", dx: -150, dy: -4 }], source: "cartebase · spotify_listening_history", n: totalPlays, xLabel: "month" } %}
 
 {{ cb.section_header("Discovery rate", "New artists per month (first-ever play)", "search") }}
-<div class="not-prose">
-  {{ cb.line_chart("chart_l_discovery", listening.new_artists_per_month | map('month'), listening.new_artists_per_month | map('new_artists'), "New artists", height=180) }}
-</div>
+{% chart { type: "line", data: listening.new_artists_per_month, x: "month", y: "new_artists", unit: "new artists", source: "cartebase · spotify_listening_history", xLabel: "month" } %}
 
 {{ cb.section_header("Listening rhythm", "Hour × weekday (UTC)", "clock") }}
-<div class="not-prose">
-  {{ cb.heatmap(listening.hour_weekday_heatmap) }}
-</div>
-<p class="text-[0.78rem] text-gray-500 dark:text-gray-400 mt-2 not-prose">Stronger blue = more plays. Hours are UTC; my local time is America/Toronto (UTC−5/−4).</p>
+{% chart { type: "heatmap", matrix: listening.hour_weekday_heatmap, unit: "plays", caption: "Bigger dot = more plays. Hours are UTC; my local time is America/Toronto (UTC−5/−4).", source: "cartebase · spotify_listening_history", n: totalPlays } %}
 
 {{ cb.section_header("Year in review", "Top artist + top track, per year", "calendar") }}
 <div class="not-prose grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">

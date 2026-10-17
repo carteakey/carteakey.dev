@@ -1,0 +1,185 @@
+---
+layout: layouts/base.njk
+title: Chart lab
+description: The site's chart grammar, rendered on real cartebase data, with variants to compare.
+permalink: /lab/charts/
+hidden: true
+eleventyExcludeFromCollections: true
+collectionArchetype: ledger
+---
+
+{% set listening = cartebase.listening %}
+{% set photoAes = cartebase.photo_aesthetics %}
+{% set pageEyebrow = "Hidden workbench" %}
+{% set pageTitle = "Chart lab" %}
+{% set pageDescription = "Every chart on the site is SVG rendered at build time by one shortcode, <code>&#123;% chart %&#125;</code>. Two choices are still open: the ink wobble on annotation rings and leaders, and the halftone dot fills. The default turns both on. A variant follows you around the site for this tab until you turn it off." %}
+{% set itemCount = 8 %}
+{% set itemLabel = "chart types" %}
+{% include "components/page-header.njk" %}
+
+<table class="font-lab-table">
+  <thead>
+    <tr><th>Variant</th><th>What changes</th><th>Try it on</th></tr>
+  </thead>
+  <tbody>
+    {% set samples = [{ label: "this page", url: "/lab/charts/" }, { label: "/data/", url: "/data/" }, { label: "/listening/", url: "/listening/" }] %}
+    {% for v in [
+      { id: "off", label: "Ink and dots (default)", note: "Hand-drawn wobble on annotation rings and leaders. Areas and heatmaps are halftone dots, sized by value." },
+      { id: "dots", label: "Dots only", note: "Halftone fills, but every line is ruled straight." },
+      { id: "ink", label: "Ink only", note: "Wobble on, areas as a flat accent tint, heatmap as stepped squares." },
+      { id: "plain", label: "Plain", note: "Precise lines, flat tint, stepped squares. The quietest version." }
+    ] %}
+    <tr>
+      <td><b>{{ v.label }}</b><br><code>?chart={{ v.id }}</code></td>
+      <td>{{ v.note }}</td>
+      <td>{% for s in samples %}<a href="{{ s.url }}?chart={{ v.id }}">{{ s.label }}</a>{% if not loop.last %} · {% endif %}{% endfor %}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<h2 class="editorial-title">Line, with annotations</h2>
+<p class="editorial-support">For change over time. The title states the finding. One or two notes in Fraunces italic point at the data. Hover a column for its value. Every chart has a footer with source, n and date range, plus the data table and query behind it.</p>
+
+{% chart {
+  type: "line",
+  data: listening.plays_per_month,
+  x: "month",
+  y: "plays",
+  area: true,
+  unit: "plays",
+  kicker: "Spotify · plays per month",
+  title: "2024 was the loudest year, peaking in November",
+  notes: [{ at: "2024-11", text: "4,279 plays,\nthe busiest month", dx: -170, dy: -4 }],
+  source: "cartebase · spotify_listening_history",
+  n: listening.plays_total,
+  range: "Oct 2016 – Apr 2026",
+  xLabel: "month"
+} %}
+
+{% chart {
+  type: "line",
+  data: photoAes.monthly,
+  x: "month",
+  y: "mean",
+  yMin: 0.3,
+  yMax: 0.55,
+  digits: 3,
+  count: "photos",
+  countLabel: "photos",
+  highlight: ["2026-01", "2026-04"],
+  kicker: "Apple Photos · mean aesthetic score, by month",
+  title: "Context in grey, the point in accent: 2026 so far is only winter",
+  notes: [{ at: "2026-02", text: "Jan–Apr only", dx: -40, dy: 40 }],
+  ref: { value: photoAes.mean, label: "all-time mean " ~ photoAes.mean },
+  source: "cartebase · photos_assets",
+  n: photoAes.photos,
+  range: "2022 – Apr 2026",
+  query: photoAes.sql.monthly
+} %}
+
+<h2 class="editorial-title">Bars</h2>
+<p class="editorial-support">For magnitude across categories or bins. Use <code>highlight</code> to pick out the bar the sentence is about; the rest go grey and get no labels.</p>
+
+{% chart {
+  type: "bars",
+  data: photoAes.histogram,
+  x: "bucket",
+  y: "count",
+  highlight: "max",
+  xTicks: 10,
+  kicker: "Apple Photos · score distribution",
+  title: "The typical photo scores about " ~ photoAes.median,
+  notes: [{ at: "0.65", text: "the top 1% start\nat " ~ photoAes.p99, dx: 60, dy: -50 }],
+  source: "cartebase · photos_assets",
+  n: photoAes.photos,
+  xLabel: "score bucket",
+  yLabel: "photos"
+} %}
+
+<h2 class="editorial-title">Ranked rows</h2>
+<p class="editorial-support">Replaces horizontal bar charts. Built in HTML so long names wrap instead of getting cut off. The first row is in accent unless <code>highlight</code> says otherwise.</p>
+
+{% chart {
+  type: "rank",
+  data: listening.top_artists_all_time,
+  x: "artist",
+  y: "plays",
+  total: listening.plays_total,
+  limit: 8,
+  kicker: "Spotify · top artists, all time",
+  title: "Radiohead, by some distance",
+  source: "cartebase · spotify_listening_history",
+  n: listening.plays_total
+} %}
+
+<h2 class="editorial-title">Heatmap</h2>
+<p class="editorial-support">Halftone by default: the area of each dot scales with the value. Plain and ink-only variants switch to squares stepped by opacity.</p>
+
+{% chart {
+  type: "heatmap",
+  matrix: listening.hour_weekday_heatmap,
+  unit: "plays",
+  kicker: "Spotify · hour × weekday (UTC)",
+  title: "Saturday leads; the busy hours fall late in the UTC day",
+  source: "cartebase · spotify_listening_history",
+  n: listening.plays_total
+} %}
+
+<h2 class="editorial-title">Waffle</h2>
+<p class="editorial-support">One dot per percent. For a single share that needs to feel like a share.</p>
+
+{% chart {
+  type: "waffle",
+  value: listening.top_artists_all_time[0].share_pct,
+  label: "of every track I've streamed since 2016 is " ~ listening.top_artists_all_time[0].artist ~ ".",
+  kicker: "Spotify · share of plays",
+  source: "cartebase · spotify_listening_history",
+  n: listening.plays_total,
+  table: false
+} %}
+
+<h2 class="editorial-title">Small multiples</h2>
+<p class="editorial-support">Replaces stacked areas with a rainbow of hues. Each series gets its own panel on a shared scale, so one accent is enough.</p>
+
+{% chart {
+  type: "multiples",
+  labels: listening.artist_share_per_year.years,
+  series: listening.artist_share_per_year.series,
+  unit: "%",
+  digits: 1,
+  limit: 9,
+  start: "2019",
+  kicker: "Spotify · share of each year's plays",
+  title: "Radiohead arrived in 2024 and has grown every year since",
+  caption: "From 2019; 2016–2018 hold under 50 plays in total.",
+  source: "cartebase · spotify_listening_history",
+  n: listening.plays_total
+} %}
+
+<h2 class="editorial-title">Steps</h2>
+<p class="editorial-support">The old <code>{% raw %}{% progression_chart %}{% endraw %}</code>, now drawn by the same renderer. For a few measured values in sequence, each one labelled.</p>
+
+{% progression_chart {
+  kicker: "Example · tokens per second",
+  title: "Each change, measured",
+  unit: "t/s",
+  points: [
+    { val: 6.5, lbl: "Baseline", sub: "stock" },
+    { val: 11.2, lbl: "Flash attn", sub: "+FA" },
+    { val: 14.9, lbl: "Offload", sub: "experts on CPU" },
+    { val: 20.8, lbl: "Tuned", sub: "MTP draft", highlight: true }
+  ],
+  caption: "Illustrative values for the specimen, not a benchmark."
+} %}
+
+<h2 class="editorial-title">Sparkline</h2>
+<p class="editorial-support">Inline, inside a stat tile. It has no frame or footer, because the tile already gives the context.</p>
+
+<div class="not-prose grid grid-cols-2 md:grid-cols-4 gap-3 mb-10">
+  {% from "components/cartebase-charts.njk" import stat_tile %}
+  {{ stat_tile("Spotify plays", listening.plays_total | localeNumber, "since 2016", chartSvg({ type: "spark", data: listening.plays_per_month, x: "month", y: "plays" })) }}
+  {{ stat_tile("Photos scored", photoAes.photos | localeNumber, "2022 onward", chartSvg({ type: "spark", data: photoAes.monthly, x: "month", y: "photos" })) }}
+</div>
+
+<p class="editorial-support">Options and examples are documented in <code>docs/BLOG_POST_FEATURES.md</code> under Charts. The renderer is <code>utils/charts.mjs</code>.</p>

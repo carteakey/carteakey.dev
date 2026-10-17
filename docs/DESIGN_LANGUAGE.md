@@ -311,9 +311,9 @@ See `docs/BLOG_POST_FEATURES.md` for the current inventory and syntax.
 
 ### Sketches and diagrams in posts
 
-Spatial structure in a post (tiers, pipelines, loops, comparisons) is drawn, not typed. ASCII box art is replaced by a hand-drawn whiteboard sketch made with the `sketches` skill (`.agents/skills/sketches/`, Part B). The sketch is ink on a truly transparent background, black plus the accent blue, placed with `{% image_cc %}`, with no rounded corners, border, or shadow. Text that must stay copyable (file trees, logs, terminal output) stays a fenced block, rows and columns stay a table, and numeric series use `{% progression_chart %}`. Per-post thumbnails are a separate job with their own rules (Part A of the same skill).
+Spatial structure in a post (tiers, pipelines, loops, comparisons) is drawn, not typed. ASCII box art is replaced by a hand-drawn whiteboard sketch made with the `sketches` skill (`.agents/skills/sketches/`, Part B). The sketch is ink on a truly transparent background, black plus the accent blue, placed with `{% image_cc %}`, with no rounded corners, border, or shadow. Text that must stay copyable (file trees, logs, terminal output) stays a fenced block, rows and columns stay a table, and numeric series use `{% chart %}` (or its older `{% progression_chart %}` form). Per-post thumbnails are a separate job with their own rules (Part A of the same skill).
 
-Charts and structured figures render through the shared `.data-card` / `.chart-*` classes: flat, square, accent-led, mono kicker, display title. Do not hand-write them in post markdown.
+Charts and structured figures render through the shared `.data-card` / `.chart-*` classes: flat, square, accent-led, mono kicker, display title. Do not hand-write them in post markdown. Pages and posts share one renderer, `{% chart %}` (build-time SVG, no Chart.js). Its grammar is "ink and dots": grey context, one accent for the point, hairline axes, halftone dots for areas and heatmaps, and Fraunces italic notes on a hand-drawn leader. The title states the finding, and the footer gives source, n and range. `/lab/charts/` shows every type.
 
 ### Lists
 

@@ -16,6 +16,10 @@ collectionArchetype: wall
     {% set pageEyebrow = "Visual Archive" %}
     {% set pageTitle = "Gallery" %}
     {% set pageDescription = "A personal collection of photos from both real life and virtual worlds." %}
+    {% set aestheticPicks = photos | selectattr("aestheticScore") | length %}
+    {% if aestheticPicks %}
+      {% set pageDescription = pageDescription ~ " " ~ aestheticPicks ~ " were shortlisted by Apple Photos' own aesthetic score, then picked by hand; the score is in each photo's caption." %}
+    {% endif %}
     {% set itemCount = photos | length %}
     {% set itemLabel = "photos" %}
     {% set pageBadges = [
@@ -38,7 +42,7 @@ collectionArchetype: wall
             data-pswp-width="{{ photo.width }}"
             data-pswp-height="{{ photo.height }}"
             data-pswp-title="{{ photo.title }}"
-            data-pswp-description="{% if photo.category == 'real' %}📍 {{ photo.location }}&#10;📱 {{ photo.device }}{% else %}🎮 {{ photo.game }}&#10;💻 {{ photo.platform }}{% endif %}&#10;📅 {{ photo.date }}">
+            data-pswp-description="{% if photo.category == 'real' %}📍 {{ photo.location }}&#10;📱 {{ photo.device }}{% else %}🎮 {{ photo.game }}&#10;💻 {{ photo.platform }}{% endif %}&#10;📅 {{ photo.date }}{% if photo.aestheticScore %}&#10;◎ Apple aesthetic score {{ photo.aestheticScore }}{% endif %}">
       {% set thumbnail = "./src/static" + photo.path %}
       <img src="{% thumbnail thumbnail %}" 
            alt="{{ photo.title }}"

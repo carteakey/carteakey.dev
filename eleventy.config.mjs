@@ -18,6 +18,7 @@ import { feedPlugin } from "@11ty/eleventy-plugin-rss";
 import Image, { generateHTML } from "@11ty/eleventy-img";
 import "dotenv/config";
 import upvotesData from "./src/_data/upvotes.js";
+import { chart } from "./utils/charts.mjs";
 import {
   clearSocialImageCache,
   resolveSocialImage,
@@ -1888,104 +1889,17 @@ export default function (eleventyConfig) {
     },
   );
 
+  // {% chart { type: "line", data: rows, x: "month", y: "plays", ... } %}
+  // Build-time SVG charts (utils/charts.mjs, docs/BLOG_POST_FEATURES.md).
+  eleventyConfig.addShortcode("chart", (opts = {}) => chart(opts));
+  // Same renderer as a function, for markup passed into macros (stat tile sparklines).
+  eleventyConfig.addNunjucksGlobal("chartSvg", (opts = {}) => chart(opts));
+
   // {% progression_chart { kicker: "...", title: "...", points: [...] } %}
-  eleventyConfig.addShortcode("progression_chart", function (opts = {}) {
-    const kicker = opts.kicker || "";
-    const title = opts.title || "";
-    const badge = opts.badge || "";
-    const caption = opts.caption || "";
-    const unit = opts.unit || "t/s";
-    const rawPoints = Array.isArray(opts.points) ? opts.points : [];
-
-    if (rawPoints.length === 0) return "";
-
-    const vals = rawPoints.map((p) => Number(p.val) || 0);
-    const maxVal = Math.max(...vals);
-    const maxY = Number(opts.maxY) || Math.ceil(maxVal / 5) * 5 || 25;
-    const minY = Number(opts.minY) || 0;
-
-    const xStart = 80;
-    const xEnd = 720;
-    const yBottom = 235;
-    const yTop = 45;
-    const n = rawPoints.length;
-
-    const points = rawPoints.map((p, i) => {
-      const val = Number(p.val) || 0;
-      const x = n > 1 ? xStart + (i / (n - 1)) * (xEnd - xStart) : 400;
-      const y = yBottom - ((val - minY) / (maxY - minY)) * (yBottom - yTop);
-      return {
-        ...p,
-        val,
-        x: Number(x.toFixed(1)),
-        y: Number(y.toFixed(1)),
-        color: p.color || "#0d9488",
-      };
-    });
-
-    // Straight segments (measured steps, not a smooth trend)
-    const linePath = points
-      .map((p, i) => `${i === 0 ? "M" : "L"} ${p.x},${p.y}`)
-      .join(" ");
-
-    // Grid steps
-    const gridStep = Math.max(1, Math.round((maxY - minY) / 5));
-    const gridLines = [];
-    for (let g = minY; g <= maxY; g += gridStep) {
-      const gy = Number(
-        (yBottom - ((g - minY) / (maxY - minY)) * (yBottom - yTop)).toFixed(1),
-      );
-      const dash = g === minY ? "" : ' stroke-dasharray="3 4"';
-      const lbl = g === maxY ? `${g} ${unit}` : `${g}`;
-      gridLines.push(
-        `      <line x1="60" y1="${gy}" x2="760" y2="${gy}" class="chart-grid"${dash} />`,
-      );
-      gridLines.push(
-        `      <text x="48" y="${gy + 4}" text-anchor="end" class="chart-text">${lbl}</text>`,
-      );
-    }
-
-    // Dots & labels
-    const dotsHtml = [];
-    points.forEach((p) => {
-      const hl = Boolean(p.highlight);
-      dotsHtml.push(
-        `      <circle cx="${p.x}" cy="${p.y}" r="${hl ? 6 : 5}" class="${hl ? "chart-dot-hl" : "chart-dot"}" />`,
-      );
-      dotsHtml.push(
-        `      <text x="${p.x}" y="${p.y - 12}" text-anchor="middle" class="${hl ? "chart-val-hl" : "chart-val"}">${p.val}</text>`,
-      );
-      dotsHtml.push(
-        `      <text x="${p.x}" y="255" text-anchor="middle" class="chart-lbl">${p.lbl || ""}</text>`,
-      );
-      dotsHtml.push(
-        `      <text x="${p.x}" y="270" text-anchor="middle" class="chart-text">${p.sub || ""}</text>`,
-      );
-    });
-
-    const lines = [
-      `<figure class="data-card not-prose">`,
-      `  <div class="data-card-head">`,
-      `    <div>`,
-      kicker ? `      <p class="data-card-kicker">${kicker}</p>` : ``,
-      title ? `      <h3 class="data-card-title">${title}</h3>` : ``,
-      `    </div>`,
-      badge ? `    <span class="data-card-badge">${badge}</span>` : ``,
-      `  </div>`,
-      `  <div class="data-card-scroll">`,
-      `    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 310" class="chart-svg" role="img" aria-label="${title || "Progression chart"}">`,
-      ...gridLines,
-      `      <path d="${linePath}" class="chart-line" />`,
-      ...dotsHtml,
-      `    </svg>`,
-      `  </div>`,
-      caption
-        ? `  <figcaption class="data-card-foot">${caption}</figcaption>`
-        : ``,
-      `</figure>`,
-    ];
-    return lines.filter((line) => line.trim().length > 0).join("\n");
-  });
+  // Kept for existing posts: the "steps" chart type with the same options.
+  eleventyConfig.addShortcode("progression_chart", (opts = {}) =>
+    chart({ ...opts, type: "steps" }),
+  );
 
   // {% diagram_card { src: "./src/static/img/diagrams/x.png", alt: "...", kicker: "...", title: "...", badge: "...", caption: "..." } %}
   // Frames a hand-drawn diagram/chart image in the same card as progression_chart

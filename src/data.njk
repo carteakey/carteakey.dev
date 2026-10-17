@@ -10,13 +10,13 @@ collectionArchetype: ledger
 {% include "components/breadcrumbs.njk" %}
 {% import "components/cartebase-charts.njk" as cb %}
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
-
 {% set startYear = (cartebase.summary.data_starts_at | split('-'))[0] %}
 {% set endYear = (cartebase.summary.data_ends_at | split('-'))[0] %}
 {% set topArtist = cartebase.listening.top_artists_all_time[0] %}
 {% set topDomain = cartebase.browsing.top_domains_all_time[0] %}
 {% set totalMinutes = cartebase.listening.minutes_total %}
+{% set peakMonth = cartebase.listening.plays_per_month | sort(true, false, "plays") | first %}
+{% set src = "cartebase · " %}
 
 {% set pageTitle = "My life in data" %}
 {% set pageMeta = "Updated " ~ (cartebase.summary.last_updated | split('T'))[0] %}
@@ -24,10 +24,10 @@ collectionArchetype: ledger
 {% include "components/page-header.njk" %}
 
 <div class="not-prose grid grid-cols-2 md:grid-cols-4 gap-3 mb-10">
-  {{ cb.stat_tile("Spotify plays", cartebase.summary.plays_total | localeNumber, "since " + startYear) }}
+  {{ cb.stat_tile("Spotify plays", cartebase.summary.plays_total | localeNumber, "since " + startYear, chartSvg({ type: "spark", data: cartebase.listening.plays_per_month, x: "month", y: "plays" })) }}
   {{ cb.stat_tile("Minutes listened", totalMinutes | round(0) | localeNumber) }}
-  {{ cb.stat_tile("Photos", cartebase.summary.photos_total | localeNumber) }}
-  {{ cb.stat_tile("Browsing visits", cartebase.summary.browsing_visits_total | localeNumber) }}
+  {{ cb.stat_tile("Photos", cartebase.summary.photos_total | localeNumber, "", chartSvg({ type: "spark", data: cartebase.photos.photos_per_month, x: "month", y: "count" })) }}
+  {{ cb.stat_tile("Browsing visits", cartebase.summary.browsing_visits_total | localeNumber, "", chartSvg({ type: "spark", data: cartebase.browsing.visits_per_month, x: "month", y: "visits" })) }}
 </div>
 
 {{ cb.section_header("Music", "Spotify listening history", "music") }}
@@ -47,23 +47,44 @@ collectionArchetype: ledger
   ) }}
 </div>
 
-<div class="not-prose mb-8">
-  <h3 class="editorial-kicker mb-4">Plays per month</h3>
-  {{ cb.line_chart("chart_plays_per_month", cartebase.listening.plays_per_month | map('month'), cartebase.listening.plays_per_month | map('plays'), "Plays", height=180) }}
-</div>
+{% chart {
+  type: "line",
+  data: cartebase.listening.plays_per_month,
+  x: "month",
+  y: "plays",
+  area: true,
+  unit: "plays",
+  kicker: "Plays per month",
+  title: "Busiest month: " ~ peakMonth.month,
+  notes: [{ at: peakMonth.month, text: (peakMonth.plays | localeNumber) ~ " plays", dx: -150, dy: -4 }],
+  source: src ~ "spotify_listening_history",
+  n: cartebase.listening.plays_total,
+  xLabel: "month"
+} %}
 
-<div class="not-prose mb-8">
-  <h3 class="editorial-kicker mb-3">Artist share over time</h3>
-  <p class="editorial-support-compact mb-4">
-    The artists that cracked any year's top 10, as a percentage of that year's plays. "Other" is the long tail - even my most-played artists rarely account for more than a quarter of a year. Watch Radiohead climb after 2024.
-  </p>
-  {{ cb.stacked_area("chart_artist_share", cartebase.listening.artist_share_per_year.years, cartebase.listening.artist_share_per_year.series, height=360) }}
-</div>
+{% chart {
+  type: "multiples",
+  labels: cartebase.listening.artist_share_per_year.years,
+  series: cartebase.listening.artist_share_per_year.series,
+  start: "2019",
+  unit: "%",
+  digits: 1,
+  kicker: "Artist share over time",
+  title: "Every artist that cracked a year's top 10, as a share of that year's plays",
+  caption: "The long tail (\"Other\") holds the rest and is not drawn. From 2019, since 2016–2018 hold under 50 plays.",
+  source: src ~ "spotify_listening_history",
+  n: cartebase.listening.plays_total
+} %}
 
-<div class="not-prose mb-8">
-  <h3 class="editorial-kicker mb-4">Listening rhythm (hour × weekday, UTC)</h3>
-  {{ cb.heatmap(cartebase.listening.hour_weekday_heatmap) }}
-</div>
+{% chart {
+  type: "heatmap",
+  matrix: cartebase.listening.hour_weekday_heatmap,
+  unit: "plays",
+  kicker: "Listening rhythm (hour × weekday, UTC)",
+  caption: "Bigger dot = more plays. Hours are UTC; local time is America/Toronto (UTC−5/−4).",
+  source: src ~ "spotify_listening_history",
+  n: cartebase.listening.plays_total
+} %}
 
 <p class="editorial-support mt-2 not-prose">
   <a href="/listening/" class="editorial-meta-link">Top albums, tracks, year-in-review → /listening/</a>
@@ -84,35 +105,44 @@ collectionArchetype: ledger
   ) }}
 </div>
 
-<div class="not-prose mb-8">
-  <h3 class="editorial-kicker mb-4">Visits per month</h3>
-  {{ cb.line_chart("chart_visits_per_month", cartebase.browsing.visits_per_month | map('month'), cartebase.browsing.visits_per_month | map('visits'), "Visits", height=180) }}
-</div>
+{% chart {
+  type: "line",
+  data: cartebase.browsing.visits_per_month,
+  x: "month",
+  y: "visits",
+  area: true,
+  unit: "visits",
+  kicker: "Visits per month",
+  source: src ~ "browsing_history",
+  n: cartebase.summary.browsing_visits_total,
+  xLabel: "month"
+} %}
 
-<div class="not-prose mb-10">
-  <h3 class="editorial-kicker mb-4">Top domains - all time</h3>
-  {{ cb.share_bars(cartebase.browsing.top_domains_all_time, "domain", "visits", cartebase.summary.browsing_visits_total, limit=10) }}
-</div>
+{% chart {
+  type: "rank",
+  data: cartebase.browsing.top_domains_all_time,
+  x: "domain",
+  y: "visits",
+  total: cartebase.summary.browsing_visits_total,
+  limit: 10,
+  kicker: "Top domains, all time",
+  source: src ~ "browsing_history",
+  n: cartebase.summary.browsing_visits_total
+} %}
 
-<div class="not-prose mt-10 pt-8 border-t border-gray-200 dark:border-zinc-800/80">
-  <h3 class="editorial-kicker mb-3">Bookmarks</h3>
-  <p class="editorial-support mb-4">
-    {{ cartebase.summary.bookmarks_total | localeNumber }} bookmarks canonicalised - of those,
-    <strong>{{ cartebase.bookmarks.with_notes_count | localeNumber }}</strong>
-    have notes attached, a hint at which ones might graduate to the blogmarks feed someday.
-  </p>
-  <details class="text-xs">
-    <summary class="cursor-pointer text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">Top bookmark domains</summary>
-    <div class="mt-4 grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-1">
-      {% for d in cartebase.bookmarks.top_domains | head(15) %}
-        <div class="flex justify-between text-xs">
-          <span class="text-gray-700 dark:text-gray-300 truncate">{{ d.domain }}</span>
-          <span class="text-gray-500 dark:text-gray-400 tabular-nums">{{ d.count | localeNumber }}</span>
-        </div>
-      {% endfor %}
-    </div>
-  </details>
-</div>
+{% chart {
+  type: "rank",
+  data: cartebase.bookmarks.top_domains,
+  x: "domain",
+  y: "count",
+  total: cartebase.summary.bookmarks_total,
+  limit: 10,
+  kicker: "Bookmarks",
+  title: (cartebase.summary.bookmarks_total | localeNumber) ~ " bookmarks, " ~ (cartebase.bookmarks.with_notes_count | localeNumber) ~ " with notes attached",
+  caption: "The ones with notes are candidates for the blogmarks feed someday.",
+  source: src ~ "bookmarks",
+  n: cartebase.summary.bookmarks_total
+} %}
 
 {{ cb.section_header("Gaming", "Steam library - " + cartebase.gaming.games_played | string + " of " + cartebase.gaming.games_owned | string + " games actually touched", "monitor") }}
 
@@ -122,17 +152,50 @@ collectionArchetype: ledger
   {{ cb.stat_tile("Avg / game played", (cartebase.gaming.total_hours / cartebase.gaming.games_played) | round(1) | string + " h") }}
 </div>
 
-<div class="not-prose mb-10">
-  <h3 class="editorial-kicker mb-4">Top games by hours</h3>
-  {{ cb.share_bars(cartebase.gaming.top_games, "name", "hours", cartebase.gaming.total_hours, limit=10) }}
-</div>
+{% chart {
+  type: "rank",
+  data: cartebase.gaming.top_games,
+  x: "name",
+  y: "hours",
+  unit: "h",
+  total: cartebase.gaming.total_hours,
+  limit: 10,
+  kicker: "Top games by hours",
+  source: src ~ "steam_games",
+  n: cartebase.gaming.games_played
+} %}
 
 {{ cb.section_header("Photos", "Apple Photos library", "camera") }}
 
-<div class="not-prose mb-10">
-  <h3 class="editorial-kicker mb-4">Photos captured per month</h3>
-  {{ cb.line_chart("chart_photos_per_month", cartebase.photos.photos_per_month | map('month'), cartebase.photos.photos_per_month | map('count'), "Photos", height=180) }}
-</div>
+{% chart {
+  type: "line",
+  data: cartebase.photos.photos_per_month,
+  x: "month",
+  y: "count",
+  area: true,
+  unit: "photos",
+  kicker: "Photos captured per month",
+  source: src ~ "photos_assets",
+  n: cartebase.summary.photos_total,
+  xLabel: "month"
+} %}
+
+{% chart {
+  type: "bars",
+  data: cartebase.photo_aesthetics.histogram,
+  x: "bucket",
+  y: "count",
+  highlight: "max",
+  xTicks: 10,
+  kicker: "Apple's aesthetic score, distribution",
+  title: "The median photo scores " ~ cartebase.photo_aesthetics.median ~ "; the top 1% start at " ~ cartebase.photo_aesthetics.p99,
+  caption: "Camera photos only. Screenshots, and " ~ (cartebase.photo_aesthetics.placeholder_excluded | localeNumber) ~ " unanalysed photos that Photos stores as exactly 0.5, are left out.",
+  source: src ~ "photos_assets",
+  n: cartebase.photo_aesthetics.photos,
+  xLabel: "score bucket",
+  yLabel: "photos",
+  query: "SELECT overall_aesthetic_score FROM photos_assets WHERE " ~ cartebase.photo_aesthetics.sql.filter ~ " AND COALESCE(is_screenshot, 0) = 0"
+} %}
 
 <div class="mt-12 border-t border-gray-200 dark:border-zinc-800/80 pt-8 not-prose">
   <h3 class="editorial-kicker mb-3">About this page</h3>

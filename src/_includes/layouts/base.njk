@@ -55,6 +55,28 @@
     })();
   </script>
   
+  {# Chart lab (/lab/charts/): ?chart=plain|ink|dots sets html[data-chart] for this tab; ?chart=off resets. #}
+  <script>
+    (() => {
+      const labels = { plain: "Plain", ink: "Ink only", dots: "Dots only" };
+      let id = new URLSearchParams(location.search).get("chart");
+      try {
+        if (id === "off") { sessionStorage.removeItem("chartLab"); id = null; }
+        else if (id) sessionStorage.setItem("chartLab", id);
+        else id = sessionStorage.getItem("chartLab");
+      } catch (error) {}
+      if (!id || !Object.hasOwn(labels, id)) return;
+      document.documentElement.dataset.chart = id;
+      document.addEventListener("DOMContentLoaded", () => {
+        const bar = document.createElement("div");
+        bar.className = "font-lab-banner";
+        bar.innerHTML = `Chart lab · <b></b> · <a href="/lab/charts/">variants</a> · <a href="?chart=off">turn off</a>`;
+        bar.querySelector("b").textContent = labels[id];
+        document.body.appendChild(bar);
+      });
+    })();
+  </script>
+
   <script defer src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <script defer src="/static/js/collection-views.js?v={{ versions.version }}"></script>
   <script defer src="/static/js/alpine.min.js?v={{ versions.version }}"></script>

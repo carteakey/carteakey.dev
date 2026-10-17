@@ -136,9 +136,45 @@ sources:
 
 A source list alone is insufficient for an adapted argument: credit it prominently and in the relevant sections. Mark verbatim wording as quotation. An AI authorship badge describes the writing process; it doesn't establish ownership of the ideas or substitute for source credit. For images, distinguish the original creator from the account that shared them.
 
-### Progression Chart
+### Charts
 
-Use for a measured series of values (throughput by runtime, scores over time). Renders through the shared `.data-card` and `.chart-*` classes: one accent line, straight segments, no gradient.
+`{% chart %}` draws a data figure as SVG at build time (`utils/charts.mjs`). There is no client JavaScript, it renders in both themes, and feed readers get a readable fallback. It uses the shared `.data-card` frame:
+
+- a mono kicker
+- a title that states the finding ("2024 was the loudest year", not "Plays per month")
+- the chart
+- a footer with `caption`, `source`, `n` and `range`
+- a collapsed **Data** table, with the `query` when you pass one
+
+Grammar ("ink and dots"): grey ink for context and the accent for the one thing the sentence is about. Hairline axes, mono labels, and Fraunces italic notes on a leader. Areas and heatmaps use halftone dots. See every type with real data at `/lab/charts/`.
+
+```md
+{% chart {
+  type: "line",                       // line | bars | rank | heatmap | waffle | multiples | steps
+  data: cartebase.photo_aesthetics.monthly, x: "month", y: "mean",
+  kicker: "Apple Photos · mean score by month",
+  title: "Winter photos score lower",
+  highlight: ["2026-01", "2026-04"],  // line: accent span, rest grey; bars: label(s) or "max"
+  notes: [{ at: "2026-02", text: "Jan–Apr only", dx: -40, dy: 40 }],
+  ref: { value: 0.427, label: "all-time mean" },
+  source: "cartebase · photos_assets", n: 10384, range: "2022 – Apr 2026",
+  query: "SELECT ..."
+} %}
+```
+
+| Type | For | Key options |
+|---|---|---|
+| `line` | change over time | `area`, `yMin`/`yMax`, `highlight`, `mark`, `ref`, `notes`, `count` (adds n to tooltips) |
+| `bars` | magnitude across categories or bins | `highlight`, `xTicks`, `ref`, `notes` |
+| `rank` | top-N lists | `total` (adds a share), `sub` (secondary key), `limit`, `unit` |
+| `heatmap` | two-way rhythm (weekday × hour) | `matrix`, `rows`, `cols`, `unit` |
+| `waffle` | one share out of 100 | `value` (percent), `label` |
+| `multiples` | several series, one accent | `labels`, `series`, `start`, `unit` |
+| `steps` | a few measured values in sequence | `points: [{ val, lbl, sub, highlight }]`, `unit` |
+
+Data comes from `data` + `x` + `y` (rows and key names; global data such as `cartebase.*` works) or from `labels` + `values`. Keep it to one or two notes per chart. Never put more than one series in an accent hue: use `multiples` instead. Pass `table: false` only when the figure already prints every value.
+
+`{% progression_chart { kicker, title, unit, points } %}` is the original name for `steps` and still works:
 
 ```md
 {% progression_chart { kicker: "...", title: "...", unit: "t/s", points: [ { val: 6.5, lbl: "Baseline", sub: "stock" }, { val: 20.8, lbl: "Tuned", highlight: true } ] } %}
