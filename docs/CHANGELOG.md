@@ -11,8 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Type badges (Post, Note, Snippet, Lexicon, and so on) are now one neutral style; the accent is kept for state (Pinned, Hidden, Featured). Featured star and authorship badges use the accent instead of amber, green, blue, and purple.
 - Authorship badges now appear only on single post, note, TIL, and snippet pages, not on feed cards, list rows, or the reviews list. `data-authored-by` stays, so the authorship filter still works.
 - Homepage dek no longer repeats the typewriter's topic list.
+- Uses page: folded in Hardware & Devices Spec Sheets directory (`#hardware`) and Personal Tools & Utilities list (`#tools`), adopted standard shared page-header macro, and removed fake terminal window controls.
 
 ### Fixed
+- Footer navigation: restored Skills link to point directly to `/skills-radar/` under About Me column.
 - `/blog/` rows under a year heading show the day (`Oct 14`) instead of an ambiguous `Oct 26`; other lists show `Oct ’26`.
 - `shortDate` used local time and could print the day before the date shown on cards.
 

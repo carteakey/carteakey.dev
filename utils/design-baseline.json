@@ -232,10 +232,6 @@
       "utility-text-stack": 2,
       "inline-style": 2
     },
-    "src/uses.njk": {
-      "pill-or-circle": 3,
-      "utility-text-stack": 2
-    },
     "src/vibes.njk": {
       "off-palette-colour": 1
     },
