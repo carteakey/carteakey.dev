@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.43] - 2026-10-16
+### Added
+- Guidelines: a "Protected Personality" section in `docs/DESIGN_LANGUAGE.md` and rule 7 in `AGENTS.md` list the elements cleanups must route around (pixel name and typewriter, halftone avatar, footer scene, masonry home feed, sketches, post toys, grain, the type trio, the jokes in the copy, the slashpages). Removing one needs an explicit request.
+
+### Changed
+- Colophon: current fonts with roles, imagery and personal-data rows, updated design rules (Fraunces, Iosevka Aile, Ioskeley, one colour), current data sources, redesign era #7, and a note on keeping agents from tidying away the personality.
+
 ## [2.7.42] - 2026-10-16
 ### Changed
 - Post endings: the reading tracker and upvote now share one row instead of two stacked strips; on phones the buttons sit together under the tracker text.

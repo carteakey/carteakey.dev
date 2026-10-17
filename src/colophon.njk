@@ -34,7 +34,9 @@ eleventyNavigation:
     <tr><td>Upvotes</td><td><a href="https://upstash.com/">Upstash Redis</a> via Netlify Functions</td></tr>
     <tr><td>Search</td><td>Client-side search, no external index</td></tr>
     <tr><td>Analytics</td><td>Google Analytics, plus a few local counters for site features</td></tr>
-    <tr><td>Fonts</td><td>Iosevka Aile and Ioskeley Mono (self-hosted), Fraunces for titles</td></tr>
+    <tr><td>Fonts</td><td><a href="https://typeof.net/Iosevka/">Iosevka Aile</a> for body text and Ioskeley Mono for labels and code, both self-hosted; <a href="https://fonts.google.com/specimen/Fraunces">Fraunces</a> for titles and Press Start 2P for the pixel name</td></tr>
+    <tr><td>Imagery</td><td>Hand-drawn post sketches, plus halftone and duotone pieces generated at build time</td></tr>
+    <tr><td>Personal data</td><td>cartebase: my own data exports as JSON (Spotify history and friends), rendered at build time</td></tr>
     <tr><td>Icons</td><td><a href="https://feathericons.com/">Feather Icons</a></td></tr>
     <tr><td>Syntax highlighting</td><td><a href="https://prismjs.com/">Prism.js</a> with custom themes</td></tr>
     <tr><td>Images</td><td><a href="https://www.11ty.dev/docs/plugins/image/">eleventy-img</a> plus a few remote image shortcuts</td></tr>
@@ -46,31 +48,32 @@ eleventyNavigation:
 
 <p>The site is currently on <strong>v{{ versions.version }}</strong>. The 2.x era started as a reset: less interest in looking tidy, more interest in looking like mine.</p>
 
-<p>The current design is trying to be three things at once: a notebook, an archive, and a workbench. That pushed the site away from rounded app cards and startup-homepage habits. The new baseline is textured paper, squarer framing, denser indexes, stronger typography, and pages that feel like shelves instead of widgets.</p>
+<p>The current design is trying to be three things at once: a notebook, an archive, and a workbench. That pushed the site away from rounded app cards and startup-homepage habits. The baseline is textured paper, squarer framing, denser indexes, stronger typography, and pages that feel like shelves instead of widgets. On top of that sits one saturated cobalt, a pixel-font name, halftone images, and Iosevka type.</p>
 
 <h2>Design Language</h2>
 
 <p>The rule now is simple enough to remember:</p>
 
 <ul>
-  <li><strong>Display serif for titles</strong> - things worth reading should look like they were named on purpose.</li>
-  <li><strong>Serif body for support copy</strong> - blurbs, notes, and explanations should read like prose, not UI helper text.</li>
-  <li><strong>Monospace for metadata</strong> - dates, labels, counts, breadcrumbs, and small navigation bits should feel archival.</li>
+  <li><strong>Fraunces for titles</strong> - things worth reading should look like they were named on purpose.</li>
+  <li><strong>Iosevka Aile for reading</strong> - a quasi-proportional cut of Iosevka, so prose and labels share one skeleton. It reads like a notebook typed at a terminal.</li>
+  <li><strong>Ioskeley Mono for metadata</strong> - dates, labels, counts, breadcrumbs, and small navigation bits should feel archival.</li>
+  <li><strong>One colour</strong> - a single cobalt accent, no per-component palettes.</li>
   <li><strong>Density as a signal</strong> - not clutter, just enough structure to suggest there is actually a body of work here.</li>
   <li><strong>Squarish surfaces</strong> - flatter, sharper, less bubbly, less dashboard.</li>
 </ul>
 
-<p>The actual working rules now live in the repo as <a href="{{ repoBase }}/docs/DESIGN_LANGUAGE.md">DESIGN_LANGUAGE.md</a>. I finally wrote them down because I got tired of rediscovering the same typography problems one page at a time.</p>
+<p>The actual working rules now live in the repo as <a href="{{ repoBase }}/docs/DESIGN_LANGUAGE.md">DESIGN_LANGUAGE.md</a>. I finally wrote them down because I got tired of rediscovering the same typography problems one page at a time. The type itself was picked in a hidden font lab that swaps fonts on the real pages, which beat staring at specimen sheets.</p>
 
 <h2>Moving Parts</h2>
 
-<p>Most of the site is static, but a few sections are pulled together at build time. Goodreads fills the reading shelf, Letterboxd fills recent watching, Steam and GitHub provide small activity signals, and a handful of cached APIs keep the now page from feeling frozen.</p>
+<p>Most of the site is static, but a few sections are pulled together at build time. Goodreads fills the reading shelf, Letterboxd fills recent watching, Spotify and Steam fill listening and games, Strava and GitHub provide small activity signals, and the moon on the now page is computed at build time and refreshed in the browser. A nightly rebuild keeps all of it from feeling frozen.</p>
 
 <p>The interactive pieces are intentionally small. Giscus handles comments through GitHub Discussions. Upvotes and reactions use Redis behind Netlify Functions. Search stays client-side, which keeps the site easy to host and avoids sending the archive to an external search index.</p>
 
 <h2>Redesigns</h2>
 
-<p>By my read of the changelog and commit history, this is <strong>major redesign #6</strong>. That count is a little fuzzy because some phases blur into each other, but these are the six visual eras that materially changed the site's grammar.</p>
+<p>By my read of the changelog and commit history, this is <strong>major redesign #7</strong>. That count is a little fuzzy because some phases blur into each other, but these are the seven visual eras that materially changed the site's grammar.</p>
 
 <table>
   <thead><tr><th>#</th><th>Era</th><th>What changed</th></tr></thead>
@@ -80,7 +83,8 @@ eleventyNavigation:
     <tr><td>3</td><td>Ground-up system reset</td><td>A proper design-system pass. Shared components, cleaner consistency, better page-level discipline.</td></tr>
     <tr><td>4</td><td>Dense editorial phase</td><td>Less chrome, flatter rows, tighter spacing, stronger metadata, more text density, fewer decorative moves.</td></tr>
     <tr><td>5</td><td>Surface/commonality pass</td><td>All the lagging pages got pulled into the same system. Less one-off styling, fewer weird holdouts.</td></tr>
-    <tr><td>6</td><td>Archive/workbench redesign</td><td>The current one. Textured paper, sharper edges, stronger type hierarchy, homepage as index, and a deliberate move away from startup energy.</td></tr>
+    <tr><td>6</td><td>Archive/workbench redesign</td><td>Textured paper, sharper edges, stronger type hierarchy, homepage as index, and a deliberate move away from startup energy.</td></tr>
+    <tr><td>7</td><td>Cobalt, halftone, and Iosevka</td><td>The current one. One saturated cobalt, a pixel-font name, halftone avatar and footer scene, paper grain in both themes, and Iosevka Aile with Fraunces titles.</td></tr>
   </tbody>
 </table>
 
@@ -90,7 +94,7 @@ eleventyNavigation:
 
 <h2>AI-Assisted Development</h2>
 
-<p>This site is built with AI help, but not on autopilot. Copilot, Codex, and the rest are useful for boilerplate, implementation, audits, cleanup passes, and repetitive consistency work. They are much less useful at deciding what the site should feel like. That part is still mine.</p>
+<p>This site is built with AI help, but not on autopilot. Copilot, Codex, Claude Code, and the rest are useful for boilerplate, implementation, audits, cleanup passes, and repetitive consistency work. They are much less useful at deciding what the site should feel like. That part is still mine. Left alone, a cleanup pass drifts toward generic, so the repo now has a written list of things agents are not allowed to tidy away.</p>
 
 <p>Some posts are also AI-assisted and marked accordingly. I would rather over-disclose than pretend this stuff is not happening.</p>
 

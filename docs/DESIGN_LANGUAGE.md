@@ -9,6 +9,26 @@ The visual goal is not polish for its own sake. The goal is to make the structur
 > technical learnings along the way, see
 > `docs/DESIGN_EXPERIMENTATION_LOG.md`.
 
+## Protected Personality
+
+These elements are the site's identity. Cleanup, declutter, and simplification work must route around them, not through them. Removing, replacing, or "toning down" any of them requires the owner to ask for that specific change in the current task. If you are unsure whether something is personality or clutter, ask before touching it.
+
+| Element | Where | Why it stays |
+| --- | --- | --- |
+| Pixel name "Hi, I'm Kartikey." and the typewriter line | Homepage intro | The site's signature; the owner has explicitly kept the typewriter. |
+| Halftone cobalt avatar | Homepage, post byline | The face of the site. Keep it large enough to read (about 6rem or more). |
+| Footer pixel landscape, its caption, and the now-playing strip | Every page | The "quiet place at the edge of the internet" sign-off. |
+| Masonry "From the workbench" feed with mixed card sizes | Homepage | Varied sizes are the point; do not flatten into rows or a two-column index. |
+| Hand-drawn sketch thumbnails and in-post sketches | Posts, lists | Authored artwork, not stock imagery. |
+| Post toys: upvote, emoji reactions, reading tracker, Copy as Markdown, comments | End of posts | Small, playful, and personal. Consolidate their layout if needed; never delete them as "widgets". |
+| Moon and other halftone pieces | `/now/`, halftone scenes | Part of the duotone/halftone identity. |
+| Paper grain in both themes and the single cobalt accent | Site-wide | Texture over gradients; one committed colour. |
+| Type trio: Iosevka Aile, Ioskeley Mono, Fraunces titles, Press Start 2P name | Site-wide | Chosen deliberately through the font lab (`/lab/fonts/`). Try alternatives there, not in production. |
+| Jokes and asides in copy ("Expert: Procrastination", random facts, "based guy") | About, now, footer | The voice. Do not rewrite copy into neutral product language. |
+| Breadth of slashpages (reading, watching, listening, games, vibes, lexicon...) | `/more/` | The archive is the point. Merge or retire pages only when asked. |
+
+What decluttering is allowed to do: remove duplicated content, dead or broken chrome, empty states that say nothing, stale labels, and repeated navigation. The `declutter` branch (October 2026) is the cautionary example: its ideas about duplicate DOM and stray chrome were good, but replacing the typewriter, the masonry feed, and the slashpages with tidy two-column ledgers made the site generic, and most of it was not merged.
+
 ## Core Feel
 
 - Dense, but intentional
@@ -402,6 +422,7 @@ surrounding text's size, it works as a stamp/label moment instead.
 ## Anti-Patterns
 
 Do not introduce:
+- "cleanups" that remove an element listed under Protected Personality
 - rounded dashboard cards
 - glossy gradients
 - giant marketing copy blocks
