@@ -4517,6 +4517,31 @@ picture img {
   }
 }
 
+/* ── Font lab (/lab/fonts/) ── */
+@layer components {
+  .font-lab-banner {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 60;
+    padding: 0.4rem 0.75rem;
+    background: var(--accent-color);
+    color: white;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+  }
+
+  .font-lab-banner a {
+    color: white;
+  }
+
+  .font-lab-table td {
+    vertical-align: top;
+  }
+}
+
 /* ── Authorship filter (reader-controlled AI content toggle) ── */
 @layer components {
   /* Hide items excluded by the active mode, only where the filter control lives */

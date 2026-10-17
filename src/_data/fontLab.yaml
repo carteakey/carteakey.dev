@@ -1,0 +1,88 @@
+# Font lab: try a type direction on any page with ?font=<id> (?font=off resets).
+# Each variant becomes /lab/fonts/<id>.css, loaded only while the lab is active.
+# `fonts` are @fontsource packages served from jsDelivr; `css` is unlayered so it
+# beats Tailwind's theme tokens. The lab page lives at /lab/fonts/ (hidden).
+samples:
+  - label: Home
+    url: /
+  - label: Writing
+    url: /blog/
+  - label: Post (prose)
+    url: /blog/vault-76-my-obsidian-vault-structure/
+  - label: Post (technical)
+    url: /blog/local-inference/the-rise-of-overfit-inference-engines/
+
+variants:
+  - id: fraunces-titles
+    label: Fraunces titles
+    note: Jakarta body; Fraunces on every page title, post title, and post heading.
+    css: |
+      .page-header-title, .post-title, .post-body h2, .post-body h3 {
+        font-family: "Fraunces", ui-serif, Georgia, serif !important;
+        font-variation-settings: "opsz" 72;
+        letter-spacing: -0.01em;
+      }
+
+  - id: aile
+    label: Aile + Fraunces
+    note: Iosevka Aile for body and card titles, Fraunces for page and post titles.
+    fonts: [iosevka-aile]
+    mono: true
+    css: |
+      :root {
+        --font-sans: "Iosevka Aile", ui-sans-serif, sans-serif;
+        --font-serif: "Iosevka Aile", ui-sans-serif, sans-serif;
+        --font-display: "Iosevka Aile", ui-sans-serif, sans-serif;
+      }
+      .page-header-title, .post-title, .post-body h2, .post-body h3 {
+        font-family: "Fraunces", ui-serif, Georgia, serif !important;
+        font-variation-settings: "opsz" 72;
+        letter-spacing: -0.01em;
+      }
+
+  - id: etoile-aile
+    label: Etoile headings + Aile content
+    note: Iosevka Etoile for page, post, card, and list titles; Iosevka Aile for everything you read.
+    fonts: [iosevka-aile, iosevka-etoile]
+    mono: true
+    css: |
+      :root {
+        --font-sans: "Iosevka Aile", ui-sans-serif, sans-serif;
+        --font-serif: "Iosevka Aile", ui-sans-serif, sans-serif;
+        --font-display: "Iosevka Etoile", ui-serif, serif;
+        --font-monument: "Iosevka Etoile", ui-serif, serif;
+      }
+      .page-header-title, .post-title, .post-body h2, .post-body h3 {
+        font-family: "Iosevka Etoile", ui-serif, serif !important;
+      }
+
+  - id: etoile
+    label: Etoile everywhere
+    note: Iosevka Etoile (slab serif) for body and titles.
+    fonts: [iosevka-etoile]
+    mono: true
+    css: |
+      :root {
+        --font-sans: "Iosevka Etoile", ui-serif, serif;
+        --font-serif: "Iosevka Etoile", ui-serif, serif;
+        --font-display: "Iosevka Etoile", ui-serif, serif;
+        --font-monument: "Iosevka Etoile", ui-serif, serif;
+      }
+      .page-header-title, .post-title, .post-body h2, .post-body h3 {
+        font-family: "Iosevka Etoile", ui-serif, serif !important;
+      }
+
+  - id: ioskeley-all
+    label: Ioskeley everywhere
+    note: Ioskeley Mono for every role, for comparison.
+    mono: true
+    css: |
+      :root {
+        --font-sans: "Ioskeley Mono", ui-monospace, monospace;
+        --font-serif: "Ioskeley Mono", ui-monospace, monospace;
+        --font-display: "Ioskeley Mono", ui-monospace, monospace;
+        --font-monument: "Ioskeley Mono", ui-monospace, monospace;
+      }
+      .page-header-title, .post-title, .post-body h2, .post-body h3 {
+        font-family: "Ioskeley Mono", ui-monospace, monospace !important;
+      }

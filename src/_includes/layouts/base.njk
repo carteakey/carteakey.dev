@@ -29,6 +29,30 @@
 
   <script src="/static/js/theme.js?v={{ versions.version }}" data-asset-version="{{ versions.version }}"></script>
   <script src="/static/js/ai-filter.js?v={{ versions.version }}"></script>
+  {# Font lab (/lab/fonts/): ?font=<id> swaps font roles for this browser tab; ?font=off resets. #}
+  <script>
+    (() => {
+      const labels = { {% for v in fontLab.variants %}{{ v.id | dump | safe }}: {{ v.label | dump | safe }}{% if not loop.last %}, {% endif %}{% endfor %} };
+      let id = new URLSearchParams(location.search).get("font");
+      try {
+        if (id === "off") { sessionStorage.removeItem("fontLab"); id = null; }
+        else if (id) sessionStorage.setItem("fontLab", id);
+        else id = sessionStorage.getItem("fontLab");
+      } catch (error) {}
+      if (!id || !Object.hasOwn(labels, id)) return;
+      const link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.href = `/lab/fonts/${id}.css`;
+      document.head.appendChild(link);
+      document.addEventListener("DOMContentLoaded", () => {
+        const bar = document.createElement("div");
+        bar.className = "font-lab-banner";
+        bar.innerHTML = `Font lab · <b></b> · <a href="/lab/fonts/">variants</a> · <a href="?font=off">turn off</a>`;
+        bar.querySelector("b").textContent = labels[id];
+        document.body.appendChild(bar);
+      });
+    })();
+  </script>
   
   <script defer src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <script defer src="/static/js/collection-views.js?v={{ versions.version }}"></script>
