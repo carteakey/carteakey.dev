@@ -5931,3 +5931,149 @@ picture img {
   transform: translateY(-1px);
 }
 
+
+/* ── agentcart (/ask/) ─────────────────────────────────────────────────────
+   A terminal session you can ask about the site, styled after a coding-agent
+   CLI. Always dark: a terminal is a terminal. One accent (the lifted dark-
+   theme ultramarine), everything else is fg / dim / rule. Square corners,
+   no shadows, no gradients. Markup lives in src/ask.njk, behaviour in
+   src/static/js/ask-terminal.js. */
+.term {
+  --term-bg: #0b0b0f;
+  --term-fg: #d9d8d0;
+  --term-dim: #7c7b85;
+  --term-faint: #4a4a55;
+  --term-rule: #24242c;
+  --term-accent: #6d6dff;
+  --term-select: #23234d;
+  display: flex;
+  flex-direction: column;
+  height: min(80vh, 820px);
+  min-height: 460px;
+  background: var(--term-bg);
+  color: var(--term-fg);
+  border: 1px solid var(--term-rule);
+  font-family: var(--font-mono);
+  font-size: 13.5px;
+  line-height: 1.55;
+  font-variant-ligatures: none;
+}
+.term ::selection { background: var(--term-select); }
+.term a { color: inherit; text-decoration: underline; text-decoration-color: var(--term-faint); text-underline-offset: 3px; }
+.term a:hover { color: var(--term-accent); text-decoration-color: var(--term-accent); }
+
+.term-titlebar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.35rem 0.75rem;
+  border-bottom: 1px solid var(--term-rule);
+  color: var(--term-dim);
+  font-size: 11.5px;
+  letter-spacing: 0.02em;
+  user-select: none;
+}
+.term-titlebar h1 { all: unset; color: var(--term-fg); }
+.term-dots { display: flex; gap: 6px; }
+.term-dots i { width: 9px; height: 9px; border: 1px solid var(--term-faint); }
+
+.term-screen {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.9rem 1rem 0.5rem;
+  scroll-behavior: auto; /* the global smooth scroll lags behind streamed text */
+  scrollbar-width: thin;
+  scrollbar-color: var(--term-faint) transparent;
+}
+
+/* Welcome banner */
+.term-welcome { border: 1px solid var(--term-accent); padding: 0.6rem 0.9rem; margin-bottom: 1rem; max-width: 44rem; }
+.term-welcome b { color: var(--term-accent); font-weight: 600; }
+.term-welcome p { margin: 0; }
+.term-tips { color: var(--term-dim); margin: 0 0 1.1rem; }
+.term-tips p { margin: 0; }
+.term-tips ol { margin: 0.25rem 0 0; padding-left: 1.6rem; list-style: decimal; }
+
+/* Transcript rows */
+.term-row { margin: 0 0 0.9rem; white-space: pre-wrap; word-break: break-word; }
+.term-user { color: var(--term-dim); border-left: 2px solid var(--term-faint); padding-left: 0.6rem; }
+.term-user::before { content: "> "; color: var(--term-dim); }
+.term-bullet { display: grid; grid-template-columns: 1.4em 1fr; }
+.term-bullet > .term-glyph { color: var(--term-accent); }
+.term-bullet.is-dim > .term-glyph { color: var(--term-dim); }
+.term-bullet.is-busy > .term-glyph { animation: term-blink 1s steps(2, start) infinite; }
+.term-tool-name { font-weight: 600; }
+.term-tool-arg { color: var(--term-dim); }
+.term-sub { display: grid; grid-template-columns: 1.4em 1.6em 1fr; color: var(--term-dim); }
+.term-bullet > .term-sub { grid-column: 1 / -1; }
+.term-sub > .term-elbow { color: var(--term-faint); }
+.term-sub.is-fail { text-decoration: line-through; text-decoration-color: var(--term-faint); }
+.term-cite { display: grid; grid-template-columns: 3.2em 4.8em 1fr; color: var(--term-dim); }
+.term-cite-n { color: var(--term-accent); }
+
+/* Rendered answer (escaped first, then a tiny markdown pass) */
+.term-answer { white-space: normal; }
+.term-answer p { margin: 0 0 0.6em; }
+.term-answer p:last-child { margin-bottom: 0; }
+.term-answer ul, .term-answer ol { margin: 0 0 0.6em; padding-left: 1.4em; }
+.term-answer ul { list-style: "· "; }
+.term-answer ol { list-style: decimal; }
+.term-answer strong { color: #fff; font-weight: 600; }
+.term-answer code { color: var(--term-accent); background: none; border: 0; padding: 0; font: inherit; }
+.term-answer pre { margin: 0.4em 0 0.7em; padding: 0.5em 0.75em; background: none; border: 0; border-left: 2px solid var(--term-faint); overflow-x: auto; white-space: pre; font: inherit; }
+.term-answer pre code { color: var(--term-fg); }
+.term-answer a.term-ref { text-decoration: none; color: var(--term-accent); }
+.term-answer a.term-ref:hover { text-decoration: underline; }
+.term-caret::after { content: "▍"; color: var(--term-accent); animation: term-blink 1s steps(2, start) infinite; }
+
+/* Spinner line */
+.term-spinner { display: grid; grid-template-columns: 1.4em 1fr; color: var(--term-accent); margin: 0 0 0.9rem; }
+.term-spinner .term-spin-text { color: var(--term-fg); }
+.term-spinner .term-spin-meta { color: var(--term-dim); }
+
+/* Boxed notices: usage limit, outages */
+.term-box { border: 1px solid var(--term-faint); padding: 0.5rem 0.8rem; margin: 0 0 0.9rem; max-width: 44rem; }
+.term-box.is-accent { border-color: var(--term-accent); }
+.term-box p { margin: 0; }
+.term-box .term-dim { color: var(--term-dim); }
+
+/* Prompt */
+.term-input-wrap { padding: 0 1rem 0.6rem; position: relative; }
+.term-input { display: grid; grid-template-columns: 1.4em 1fr; border: 1px solid var(--term-faint); padding: 0.45rem 0.6rem; }
+.term-input:focus-within { border-color: var(--term-dim); }
+.term-input > span { color: var(--term-fg); }
+.term-input textarea {
+  all: unset;
+  resize: none;
+  white-space: pre-wrap;
+  word-break: break-word;
+  min-height: 1.55em;
+  max-height: 8em;
+  overflow-y: auto;
+  caret-color: var(--term-accent);
+}
+.term-input textarea::placeholder { color: var(--term-faint); }
+.term-input textarea:disabled { color: var(--term-dim); }
+.term-status { display: flex; justify-content: space-between; gap: 1rem; color: var(--term-dim); font-size: 11.5px; padding: 0.3rem 0.2rem 0; }
+.term-status .term-mode { color: var(--term-accent); }
+
+/* Slash-command menu */
+.term-menu { position: absolute; left: 1rem; right: 1rem; bottom: 100%; background: var(--term-bg); border: 1px solid var(--term-faint); padding: 0.25rem 0; }
+.term-menu-item { display: grid; grid-template-columns: 9em 1fr; padding: 0 0.6rem; color: var(--term-dim); cursor: pointer; }
+.term-menu-item b { font-weight: 400; color: var(--term-fg); }
+.term-menu-item.is-active { background: var(--term-select); }
+.term-menu-item.is-active b { color: var(--term-accent); }
+
+@keyframes term-blink { to { visibility: hidden; } }
+@media (prefers-reduced-motion: reduce) {
+  .term-caret::after, .term-bullet.is-busy > .term-glyph { animation: none; }
+}
+@media (max-width: 640px) {
+  .term { height: 78vh; font-size: 12.5px; }
+  .term-screen { padding: 0.7rem 0.6rem 0.4rem; }
+  .term-input-wrap { padding: 0 0.6rem 0.5rem; }
+  .term-cite { grid-template-columns: 2.6em 1fr; }
+  .term-cite-k { display: none; }
+  .term-status .term-status-right { display: none; }
+}

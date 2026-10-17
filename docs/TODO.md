@@ -393,3 +393,9 @@ After: https://carteakey.dev
 
 **Next Up: Content Polish & New Pages** 🎨
 - [x] Sync Goodreads shelves into `/reading` and `/now` while preserving manual books, notes, and Kindle progress overrides; archive the outgoing `/now` page before every refresh. (2026-06-24)
+
+**agentcart (`/ask/`) — from POC to shipped**
+- [ ] Set Netlify env: `OPENROUTER_API_KEY`, `NVIDIA_API_KEY`, `LOCAL_LLM_URL` + `LOCAL_LLM_TOKEN` (tunnel to llama-swap), optional `ASK_ROUTE`, `ASK_LIMIT`, `ASK_GLOBAL_DAILY`, `ASK_MAX_PARALLEL`. Confirm the NVIDIA model id (`ASK_NVIDIA_MODELS`).
+- [ ] Try it under `netlify dev` against live models, then drop `hidden: true` from `src/ask.njk` and add a nav entry / shortcut.
+- [ ] Idea: an opt-in `ask-notes/` folder of behind-the-scenes notes for the corpus. Anything indexed can be quoted back verbatim, so treat it as public-but-unlisted.
+- [ ] Retrieval: weak matches on off-topic queries; consider embeddings (embeddinggemma on L3MS at build time) if BM25 misses too often.

@@ -19,6 +19,7 @@ import Image, { generateHTML } from "@11ty/eleventy-img";
 import "dotenv/config";
 import upvotesData from "./src/_data/upvotes.js";
 import { chart } from "./utils/charts.mjs";
+import { buildAskCorpus } from "./utils/ask-corpus.mjs";
 import {
   clearSocialImageCache,
   resolveSocialImage,
@@ -657,6 +658,11 @@ export default function (eleventyConfig) {
     Array.isArray(items)
       ? items.filter((item) => !(item && typeof item === "object" && item.enabled === false))
       : items,
+  );
+
+  // agentcart (/ask/) retrieval corpus: public Markdown chunks + inverted index.
+  eleventyConfig.addFilter("askCorpus", (items) =>
+    JSON.stringify(buildAskCorpus(items)),
   );
 
   eleventyConfig.addFilter("readableDate", (dateObj) => {

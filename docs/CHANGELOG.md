@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.9.0] - 2026-10-17
+### Added
+- agentcart (`/ask/`, hidden, local-only POC): a terminal you can ask about the site, styled after a coding-agent CLI. Retrieval shows as a `Search(...)` tool call with numbered citations, answers stream with a spinner, and `/help`, `/clear`, `/sources`, `/route`, `/model`, `/cost`, `/about` and `/exit` work as slash commands with a completion menu. Up/down history, Esc to interrupt, Ctrl+L to clear.
+- `netlify/edge-functions/ask.js` (`POST /api/ask`): BM25 over a build-time index, then a model route of OpenRouter free models, NVIDIA's free Nemotron endpoint, and the local llama-swap box through a tunnel, each hop skipped if no token arrives in time. It is an edge function because Netlify stops streamed serverless responses at 10 s. Per-IP session limit and a global daily cap (Upstash), and a 5-at-a-time queue with visible position.
+- `/ask/corpus.json` (`utils/ask-corpus.mjs`): heading-sized chunks of published posts, notes, snippets, TILs, lexicon, prompts, reviews and device specs, with an inverted index. Hidden and future-dated pages are excluded even when `SHOW_HIDDEN` is on.
+
 ## [2.8.4] - 2026-10-17
 ### Added
 - Stats: a publishing-rhythm heatmap (posts, notes and snippets by year and month), titled with the busiest month.

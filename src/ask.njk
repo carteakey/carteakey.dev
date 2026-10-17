@@ -1,0 +1,55 @@
+---
+layout: layouts/base.njk
+title: agentcart
+description: A terminal you can ask about this site. Answers come only from published pages, with citations.
+permalink: /ask/
+hidden: true
+eleventyExcludeFromCollections: true
+---
+{#
+  agentcart POC. hidden: true keeps it local-only until it ships.
+  Backend: netlify/edge-functions/ask.js (POST /api/ask, NDJSON stream).
+  Corpus: src/ask-corpus.njk -> /ask/corpus.json (utils/ask-corpus.mjs).
+#}
+<section class="term" id="agentcart" aria-label="agentcart terminal">
+  <div class="term-titlebar">
+    <span class="term-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <h1>agentcart</h1>
+    <span>~/carteakey.dev · zsh</span>
+  </div>
+
+  <div class="term-screen" data-screen role="log" aria-live="polite">
+    <div class="term-welcome">
+      <p><b>✻</b> Welcome to <b>agentcart</b>.</p>
+      <p>&nbsp;</p>
+      <p>&nbsp;&nbsp;/help for commands, /sources for the last answer's citations</p>
+      <p>&nbsp;</p>
+      <p>&nbsp;&nbsp;cwd: ~/carteakey.dev</p>
+      <p>&nbsp;&nbsp;index: published pages, rebuilt every deploy</p>
+    </div>
+    <div class="term-tips">
+      <p>Tips for getting started:</p>
+      <ol>
+        <li>Ask about posts, benchmarks, devices, or what Kartikey uses.</li>
+        <li>Answers come only from published pages, cited like [1].</li>
+        <li>Free models first, Kartikey's own GPU if they're busy.</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="term-input-wrap">
+    <div class="term-menu" data-menu hidden role="listbox"></div>
+    <label class="term-input">
+      <span aria-hidden="true">&gt;</span>
+      <textarea data-input rows="1" spellcheck="false" autocomplete="off" placeholder='Try "what GPU runs the local models?"' aria-label="Ask agentcart"></textarea>
+    </label>
+    <div class="term-status">
+      <span data-hint>? for shortcuts</span>
+      <span class="term-status-right"><span class="term-mode">auto</span> · <span data-usage>free routing engine</span></span>
+    </div>
+  </div>
+</section>
+
+<noscript><p>agentcart needs JavaScript. The <a href="/search/">search page</a> works without it.</p></noscript>
+
+<script defer src="/static/js/ask-terminal.js?v={{ versions.version }}"></script>
