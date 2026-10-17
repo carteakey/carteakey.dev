@@ -63,6 +63,7 @@ collectionArchetype: index
 {# ── LIST VIEW (default) — same rows as /feed, plus a one-line description ── #}
 <div id="blogList" class="mt-4">
   {% if collections.pinnedPosts.length > 0 %}
+  <div data-ai-filter-section>
     <h2 id="pinned-posts" class="not-prose scroll-mt-20 editorial-kicker py-2 flex items-center gap-1.5">
       {% feather "bookmark", class="w-3.5 h-3.5" %} Pinned
     </h2>
@@ -74,9 +75,11 @@ collectionArchetype: index
       }) }}
     {% endfor %}
     </ul>
+  </div>
   {% endif %}
 
   {% for year in archiveYears %}
+  <div data-ai-filter-section>
     <h2 id="year-{{ year }}" class="not-prose scroll-mt-20 editorial-kicker py-2">{{ year }}</h2>
     <ul class="feed-list not-prose list-none m-0 p-0">
     {% for post in collections.posts | sortByDate %}
@@ -89,6 +92,7 @@ collectionArchetype: index
       {% endif %}
     {% endfor %}
     </ul>
+  </div>
   {% endfor %}
 </div>
 

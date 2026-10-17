@@ -95,17 +95,19 @@
 {% endmacro %}
 
 {% macro heatmap(matrix, rowLabels=None, colLabels=None) %}
-{# matrix is 2D list (rows x cols). One halftone dot per cell, radius 0.6 x pitch x sqrt(v / max). #}
+{# matrix is 2D list (rows x cols). Square cells in the accent hue, five steps light to dark by sqrt(v / max). #}
 {% set rows = rowLabels or ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"] %}
 {% set cols = colLabels or ["0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23"] %}
 {% set maxVal = 0 %}
 {% for row in matrix %}{% for v in row %}{% if v > maxVal %}{% set maxVal = v %}{% endif %}{% endfor %}{% endfor %}
 {% set pitch = 14 %}
+{% set cell = 12 %}
 {% set left = 30 %}
 {% set top = 14 %}
+{% set steps = [0.16, 0.34, 0.54, 0.76, 1] %}
 
 <div class="surface p-3 dot-heatmap-scroll">
-  <svg class="dot-grid dot-grid-heatmap" viewBox="0 0 {{ left + cols | length * pitch + 2 }} {{ top + matrix | length * pitch + 2 }}" role="img" aria-label="Plays by weekday and hour; larger dots mean more plays">
+  <svg class="dot-grid dot-grid-heatmap" viewBox="0 0 {{ left + cols | length * pitch + 2 }} {{ top + matrix | length * pitch + 2 }}" role="img" aria-label="Plays by weekday and hour; darker squares mean more plays">
     {% for c in cols %}
       {% if loop.index0 % 3 == 0 %}<text class="dot-grid-label" x="{{ left + loop.index0 * pitch + pitch / 2 }}" y="9" text-anchor="middle">{{ c }}</text>{% endif %}
     {% endfor %}
@@ -113,16 +115,20 @@
       {% set ri = loop.index0 %}
       <text class="dot-grid-label" x="0" y="{{ top + ri * pitch + pitch / 2 + 3 }}">{{ rows[ri] }}</text>
       {% for v in row %}
-        {% set cx = left + loop.index0 * pitch + pitch / 2 %}
-        {% set cy = top + ri * pitch + pitch / 2 %}
+        {% set x = left + loop.index0 * pitch + (pitch - cell) / 2 %}
+        {% set y = top + ri * pitch + (pitch - cell) / 2 %}
         {% if v > 0 and maxVal > 0 %}
-          <circle cx="{{ cx }}" cy="{{ cy }}" r="{{ (0.6 * pitch * ((v / maxVal) ** 0.5)) | round(2) }}" fill="currentColor" class="dot-grid-dot"><title>{{ rows[ri] }} {{ cols[loop.index0] }}: {{ v }}</title></circle>
+          {% set step = ((v / maxVal) ** 0.5 * 4.999) | int %}
+          <rect x="{{ x }}" y="{{ y }}" width="{{ cell }}" height="{{ cell }}" class="heat-cell" fill-opacity="{{ steps[step] }}"><title>{{ rows[ri] }} {{ cols[loop.index0] }}:00 UTC: {{ v }} plays</title></rect>
         {% else %}
-          <circle cx="{{ cx }}" cy="{{ cy }}" r="{{ (0.12 * pitch) | round(2) }}" fill="currentColor" class="dot-grid-dot" opacity="0.35"><title>{{ rows[ri] }} {{ cols[loop.index0] }}: {{ v }}</title></circle>
+          <rect x="{{ x + 0.25 }}" y="{{ y + 0.25 }}" width="{{ cell - 0.5 }}" height="{{ cell - 0.5 }}" class="heat-cell-empty"><title>{{ rows[ri] }} {{ cols[loop.index0] }}:00 UTC: no plays</title></rect>
         {% endif %}
       {% endfor %}
     {% endfor %}
   </svg>
+  <p class="heat-legend" aria-hidden="true">Fewer
+    {% for o in steps %}<svg viewBox="0 0 10 10"><rect width="10" height="10" class="heat-cell" fill-opacity="{{ o }}"/></svg>{% endfor %}
+    More</p>
 </div>
 {% endmacro %}
 

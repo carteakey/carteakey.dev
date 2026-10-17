@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.42] - 2026-10-16
+### Changed
+- Post endings: the reading tracker and upvote now share one row instead of two stacked strips; on phones the buttons sit together under the tracker text.
+- Mobile posts: the outline is a collapsible block above the post body instead of sitting below the comments.
+- `/listening/` heatmap: square cells in one cobalt hue, five steps from light to strong, with a legend, replacing the size-scaled circles. The caption now reads "Stronger blue" so it holds in dark mode.
+- `/now/`: the moon card hugs its content instead of spanning the page.
+
+### Fixed
+- `/blog/`: Pinned and year headings hide when the authorship filter leaves them empty.
+
 ## [2.7.41] - 2026-10-16
 ### Changed
 - Notes & Lexicon: Removed verbose explanatory subtitle ("Choose the reading rhythm that fits...") and right-aligned the view toggle toolbar cleanly.

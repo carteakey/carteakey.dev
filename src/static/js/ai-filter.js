@@ -51,6 +51,15 @@ const updateAiFilterNotice = () => {
   document.body.appendChild(notice);
 };
 
+// Hide a section heading when the filter leaves none of its items visible.
+const updateAiFilterSections = () => {
+  document.querySelectorAll("[data-ai-filter-section]").forEach((section) => {
+    const items = [...section.querySelectorAll("li, article")];
+    // Decide from the filter rule, not layout, so a hidden list/grid view does not count as empty.
+    section.hidden = items.length > 0 && !items.some((item) => window.aiFilterAllows(item.dataset.authoredBy));
+  });
+};
+
 const setAiFilter = (value) => {
   if (!AI_FILTERS.includes(value) || value === getAiFilter()) return;
   localStorage[AI_FILTER_KEY] = value;
@@ -67,6 +76,10 @@ document.addEventListener("DOMContentLoaded", () => {
     if (option) setAiFilter(option.dataset.aiFilterOption);
   });
   updateAiFilterNotice();
+  updateAiFilterSections();
 });
 
-document.addEventListener("aifilterchange", updateAiFilterNotice);
+document.addEventListener("aifilterchange", () => {
+  updateAiFilterNotice();
+  updateAiFilterSections();
+});

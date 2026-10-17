@@ -196,6 +196,13 @@ hasEthicalAds: false
       </aside>
     {% endif %}
 
+    {% if tocHtml | trim %}
+    <details class="post-outline-mobile surface surface-compact xl:hidden not-prose">
+      <summary class="post-panel-title">Outline</summary>
+      <div class="post-outline-mobile-list">{{ tocHtml | safe }}</div>
+    </details>
+    {% endif %}
+
     <div class="post-body{% if isEditorial %} ed-prose{% endif %}">
       {{ content | safe }}
     </div>
@@ -258,23 +265,39 @@ hasEthicalAds: false
     </footer>
     {% endif %}
 
-    <section class="learning-post-panel not-prose" data-learning-panel>
-      <div>
-        <p class="post-panel-title">Reading tracker</p>
-        <p class="editorial-support-compact mt-1"><span data-learning-state>Unread</span> · saved only in this browser</p>
+    {# End-of-post toys on one row: reading tracker + upvote. #}
+    <div class="post-endbar not-prose">
+      <section class="learning-post-panel" data-learning-panel>
+        <div>
+          <p class="post-panel-title">Reading tracker</p>
+          <p class="editorial-support-compact mt-1"><span data-learning-state>Unread</span> · saved only in this browser</p>
+        </div>
+        <button
+          type="button"
+          class="learning-toggle accent-focus"
+          data-learning-toggle
+          data-learning-id="{{ page.url }}"
+          data-learning-title="{{ title | escape }}"
+          aria-pressed="false"
+        >
+          {% feather "check", class="w-3.5 h-3.5" %}
+          <span data-learning-label>Mark as read</span>
+        </button>
+      </section>
+      <!-- Upvote Section -->
+      <div class="upvote-section flex items-center">
+        <button id="upvoteButton" class="upvote-button post-action-button" aria-label="Upvote this post" aria-busy="false">
+          {% feather "thumbs-up", class="w-4 h-4 text-gray-500 dark:text-gray-400" %}
+          <span id="upvoteCount" class="text-[0.78rem] font-medium text-gray-600 dark:text-gray-300">
+            {{ upvotes.posts[page.fileSlug] | default(0) }}
+          </span>
+          <span id="upvoteLoading" class="hidden">
+            <div class="animate-spin rounded-full h-3.5 w-3.5 border-b-2" style="border-color: var(--accent-color);"></div>
+          </span>
+        </button>
+        <span id="upvoteMessage" class="ml-2 text-sm text-gray-500 dark:text-gray-400 hidden">Thanks for your upvote!</span>
       </div>
-      <button
-        type="button"
-        class="learning-toggle accent-focus"
-        data-learning-toggle
-        data-learning-id="{{ page.url }}"
-        data-learning-title="{{ title | escape }}"
-        aria-pressed="false"
-      >
-        {% feather "check", class="w-3.5 h-3.5" %}
-        <span data-learning-label>Mark as read</span>
-      </button>
-    </section>
+    </div>
     <p id="learningLiveStatus" class="sr-only" aria-live="polite"></p>
     <script defer src="/static/js/learning-progress.js?v={{ versions.version }}"></script>
 
@@ -285,20 +308,6 @@ hasEthicalAds: false
       { id: 'lightbulb', emoji: '💡', label: 'Interesting idea' },
       { id: 'eyes', emoji: '👀', label: 'Watching this' }
     ] %}
-
-    <!-- Upvote Section -->
-    <div class="upvote-section mt-8 mb-4 flex items-center">
-      <button id="upvoteButton" class="upvote-button post-action-button" aria-label="Upvote this post" aria-busy="false">
-        {% feather "thumbs-up", class="w-4 h-4 text-gray-500 dark:text-gray-400" %}
-        <span id="upvoteCount" class="text-[0.78rem] font-medium text-gray-600 dark:text-gray-300">
-          {{ upvotes.posts[page.fileSlug] | default(0) }}
-        </span>
-        <span id="upvoteLoading" class="hidden">
-          <div class="animate-spin rounded-full h-3.5 w-3.5 border-b-2" style="border-color: var(--accent-color);"></div>
-        </span>
-      </button>
-      <span id="upvoteMessage" class="ml-2 text-sm text-gray-500 dark:text-gray-400 hidden">Thanks for your upvote!</span>
-    </div>
 
     <div id="postReactions" class="hidden mt-6" data-slug="{{ page.fileSlug }}">
       <h2 class="post-panel-title flex items-center gap-2">
@@ -803,14 +812,4 @@ hasEthicalAds: false
     })();
   </script>
 
-  {% if tocHtml | trim %}
-  <div class="xl:hidden mt-12">
-    <section class="surface surface-padding space-y-4 text-sm text-gray-600 dark:text-gray-300">
-      <p class="post-panel-title my-0">Outline</p>
-      <div class="max-h-[50vh] overflow-y-auto pr-1 space-y-2">
-        {{ tocHtml | safe }}
-      </div>
-    </section>
-  </div>
-  {% endif %}
 </div>
