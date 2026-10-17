@@ -38,10 +38,12 @@ webrings:
   - name: "Fediring"
     url: "https://fediring.net/"
     description: "A webring connecting personal blogs and independent creators across the fediverse and indie web."
+    button: "/img/buttons/fediring.gif"
     tags: [IndieWeb, Fediverse]
   - name: "Geekring"
     url: "https://geekring.net/"
     description: "A ring connecting technology, open source, Linux, and homelab sites."
+    button: "/img/buttons/geekring.gif"
     tags: [OpenSource, Homelab]
   - name: "HTML Energy"
     url: "https://html.energy/"
@@ -51,3 +53,21 @@ webrings:
     url: "https://webring.bucketfish.me/"
     description: "A curated webring for developer blogs and personal homepages across the open internet."
     tags: [PersonalSites, Community]
+
+retro_buttons:
+  - name: "Viewable With Any Browser"
+    url: "https://anybrowser.org/"
+    image: "/img/buttons/anybrowser.gif"
+    alt: "Viewable With Any Browser"
+  - name: "NeoCities"
+    url: "https://neocities.org/"
+    image: "/img/buttons/neocities.gif"
+    alt: "NeoCities.org"
+
+site_button:
+  url: "https://carteakey.dev"
+  image: "https://carteakey.dev/img/buttons/carteakey.png"
+  local_image: "/img/buttons/carteakey.png"
+  alt: "carteakey.dev"
+  width: 88
+  height: 31

@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.8.1] - 2026-10-17
+### Added
+- Bookmarks: 88×31 retro button shelf featuring Fediring and Geekring webring buttons, classic web buttons ("Viewable with Any Browser", "NeoCities"), and a custom pixel-drawn 88×31 button for `carteakey.dev`.
+- Bookmarks: Interactive one-click copyable HTML embed box for the `carteakey.dev` 88×31 button so other sites can link back.
+- CSS: Added `.pixelated` and `.micro-button` utility classes for crisp integer pixel scaling and subtle button hover states.
+
 ## [2.8.0] - 2026-10-17
 ### Added
 - Collection engine (`components/collection-index.njk`): Writing, Feed, Notes, Lexicon, Snippets, TIL, Quotations, and Reviews now share one toolbar, grouping, and view renderer built from the Writing list. Every row and card goes through `feedCard`; grids use the shared masonry.
