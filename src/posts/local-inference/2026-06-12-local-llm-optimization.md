@@ -5,6 +5,7 @@ image: /img/blog-sketches/unique/local-llm-optimization-stamp-trim.png
 imageAlt: "Transparent monochrome sketch of a workstation PC tower with exposed GPU fans, monitor displaying tuning parameters, and dials measuring tokens-per-second performance"
 date: 2026-06-12
 updated: 2026-10-18
+giscusTerm: "/blog/local-inference/local-llm-optimization/"
 authored_by: ai-assisted
 draft: false
 tags:
