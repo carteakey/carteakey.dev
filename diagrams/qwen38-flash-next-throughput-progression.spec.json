@@ -1,5 +1,5 @@
 {
-  "unit": "t/s", "minY": 0, "maxY": 100, "step": 20, "width": 1000,
+  "unit": "t/s", "minY": 0, "maxY": 100, "step": 20, "width": 1100,
   "points": [
     { "val": 6.5,   "lbl": "Power-\nsave",   "sub": "Aug 27" },
     { "val": 12.2,  "lbl": "CPU\nGov",       "sub": "+88%" },
@@ -9,6 +9,7 @@
     { "val": 20.65, "lbl": "MTP\nV1",        "sub": "ncmoe 45" },
     { "val": 27.06, "lbl": "MTP\nV2",        "sub": "#28243" },
     { "val": 60.3,  "lbl": "Strata",         "sub": "Cache", "highlight": true },
-    { "val": 90.2,  "lbl": "Strata\nPeak",   "sub": "Warm draft", "highlight": true }
+    { "val": 65.8,  "lbl": "DDR5-\n5800",    "sub": "+5.8% RAM", "highlight": true },
+    { "val": 74.8,  "lbl": "Q8_0\nPLE",      "sub": "0 VRAM", "highlight": true }
   ]
 }

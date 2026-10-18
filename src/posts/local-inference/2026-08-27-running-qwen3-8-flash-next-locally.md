@@ -4,7 +4,7 @@ description: "The 51B n-gram table on SSD via lazy mmap: 27 tok/s with MTP and u
 image: /img/blog-sketches/unique/running-qwen3-8-flash-next-locally-stamp-trim.png
 imageAlt: Transparent monochrome sketch of a GPU offloading to an NVMe SSD drive next to a token speed gauge and architecture notebook
 date: 2026-08-27
-updated: 2026-10-14
+updated: 2026-10-18
 authored_by: ai-assisted
 draft: true
 hidden: false
@@ -16,106 +16,88 @@ pinned: false
 ogImage: /img/og/running-qwen3-8-flash-next-locally-og.png
 ---
 
-{% update "2026-10-16", "October 2026 Update: Thinking Mode Sampling Defaults (-4.9% penalty)" %}
-Verified that Strata defaults to greedy argmax decoding (`temperature=0`) if client requests leave out sampling parameters and the server config lacks a `"sampling"` block. Benchmarking official **Thinking Mode** sampling (`temp 1.0 / top-p 0.95 / top-k 20 / min-p 0.0`) vs. greedy decode on `IQ3_XXS` + native MTP shows a minimal throughput impact of **-2.8 tok/s (57.3 → 54.5 tok/s, ~4.9% loss)** due to speculative draft acceptance dropping from 68.9% to 55.7%. Enforced server-side in all active Strata JSON configs to eliminate reasoning repetition loops.
+{% update "2026-10-18", "October 2026 Update: 74.8 tok/s on Strata with Q8_0 PLE & DDR5-5800" %}
+I originally wrote this post for **`llama.cpp`**, which topped out at 20.5 - 27.1 tok/s on my RTX 4070. Since then, I've moved my daily serving to **Strata**, whose dynamic expert cache (keeping the hottest experts in VRAM across all layers) pushed steady decode past 60 tok/s. Overclocking my RAM to DDR5-5800 and swapping the NVMe-mapped n-gram table to uncompressed Q8_0 (at zero extra VRAM cost) brought steady decode to **74.8 tok/s on text** and 73.3 tok/s on vision, with 2,013 tok/s prefill.
+
+If you want to run this model in Strata, see **[Strata on an RTX 4070](/blog/local-inference/strata-on-an-rtx-4070/)** (and the companion essay, [The Rise of Overfit Inference Engines](/blog/local-inference/the-rise-of-overfit-inference-engines/)). For the `Q8_0` n-gram table trick that applies to both engines, jump to the [full Q8_0 PLE section](#full-precision-q8_0-ple-faster-decode-for-zero-vram) below.
 {% endupdate %}
 
-{% update "2026-10-14", "October 2026 Update: Strata v0.1.44.1 (62.2 tok/s)" %}
-Strata is updated to **v0.1.44.1**, reaching **62.20 tok/s** steady decode on real code (probes: 59.6–64.8 t/s; 90.2 t/s peak burst) and **1,992 tok/s** 8k prefill on `IQ3_XXS`.
-{% endupdate %}
+Qwen3.8-Flash-Next (the preview of the Qwen4 architecture) is a 125B MoE with about 6B active parameters per token, paired with a **51B n-gram lookup table**. That table isn't standard transformer weights - it's hashed 3-token lookups into a giant embedding, so it doesn't need to sit in RAM at all. Because of that one property, an 88 GB model runs comfortably on my desktop with a 12 GB RTX 4070 and 64 GB of DDR5, climbing from 20.5 tok/s on stock llama.cpp up to **74.8 tok/s on Strata**.
 
-{% update "2026-09-30", "Update: Dynamic expert caching with Strata (60–90 t/s)" %}
-Abandoning static layer-by-layer offloading in favor of an **online dynamic expert cache** (holding 3,086 hot experts across all 48 layers in 5.04 GB VRAM) paired with MTP speculative decoding pushes `Qwen3.8-Flash-Next` on ISTA-DASLab quants to **53–63 t/s steady decode on real code** (peaking at **90.2 t/s**) and **2,013 t/s prefill**.
-
-For the systems architecture deep dive, see **[The Rise of Overfit Inference Engines](/blog/local-inference/the-rise-of-overfit-inference-engines/)**.
-{% endupdate %}
-
-Qwen3.8-Flash-Next (the `qwen4exp` preview of the Qwen4 architecture) is a 125B-A6B MoE plus a **51B n-gram lookup table**. The table is not weights in the usual sense — it is hashed 3-token lookups into a giant embedding — which means it does not need to live in RAM at all. That single property lets an 88 GB quant run on a machine with 12 GB VRAM + 64 GB RAM, decoding from **20.5 t/s on master up to 90.2 tok/s on Strata**.
-
-This post covers the quant choice, baseline `llama.cpp` serving, multimodal vision, MTP speculative decoding (27 t/s), and the Strata expert-caching engine (60–90 t/s).
+Here's which quant to grab, how I build and run it in `llama.cpp`, where the memory actually goes, and which tuning levers mattered on my box. (For how to run it in Strata and how its dynamic expert cache works, see [Strata on an RTX 4070](/blog/local-inference/strata-on-an-rtx-4070/).)
 
 {% diagram_card {
   src: "./src/static/img/diagrams/qwen38-flash-next-throughput-progression.png",
-  alt: "Line chart of Qwen3.8-Flash-Next decode throughput on an RTX 4070 12GB in tokens per second across nine runtime steps: Powersave 6.5, CPU governor 12.2, SSD mmap 15.2, q8 KV plus fit 18.9, master 19.35, MTP V1 20.65, MTP V2 27.06, Strata dynamic cache 60.3, Strata peak 90.2",
+  alt: "Line chart of Qwen3.8-Flash-Next decode throughput on an RTX 4070 12GB in tokens per second across runtime steps: Powersave 6.5, CPU governor 12.2, SSD mmap 15.2, q8 KV plus fit 18.9, master 19.35, MTP V1 20.65, MTP V2 27.06, Strata dynamic cache 60.3, DDR5-5800 65.8, Full Q8_0 PLE 74.8",
   kicker: "Performance Evolution · RTX 4070 12GB + 64GB DDR5",
   title: "Qwen3.8-Flash-Next Decode Throughput Progression",
-  badge: "6.5 → 90.2 tok/s (+1,287% leap)",
-  caption: "<strong>Progression:</strong> Powersave (6.5) → CPU governor (12.2) → PR #27742/#27794 lazy mmap offload (15.2) → q8_0 KV and dynamic layer fitting (18.9) → upstream master refresh (19.35) → compact PR #28243 MTP (20.65) → unified QSA Sparsity Stack V2 MTP (27.06) → Strata steady decode (60.3) → Strata peak burst (<strong>90.2 t/s</strong>)."
+  badge: "6.5 → 74.8 tok/s steady (+1,050% leap)",
+  caption: "<strong>Progression:</strong> Powersave (6.5) → CPU governor (12.2) → lazy mmap offload (15.2) → q8_0 KV and dynamic layer fitting (18.9) → upstream master refresh (19.35) → compact MTP (20.65) → QSA Sparsity Stack V2 MTP (27.06) → Strata dynamic cache (60.3) → DDR5-5800 tuning (65.8) → Full Q8_0 PLE (<strong>74.8 t/s</strong> steady)."
 } %}
 
 ## TL;DR
 
-- **Model**: `AtomicChat/Qwen3.8-Flash-Next-GGUF` (`AD-4.27bpw-Q4_K_M-M64`) for `llama.cpp`, and `ISTA-DASLab/Qwen3.8-Flash-Next-GSQ-RCO-GGUF` (`IQ3_XXS`) for Strata. Both isolate the 51B n-gram table into a dedicated shard for clean NVMe mmap offloading.
-- **Stack**: Upstream `llama.cpp` master (`b11241` / `1c4729414`), Unified QSA Sparsity Stack V2 (`build 11268`), and Strata v0.1.44.1.
-- **Server-realistic throughput**:
-  - **Strata (dynamic expert cache + MTP)**: **53–63 tok/s steady decode** (real code), **90.2 tok/s peak burst** (2.76–2.93 tok/step with native MTP), **1,138–2,013 tok/s prefill** via online dynamic expert VRAM caching (3,086 hot experts in 5.04 GB VRAM) on ISTA-DASLab GSQ-RCO quants. See [The Rise of Overfit Inference Engines](/blog/local-inference/the-rise-of-overfit-inference-engines/).
-  - **llama.cpp plain master**: **20.5–22.1 tok/s steady decode** (fused RMS_NORM+SCALE #29393); **pp 180–385 tok/s** @ **96k context** (q8 KV, `--fit on --fit-target 512`).
-  - **llama.cpp + MTP draft**: **25.32–27.06 tok/s aggregate** (97–100% draft acceptance, 2.76–2.93 tok/step) with compact `shared-Q4_K_M.gguf` (1.78 GB) + Unified QSA Sparsity Stack V2 (-ncmoe 46, 16k ctx, 11,025 MiB VRAM).
-  - **llama.cpp + Vision**: **18.2–18.6 tok/s** with `mmproj-F16.gguf` (-ncmoe 45, 16k ctx, 1.8 GB free VRAM headroom).
-  - **NVMe Cold Prefill**: **135.2 tok/s** (3x faster than cold master) via Aman Gupta's PR #29599 `madvise` row prefetching on SSD-offloaded PLE layers.
-- **Key note**: mmap **on** (the opposite of my other posts) — lazy paging *is* the offload mechanism here. `--no-mmap --mlock` is instant death for this model on 64 GB. Initial cold-start generations pay an NVMe page-in transient (~10–14 tok/s) before converging into DRAM at steady state.
+I use [ISTA-DASLab's GSQ-RCO IQ3_XXS](https://huggingface.co/ISTA-DASLab/Qwen3.8-Flash-Next-GSQ-RCO-GGUF) for Strata, and [AtomicChat's AD-4.27bpw](https://huggingface.co/AtomicChat/Qwen3.8-Flash-Next-GGUF) for llama.cpp. Both builds isolate the 51B n-gram table into Shard 2 so it can stay on NVMe.
+
+On my RTX 4070 (12 GB) + 64 GB DDR5 box:
+- **Strata** (dynamic expert cache + native MTP) hits **74.8 tok/s steady decode** with the Q8_0 PLE table (65.8 tok/s with the default IQ4_NL PLE), and over 2,000 tok/s prefill.
+- **llama.cpp + MTP draft stack** reaches **27.1 tok/s** at 16k context using the compact Q4_K_M draft head and [NVMe row prefetching](https://github.com/ggml-org/llama.cpp/pull/29599).
+- **llama.cpp plain master** runs at **20.5 - 22.1 tok/s** decode and up to 385 tok/s prefill, scaling cleanly to **96k context** (and 18.4 tok/s with the F16 vision projector).
+
+One rule flips my usual advice on its head: **leave `mmap` on**. Lazy paging is the offload mechanism here. Passing `--no-mmap --mlock` on a 64 GB machine will crash immediately. Cold boots start slow on the very first prompt while hot expert pages fault into RAM, then settle into full speed.
 
 {% callout "note", "Live Leaderboard & Reproduction Scripts" %}
-The active profile leaderboard at [l3ms.carteakey.dev](https://l3ms.carteakey.dev/) is updated with these Qwen3.8-Flash-Next benchmark tiers alongside all other models served and benchmarked on this exact machine (RTX 4070 12GB + 64GB DDR5, including Gemma 4 26B QAT+MTP @ 100 tok/s and Qwen3.8-27B @ 36.7 tok/s). All serving configurations, placement recipes, and automated bench harnesses are published in the [l3ms repository](https://github.com/carteakey/l3ms).
+My homelab leaderboard at [l3ms.carteakey.dev](https://l3ms.carteakey.dev/) tracks these setups alongside every other model I run on this machine. All serving configs and benchmark scripts live in the [l3ms repository](https://github.com/carteakey/l3ms).
 {% endcallout %}
 
 ## Why this quant?
 
-Qwen3.8-Flash-Next has about 176B parameters: a 125B MoE (6B active per token) plus a 51B n-gram table. The roughly 4B MTP head is additional and excluded from the 176B count. The n-gram table is read ~2.7 KB per token from a 36 GB address space — a 1-in-13-million read ratio that NVMe answers in <100 µs. The experts are the opposite: ~2.5 GB of active weights per token, hopeless from disk.
+Out of the model's 176B parameters, the 51B n-gram table only reads a few kilobytes per token out of a huge address space. An NVMe SSD answers those tiny random reads in microseconds. The routed MoE experts are the opposite: each token touches hundreds of megabytes of expert weights, which is hopeless from disk.
 
-That gives three distinct storage tiers: VRAM (dense + a couple expert layers + KV), system RAM (the other 46 MoE layers), SSD (the whole n-gram table).
+So the model naturally splits across three storage tiers:
+1. **VRAM** holds attention, shared weights, the KV cache, and as many hot experts or layers as fit.
+2. **System RAM** holds the remaining routed MoE experts.
+3. **NVMe SSD** holds the entire 51B n-gram table (`per_layer_token_embd.weight`).
 
-The AtomicChat build is the right file for this:
-
-- **The table ships pre-isolated** in shard 2 (35.8 GiB, `per_layer_token_embd.weight` alone). On Metal this is what keeps llama.cpp from wiring the table into VRAM; on CUDA it is not strictly required, but it makes the lazy-read path clean and the file verifiable.
-- **Imatrix-tuned**: KLD 0.0842, 89.5% top-1 vs bf16 — better than unsloth's Q3_K_XL *backbone* at similar resident cost, and better than the same-size IQ4_XS-style builds by a wide margin (their own A/B: KLD 0.2277 → 0.0842).
-- Sized honestly: 54.5 GB resident is what the builder measured on unified memory; on a discrete-GPU box you shave the GPU layers off that.
-
-Unsloth's quants interleave the table into weight shards, so the whole file has to be resident (or you repack — see the Quant ladder section below).
+For that split to work without eating your RAM, the n-gram table has to live in its own GGUF shard. Both ISTA-DASLab and AtomicChat put the table alone in Shard 2, so the Linux kernel can memory-map it straight from NVMe without pulling it into memory. Unsloth's quants interleave the table across weight shards, which forces the whole file into RAM unless you repack it yourself.
 
 ## Quant ladder (what fits where)
 
-Published quants sorted by fast-memory backbone footprint (backbone = what must live in RAM+VRAM; the rest is the n-gram table offloaded to NVMe):
+Here's how the published quants fit on a 12 GB VRAM + 64 GB RAM box, sorted by the fast-memory backbone (what actually has to sit in RAM and VRAM after leaving the n-gram shard on SSD):
 
 | Publisher | Quant | File (GiB) | Backbone (GiB) | Fits 12GB VRAM + 64GB RAM? |
 | --- | --- | ---: | ---: | --- |
 | **ISTA-DASLab** | **GSQ-RCO-Coder IQ1_M** | **54.4** | **27.6** | **yes, easily (fits 262k context)** |
 | unsloth | UD-IQ1_S | 67.6 | 50.7 | yes, snug |
 | unsloth | UD-IQ1_M | 69.4 | 52.0 | yes, snug |
-| **ISTA-DASLab** | **GSQ-RCO IQ3_XXS** | **70.6** | **43.8** | **yes — active Strata default (~43 GB RAM + 5 GB VRAM)** |
+| **ISTA-DASLab** | **GSQ-RCO IQ3_XXS** | **70.6** | **43.8** | **yes - active Strata default (~43 GB RAM + 5 GB VRAM)** |
 | unsloth | UD-Q2_K_XL | 73.5 | 55.1 | yes |
 | unsloth | UD-IQ3_XXS | 76.3 | 57.2 | yes |
-| **ISTA-DASLab** | **GSQ-RCO IQ3_S** | **77.9** | **51.0** | **yes, comfortably (full BF16 parity)** |
+| **ISTA-DASLab** | **GSQ-RCO IQ3_S** | **77.9** | **51.0** | **yes, comfortably (near BF16 parity)** |
 | unsloth | UD-Q3_K_XL | 83.8 | 62.9 | tight (paging risk) |
 | AtomicChat | AD-3.84bpw-IQ4_XS-M64 | 84.9 | 45.8 | **yes, comfortably** |
 | unsloth | UD-IQ4_XS | 87.2 | 65.4 | tight (paging risk) |
-| **AtomicChat** | **AD-4.27bpw-Q4_K_M-M64** | **88.0** | **54.5** | **yes — llama.cpp baseline** |
+| **AtomicChat** | **AD-4.27bpw-Q4_K_M-M64** | **88.0** | **54.5** | **yes - llama.cpp baseline** |
 | unsloth | UD-Q4_K_XL | 103.7 | 77.8 | no |
 | AtomicChat | AD-5.00bpw-Q5_K_M-M64 | 110.5 | 56.1 | borderline |
 | ggml-org (official) | Q8_0 (BF16→) | ~180+ | n/a | reference only |
 
-Notes on the quants:
+If you're choosing between them, ISTA-DASLab's IQ3_XXS is the sweet spot for 64 GB of RAM. It assigns bit precision per layer based on gradient sensitivity, matching AtomicChat's 4.27-bit quality while shaving over 10 GB off the RAM footprint. Even better, Shard 2 (the 26.8 GiB n-gram table) is byte-for-byte identical across ISTA-DASLab's IQ3_XXS, IQ3_S, and Coder IQ1_M builds, so you can hardlink Shard 2 across variants and save 27 GB of disk space per extra model.
 
-- **ISTA-DASLab GSQ-RCO quants (`IQ3_XXS`, `IQ3_S`, `Coder IQ1_M`)**: Built using Gumbel-Softmax Quantization and Riemannian Constrained Optimization to assign bit precision per-layer based on gradient sensitivity. `IQ3_XXS` averages 3.0 bpw while matching the quality of `AD-4.27bpw`, but requires over 10 GB less fast memory (43.8 GiB backbone vs 54.5 GiB).
-- **Dedicated Shard 2 for the PLE table**: Both ISTA-DASLab and AtomicChat cleanly isolate the 51B n-gram lookup table into its own separate shard (`-00002-of-00002.gguf`, 26.8 GiB for ISTA; Shard 33, 35.8 GiB for AtomicChat). This allows clean, zero-RAM NVMe offload via `mmap`. Unsloth quants interleave the table across weight shards, forcing the entire file into RAM unless manually repacked.
-- **Shared PLE hardlink deduplication**: In the ISTA-DASLab suite, Shard 2 is **100% byte-identical** between the general quants (`IQ3_XXS`, `IQ3_S`) and the `Coder` variant (`IQ1_M`). By hardlinking Shard 2 across models, you save ~27 GB of SSD space per variant.
-- **AtomicChat's AD-4.27bpw**: Our earlier baseline for `llama.cpp` (KLD 0.0842, 89.5% top-1 vs bf16). Highly reliable and well-tuned, but heavier in memory.
-- The heuristic is calibrated for unified-memory Macs. On a discrete-GPU box, VRAM holding dense layers and KV cache effectively adds to the memory budget, allowing an 88 GiB file to run smoothly with 10–11 GiB in VRAM and ~43–46 GiB in RAM.
-
-### Where the memory actually goes (measured, this config)
+### Where the memory actually goes (AtomicChat 88 GiB config)
 
 | Tier | Contents | GiB |
 | --- | --- | ---: |
 | File | whole AD-4.27bpw quant | 88.0 |
-| VRAM | dense/attention ~4.4 + last-2 expert layers ~2.0 + q8 KV (64k) ~0.6 + compute ~1.6 | 10.0 |
+| VRAM | dense/attention ~4.4 + last 2 expert layers ~2.0 + q8 KV (64k) ~0.6 + compute ~1.6 | 10.0 |
 | RAM (RSS) | 46 host expert layers ~44.6 + token-embd/output ~1.2 (file-backed, evictable) | 45.6 |
 | SSD | 88.0 − 10.0 − 45.6 | **32.4** |
 
-The SSD tier is only the n-gram table (35.8 GiB minus ~3.4 GiB of rows already cached). Only `per_layer_token_embd` is *deliberately* offloaded; the host expert layers are clean file-backed pages that the kernel only evicts under RAM pressure — if tg suddenly halves mid-session, check `free -g` first. Evidence: 176k major page faults (~690 MB) during a 1455-token prefill = the table paging in on demand, exactly as designed.
+Only the n-gram embedding table stays on SSD on purpose. The 46 host expert layers sit in file-backed RAM pages that the Linux kernel will only evict if desktop apps eat your remaining memory. If generation speed suddenly halves mid-session, check `free -g` first.
 
-## Build
+## Build & Download
 
-All architecture support, lazy tensor reading, and fused MoE reduction kernels are merged into upstream `llama.cpp` master (`b78a39a2f`). A standard build works directly with zero patches:
+All architecture support, lazy tensor reads, and fused MoE reductions are in upstream llama.cpp master. A standard CUDA build works out of the box:
 
 ```bash
 git clone https://github.com/ggml-org/llama.cpp
@@ -132,14 +114,9 @@ cmake -B build \
 cmake --build build --config Release --target llama-server llama-bench --parallel
 ```
 
-> **Easier path**: In [l3ms](https://github.com/carteakey/l3ms), running `cargo build --release` automatically detects CUDA architecture and wires binary paths.
-
-## Download
-
-88 GiB across 33 shards. Plain `hf download` was throttled to <4 MB/s here and Xet stalled outright; a segmented downloader (12 concurrent range requests, ~10 MB/s) got it done in ~2.5 h.
+After downloading, you can verify that Shard 2 holds only the isolated n-gram table with a quick check:
 
 ```bash
-# verify shard 2 is the isolated table after download
 python3 - <<'EOF'
 from gguf import GGUFReader
 r = GGUFReader("Qwen3.8-Flash-Next-AD-4.27bpw-Q4_K_M-M64-00002-of-00033.gguf")
@@ -147,9 +124,9 @@ print([t.name for t in r.tensors])  # -> ['per_layer_token_embd.weight']
 EOF
 ```
 
-> **Easier path**: drop the repo + include glob into `model_downloader/models_config.json` in l3ms.
+> **Easier path**: In [l3ms](https://github.com/carteakey/l3ms), `cargo build --release` wires the CUDA build automatically, and the downloader handles segmented range requests when Hugging Face throttles single streams.
 
-## Run
+## Run (`llama.cpp`)
 
 ```bash
 llama-server \
@@ -166,262 +143,118 @@ llama-server \
   --temp 1.0 --top-p 0.95 --top-k 20 --min-p 0.0 --no-warmup
 ```
 
-What each piece does on a 12 GB card:
+Four flags do the heavy lifting on a 12 GB card:
+- `--fit on --fit-target 512` places dense/attention weights plus as many MoE layers as fit into VRAM while keeping a half-gigabyte safety buffer.
+- `-b 4096 -ub 2048` is the prefill lever: a 2,048 micro-batch lets the CPU stream the host expert weights once per 2k prompt instead of twice, jumping prefill past 350 tok/s with no hit to decode.
+- `--lazy-mode on` leaves the n-gram table memory-mapped on NVMe so only the rows touched by a token fault into RAM.
+- `-ctk q8_0 -ctv q8_0` halves KV cache memory so a 64k window fits cleanly on the GPU. Don't pass `--no-kv-offload` here - moving KV to host RAM tanks PCIe throughput.
 
-- **`--fit on --fit-target 512`** — dynamic layer offload: automatically places dense/attention weights plus as many MoE expert layers as possible onto the GPU while reserving 512 MiB margin. Uses 11,074 MiB VRAM at 64k context.
-- **`-b 4096 -ub 2048`** — the prefill lever: streams the ~45 GiB CPU expert weights in a single pass for prompts up to 2,048 tokens, delivering **303–385 tok/s** without degrading decode.
-- **`--lazy-mode on`** — the 35.8 GiB n-gram table is mmapped on SSD but never prefetched into RAM; individual rows fault in on demand and evict freely.
-- **`-ctk q8_0 -ctv q8_0`** — quantized KV cache halves memory consumption, enabling a 64k context window directly in VRAM.
-- **KV on GPU** — do not use `--no-kv-offload`. QSA's KV cache is sparse-window budgeted; host placement degrades PCIe throughput.
+## Benchmarks & Tuning Levers
 
-Sampling: Qwen's thinking-mode defaults (`temp 1.0 / top-p 0.95 / top-k 20`).
+### 1. Upstream `llama.cpp` vs MTP Speculative Decoding
 
-> **Easier path**: the `qwen38-flash-next` entry in l3ms `llama-swap.yaml` has all of the above wired (binary macro points at the dual-PR build); llama-swap swaps it in and out of the 12 GB card automatically.
+On my 6-task unique prompt suite at 16k context, plain upstream llama.cpp master already beats `ik_llama`, so I dropped `ik_llama` from my setup.
 
-## Bench
+Adding speculative decoding via [Daniel Han's MTP draft-head PR](https://github.com/ggml-org/llama.cpp/pull/28243) and the QSA sparsity stack ([pooled-key indexer cache](https://github.com/ggml-org/llama.cpp/pull/28699), [gather sparse decode](https://github.com/ggml-org/llama.cpp/pull/28213), and [Aman Gupta's NVMe `madvise` row prefetch](https://github.com/ggml-org/llama.cpp/pull/29599)) pushed llama.cpp to **27.1 tok/s**:
 
-### September 2026 Refresh: Upstream Master Refresh, Vision & MTP Specs
-
-In September 2026, upstream master (`b78a39a2f`, 175 commits newer than September 1 build `9d817213a`) brought fused CUDA MoE reductions and faster Q4_K/Q5_K unpacking with L2 prefetch. We evaluated plain master, Daniel Han's revised PR #28243 (`d1a92352c` on master), and live `ik_llama` with expert prefetch on a standardized 6-task unique-prompt corpus (1,152 generated tokens total, 192 tokens per prompt, 16k context, RTX 4070 12 GB, 5600 MT/s RAM):
-
-#### Table A: Upstream Master Refresh vs Previous Master vs `ik_llama`
-
-| Task | Previous (`9d817213a`) | **Master (`b78a39a2f`)** | PR #28243 Q8 `n_max=1` | PR #28243 Q8 `n_max=2` | `ik_llama` base | `ik_llama` MTP-1 | `ik_llama` MTP-2 |
-|---|---:|---:|---:|---:|---:|---:|---:|
-| `code-pathlib` | 17.71 | **19.64** | 17.98 | 19.80 | 17.90 | 18.81 | 15.66 |
-| `code-rust-lru` | 18.92 | **19.28** | 18.00 | 19.80 | 18.45 | 16.38 | 16.18 |
-| `code-sql-batch` | 19.49 | **19.45** | 18.65 | 20.61 | 17.28 | 17.93 | 17.69 |
-| `story-radio` | 18.91 | **19.09** | 16.90 | 18.65 | 18.16 | 14.87 | 15.37 |
-| `story-library` | 19.35 | **19.11** | 17.98 | 18.69 | 18.16 | 14.17 | 15.71 |
-| `story-orchard` | 18.91 | **19.56** | 17.84 | 20.51 | 18.09 | 14.91 | 16.49 |
-| **Aggregate t/s** | **18.86** | **19.35** | **17.88** | **19.65** | **18.00** | **16.01** | **16.15** |
-| **Delta vs Previous** | Baseline | **+2.6%** | -5.2% | +4.2% | -4.6% | -15.1% | -14.4% |
-| **Delta vs `ik_llama` Base** | +4.8% | **+7.5%** | -0.7% | +9.2% | Baseline | -11.1% | -10.3% |
-| **VRAM Allocated** | 8,510 MiB | **8,458 MiB** | 11,406 MiB | 11,518 MiB | — | — | — |
-
-- **Master plain decode gains:** Upstream plain decode (19.35 t/s) beats `ik_llama` base (18.00 t/s) by +7.5% and `ik_llama` MTP-2 (16.15 t/s) by +19.8%, completely eliminating the need for ik_llama on fresh traffic. Code decode jumps +10.9% on pathlib (19.64 vs 17.71).
-
-#### Table B: Compact Shared-Q4_K_M Draft Head (PR #28243) vs Baselines
-
-The compact 1.78 GB `shared-Q4_K_M` head saves **~870 MiB VRAM** compared to `shared-Q8_0` (2.60 GB). This reclaimed slack allows offloading an extra MoE layer (`-ncmoe 45`, 3 MoE layers on GPU) under the 12 GB VRAM envelope:
-
-| Task | Master Plain (`ncmoe 46`) | Q8_0 `n_max=2` (`ncmoe 46`) | Q4_K_M `n_max=1` (`ncmoe 46`) | Q4_K_M `n_max=2` (`ncmoe 46`) | **Q4_K_M `n_max=2` (`ncmoe 45`)** |
-|---|---:|---:|---:|---:|---:|
-| `code-pathlib` | 19.64 | 19.80 | 20.76 | 20.21 | **20.83** |
-| `code-rust-lru` | 19.28 | 19.80 | 20.10 | 20.39 | **20.35** |
-| `code-sql-batch` | 19.45 | 20.61 | 21.05 | 22.42 | **21.88** |
-| `story-radio` | 19.09 | 18.65 | 19.90 | 19.41 | **20.00** |
-| `story-library` | 19.11 | 18.69 | 19.73 | 19.14 | **20.65** |
-| `story-orchard` | 19.56 | 20.51 | 20.23 | 19.74 | **20.28** |
-| **Aggregate t/s** | **19.35** | **19.65** | **20.28** | **20.16** | **20.65** |
-| **Delta vs Master Plain** | Baseline | +1.5% | +4.8% | +4.2% | **+6.7%** |
-| **Delta vs Old Gold** | +2.6% | +4.2% | +7.5% | +6.9% | **+9.5%** |
-| **VRAM Used** | 8,458 MiB | 11,518 MiB | 10,536 MiB | 10,648 MiB | **11,786 MiB** |
-| **VRAM Headroom** | 3,824 MiB | 764 MiB | 1,746 MiB | 1,634 MiB | **496 MiB** |
-| **Draft Acceptance** | — | 79.6–90.7% | 82.7–96.1% | 79.8–96.3% | **76.9–95.7%** |
-
-- **Breaking the 20 t/s barrier:** `shared-Q4_K_M` paired with `-ncmoe 45` delivers **20.65 t/s aggregate** (>20 t/s on every prompt, up to 21.88–22.42 t/s on SQL/code), beating plain master by +6.7% and old gold by +9.5%.
-
-#### Table C: VRAM Allocation & Layer Fitting Geometry (RTX 4070 12,282 MiB)
-
-Each MoE layer costs **1,138 MiB VRAM** on GPU:
-
-| Configuration | Context | MoE on GPU | Head | VRAM Used | Free Headroom | Measured Decode |
+| Configuration | Context | MoE on GPU | Draft Head | VRAM Used | Free Headroom | Measured Decode |
 |---|---:|---:|---|---:|---:|---:|
-| Plain Master | 64k | 2 (`-ncmoe 46`) | None | 8,458 MiB | 3,824 MiB | 19.35 t/s |
-| Plain Dynamic Fit | 64k | Dynamic (`--fit on --fit-target 512`) | None | 10,714 MiB | 512 MiB | 19.99 t/s (+0.64) |
-| Vision Master (`mmproj-F16`) | 16k | 3 (`-ncmoe 45`) | None | 10,460 MiB | 1,822 MiB | 18.2–18.6 t/s |
-| PR #28243 MTP Q8_0 | 16k | 2 (`-ncmoe 46`) | 2.60 GB | 11,518 MiB | 764 MiB | 19.65 t/s |
-| PR #28243 MTP Q4_K_M (V1) | 16k | 3 (`-ncmoe 45`) | 1.78 GB | 11,786 MiB | 496 MiB | 20.65 t/s |
-| **Unified QSA Stack V2 MTP** | **16k** | **2 (`-ncmoe 46`)** | **1.78 GB** | **11,025 MiB** | **1,257 MiB** | **25.32–27.06 t/s** |
+| Plain Master (`-ncmoe 46`) | 64k | 2 layers | None | 8,458 MiB | 3,824 MiB | 19.35 t/s |
+| Plain Dynamic Fit (`--fit on`) | 64k | 4 layers | None | 10,714 MiB | 512 MiB | 20.50 t/s |
+| Vision Master (`mmproj-F16`) | 16k | 3 layers | None | 10,460 MiB | 1,822 MiB | 18.40 t/s |
+| MTP `shared-Q8_0` | 16k | 2 layers | 2.60 GB | 11,518 MiB | 764 MiB | 19.65 t/s |
+| MTP `shared-Q4_K_M` (V1) | 16k | 3 layers | 1.78 GB | 11,786 MiB | 496 MiB | 20.65 t/s |
+| **QSA Stack V2 + MTP `Q4_K_M`** | **16k** | **2 layers** | **1.78 GB** | **11,025 MiB** | **1,257 MiB** | **25.32 - 27.06 t/s** |
 
-#### September 29, 2026: Unified QSA Sparsity Stack V2 (27 t/s MTP)
+Shrinking the draft head from Q8_0 to Q4_K_M freed nearly a gigabyte of VRAM while keeping 98% draft acceptance on code and SQL, leaving enough headroom that desktop Wayland sessions don't trigger OOMs. And asynchronous `madvise` row prefetching eliminated NVMe stalls during cold prompt processing, tripling cold prefill to 135 tok/s.
 
-On September 29, upstream master tagged `b11241` (`1c4729414`), introducing GDN RMS_NORM+SCALE CUDA fusion ([PR #29393](https://github.com/ggml-org/llama.cpp/pull/29393)) and causal attention scheduler fixes ([PR #28751](https://github.com/ggml-org/llama.cpp/pull/28751)). Steady-state prefill jumped **148.8 → 179.8 tok/s (+20.8%)**, and peak plain decode reached **22.11 tok/s**.
+### 2. The Context Crossover: Why Plain Master Wins Past 16k
 
-To push speculative decoding further, we assembled **Unified QSA Sparsity Stack V2** (`vendor/llama.cpp-exp-stack-v2`, `build 11268` / `f382a59e3`), integrating:
-1. **Daniel Han's PR #28243** (revised Sept 28, 2026) for the compact `shared-Q4_K_M` draft head.
-2. **Rhonstin's PR #28699** (incremental pooled-key indexer cache) & **Abdel Darwish's PR #28213** (gather sparse decode).
-3. **Akio Nishimura's PR #29166** (multi-sequence block bias indexing fix).
-4. **Aman Gupta's PR #29599** (`madvise` row prefetching for SSD-offloaded PLE layers).
-
-Benchmarked on our standardized 16k context, 192-token prompt suite (RTX 4070 12GB, `-ncmoe 46`, compact `shared-Q4_K_M` head):
-
-| Task | Master Plain (`1c4729414`) | MTP V1 (`b78a39a2f`) | **MTP Stack V2 (`f382a59e3`)** | Draft Acceptance | Mean Spec Length |
-|---|---:|---:|---:|---:|---:|
-| `code-pathlib` | 19.64 | 20.83 | **25.32 t/s** | 97.4% | 2.76 tok/round |
-| `code-rust-lru` | 19.28 | 20.35 | **26.24 t/s** | 98.9% | 2.87 tok/round |
-| `code-sql-batch` | 19.45 | 21.88 | **27.06 t/s** | 100.0% | 2.93 tok/round |
-| **Aggregate t/s** | **19.46** | **21.02** | **26.21 t/s** | **98.8%** | **2.85 tok/round** |
-| **Delta vs Master Plain** | Baseline | +8.0% | **+34.7%** | — | — |
-| **Delta vs MTP V1** | -7.4% | Baseline | **+24.7%** | — | — |
-| **VRAM Allocated** | 8,458 MiB | 11,786 MiB | **11,025 MiB** | — | — |
-| **Free Headroom** | 3,824 MiB | 496 MiB | **1,257 MiB** | — | — |
-
-**Key architectural observations:**
-- **Breaking 27 t/s with >98% acceptance**: Incremental pooled-key caching combined with gather-based sparse decoding reduces draft validation overhead dramatically, lifting throughput to **25.32–27.06 t/s** across coding and SQL tasks.
-- **Safer VRAM envelope (`-ncmoe 46`)**: Offloading 2 MoE layers instead of 3 drops VRAM footprint to **11,025 MiB**, leaving a healthy **1,257 MiB headroom** so desktop Wayland compositors never cause out-of-memory spikes.
-- **NVMe PLE Row Prefetching (#29599)**: Aman Gupta's asynchronous row `madvise` prefetch eliminates I/O stalls during token prefill, lifting cold-prompt prefill throughput from **32.9–49.8 t/s to 135.2 t/s (a 3x speedup)**.
-- **On-Device State Revert**: We evaluated experimental on-device checkpoint flags (`LLAMA_STATE_SEQ_FLAGS_ON_DEVICE` from PR #28118), but encountered an abort in `state_seq_set_data` during consecutive non-speculative server requests. Reverting it retained full speculative performance while ensuring 100% operational stability.
-
-#### The Context Scaling Reality: 16k vs 32k vs 48k vs 64k vs 96k
-
-While MTP dominates headlines with **27 tok/s**, looking at performance apples-to-apples across context depths reveals a fascinating crossover point on a 12 GB card:
+While MTP wins on short contexts, sweeping the context window from 16k to 96k on a 12 GB card shows a sharp crossover:
 
 | Context Window | MTP VRAM | MTP Headroom | **MTP Decode (tg)** | **llama.cpp Plain Decode (tg)** | Winner |
 | :---: | :---: | :---: | :---: | :---: | :---: |
-| **16k** (`-c 16384`) | 11,025 MiB | 1,257 MiB | **25.32 – 27.06 t/s** | 19.68 t/s | **MTP (+33%)** |
-| **32k** (`-c 32768`) | 11,380 MiB | 902 MiB | **18.15 – 19.31 t/s** | 20.10 t/s | **Plain (+5%)** |
-| **48k** (`-c 49152`) | 11,264 MiB | 934 MiB | **15.88 – 16.77 t/s** | 20.65 t/s | **Plain (+25%)** |
-| **64k** (`-c 65536`) | 11,654 MiB | 544 MiB | **17.35 – 19.96 t/s** | **20.95 t/s (up to 22.1)** | **Plain (+15%)** |
-| **96k** (`-c 98304`) | — (OOM risk) | — | — | **Healthy (11,302 MiB, 896 MiB headroom)** | **Plain (Solo)** |
+| **16k** (`-c 16384`) | 11,025 MiB | 1,257 MiB | **25.32 - 27.06 t/s** | 19.68 t/s | **MTP (+33%)** |
+| **32k** (`-c 32768`) | 11,380 MiB | 902 MiB | 18.15 - 19.31 t/s | **20.10 t/s** | **Plain (+5%)** |
+| **48k** (`-c 49152`) | 11,264 MiB | 934 MiB | 15.88 - 16.77 t/s | **20.65 t/s** | **Plain (+25%)** |
+| **64k** (`-c 65536`) | 11,654 MiB | 544 MiB | 17.35 - 19.96 t/s | **20.95 t/s (up to 22.1)** | **Plain (+15%)** |
+| **96k** (`-c 98304`) | OOM risk | - | - | **20.5 t/s (11,302 MiB)** | **Plain (Solo)** |
 
-**Why MTP drops past 16k while plain llama.cpp stays fast:**
-1. **Symmetrical Draft Context Penalty**: `llama.cpp` currently ties `-c` uniformly to both the base model and the draft head. At 48k or 64k, the tiny 1.78 GB draft head must evaluate its speculative candidate passes across the entire wide attention grid. That inflates draft latency from ~3 ms at 16k to ~7–9 ms at 48k/64k, erasing the speculative speed advantage.
-2. **VRAM Displacement**: Plain master does not carry the 1.78 GB draft head. That spare VRAM is claimed by `--fit on --fit-target 512`, packing **4 full MoE layers onto GPU CUDA** instead of 2. That allows plain master to maintain a brisk **20.5–22.1 tok/s** steady state all the way up through 64k and cleanly boot at **96k context** (`-c 98304`, 11,302 MiB allocated, 896 MiB headroom).
+Why does MTP fall behind past 16k? Right now llama.cpp ties `-c` to both the main model and the draft head, so at 48k and 64k the draft head has to attend across the entire wide context window, doubling draft latency. Meanwhile, plain master doesn't carry the draft head at all, so `--fit on` packs four MoE layers into VRAM instead of two and holds a steady 21 tok/s all the way to 96k context.
 
-**Operational Rule of Thumb**: For standard conversational coding and quick tasks under 16k context, MTP at **26–27 tok/s** is unbeatable. For long-context document ingestion, multi-turn transcripts, and heavy repo queries (32k–96k), **plain master is the true workhorse**.
+### 3. Prefill Scaling (`-ub 2048` and P-Core Threads)
 
-#### Cold Page-In Transient vs System State (Why Probe 1 Starts at 10–14 t/s)
-
-On fresh server start with `--no-warmup`, the very first generation ("Count to 30") often clocks ~10.3–15.3 t/s before climbing to ~18.8 t/s on probe 2 and reaching full steady state (19.35–20.65 t/s).
-- **Not a system state issue:** Host RAM is healthy (54.5 GiB available, 1.0 MiB zram swap, CPU governor pinned at performance).
-- **Physical cause:** The ~45.5 GB of CPU-side MoE expert weights reside in memory-mapped (`mmap`) files on NVMe SSD. When a fresh server starts, the router gate dynamically selects experts that are not yet resident in Linux page cache. The CPU incurs synchronous major page faults in the token loop. Once ~1,000 tokens have been processed, the working set converges into physical RAM, NVMe read traffic drops to the ~5 KB/token baseline, and decode locks into its 19.35–20.65 t/s ceiling.
-
-### Prompt processing ladder & prefill scaling (measured September 2026)
-
-Prefill is expert-traffic-bound on the CPU side: ~45 GiB of expert weights are read once per ubatch regardless of token count. At `ub 1024`, upstream master (`b78a39a2f`) delivers a **+17.3% overall prefill gain** over previous master (`9d817213a`), widening to **+33.7%** on 2k-token prompts (285.8 vs 213.8 tok/s) due to fused CUDA MoE reductions.
-
-Increasing micro-batch to **`-ub 2048`** unlocks a massive prefill leap for documents and long contexts, hitting **303–385 tok/s**:
+Because 45 GiB of CPU-resident expert weights have to stream through RAM once per micro-batch, raising `-ub` from 1024 to 2048 processes a 2k prompt in a single pass instead of two:
 
 | Configuration | ~512 tok (t/s) | ~1024 tok (t/s) | ~2048 tok (t/s) | Mean PP (t/s) | VRAM (MiB) |
 |---|---:|---:|---:|---:|---:|
-| 1. Previous Master (`9d817213a`) `-ncmoe 46`, ub 1024, tb 12 | 195.9 | 214.5 | 213.8 | **208.1** | 9,104 |
-| 2. Master (`b78a39a2f`) `-ncmoe 46`, ub 1024, tb 12 | 205.7 | 241.1 | 285.8 | **244.2** | 9,052 |
-| 3. Master `-ncmoe 45` (+1 MoE on GPU), ub 1024, tb 12 | 220.1 | 243.6 | 280.7 | **248.2** | 10,190 |
-| 4. Master `--fit on --fit-target 512`, ub 1024, tb 12 | 217.6 | 250.3 | 282.3 | **250.1** | 11,508 |
-| **5. Master `-ncmoe 45`, ub 2048, tb 12** | **201.4** | **303.1** | **356.8** | **287.1** | **10,798** |
-| 6. Master `-ncmoe 45`, ub 1024, tb 16 (all logical cores) | 220.6 | 240.3 | 272.0 | **244.3** | 10,190 |
+| Master `-ncmoe 46`, ub 1024, tb 12 | 205.7 | 241.1 | 285.8 | 244.2 | 9,052 |
+| Master `--fit on`, ub 1024, tb 12 | 217.6 | 250.3 | 282.3 | 250.1 | 11,508 |
+| **Master `-ncmoe 45`, ub 2048, tb 12** | **201.4** | **303.1** | **356.8** | **287.1** | **10,798** |
+| Master `-ncmoe 45`, ub 1024, tb 16 (all cores) | 220.6 | 240.3 | 272.0 | 244.3 | 10,190 |
 
-**Key prefill insights:**
-- **Why `ub 2048` unlocks >350 tok/s:** At `ub 1024`, a 2,048-token prompt forces the CPU to stream the ~45 GB expert pool twice. At `ub 2048`, the full 2,048 tokens are processed in a single pass over the expert weights, doubling arithmetic intensity and delivering **356.8 tok/s (up to 385.2 tok/s peak)**. VRAM increases by only 608 MiB (10,798 MiB total), leaving 1.48 GB headroom.
-- **Batch threads (`--threads-batch`):** 12 threads matches the 6 P-cores (12 logical hyperthreads). Over-allocating to 16 threads onto the 4 slow E-cores degrades throughput (244.3 vs 248.2 tok/s) due to core synchronization jitter. Keep `--threads-batch 12`.
+Keep `--threads-batch 12` to match the six P-cores (12 hyperthreads) on the i5-12600K. Spilling batch threads onto the four slower E-cores slows prefill down from synchronization jitter.
 
-> **N-gram Speculation Note**: N-gram lookup speculation (`--spec-type ngram-mod`) costs zero VRAM and provides a +20–90% burst on repeated or highly predictable prompt structures (e.g. code boilerplate). For general novel text generation, true neural MTP via PR #28243 (Table B) provides consistent +7–10% gains across all tasks without content dependence.
+### 4. The CPU Governor & DDR5 Clock Speed
 
-### The CPU power governor is worth 2×
+The single biggest llama.cpp decode jump wasn't a model flag. Under Linux's default `powersave` governor, my P-cores sat around 81% clock and decode crawled at 6.5 tok/s. Switching to `performance` (`powerprofilesctl set performance`) with `-t 10` nearly doubled decode to 12.2 tok/s before I touched anything else.
 
-The single biggest decode lever was not a llama.cpp flag: under the default `powersave` governor the P-cores sit at ~81% clock and tg was **6.5 tok/s**. Switching to `performance` (P-cores pinned at 4.5 GHz) with **zero flag changes** lifted tg to **12.2 tok/s**. Thread count is a distant second — the full matrix at `-ncmoe 46`:
+Host memory bandwidth shows up just as directly on Strata. Pushing my dual-channel DDR5 from 5600 to 5800 MT/s lifted my steady-state decode floor above 65 tok/s on real code:
 
-| threads | tg128 (tok/s) |
-| ---: | ---: |
-| 6 (P only) | 10.67 |
-| 8 | 11.96 |
-| **10** | **12.19 ± 0.17** |
-| 12 | 11.29 |
-| 16 (P+E) | 11.17 |
+| Memory Clock | Steady Decode (tg) | Probe Range | 8k Prefill (pp) | 16k Prefill (pp) | Stability |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| DDR5-5600 Baseline | 62.20 t/s | 59.6 - 64.8 t/s | 996 - 1,012 t/s | 1,992 t/s | Pass |
+| **DDR5-5800** | **65.80 t/s** | **65.1 - 66.5 t/s** | 926 - 947 t/s | 1,885 t/s | Pass |
 
-Keep `-t 10`; add `--prio 2` from the l3ms conventions. Before benchmarking anything on this box, run the power checks in `preflight-check.sh` (`tuned-adm profile throughput-performance` / `powerprofilesctl set performance`).
+## Full-precision Q8_0 PLE: Faster decode for zero VRAM
 
-### Quantized KV unlocks 64k
+In the standard community quants, the 51.2B Per-Layer Embedding (PLE) n-gram table ships quantized to IQ4_NL (28.8 GB), which introduces noticeable reconstruction error in the early layers.
 
-The QSA Hadamard-rotation fix (in the PR head now — the old `self_k_rot` assert is gone) makes `-ctk q8_0 -ctv q8_0` work, halving KV size versus f16:
+I swapped Shard 2 for the uncompressed **Q8_0 PLE table (54.4 GB)** alongside the IQ3_XXS expert backbone. Because that shard stays memory-mapped on NVMe, it costs zero extra GPU VRAM. I expected a slight slowdown from reading larger rows off SSD, but it ran **31.7% faster** instead:
 
-- **64k–96k context on GPU KV**: healthy, VRAM 10.7–11.3 GiB with `--fit on --fit-target 512`, steady decode 20.5–22.1 t/s.
-- 131k with q8_0 KV segfaults on CUDA (`ggml-cuda.cu:107` during reserve) — 96k remains the reliable upper envelope on a 12 GB card.
+| Benchmark Dimension | Shipped Baseline (`IQ4_NL` PLE) | Full-Precision (`Q8_0` PLE) | Impact |
+| :--- | :---: | :---: | :--- |
+| PLE Table Size (Shard 2) | 28.8 GB | 54.4 GB | +25.6 GB NVMe disk space |
+| GPU VRAM Overhead | 0 MiB | 0 MiB | Zero VRAM cost |
+| Strata Text Decode (Steady) | 56.8 tok/s | **74.8 tok/s** | **+31.7% speedup** |
+| Strata Multimodal Vision Decode | 68.0 tok/s | **73.3 tok/s** | +7.8% speedup |
+| MTP Draft Acceptance | 72.1% | **78.2%** | +6.1% higher draft acceptance |
+| llama.cpp Master Decode | 8.45 tok/s (cold) | **20.54 tok/s** | 2.43× faster once cached |
+| Generated CDN Links / Three.js | Broken 404 URLs | Working URLs + full bloom pass | Eliminates mangled URLs |
 
-### Context guidance
+Two things explain why a larger file runs faster here. First, cleaner embeddings sharpen the draft logits, lifting MTP draft acceptance from 72% to 78% so more tokens pass verification on each step. Second, IQ4_NL requires non-linear 16-entry lookup tables on the CPU, whereas Q8_0 unpacks with a single linear AVX2 multiply-scale at memory line rate.
 
-- **16k is the speed sweet spot**: MTP dominates at **25.32–27.06 tok/s** with 97–100% acceptance.
-- **32k to 96k is plain master territory**: Plain master takes over as context grows past 16k, maintaining a steady **20.5–22.1 tok/s** all the way up through **96k context** (`-c 98304`) with q8_0 KV on GPU.
-- Spec decoding roughly doubles effective decode once the ngram cache warms (first runs are cold; run 2+ is the steady state). **Measured 2026-08-28 at the 64k fit-on config: cold-pool 18.9 t/s → 35.9 t/s steady on repeated identical prompts (+90%)** — the ngram-mod hash pool persists per-process and is content-keyed, so the ceiling applies to repeat/related content (code iteration, template output), not novel generation. Novel-content decode through the router is ~20 t/s.
+## Next tier: IQ3_S, and 27B vs Flash-Next
 
-## 27B or Flash-Next?
+With Strata running at 65 - 75 tok/s on IQ3_XXS, I also keep ISTA-DASLab's IQ3_S build (with a hardlinked Shard 2) on local SSD when I want to trade a bit of DDR5 miss bandwidth for near-BF16 routing precision.
 
-I also run the [Qwen3.8-27B UD-IQ3_XXS](/blog/local-inference/running-qwen3-8-27b-locally/) on this box, and the full comparison — measured head-to-head, a benchmark-anchored intelligence index (~90 vs ~74), the hardware/task decision matrix, and a quant-agnostic dense-vs-MoE chooser tree — now lives in its own post: [Qwen3.8-27B vs Qwen3.8-Flash-Next — which one to run locally](/blog/local-inference/qwen3-8-27b-vs-flash-next/).
+If you're deciding between this model and its smaller dense sibling, I broke out the head-to-head benchmarks, memory trade-offs, and decision tree into a separate post: [Qwen3.8-27B vs Qwen3.8-Flash-Next - Which One to Run Locally?](/blog/local-inference/qwen3-8-27b-vs-flash-next/).
 
 ## What did NOT help (and why)
 
-- **`-ot 'exps=CPU'` overrides** — fights `-ncmoe` (explicit overrides win, so *no* expert layer lands on GPU) and produced 4 tok/s. Let `-ncmoe` or `--fit` do the split.
-- **`-ngl 99` alone** — the PLE tensor is *not* GPU-offloaded by default (`LLM_TENSOR_LAYER_INPUT`), but with no `--ncmoe` or `--fit`, the 52 GiB of experts try to allocate on the 12 GB card. Instant `cudaMalloc failed: out of memory`.
-- **Eager table prefetch (lazy off)** — the loader faults the full 36 GiB table into page cache; combined with ~42 GiB of host experts, the box thrashes (4–5 tok/s and falling).
-- **`--no-mmap --mlock`** — the default reflex from other models. Here it's a guaranteed failure: there is no RAM to lock 88 GiB into.
-- **128k context** — fits only with host-side KV, and the RSS/PCIe cost erases the win (5.8 vs 15.2 tok/s). Revisit once upstream long-context decay patches land.
-
-## Notes
-
-- **MTP reaches 27 t/s via Unified QSA Stack V2**: Merging Daniel Han's PR #28243 with the Unified QSA Sparsity Stack (#28699 + #28213 + #29166) and the compact 1.78 GB `shared-Q4_K_M.gguf` head fits fully into VRAM at 16k context with `-ncmoe 46`, delivering **25.32–27.06 t/s aggregate** (97–100% acceptance, 2.76–2.93 tok/step) with 1,257 MiB free VRAM headroom.
-- **NVMe row prefetching with `madvise`**: Aman Gupta's PR #29599 (`madvise` willneed for PLE rows) completely eliminates SSD seek latency during prompt processing, surging cold prefill from 32.9–49.8 t/s to **135.2 t/s**.
-- **zram matters on 64 GB**: the system runs zstd swap; without it the desktop + 49 GiB working set would spill to NVMe and die. Watch `swapon --show` if you copy this config.
-- The table's first-touch faults show up as a slow first generation (~10–14 t/s); subsequent generations hit DRAM page cache (20.5–27.06 t/s). Don't judge cold numbers.
-- **MTP verdicts are RAM-bandwidth-dependent**: our result (27 t/s) is on DDR5-5600; slower RAM or PCIe configurations may see MTP overhead reduce decode. Always verify on your specific memory subsystem.
-- This build's `llama-server` is the stable surface, same as with Qwen3.8-27B: `llama-bench` with these flags needs care (compute-buffer reserves), `llama-cli` was not exercised.
-
-## Open watch items
-
-1. **Upstream PR #28243 merge**: When Daniel Han's Qwen3.8-Flash-Next MTP PR merges into upstream master, MTP serving will run directly off plain master without maintaining a separate PR clone.
-2. **Long-context decay mitigations (#27977 & #27992)**: Target decode degradation as context grows past 64k. When merged, refresh and re-bench at 128k context.
-3. **Upstream row prefetch merge (#29599)**: Aman Gupta's madvise row prefetch for PLE layers should be merged into master for zero-config cold prefill acceleration.
-4. **ISTA-DASLab GSQ-RCO IQ3_XXS evaluation**: DASLab's 3.0 bpw non-uniform quant (47.0 GB weights + 28.8 GB SSD n-gram table) retains 99.4% task recovery (100.0 on AIME25, 86.3 on LiveCodeBench). Because each MoE layer shrinks to ~800 MiB (vs 1,138 MiB on AtomicChat), it unlocks packing 5–6 layers on GPU instead of 2–4, projecting an +8% to +10% decode boost while reclaiming 7.5 GB of host RAM cushion. Slated for benchmarking once secondary storage is mounted to hold the 75.8 GB download.
-
-## Next tier: IQ3_S
-
-With Strata at 60+ t/s on `IQ3_XXS`, the obvious question is whether I can spend some of that headroom on precision without leaving the 12 GB VRAM / 64 GB RAM envelope. The next candidate is `ISTA-DASLab/Qwen3.8-Flash-Next-GSQ-RCO-GGUF` at `IQ3_S`.
-
-The file layout on Hugging Face:
-
-- Shard 1 (backbone + MoE experts): 51.05 GB, against 39.97 GB for `IQ3_XXS`
-- Shard 2 (51B n-gram table on SSD): 26.82 GB, stays lazy-mapped on NVMe
-- Total footprint: 77.87 GB
-
-```text
-Host RAM Budget (64 GB Physical):
-  51.05 GB Shard 1 Weights
--  5.04 GB VRAM Expert Cache Arena
-+  2.00 GB Strata Runtime Buffers
-+  5.00 GB OS & Desktop Headroom
-───────────────────────────────────
-  53.01 GB Total Resident Memory (~11 GB free)
-```
-
-The trade-off is precision against DDR5 miss bandwidth. `IQ3_S` goes from 3.06 to 3.44 bpw, with uncompressed routing gates and higher-precision attention projections. ISTA-DASLab claims it recovers 98% to 100% of BF16 performance on HumanEval, LiveCodeBench, and GPQA (their numbers, not mine). Each expert is about 27% larger, so cache misses streaming over DDR5 cost more. My estimate, not a measurement, is that steady-state decode drops from ~55-60 t/s to ~45-52 t/s. If that holds, 48 t/s at higher precision is a good trade.
-
-That also means retiring the older quants to cold NAS storage. The Unsloth `UD-Q4_K_XL` (it interleaved the n-gram table into the weights and blew past memory limits) goes to the archive. The AtomicChat `AD-4.27bpw` dual-PR build, my initial baseline at 20.8 t/s, stays on the NAS as a stability snapshot. Local SSD keeps the Strata stack: `IQ3_XXS` for speed (60-90 t/s) and `IQ3_S` for precision.
+- **Manual `-ot 'exps=CPU'` overrides**: fights `-ncmoe` so zero expert layers land on the GPU, dropping decode to 4 tok/s. Let `--fit` or `-ncmoe` handle placement.
+- **`-ngl 99` by itself**: tries to allocate all 52 GiB of experts onto the 12 GB GPU and crashes immediately with `cudaMalloc failed`.
+- **Turning off lazy mode**: faults the entire 36 GiB n-gram table into RAM up front, thrashing against the host experts.
+- **`--no-mmap --mlock`**: my default reflex on smaller models, and a guaranteed crash when the file is 88 GiB and you only have 64 GB of RAM.
+- **128k context on stock llama.cpp**: only fits by moving the KV cache to host RAM, which craters decode down to 5.8 tok/s. Use Strata if you need 128k.
 
 ## Changelog
 
 | Date | Note |
 | --- | --- |
-| 2026-10-14 | **Strata v0.1.44.1 refresh & Quant ladder update.** Updated to Strata v0.1.44.1 (62.20 tok/s steady decode on real code; 1,992 tok/s prefill). Added ISTA-DASLab GSQ-RCO quants (`IQ3_XXS`, `IQ3_S`, and `Coder IQ1_M`) to the quant ladder with shared byte-identical PLE table deduplication. |
-| 2026-10-07 | **October 2026 Refresh Matrix (Native MTP, MoE LRU Cache #29887, & Strata v0.1.40.2).** Tested 7-way parity on identical ISTA IQ3_XXS quant. Upstream master b11475 (merged native MTP #29761, indexer memory halved #29825) reached 17.34 t/s with 11.1 GB VRAM. New MoE LRU cache PR #29887 (--moe-cache-mib 2048) surged decode to 23.92 t/s (+40.1% over plain offload). Strata v0.1.40.2 delivered 56.08 t/s decode and 1,999.2 t/s 8k prefill. Full live evolution tracker published on l3ms.carteakey.dev. |
-| 2026-10-03 | Standardized the parameter count at 176B: 125B main model plus 51B n-gram embeddings, excluding the additional MTP head. |
-| 2026-10-01 | Added the IQ3_S tier plan and the legacy-quant archive note, moved here from the overfit-engines post. |
-| 2026-09-29 | **Upstream master b11241 refresh & Unified QSA Sparsity Stack V2 (27 tok/s MTP & 3x cold prefill).** Upstream master b11241 (`1c4729414`) merged GDN RMS_NORM+SCALE CUDA fusion (#29393) and causal attention fixes (#28751), lifting prefill +20.8% (148.8 → 179.8 t/s) and peak decode to 22.11 t/s. Experimental Unified QSA Sparsity Stack V2 (`build 11268` / `f382a59e3`) merged Daniel Han PR #28243, Rhonstin #28699, Abdel Darwish #28213, Akio Nishimura #29166, and Aman Gupta #29599. MTP speculative decode surged to **25.32–27.06 tok/s** (97–100% acceptance, 2.76–2.93 tok/step) at `-ncmoe 46` under 11,025 MiB VRAM (>1.25 GB headroom). Aman Gupta's NVMe row prefetching lifted cold prefill from 32.9–49.8 t/s to **135.2 t/s** (+200% / 3x speedup). |
-| 2026-09-14 | **Upstream master refresh; Vision config & compact MTP 20.65 t/s.** Refreshed upstream master (`b78a39a2f`, 175 commits newer) tested at 19.35 t/s aggregate on unique 6-task corpus. Multimodal `qwen38-flash-next-vision` wired with `mmproj-F16.gguf` (-ncmoe 45, 16k ctx, 18.2–18.6 t/s). Compact `shared-Q4_K_M.gguf` (1.78 GB) with Daniel Han PR #28243 saves ~870 MiB VRAM, allowing `-ncmoe 45` (+1 MoE on GPU) to fit 11.78 GB VRAM and hit **20.65 t/s aggregate** (>20 t/s on every task). Diagnosed fresh-boot 10–14 t/s probe 1 decode as mmap NVMe cold page-in transient (not system swap). |
-| 2026-08-31 | **27B-vs-Flash-Next comparison split into its own post** ([Qwen3.8-27B vs Qwen3.8-Flash-Next](/blog/local-inference/qwen3-8-27b-vs-flash-next/)): head-to-head table, intelligence index (~90 vs ~74 via LLM Stats 49.7 + KLD curves), decision matrix, and a quant-agnostic dense-vs-MoE chooser tree. Pointer section added here. |
-| 2026-08-28 | **pp investigation** (`bench-llama-qwen38-flash-next-pp.sh`): three effects were stacked. (1) first prompt after every (re)load pays expert-page NVMe fault-in — ~45 GiB ÷ ~6 GB/s (SN770, Gen4 x4) ≈ 7.5 s; recurs with `globalTTL: 600`. (2) identical repeat prompts hit KV prefix reuse — `prompt_n` collapses and naive pp math reports garbage (~22 t/s); always print `prompt_n`, force full re-prefill with a unique prefix. (3) real warm full-prefill pp on a fresh quiet boot: **~200 t/s** (fit-on, 64k, THP=always) — above the doc's 180 reference. THP=always measured neutral-to-positive; kept on (`defrag=defer+madvise`). A mid-session dip to ~97 was desktop churn + swap pressure, resolved by reboot — the 64 GB box has zero slack against the 45.6 GiB expert set. |
-| 2026-08-28 | Thread-intel pass: tensor-type dump shows routed experts are IQ2_XS + Q2_K_S (label bpw is a weighted average) — TODO #1 gets a verify-first caveat. `ngram-mod,ngram-map-k4v` combo A/B: no effect on distinct prompts. MTP bandwidth caveat + kvarn5 watch item noted. |
-| 2026-08-28 | **Attribution 2×2 + warm-pool measurement** (`bench-llama-qwen38-flash-next-graphopt.sh`): `GGML_CUDA_GRAPH_OPT=1` is a **no-op** on current master (graphs already reused 1902/request without it; ±0.2% tg); `--fit on --fit-target 512` = +2.8% over `-ncmoe 46` (20.45 vs 19.90 median) at 64k — base swap entry switched to fit-on. Warm ngram-mod pool on repeated content: 18.9 → **35.9 t/s** (+90%); novel-content decode ~20 t/s. |
-| 2026-08-28 | **MTP landed via PR #27836.** Sidecar Q4_K_M head (requantized from agentionai Q8_0, llama-quantize) in VRAM at 32k ctx (11636/12282 MiB). A/B on this box: ungated dn=2 = code +10%, prose −12..−22% (acceptance 0.61–0.69); `--spec-draft-p-min 0.7` = code **+25.7% (t0) / +15.1% (t1)**, prose −0.3% (parity), acceptance 0.81–0.97. New `qwen38-flash-next-mtp` swap entry + `bench-llama-qwen38-flash-next-mtp.sh` A/B harness. Reasoning caps (`--reasoning-effort medium --reasoning-budget 4000 --reasoning-preserve`) added to both Flash-Next entries. |
-| 2026-08-27 | Added the full quant ladder (unsloth / AtomicChat / ggml-org official), the backbone-fits heuristic, repack guidance for interleaved-shard quants, and the measured memory ledger (VRAM 10.0 / RAM 45.6 / SSD 32.4 GiB). |
-| 2026-08-27 | **Power governor: tg 6.5 → 12.2 tok/s** with `performance` (no flag changes). Thread matrix confirms `-t 10` optimal. `--prio 2` added to the swap entry; preflight power checks now part of the bench ritual. |
-| 2026-08-27 | **PR #27742 + graph-reuse fixes merged upstream.** Rebuilt from master: 64k config verified regression-free (tg 6.4–6.9), `graphs reused` counter now 318–605/request (was 0 on the PR branch), per-request host leak patched. 131k still CUDA-OOMs — matches the upstream indexer-buffer finding (grows context-proportionally). Serving binary = upstream master now. |
-| 2026-08-27 | Spec reality-check: type sweep shows all ngram variants within noise at chat settings; gain is content-dependent (6–9 typical, ~15 repetitive-prose ceiling). `-n-min/-n-max` are no-ops. q8_0 KV works → **64k ctx at full speed**; 131k q8 segfaults on CUDA (upstream report pending). Swap entry now 64k + q8 KV. |
-| 2026-08-27 | pp fix: `-b 4096 -ub 1024` lifts prefill 15 → 180 tok/s (expert traffic amortized per ubatch); tg unchanged. Wired into llama-swap. |
-| 2026-08-27 | Initial post — AD-4.27bpw, dual-PR build, `-ncmoe 46` placement ladder, 32k sweet spot, ngram-mod spec results. |
+| 2026-10-18 | Added DDR5-5800 scaling (65.8 tok/s) and uncompressed Q8_0 PLE on NVMe (74.8 tok/s text, 73.3 tok/s vision, 0 MiB extra VRAM). |
+| 2026-10-14 | Updated Strata to v0.1.44.1 (62.2 tok/s steady) and added ISTA-DASLab GSQ-RCO quants to the quant ladder. |
+| 2026-10-07 | Benchmarked upstream llama.cpp native MTP, MoE LRU cache, and Strata v0.1.40.2. |
+| 2026-09-29 | Added QSA Sparsity Stack V2 results (27.1 tok/s MTP at 16k, 135 tok/s cold prefill) and the context crossover table. |
+| 2026-09-14 | Added multimodal vision config and compact Q4_K_M MTP draft head benchmarks. |
+| 2026-08-31 | Split the 27B vs Flash-Next head-to-head comparison into its own post. |
+| 2026-08-27 | Initial post: AtomicChat AD-4.27bpw, Shard 2 NVMe mmap offload, power governor fix, and `-ub 2048` prefill tuning. |
 
 ## References
 
-- [AtomicChat/Qwen3.8-Flash-Next-GGUF](https://huggingface.co/AtomicChat/Qwen3.8-Flash-Next-GGUF) (quant + imatrix + metrics)
-- [Qwen/Qwen3.8-Flash-Next (base)](https://huggingface.co/Qwen/Qwen3.8-Flash-Next)
-- [llama.cpp PR #27742 — qwen4exp support](https://github.com/ggml-org/llama.cpp/pull/27742)
-- [llama.cpp PR #27794 — lazy tensor reads](https://github.com/ggml-org/llama.cpp/pull/27794)
-- [llama.cpp PR #28243 — Daniel Han qwen4exp MTP shared draft head](https://github.com/ggml-org/llama.cpp/pull/28243)
-- [llama.cpp PR #28699 — incremental pooled-key cache for QSA indexer](https://github.com/ggml-org/llama.cpp/pull/28699)
-- [llama.cpp PR #28213 — gather-based sparse attention decode](https://github.com/ggml-org/llama.cpp/pull/28213)
-- [llama.cpp PR #29166 — multi-sequence block bias indexing bugfix](https://github.com/ggml-org/llama.cpp/pull/29166)
-- [llama.cpp PR #29599 — asynchronous NVMe PLE row madvise prefetch](https://github.com/ggml-org/llama.cpp/pull/29599)
-- [llama.cpp PR #29393 — CUDA GDN RMS_NORM+SCALE fusion](https://github.com/ggml-org/llama.cpp/pull/29393)
-- [agentionai/Qwen3.8-Flash-Next-MTP-Q8_0-GGUF](https://huggingface.co/agentionai/Qwen3.8-Flash-Next-MTP-Q8_0-GGUF) (sidecar head)
-- [l3ms.carteakey.dev](https://l3ms.carteakey.dev/) (live homelab LLM leaderboard, served models, and task benchmarks)
-- [carteakey/l3ms repository](https://github.com/carteakey/l3ms) (homelab LLM toolkit, build flags, serving configurations, and bench reproduction scripts)
+- [ISTA-DASLab/Qwen3.8-Flash-Next-GSQ-RCO-GGUF](https://huggingface.co/ISTA-DASLab/Qwen3.8-Flash-Next-GSQ-RCO-GGUF) (IQ3_XXS, IQ3_S, Coder IQ1_M)
+- [AtomicChat/Qwen3.8-Flash-Next-GGUF](https://huggingface.co/AtomicChat/Qwen3.8-Flash-Next-GGUF) (AD-4.27bpw-Q4_K_M-M64)
+- [Qwen/Qwen3.8-Flash-Next](https://huggingface.co/Qwen/Qwen3.8-Flash-Next) (base model card)
+- [Strata inference engine](https://github.com/Niko1221/Strata) & [The Rise of Overfit Inference Engines](/blog/local-inference/the-rise-of-overfit-inference-engines/)
+- llama.cpp PRs: [#27742 (qwen4exp)](https://github.com/ggml-org/llama.cpp/pull/27742), [#27794 (lazy tensor reads)](https://github.com/ggml-org/llama.cpp/pull/27794), [#28243 (MTP shared draft head)](https://github.com/ggml-org/llama.cpp/pull/28243), [#29599 (NVMe PLE madvise prefetch)](https://github.com/ggml-org/llama.cpp/pull/29599), [#29887 (MoE LRU cache)](https://github.com/ggml-org/llama.cpp/pull/29887)
+- [l3ms.carteakey.dev](https://l3ms.carteakey.dev/) & [carteakey/l3ms repository](https://github.com/carteakey/l3ms)
