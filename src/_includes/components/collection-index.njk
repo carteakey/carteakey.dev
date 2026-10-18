@@ -107,7 +107,7 @@
                 showTags: cvRow.showTags,
                 showAuthorship: cvRow.showAuthorship,
                 date: item | collectionDate(cv),
-                dateFormat: 'MMM d' if group.kind == 'year' else cvRow.dateFormat,
+                dateFormat: 'MMM d' if (group.kind == 'year' or group.kind == 'pinned') else cvRow.dateFormat,
                 saveable: 'saved' in cvFilters,
                 outerAttrs: 'data-collection-item data-type="' ~ item.type ~ '" data-search="' ~ (item | collectionSearchText) ~ '"'
               }) }}

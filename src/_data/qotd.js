@@ -14,7 +14,7 @@ function cleanQuoteText(raw) {
 function getRandomLocalQuote() {
   const available = Array.isArray(quotes)
     ? quotes.filter(
-        (item) => !(item && typeof item === "object" && item.enabled === false)
+        (item) => !(item && typeof item === "object" && item.enabled === false),
       )
     : [];
 
@@ -176,7 +176,7 @@ async function generateQuote() {
     } catch (error) {
       console.warn(
         "OpenRouter QOTD failed, trying other providers:",
-        error.message || error
+        error.message || error,
       );
     }
   }
@@ -188,7 +188,7 @@ async function generateQuote() {
     } catch (error) {
       console.warn(
         "Ollama QOTD failed, trying other providers:",
-        error.message || error
+        error.message || error,
       );
     }
   }
@@ -202,7 +202,7 @@ async function generateQuote() {
   }
 
   console.log(
-    "No external AI providers succeeded for QOTD, pulling random quote from saved lines."
+    "No external AI providers succeeded for QOTD, pulling random quote from saved lines.",
   );
   return getRandomLocalQuote();
 }
@@ -230,7 +230,7 @@ export default async function () {
   } catch (e) {
     console.warn(
       "QOTD generation failed, falling back to saved quotes:",
-      e.message || e
+      e.message || e,
     );
     const result = getRandomLocalQuote();
     await qotd.save(result, "json");

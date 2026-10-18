@@ -33,7 +33,14 @@ blog:
   jump: true
   search: true
   filters: [authorship]
-  row: { rich: true, showType: false, showSummary: true, showTags: true }
+  row:
+    {
+      rich: true,
+      showType: false,
+      showSummary: true,
+      showTags: true,
+      dateFormat: "MMM d",
+    }
   why: >-
     The reference index. 70+ long posts need year groups, jump pills and search
     to stay scannable; the wall exists because the thumbnails make browsing by

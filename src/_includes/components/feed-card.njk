@@ -413,7 +413,7 @@
       rich: true,
       showType: false,
       date: post.date,
-      dateFormat: extra.dateFormat,
+      dateFormat: extra.dateFormat or 'MMM d',
       extraClasses: (extra.extraClasses or '') ~ ((' postlist-item-active') if extra.active else ''),
       outerAttrs: extra.outerAttrs
     }) }}

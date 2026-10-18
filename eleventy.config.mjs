@@ -656,7 +656,10 @@ export default function (eleventyConfig) {
   // Entries without the flag, including plain strings, are enabled.
   eleventyConfig.addFilter("enabled", (items) =>
     Array.isArray(items)
-      ? items.filter((item) => !(item && typeof item === "object" && item.enabled === false))
+      ? items.filter(
+          (item) =>
+            !(item && typeof item === "object" && item.enabled === false),
+        )
       : items,
   );
 
@@ -1175,8 +1178,26 @@ export default function (eleventyConfig) {
         if (c > peak.count) peak = { year: yr, month: mi, count: c };
       }),
     );
-    const cols = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-    return { rows, cols, matrix, peak: { ...peak, label: `${cols[peak.month]} ${peak.year}` } };
+    const cols = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
+    return {
+      rows,
+      cols,
+      matrix,
+      peak: { ...peak, label: `${cols[peak.month]} ${peak.year}` },
+    };
   });
 
   eleventyConfig.addFilter("countInYearMonth", function (posts, year, month) {

@@ -220,7 +220,10 @@ export default async function () {
 
     throw new Error("Parsed zero contributions from GitHub");
   } catch (error) {
-    console.warn("github-history: fetch failed, using fallback.", error.message);
+    console.warn(
+      "github-history: fetch failed, using fallback.",
+      error.message,
+    );
     try {
       const cached = await cache.getCachedValue();
       if (cached?.monthly?.length) return cached;

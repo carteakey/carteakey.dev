@@ -1,6 +1,6 @@
 meta:
   title: Agentic Coding Model Tier List
-  updated_at: '2026-10-14'
+  updated_at: "2026-10-14"
   currency: USD
   methodology: >
     Editorial ranking triangulated across public benchmarks (Artificial Analysis Intelligence Index v4.3.2,
@@ -117,8 +117,8 @@ models:
       input_per_million: 5
       cached_input_per_million: 0.5
       output_per_million: 30
-      effective_date: '2026-10-14'
-    last_verified: '2026-10-14'
+      effective_date: "2026-10-14"
+    last_verified: "2026-10-14"
     sources:
       - title: OpenAI GPT-6 Astra documentation
         url: https://developers.openai.com/api/docs/models/gpt-6-astra
@@ -140,7 +140,7 @@ models:
       - Deep bug investigation
       - Architecture and API design
     strengths:
-      - '#1 on Artificial Analysis Intelligence Index v4.3.2 with peak score of 58 (max effort)'
+      - "#1 on Artificial Analysis Intelligence Index v4.3.2 with peak score of 58 (max effort)"
       - Concise, direct implementation without pedagogical filler
       - One-million-token context window
       - Exceptional multi-agent coordination
@@ -158,8 +158,8 @@ models:
       input_per_million: 5
       cached_input_per_million: 0.5
       output_per_million: 25
-      effective_date: '2026-10-14'
-    last_verified: '2026-10-14'
+      effective_date: "2026-10-14"
+    last_verified: "2026-10-14"
     sources:
       - title: Anthropic Claude Opus 5.5 documentation
         url: https://platform.claude.com/docs/en/about-claude/models/whats-new-opus-5-5
@@ -199,8 +199,8 @@ models:
       input_per_million: 10
       cached_input_per_million: 1
       output_per_million: 50
-      effective_date: '2026-10-14'
-    last_verified: '2026-10-14'
+      effective_date: "2026-10-14"
+    last_verified: "2026-10-14"
     sources:
       - title: Anthropic Claude Fable 5.1 model documentation
         url: https://platform.claude.com/docs/en/about-claude/models/introducing-claude-fable-5-1
@@ -222,7 +222,7 @@ models:
       - Complex feature development
       - Code review
     strengths:
-      - '#2 on Artificial Analysis Intelligence Index v4.3.2 (score 56), rivaling Opus at lower cost'
+      - "#2 on Artificial Analysis Intelligence Index v4.3.2 (score 56), rivaling Opus at lower cost"
       - Exceptional speed-to-intelligence ratio
       - Rock-solid tool use and terminal execution
       - One-million-token context window
@@ -240,8 +240,8 @@ models:
       input_per_million: 3
       cached_input_per_million: 0.3
       output_per_million: 15
-      effective_date: '2026-10-14'
-    last_verified: '2026-10-14'
+      effective_date: "2026-10-14"
+    last_verified: "2026-10-14"
     sources:
       - title: Anthropic Claude Sonnet 5.5 documentation
         url: https://platform.claude.com/docs/en/about-claude/models/whats-new-sonnet-5-5
@@ -281,8 +281,8 @@ models:
       input_per_million: 0.35
       cached_input_per_million: 0.035
       output_per_million: 1.05
-      effective_date: '2026-10-14'
-    last_verified: '2026-10-14'
+      effective_date: "2026-10-14"
+    last_verified: "2026-10-14"
     sources:
       - title: Google Gemini 3.8 Flash documentation
         url: https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash
@@ -322,8 +322,8 @@ models:
       input_per_million: 3
       cached_input_per_million: 0.3
       output_per_million: 15
-      effective_date: '2026-10-14'
-    last_verified: '2026-10-14'
+      effective_date: "2026-10-14"
+    last_verified: "2026-10-14"
     sources:
       - title: OpenAI GPT-6.1 Sol documentation
         url: https://developers.openai.com/api/docs/models/gpt-6.1-sol
@@ -361,8 +361,8 @@ models:
       input_per_million: 3
       cached_input_per_million: 0.3
       output_per_million: 15
-      effective_date: '2026-10-14'
-    last_verified: '2026-10-14'
+      effective_date: "2026-10-14"
+    last_verified: "2026-10-14"
     sources:
       - title: Kimi K3 official repository and evaluation table
         url: https://github.com/MoonshotAI/Kimi-K3
@@ -402,8 +402,8 @@ models:
       input_per_million: 2
       cached_input_per_million: 0.3
       output_per_million: 6
-      effective_date: '2026-10-14'
-    last_verified: '2026-10-14'
+      effective_date: "2026-10-14"
+    last_verified: "2026-10-14"
     sources:
       - title: SpaceXAI Grok 4.5 model documentation
         url: https://docs.x.ai/developers/models/grok-4.5
@@ -439,7 +439,7 @@ models:
     speed: fast
     price_level: low
     api_pricing: null
-    last_verified: '2026-10-14'
+    last_verified: "2026-10-14"
     sources:
       - title: Z.ai GLM-5.3 release
         url: https://z.ai/blog/glm-5.3
@@ -478,8 +478,8 @@ models:
       input_per_million: 0.1
       cached_input_per_million: 0.01
       output_per_million: 0.5
-      effective_date: '2026-10-14'
-    last_verified: '2026-10-14'
+      effective_date: "2026-10-14"
+    last_verified: "2026-10-14"
     sources:
       - title: Z.ai GLM-5.3 Flash release
         url: https://z.ai/blog/glm-5.3
@@ -519,8 +519,8 @@ models:
       input_per_million: 0.435
       cached_input_per_million: 0.003625
       output_per_million: 0.87
-      effective_date: '2026-10-14'
-    last_verified: '2026-10-14'
+      effective_date: "2026-10-14"
+    last_verified: "2026-10-14"
     sources:
       - title: DeepSeek V4 Pro official model card
         url: https://huggingface.co/deepseek-ai/DeepSeek-V4-Pro
@@ -556,8 +556,8 @@ models:
       input_per_million: 0.35
       cached_input_per_million: 0.05
       output_per_million: 1.4
-      effective_date: '2026-10-14'
-    last_verified: '2026-10-14'
+      effective_date: "2026-10-14"
+    last_verified: "2026-10-14"
     sources:
       - title: Qwen3.8-Flash-Next official model card
         url: https://huggingface.co/Qwen/Qwen3.8-Flash-Next
@@ -597,8 +597,8 @@ models:
       input_per_million: 0.3
       cached_input_per_million: 0.06
       output_per_million: 1.2
-      effective_date: '2026-10-14'
-    last_verified: '2026-10-14'
+      effective_date: "2026-10-14"
+    last_verified: "2026-10-14"
     sources:
       - title: MiniMax M2.7 official model page
         url: https://www.minimax.io/models/text/m27
@@ -640,8 +640,8 @@ models:
       input_per_million: 0.2
       cached_input_per_million: 0.02
       output_per_million: 1.2
-      effective_date: '2026-10-14'
-    last_verified: '2026-10-14'
+      effective_date: "2026-10-14"
+    last_verified: "2026-10-14"
     sources:
       - title: OpenAI GPT-6 Luna documentation
         url: https://developers.openai.com/api/docs/models/gpt-6-luna
@@ -681,8 +681,8 @@ models:
       input_per_million: 0.14
       cached_input_per_million: 0.0028
       output_per_million: 0.28
-      effective_date: '2026-10-14'
-    last_verified: '2026-10-14'
+      effective_date: "2026-10-14"
+    last_verified: "2026-10-14"
     sources:
       - title: DeepSeek V4 Flash official model card and evaluations
         url: https://huggingface.co/deepseek-ai/DeepSeek-V4-Flash
@@ -720,8 +720,8 @@ models:
       input_per_million: 1
       cached_input_per_million: 0.1
       output_per_million: 5
-      effective_date: '2026-10-14'
-    last_verified: '2026-10-14'
+      effective_date: "2026-10-14"
+    last_verified: "2026-10-14"
     sources:
       - title: Anthropic Claude Haiku 5.5 documentation
         url: https://platform.claude.com/docs/en/about-claude/models/whats-new-haiku-5-5
@@ -759,8 +759,8 @@ models:
       input_per_million: 1.25
       cached_input_per_million: 0.15
       output_per_million: 4.25
-      effective_date: '2026-10-14'
-    last_verified: '2026-10-14'
+      effective_date: "2026-10-14"
+    last_verified: "2026-10-14"
     sources:
       - title: Meta Model API and Muse Spark benchmarks
         url: https://ai.meta.com/llama
@@ -800,8 +800,8 @@ models:
       input_per_million: 0.6
       cached_input_per_million: null
       output_per_million: 3.6
-      effective_date: '2026-10-14'
-    last_verified: '2026-10-14'
+      effective_date: "2026-10-14"
+    last_verified: "2026-10-14"
     sources:
       - title: Qwen3.8-27B official model card
         url: https://huggingface.co/Qwen/Qwen3.8-27B
@@ -833,7 +833,7 @@ services:
     byok: false
     best_for: Developers who want strong Codex access at the standard consumer price.
     limitation: Heavy autonomous sessions can exhaust usage sooner than higher Pro tiers.
-    last_verified: '2026-10-14'
+    last_verified: "2026-10-14"
     sources:
       - title: OpenAI ChatGPT Pro tiers
         url: https://help.openai.com/en/articles/9793128-about-chatgpt-pro-plans
@@ -862,7 +862,7 @@ services:
     byok: false
     best_for: Frequent Codex users who need more headroom without the highest subscription.
     limitation: Usage remains metered and is lower than the $200 Pro tier.
-    last_verified: '2026-10-14'
+    last_verified: "2026-10-14"
     sources:
       - title: OpenAI ChatGPT Pro tiers
         url: https://help.openai.com/en/articles/9793128-about-chatgpt-pro-plans
@@ -891,7 +891,7 @@ services:
     byok: false
     best_for: Power users running sustained high-effort Codex and ChatGPT workloads.
     limitation: High fixed monthly cost and still subject to abuse guards and plan limits.
-    last_verified: '2026-10-14'
+    last_verified: "2026-10-14"
     sources:
       - title: OpenAI ChatGPT Pro tiers
         url: https://help.openai.com/en/articles/9793128-about-chatgpt-pro-plans
@@ -921,7 +921,7 @@ services:
     byok: false
     best_for: Regular developers who prefer Claude Code and can work within standard limits.
     limitation: Web, desktop, and Claude Code draw from the same usage pool.
-    last_verified: '2026-10-14'
+    last_verified: "2026-10-14"
     sources:
       - title: Claude pricing
         url: https://claude.com/pricing
@@ -949,7 +949,7 @@ services:
     byok: false
     best_for: Frequent Claude Code users who need longer uninterrupted sessions.
     limitation: Weekly caps still apply and Fable can consume usage credits quickly.
-    last_verified: '2026-10-14'
+    last_verified: "2026-10-14"
     sources:
       - title: Claude pricing
         url: https://claude.com/pricing
@@ -977,7 +977,7 @@ services:
     byok: false
     best_for: Developers who use Claude Code throughout the workday.
     limitation: Expensive, and all Claude surfaces still share the same plan pool.
-    last_verified: '2026-10-14'
+    last_verified: "2026-10-14"
     sources:
       - title: Claude pricing
         url: https://claude.com/pricing
@@ -1007,7 +1007,7 @@ services:
     byok: true
     best_for: Developers who want a polished multi-model agent IDE at the entry paid tier.
     limitation: Included model usage is limited and expensive agents can trigger overages.
-    last_verified: '2026-10-14'
+    last_verified: "2026-10-14"
     sources:
       - title: Cursor pricing
         url: https://cursor.com/pricing
@@ -1043,7 +1043,7 @@ services:
     byok: true
     best_for: Daily agent users who regularly exceed Cursor Pro.
     limitation: The jump in allowance may still be insufficient for sustained high-effort agents.
-    last_verified: '2026-10-14'
+    last_verified: "2026-10-14"
     sources:
       - title: Cursor pricing
         url: https://cursor.com/pricing
@@ -1077,7 +1077,7 @@ services:
     byok: true
     best_for: Power users who run Cursor agents for most of their development work.
     limitation: High fixed price and model-specific usage can still vary substantially.
-    last_verified: '2026-10-14'
+    last_verified: "2026-10-14"
     sources:
       - title: Cursor pricing
         url: https://cursor.com/pricing
@@ -1107,7 +1107,7 @@ services:
     byok: false
     best_for: Developers already working in GitHub and supported editors.
     limitation: Premium agent use consumes a relatively small monthly credit pool.
-    last_verified: '2026-10-14'
+    last_verified: "2026-10-14"
     sources:
       - title: GitHub Copilot plans and model availability
         url: https://github.com/features/copilot/plans
@@ -1135,7 +1135,7 @@ services:
     byok: false
     best_for: Developers who want broad model choice and delegated agents inside GitHub.
     limitation: AI-credit accounting makes effective usage less predictable than simple request limits.
-    last_verified: '2026-10-14'
+    last_verified: "2026-10-14"
     sources:
       - title: GitHub Copilot plans and model availability
         url: https://github.com/features/copilot/plans
@@ -1163,7 +1163,7 @@ services:
     byok: false
     best_for: Heavy GitHub-native agent users who need substantially more included compute.
     limitation: Still tied to Copilot's curated models, feature availability, and credit accounting.
-    last_verified: '2026-10-14'
+    last_verified: "2026-10-14"
     sources:
       - title: GitHub Copilot plans and model availability
         url: https://github.com/features/copilot/plans
@@ -1186,7 +1186,7 @@ services:
     limitation: >-
       Frontier-model usage can consume quotas quickly and the allowance system is less transparent
       than flat requests.
-    last_verified: '2026-10-14'
+    last_verified: "2026-10-14"
     sources:
       - title: Windsurf upgrade and pricing page
         url: https://windsurf.com/account/upgrade-prompt
@@ -1205,7 +1205,7 @@ services:
     byok: true
     best_for: Teams that want one API and routing layer across many model providers.
     limitation: Model availability changes and gateway fees or provider routing can alter effective cost.
-    last_verified: '2026-10-14'
+    last_verified: "2026-10-14"
     sources:
       - title: OpenRouter pricing
         url: https://openrouter.ai/pricing
@@ -1228,7 +1228,7 @@ services:
     byok: false
     best_for: Light regular use of Kimi Code and Kimi's research workspace.
     limitation: Coding credits and concurrency are much lower than higher Kimi tiers.
-    last_verified: '2026-10-14'
+    last_verified: "2026-10-14"
     sources:
       - title: Kimi membership pricing
         url: https://www.kimi.com/help/membership/membership-pricing
@@ -1253,7 +1253,7 @@ services:
     byok: false
     best_for: Frequent Kimi Code users seeking a mid-priced plan.
     limitation: Long sessions remain governed by rolling and weekly limits.
-    last_verified: '2026-10-14'
+    last_verified: "2026-10-14"
     sources:
       - title: Kimi membership pricing
         url: https://www.kimi.com/help/membership/membership-pricing
@@ -1278,7 +1278,7 @@ services:
     byok: false
     best_for: Heavy Kimi Code and million-token workspace users.
     limitation: High fixed price and usage remains credit-based.
-    last_verified: '2026-10-14'
+    last_verified: "2026-10-14"
     sources:
       - title: Kimi membership pricing
         url: https://www.kimi.com/help/membership/membership-pricing
@@ -1303,7 +1303,7 @@ services:
     byok: false
     best_for: Power users committed to Kimi's coding and agent ecosystem.
     limitation: Expensive and less broadly integrated than Claude Code or Codex.
-    last_verified: '2026-10-14'
+    last_verified: "2026-10-14"
     sources:
       - title: Kimi membership pricing
         url: https://www.kimi.com/help/membership/membership-pricing
@@ -1325,7 +1325,7 @@ services:
     byok: false
     best_for: Budget access to GLM coding agents.
     limitation: The entry allowance is limited for sustained autonomous work.
-    last_verified: '2026-10-14'
+    last_verified: "2026-10-14"
     sources:
       - title: Z.ai subscription plans
         url: https://z.ai/subscribe
@@ -1345,7 +1345,7 @@ services:
     byok: false
     best_for: Regular GLM users who need substantially more capacity.
     limitation: The model ecosystem is narrower than multi-provider IDE subscriptions.
-    last_verified: '2026-10-14'
+    last_verified: "2026-10-14"
     sources:
       - title: Z.ai subscription plans
         url: https://z.ai/subscribe
@@ -1365,7 +1365,7 @@ services:
     byok: false
     best_for: Heavy open-model-oriented agent users.
     limitation: High fixed price for access centered primarily on the GLM family.
-    last_verified: '2026-10-14'
+    last_verified: "2026-10-14"
     sources:
       - title: Z.ai subscription plans
         url: https://z.ai/subscribe
@@ -1396,7 +1396,7 @@ services:
     byok: false
     best_for: Developers who want a mixed Chinese-model coding plan through Alibaba Cloud.
     limitation: The plan does not include the newest flagship models in this ranking.
-    last_verified: '2026-10-14'
+    last_verified: "2026-10-14"
     sources:
       - title: Alibaba Cloud Model Studio Coding Plan
         url: https://www.alibabacloud.com/help/en/model-studio/coding-plan
@@ -1416,7 +1416,7 @@ services:
     byok: false
     best_for: Budget developers using MiniMax Code or compatible coding tools.
     limitation: Rolling-window limits can interrupt long agent sessions.
-    last_verified: '2026-10-14'
+    last_verified: "2026-10-14"
     sources:
       - title: MiniMax Token Plan
         url: https://platform.minimax.io/subscribe/token-plan
@@ -1438,7 +1438,7 @@ services:
     byok: false
     best_for: Frequent MiniMax coding-agent users.
     limitation: Usage quotas are dynamic rather than a fixed token entitlement.
-    last_verified: '2026-10-14'
+    last_verified: "2026-10-14"
     sources:
       - title: MiniMax Token Plan
         url: https://platform.minimax.io/subscribe/token-plan
@@ -1460,7 +1460,7 @@ services:
     byok: false
     best_for: High-volume users prioritizing inexpensive MiniMax agents.
     limitation: The ecosystem and independent evaluation coverage are smaller than frontier competitors.
-    last_verified: '2026-10-14'
+    last_verified: "2026-10-14"
     sources:
       - title: MiniMax Token Plan
         url: https://platform.minimax.io/subscribe/token-plan
@@ -1485,7 +1485,7 @@ services:
     limitation: >-
       Google's consumer coding-product entitlements are transitioning toward Antigravity, so exact
       model access is unsettled.
-    last_verified: '2026-10-14'
+    last_verified: "2026-10-14"
     sources:
       - title: Google Developer Program plans and pricing
         url: https://developers.google.com/program/plans-and-pricing
@@ -1508,7 +1508,7 @@ services:
     byok: false
     best_for: Early adopters testing Meta's new coding-agent stack without a monthly subscription.
     limitation: Beta availability, limited official documentation, and scarce independent 1.2 benchmarks.
-    last_verified: '2026-10-14'
+    last_verified: "2026-10-14"
     sources:
       - title: Meta Model API and Muse Spark
         url: https://ai.meta.com/llama

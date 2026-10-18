@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.9.1] - 2026-10-18
+### Added
+- Readability & Diff Workbench (`utils/snapshot-post.mjs`, `src/_data/postSnapshots.js`, `src/_includes/components/post-diff-workbench.njk`): local-only side-by-side comparison bar (`Split (Aligned)`, `Split (Full)`, `Word Diff`, `After (Clean)`, `Before`) with live `Before → After` prose metric chips (`words`, `numbers/1k`, `bold/1k`, `code/1k`, `emDashes`, `contractions/1k`). Gated to local preview (`SHOW_LOCAL_PREVIEW`) and git-ignored (`utils/post-snapshots.json`) so production builds ship zero diff overhead.
+- Skills (`human-writer`, `publish-post`): codified the two-workflow readability pipeline separating Writing/Fine-Tuning/Rewriting practices (`Mode A — Light Fine-Tuning`, `Mode B — Full De-Stuffing`, `Mode C — Human Post Proofread`) from the 5-step Side-by-Side Diffing & Review loop.
+
+### Changed
+- Local inference posts (`running-qwen3-8-flash-next-locally`, `strata-on-an-rtx-4070`, `qwen3-8-27b-vs-flash-next`): de-stuffed and rewritten for readability (~50–57% prose reduction, zero em dashes, consolidated stacked `{% update %}` boxes, promoted the Strata run guide near the top, updated Strata headline to 75 tok/s at 128k context with `Q8_0` PLE and DDR5-5800, and added the 3-row Greedy vs Thinking Mode sampling comparison table).
+- `ink.js` & `.post-body` typography: armed visible `.sketch-draw` diagrams above the 90% fold and across mode switches so the left-to-right ink-wipe animation runs consistently in regular and diff views; gave `.post-body h2` and `.post-body h3` explicit font-size hierarchy and vertical spacing.
+- Blog index & feed cards: standardized `MMM d` short date formatting across year and pinned groups.
+
 ## [2.9.0] - 2026-10-17
 ### Added
 - Projects: all-time GitHub commit curve in dataviz style (`{% chart %}`), plotting cumulative contributions and monthly cadence since account creation in June 2018 with milestone annotations, hover details, and an accessible data table.
