@@ -44,23 +44,24 @@ was wrong by 5x). Run the steps in order; stop and report on any failure.
 - No `---` rules between sections and no recap "Conclusion" heading unless the
   owner wants one (they rarely use either).
 
-## 3. Voice
+## 3. Voice, Fine-Tuning & Diffing Workbench
 
-1. Run the `human-writer` skill:
-   - Apply **Part 2** (General Humanizer Engine) to eliminate generic AI tells, formulaic staging, and chatbot framing.
-   - Check the result against **Part 1** (Author Baseline Table). Measure, do not guess:
+Use the two workflows in `human-writer` (`Workflow 1: Writing, Fine-Tuning & Rewriting Practices` and `Workflow 2: Side-by-Side Diffing & Review Workflow`):
 
+1. **Lock a "Before" snapshot before editing** so the owner can review Before vs After side-by-side in the local dev server (`?diff=split-aligned` or `?diff=word-diff`):
    ```sh
-   python3 .agents/skills/human-writer/scripts/calibrate.py     # corpus baseline
+   node utils/snapshot-post.mjs <path-to-post.md>
    ```
-   For one file, load it through the same `metrics()` function and compare
-   before and after. Targets per 1k words: **0 em dashes**, ~12 contractions,
-   ~21 first-person pronouns, ~8 bold. Say which signals are still far off
-   (length and number density on benchmark posts are the usual ones).
-2. Deliberate voice stays. Rare, earned swearing ("what in the fuck?") is the
-   owner's and is not edited out.
-3. The no-fabrication rule applies to your edits: keep all facts intact; this step
-   catches the shape and tone of the prose, not its substance.
+2. **Choose the right editing mode (`Workflow 1` in `human-writer`):**
+   - **Mode A — Light Fine-Tuning (Default for new posts & clean updates):** Keep raw numbers in tables, keep git SHAs/CLI flags in code blocks, eliminate AI tells (Part 2), and hit the voice baseline (Part 1: **0 em dashes**, ~12–18 contractions/1k, ~15–21 first-person pronouns/1k, ~8–13 bold/1k, <18 inline code spans/1k).
+   - **Mode B — Full De-Stuffing & Rewriting (For bloated `ai-assisted` / `ai-generated` posts):** Delete bullet lists that repeat benchmark tables, evict commit-hash/PR soup from narrative prose, collapse stacked `{% update %}` boxes into one, and un-backtick model/quant names in prose before polishing voice.
+   - **Mode C — Human Post Proofread (`authored_by: human`):** Typo and grammar fixes only — never rewrite voice or cut sections unless explicitly requested.
+3. **Check scorecard & review in browser (`Workflow 2` in `human-writer`):**
+   ```sh
+   node utils/snapshot-post.mjs --diff <path-to-post.md>
+   ```
+   Review in the browser's `[READABILITY WORKBENCH]` (`Split (Aligned)`, `Word Diff`, `After (Clean)`). Once approved by the owner, clear the local snapshot (`node utils/snapshot-post.mjs --clear <slug>` or `--clear-all`).
+4. Deliberate voice stays (rare, earned swearing is not edited out), and the no-fabrication rule applies to all edits: keep all facts, tables, and reproduction commands intact.
 
 ## 4. Fact-check
 

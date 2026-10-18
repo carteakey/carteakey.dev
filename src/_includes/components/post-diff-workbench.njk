@@ -1,0 +1,541 @@
+<div
+  class="diff-workbench"
+  x-data="postDiffWorkbench()"
+  x-init="initWorkbench()"
+>
+  <div class="diff-toolbar surface surface-compact not-prose">
+    <div class="diff-toolbar-top">
+      <div class="diff-toolbar-title">
+        <span class="diff-eyebrow">[READABILITY WORKBENCH]</span>
+        <span class="diff-sub" x-text="summaryText">Comparing Before snapshot vs live After</span>
+      </div>
+      <div class="diff-mode-group" role="tablist" aria-label="Comparison view mode">
+        <button
+          type="button"
+          class="diff-mode-btn"
+          :class="{ 'is-active': mode === 'split-aligned' }"
+          @click="setMode('split-aligned')"
+        >
+          Split (Aligned)
+        </button>
+        <button
+          type="button"
+          class="diff-mode-btn"
+          :class="{ 'is-active': mode === 'split-full' }"
+          @click="setMode('split-full')"
+        >
+          Split (Full)
+        </button>
+        <button
+          type="button"
+          class="diff-mode-btn"
+          :class="{ 'is-active': mode === 'word-diff' }"
+          @click="setMode('word-diff')"
+        >
+          Word Diff
+        </button>
+        <button
+          type="button"
+          class="diff-mode-btn"
+          :class="{ 'is-active': mode === 'after' }"
+          @click="setMode('after')"
+        >
+          After (Clean)
+        </button>
+        <button
+          type="button"
+          class="diff-mode-btn"
+          :class="{ 'is-active': mode === 'before' }"
+          @click="setMode('before')"
+        >
+          Before
+        </button>
+      </div>
+    </div>
+
+    <div class="diff-metrics-strip">
+      <template x-for="m in metricRows" :key="m.label">
+        <div class="diff-metric-chip" :class="{ 'is-good': m.good }">
+          <span class="diff-metric-label" x-text="m.label"></span>
+          <span class="diff-metric-vals">
+            <span class="diff-val-before" x-text="m.before"></span>
+            <span class="diff-arrow">→</span>
+            <strong class="diff-val-after" x-text="m.after"></strong>
+            <span class="diff-val-delta" x-text="m.delta"></span>
+          </span>
+          <span class="diff-metric-target" x-text="'target: ' + m.target"></span>
+        </div>
+      </template>
+    </div>
+  </div>
+
+  {# Hidden template holding the locked Before HTML #}
+  <template id="post-before-template">{{ postSnapshot.beforeHtml | safe }}</template>
+  <script type="application/json" id="post-before-metrics-json">{{ postSnapshot.beforeMetrics | dump | safe }}</script>
+
+  {# 1. Section-Aligned Side-by-Side View #}
+  <div x-show="mode === 'split-aligned'" x-cloak class="diff-aligned-container">
+    <div class="diff-col-headers not-prose">
+      <div class="diff-col-header-cell">BEFORE (ORIGINAL SNAPSHOT)</div>
+      <div class="diff-col-header-cell is-after">AFTER (LIVE REWRITE)</div>
+    </div>
+    <template x-for="(pair, idx) in alignedSections" :key="idx">
+      <div class="diff-section-row">
+        <div class="diff-section-bar not-prose">
+          <span class="diff-section-title" x-text="pair.title"></span>
+          <span class="diff-section-stats" x-text="pair.stats"></span>
+        </div>
+        <div class="diff-split-grid">
+          <div class="diff-split-col is-before post-body{% if isEditorial %} ed-prose{% endif %}" x-html="pair.beforeHtml || '<p class=\'diff-empty-note\'>[New section in rewrite]</p>'"></div>
+          <div class="diff-split-col is-after post-body{% if isEditorial %} ed-prose{% endif %}" x-html="pair.afterHtml || '<p class=\'diff-empty-note\'>[Section removed or merged into prose above]</p>'"></div>
+        </div>
+      </div>
+    </template>
+  </div>
+
+  {# 2. Continuous Two-Column Side-by-Side View #}
+  <div x-show="mode === 'split-full'" x-cloak class="diff-full-container">
+    <div class="diff-col-headers not-prose">
+      <div class="diff-col-header-cell">BEFORE (ORIGINAL SNAPSHOT)</div>
+      <div class="diff-col-header-cell is-after">AFTER (LIVE REWRITE)</div>
+    </div>
+    <div class="diff-split-grid">
+      <div class="diff-split-col is-before post-body{% if isEditorial %} ed-prose{% endif %}" x-html="beforeRawHtml"></div>
+      <div class="diff-split-col is-after post-body{% if isEditorial %} ed-prose{% endif %}" x-html="afterRawHtml"></div>
+    </div>
+  </div>
+
+  {# 3. Word-Level Inline Diff View #}
+  <div x-show="mode === 'word-diff'" x-cloak class="diff-word-container">
+    <template x-for="(pair, idx) in alignedSections" :key="'wd-' + idx">
+      <div class="diff-word-section surface surface-padding">
+        <div class="diff-section-bar not-prose">
+          <span class="diff-section-title" x-text="pair.title"></span>
+          <span class="diff-section-stats" x-text="pair.stats"></span>
+        </div>
+        <div class="diff-word-body post-body" x-html="pair.wordDiffHtml"></div>
+      </div>
+    </template>
+  </div>
+
+  {# 4. Before-only Single Column View #}
+  <div
+    x-show="mode === 'before'"
+    x-cloak
+    class="post-body{% if isEditorial %} ed-prose{% endif %}"
+    x-html="beforeRawHtml"
+  ></div>
+</div>
+
+{# 5. Standard Live After Post Body (kept in normal DOM location for TOC & progress bar) #}
+<div
+  id="post-after-live"
+  class="post-body{% if isEditorial %} ed-prose{% endif %}"
+>
+  {{ content | safe }}
+</div>
+
+<script>
+  function postDiffWorkbench() {
+    return {
+      mode: new URLSearchParams(window.location.search).get("diff") || "split-aligned",
+      beforeRawHtml: "",
+      afterRawHtml: "",
+      metricRows: [],
+      alignedSections: [],
+      summaryText: "",
+
+      initWorkbench() {
+        const beforeTpl = document.getElementById("post-before-template");
+        const afterEl = document.getElementById("post-after-live");
+        const beforeMetricsEl = document.getElementById("post-before-metrics-json");
+
+        this.beforeRawHtml = beforeTpl ? beforeTpl.innerHTML.trim() : "";
+        this.afterRawHtml = afterEl ? afterEl.innerHTML.trim() : "";
+
+        let beforeMetrics = {};
+        try {
+          beforeMetrics = JSON.parse(beforeMetricsEl?.textContent || "{}");
+        } catch (e) {}
+
+        const afterMetrics = this.computeDomMetrics(afterEl);
+        if (!beforeMetrics.words) {
+          const tempBefore = document.createElement("div");
+          tempBefore.innerHTML = this.beforeRawHtml;
+          beforeMetrics = this.computeDomMetrics(tempBefore);
+        }
+
+        this.buildMetrics(beforeMetrics, afterMetrics);
+        this.buildAlignedSections();
+        this.applyLayoutMode();
+      },
+
+      setMode(newMode) {
+        this.mode = newMode;
+        const url = new URL(window.location.href);
+        if (newMode === "after") {
+          url.searchParams.delete("diff");
+        } else {
+          url.searchParams.set("diff", newMode);
+        }
+        window.history.replaceState({}, "", url.toString());
+        this.applyLayoutMode();
+      },
+
+      applyLayoutMode() {
+        const wrap = document.querySelector(".post-wrap");
+        const afterEl = document.getElementById("post-after-live");
+        const isWide = this.mode === "split-aligned" || this.mode === "split-full" || this.mode === "word-diff";
+        if (wrap) {
+          wrap.classList.toggle("post-diff-wide", isWide);
+        }
+        if (afterEl) {
+          afterEl.style.display = this.mode === "after" ? "" : "none";
+        }
+        setTimeout(() => {
+          if (typeof window.rearmInk === "function") window.rearmInk();
+        }, 40);
+      },
+
+      computeDomMetrics(rootEl) {
+        if (!rootEl) return { words: 1, numbersPer1k: 0, boldPer1k: 0, codePer1k: 0, emDashes: 0, contractionsPer1k: 0 };
+        const clone = rootEl.cloneNode(true);
+        clone.querySelectorAll("pre, table, figure, .data-card, script, style").forEach((el) => el.remove());
+        const text = clone.textContent || "";
+        const wordsArr = text.match(/\b[\w'-]+\b/g) || [];
+        const words = wordsArr.length || 1;
+        const k = 1000 / words;
+
+        const numbers = (text.match(/\b\d+(?:\.\d+)?(?:%|x|×|k|B|GB|GiB|MB|MiB|tok\/s|t\/s)?\b/g) || []).length;
+        const bolds = clone.querySelectorAll("strong, b").length;
+        const codes = clone.querySelectorAll("code").length;
+        const emDashes = (text.match(/—/g) || []).length;
+        const contractions = (
+          text.match(
+            /\b(?:I'm|I've|I'd|I'll|you're|you've|you'll|it's|don't|doesn't|didn't|can't|won't|isn't|aren't|wasn't|weren't|haven't|hasn't|hadn't|wouldn't|couldn't|shouldn't|that's|there's|what's|who's|let's|we're|we've|they're)\b/gi
+          ) || []
+        ).length;
+
+        return {
+          words,
+          numbersPer1k: Number((numbers * k).toFixed(1)),
+          boldPer1k: Number((bolds * k).toFixed(1)),
+          codePer1k: Number((codes * k).toFixed(1)),
+          emDashes,
+          contractionsPer1k: Number((contractions * k).toFixed(1)),
+        };
+      },
+
+      buildMetrics(b, a) {
+        const pct = (beforeVal, afterVal) => {
+          if (!beforeVal) return "";
+          const d = Math.round(((afterVal - beforeVal) / beforeVal) * 100);
+          return (d > 0 ? "+" : "") + d + "%";
+        };
+        this.summaryText = `Prose cut from ${b.words} to ${a.words} words (${pct(b.words, a.words)}) · Em dashes: ${b.emDashes} → ${a.emDashes}`;
+        this.metricRows = [
+          {
+            label: "Prose words",
+            before: b.words,
+            after: a.words,
+            delta: pct(b.words, a.words),
+            target: "~800–2,000",
+            good: a.words <= b.words,
+          },
+          {
+            label: "Numbers / 1k",
+            before: b.numbersPer1k,
+            after: a.numbersPer1k,
+            delta: pct(b.numbersPer1k, a.numbersPer1k),
+            target: "13–35",
+            good: a.numbersPer1k < b.numbersPer1k,
+          },
+          {
+            label: "Bold / 1k",
+            before: b.boldPer1k,
+            after: a.boldPer1k,
+            delta: pct(b.boldPer1k, a.boldPer1k),
+            target: "~8.4",
+            good: a.boldPer1k <= 14 || a.boldPer1k < b.boldPer1k,
+          },
+          {
+            label: "Inline code / 1k",
+            before: b.codePer1k,
+            after: a.codePer1k,
+            delta: pct(b.codePer1k, a.codePer1k),
+            target: "<18",
+            good: a.codePer1k <= b.codePer1k,
+          },
+          {
+            label: "Em dashes (—)",
+            before: b.emDashes,
+            after: a.emDashes,
+            delta: a.emDashes === 0 ? "CLEAN" : "",
+            target: "0",
+            good: a.emDashes === 0,
+          },
+          {
+            label: "Contractions / 1k",
+            before: b.contractionsPer1k,
+            after: a.contractionsPer1k,
+            delta: pct(b.contractionsPer1k, a.contractionsPer1k),
+            target: "~12.9",
+            good: a.contractionsPer1k >= b.contractionsPer1k,
+          },
+        ];
+      },
+
+      splitIntoH2Sections(htmlString) {
+        const container = document.createElement("div");
+        container.innerHTML = htmlString;
+        const sections = [];
+        let current = { title: "Intro & Updates", key: "intro", nodes: [] };
+
+        Array.from(container.childNodes).forEach((node) => {
+          if (node.nodeType === 1 && node.tagName === "H2") {
+            if (current.nodes.length > 0) {
+              sections.push(this.finalizeSection(current));
+            }
+            const rawTitle = (node.textContent || "").replace(/#/g, "").trim();
+            current = {
+              title: rawTitle,
+              key: this.normalizeHeadingKey(rawTitle),
+              nodes: [node],
+            };
+          } else {
+            current.nodes.push(node);
+          }
+        });
+        if (current.nodes.length > 0) {
+          sections.push(this.finalizeSection(current));
+        }
+        return sections;
+      },
+
+      finalizeSection(sec) {
+        const wrap = document.createElement("div");
+        sec.nodes.forEach((n) => wrap.appendChild(n.cloneNode(true)));
+        const html = wrap.innerHTML.trim();
+        const text = (wrap.textContent || "").trim();
+        const words = (text.match(/\b[\w'-]+\b/g) || []).length;
+        return { title: sec.title, key: sec.key, html, text, words };
+      },
+
+      normalizeHeadingKey(title) {
+        const t = title.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+        if (t.includes("tl dr") || t.includes("tldr")) return "tldr";
+        if (t.includes("quant") && t.includes("why")) return "why-quant";
+        if (t.includes("quant") && t.includes("ladder")) return "quant-ladder";
+        if (t.includes("build")) return "build";
+        if (t.includes("download")) return "download";
+        if (t === "run" || t.startsWith("run ")) return "run";
+        if (t.includes("bench") || t.includes("throughput") || t.includes("performance")) return "bench";
+        if (t.includes("q8 0") || t.includes("ple") || t.includes("embedding")) return "ple";
+        if (t.includes("27b") || t.includes("which one")) return "vs-27b";
+        if (t.includes("not help") || t.includes("didn t work") || t.includes("failed")) return "what-failed";
+        if (t.includes("note") || t.includes("watch") || t.includes("iq3 s") || t.includes("next")) return "notes";
+        if (t.includes("changelog")) return "changelog";
+        if (t.includes("reference")) return "references";
+        return t;
+      },
+
+      buildAlignedSections() {
+        const beforeSecs = this.splitIntoH2Sections(this.beforeRawHtml);
+        const afterSecs = this.splitIntoH2Sections(this.afterRawHtml);
+        const usedAfter = new Set();
+        const pairs = [];
+
+        beforeSecs.forEach((bSec) => {
+          let matchIdx = afterSecs.findIndex((aSec, idx) => !usedAfter.has(idx) && aSec.key === bSec.key);
+          if (matchIdx === -1) {
+            // Try word overlap
+            const bWords = new Set(bSec.title.toLowerCase().split(/\W+/).filter((w) => w.length > 2));
+            let bestScore = 0;
+            afterSecs.forEach((aSec, idx) => {
+              if (usedAfter.has(idx)) return;
+              const aWords = aSec.title.toLowerCase().split(/\W+/).filter((w) => w.length > 2);
+              const overlap = aWords.filter((w) => bWords.has(w)).length;
+              if (overlap > bestScore) {
+                bestScore = overlap;
+                matchIdx = idx;
+              }
+            });
+          }
+
+          if (matchIdx !== -1) {
+            usedAfter.add(matchIdx);
+            const aSec = afterSecs[matchIdx];
+            const delta = bSec.words ? Math.round(((aSec.words - bSec.words) / bSec.words) * 100) : 0;
+            const sign = delta > 0 ? "+" : "";
+            pairs.push({
+              title: bSec.title === aSec.title ? bSec.title : `${bSec.title} → ${aSec.title}`,
+              stats: `${bSec.words}w → ${aSec.words}w (${sign}${delta}%)`,
+              beforeHtml: bSec.html,
+              afterHtml: aSec.html,
+              wordDiffHtml: this.computeWordDiff(bSec.html, aSec.html),
+            });
+          } else {
+            pairs.push({
+              title: `${bSec.title} (Collapsed / Removed)`,
+              stats: `${bSec.words}w → 0w (-100%)`,
+              beforeHtml: bSec.html,
+              afterHtml: "",
+              wordDiffHtml: `<div class="diff-removed-block">${bSec.html}</div>`,
+            });
+          }
+        });
+
+        afterSecs.forEach((aSec, idx) => {
+          if (!usedAfter.has(idx)) {
+            pairs.push({
+              title: `${aSec.title} (New Section)`,
+              stats: `0w → ${aSec.words}w`,
+              beforeHtml: "",
+              afterHtml: aSec.html,
+              wordDiffHtml: `<div class="diff-added-block">${aSec.html}</div>`,
+            });
+          }
+        });
+
+        this.alignedSections = pairs;
+      },
+
+      computeWordDiff(beforeHtml, afterHtml) {
+        const extractBlocks = (html) => {
+          const d = document.createElement("div");
+          d.innerHTML = html;
+          d.querySelectorAll("pre, table, figure, .data-card").forEach((el) => el.remove());
+          const blocks = [];
+          d.querySelectorAll("h2, h3, h4, p, li").forEach((el) => {
+            if (el.tagName === "P" && el.closest("li")) return;
+            const text = (el.textContent || "").replace(/\s+/g, " ").trim();
+            if (text) blocks.push({ tag: el.tagName.toLowerCase(), text });
+          });
+          return blocks;
+        };
+
+        const bBlocks = extractBlocks(beforeHtml);
+        const aBlocks = extractBlocks(afterHtml);
+        if (!bBlocks.length && !aBlocks.length) return afterHtml;
+
+        const contentWords = (s) =>
+          new Set(
+            s
+              .toLowerCase()
+              .split(/\W+/)
+              .filter((w) => w.length > 3)
+          );
+
+        const usedB = new Set();
+        const rows = [];
+        let bCursor = 0;
+
+        aBlocks.forEach((aBlk) => {
+          const aSet = contentWords(aBlk.text);
+          let bestIdx = -1;
+          let bestOverlap = 0;
+
+          for (let i = bCursor; i < bBlocks.length; i++) {
+            if (usedB.has(i)) continue;
+            const bSet = contentWords(bBlocks[i].text);
+            let shared = 0;
+            aSet.forEach((w) => {
+              if (bSet.has(w)) shared++;
+            });
+            const score = shared / Math.max(1, Math.min(aSet.size, bSet.size));
+            if (score >= 0.3 && score > bestOverlap) {
+              bestOverlap = score;
+              bestIdx = i;
+            }
+          }
+
+          if (bestIdx !== -1) {
+            for (let k = bCursor; k < bestIdx; k++) {
+              if (!usedB.has(k)) {
+                usedB.add(k);
+                rows.push(`<p class="diff-block-del"><del class="diff-del">${this.escapeHtml(bBlocks[k].text)}</del></p>`);
+              }
+            }
+            usedB.add(bestIdx);
+            bCursor = bestIdx + 1;
+            rows.push(`<p class="diff-prose-stream">${this.diffTwoStrings(bBlocks[bestIdx].text, aBlk.text)}</p>`);
+          } else {
+            rows.push(`<p class="diff-block-ins"><ins class="diff-ins">${this.escapeHtml(aBlk.text)}</ins></p>`);
+          }
+        });
+
+        for (let k = 0; k < bBlocks.length; k++) {
+          if (!usedB.has(k)) {
+            rows.push(`<p class="diff-block-del"><del class="diff-del">${this.escapeHtml(bBlocks[k].text)}</del></p>`);
+          }
+        }
+
+        return rows.join("\n");
+      },
+
+      diffTwoStrings(bText, aText) {
+        const bTokens = bText.split(" ").filter(Boolean);
+        const aTokens = aText.split(" ").filter(Boolean);
+        const stop = new Set(["the", "and", "for", "that", "with", "this", "from", "into", "are", "was", "were", "to", "of", "in", "on", "at", "by", "as", "is", "it", "or", "an", "a"]);
+
+        let i = 0, j = 0;
+        const out = [];
+        const windowSize = 14;
+
+        while (i < bTokens.length || j < aTokens.length) {
+          if (i < bTokens.length && j < aTokens.length && bTokens[i] === aTokens[j]) {
+            out.push(this.escapeHtml(aTokens[j]));
+            i++;
+            j++;
+            continue;
+          }
+          let foundI = -1, foundJ = -1;
+          search: for (let dist = 1; dist <= windowSize; dist++) {
+            for (let di = 0; di <= dist; di++) {
+              const dj = dist - di;
+              if (i + di < bTokens.length && j + dj < aTokens.length && bTokens[i + di] === aTokens[j + dj]) {
+                const tok = bTokens[i + di].toLowerCase().replace(/\W+/g, "");
+                const nextMatch =
+                  i + di + 1 < bTokens.length &&
+                  j + dj + 1 < aTokens.length &&
+                  bTokens[i + di + 1] === aTokens[j + dj + 1];
+                if (!stop.has(tok) || nextMatch) {
+                  foundI = i + di;
+                  foundJ = j + dj;
+                  break search;
+                }
+              }
+            }
+          }
+          if (foundI !== -1) {
+            if (foundI > i) {
+              out.push(`<del class="diff-del">${this.escapeHtml(bTokens.slice(i, foundI).join(" "))}</del>`);
+            }
+            if (foundJ > j) {
+              out.push(`<ins class="diff-ins">${this.escapeHtml(aTokens.slice(j, foundJ).join(" "))}</ins>`);
+            }
+            i = foundI;
+            j = foundJ;
+          } else {
+            if (i < bTokens.length) {
+              out.push(`<del class="diff-del">${this.escapeHtml(bTokens.slice(i).join(" "))}</del>`);
+              i = bTokens.length;
+            }
+            if (j < aTokens.length) {
+              out.push(`<ins class="diff-ins">${this.escapeHtml(aTokens.slice(j).join(" "))}</ins>`);
+              j = aTokens.length;
+            }
+          }
+        }
+        return out.join(" ");
+      },
+
+      escapeHtml(s) {
+        return String(s)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;");
+      },
+    };
+  }
+</script>

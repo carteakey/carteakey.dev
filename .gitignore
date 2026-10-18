@@ -26,3 +26,7 @@ src/static/img/blog-sketches/site-stack.png
 
 # Local Claude Code preview config
 .claude/launch.json
+
+# Local readability workbench snapshots
+utils/post-snapshots.json
+

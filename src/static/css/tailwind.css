@@ -3311,9 +3311,17 @@ picture img {
   }
 
   .post-body h2 {
-    margin-top: 1.55em;
+    font-size: 1.32rem;
+    margin-top: 1.65em;
+    margin-bottom: 0.5em;
     padding-bottom: 0.22em;
     border-bottom: 1px solid rgb(214 207 193 / 0.95);
+  }
+
+  .post-body h3:not(:where(.data-card-title)) {
+    font-size: 1.14rem;
+    margin-top: 1.35em;
+    margin-bottom: 0.4em;
   }
 
   .dark .post-body h2 {
@@ -6086,3 +6094,287 @@ picture img {
 .nav-ask:hover .nav-ask-eye { animation-duration: 0.9s; }
 @keyframes nav-ask-blink { 0%, 94%, 100% { transform: scaleY(1); } 96% { transform: scaleY(0.2); } }
 @media (prefers-reduced-motion: reduce) { .nav-ask-eye { animation: none; } }
+
+/* ── Readability & Diff Workbench (post-diff-workbench.njk) ─────────────── */
+@media (min-width: 1024px) {
+  .post-wrap.post-diff-wide {
+    display: block;
+    width: min(calc(100vw - 2.5rem), 94rem);
+    max-width: 94rem;
+    margin: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .post-wrap.post-diff-wide .post-rail-left,
+  .post-wrap.post-diff-wide .post-rail-right {
+    display: none !important;
+  }
+  .post-wrap.post-diff-wide .post-shell {
+    max-width: 94rem;
+    width: 100%;
+  }
+}
+
+.diff-workbench {
+  margin: 1rem 0 1.5rem;
+}
+
+.diff-toolbar {
+  position: sticky;
+  top: 3.75rem;
+  z-index: 30;
+  margin-bottom: 1.25rem;
+  border-color: var(--accent-color);
+}
+
+.diff-toolbar-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.65rem 1rem;
+  padding-bottom: 0.65rem;
+  border-bottom: 1px solid rgb(210 205 195 / 0.8);
+}
+
+.dark .diff-toolbar-top {
+  border-bottom-color: rgb(63 63 70 / 0.9);
+}
+
+.diff-toolbar-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem 0.75rem;
+}
+
+.diff-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--accent-color);
+}
+
+.diff-sub {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  color: rgb(107 114 128);
+}
+
+.dark .diff-sub {
+  color: rgb(161 161 170);
+}
+
+.diff-mode-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+.diff-mode-btn {
+  padding: 0.25rem 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  border: 1px solid rgb(210 205 195 / 0.9);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.dark .diff-mode-btn {
+  border-color: rgb(63 63 70 / 0.9);
+}
+
+.diff-mode-btn:hover {
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+}
+
+.diff-mode-btn.is-active {
+  background: var(--accent-color);
+  border-color: var(--accent-color);
+  color: #fff;
+  font-weight: 600;
+}
+
+.diff-metrics-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
+  gap: 0.5rem;
+  padding-top: 0.65rem;
+}
+
+.diff-metric-chip {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  padding: 0.35rem 0.5rem;
+  border: 1px solid rgb(210 205 195 / 0.7);
+  font-family: var(--font-mono);
+}
+
+.dark .diff-metric-chip {
+  border-color: rgb(63 63 70 / 0.8);
+}
+
+.diff-metric-chip.is-good {
+  border-left: 3px solid var(--accent-color);
+}
+
+.diff-metric-label {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: rgb(107 114 128);
+}
+
+.dark .diff-metric-label {
+  color: rgb(161 161 170);
+}
+
+.diff-metric-vals {
+  display: flex;
+  align-items: baseline;
+  gap: 0.3rem;
+  font-size: 0.82rem;
+}
+
+.diff-val-before {
+  opacity: 0.6;
+  text-decoration: line-through;
+}
+
+.diff-val-after {
+  color: var(--accent-color);
+}
+
+.diff-val-delta {
+  font-size: 0.7rem;
+  opacity: 0.8;
+}
+
+.diff-metric-target {
+  font-size: 0.66rem;
+  opacity: 0.65;
+}
+
+.diff-col-headers {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.diff-col-header-cell {
+  padding: 0.35rem 0.65rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  border-bottom: 2px solid rgb(161 161 170 / 0.6);
+  opacity: 0.8;
+}
+
+.diff-col-header-cell.is-after {
+  border-bottom-color: var(--accent-color);
+  color: var(--accent-color);
+  opacity: 1;
+}
+
+.diff-section-row {
+  margin-bottom: 1.5rem;
+  border: 1px solid rgb(210 205 195 / 0.85);
+}
+
+.dark .diff-section-row {
+  border-color: rgb(63 63 70 / 0.9);
+}
+
+.diff-section-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.4rem 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  background: color-mix(in srgb, var(--accent-color) 7%, transparent);
+  border-bottom: 1px solid rgb(210 205 195 / 0.85);
+}
+
+.dark .diff-section-bar {
+  border-bottom-color: rgb(63 63 70 / 0.9);
+}
+
+.diff-section-title {
+  font-weight: 700;
+}
+
+.diff-section-stats {
+  color: var(--accent-color);
+}
+
+.diff-split-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+
+@media (max-width: 900px) {
+  .diff-split-grid,
+  .diff-col-headers {
+    grid-template-columns: 1fr;
+  }
+}
+
+.diff-split-col {
+  min-width: 0;
+  padding: 0.85rem 1rem;
+  overflow-x: auto;
+}
+
+.diff-split-col.is-before {
+  border-right: 1px solid rgb(210 205 195 / 0.85);
+  background: color-mix(in srgb, currentColor 2%, transparent);
+}
+
+.dark .diff-split-col.is-before {
+  border-right-color: rgb(63 63 70 / 0.9);
+}
+
+.diff-split-col .wide-wrap {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  width: 100% !important;
+  overflow-x: auto;
+}
+
+.diff-empty-note {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  opacity: 0.55;
+  font-style: italic;
+}
+
+.diff-word-section {
+  margin-bottom: 1rem;
+}
+
+.diff-prose-stream {
+  line-height: 1.75;
+}
+
+.diff-del {
+  text-decoration: line-through;
+  opacity: 0.55;
+  padding: 0 0.15em;
+  background: color-mix(in srgb, currentColor 8%, transparent);
+}
+
+.diff-ins {
+  text-decoration: none;
+  padding: 0 0.18em;
+  border-bottom: 2px solid var(--accent-color);
+  background: color-mix(in srgb, var(--accent-color) 14%, transparent);
+}
+

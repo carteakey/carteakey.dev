@@ -7,17 +7,21 @@
 (() => {
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-  // 2 + 3. Arm elements that start below the fold, then reveal on scroll.
-  const arm = (selector, armedClass, drawnClass, threshold) => {
-    const els = [...document.querySelectorAll(selector)].filter(
-      (el) => el.getBoundingClientRect().top > window.innerHeight * 0.9
-    );
+  // 2 + 3. Arm elements and reveal when they enter the viewport (including on initial view for sketches).
+  const arm = (selector, armedClass, drawnClass, threshold, includeAboveFold = false) => {
+    const els = [...document.querySelectorAll(selector)].filter((el) => {
+      if (el.classList.contains(armedClass) || el.offsetParent === null) return false;
+      if (includeAboveFold) return true;
+      return el.getBoundingClientRect().top > window.innerHeight * 0.9;
+    });
     if (!els.length || !("IntersectionObserver" in window)) return;
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return;
-          entry.target.classList.add(drawnClass);
+          requestAnimationFrame(() => {
+            entry.target.classList.add(drawnClass);
+          });
           io.unobserve(entry.target);
         });
       },
@@ -107,11 +111,16 @@
     requestAnimationFrame(frame);
   };
 
+  const rearm = () => {
+    arm(".note", "note-armed", "note-drawn", 0.6, false);
+    arm(".sketch-draw", "sketch-armed", "sketch-drawn", 0.2, true);
+  };
+
   const start = () => {
-    arm(".note", "note-armed", "note-drawn", 0.6);
-    arm(".sketch-draw", "sketch-armed", "sketch-drawn", 0.25);
+    rearm();
     initAvatar();
   };
+  window.rearmInk = rearm;
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start);
   else start();
 })();

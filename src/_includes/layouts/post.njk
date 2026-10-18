@@ -203,9 +203,14 @@ hasEthicalAds: false
     </details>
     {% endif %}
 
+    {% set postSnapshot = postSnapshots[page.fileSlug] if postSnapshots else null %}
+    {% if postSnapshot %}
+      {% include "components/post-diff-workbench.njk" %}
+    {% else %}
     <div class="post-body{% if isEditorial %} ed-prose{% endif %}">
       {{ content | safe }}
     </div>
+    {% endif %}
 
     {% if sources and sources.length %}
       <section class="surface surface-padding" aria-labelledby="post-sources-title">
