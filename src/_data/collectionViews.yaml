@@ -141,7 +141,14 @@ reviews:
   engine: true
   types: [review]
   views: [list]
-  row: { rich: true, showType: false, showSummary: true, showTags: true }
+  row:
+    {
+      rich: true,
+      showType: false,
+      showSummary: true,
+      showTags: true,
+      dateFormat: "MMM d",
+    }
   why: >-
     Reviews read like posts (stamp, title, one-line summary), so they use the
     Writing row; price paid and rating sit with the tags when a review sets

@@ -251,7 +251,7 @@
   {# ── LIST VARIANT (homepage preview - single compact row) ── #}
   {% elif variant == 'list' %}
   <li class="feed-list-row{% if opts.rich %} feed-list-row-thumb{% endif %}{% if extraClasses %} {{ extraClasses }}{% endif %}" {% if item.authored_by %}data-authored-by="{{ item.authored_by }}" {% endif %}{% if outerAttrs %}{{ outerAttrs | safe }}{% endif %}>
-    <span class="feed-list-date meta-text">{{ (opts.date or item.date) | shortDate(opts.dateFormat or "MMM ’yy") }}</span>
+    <span class="feed-list-date meta-text">{{ (opts.date or item.date) | shortDate(opts.dateFormat or "MMM d") }}</span>
     {% if opts.rich %}<span class="hidden sm:block w-11 h-11">{% if item.imageMetadata %}<a href="{{ item.url | url }}" style="text-decoration: none;">{% post_thumbnail_markup item.imageMetadata, itemImageAlt, "stamp-cobalt block h-11 w-11 object-contain", 44 %}</a>{% endif %}</span>{% endif %}
     <div>
     {% if item.url %}

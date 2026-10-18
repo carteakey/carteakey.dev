@@ -204,6 +204,17 @@ Reason: the redesign lives in semantic classes. Utility-only text styling breaks
 
 If unsure, choose serif over sans for content, and mono over sans for metadata.
 
+### Date conventions
+
+Dates follow three distinct, intentional tiers across the site:
+
+1. **Compact list rows (`MMM d`)**:
+   Used in `.feed-list-date` across all dense `.feed-list-row` lists (Writing, Series Folders, Tags, Reviews, Snippets, TILs, and the list toggles on Feed and Notes). E.g. `Oct 16`, `Sep 30`. Always includes the day to keep rows distinguishable and fits the `4rem` monospace column. Avoid ambiguous `MMM ’yy` formats (e.g. `Oct ’26`), which readers confuse with the day of the month and which collapse multiple posts in a month into duplicate labels.
+2. **Full editorial dates (`MMM d, yyyy`)**:
+   Used in single-item page headers (posts, notes, snippets, tils, lexicon, skills), stream views, masonry grid cards, public activity feeds (reading, watching, workouts, status), and `/now/`. E.g. `Oct 16, 2026`. Formatted with `readableDate`.
+3. **Technical ledger dates (`YYYY-MM-DD`)**:
+   Used in chronological version releases and hardware spec logs (`/changelog/`, `/uses/` changelog, `/devices/` logs). E.g. `2026-10-18`. Formatted as ISO 8601 for strict chronological scanning.
+
 ## Layout Language
 
 ### Homepage

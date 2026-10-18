@@ -13,7 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Local inference posts (`running-qwen3-8-flash-next-locally`, `strata-on-an-rtx-4070`, `qwen3-8-27b-vs-flash-next`): de-stuffed and rewritten for readability (~50–57% prose reduction, zero em dashes, consolidated stacked `{% update %}` boxes, promoted the Strata run guide near the top, updated Strata headline to 75 tok/s at 128k context with `Q8_0` PLE and DDR5-5800, and added the 3-row Greedy vs Thinking Mode sampling comparison table).
 - `ink.js` & `.post-body` typography: armed visible `.sketch-draw` diagrams above the 90% fold and across mode switches so the left-to-right ink-wipe animation runs consistently in regular and diff views; gave `.post-body h2` and `.post-body h3` explicit font-size hierarchy and vertical spacing.
-- Blog index & feed cards: standardized `MMM d` short date formatting across year and pinned groups.
+- Date conventions: standardized across three canonical tiers (dense list rows use `MMM d`, single items/stream use `readableDate` `MMM d, yyyy`, and ledgers use ISO `YYYY-MM-DD`). Codified in `docs/DESIGN_LANGUAGE.md` and `AGENTS.md`. Updated `feed-card.njk`, `collection-index.njk`, `collectionViews.yaml`, and `projects.njk`.
+- Dependencies: resolved Dependabot PRs by bumping `@upstash/redis` to `^1.39.0`, `openai` to `^7.30.0`, `postcss` to `^8.5.30`, and updating `actions/upload-artifact` from `v4` to `v7` in CI workflows.
 
 ## [2.9.0] - 2026-10-17
 ### Added

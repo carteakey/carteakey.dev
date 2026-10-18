@@ -672,7 +672,7 @@ export default function (eleventyConfig) {
     const dateTime = dateTimeFromInput(dateObj);
     return dateTime.isValid ? dateTime.toFormat("MMM d, yyyy") : "";
   });
-  eleventyConfig.addFilter("shortDate", (dateObj, format = "MMM ’yy") => {
+  eleventyConfig.addFilter("shortDate", (dateObj, format = "MMM d") => {
     const dateTime = dateTimeFromInput(dateObj);
     return dateTime.isValid ? dateTime.toFormat(format) : "";
   });
