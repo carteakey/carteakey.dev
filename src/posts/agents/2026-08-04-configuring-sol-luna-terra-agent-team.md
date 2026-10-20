@@ -5,6 +5,7 @@ image: /img/blog-sketches/unique/configuring-sol-luna-terra-agent-team-stamp-tri
 imageAlt: "Monochrome pencil sketch of a brass orrery with a sun, a moon and an earth on arms above gears, beside an open laptop"
 seoDescription: "A practical, cost-aware Codex agent setup with Sol orchestrating, Luna Max as the default workhorse, and Terra High as a read-heavy support worker."
 date: 2026-08-04
+giscusTerm: "/blog/agents/configuring-sol-luna-terra-agent-team/"
 authored_by: ai-assisted
 tags:
   - AI

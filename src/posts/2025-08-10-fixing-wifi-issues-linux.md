@@ -5,6 +5,7 @@ seoDescription: "A practical Linux Wi-Fi troubleshooting guide covering adapters
 image: /img/blog-sketches/unique/fixing-wifi-issues-linux-stamp-trim.png
 imageAlt: "Transparent monochrome sketch of a Linux laptop troubleshooting Wi-Fi"
 date: 2025-08-10T09:00:00.000Z
+giscusTerm: "/blog/fixing-wifi-issues-linux/"
 authored_by: ai-assisted
 updated: 2025-08-10T09:00:00.000Z
 tags:

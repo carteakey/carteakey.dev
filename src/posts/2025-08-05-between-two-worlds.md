@@ -5,6 +5,7 @@ seoDescription: "A personal Toastmasters speech about moving from India to Canad
 image: /img/blog-sketches/unique/between-two-worlds-stamp-trim.png
 imageAlt: "Transparent monochrome sketch of two cities connected by notes and travel papers"
 date: 2025-08-05T21:19:59.349Z
+giscusTerm: "/blog/between-two-worlds/"
 authored_by: human
 updated: 2025-08-05T21:19:59.355Z
 tags:

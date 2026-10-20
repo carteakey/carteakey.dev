@@ -4,6 +4,7 @@ description: aidar tracks stylistic signals associated with AI-era writing acros
 image: /img/blog-sketches/unique/aidar-tracking-ai-writing-drift-stamp-trim.png
 imageAlt: "Transparent monochrome sketch of a web page under a scanner for AI writing signals"
 date: 2026-02-26
+giscusTerm: "/blog/aidar-tracking-ai-writing-drift/"
 authored_by: ai-generated
 tags:
   - AI

@@ -103,8 +103,19 @@ async function checkContentFiles() {
         );
       }
 
-      // Every blog post needs a unique thumbnail sketch (see the `sketches` skill, Part A).
+      // Every blog post needs a unique thumbnail sketch (see the `sketches` skill, Part A)
+      // and an explicit `giscusTerm` so comment threads survive future folder/slug moves.
       if (dir === "src/posts" && !base.includes("template")) {
+        if (!data.giscusTerm || typeof data.giscusTerm !== "string") {
+          problems.push(
+            `${rel}: missing explicit \`giscusTerm\` in front matter (locks Giscus comment thread across folder moves)`,
+          );
+        } else if (!data.giscusTerm.startsWith("/")) {
+          problems.push(
+            `${rel}: \`giscusTerm\` "${data.giscusTerm}" must start with "/"`,
+          );
+        }
+
         if (!data.image) {
           problems.push(
             `${rel}: missing \`image\` thumbnail (every post needs one; see .agents/skills/sketches)`,

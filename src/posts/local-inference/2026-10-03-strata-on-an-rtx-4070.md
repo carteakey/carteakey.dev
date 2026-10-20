@@ -4,6 +4,7 @@ description: "75 tok/s with a 128k context window on a 12 GB RTX 4070: how I run
 image: /img/blog-sketches/unique/strata-on-an-rtx-4070-stamp-trim.png
 imageAlt: "Monochrome pencil sketch of a graphics card beside a tray of cached chips, a larger chip pile, a RAM stick, and a stopwatch"
 date: 2026-10-03
+giscusTerm: "/blog/local-inference/strata-on-an-rtx-4070/"
 updated: 2026-10-18
 authored_by: ai-assisted
 draft: true

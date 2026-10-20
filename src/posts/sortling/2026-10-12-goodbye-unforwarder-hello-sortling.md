@@ -5,6 +5,7 @@ seoDescription: "Replacing a slow yes/no vision-LLM prompt with local decision m
 image: /img/blog-sketches/unique/goodbye-unforwarder-hello-sortling-stamp-trim.png
 imageAlt: "Monochrome sketch of the Sortling mascot, a round chibi creature in an oversized star wizard hat and cape, magically sorting files into boxes with a wand"
 date: 2026-10-12T00:00:00.000Z
+giscusTerm: "/blog/sortling/goodbye-unforwarder-hello-sortling/"
 authored_by: ai-assisted
 updated: 2026-10-12T00:00:00.000Z
 hidden: true

@@ -5,6 +5,7 @@ seoDescription: "How privacy laws like GDPR challenge AI-powered search engines,
 image: /img/blog-sketches/unique/challenges-to-ai-ml-based-search-engines-stamp-trim.png
 imageAlt: "Transparent monochrome sketch of AI search, privacy, and search results"
 date: 2021-09-11
+giscusTerm: "/blog/challenges-to-ai-ml-based-search-engines/"
 authored_by: human
 tags:
   - AI

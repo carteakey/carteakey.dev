@@ -4,6 +4,7 @@ description: "Five generated Mario clones, inspected line by line: which run, wh
 image: /img/blog-sketches/unique/mariobench-initial-observations-stamp-trim.png
 imageAlt: "Monochrome pencil sketch of a retro CRT television showing a pixel platformer runner, with a game controller and a cartridge in front"
 date: 2026-09-15
+giscusTerm: "/blog/mariobench-initial-observations/"
 updated: 2026-10-01
 authored_by: ai-assisted
 draft: true

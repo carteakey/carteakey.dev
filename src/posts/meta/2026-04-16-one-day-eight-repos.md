@@ -4,6 +4,7 @@ description: "What shipped on 2026-04-16 across my stack, what it cost, and the 
 image: /img/blog-sketches/unique/one-day-eight-repos-stamp-trim.png
 imageAlt: "Transparent monochrome sketch of an agent coding cost ledger spanning many repositories"
 date: 2026-04-16
+giscusTerm: "/blog/meta/one-day-eight-repos/"
 authored_by: ai-assisted
 tags:
   - AI

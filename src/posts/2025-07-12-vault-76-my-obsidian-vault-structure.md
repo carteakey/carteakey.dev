@@ -5,6 +5,7 @@ seoDescription: "My evolving Obsidian vault structure for notes, projects, refer
 image: /img/blog-sketches/unique/vault-76-my-obsidian-vault-structure-stamp-trim.png
 imageAlt: "Transparent monochrome sketch of a structured note vault with linked cards"
 date: 2025-07-12
+giscusTerm: "/blog/vault-76-my-obsidian-vault-structure/"
 authored_by: human
 tags:
   - Obsidian

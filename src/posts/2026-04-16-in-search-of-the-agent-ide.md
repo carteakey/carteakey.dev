@@ -4,6 +4,7 @@ description: A data analyst's mostly futile quest for the perfect workflow.
 image: /img/blog-sketches/unique/agent-ide-stamp-trim.png
 imageAlt: Transparent monochrome sketch of an AI coding workspace
 date: 2026-04-16
+giscusTerm: "/blog/in-search-of-the-agent-ide/"
 updated: 2026-08-09
 authored_by: human
 theme: editorial

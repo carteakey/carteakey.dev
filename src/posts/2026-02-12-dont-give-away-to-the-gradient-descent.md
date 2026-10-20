@@ -4,6 +4,7 @@ description: Ramblings on what gets quietly lost when intelligence becomes a uti
 image: /img/blog-sketches/unique/dont-give-away-to-the-gradient-descent-stamp-trim.png
 imageAlt: "Transparent monochrome sketch of handmade tools pushing against a smooth optimization curve"
 date: 2026-02-12T01:42:23.935Z
+giscusTerm: "/blog/dont-give-away-to-the-gradient-descent/"
 authored_by: human
 updated: 2026-02-12T01:42:23.950Z
 hidden: false

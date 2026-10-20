@@ -5,6 +5,7 @@ seoDescription: "A follow-up on rebuilding carteakey.dev with Eleventy, Tailwind
 image: /img/blog-sketches/unique/moving-my-site-from-jekyll-to-eleventy-part-ii-stamp-trim.png
 imageAlt: "Transparent monochrome sketch of a second static site migration pass"
 date: 2023-02-14T21:47:18.818Z
+giscusTerm: "/blog/moving-my-site-from-jekyll-to-eleventy-part-ii/"
 authored_by: human
       
 tags:

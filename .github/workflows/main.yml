@@ -3,11 +3,44 @@ name: Trigger Netlify Build
 on:
   schedule:
     - cron: '0 0 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  discussions: write
 
 jobs:
   build:
-    name: Trigger deploy
+    name: Refresh discussions & trigger deploy
     runs-on: ubuntu-latest
     steps:
+      - name: Re-index Giscus GitHub Discussions in Search
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # GitHub's Discussion search index evicts inactive threads after a few months,
+          # which causes Giscus (data-mapping="specific") to return "Discussion not found".
+          # Touching each discussion's title (and ensuring a leading "/") keeps every thread
+          # indexed in GitHub Search permanently.
+          gh api graphql -f query='{
+            repository(owner: "carteakey", name: "carteakey.dev") {
+              discussions(first: 100) {
+                nodes { id number title }
+              }
+            }
+          }' --jq '.data.repository.discussions.nodes[] | @base64' | while read -r row; do
+            id=$(echo "$row" | base64 -d | jq -r '.id')
+            title=$(echo "$row" | base64 -d | jq -r '.title')
+            if [[ "$title" == blog/* ]]; then
+              title="/$title"
+            fi
+            gh api graphql -f query="mutation(\$id: ID!, \$title: String!) {
+              updateDiscussion(input: {discussionId: \$id, title: \$title}) {
+                discussion { number title }
+              }
+            }" -f id="$id" -f title="$title" >/dev/null
+          done
+
       - name: Curl request
         run: curl -X POST -d {} ${{ secrets.NETLIFY_BUILD_URL }}
+

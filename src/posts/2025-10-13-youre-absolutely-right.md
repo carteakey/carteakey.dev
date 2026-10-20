@@ -5,6 +5,7 @@ seoDescription: "A draft reflection on AI assistants that agree too easily, miss
 image: /img/blog-sketches/unique/youre-absolutely-right-stamp-trim.png
 imageAlt: "Transparent monochrome sketch of an agreeable AI chat window being corrected"
 date: 2025-10-13T00:00:00.000Z
+giscusTerm: "/blog/youre-absolutely-right/"
 authored_by: human
 updated: 2025-10-13T00:00:00.000Z
 hidden: true

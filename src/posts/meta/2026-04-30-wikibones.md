@@ -2,6 +2,7 @@
 title: Wikibones, or How I Want My Agent-Maintained Wikis to Work
 description: A small scaffold for local, Git-backed, LLM-maintained wikis
 date: 2026-04-30
+giscusTerm: "/blog/meta/wikibones/"
 updated: 2026-05-04
 authored_by: ai-assisted
 image: /img/blog-sketches/unique/wikibones-stamp-trim.png

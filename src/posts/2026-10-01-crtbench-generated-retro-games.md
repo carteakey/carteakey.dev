@@ -4,6 +4,7 @@ description: "MarioBench grew into CRTBench: single-file retro games across four
 image: /img/blog-sketches/unique/crtbench-generated-retro-games-stamp-trim.png
 imageAlt: "Monochrome pencil sketch of an arcade cabinet with a CRT screen showing falling blocks, a joystick, and a stack of cartridges"
 date: 2026-10-01
+giscusTerm: "/blog/crtbench-generated-retro-games/"
 authored_by: ai-assisted
 draft: true
 hidden: true

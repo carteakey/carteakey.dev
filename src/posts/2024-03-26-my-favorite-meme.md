@@ -5,6 +5,7 @@ seoDescription: "A small love letter to the IQ bell curve meme, why it works, an
 image: /img/blog-sketches/unique/my-favorite-meme-stamp-trim.png
 imageAlt: "Transparent monochrome sketch of an empty idea notebook and image placeholder"
 date: 2023-12-26T19:53:34.546Z
+giscusTerm: "/blog/my-favorite-meme/"
 authored_by: human
 updated: 2024-03-26T02:37:52.739Z
 tags:

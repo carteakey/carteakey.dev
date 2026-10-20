@@ -4,6 +4,7 @@ description: "A retrospective on going from Kaggle notebooks to AI pipelines - a
 image: /img/blog-sketches/unique/four-phases-of-a-builder-stamp-trim.png
 imageAlt: "Transparent monochrome sketch of four stages of building software around a laptop"
 date: 2026-04-17
+giscusTerm: "/blog/four-phases-of-a-builder/"
 authored_by: ai-assisted
 hidden: true
 draft: false

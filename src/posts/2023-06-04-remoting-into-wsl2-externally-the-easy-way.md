@@ -5,6 +5,7 @@ seoDescription: "How to SSH into WSL2 from another device using Windows OpenSSH 
 image: /img/blog-sketches/unique/remoting-into-wsl2-externally-the-easy-way-stamp-trim.png
 imageAlt: "Transparent monochrome sketch of a remote connection into a WSL machine"
 date: 2023-06-04T19:07:39.634Z
+giscusTerm: "/blog/remoting-into-wsl2-externally-the-easy-way/"
 authored_by: human
 tags:
   - WSL

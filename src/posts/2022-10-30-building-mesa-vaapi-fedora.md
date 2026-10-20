@@ -5,6 +5,7 @@ seoDescription: "How to rebuild Mesa on Fedora with VA-API video codec support t
 image: /img/blog-sketches/unique/building-mesa-vaapi-fedora-stamp-trim.png
 imageAlt: "Transparent monochrome sketch of a Linux graphics driver build workstation"
 date: 2022-10-30
+giscusTerm: "/blog/building-mesa-vaapi-fedora/"
 authored_by: human
 tags:
   - Fedora

@@ -4,6 +4,7 @@ description: "The tech stack powering this site - Netlify, Eleventy, Alpine, and
 image: /img/blog-sketches/unique/understanding-the-neat-framework-stamp-trim.png
 imageAlt: "Transparent monochrome sketch of a compact web stack feeding a browser"
 date: 2026-03-05
+giscusTerm: "/blog/understanding-the-neat-framework/"
 authored_by: ai-assisted
 tags:
   - 11ty

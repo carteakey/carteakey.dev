@@ -5,6 +5,7 @@ seoDescription: "A draft rant about the small macOS quirks that still manage to 
 image: /img/blog-sketches/unique/quirks-of-owning-a-mac-stamp-trim.png
 imageAlt: "Transparent monochrome sketch of a laptop with adapter dongles and system quirks"
 date: 2025-05-03T22:01:26.448Z
+giscusTerm: "/blog/quirks-of-owning-a-mac/"
 authored_by: human
 updated: 2025-05-03T22:01:26.455Z
 tags:

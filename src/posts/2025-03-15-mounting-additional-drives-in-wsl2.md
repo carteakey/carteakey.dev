@@ -5,6 +5,7 @@ seoDescription: "Notes on mounting an additional physical drive in WSL2 as ext4 
 image: /img/blog-sketches/unique/mounting-additional-drives-in-wsl2-stamp-trim.png
 imageAlt: "Transparent monochrome sketch of external drives being mounted in WSL2"
 date: 2025-03-15T19:59:51.454Z
+giscusTerm: "/blog/mounting-additional-drives-in-wsl2/"
 authored_by: human
 updated: 2025-03-15T19:59:51.459Z
 tags:

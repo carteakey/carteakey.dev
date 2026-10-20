@@ -5,6 +5,7 @@ seoDescription: "A draft argument for Claude Code as a practical agent workflow,
 image: /img/blog-sketches/unique/claude-code-is-all-you-need-stamp-trim.png
 imageAlt: "Transparent monochrome sketch of a terminal-centered laptop applying code patches"
 date: 2026-04-15
+giscusTerm: "/blog/agents/claude-code-is-all-you-need/"
 authored_by: human
 draft: true
 tags:

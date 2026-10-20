@@ -4,6 +4,7 @@ description: I burned API credits comparing ChatGPT Images 2.0, Nano Banana, and
 image: /img/blog-sketches/unique/battle-of-the-image-generators-stamp-trim.png
 imageAlt: Transparent monochrome sketch of a scoreboard chart comparing different image models with checkmarks and cross marks
 date: 2026-05-17
+giscusTerm: "/blog/battle-of-the-image-generators/"
 updated: 2026-05-17
 authored_by: ai-assisted
 draft: true

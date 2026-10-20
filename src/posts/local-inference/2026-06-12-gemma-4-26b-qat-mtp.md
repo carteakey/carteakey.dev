@@ -4,6 +4,7 @@ description: "Local benchmarks comparing Gemma 4 26B under standard, QAT, MTP, a
 image: /img/blog-sketches/unique/gemma-4-26b-qat-mtp-stamp-trim.png
 imageAlt: Transparent monochrome sketch of a speedometer showing a high rate of speed next to a dual-fan graphics card
 date: 2026-06-12
+giscusTerm: "/blog/local-inference/gemma-4-26b-qat-mtp/"
 authored_by: ai-assisted
 draft: false
 tags:

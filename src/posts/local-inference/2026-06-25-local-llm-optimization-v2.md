@@ -4,6 +4,7 @@ description: "A hidden layout experiment for the optimization guide: callouts, w
 image: /img/blog-sketches/unique/local-llm-optimization-stamp-trim.png
 imageAlt: "Transparent monochrome sketch of a workstation PC tower with exposed GPU fans, monitor displaying tuning parameters, and dials measuring tokens-per-second performance"
 date: 2026-06-25
+giscusTerm: "/blog/local-inference/local-llm-optimization-v2/"
 updated: 2026-06-25
 authored_by: ai-assisted
 draft: true

@@ -5,6 +5,7 @@ seoDescription: "A practical guide to syncing Obsidian notes across Windows, Lin
 image: /img/blog-sketches/unique/setup-obsidian-sync-with-ios-and-pc-stamp-trim.png
 imageAlt: "Transparent monochrome sketch of Obsidian notes syncing between phone and desktop"
 date: 2022-06-05
+giscusTerm: "/blog/setup-obsidian-sync-with-ios-and-pc/"
 authored_by: human
 tags:
   - Obsidian

@@ -5,6 +5,7 @@ seoDescription: "How to export a Heroku Postgres database and restore it on a cl
 image: /img/blog-sketches/unique/migrating-from-heroku-postgres-to-local-stamp-trim.png
 imageAlt: "Transparent monochrome sketch of a database migrating from cloud to server"
 date: 2022-08-31
+giscusTerm: "/blog/migrating-from-heroku-postgres-to-local/"
 authored_by: human
 tags:
   - Heroku

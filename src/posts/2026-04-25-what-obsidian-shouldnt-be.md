@@ -2,6 +2,7 @@
 title: What Obsidian Shouldn't Be
 description: "A note-taking app gets weird fast when you make it your records system, admin dashboard, and substitute for thinking."
 date: 2026-04-25T00:00:00.000Z
+giscusTerm: "/blog/what-obsidian-shouldnt-be/"
 updated: 2026-05-07T00:00:00.000Z
 image: /img/blog-sketches/unique/what-obsidian-shouldnt-be-stamp-trim.png
 imageAlt: Monochrome sketch of a person at a laptop being overwhelmed by folders, PDFs, medical records, and receipts.

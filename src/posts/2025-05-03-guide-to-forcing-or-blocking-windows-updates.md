@@ -5,6 +5,7 @@ seoDescription: "A draft guide to taking back control of Windows updates, from f
 image: /img/blog-sketches/unique/guide-to-forcing-or-blocking-windows-updates-stamp-trim.png
 imageAlt: "Transparent monochrome sketch of operating system update controls"
 date: 2025-05-03T22:01:26.448Z
+giscusTerm: "/blog/guide-to-forcing-or-blocking-windows-updates/"
 authored_by: human
 updated: 2025-05-03T22:01:26.455Z
 tags:

@@ -5,6 +5,7 @@ seoDescription: "Why I moved my personal site from Jekyll to Eleventy, and what 
 image: /img/blog-sketches/unique/moving-site-jekyll-to-eleventy-stamp-trim.png
 imageAlt: "Transparent monochrome sketch of a static site migration into a browser"
 date: 2022-10-10
+giscusTerm: "/blog/moving-site-jekyll-to-eleventy/"
 authored_by: human
 tags:
   - 11ty

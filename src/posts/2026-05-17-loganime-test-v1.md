@@ -4,6 +4,7 @@ description: A messy still-frame trailer experiment, and the weirdly practical l
 image: /img/blog-sketches/unique/loganime-test-v1-stamp-trim.png
 imageAlt: Transparent monochrome sketch of a classic film strip containing individual anime/Ghibli-style landscape frames
 date: 2026-05-17
+giscusTerm: "/blog/loganime-test-v1/"
 updated: 2026-05-17
 authored_by: ai-assisted
 draft: true

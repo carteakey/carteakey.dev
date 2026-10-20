@@ -5,6 +5,7 @@ image: /img/blog-sketches/unique/backlog-creator-reviewer-burner-stamp-trim.png
 imageAlt: "Monochrome pencil sketch of a stack of ticket cards inspected with a magnifying glass, a small stove burning one card, and a checkmark on the top card"
 seoDescription: "A practical Codex workflow using Backlog Creator, Reviewer, and Burner skills to discover, verify, implement, and audit work across many repositories."
 date: 2026-08-12
+giscusTerm: "/blog/agents/backlog-creator-reviewer-burner/"
 authored_by: ai-assisted
 tags:
   - AI

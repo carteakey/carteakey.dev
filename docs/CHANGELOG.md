@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.9.2] - 2026-10-19
+### Added
+- Note: "Gemini 4 Argon and the Great Prose De-Stuffing", a short summary of the readability workbench pass on the local inference posts (full post to follow).
+- Nightly workflow (`.github/workflows/main.yml`): touches every GitHub Discussion before the Netlify build so GitHub search keeps them indexed and Giscus can find them; normalizes titles to a leading `/`. Also runnable by hand (`workflow_dispatch`).
+- `check:content`: every post must declare a `giscusTerm` starting with `/`.
+
+### Fixed
+- Comments missing on older posts: GitHub search had dropped six discussions, so Giscus returned "Discussion not found". Re-indexed them all, and pinned an explicit `giscusTerm` on the 43 posts that had none, so future folder or slug moves cannot orphan a thread.
+
 ## [2.9.1] - 2026-10-18
 ### Added
 - Readability & Diff Workbench (`utils/snapshot-post.mjs`, `src/_data/postSnapshots.js`, `src/_includes/components/post-diff-workbench.njk`): local-only side-by-side comparison bar (`Split (Aligned)`, `Split (Full)`, `Word Diff`, `After (Clean)`, `Before`) with live `Before → After` prose metric chips (`words`, `numbers/1k`, `bold/1k`, `code/1k`, `emDashes`, `contractions/1k`). Gated to local preview (`SHOW_LOCAL_PREVIEW`) and git-ignored (`utils/post-snapshots.json`) so production builds ship zero diff overhead.

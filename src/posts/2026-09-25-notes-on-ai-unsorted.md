@@ -4,6 +4,7 @@ description: "Brain dump of fleeting thoughts on AI, agents, attention, intellig
 image: /img/blog-sketches/unique/notes-on-ai-unsorted-stamp-trim.png
 imageAlt: "Monochrome pencil sketch of a box spilling loose index cards across a desk, with notes pinned to a corkboard, an open notebook, and a pencil"
 date: 2026-09-25
+giscusTerm: "/blog/notes-on-ai-unsorted/"
 authored_by: human
 tags:
   - AI

@@ -2,6 +2,7 @@
 title: Has My Photography Gotten Better? Asking Apple's Aesthetic Score
 description: Apple Photos quietly scores every photo. Ten thousand of mine say the month matters more than the phone.
 date: 2026-10-16
+giscusTerm: "/blog/cartebase/has-my-photography-gotten-better/"
 authored_by: ai-assisted
 image: /img/blog-sketches/unique/has-my-photography-gotten-better-stamp-trim.png
 imageAlt: Transparent monochrome sketch of a phone camera viewfinder over a scatter of small dots
