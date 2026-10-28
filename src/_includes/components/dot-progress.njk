@@ -1,5 +1,5 @@
 {# Progress as a row of halftone dots: full dots are done, one dot is sized by the remainder, the rest are specks.
-   Dot radius follows the build strip: 5.4 on a 12 pitch, 1.44 for an empty speck. #}
+   Dot radius follows the build strip: 5.4 on a 12 pitch, 0.9 for an empty speck. #}
 {% macro dotProgress(percent, label, id="", dots=20) %}
 {% set pct = 100 if percent > 100 else (0 if percent < 0 else percent) %}
 <svg {% if id %}id="{{ id }}" {% endif %}class="dot-progress" viewBox="0 0 {{ dots * 12 }} 12" data-dots="{{ dots }}" role="progressbar" aria-label="{{ label }}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ pct | round }}">
@@ -10,9 +10,9 @@
       <circle data-dot cx="{{ n * 12 + 6 }}" cy="6" r="5.4" fill="currentColor"></circle>
     {% elif cov > 0 %}
       {% set r = 5.4 * (cov ** 0.5) %}
-      <circle data-dot cx="{{ n * 12 + 6 }}" cy="6" r="{{ (r if r > 1.44 else 1.44) | round(2) }}" fill="currentColor"></circle>
+      <circle data-dot cx="{{ n * 12 + 6 }}" cy="6" r="{{ (r if r > 0.9 else 0.9) | round(2) }}" fill="currentColor"></circle>
     {% else %}
-      <circle data-dot cx="{{ n * 12 + 6 }}" cy="6" r="1.44" fill="currentColor" opacity="0.35"></circle>
+      <circle data-dot cx="{{ n * 12 + 6 }}" cy="6" r="0.9" fill="currentColor" opacity="0.35"></circle>
     {% endif %}
   {% endfor %}
 </svg>

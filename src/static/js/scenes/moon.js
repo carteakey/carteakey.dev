@@ -73,11 +73,12 @@ export default function makeScene({ cols, rows, theme = "night", date }) {
         }
         const body = night ? mix(1, 0.72, maria) : mix(0.96, 0.62, maria);
         const litV = rim ? Math.min(1, body + 0.1) : body;
-        // The dark part: faint earthshine at night, pale ink by day.
-        const dark = night ? 0.05 + 0.05 * (1 - maria) : 0.12 - 0.03 * maria;
+        // The dark part: earthshine strong enough to show the maria, so a new
+        // moon still reads as the moon rather than an empty disc.
+        const dark = night ? 0.08 + 0.1 * (1 - maria) : 0.17 - 0.08 * maria;
         value = mix(dark, litV, lit);
-        // Keep the limb from dissolving into the sky.
-        if (d > 0.93 && lit < 0.5) value = Math.max(value, night ? 0.16 : 0.2);
+        // A drawn limb keeps the unlit disc from dissolving into the sky.
+        if (d > 0.9 && lit < 0.5) value = Math.max(value, night ? 0.3 : 0.42);
       } else {
         sky[p] = 1;
         // A soft halo, stronger when fuller.

@@ -2,6 +2,8 @@
   publish = "_site"
   command = "npm run build"
   functions = "netlify/functions"
+  # Skip deploy previews for Dependabot branches (CI in build.yml still checks them)
+  ignore = "test \"$HEAD\" != \"${HEAD#dependabot/}\""
 
 [[headers]]
   for = "/css/*"

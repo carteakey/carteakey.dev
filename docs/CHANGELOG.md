@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.9.3] - 2026-10-28
+### Changed
+- Model-list skill: Use dated firsthand notes when ranking models and subscriptions, alongside current provider evidence.
+- Model tier list: Added editable model and subscription tier boards with draggable logo tiles, saved personal rankings, detail dialogs containing subscription comparisons.
+- Model data: Added Gemini 4 Argon and GPT-6.1 Terra, corrected Astra and Opus 5.5 API prices, and replaced the discontinued standalone Google Developer Program Premium subscription with Google AI Pro, and added OpenCode Go.
+- Restored the local halftone scene and progress refinements, and Dependabot and Netlify automation settings from the pre-sync branch.
+
 ## [2.9.2] - 2026-10-19
 ### Added
 - Note: "Gemini 4 Argon and the Great Prose De-Stuffing", a short summary of the readability workbench pass on the local inference posts (full post to follow).

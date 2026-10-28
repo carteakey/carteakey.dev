@@ -66,7 +66,7 @@ The tier list must always reflect the **active frontier generation**. It is an a
 
 ### 1. Generational Wave Checks (Mandatory Per Provider)
 Before editing the roster, systematically audit each provider's active generation:
-- **OpenAI**: Flagship line is `GPT-6` / `GPT-6.1` (`GPT-6 Astra` in S+, `GPT-6.1 Sol` in S, `GPT-6 Luna` in B). Note that `GPT-6 Terra` does not exist; avoid confusing with legacy 5.6 Terra. When `GPT-6` is active, immediately purge all legacy `GPT-5.x` models. Never leave previous generation variants lingering in the tiers.
+- **OpenAI**: Flagship line is `GPT-6` / `GPT-6.1` (`GPT-6 Astra` in S+, `GPT-6.1 Sol` in S, `GPT-6 Luna` in B). Verify exact names against the official model catalog; GPT-6.1 Terra is a distinct model (https://developers.openai.com/api/docs/models/gpt-6.1-terra). When `GPT-6` is active, immediately purge all legacy `GPT-5.x` models. Never leave previous generation variants lingering in the tiers.
 - **Anthropic**: Flagship line is `Claude 5.5` (`Claude Opus 5.5`, `Claude Sonnet 5.5`, `Claude Haiku 5.5`) alongside reasoning frontier `Claude Fable 5.1`. Purge legacy `Opus 5`, `Sonnet 5`, `Haiku 4.5`, and older `Fable 5`.
 - **Google DeepMind**: Flagship high-TPS line is `Gemini 3.8` (e.g. `Gemini 3.8 Flash`). Purge superseded `Gemini 3.6` and `3.5` iterations.
 - **Alibaba**: Flagship line is `Qwen 3.8` (`Qwen3.8-Flash-Next`, `Qwen3.8-27B`). Purge older `Qwen 3.7` and `3.6` generations.
@@ -162,6 +162,14 @@ Keep all text concise and practical. Avoid marketing language. Do not repeat the
 ### Handling Uncertainty
 
 When information cannot be verified: use `null`, `unknown`, or briefly note uncertainty. Do not guess or copy unverified rumours. Distinguish announcement, preview, waitlist, and general availability.
+
+## Personal perspective and subscription tiers
+
+- Research the author's recent notes, posts and usage data before assigning default model and subscription tiers. Treat dated firsthand experiences as editorial evidence, not timeless facts or a substitute for current plan and price verification.
+- On October 28, 2026, the author placed Google AI Pro, Claude Pro, ChatGPT Plus and OpenCode Go in S, and said ChatGPT Plus base usage had worsened but frequent resets still made it worthwhile. Reassess these opinions when newer evidence is available.
+- The July 2026 [Codex value note](/notes/codex-best-value/) favors ChatGPT Plus for the author's personal coding workflow. The September 2026 [Opus 5.5 note](/notes/opus-5-5-and-wait-what/) values its more direct bug explanations. Revisit these views against newer writing and current usage before carrying them forward.
+- Assign each subscription a `tier` matching the site's tier IDs (`s-plus`, `s`, `a`, `b`), separately from model rankings. Judge practical coding access, limits, price and personal fit; clearly identify provisional judgments and cite the basis. Keep pay-as-you-go services distinct from fixed-price subscriptions in their descriptions.
+- Treat the board as an editable starting opinion. Never imply an unverified personal experience or present one person's ranking as a universal benchmark.
 
 ## Service Rules
 

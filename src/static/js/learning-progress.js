@@ -67,7 +67,7 @@
     const dots = Array.from(svg.querySelectorAll('[data-dot]'))
     dots.forEach((dot, index) => {
       const coverage = Math.min(1, Math.max(0, (percentage / 100) * dots.length - index))
-      const radius = coverage >= 1 ? 5.4 : Math.max(1.44, 5.4 * Math.sqrt(coverage))
+      const radius = coverage >= 1 ? 5.4 : Math.max(0.9, 5.4 * Math.sqrt(coverage))
       dot.setAttribute('r', radius.toFixed(2))
       if (coverage > 0) dot.removeAttribute('opacity')
       else dot.setAttribute('opacity', '0.35')

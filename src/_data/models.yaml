@@ -1,21 +1,25 @@
 meta:
   title: Agentic Coding Model Tier List
-  updated_at: "2026-10-14"
+  updated_at: "2026-10-28"
   currency: USD
   methodology: >
-    Editorial ranking triangulated across public benchmarks (Artificial Analysis Intelligence Index v4.3.2,
-    CursorBench 3.2), original long-horizon repository tasks, ambiguous multi-file work, terminal
-    execution, practical harness quality, real developer throughput (TPS), and standard API pricing.
+    Editorial ranking triangulated across public benchmarks (Artificial Analysis Intelligence Index
+    v4.3.2, CursorBench 3.2), original long-horizon repository tasks, ambiguous multi-file work,
+    terminal execution, practical harness quality, real developer throughput (TPS), and standard API
+    pricing.
   benchmark_caveat: >
     Coding results belong to model-harness configurations, not base models alone. Harness choice can
-    change task success materially, so no single leaderboard determines the tiers. We cross-reference
-    public evaluations like the Artificial Analysis Intelligence Index v4.3.2 while adjusting for
-    unreleased checkpoints, reasoning latency, and daily developer ergonomics.
+    change task success materially, so no single leaderboard determines the tiers. We
+    cross-reference public evaluations like the Artificial Analysis Intelligence Index v4.3.2 while
+    adjusting for unreleased checkpoints, reasoning latency, and daily developer ergonomics.
   disclaimer: >-
     Prices are standard public list prices per 1M tokens unless a service is subscription-based.
-    Preview models are marked as not generally available. Last verified October 14, 2026.
+    Entries were verified on their individual dates; check provider links for current prices. Gemini
+    4 Argon introductory pricing is excluded from the API table.
   benchmark_sources:
-    - title: "Artificial Analysis Intelligence Index v4.3.2 (10-eval composite: Terminal-Bench 4.0, AA-Briefcase, GDPval)"
+    - title: >-
+        Artificial Analysis Intelligence Index v4.3.2 (10-eval composite: Terminal-Bench 4.0,
+        AA-Briefcase, GDPval)
       url: https://artificialanalysis.ai/intelligence-index
     - title: CursorBench 3.2 - ambiguous multi-file tasks from real sessions
       url: https://cursor.com/evals
@@ -114,11 +118,11 @@ models:
     price_level: high
     api_pricing:
       currency: USD
-      input_per_million: 5
-      cached_input_per_million: 0.5
-      output_per_million: 30
-      effective_date: "2026-10-14"
-    last_verified: "2026-10-14"
+      input_per_million: 10
+      cached_input_per_million: 1
+      output_per_million: 50
+      effective_date: "2026-10-28"
+    last_verified: "2026-10-28"
     sources:
       - title: OpenAI GPT-6 Astra documentation
         url: https://developers.openai.com/api/docs/models/gpt-6-astra
@@ -155,12 +159,14 @@ models:
     price_level: high
     api_pricing:
       currency: USD
-      input_per_million: 5
-      cached_input_per_million: 0.5
-      output_per_million: 25
-      effective_date: "2026-10-14"
-    last_verified: "2026-10-14"
+      input_per_million: 4
+      cached_input_per_million: 0.2
+      output_per_million: 20
+      effective_date: "2026-10-28"
+    last_verified: "2026-10-28"
     sources:
+      - title: Anthropic Opus 5.5 pricing
+        url: https://www.anthropic.com/claude-opus-5-5
       - title: Anthropic Claude Opus 5.5 documentation
         url: https://platform.claude.com/docs/en/about-claude/models/whats-new-opus-5-5
       - title: Artificial Analysis Intelligence Index v4.3.2
@@ -197,10 +203,10 @@ models:
     api_pricing:
       currency: USD
       input_per_million: 10
-      cached_input_per_million: 1
+      cached_input_per_million: 0.25
       output_per_million: 50
-      effective_date: "2026-10-14"
-    last_verified: "2026-10-14"
+      effective_date: "2026-10-28"
+    last_verified: "2026-10-28"
     sources:
       - title: Anthropic Claude Fable 5.1 model documentation
         url: https://platform.claude.com/docs/en/about-claude/models/introducing-claude-fable-5-1
@@ -319,11 +325,11 @@ models:
     price_level: medium
     api_pricing:
       currency: USD
-      input_per_million: 3
-      cached_input_per_million: 0.3
-      output_per_million: 15
-      effective_date: "2026-10-14"
-    last_verified: "2026-10-14"
+      input_per_million: 2
+      cached_input_per_million: 0.1
+      output_per_million: 10
+      effective_date: "2026-10-28"
+    last_verified: "2026-10-28"
     sources:
       - title: OpenAI GPT-6.1 Sol documentation
         url: https://developers.openai.com/api/docs/models/gpt-6.1-sol
@@ -461,7 +467,9 @@ models:
       - Open-weight subagents
       - Routine coding tasks
     strengths:
-      - Standout score of 42 on Artificial Analysis Intelligence Index v4.3.2 (ahead of Gemini 3.8 Flash)
+      - >-
+        Standout score of 42 on Artificial Analysis Intelligence Index v4.3.2 (ahead of Gemini 3.8
+        Flash)
       - Very fast generation speed
       - One-million-token context window
       - MIT-licensed open weights
@@ -637,11 +645,11 @@ models:
     price_level: very-low
     api_pricing:
       currency: USD
-      input_per_million: 0.2
-      cached_input_per_million: 0.02
-      output_per_million: 1.2
-      effective_date: "2026-10-14"
-    last_verified: "2026-10-14"
+      input_per_million: 0.1
+      cached_input_per_million: 0.01
+      output_per_million: 0.5
+      effective_date: "2026-10-28"
+    last_verified: "2026-10-28"
     sources:
       - title: OpenAI GPT-6 Luna documentation
         url: https://developers.openai.com/api/docs/models/gpt-6-luna
@@ -811,8 +819,71 @@ models:
         url: https://www.alibabacloud.com/help/en/model-studio/model-pricing
       - title: Artificial Analysis Intelligence Index v4.3.2
         url: https://artificialanalysis.ai/intelligence-index
+  - id: gemini-4-argon
+    name: Gemini 4 Argon
+    provider_id: google
+    tier: s
+    rank: 6
+    verdict: Google’s flagship model for complex coding and long-running agent tasks.
+    best_for:
+      - Complex software engineering
+      - Long-context work
+      - Multi-step agents
+    strengths:
+      - Unified 1M-token context
+      - Long output generation
+      - Available in Gemini API
+    weaknesses:
+      - Closed weights
+      - New release with limited independent track record
+      - Introductory API pricing expires November 30
+    context_window: 1048576
+    api_available: true
+    open_weights: false
+    speed: unknown
+    price_level: high
+    api_pricing: null
+    last_verified: "2026-10-28"
+    sources:
+      - title: Google Gemini 4 Argon API documentation and pricing
+        url: https://ai.google.dev/gemini-api/docs/latest-model
+  - id: gpt-6-1-terra
+    name: GPT-6.1 Terra
+    provider_id: openai
+    tier: a
+    rank: 6
+    verdict: A fast model for scoped code fixes and visual or computer-use tasks.
+    best_for:
+      - Scoped code fixes
+      - Visual reasoning
+      - Computer use
+    strengths:
+      - Tool calling and hosted shell
+      - 1.05M-token context
+      - Lower API cost than Sol
+    weaknesses:
+      - Less focused on difficult coding than Astra or Sol
+      - Closed weights
+    context_window: 1050000
+    api_available: true
+    open_weights: false
+    speed: fast
+    price_level: medium
+    api_pricing:
+      currency: USD
+      input_per_million: 1
+      cached_input_per_million: 0.05
+      output_per_million: 5
+      effective_date: "2026-10-28"
+    last_verified: "2026-10-28"
+    sources:
+      - title: OpenAI GPT-6.1 Terra documentation
+        url: https://developers.openai.com/api/docs/models/gpt-6.1-terra
+      - title: OpenAI model selection
+        url: https://developers.openai.com/api/docs/guides/model-selection
 services:
   - id: chatgpt-plus
+    tier: s
     name: ChatGPT Plus and Codex
     provider: OpenAI
     models:
@@ -832,7 +903,7 @@ services:
       - IDE
     byok: false
     best_for: Developers who want strong Codex access at the standard consumer price.
-    limitation: Heavy autonomous sessions can exhaust usage sooner than higher Pro tiers.
+    limitation: The author's experience is that base usage has worsened, but frequent resets still make Plus worthwhile.
     last_verified: "2026-10-14"
     sources:
       - title: OpenAI ChatGPT Pro tiers
@@ -842,6 +913,7 @@ services:
       - title: OpenAI Codex rate card
         url: https://help.openai.com/en/articles/20001106-codex-rate-card
   - id: chatgpt-pro-5x
+    tier: a
     name: ChatGPT Pro 5x and Codex
     provider: OpenAI
     models:
@@ -871,6 +943,7 @@ services:
       - title: OpenAI Codex rate card
         url: https://help.openai.com/en/articles/20001106-codex-rate-card
   - id: chatgpt-pro-20x
+    tier: a
     name: ChatGPT Pro 20x and Codex
     provider: OpenAI
     models:
@@ -900,6 +973,7 @@ services:
       - title: OpenAI Codex rate card
         url: https://help.openai.com/en/articles/20001106-codex-rate-card
   - id: claude-pro
+    tier: s
     name: Claude Pro with Claude Code
     provider: Anthropic
     models:
@@ -928,6 +1002,7 @@ services:
       - title: Claude Code product
         url: https://claude.com/product/claude-code
   - id: claude-max-5x
+    tier: a
     name: Claude Max 5x with Claude Code
     provider: Anthropic
     models:
@@ -956,6 +1031,7 @@ services:
       - title: Claude Code product
         url: https://claude.com/product/claude-code
   - id: claude-max-20x
+    tier: a
     name: Claude Max 20x with Claude Code
     provider: Anthropic
     models:
@@ -984,6 +1060,7 @@ services:
       - title: Claude Code product
         url: https://claude.com/product/claude-code
   - id: cursor-pro
+    tier: s
     name: Cursor Pro
     provider: Cursor
     models:
@@ -1018,6 +1095,7 @@ services:
       - title: CursorBench 3.2
         url: https://cursor.com/evals
   - id: cursor-pro-plus
+    tier: a
     name: Cursor Pro+
     provider: Cursor
     models:
@@ -1054,6 +1132,7 @@ services:
       - title: CursorBench 3.2
         url: https://cursor.com/evals
   - id: cursor-ultra
+    tier: b
     name: Cursor Ultra
     provider: Cursor
     models:
@@ -1088,6 +1167,7 @@ services:
       - title: CursorBench 3.2
         url: https://cursor.com/evals
   - id: github-copilot-pro
+    tier: a
     name: GitHub Copilot Pro
     provider: GitHub
     models:
@@ -1112,6 +1192,7 @@ services:
       - title: GitHub Copilot plans and model availability
         url: https://github.com/features/copilot/plans
   - id: github-copilot-pro-plus
+    tier: a
     name: GitHub Copilot Pro+
     provider: GitHub
     models:
@@ -1140,6 +1221,7 @@ services:
       - title: GitHub Copilot plans and model availability
         url: https://github.com/features/copilot/plans
   - id: github-copilot-max
+    tier: b
     name: GitHub Copilot Max
     provider: GitHub
     models:
@@ -1168,6 +1250,7 @@ services:
       - title: GitHub Copilot plans and model availability
         url: https://github.com/features/copilot/plans
   - id: windsurf-pro
+    tier: a
     name: Windsurf Pro
     provider: Windsurf
     models:
@@ -1191,12 +1274,11 @@ services:
       - title: Windsurf upgrade and pricing page
         url: https://windsurf.com/account/upgrade-prompt
   - id: openrouter-payg
+    tier: a
     name: OpenRouter Pay-as-you-go
     provider: OpenRouter
     models: []
-    monthly_price:
-      amount: 0
-      currency: USD
+    monthly_price: null
     usage_summary: >-
       No fixed subscription; routes to hundreds of models at provider list pricing with a
       credit-purchase fee and optional BYOK.
@@ -1212,6 +1294,7 @@ services:
       - title: OpenRouter BYOK FAQ
         url: https://openrouter.ai/docs/faq
   - id: kimi-moderato
+    tier: a
     name: Kimi Moderato
     provider: Moonshot AI
     models:
@@ -1235,6 +1318,7 @@ services:
       - title: Kimi K3 pricing and plan overview
         url: https://www.kimi.com/resources/kimi-k3-pricing
   - id: kimi-allegretto
+    tier: a
     name: Kimi Allegretto
     provider: Moonshot AI
     models:
@@ -1260,6 +1344,7 @@ services:
       - title: Kimi K3 pricing and plan overview
         url: https://www.kimi.com/resources/kimi-k3-pricing
   - id: kimi-allegro
+    tier: b
     name: Kimi Allegro
     provider: Moonshot AI
     models:
@@ -1285,6 +1370,7 @@ services:
       - title: Kimi K3 pricing and plan overview
         url: https://www.kimi.com/resources/kimi-k3-pricing
   - id: kimi-vivace
+    tier: b
     name: Kimi Vivace
     provider: Moonshot AI
     models:
@@ -1310,6 +1396,7 @@ services:
       - title: Kimi K3 pricing and plan overview
         url: https://www.kimi.com/resources/kimi-k3-pricing
   - id: zai-lite
+    tier: a
     name: Z.ai Coding Plan Lite
     provider: Z.ai
     models:
@@ -1330,6 +1417,7 @@ services:
       - title: Z.ai subscription plans
         url: https://z.ai/subscribe
   - id: zai-pro
+    tier: b
     name: Z.ai Coding Plan Pro
     provider: Z.ai
     models:
@@ -1350,6 +1438,7 @@ services:
       - title: Z.ai subscription plans
         url: https://z.ai/subscribe
   - id: zai-max
+    tier: b
     name: Z.ai Coding Plan Max
     provider: Z.ai
     models:
@@ -1370,6 +1459,7 @@ services:
       - title: Z.ai subscription plans
         url: https://z.ai/subscribe
   - id: alibaba-coding-plan
+    tier: b
     name: Alibaba Cloud Model Studio Coding Plan
     provider: Alibaba Cloud
     models:
@@ -1401,6 +1491,7 @@ services:
       - title: Alibaba Cloud Model Studio Coding Plan
         url: https://www.alibabacloud.com/help/en/model-studio/coding-plan
   - id: minimax-plus
+    tier: a
     name: MiniMax Token Plan Plus
     provider: MiniMax
     models:
@@ -1423,6 +1514,7 @@ services:
       - title: MiniMax Token Plan documentation
         url: https://platform.minimax.io/docs/token-plan/intro
   - id: minimax-max
+    tier: b
     name: MiniMax Token Plan Max
     provider: MiniMax
     models:
@@ -1445,6 +1537,7 @@ services:
       - title: MiniMax Token Plan documentation
         url: https://platform.minimax.io/docs/token-plan/intro
   - id: minimax-ultra
+    tier: b
     name: MiniMax Token Plan Ultra
     provider: MiniMax
     models:
@@ -1466,32 +1559,57 @@ services:
         url: https://platform.minimax.io/subscribe/token-plan
       - title: MiniMax Token Plan documentation
         url: https://platform.minimax.io/docs/token-plan/intro
-  - id: google-developer-premium
-    name: Google Developer Program Premium
+  - id: opencode-go
+    icon: /assets/services/opencode-go.png
+    tier: s
+    name: OpenCode Go
+    provider: OpenCode
+    models:
+      - GLM-5.3
+      - Kimi K3
+      - GPT-6 Luna
+    monthly_price:
+      amount: 10
+      currency: USD
+    usage_summary: Access to a curated model lineup with usage limits that vary by model.
+    interfaces:
+      - CLI
+      - API
+    byok: false
+    best_for: Affordable access to a range of coding models in OpenCode or compatible agents.
+    limitation: Model-specific usage caps apply and the available lineup can change.
+    last_verified: "2026-10-28"
+    sources:
+      - title: OpenCode Go plans and models
+        url: https://docs.opencode.ai/docs/go/
+  - id: google-ai
+    tier: s
+    name: Google AI Pro
     provider: Google
-    models: []
+    models:
+      - Gemini 4 Argon
     monthly_price:
       amount: 19.99
       currency: USD
-    usage_summary: >-
-      Includes enhanced developer benefits, Gemini CLI access, a published daily request allowance,
-      and monthly Google Cloud credits.
+    usage_summary: Expanded Antigravity access and $10 in monthly GenAI and Google Cloud developer credits; includes Gemini app and storage benefits.
     interfaces:
       - Web
+      - Desktop
       - CLI
       - IDE
     byok: false
-    best_for: Developers already invested in Google Cloud and Gemini tooling.
-    limitation: >-
-      Google's consumer coding-product entitlements are transitioning toward Antigravity, so exact
-      model access is unsettled.
-    last_verified: "2026-10-14"
+    best_for: Developers using Google's Gemini and Antigravity tools.
+    limitation: Usage is quota-limited; consumer Gemini Code Assist and Gemini CLI sign-in were discontinued.
+    last_verified: "2026-10-28"
     sources:
       - title: Google Developer Program plans and pricing
         url: https://developers.google.com/program/plans-and-pricing
-      - title: Gemini Code Assist deprecations
+      - title: Google AI plans
+        url: https://one.google.com/about/google-ai-plans/
+      - title: Gemini Code Assist consumer accounts
         url: https://developers.google.com/gemini-code-assist/docs/deprecations/code-assist-individuals
   - id: muse-code-beta
+    tier: b
     name: Muse Code Beta
     provider: Meta
     models:

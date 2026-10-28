@@ -61,9 +61,10 @@ export default function makeScene({ cols, rows, theme = "night", mode = "" }) {
     }
     if (ashore && y > sandTop) {
       const depth = (y - sandTop) / (1 - sandTop);
+      // A quiet sand tone with sparse grains; dense random stipple reads as noise.
       const speck = hash(X[k] * 213.1, y * 187.7);
-      const thr = 0.93 - 0.1 * depth;
-      sand[k] = speck > thr ? (night ? 0.14 + 0.16 * hash(y * 9, X[k]) : 0.22 + 0.2 * hash(y * 9, X[k])) : 0;
+      const grain = speck > 0.975 - 0.02 * depth;
+      sand[k] = night ? (grain ? 0.2 : 0.035) : grain ? 0.4 : 0.08 + 0.05 * depth;
     }
   }
 
@@ -99,7 +100,8 @@ export default function makeScene({ cols, rows, theme = "night", mode = "" }) {
       }
       if (edge || capL || capR) return 0.92;
       // A line of writing along the roll.
-      if (Math.abs(v) < 0.004 && Math.sin(u * 190) > -0.2 && u < scrollEnd - 0.04) return 0.7;
+      // Only inside the glass: past the neck the line breaks into noise.
+      if (inGlass && Math.abs(v) < 0.004 && Math.sin(u * 190) > -0.2 && u < scrollEnd - 0.04) return 0.7;
       return 0.1;
     }
     if (!inGlass) return -1;
@@ -111,10 +113,11 @@ export default function makeScene({ cols, rows, theme = "night", mode = "" }) {
       if (sNorm < -0.3 && sNorm > -0.6 && u > -0.22 && u < 0.05) return 0.5; // sheen
       return 0.0;
     }
-    if (Math.abs(sNorm) > 0.8 || u < baseU + 0.012) return 0.88; // darker edge
+    if (Math.abs(sNorm) > (ashore ? 0.72 : 0.8) || u < baseU + 0.012) return ashore ? 0.95 : 0.88; // darker edge
     if (sNorm < -0.3 && sNorm > -0.6 && u > -0.22 && u < 0.05) return 0.0; // lit streak
     if (sNorm < -0.3 && sNorm > -0.6 && u > -0.27 && u < -0.24) return 0.0; // glint at the base
-    return mix(0.5, 0.66, smooth(0, 1, sNorm));
+    // Ashore the glass is drawn pale so it stands off the wet sand.
+    return ashore ? mix(0.16, 0.3, smooth(0, 1, sNorm)) : mix(0.5, 0.66, smooth(0, 1, sNorm));
   }
 
   return function frame(t) {
@@ -173,7 +176,8 @@ export default function makeScene({ cols, rows, theme = "night", mode = "" }) {
           } else if (y > foamTop) {
             // Foam: paper by day, bright by night, lacy at its rear edge.
             const lace = (y - foamTop) / (yf - foamTop);
-            const holes = hash(x * 311 + Math.floor(t * 2) * 0.1, y * 297) > 0.45 + 0.5 * lace;
+            // Coherent lace that drifts with the water, not per-frame static.
+            const holes = noise(x * 34 - t * 0.4, y * 70) > 0.35 + 0.5 * lace;
             v = night ? (holes ? 0.5 * lace + 0.1 : 0.04) : holes ? 0.0 : 0.38;
             if (yf - y < px * 1.1 && noise(x * 8 - t * 0.2, 7) > 0.3) v = night ? 0.8 : 0.8; // leading edge, broken
           }
@@ -220,7 +224,7 @@ export default function makeScene({ cols, rows, theme = "night", mode = "" }) {
         if (dx * dx + dy * dy > reach * reach) continue;
         const u = ((dx * c + dy * s) / P.sc) + 0.02, v = (-dx * s + dy * c) / P.sc;
         const w = halfWidth(u);
-        if (w > 0 && Math.abs(v) < w * 0.9 && !night) out[k] = Math.max(out[k], 0.34);
+        if (w > 0 && Math.abs(v) < w * 0.9 && !night) out[k] = Math.max(out[k], 0.5);
       }
     }
     for (let k = 0; k < n; k++) {

@@ -853,6 +853,56 @@ date: 2026-07-11
       text-align: right;
     }
 
+    .model-card { touch-action: none; user-select: none; }
+    .model-card.dragging { opacity: .35; }
+    .tier-row.drop-target .tier-models { outline: 3px solid #1769aa; outline-offset: -3px; background: #384d5e; }
+    .drag-ghost { position: fixed; z-index: 1000; pointer-events: none; opacity: .88; transform: translate(-50%, -50%) rotate(3deg); }
+    .table-wrap, .calculator, .control, .service-icon, .quick-answer { border-radius: 0; box-shadow: none; }
+    table { font-size: 12px; }
+    th { font-size: 10px; padding: 10px; }
+    td { padding: 10px; }
+    .section-heading p, .disclaimer { font-size: 12px; }
+    .subscription-note { font-size: 12px; line-height: 1.5; }
+    .service-tile { position: relative; width: 100px; height: 100px; padding: 0; border: 1px solid #555; background: #f4f3ee; cursor: grab; touch-action: none; user-select: none; overflow: hidden; }
+    .service-tile img { width: 100%; height: 100%; object-fit: contain; padding: 16px; }
+    .service-tile > span { position: absolute; inset: auto 0 0; padding: 4px; color: white; background: rgba(0,0,0,.82); font-size: 11px; line-height: 1.15; }
+    .service-tile.dragging { opacity: .35; }
+    .service-tile.drag-ghost { position: fixed; }
+    .service-tile:focus-visible { outline: 3px solid #1769aa; outline-offset: -3px; }
+    @media (max-width: 720px) { .service-tile { width: 82px; height: 82px; } }
+    .board-controls { display: flex; align-items: center; justify-content: space-between; gap: 12px; font-size: 12px; }
+    .board-controls button { padding: 6px 10px; cursor: pointer; }
+    #model-tier-select { margin: 16px 0 0 8px; }
+    /* Compact tier-list tiles and model detail dialog. */
+    .tier-board { border-radius: 0; box-shadow: none; }
+    .tier-row { min-height: 110px; }
+    .tier-label span { display: none; }
+    .tier-models { gap: 4px; padding: 5px; background: #292929; }
+    .model-card, .model-card.expanded {
+      width: 100px; height: 100px; min-height: 0; padding: 0;
+      border: 1px solid #555; border-radius: 0; box-shadow: none;
+      background: #f4f3ee; overflow: hidden;
+    }
+    .model-card:hover { transform: none; border-color: #1769aa; box-shadow: none; }
+    .model-head { display: block; height: 100%; }
+    .model-icon { width: 100%; height: 100%; border: 0; border-radius: 0; background: #f4f3ee; }
+    .model-icon img { padding: 16px; }
+    .model-card .model-name {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 4px 3px; background: rgba(0, 0, 0, .82); color: white;
+      text-align: center; font-size: 11px; line-height: 1.15;
+    }
+    .model-card .rank, .model-card .model-provider, .model-card .model-verdict,
+    .model-card .mini-meta, .model-card .model-details { display: none; }
+    #service-dialog, #model-dialog { width: min(520px, calc(100% - 32px)); max-height: 85vh; border: 1px solid var(--line-strong); padding: 24px; background: var(--paper); color: #242424; }
+    #service-dialog::backdrop, #model-dialog::backdrop { background: rgba(0, 0, 0, .65); }
+    .dialog-close { float: right; border: 0; background: transparent; font-size: 28px; cursor: pointer; }
+    .dialog-title { margin: 0 36px 12px 0; }
+    .dialog-content { font-size: 14px; line-height: 1.5; }
+    .dialog-content .model-verdict { font-size: 14px; }
+    .dialog-content .detail-row { margin: 12px 0; }
+    .dialog-content .sources a { display: block; margin-top: 8px; }
+
     /*
       Responsive
     */
@@ -866,9 +916,7 @@ date: 2026-07-11
         grid-template-columns: 1fr 1fr;
       }
 
-      .model-card {
-        width: 220px;
-      }
+
 
       #pricing {
         grid-template-columns: 1fr;
@@ -921,9 +969,9 @@ date: 2026-07-11
         font-size: 7px;
       }
 
-      .model-card,
-      .model-card.expanded {
-        width: 100%;
+      .model-card, .model-card.expanded {
+        width: 82px;
+        height: 82px;
       }
 
       main {
@@ -999,7 +1047,7 @@ date: 2026-07-11
         {% endfor %}
       </ul>
 
-      <a href="#tier-rows" class="quick-answer-link">See full list →</a>
+      <a href="#tier-board" class="quick-answer-link">See full list →</a>
     </div>
 
     <div
@@ -1069,6 +1117,10 @@ date: 2026-07-11
 
     <main>
 
+      <div class="board-controls">
+        <p>Drag a model to any tier. Tap a tile for details and another way to move it. Your list stays in this browser.</p>
+        <button type="button" onclick="resetTiers()">Reset rankings</button>
+      </div>
       <div
         class="tier-board"
         id="tier-board"
@@ -1098,9 +1150,9 @@ date: 2026-07-11
                     class="model-card"
                     tabindex="0"
                     role="button"
-                    aria-expanded="false"
+                    aria-haspopup="dialog"
 
-                    onclick="toggleCard(this)"
+                    onclick="openModel(this)"
 
                     onkeydown="
                       if (
@@ -1108,10 +1160,13 @@ date: 2026-07-11
                         event.key === ' '
                       ) {
                         event.preventDefault();
-                        toggleCard(this);
+                        openModel(this);
                       }
                     "
 
+                    draggable="true"
+                    data-model-id="{{ model.id }}"
+                    data-original-tier="{{ tier.id }}"
                     data-provider="{{ model.provider_id }}"
 
                     data-open="{{
@@ -1198,7 +1253,8 @@ date: 2026-07-11
                     </div>
 
                     <div class="model-details">
-
+                      <div class="detail-row"><strong>Strengths:</strong> {{ model.strengths | join(", ") }}</div>
+                      <div class="detail-row"><strong>Limitations:</strong> {{ model.weaknesses | join(", ") }}</div>
                       <div class="detail-row">
                         <strong>Best for:</strong>
 
@@ -1214,10 +1270,7 @@ date: 2026-07-11
                       <div class="detail-row">
                         <strong>Context:</strong>
 
-                        {{
-                          (model.context_window / 1000)
-                          | round
-                        }}K
+                        {% if model.context_window %}{{ (model.context_window / 1000) | round }}K{% else %}Unknown{% endif %}
                       </div>
 
                       {% if model.api_pricing %}
@@ -1282,94 +1335,23 @@ date: 2026-07-11
           </p>
         </div>
 
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Service</th>
-                <th>Price</th>
-                <th>What you get</th>
-                <th>Best for</th>
-                <th>Main limitation</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {% for svc in models.services %}
-
-                <tr>
-                  <td class="service-name-cell">
-                    <div class="service-name-wrap">
-
-                      <div
-                        class="service-icon"
-                        aria-hidden="true"
-                      >
-                        <img
-                          src="/assets/services/{{ svc.id }}.svg"
-                          alt=""
-
-                          onerror="
-                            this.style.display = 'none';
-                            this.nextElementSibling.style.display = 'grid';
-                          "
-                        >
-
-                        <span style="display: none;">
-                          {{ svc.name.slice(0, 2) }}
-                        </span>
-                      </div>
-
-                      <strong>
-                        {{ svc.name }}
-                      </strong>
-                    </div>
-                  </td>
-
-                  <td class="price">
-                    {% if svc.monthly_price.amount == 0 %}
-                      Free
-                    {% else %}
-                      ${{ svc.monthly_price.amount }}/mo
-                    {% endif %}
-                  </td>
-
-                  <td>
-                    {% for m in svc.models %}
-                      {{ m }}
-
-                      {% if not loop.last %}
-                        ,
-                      {% endif %}
-                    {% endfor %}
-
-                    <div class="muted">
-                      {% for i in svc.interfaces %}
-                        {{ i }}
-
-                        {% if not loop.last %}
-                          ·
-                        {% endif %}
-                      {% endfor %}
-
-                      {% if svc.byok %}
-                        · BYOK
-                      {% endif %}
-                    </div>
-                  </td>
-
-                  <td>
-                    {{ svc.best_for }}
-                  </td>
-
-                  <td class="muted">
-                    {{ svc.limitation }}
-                  </td>
-                </tr>
-
-              {% endfor %}
-            </tbody>
-          </table>
+        <p class="subscription-note">Editorial starting points based on coding value, available tools, and the author's experience. <a href="/notes/codex-best-value/">Why Codex Plus ranks highly</a>. Drag tiles or open one to change its tier; your changes stay in this browser.</p>
+        <div class="board-controls"><span>Subscription tiers</span><button type="button" id="reset-services">Reset subscriptions</button></div>
+        <div class="tier-board" id="service-board">
+          {% for tier in models.tiers %}
+          <section class="tier-row service-row" data-tier="{{ tier.id }}">
+            <div class="tier-label"><strong>{{ tier.label }}</strong></div>
+            <div class="tier-models">
+              {% for svc in models.services %}{% if svc.tier == tier.id %}
+              <button class="service-tile" type="button" draggable="true" data-id="{{ svc.id }}" data-original-tier="{{ svc.tier }}" aria-haspopup="dialog">
+                <img src="{{ svc.icon if svc.icon else '/assets/services/' + svc.id + '.svg' }}" alt="" onerror="this.style.display='none'">
+                <span>{{ svc.name }}</span>
+                <template><p>{{ svc.usage_summary }}</p><p><strong>Models:</strong> {% if svc.models | length %}{{ svc.models | join(", ") }}{% else %}See provider{% endif %}</p><p><strong>Interfaces:</strong> {{ svc.interfaces | join(" · ") }}{% if svc.byok %} · BYOK{% endif %}</p><p><strong>Best for:</strong> {{ svc.best_for }}</p><p><strong>Limitation:</strong> {{ svc.limitation }}</p><p><strong>Price:</strong> {% if not svc.monthly_price %}Usage-based{% elif svc.monthly_price.amount == 0 %}Free{% else %}${{ svc.monthly_price.amount }}/month{% endif %}</p>{% if svc.sources and svc.sources[0] %}<a href="{{ svc.sources[0].url }}">Official source</a>{% endif %}</template>
+              </button>
+              {% endif %}{% endfor %}
+            </div>
+          </section>
+          {% endfor %}
         </div>
       </section>
 
@@ -1562,16 +1544,176 @@ date: 2026-07-11
 
   </div>
 
-  <script>
-    function toggleCard(card) {
-      const expanded =
-        card.classList.toggle("expanded");
+  <dialog id="model-dialog" aria-labelledby="model-dialog-title">
+    <button class="dialog-close" type="button" aria-label="Close details" onclick="this.closest('dialog').close()">×</button>
+    <h2 class="dialog-title" id="model-dialog-title"></h2>
+    <div class="dialog-content"></div>
+    <label for="model-tier-select">Move to tier</label>
+    <select id="model-tier-select">
+      {% for tier in models.tiers %}<option value="{{ tier.id }}">{{ tier.label }}</option>{% endfor %}
+    </select>
+  </dialog>
 
-      card.setAttribute(
-        "aria-expanded",
-        expanded ? "true" : "false"
-      );
+  <dialog id="service-dialog" aria-labelledby="service-dialog-title">
+    <button class="dialog-close" type="button" aria-label="Close details" onclick="this.closest('dialog').close()">×</button>
+    <h2 id="service-dialog-title"></h2><div class="service-dialog-content"></div>
+    <label for="service-tier-select">Move to tier</label>
+    <select id="service-tier-select">{% for tier in models.tiers %}<option value="{{ tier.id }}">{{ tier.label }}</option>{% endfor %}</select>
+  </dialog>
+  <script>
+    const tierStorageKey = "model-tier-list-rankings";
+    let activeCard = null;
+    let draggedCard = null;
+    let suppressClick = false;
+    function clearDropTargets() {
+      document.querySelectorAll(".drop-target").forEach((row) => row.classList.remove("drop-target"));
     }
+
+    function saveTiers() {
+      const placements = {};
+      document.querySelectorAll(".model-card").forEach((card) => {
+        placements[card.dataset.modelId] = card.closest(".tier-row").dataset.tier;
+      });
+      try { localStorage.setItem(tierStorageKey, JSON.stringify(placements)); } catch (error) { /* Storage may be unavailable. */ }
+    }
+
+    function moveModel(card, tier, save = true) {
+      const row = Array.from(document.querySelectorAll("#tier-board .tier-row")).find((item) => item.dataset.tier === tier);
+      if (!row) return;
+      row.querySelector(".tier-models").appendChild(card);
+      if (save) saveTiers();
+      filterModels();
+    }
+
+    function resetTiers() {
+      document.querySelectorAll(".model-card").forEach((card) => moveModel(card, card.dataset.originalTier, false));
+      document.querySelectorAll("#tier-board .tier-models").forEach((row) => {
+        Array.from(row.children).sort((a, b) => Number(a.dataset.originalOrder) - Number(b.dataset.originalOrder)).forEach((card) => row.appendChild(card));
+      });
+      try { localStorage.removeItem(tierStorageKey); } catch (error) { /* Storage may be unavailable. */ }
+    }
+
+    document.querySelectorAll(".model-card").forEach((card, index) => {
+      card.dataset.originalOrder = index;
+      card.addEventListener("dragstart", (event) => {
+        draggedCard = card;
+        event.dataTransfer.effectAllowed = "move";
+        event.dataTransfer.setData("text/plain", card.dataset.modelId);
+        requestAnimationFrame(() => card.classList.add("dragging"));
+      });
+      card.addEventListener("dragend", () => { card.classList.remove("dragging"); draggedCard = null; clearDropTargets(); });
+      card.addEventListener("pointerdown", (event) => {
+        if (event.pointerType !== "touch") return;
+        const startX = event.clientX, startY = event.clientY;
+        let ghost = null, target = null;
+        card.setPointerCapture(event.pointerId);
+        const move = (e) => {
+          if (!ghost && Math.hypot(e.clientX - startX, e.clientY - startY) > 8) {
+            ghost = card.cloneNode(true); ghost.classList.add("drag-ghost");
+            document.body.appendChild(ghost); card.classList.add("dragging");
+          }
+          if (!ghost) return;
+          ghost.style.left = e.clientX + "px"; ghost.style.top = e.clientY + "px";
+          clearDropTargets(); target = document.elementFromPoint(e.clientX, e.clientY)?.closest(".tier-row");
+          if (target) target.classList.add("drop-target");
+        };
+        const end = (e) => {
+          card.removeEventListener("pointermove", move); card.removeEventListener("pointerup", end); card.removeEventListener("pointercancel", end);
+          if (ghost) {
+            suppressClick = true; setTimeout(() => { suppressClick = false; }, 300);
+            if (target && e.type !== "pointercancel") moveModel(card, target.dataset.tier);
+            ghost.remove(); card.classList.remove("dragging"); clearDropTargets();
+          }
+        };
+        card.addEventListener("pointermove", move); card.addEventListener("pointerup", end); card.addEventListener("pointercancel", end);
+      });
+    });
+    document.querySelectorAll("#tier-board .tier-row").forEach((row) => {
+      row.addEventListener("dragover", (event) => { if (draggedCard) { event.preventDefault(); clearDropTargets(); row.classList.add("drop-target"); } });
+      row.addEventListener("dragleave", (event) => { if (!row.contains(event.relatedTarget)) row.classList.remove("drop-target"); });
+      row.addEventListener("drop", (event) => {
+        event.preventDefault();
+        if (draggedCard) moveModel(draggedCard, row.dataset.tier);
+        clearDropTargets();
+      });
+    });
+    document.getElementById("model-tier-select").addEventListener("change", (event) => {
+      if (activeCard) moveModel(activeCard, event.target.value);
+    });
+    try {
+      const saved = JSON.parse(localStorage.getItem(tierStorageKey) || "{}");
+      document.querySelectorAll(".model-card").forEach((card) => {
+        if (saved[card.dataset.modelId]) moveModel(card, saved[card.dataset.modelId], false);
+      });
+    } catch (error) { /* Ignore unavailable or invalid saved rankings. */ }
+
+    function openModel(card) {
+      if (suppressClick) return;
+      activeCard = card;
+      const dialog = document.getElementById("model-dialog");
+      dialog.querySelector(".dialog-title").textContent = card.querySelector(".model-name").textContent.trim();
+      dialog.querySelector(".dialog-content").innerHTML =
+        card.querySelector(".model-verdict").outerHTML +
+        card.querySelector(".mini-meta").outerHTML +
+        card.querySelector(".model-details").innerHTML;
+      document.getElementById("model-tier-select").value = card.closest(".tier-row").dataset.tier;
+      dialog.showModal();
+    }
+
+    const serviceBoard = document.getElementById("service-board");
+    const serviceDialog = document.getElementById("service-dialog");
+    const serviceSelect = document.getElementById("service-tier-select");
+    let activeService = null, draggedService = null, suppressServiceClick = false;
+    function moveService(tile, tier, save = true) {
+      const row = Array.from(serviceBoard.querySelectorAll(".service-row")).find(item => item.dataset.tier === tier);
+      if (!row) return;
+      row.querySelector(".tier-models").appendChild(tile);
+      if (save) {
+        const placements = {};
+        serviceBoard.querySelectorAll(".service-tile").forEach(item => { placements[item.dataset.id] = item.closest(".service-row").dataset.tier; });
+        try { localStorage.setItem("subscription-tier-rankings", JSON.stringify(placements)); } catch (error) {}
+      }
+    }
+    serviceBoard.querySelectorAll(".service-tile").forEach((tile, index) => {
+      tile.dataset.originalOrder = index;
+      tile.addEventListener("click", () => {
+        if (suppressServiceClick) return;
+        activeService = tile;
+        serviceDialog.querySelector("h2").textContent = tile.querySelector("span").textContent;
+        serviceDialog.querySelector(".service-dialog-content").innerHTML = tile.querySelector("template").innerHTML;
+        serviceSelect.value = tile.closest(".service-row").dataset.tier;
+        serviceDialog.showModal();
+      });
+      tile.addEventListener("dragstart", e => { draggedService = tile; e.dataTransfer.setData("text/plain", tile.dataset.id); requestAnimationFrame(() => tile.classList.add("dragging")); });
+      tile.addEventListener("dragend", () => { tile.classList.remove("dragging"); draggedService = null; clearDropTargets(); });
+      tile.addEventListener("pointerdown", e => {
+        if (e.pointerType !== "touch") return;
+        const x = e.clientX, y = e.clientY; let ghost = null, target = null;
+        tile.setPointerCapture(e.pointerId);
+        const move = ev => {
+          if (!ghost && Math.hypot(ev.clientX - x, ev.clientY - y) > 8) { ghost = tile.cloneNode(true); ghost.classList.add("drag-ghost"); document.body.appendChild(ghost); tile.classList.add("dragging"); }
+          if (!ghost) return;
+          ghost.style.left = ev.clientX + "px"; ghost.style.top = ev.clientY + "px";
+          clearDropTargets(); target = document.elementFromPoint(ev.clientX, ev.clientY)?.closest(".service-row"); if (target) target.classList.add("drop-target");
+        };
+        const end = ev => {
+          tile.removeEventListener("pointermove", move); tile.removeEventListener("pointerup", end); tile.removeEventListener("pointercancel", end);
+          if (ghost) { suppressServiceClick = true; setTimeout(() => { suppressServiceClick = false; }, 300); if (target && ev.type !== "pointercancel") moveService(tile, target.dataset.tier); ghost.remove(); tile.classList.remove("dragging"); clearDropTargets(); }
+        };
+        tile.addEventListener("pointermove", move); tile.addEventListener("pointerup", end); tile.addEventListener("pointercancel", end);
+      });
+    });
+    serviceBoard.querySelectorAll(".service-row").forEach(row => {
+      row.addEventListener("dragover", e => { if (draggedService) { e.preventDefault(); clearDropTargets(); row.classList.add("drop-target"); } });
+      row.addEventListener("drop", e => { e.preventDefault(); if (draggedService) moveService(draggedService, row.dataset.tier); clearDropTargets(); });
+    });
+    serviceSelect.addEventListener("change", () => { if (activeService) moveService(activeService, serviceSelect.value); });
+    document.getElementById("reset-services").addEventListener("click", () => {
+      serviceBoard.querySelectorAll(".service-tile").forEach(tile => moveService(tile, tile.dataset.originalTier, false));
+      serviceBoard.querySelectorAll(".tier-models").forEach(row => Array.from(row.children).sort((a,b) => Number(a.dataset.originalOrder) - Number(b.dataset.originalOrder)).forEach(tile => row.appendChild(tile)));
+      try { localStorage.removeItem("subscription-tier-rankings"); } catch (error) {}
+    });
+    try { const saved = JSON.parse(localStorage.getItem("subscription-tier-rankings") || "{}"); serviceBoard.querySelectorAll(".service-tile").forEach(tile => { if (saved[tile.dataset.id]) moveService(tile, saved[tile.dataset.id], false); }); } catch (error) {}
 
     function filterModels() {
       const query = document
@@ -1643,7 +1785,7 @@ date: 2026-07-11
       });
 
       document
-        .querySelectorAll(".tier-row")
+        .querySelectorAll("#tier-board .tier-row")
         .forEach((row) => {
           const hasVisibleModel =
             row.querySelector(
@@ -1651,7 +1793,7 @@ date: 2026-07-11
             );
 
           row.style.display =
-            hasVisibleModel ? "" : "none";
+            hasVisibleModel || (!query && !provider && !weightType && !apiAvailability) ? "" : "none";
         });
 
       document
