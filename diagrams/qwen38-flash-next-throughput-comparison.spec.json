@@ -1,33 +1,45 @@
 {
-  "title": "Decode throughput \u00b7 RTX 4070 12GB",
+  "title": "Decode throughput · RTX 4070 12GB",
   "unit": "tok/s",
   "max": 100,
   "step": 20,
   "bars": [
     {
-      "label": "llama.cpp master \u00b7 AD-4.27",
+      "label": "llama.cpp master · AD-4.27",
       "value": 20.8,
       "text": "20.8 (no MTP head)"
     },
     {
-      "label": "llama.cpp MTP V2 \u00b7 AD-4.27",
+      "label": "llama.cpp MTP V2 · AD-4.27",
       "value": 27.06,
       "text": "27.06 (16k capacity)"
     },
     {
-      "label": "Strata IQ3_XXS \u00b7 60k prompt",
+      "label": "Strata IQ3_XXS · 60k prompt",
       "value": 53.2,
       "text": "53.2",
       "accent": true
     },
     {
-      "label": "Strata IQ3_XXS \u00b7 DDR5-5800",
+      "label": "Strata IQ3_XXS · DDR5-5800 (OC)",
       "value": 65.8,
       "text": "65.8 (sustained code)",
       "accent": true
     },
     {
-      "label": "Full Q8_0 PLE \u00b7 DDR5-5800",
+      "label": "4070 fork · DDR5-5200 (stable)",
+      "value": 69.6,
+      "text": "69.6 (PR #3453)",
+      "accent": true
+    },
+    {
+      "label": "--kv-grow · DDR5-5200 (stable)",
+      "value": 73.5,
+      "text": "73.5 (3,277 slots)",
+      "accent": true
+    },
+    {
+      "label": "Full Q8_0 PLE · DDR5-5800 (OC)",
       "value": 74.8,
       "text": "74.8 (uncompressed)",
       "accent": true

@@ -28,11 +28,11 @@ Here's which quant to grab, how I build and run it in `llama.cpp`, where the mem
 
 {% diagram_card {
   src: "./src/static/img/diagrams/qwen38-flash-next-throughput-progression.png",
-  alt: "Line chart of Qwen3.8-Flash-Next decode throughput on an RTX 4070 12GB in tokens per second across runtime steps: Powersave 6.5, CPU governor 12.2, SSD mmap 15.2, q8 KV plus fit 18.9, master 19.35, MTP V1 20.65, MTP V2 27.06, Strata dynamic cache 60.3, DDR5-5800 65.8, Full Q8_0 PLE 74.8",
+  alt: "Line chart of Qwen3.8-Flash-Next decode throughput on an RTX 4070 12GB across tuning steps up to Strata fork 69.6 and --kv-grow 73.5 tok/s.",
   kicker: "Performance Evolution · RTX 4070 12GB + 64GB DDR5",
   title: "Qwen3.8-Flash-Next Decode Throughput Progression",
-  badge: "6.5 → 74.8 tok/s steady (+1,050% leap)",
-  caption: "<strong>Progression:</strong> Powersave (6.5) → CPU governor (12.2) → lazy mmap offload (15.2) → q8_0 KV and dynamic layer fitting (18.9) → upstream master refresh (19.35) → compact MTP (20.65) → QSA Sparsity Stack V2 MTP (27.06) → Strata dynamic cache (60.3) → DDR5-5800 tuning (65.8) → Full Q8_0 PLE (<strong>74.8 t/s</strong> steady)."
+  badge: "6.5 → 74.8 tok/s steady",
+  caption: "<strong>Progression:</strong> Powersave (6.5) → CPU governor (12.2) → lazy mmap offload (15.2) → q8_0 KV and dynamic layer fitting (18.9) → upstream master refresh (19.35) → compact MTP (20.65) → QSA Sparsity Stack V2 MTP (27.06) → Strata dynamic cache (60.3) → DDR5-5800 tuning (65.8) → 4070 fork with Ada sm_89 MMVQ (69.6) → --kv-grow cache expansion (<strong>73.5 t/s</strong>)."
 } %}
 
 ## TL;DR

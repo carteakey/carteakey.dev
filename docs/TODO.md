@@ -377,6 +377,8 @@ After: https://carteakey.dev
 - [x] Add blogroll section - Curated list of blogs you recommend
 - [x] Newsletter signup - Simple email collection via Netlify Forms
 
+- [ ] Personal site inspirations series: structured site deconstructions live in `docs/inspirations/` (see [vipul.xyz.md](file:///home/kchauhan/repos/carteakey.dev/docs/inspirations/vipul.xyz.md)).
+
 ## Completed Features ✅
 - [x] Upvote system
 - [x] Dark mode toggle

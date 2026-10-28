@@ -54,11 +54,11 @@ One important caveat to keep in mind throughout this post: **Strata and llama.cp
 
 {% diagram_card {
   src: "./src/static/img/diagrams/qwen38-flash-next-throughput-comparison.png",
-  alt: "Bar chart: llama.cpp master without MTP 20.8 tok/s, llama.cpp MTP V2 27.06, Strata at 60k context 53.2, Strata best context-sweep row 60.3, DDR5-5800 65.8, Full Q8_0 PLE 74.8. Quantization and context settings differ.",
+  alt: "Bar chart of decode throughput on an RTX 4070 12GB: llama.cpp master 20.8 tok/s, llama.cpp MTP V2 27.06, Strata at 60k context 53.2, DDR5-5800 65.8, Full Q8_0 PLE 74.8, 4070-main-lite fork on stable DDR5-5200 at 69.6, and --kv-grow on stable DDR5-5200 at 73.5 tok/s.",
   kicker: "Decode · RTX 4070 12GB + 64GB DDR5",
   title: "Measured Serving Setups",
-  badge: "53.2 / 27.06 = 1.97×",
-  caption: "Different quants and context settings. 60.3 t/s is the baseline context-sweep row; 65.8 t/s reflects DDR5-5800 memory scaling, and 74.8 t/s reflects full-precision Q8_0 PLE. Strata with speculation off remains unmeasured."
+  badge: "20.8 → 74.8 tok/s",
+  caption: "Comparing serving setups and fork checkpoints. After reverting from DDR5-5800 to stock DDR5-5200 for stability, the lean 4070 fork reaches 69.6 t/s with the calibrated sm_89 MMVQ table, and --kv-grow reaches 73.5 t/s with a 3,277-slot cache."
 } %}
 
 ## How to run it in Strata

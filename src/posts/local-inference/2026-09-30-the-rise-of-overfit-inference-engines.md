@@ -61,11 +61,11 @@ My unfiltered reaction was: *what in the fuck?*
 
 {% diagram_card {
   src: "./src/static/img/diagrams/qwen38-flash-next-throughput-progression.png",
-  alt: "Line chart of Qwen3.8-Flash-Next decode throughput on an RTX 4070 12GB in tokens per second across nine steps: Powersave 6.5, CPU governor 12.2, SSD mmap 15.2, q8 KV plus fit 18.9, master 19.35, MTP V1 20.65, MTP V2 27.06, Strata dynamic cache 60.3, Strata peak 90.2",
+  alt: "Line chart of Qwen3.8-Flash-Next decode throughput on an RTX 4070 12GB across tuning steps up to Strata fork 69.6 and --kv-grow 73.5 tok/s.",
   kicker: "Decode · RTX 4070 12GB + 64GB DDR5",
   title: "Seven Tuning Steps, Then One Runtime Swap",
   badge: "27.06 → 53.2 tok/s at 60k",
-  caption: "The first seven points are tuning steps on llama.cpp, not separate runtimes. 60.3 is Strata's best short-prompt row; at a 60k context it holds 53.2. 90.2 is a warm-draft burst on repetitive code, not sustained throughput."
+  caption: "The first seven points are tuning steps on llama.cpp. Strata dynamic cache pushed past 60 t/s, our lean 4070 fork reached 69.6 t/s, and --kv-grow hit 73.5 t/s steady decode with zero quality loss."
 } %}
 
 Quants and settings differ between the two engines, so that's a comparison of complete serving setups, not a controlled experiment. The measurements, memory layout and caveats are in the technical write-up, [Strata on an RTX 4070](/blog/local-inference/strata-on-an-rtx-4070/). This post is about what I think it means.
