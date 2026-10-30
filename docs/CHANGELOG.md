@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.9.4] - 2026-10-29
+### Added
+- Blog post: "alvidaa: root access to VIDAA OS" (`/blog/homelab/alvidaa/`), covering the RemoteNow MQTT client-cert gate, self-installing canvas launcher, `localhost:9009` browser file bridge sandbox escape, `rc.local` (`otaTest.sh`) root hook, five-lock Dropbear SSH gauntlet, eMMC partition/telemetry audit, and `doomgeneric` on `/dev/fb0`.
+
 ## [2.9.3] - 2026-10-28
 ### Changed
 - Model-list skill: Use dated firsthand notes when ranking models and subscriptions, alongside current provider evidence.
