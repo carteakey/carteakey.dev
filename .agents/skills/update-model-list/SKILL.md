@@ -169,6 +169,7 @@ When information cannot be verified: use `null`, `unknown`, or briefly note unce
 - On October 28, 2026, the author placed Google AI Pro, Claude Pro, ChatGPT Plus and OpenCode Go in S, and said ChatGPT Plus base usage had worsened but frequent resets still made it worthwhile. Reassess these opinions when newer evidence is available.
 - The July 2026 [Codex value note](/notes/codex-best-value/) favors ChatGPT Plus for the author's personal coding workflow. The September 2026 [Opus 5.5 note](/notes/opus-5-5-and-wait-what/) values its more direct bug explanations. Revisit these views against newer writing and current usage before carrying them forward.
 - Assign each subscription a `tier` matching the site's tier IDs (`s-plus`, `s`, `a`, `b`), separately from model rankings. Judge practical coding access, limits, price and personal fit; clearly identify provisional judgments and cite the basis. Keep pay-as-you-go services distinct from fixed-price subscriptions in their descriptions.
+- Maintain the separate bang-for-the-buck board: assign `value_tier` and a concise `value_reason` to models with a verifiable listed API price. Weigh coding usefulness, cost, speed and local options; do not fabricate prices or present subjective tiers as measured benchmarks. Preserve verification dates and source links.
 - Treat the board as an editable starting opinion. Never imply an unverified personal experience or present one person's ranking as a universal benchmark.
 
 ## Service Rules

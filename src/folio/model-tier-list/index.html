@@ -1,8 +1,8 @@
 ---
 layout: false
 permalink: /folio/model-tier-list/
-title: "Agentic Coding Models — Tier List"
-description: "A practical tier list for coding and agentic AI models, with service comparisons and API pricing."
+title: "AI Coding Tier Lists"
+description: "An editable tier list for coding models, subscriptions, and value for money."
 date: 2026-07-11
 ---
 <!DOCTYPE html>
@@ -15,11 +15,11 @@ date: 2026-07-11
     content="width=device-width, initial-scale=1.0"
   >
 
-  <title>Agentic Coding Models — Tier List</title>
+  <title>AI Coding Tier Lists</title>
 
   <meta
     name="description"
-    content="A practical tier list for coding and agentic AI models, with service comparisons and API pricing."
+    content="An editable tier list for coding models, subscriptions, and value for money."
   >
 
   <link
@@ -894,8 +894,8 @@ date: 2026-07-11
     }
     .model-card .rank, .model-card .model-provider, .model-card .model-verdict,
     .model-card .mini-meta, .model-card .model-details { display: none; }
-    #service-dialog, #model-dialog { width: min(520px, calc(100% - 32px)); max-height: 85vh; border: 1px solid var(--line-strong); padding: 24px; background: var(--paper); color: #242424; }
-    #service-dialog::backdrop, #model-dialog::backdrop { background: rgba(0, 0, 0, .65); }
+    #value-dialog, #service-dialog, #model-dialog { width: min(520px, calc(100% - 32px)); max-height: 85vh; border: 1px solid var(--line-strong); padding: 24px; background: var(--paper); color: #242424; }
+    #value-dialog::backdrop, #service-dialog::backdrop, #model-dialog::backdrop { background: rgba(0, 0, 0, .65); }
     .dialog-close { float: right; border: 0; background: transparent; font-size: 28px; cursor: pointer; }
     .dialog-title { margin: 0 36px 12px 0; }
     .dialog-content { font-size: 14px; line-height: 1.5; }
@@ -1008,7 +1008,7 @@ date: 2026-07-11
         </div>
 
         <h1>
-          Agentic Coding Model Tier List
+          AI Coding Tier Lists
         </h1>
 
         <p class="intro">
@@ -1273,17 +1273,7 @@ date: 2026-07-11
                         {% if model.context_window %}{{ (model.context_window / 1000) | round }}K{% else %}Unknown{% endif %}
                       </div>
 
-                      {% if model.api_pricing %}
-                        <div class="detail-row">
-                          <strong>API:</strong>
 
-                          ${{ model.api_pricing.input_per_million }}
-                          in /
-
-                          ${{ model.api_pricing.output_per_million }}
-                          out per 1M
-                        </div>
-                      {% endif %}
 
                       {% if model.sources %}
                         <div class="sources">
@@ -1355,185 +1345,34 @@ date: 2026-07-11
         </div>
       </section>
 
-      <section
-        class="section"
-        id="pricing"
-      >
+      <section class="section" id="value">
         <div class="section-heading">
-          <h2>
-            API pricing
-          </h2>
-
-          <p>
-            Reference pricing only. Subscription value and raw
-            model quality are intentionally ranked separately.
-          </p>
+          <h2>Bang for the buck</h2>
+          <p>Editorial picks for coding capability relative to API cost, speed and local usefulness. These are starting points, not a formula; costs and availability can change.</p>
         </div>
-
-        <div class="api-toolbar">
-          <select
-            class="control"
-            id="pricing-provider"
-            onchange="filterPricing()"
-          >
-            <option value="">
-              All providers
-            </option>
-
-            {% for p in models.providers %}
-              <option value="{{ p.id }}">
-                {{ p.name }}
-              </option>
-            {% endfor %}
-          </select>
-        </div>
-
-        <div class="table-wrap">
-          <table id="pricing-table">
-            <thead>
-              <tr>
-                <th>Model</th>
-                <th>Provider</th>
-                <th>Input /1M</th>
-                <th>Cached /1M</th>
-                <th>Output /1M</th>
-                <th>Context</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {% for model in models.models %}
-                {% if model.api_pricing %}
-
-                  <tr data-provider="{{ model.provider_id }}">
-                    <td>
-                      <strong>
-                        {{ model.name }}
-                      </strong>
-                    </td>
-
-                    <td>
-                      {{ model.provider_id }}
-                    </td>
-
-                    <td class="price">
-                      ${{ model.api_pricing.input_per_million }}
-                    </td>
-
-                    <td class="price">
-                      {% if
-                        model.api_pricing.cached_input_per_million
-                        != null
-                      %}
-                        ${{
-                          model.api_pricing
-                          .cached_input_per_million
-                        }}
-                      {% else %}
-                        <span class="muted">
-                          N/A
-                        </span>
-                      {% endif %}
-                    </td>
-
-                    <td class="price">
-                      ${{ model.api_pricing.output_per_million }}
-                    </td>
-
-                    <td class="price">
-                      {{
-                        (model.context_window / 1000)
-                        | round
-                      }}K
-                    </td>
-                  </tr>
-
-                {% endif %}
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
-
-        <div class="calculator">
-
-          <div class="field">
-            <label for="calc-model">
-              Model
-            </label>
-
-            <select
-              class="control"
-              id="calc-model"
-              oninput="calcCost()"
-            >
-              {% for model in models.models %}
-                {% if model.api_pricing %}
-
-                  <option
-                    value="{{
-                      model.api_pricing.input_per_million
-                    }},{{
-                      model.api_pricing.output_per_million
-                    }}"
-                  >
-                    {{ model.name }}
-                  </option>
-
-                {% endif %}
-              {% endfor %}
-            </select>
-          </div>
-
-          <div class="field">
-            <label for="calc-input">
-              Input tokens
-            </label>
-
-            <input
-              class="control"
-              type="number"
-              id="calc-input"
-              value="10000"
-              min="0"
-              oninput="calcCost()"
-            >
-          </div>
-
-          <div class="field">
-            <label for="calc-output">
-              Output tokens
-            </label>
-
-            <input
-              class="control"
-              type="number"
-              id="calc-output"
-              value="2000"
-              min="0"
-              oninput="calcCost()"
-            >
-          </div>
-
-          <div class="field">
-            <label>
-              Estimated cost
-            </label>
-
-            <div
-              class="calc-result"
-              id="calc-result"
-            >
-              $0.000000
+        <p class="subscription-note">Only models with a listed API price are ranked. Pricing was checked on the individual source dates; see each model's source for current terms. Drag tiles or open one to change its tier.</p>
+        <div class="board-controls"><span>Model value tiers</span><button type="button" id="reset-value">Reset value rankings</button></div>
+        <div class="tier-board" id="value-board">
+          {% for tier in models.tiers %}
+          <section class="tier-row value-row" data-tier="{{ tier.id }}">
+            <div class="tier-label"><strong>{{ tier.label }}</strong></div>
+            <div class="tier-models">
+              {% for model in models.models %}{% if model.value_tier == tier.id %}
+              <button class="service-tile value-tile" type="button" draggable="true" data-id="{{ model.id }}" data-original-tier="{{ model.value_tier }}" aria-haspopup="dialog">
+                <img src="/assets/providers/{{ model.provider_id }}.svg" alt="" onerror="this.style.display='none'">
+                <span>{{ model.name }}</span>
+                <template><p>{{ model.value_reason }}</p><p><strong>Best for:</strong> {{ model.best_for | join(", ") }}</p><p><strong>Trade-offs:</strong> {{ model.weaknesses | join(", ") }}</p><p>Last checked: {{ model.last_verified }}</p>{% if model.sources and model.sources[0] %}<a href="{{ model.sources[0].url }}">Model source</a>{% endif %}</template>
+              </button>
+              {% endif %}{% endfor %}
             </div>
-          </div>
-
+          </section>
+          {% endfor %}
         </div>
       </section>
     </main>
 
     <div class="disclaimer">
-      <strong>Disclaimer:</strong>
-      {{ models.meta.disclaimer }}
+      <strong>Note:</strong> Rankings are editorial and depend on your workload. Check linked provider documentation for current availability and terms.
     </div>
 
     <div class="footer-link">
@@ -1559,6 +1398,12 @@ date: 2026-07-11
     <h2 id="service-dialog-title"></h2><div class="service-dialog-content"></div>
     <label for="service-tier-select">Move to tier</label>
     <select id="service-tier-select">{% for tier in models.tiers %}<option value="{{ tier.id }}">{{ tier.label }}</option>{% endfor %}</select>
+  </dialog>
+  <dialog id="value-dialog" aria-labelledby="value-dialog-title">
+    <button class="dialog-close" type="button" aria-label="Close details" onclick="this.closest('dialog').close()">×</button>
+    <h2 id="value-dialog-title"></h2><div class="value-dialog-content"></div>
+    <label for="value-tier-select">Move to tier</label>
+    <select id="value-tier-select">{% for tier in models.tiers %}<option value="{{ tier.id }}">{{ tier.label }}</option>{% endfor %}</select>
   </dialog>
   <script>
     const tierStorageKey = "model-tier-list-rankings";
@@ -1715,6 +1560,61 @@ date: 2026-07-11
     });
     try { const saved = JSON.parse(localStorage.getItem("subscription-tier-rankings") || "{}"); serviceBoard.querySelectorAll(".service-tile").forEach(tile => { if (saved[tile.dataset.id]) moveService(tile, saved[tile.dataset.id], false); }); } catch (error) {}
 
+    const valueBoard = document.getElementById("value-board");
+    const valueDialog = document.getElementById("value-dialog");
+    const valueSelect = document.getElementById("value-tier-select");
+    let activeValue = null, draggedValue = null, suppressValueClick = false;
+    function moveValue(tile, tier, save = true) {
+      const row = Array.from(valueBoard.querySelectorAll(".value-row")).find(item => item.dataset.tier === tier);
+      if (!row) return;
+      row.querySelector(".tier-models").appendChild(tile);
+      if (save) {
+        const placements = {};
+        valueBoard.querySelectorAll(".value-tile").forEach(item => { placements[item.dataset.id] = item.closest(".value-row").dataset.tier; });
+        try { localStorage.setItem("value-tier-rankings", JSON.stringify(placements)); } catch (error) {}
+      }
+    }
+    valueBoard.querySelectorAll(".value-tile").forEach((tile, index) => {
+      tile.dataset.originalOrder = index;
+      tile.addEventListener("click", () => {
+        if (suppressValueClick) return;
+        activeValue = tile;
+        valueDialog.querySelector("h2").textContent = tile.querySelector("span").textContent;
+        valueDialog.querySelector(".value-dialog-content").innerHTML = tile.querySelector("template").innerHTML;
+        valueSelect.value = tile.closest(".value-row").dataset.tier;
+        valueDialog.showModal();
+      });
+      tile.addEventListener("dragstart", e => { draggedValue = tile; e.dataTransfer.setData("text/plain", tile.dataset.id); requestAnimationFrame(() => tile.classList.add("dragging")); });
+      tile.addEventListener("dragend", () => { tile.classList.remove("dragging"); draggedValue = null; clearDropTargets(); });
+      tile.addEventListener("pointerdown", e => {
+        if (e.pointerType !== "touch") return;
+        const x = e.clientX, y = e.clientY; let ghost = null, target = null;
+        tile.setPointerCapture(e.pointerId);
+        const move = ev => {
+          if (!ghost && Math.hypot(ev.clientX - x, ev.clientY - y) > 8) { ghost = tile.cloneNode(true); ghost.classList.add("drag-ghost"); document.body.appendChild(ghost); tile.classList.add("dragging"); }
+          if (!ghost) return;
+          ghost.style.left = ev.clientX + "px"; ghost.style.top = ev.clientY + "px";
+          clearDropTargets(); target = document.elementFromPoint(ev.clientX, ev.clientY)?.closest(".value-row"); if (target) target.classList.add("drop-target");
+        };
+        const end = ev => {
+          tile.removeEventListener("pointermove", move); tile.removeEventListener("pointerup", end); tile.removeEventListener("pointercancel", end);
+          if (ghost) { suppressValueClick = true; setTimeout(() => { suppressValueClick = false; }, 300); if (target && ev.type !== "pointercancel") moveValue(tile, target.dataset.tier); ghost.remove(); tile.classList.remove("dragging"); clearDropTargets(); }
+        };
+        tile.addEventListener("pointermove", move); tile.addEventListener("pointerup", end); tile.addEventListener("pointercancel", end);
+      });
+    });
+    valueBoard.querySelectorAll(".value-row").forEach(row => {
+      row.addEventListener("dragover", e => { if (draggedValue) { e.preventDefault(); clearDropTargets(); row.classList.add("drop-target"); } });
+      row.addEventListener("drop", e => { e.preventDefault(); if (draggedValue) moveValue(draggedValue, row.dataset.tier); clearDropTargets(); });
+    });
+    valueSelect.addEventListener("change", () => { if (activeValue) moveValue(activeValue, valueSelect.value); });
+    document.getElementById("reset-value").addEventListener("click", () => {
+      valueBoard.querySelectorAll(".value-tile").forEach(tile => moveValue(tile, tile.dataset.originalTier, false));
+      valueBoard.querySelectorAll(".tier-models").forEach(row => Array.from(row.children).sort((a,b) => Number(a.dataset.originalOrder) - Number(b.dataset.originalOrder)).forEach(tile => row.appendChild(tile)));
+      try { localStorage.removeItem("value-tier-rankings"); } catch (error) {}
+    });
+    try { const saved = JSON.parse(localStorage.getItem("value-tier-rankings") || "{}"); valueBoard.querySelectorAll(".value-tile").forEach(tile => { if (saved[tile.dataset.id]) moveValue(tile, saved[tile.dataset.id], false); }); } catch (error) {}
+
     function filterModels() {
       const query = document
         .getElementById("search")
@@ -1804,68 +1704,6 @@ date: 2026-07-11
             : "block";
     }
 
-    function filterPricing() {
-      const provider = document
-        .getElementById("pricing-provider")
-        .value;
-
-      document
-        .querySelectorAll(
-          "#pricing-table tbody tr"
-        )
-        .forEach((row) => {
-          const matches =
-            !provider ||
-            row.dataset.provider === provider;
-
-          row.style.display =
-            matches ? "" : "none";
-        });
-    }
-
-    function calcCost() {
-      const modelSelect =
-        document.getElementById("calc-model");
-
-      if (!modelSelect || !modelSelect.value) {
-        return;
-      }
-
-      const parts =
-        modelSelect.value.split(",");
-
-      const inputPrice =
-        parseFloat(parts[0]) || 0;
-
-      const outputPrice =
-        parseFloat(parts[1]) || 0;
-
-      const inputTokens =
-        parseInt(
-          document.getElementById("calc-input").value,
-          10
-        ) || 0;
-
-      const outputTokens =
-        parseInt(
-          document.getElementById("calc-output").value,
-          10
-        ) || 0;
-
-      const cost =
-        inputTokens / 1_000_000 * inputPrice +
-        outputTokens / 1_000_000 * outputPrice;
-
-      document
-        .getElementById("calc-result")
-        .textContent =
-          "$" + cost.toFixed(6);
-    }
-
-    window.addEventListener(
-      "DOMContentLoaded",
-      calcCost
-    );
   </script>
 </body>
 </html>

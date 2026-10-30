@@ -1,5 +1,5 @@
 meta:
-  title: Agentic Coding Model Tier List
+  title: AI Coding Tier Lists
   updated_at: "2026-10-28"
   currency: USD
   methodology: >
@@ -90,6 +90,8 @@ providers:
     name: Google DeepMind
 models:
   - id: gpt-6-astra
+    value_tier: b
+    value_reason: High capability, but premium API cost makes it a deliberate choice for difficult tasks.
     name: GPT-6 Astra
     provider_id: openai
     tier: s-plus
@@ -131,6 +133,8 @@ models:
       - title: CursorBench 3.2
         url: https://cursor.com/evals
   - id: claude-opus-5-5
+    value_tier: a
+    value_reason: Strong coding capability at a lower listed price than Astra; still a premium model.
     name: Claude Opus 5.5
     provider_id: anthropic
     tier: s-plus
@@ -174,6 +178,8 @@ models:
       - title: CursorBench 3.2
         url: https://cursor.com/evals
   - id: claude-fable-5-1
+    value_tier: b
+    value_reason: Strong reasoning, with premium input and output costs.
     name: Claude Fable 5.1
     provider_id: anthropic
     tier: s-plus
@@ -215,6 +221,8 @@ models:
       - title: CursorBench 3.2
         url: https://cursor.com/evals
   - id: claude-sonnet-5-5
+    value_tier: a
+    value_reason: A daily driver balancing coding ability and cost.
     name: Claude Sonnet 5.5
     provider_id: anthropic
     tier: s
@@ -256,6 +264,8 @@ models:
       - title: CursorBench 3.2
         url: https://cursor.com/evals
   - id: gemini-3-8-flash
+    value_tier: s
+    value_reason: Fast, inexpensive agent loops with a large context.
     name: Gemini 3.8 Flash
     provider_id: google
     tier: s
@@ -297,6 +307,8 @@ models:
       - title: CursorBench 3.2
         url: https://cursor.com/evals
   - id: gpt-6-1-sol
+    value_tier: s
+    value_reason: Strong coding capability at a lower API price than the flagship.
     name: GPT-6.1 Sol
     provider_id: openai
     tier: s
@@ -338,6 +350,8 @@ models:
       - title: CursorBench 3.2
         url: https://cursor.com/evals
   - id: kimi-k3
+    value_tier: a
+    value_reason: Open-weight frontier capability, though hosted pricing remains substantial.
     name: Kimi K3
     provider_id: moonshot
     tier: s
@@ -377,6 +391,8 @@ models:
       - title: CursorBench 3.2
         url: https://cursor.com/evals
   - id: grok-4-5
+    value_tier: a
+    value_reason: A mid-priced option for terminal and repository work.
     name: Grok 4.5
     provider_id: spacexai
     tier: s
@@ -454,6 +470,8 @@ models:
       - title: CursorBench 3.2
         url: https://cursor.com/evals
   - id: glm-5-3-flash
+    value_tier: s
+    value_reason: Low-cost, fast agent work with open weights.
     name: GLM-5.3 Flash
     provider_id: zhipu
     tier: a
@@ -496,6 +514,8 @@ models:
       - title: Artificial Analysis Intelligence Index v4.3.2
         url: https://artificialanalysis.ai/intelligence-index
   - id: deepseek-v4-pro
+    value_tier: s-plus
+    value_reason: Strong agent work for a low listed API price.
     name: DeepSeek V4 Pro
     provider_id: deepseek
     tier: a
@@ -535,6 +555,8 @@ models:
       - title: DeepSeek V4 API pricing
         url: https://api-docs.deepseek.com/quick_start/pricing
   - id: qwen3-8-flash-next
+    value_tier: s
+    value_reason: A low-cost open-weight option for agent loops and local use.
     name: Qwen3.8-Flash-Next
     provider_id: alibaba
     tier: a
@@ -574,6 +596,8 @@ models:
       - title: Artificial Analysis Intelligence Index v4.3.2
         url: https://artificialanalysis.ai/intelligence-index
   - id: minimax-m2-7
+    value_tier: a
+    value_reason: Low-cost coding and debugging with a smaller evaluation record.
     name: MiniMax M2.7
     provider_id: minimax
     tier: a
@@ -617,6 +641,8 @@ models:
       - title: MiniMax M2.7 official repository
         url: https://github.com/MiniMax-AI/MiniMax-M2.7
   - id: gpt-6-luna
+    value_tier: s-plus
+    value_reason: Low-cost, fast model suited to focused and parallel tasks.
     name: GPT-6 Luna
     provider_id: openai
     tier: b
@@ -658,6 +684,8 @@ models:
       - title: CursorBench 3.2
         url: https://cursor.com/evals
   - id: deepseek-v4-flash
+    value_tier: s-plus
+    value_reason: Very low listed API price for repetitive fixes and parallel work.
     name: DeepSeek V4 Flash
     provider_id: deepseek
     tier: b
@@ -697,6 +725,8 @@ models:
       - title: DeepSeek V4 API pricing
         url: https://api-docs.deepseek.com/quick_start/pricing
   - id: claude-haiku-5-5
+    value_tier: a
+    value_reason: A fast option for routing and smaller coding tasks.
     name: Claude Haiku 5.5
     provider_id: anthropic
     tier: b
@@ -736,6 +766,8 @@ models:
       - title: Anthropic model overview and pricing
         url: https://platform.claude.com/docs/en/about-claude/models/overview
   - id: muse-spark-1-2
+    value_tier: b
+    value_reason: Low-cost workhorse with limited independent validation.
     name: Muse Spark 1.2
     provider_id: meta
     tier: b
@@ -777,6 +809,8 @@ models:
       - title: Reuters Muse Spark 1.2 and Muse Code launch report
         url: https://www.reuters.com/technology/meta-launches-new-ai-coding-tool-powered-by-muse-spark-12-2026-08-05/
   - id: qwen3-8-27b
+    value_tier: a
+    value_reason: Useful local model when hardware and privacy matter.
     name: Qwen3.8-27B
     provider_id: alibaba
     tier: b
@@ -848,6 +882,8 @@ models:
       - title: Google Gemini 4 Argon API documentation and pricing
         url: https://ai.google.dev/gemini-api/docs/latest-model
   - id: gpt-6-1-terra
+    value_tier: s
+    value_reason: Low API cost for scoped fixes, visual reasoning and computer use.
     name: GPT-6.1 Terra
     provider_id: openai
     tier: a
