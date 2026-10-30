@@ -6,6 +6,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [2.9.5] - 2026-10-30
+### Added
+- Infographics collection (`/infographics/`): poster-style visual references with grid and list views, wired into the feed engine and footer nav; `src/infographics` is registered with the content and design checks. First entry is the App Swaps poster.
+- Folio 004, App Swaps (`/folio/app-swaps/`): heavy apps and their smaller replacements, with per-row memory and disk bars, measured numbers marked apart from typical figures, and what each swap gives up. Data lives in `src/_data/lightweightApps.yaml`.
+- CI gate: `build.yml` now runs `pnpm audit --prod --audit-level=high` after install, so a stale lockfile or a new production advisory fails the build instead of drifting silently.
+
+### Changed
+- Renamed the model tier list to AI Coding Tier Lists across the page and folio listing.
+- Model tier list: Replaced the public API price table and calculator with an editable bang-for-the-buck board, including explanations and source dates for each ranked model. Updated the model-list skill to maintain it.
+- alvidaa post: Doom went playable over the Bluetooth remote with an OTA-safe launcher tile, R0 guardrails closed the DNS bypass in-kernel and froze the OTA host, and the wiretap salvager caught the TV calling `spectrum.s3.amazonaws.com` over plaintext HTTP.
+
 ### Fixed
 - Dependency drift: the lockfile had fallen behind the manifest (markdown-it was 14.3.2 while `package.json` declared `^15.0.2`, plus stale dotenv/openai/postcss), so builds ran older code than declared. Synced with `pnpm install` and raised the `pnpm-workspace.yaml` override floors for `undici` (`>=7.29.1` → `>=8.12.2`) and `markdown-it` (`>=14.3.2` → `>=15.0.3`) to the patched versions, clearing all 10 `pnpm audit --prod` advisories (5 high, all undici via cheerio and openai).
 
