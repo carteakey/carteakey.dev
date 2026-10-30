@@ -1,0 +1,381 @@
+---
+layout: false
+permalink: /folio/app-swaps/
+title: "App Swaps // carteakey.dev"
+description: "Heavy apps and the smaller ones that replaced them, with the memory and disk numbers to scale, and what each swap gives up."
+date: 2026-10-29
+---
+{%- macro meter(label, m) -%}
+{%- set top = m.was_mb if m.was_mb > m.now_mb else m.now_mb -%}
+{%- set wasW = ((m.was_mb / top) * 100) | round -%}
+{%- set nowW = ((m.now_mb / top) * 100) | round -%}
+<div class="meter">
+  <span class="meter-label">{{ label }}</span>
+  <div class="meter-bars">
+    <div class="bar-row was"><span class="bar" style="--w: {{ wasW if wasW > 2 else 2 }}%"></span><span class="bar-val">{{ m.was }}</span></div>
+    <div class="bar-row now"><span class="bar" style="--w: {{ nowW if nowW > 2 else 2 }}%"></span><span class="bar-val">{{ m.now }}</span></div>
+  </div>
+</div>
+{%- endmacro -%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>App Swaps - carteakey.dev/folio</title>
+  <meta name="description" content="Heavy apps and the smaller ones that replaced them, with the memory and disk numbers to scale, and what each swap gives up.">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+
+  <meta property="og:title" content="App Swaps: smaller apps, and what they cost">
+  <meta property="og:description" content="Heavy apps and the smaller ones that replaced them, with the memory and disk numbers to scale, and what each swap gives up.">
+  <meta property="og:url" content="https://carteakey.dev/folio/app-swaps/">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --paper: #f1eee6;
+      --ink: #1b1a17;
+      --ink-2: #57534b;
+      --ink-3: #8f897d;
+      --rule: #d6d0c3;
+      --rule-soft: #e4dfd4;
+      --mark: #d4471c;
+      --serif: 'Instrument Serif', Georgia, serif;
+      --sans: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --mono: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --paper: #161513;
+        --ink: #ece8df;
+        --ink-2: #a9a397;
+        --ink-3: #6f6a60;
+        --rule: #2f2d29;
+        --rule-soft: #24221f;
+        --mark: #f0703f;
+      }
+    }
+
+    html { background: var(--paper); }
+
+    body {
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 14px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      padding: 28px 24px 96px;
+    }
+
+    a { color: inherit; }
+
+    .page { max-width: 1120px; margin: 0 auto; }
+
+    /* Top line */
+    .topline {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--ink-3);
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--ink);
+    }
+    .topline a { text-decoration: none; }
+    .topline a:hover { color: var(--mark); }
+
+    /* Masthead */
+    .masthead {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 22rem);
+      gap: 48px;
+      align-items: end;
+      padding: 56px 0 40px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    h1 {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(72px, 13vw, 168px);
+      line-height: 0.82;
+      letter-spacing: -0.03em;
+    }
+    h1 em { color: var(--mark); }
+
+    .standfirst {
+      font-family: var(--serif);
+      font-size: 24px;
+      line-height: 1.2;
+      margin-top: 20px;
+      max-width: 34rem;
+      color: var(--ink-2);
+    }
+
+    .key {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--ink-2);
+      display: grid;
+      gap: 8px;
+    }
+    .key-row { display: grid; grid-template-columns: 44px 1fr; gap: 10px; align-items: center; }
+    .key-row .bar { height: 8px; }
+    .key-row.was .bar { width: 44px; }
+    .key-row.now .bar { width: 14px; }
+    .key-glyph { text-align: center; color: var(--ink); }
+    .key-glyph.dot { color: var(--mark); }
+
+    /* Bars, shared by key and rows */
+    .was .bar {
+      background: repeating-linear-gradient(-45deg, var(--ink-3) 0 1px, transparent 1px 4px);
+      box-shadow: inset 0 0 0 1px var(--ink-3);
+    }
+    .now .bar { background: var(--ink); }
+
+    /* Sections */
+    .section-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding: 44px 0 10px;
+      border-bottom: 1px solid var(--ink);
+    }
+    .section-head h2 {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-style: italic;
+      font-size: 30px;
+      line-height: 1;
+    }
+    .section-head span { font-family: var(--mono); font-size: 12px; color: var(--ink-3); }
+
+    /* Swap rows */
+    .swap {
+      display: grid;
+      grid-template-columns: 2.25rem minmax(21rem, 1.4fr) minmax(14rem, 1fr) minmax(13rem, 1fr);
+      gap: 28px;
+      padding: 22px 0;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .num { font-family: var(--mono); font-size: 12px; color: var(--ink-3); padding-top: 6px; }
+
+    .names {
+      font-family: var(--serif);
+      font-size: 27px;
+      line-height: 1.1;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 4px 8px;
+    }
+    .app-icon {
+      width: 20px;
+      height: 20px;
+      border-radius: 4.5px;
+      vertical-align: -2px;
+      display: inline-block;
+      object-fit: contain;
+      flex-shrink: 0;
+      margin-right: 5px;
+    }
+    .names .old-pair, .names .new-pair {
+      display: inline-flex;
+      align-items: center;
+      white-space: nowrap;
+    }
+    .names .old-pair { color: var(--ink-3); }
+    .names .arrow { font-family: var(--mono); font-size: 14px; color: var(--ink-3); }
+    .names .new-pair {
+      text-decoration: none;
+      position: relative;
+    }
+    .names .new-pair:hover { color: var(--mark); }
+    .names .here {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--mark);
+      align-self: center;
+      white-space: nowrap;
+    }
+
+    .stacks {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--ink-3);
+      margin-top: 6px;
+    }
+
+    .install {
+      appearance: none;
+      border: 0;
+      background: none;
+      cursor: copy;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--ink-2);
+      margin-top: 14px;
+      padding: 0;
+      text-align: left;
+      border-bottom: 1px dashed var(--rule);
+    }
+    .install:hover { color: var(--ink); border-bottom-color: var(--ink); }
+    .install::before { content: '$ '; color: var(--ink-3); }
+    .install[data-state="copied"]::after { content: '  copied'; color: var(--mark); }
+
+    /* Meters */
+    .meters { display: grid; gap: 14px; align-content: start; padding-top: 6px; }
+    .meter { display: grid; grid-template-columns: 2.5rem 1fr; gap: 10px; }
+    .meter-label { font-family: var(--mono); font-size: 11px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.06em; padding-top: 1px; }
+    .meter-bars { display: grid; gap: 4px; }
+    .bar-row { display: grid; grid-template-columns: minmax(0, 1fr) 7.25rem; gap: 10px; align-items: center; }
+    .bar-row .bar { display: block; height: 9px; width: var(--w); }
+    .bar-val { font-family: var(--mono); font-size: 12px; white-space: nowrap; }
+    .was .bar-val { color: var(--ink-3); }
+    .now .bar-val { color: var(--ink); }
+    .no-meter { font-family: var(--serif); font-style: italic; font-size: 17px; color: var(--ink-3); line-height: 1.3; }
+
+    /* Trade */
+    .trade { display: grid; gap: 8px; padding-top: 4px; }
+    .trade p { display: grid; grid-template-columns: 2.75rem 1fr; gap: 10px; color: var(--ink-2); }
+    .trade b { font-family: var(--mono); font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-3); padding-top: 2px; }
+    .trade .lost { color: var(--ink); }
+    .trade .lost b { color: var(--mark); }
+
+    /* Footer */
+    .colophon {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+      gap: 28px;
+      margin-top: 56px;
+      padding-top: 16px;
+      border-top: 1px solid var(--ink);
+      font-size: 13px;
+      color: var(--ink-2);
+    }
+    .colophon h3 { font-family: var(--mono); font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-3); margin-bottom: 6px; }
+    .colophon code { font-family: var(--mono); font-size: 12px; }
+
+    @media (max-width: 960px) {
+      .swap { grid-template-columns: 2.25rem minmax(0, 1fr) minmax(0, 1fr); }
+      .trade { grid-column: 2 / -1; }
+    }
+
+    @media (max-width: 640px) {
+      body { padding: 20px 16px 72px; }
+      .masthead { grid-template-columns: 1fr; gap: 28px; padding-top: 40px; }
+      .swap { grid-template-columns: 1.75rem minmax(0, 1fr); gap: 16px; }
+      .meters, .trade { grid-column: 2; }
+      .names { font-size: 26px; }
+      .bar-row { grid-template-columns: minmax(0, 1fr) 7.5rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <nav class="topline">
+    <a href="/folio/">← carteakey.dev / folio</a>
+    <span>004 · updated Oct 2026</span>
+  </nav>
+
+  <header class="masthead">
+    <div>
+      <h1>App Swaps<em>.</em></h1>
+      <p class="standfirst">Heavy apps, the smaller ones that replace them, and what each swap gives up. Smaller is not free.</p>
+    </div>
+    <div class="key" aria-label="How to read this page">
+      <div class="key-row was"><span class="bar"></span><span>before</span></div>
+      <div class="key-row now"><span class="bar"></span><span>after, to scale within the row</span></div>
+      <div class="key-row"><span class="key-glyph">~</span><span>typical figure, not mine</span></div>
+      <div class="key-row"><span class="key-glyph dot">●</span><span>installed on my Mac right now</span></div>
+    </div>
+  </header>
+
+  {%- set apps = lightweightApps.apps | enabled -%}
+  {%- set grouped = apps | groupby("section") -%}
+  {% for section in lightweightApps.sections %}
+  {%- set rows = grouped[section.id] or [] -%}
+  {% if rows | length %}
+  <section>
+    <header class="section-head">
+      <h2>{{ section.title }}</h2>
+      <span>{{ rows | length }} {{ "swap" if rows | length == 1 else "swaps" }}</span>
+    </header>
+
+    {% for app in rows %}
+    {%- set n = apps.indexOf(app) + 1 -%}
+    <article class="swap">
+      <span class="num">{{ "0" if n < 10 }}{{ n }}</span>
+
+      <div>
+        <h3 class="names">
+          <span class="old-pair">
+            {% if app.was_icon %}<img src="{{ app.was_icon }}" alt="" class="app-icon" width="22" height="22" loading="lazy">{% endif %}
+            <span>{{ app.was }}</span>
+          </span>
+          <span class="arrow" aria-label="replaced by">→</span>
+          <a class="new-pair" href="{{ app.link }}" target="_blank" rel="noopener">
+            {% if app.now_icon %}<img src="{{ app.now_icon }}" alt="" class="app-icon" width="22" height="22" loading="lazy">{% endif %}
+            <span>{{ app.now }}</span>
+          </a>
+          {% if app.on_my_mac %}<span class="here" title="Installed on my Mac">● mine</span>{% endif %}
+        </h3>
+        <p class="stacks">{{ app.was_stack }} → {{ app.now_stack }}</p>
+        <button type="button" class="install" data-cmd="{{ app.install }}" title="Copy">{{ app.install }}</button>
+      </div>
+
+      <div class="meters">
+        {% if app.ram %}{{ meter("RAM", app.ram) }}{% endif %}
+        {% if app.disk %}{{ meter("Disk", app.disk) }}{% endif %}
+        {% if not app.ram and not app.disk %}<p class="no-meter">No bars. Weight isn't the point of this one.</p>{% endif %}
+      </div>
+
+      <div class="trade">
+        <p><b>Kept</b><span>{{ app.kept }}</span></p>
+        <p class="lost"><b>Lost</b><span>{{ app.lost }}</span></p>
+      </div>
+    </article>
+    {% endfor %}
+  </section>
+  {% endif %}
+  {% endfor %}
+
+  <footer class="colophon">
+    <div>
+      <h3>How the numbers were taken</h3>
+      <p>Plain numbers are mine, from an M3 Pro in October 2026: resident memory summed across every process the app runs, at idle, and <code>du -sh</code> of the app bundle. RSS over-counts shared memory, so treat them as rough. Anything with <code>~</code> is a typical figure for an app I don't have installed.</p>
+    </div>
+    <div>
+      <h3>What counts as a swap</h3>
+      <p>The replacement has to cover the daily job without an account, a subscription, or a background daemon it didn't need before. Sometimes the win is weight. Sometimes it's that the files are yours. Each row says which.</p>
+    </div>
+    <div>
+      <h3>Source</h3>
+      <p>The list lives in <code>src/_data/lightweightApps.yaml</code>. Rows get added when I've used the replacement long enough to know what it lost.</p>
+    </div>
+  </footer>
+</div>
+
+<script>
+  document.addEventListener('click', (event) => {
+    const button = event.target.closest('.install');
+    if (!button || !navigator.clipboard) return;
+    navigator.clipboard.writeText(button.dataset.cmd).then(() => {
+      button.dataset.state = 'copied';
+      setTimeout(() => { delete button.dataset.state; }, 1500);
+    });
+  });
+</script>
+</body>
+</html>

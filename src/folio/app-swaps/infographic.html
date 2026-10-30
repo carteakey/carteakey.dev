@@ -1,0 +1,356 @@
+---
+layout: false
+permalink: /folio/app-swaps/infographic/
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --paper: #f4f1ea;
+      --row-bg: #ffffff;
+      --ink: #1b1a17;
+      --ink-2: #524e47;
+      --ink-3: #8a8376;
+      --rule: #dcd6c8;
+      --rule-soft: #ede8dc;
+      --mark: #d4471c;
+      --mark-subtle: #fbeee8;
+      --serif: 'Instrument Serif', Georgia, serif;
+      --sans: 'IBM Plex Sans', -apple-system, sans-serif;
+      --mono: 'IBM Plex Mono', monospace;
+    }
+    body {
+      width: 1200px;
+      height: 1200px;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--sans);
+      padding: 36px 44px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      -webkit-font-smoothing: antialiased;
+    }
+    .poster-border {
+      position: absolute;
+      inset: 14px;
+      border: 1px solid var(--rule);
+      pointer-events: none;
+    }
+
+    /* Header */
+    header {
+      border-bottom: 2px solid var(--ink);
+      padding-bottom: 14px;
+    }
+    .top-meta {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--ink-3);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .header-body {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    h1 {
+      font-family: var(--serif);
+      font-size: 64px;
+      line-height: 0.88;
+      letter-spacing: -0.03em;
+      font-weight: 400;
+    }
+    h1 em { color: var(--mark); font-style: normal; }
+    .lead {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 18px;
+      line-height: 1.25;
+      color: var(--ink-2);
+      max-width: 440px;
+      text-align: right;
+    }
+
+    /* Ledger Rows: 1 app per row */
+    .ledger-header {
+      display: grid;
+      grid-template-columns: 24px 340px 165px 145px 1fr;
+      align-items: center;
+      gap: 14px;
+      padding: 0 16px 2px;
+      font-family: var(--mono);
+      font-size: 9.5px;
+      font-weight: 600;
+      color: var(--ink-3);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .ledger {
+      display: flex;
+      flex-direction: column;
+      gap: 5.5px;
+      margin: 10px 0 14px;
+    }
+    .ledger-row {
+      background: var(--row-bg);
+      border: 1px solid var(--rule);
+      border-radius: 5px;
+      padding: 6.5px 16px;
+      display: grid;
+      grid-template-columns: 24px 340px 165px 145px 1fr;
+      align-items: center;
+      gap: 14px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+    }
+
+    .row-num {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--ink-3);
+    }
+
+    /* Pair */
+    .pair-col {
+      display: grid;
+      grid-template-columns: 142px 14px 1fr;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+    .app-node {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      overflow: hidden;
+      min-width: 0;
+    }
+    .app-node.was {
+      color: var(--ink-3);
+    }
+    .app-node.was img {
+      opacity: 0.75;
+      filter: grayscale(15%);
+    }
+    .app-node.now {
+      font-weight: 600;
+      color: var(--ink);
+    }
+    .app-node img {
+      width: 18px;
+      height: 18px;
+      border-radius: 3.5px;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+    .app-name {
+      font-size: 13px;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .arrow {
+      color: var(--ink-3);
+      font-family: var(--mono);
+      font-size: 11px;
+      text-align: center;
+    }
+    .now-wrap {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      overflow: hidden;
+    }
+    .badge-mine {
+      font-family: var(--mono);
+      font-size: 8px;
+      background: var(--mark-subtle);
+      color: var(--mark);
+      font-weight: 600;
+      padding: 1px 3.5px;
+      border-radius: 2.5px;
+      letter-spacing: 0.03em;
+      flex-shrink: 0;
+    }
+
+    /* Metrics: RAM & Disk */
+    .metric-cell {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+    .metric-val {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      display: grid;
+      grid-template-columns: 1fr 12px 1fr;
+      align-items: center;
+      gap: 3px;
+      white-space: nowrap;
+    }
+    .val-was {
+      color: var(--ink-3);
+      text-decoration: line-through;
+      text-align: right;
+    }
+    .val-arrow {
+      color: var(--ink-3);
+      text-align: center;
+      font-size: 9px;
+    }
+    .val-now {
+      color: var(--ink);
+      font-weight: 600;
+      text-align: left;
+    }
+
+    /* Tradeoffs */
+    .trade-col {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      font-size: 10.5px;
+      line-height: 1.3;
+    }
+    .trade-line {
+      display: grid;
+      grid-template-columns: 30px 1fr;
+      gap: 5px;
+      align-items: baseline;
+    }
+    .trade-tag {
+      font-family: var(--mono);
+      font-size: 8.5px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--ink-3);
+    }
+    .trade-line.lost .trade-tag { color: var(--mark); }
+    .trade-text {
+      color: var(--ink-2);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--rule);
+      padding-top: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--mono);
+      font-size: 10.5px;
+      color: var(--ink-3);
+    }
+    .footer-left {
+      display: flex;
+      gap: 18px;
+    }
+    .footer-right strong {
+      color: var(--ink);
+    }
+  </style>
+</head>
+<body>
+  <div class="poster-border"></div>
+
+  <header>
+    <div class="top-meta">
+      <span>Folio 004 // Reference Ledger</span>
+      <span>carteakey.dev/folio/app-swaps/</span>
+      <span>Apple Silicon M3 Pro Benchmarks</span>
+    </div>
+    <div class="header-body">
+      <h1>App Swaps<em>.</em></h1>
+      <p class="lead">Heavy desktop apps replaced with native, local-first alternatives. One row per swap with measured footprints and tradeoffs.</p>
+    </div>
+  </header>
+
+  <div class="ledger-header">
+    <span>#</span>
+    <span>Software Swap</span>
+    <span style="text-align: center;">Active RAM</span>
+    <span style="text-align: center;">Disk Size</span>
+    <span>Tradeoffs (Kept vs Lost)</span>
+  </div>
+
+  <main class="ledger">
+    {% set count = 0 %}
+    {% for app in lightweightApps.apps | enabled %}
+    {% set count = count + 1 %}
+    <div class="ledger-row">
+      <span class="row-num">{{ "0" if count < 10 }}{{ count }}</span>
+
+      <div class="pair-col">
+        <div class="app-node was">
+          {% if app.was_icon %}<img src="{{ app.was_icon }}" alt="">{% endif %}
+          <span class="app-name">{{ app.was }}</span>
+        </div>
+        <span class="arrow">→</span>
+        <div class="now-wrap">
+          <div class="app-node now">
+            {% if app.now_icon %}<img src="{{ app.now_icon }}" alt="">{% endif %}
+            <span class="app-name">{{ app.now }}</span>
+          </div>
+          {% if app.on_my_mac %}<span class="badge-mine">● MINE</span>{% endif %}
+        </div>
+      </div>
+
+      <div class="metric-cell">
+        <div class="metric-val">
+          <span class="val-was">{{ app.ram.was if app.ram else '—' }}</span>
+          <span class="val-arrow">→</span>
+          <span class="val-now">{{ app.ram.now if app.ram else 'Negl.' }}</span>
+        </div>
+      </div>
+
+      <div class="metric-cell">
+        <div class="metric-val">
+          <span class="val-was">{{ app.disk.was if app.disk else '—' }}</span>
+          <span class="val-arrow">→</span>
+          <span class="val-now">{{ app.disk.now if app.disk else 'Negl.' }}</span>
+        </div>
+      </div>
+
+      <div class="trade-col">
+        <div class="trade-line kept">
+          <span class="trade-tag">Kept</span>
+          <span class="trade-text">{{ app.kept }}</span>
+        </div>
+        <div class="trade-line lost">
+          <span class="trade-tag">Lost</span>
+          <span class="trade-text">{{ app.lost }}</span>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </main>
+
+  <footer>
+    <div class="footer-left">
+      <span>Plain numbers measured live on M3 Pro (RSS / du)</span>
+      <span>~ indicates typical figures</span>
+      <span>Zero telemetry or persistent daemons</span>
+    </div>
+    <div class="footer-right">
+      <span>Curated & Benchmarked by <strong>carteakey.dev</strong></span>
+    </div>
+  </footer>
+</body>
+</html>

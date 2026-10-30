@@ -1,0 +1,260 @@
+# Folio 004: App Swaps. Heavy apps and the smaller ones that replaced them.
+#
+# Numbers:
+#   - A plain number was measured on my M3 Pro (Oct 29, 2026): resident memory
+#     summed across the app's processes, and `du -sh` of the .app bundle.
+#   - A number starting with "~" is a typical figure, not my measurement.
+#   - `*_mb` fields only drive the bar widths. Leave `ram`/`disk` out when the
+#     comparison is meaningless (both tiny, or not the point of the swap).
+#   - `on_my_mac: true` only for apps that are actually installed here.
+# Every entry supports enabled: true/false.
+
+sections:
+  - id: big
+    title: "The big three"
+  - id: heavy
+    title: "The heavyweights"
+  - id: smaller
+    title: "Smaller wins"
+
+apps:
+  # ── The big three ───────────────────────────────────────────────
+  - section: big
+    was: "Logi Options+"
+    was_icon: "/img/app-swaps/logioptionsplus.png"
+    was_stack: "Electron, 9 processes"
+    now: "OpenLogi"
+    now_icon: "/img/app-swaps/openlogi.png"
+    now_stack: "Rust, HID++"
+    link: "https://openlogi.org"
+    install: "brew install --cask openlogi"
+    on_my_mac: true
+    ram: { was: "411 MB", was_mb: 411, now: "69 MB", now_mb: 69 }
+    disk: { was: "518 MB", was_mb: 518, now: "56 MB", now_mb: 56 }
+    kept: "Remap, gestures, DPI, scroll."
+    lost: "Flow, Smart Actions, older mice."
+    enabled: true
+
+  - section: big
+    was: "WhatsApp"
+    was_icon: "/img/app-swaps/whatsapp.png"
+    was_stack: "Web view"
+    now: "ZapFast"
+    now_icon: "/img/app-swaps/zapfast.png"
+    now_stack: "Rust, egui, no browser engine"
+    link: "https://github.com/crmne/zapfast"
+    install: "brew install --cask crmne/tap/zapfast"
+    on_my_mac: true
+    ram: { was: "~600 MB – 1.2 GB", was_mb: 900, now: "35 MB", now_mb: 35 }
+    disk: { was: "~450 MB", was_mb: 450, now: "112 MB", now_mb: 112 }
+    kept: "Chats, media, reactions, QR pairing."
+    lost: "Calls, status, official client support."
+    enabled: true
+
+  - section: big
+    was: "Spotify"
+    was_icon: "/img/app-swaps/spotify.png"
+    was_stack: "Chromium Embedded"
+    now: "Spotifast"
+    now_icon: "/img/app-swaps/spotifast.png"
+    now_stack: "Rust, egui + librespot"
+    link: "https://github.com/crmne/spotifast"
+    install: "brew install --cask crmne/tap/spotifast"
+    on_my_mac: true
+    ram: { was: "~600 MB – 1 GB", was_mb: 800, now: "42 MB", now_mb: 42 }
+    disk: { was: "~350 MB", was_mb: 350, now: "60 MB", now_mb: 60 }
+    kept: "Library, playlists, Connect, media keys."
+    lost: "Canvas, lyrics, requires Premium."
+    enabled: true
+
+  # ── The heavyweights ────────────────────────────────────────────
+  - section: heavy
+    was: "ChatGPT.app"
+    was_icon: "/img/app-swaps/chatgpt.png"
+    was_stack: "Electron + bundled Codex, 19 processes"
+    now: "chatgpt.com"
+    now_icon: "/img/app-swaps/safari.png"
+    now_stack: "Safari web app"
+    link: "https://support.apple.com/en-us/104996"
+    install: "Safari → File → Add to Dock"
+    on_my_mac: true
+    ram: { was: "1,990 MB", was_mb: 1990, now: "~300 MB", now_mb: 300 }
+    disk: { was: "1.7 GB", was_mb: 1700, now: "0 MB", now_mb: 0 }
+    kept: "Chats, projects, voice, attachments."
+    lost: "⌥Space launcher, screen share."
+    enabled: true
+
+  - section: heavy
+    was: "Notion"
+    was_icon: "/img/app-swaps/notion.png"
+    was_stack: "Electron, cloud, 14 processes"
+    now: "Obsidian"
+    now_icon: "/img/app-swaps/obsidian.png"
+    now_stack: "Electron, local files"
+    link: "https://obsidian.md"
+    install: "brew install --cask obsidian"
+    on_my_mac: true
+    ram: { was: "496 MB", was_mb: 496, now: "142 MB", now_mb: 142 }
+    disk: { was: "317 MB", was_mb: 317, now: "482 MB", now_mb: 482 }
+    kept: "Links, canvas, graph, local Markdown."
+    lost: "Databases, team collaboration."
+    enabled: true
+
+  - section: heavy
+    was: "Bitwarden desktop"
+    was_icon: "/img/app-swaps/bitwarden.png"
+    was_stack: "Electron"
+    now: "rbw + the extension"
+    now_icon: "/img/app-swaps/bitwarden.png"
+    now_stack: "Rust CLI, same vault"
+    link: "https://github.com/doy/rbw"
+    install: "brew install rbw"
+    ram: { was: "175 MB", was_mb: 175, now: "~10 MB", now_mb: 10 }
+    disk: { was: "747 MB", was_mb: 747, now: "~10 MB", now_mb: 10 }
+    kept: "Cloud vault sync, autofill, CLI."
+    lost: "Desktop UI, Touch ID in browser."
+    enabled: true
+
+  - section: heavy
+    was: "VS Code / ZCode"
+    was_icon: "/img/app-swaps/vscode.png"
+    was_stack: "Electron, 8 processes"
+    now: "Zed"
+    now_icon: "/img/app-swaps/zed.png"
+    now_stack: "Rust, GPU-drawn UI"
+    link: "https://zed.dev"
+    install: "brew install --cask zed"
+    on_my_mac: true
+    ram: { was: "165 MB", was_mb: 165, now: "84 MB", now_mb: 84 }
+    disk: { was: "806 MB", was_mb: 806, now: "176 MB", now_mb: 176 }
+    kept: "LSP, Vim mode, terminal, multi-cursor."
+    lost: "Extension catalog, remote SSH tunnels."
+    enabled: true
+
+  # ── Smaller wins ────────────────────────────────────────────────
+  - section: smaller
+    was: "Hyper / iTerm2"
+    was_icon: "/img/app-swaps/iterm2.png"
+    was_stack: "Electron / AppKit"
+    now: "Ghostty"
+    now_icon: "/img/app-swaps/ghostty.png"
+    now_stack: "Zig, native UI"
+    link: "https://ghostty.org"
+    install: "brew install --cask ghostty"
+    on_my_mac: true
+    ram: { was: "~250–400 MB", was_mb: 320, now: "~60–90 MB", now_mb: 75 }
+    disk: { was: "~300 MB", was_mb: 300, now: "67 MB", now_mb: 67 }
+    kept: "Native splits, ligatures, Kitty protocol."
+    lost: "tmux control mode, legacy profiles."
+    enabled: true
+
+  - section: smaller
+    was: "Postman"
+    was_icon: "/img/app-swaps/postman.png"
+    was_stack: "Electron, account required"
+    now: "Bruno"
+    now_icon: "/img/app-swaps/bruno.png"
+    now_stack: "Electron, offline"
+    link: "https://usebruno.com"
+    install: "brew install --cask bruno"
+    ram: { was: "~500–800 MB", was_mb: 650, now: "~200–300 MB", now_mb: 250 }
+    kept: "REST, GraphQL, envs, git collections."
+    lost: "Cloud workspaces, mock servers."
+    enabled: true
+
+  - section: smaller
+    was: "Paste"
+    was_icon: "/img/app-swaps/paste.png"
+    was_stack: "Subscription"
+    now: "Maccy"
+    now_icon: "/img/app-swaps/maccy.png"
+    now_stack: "Swift, open source"
+    link: "https://maccy.app"
+    install: "brew install --cask maccy"
+    ram: { was: "~150 MB", was_mb: 150, now: "~25 MB", now_mb: 25 }
+    kept: "History search, pins, ⌘1–9 paste."
+    lost: "iCloud sync, visual card strip."
+    enabled: true
+
+  - section: smaller
+    was: "Vendor display apps"
+    was_icon: "/img/app-swaps/displayapps.png"
+    was_stack: "Dell / LG daemons"
+    now: "MonitorControl"
+    now_icon: "/img/app-swaps/monitorcontrol.png"
+    now_stack: "Swift, DDC/CI"
+    link: "https://github.com/MonitorControl/MonitorControl"
+    install: "brew install --cask monitorcontrol"
+    on_my_mac: true
+    ram: { was: "~150–300 MB", was_mb: 220, now: "~20 MB", now_mb: 20 }
+    disk: { was: "~350 MB", was_mb: 350, now: "40 MB", now_mb: 40 }
+    kept: "Hardware brightness & volume on Mac keys."
+    lost: "Firmware updates, vendor presets."
+    enabled: true
+
+  # ── Drafts: not lighter, just different ─────────────────────────
+  - section: smaller
+    was: "Magnet"
+    was_stack: "Paid, closed source"
+    now: "Rectangle"
+    now_stack: "Swift, open source"
+    link: "https://rectangleapp.com"
+    install: "brew install --cask rectangle"
+    kept: "Halves, thirds, quarters, drag-to-snap."
+    lost: "Nothing meaningful."
+    enabled: false
+
+  - section: smaller
+    was: "Bartender"
+    was_stack: "Paid, sold in 2024"
+    now: "Ice"
+    now_stack: "Swift, open source"
+    link: "https://github.com/jordanbaird/Ice"
+    install: "brew install --cask jordanbaird-ice"
+    kept: "Menu bar hide/reveal, hotkeys."
+    lost: "Custom triggers."
+    enabled: false
+
+  - section: smaller
+    was: "Bitwarden desktop"
+    was_stack: "Electron"
+    now: "KeePassXC"
+    now_stack: "C++, Qt"
+    link: "https://keepassxc.org"
+    install: "brew install --cask keepassxc"
+    kept: "Local encrypted vault, TOTP."
+    lost: "Cloud sync."
+    enabled: false
+
+  - section: smaller
+    was: "VLC"
+    was_stack: "Qt, cross-platform"
+    now: "IINA"
+    now_stack: "Swift + mpv"
+    link: "https://iina.io"
+    install: "brew install --cask iina"
+    kept: "Universal format playback, PiP."
+    lost: "Transcoding."
+    enabled: false
+
+  - section: smaller
+    was: "Port forwarding + a VPN box"
+    was_stack: "Router config"
+    now: "Tailscale"
+    now_stack: "Go, WireGuard"
+    link: "https://tailscale.com"
+    install: "brew install --cask tailscale"
+    kept: "Mesh networking by machine name."
+    lost: "Third-party coordination reliance."
+    enabled: false
+
+  - section: smaller
+    was: "Upload-to-compress sites"
+    was_stack: "Browser tab"
+    now: "ImageOptim"
+    now_stack: "Objective-C"
+    link: "https://imageoptim.com"
+    install: "brew install --cask imageoptim"
+    kept: "Lossless image strip, drag-and-drop."
+    lost: "Aggressive lossy shrinking."
+    enabled: false
