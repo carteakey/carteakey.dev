@@ -1,0 +1,7 @@
+{
+  "layout": "layouts/infographic.njk",
+  "tags": ["infographics"],
+  "eleventyComputed": {
+    "permalink": "/infographics/{{ page.fileSlug }}/"
+  }
+}

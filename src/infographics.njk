@@ -1,0 +1,23 @@
+---
+layout: layouts/base.njk
+title: Infographics
+description: Visual reference sheets, posters, and system benchmark graphics.
+permalink: /infographics/
+eleventyNavigation:
+  key: Infographics
+  order: 8
+collectionArchetype: index
+---
+
+{% include "components/breadcrumbs.njk" %}
+
+{% set pageEyebrow = "Visual Reference" %}
+{% set pageTitle = "Infographics" %}
+{% set pageDescription = "Technical reference posters, system architectures, and benchmark sheets designed to communicate complex comparisons at a glance." %}
+{% set itemCount = collections.infographics | length %}
+{% set itemLabel = "posters" %}
+
+{% include "components/page-header.njk" %}
+
+{% set collectionKey = "infographics" %}
+{% include "components/collection-index.njk" %}

@@ -1562,6 +1562,15 @@ export default function (eleventyConfig) {
       .sort((a, b) => b.date - a.date);
   });
 
+  // Infographics collection
+  eleventyConfig.addCollection("infographics", function (collectionApi) {
+    const now = new Date();
+    return collectionApi
+      .getFilteredByGlob("./src/infographics/**/*.md")
+      .filter((entry) => isVisibleContent(entry, now))
+      .sort((a, b) => b.date - a.date);
+  });
+
   // Add a unified feed collection across key content types
   eleventyConfig.addCollection("feed", async function (collectionApi) {
     const now = new Date();
@@ -1718,6 +1727,40 @@ export default function (eleventyConfig) {
           authored_by: note.data.authored_by ?? null,
         };
       });
+
+    const infographics = await Promise.all(
+      collectionApi
+        .getFilteredByGlob("./src/infographics/**/*.md")
+        .filter((entry) => isVisibleContent(entry, now))
+        .map(async (entry) => {
+          entry.data.feedType = "infographic";
+          const summarySource =
+            entry.data.description || entry.data.excerpt || "";
+          const summary = summarySource
+            ? truncate(stripHtmlToText(summarySource), 260)
+            : null;
+          const image = entry.data.image ?? null;
+          return {
+            type: "infographic",
+            title: entry.data.title || "Infographic",
+            date: entry.date,
+            url: entry.url && entry.url !== false ? entry.url : null,
+            summary,
+            tags: (entry.data.tags || []).filter(
+              (tag) => tag !== "infographics" && tag !== "infographic",
+            ),
+            pinned: !!entry.data.pinned,
+            original: entry,
+            hidden: !!entry.data.hidden,
+            authored_by: entry.data.authored_by ?? null,
+            image,
+            imageAlt: entry.data.imageAlt ?? entry.data.title,
+            imageMetadata: image
+              ? await generatePostThumbnailMetadata(image)
+              : null,
+          };
+        }),
+    );
 
     const nowUpdates = collectionApi
       .getFilteredByGlob("./src/now/archive/*.md")
@@ -1908,6 +1951,7 @@ export default function (eleventyConfig) {
       ...reviews,
       ...snippets,
       ...notes,
+      ...infographics,
       ...tilEntries,
       ...folioEntries,
       ...nowUpdates,

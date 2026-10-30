@@ -45,6 +45,7 @@ const CONTENT_DIRS = [
   "src/quotations",
   "src/folio",
   "src/lexicon",
+  "src/infographics",
 ];
 
 async function walk(dir, exts) {

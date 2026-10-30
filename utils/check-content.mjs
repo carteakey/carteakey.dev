@@ -24,6 +24,7 @@ const CONTENT_DIRS = [
   "src/prompts",
   "src/quotations",
   "src/folio",
+  "src/infographics",
 ];
 
 // Tags that intentionally break Title Case casing.
