@@ -38,6 +38,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      # Fail on known production advisories (high and up). Dependabot bumps
+      # manifests, but nothing else catches a stale lockfile shipping old code.
+      - name: Audit production dependencies
+        run: pnpm audit --prod --audit-level=high
+
       - name: Check formatting
         run: pnpm run lint
 

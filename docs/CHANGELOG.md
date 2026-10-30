@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.9.5] - 2026-10-30
+### Fixed
+- Dependency drift: the lockfile had fallen behind the manifest (markdown-it was 14.3.2 while `package.json` declared `^15.0.2`, plus stale dotenv/openai/postcss), so builds ran older code than declared. Synced with `pnpm install` and raised the `pnpm-workspace.yaml` override floors for `undici` (`>=7.29.1` → `>=8.12.2`) and `markdown-it` (`>=14.3.2` → `>=15.0.3`) to the patched versions, clearing all 10 `pnpm audit --prod` advisories (5 high, all undici via cheerio and openai).
+
+### Added
+- CI gate: `build.yml` now runs `pnpm audit --prod --audit-level=high` after install, so a stale lockfile or a new production advisory fails the build instead of drifting silently.
+
 ## [2.9.4] - 2026-10-29
 ### Added
 - Blog post: "alvidaa: root access to VIDAA OS" (`/blog/homelab/alvidaa/`), covering the RemoteNow MQTT client-cert gate, self-installing canvas launcher, `localhost:9009` browser file bridge sandbox escape, `rc.local` (`otaTest.sh`) root hook, five-lock Dropbear SSH gauntlet, eMMC partition/telemetry audit, and `doomgeneric` on `/dev/fb0`.
