@@ -42,6 +42,48 @@
           "tbt": 164
         }
       }
+    },
+    {
+      "date": "2026-11-01",
+      "source": "Lighthouse CI, monthly workflow",
+      "pages": {
+        "/": {
+          "performance": 57,
+          "accessibility": 92,
+          "bestPractices": 100,
+          "seo": 85,
+          "lcp": 7362,
+          "cls": 0.119,
+          "tbt": 197
+        },
+        "/blog/": {
+          "performance": 68,
+          "accessibility": 91,
+          "bestPractices": 100,
+          "seo": 85,
+          "lcp": 5117,
+          "cls": 0.001,
+          "tbt": 198
+        },
+        "/now/": {
+          "performance": 88,
+          "accessibility": 83,
+          "bestPractices": 100,
+          "seo": 85,
+          "lcp": 3258,
+          "cls": 0.008,
+          "tbt": 134
+        },
+        "/blog/local-inference/optimizing-gpt-oss-120b-local-inference/": {
+          "performance": 61,
+          "accessibility": 87,
+          "bestPractices": 96,
+          "seo": 85,
+          "lcp": 11397,
+          "cls": 0.017,
+          "tbt": 159
+        }
+      }
     }
   ]
 }
