@@ -8,14 +8,14 @@ image: /img/blog-sketches/unique/alvidaa-stamp-trim.png
 imageAlt: "Monochrome sketch of a TV emitting log lines toward a small server"
 authored_by: ai-assisted
 hidden: true
-giscusTerm: "/blog/homelab/vidaa-telemetry/"
+giscusTerm: "/blog/alvidaa/vidaa-telemetry/"
 tags:
   - Self-Host
   - Privacy
 ---
 
 {% callout "note", "Companion post" %}
-This is the privacy half of the [alvidaa story](/blog/homelab/alvidaa/) — that post covers *how* root was gained; this one covers *what the TV does with it watching*. Method summary here, full mechanics in the repo's findings.
+This is the privacy half of the [alvidaa story](/blog/alvidaa/alvidaa/) — that post covers *how* root was gained; this one covers *what the TV does with it watching*. Method summary here, full mechanics in the repo's findings.
 {% endcallout %}
 
 ## The setup, in one paragraph
