@@ -65,8 +65,12 @@ export function computeMetrics(markdownBody) {
 }
 
 function extractPostBodyHtml(fullHtml) {
-  const startMarker = '<div class="post-body';
-  const startIdx = fullHtml.indexOf(startMarker);
+  let startIdx = fullHtml.indexOf('id="post-after-live"');
+  if (startIdx !== -1) {
+    startIdx = fullHtml.lastIndexOf("<div", startIdx);
+  } else {
+    startIdx = fullHtml.indexOf('<div class="post-body');
+  }
   if (startIdx === -1) return "";
   const openTagEnd = fullHtml.indexOf(">", startIdx);
   if (openTagEnd === -1) return "";
