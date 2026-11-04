@@ -2,6 +2,10 @@
 # plain voice: what the month was about, not every entry. Months without a
 # summary show only the generated counts. src/_data/changelog.js reads this.
 
+2026-11: >-
+  Herding multi-agent teams on Herdr UI: cross-harness coordination across terminal panes,
+  durable SQLite state, and multi-agent self-improvement.
+
 2026-10: >-
   Charts moved to one build-time SVG renderer, so `/data/` and `/listening/` dropped Chart.js,
   and `/stats/` caught up. Most collection pages now run on one shared engine with a registry
