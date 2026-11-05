@@ -91,7 +91,7 @@ collectionArchetype: index
       <div class="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-1.5">
         {% for item in group.items %}
           <div class="flex items-baseline gap-2 py-0.5 min-w-0">
-            <a href="{{ item.path | url }}" class="font-mono text-[0.78rem] font-semibold accent-link shrink-0">{{ item.path }}</a>
+            <a href="{{ item.path | url }}" class="font-mono text-[0.78rem] font-semibold accent-link shrink-0" aria-label="{{ item.path }} — {{ item.desc }}">{{ item.path }}</a>
             <span class="meta-line text-xs opacity-40 shrink-0">·</span>
             <span class="editorial-support-compact truncate sm:overflow-visible">{{ item.desc }}</span>
           </div>

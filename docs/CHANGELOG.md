@@ -9,7 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Snippet tag index (`/snippets/tags/`): the archive landing page the breadcrumb on every `/snippets/tags/<tag>/` page already pointed at, so that crumb no longer 404s.
 
+### Changed
+- Font preloads now request the exact URL the `@font-face` rules use. The `?v=` suffix made the preload a second, uncached fetch of the same file instead of a warm start.
+- `ai-filter.js` is deferred, with a one-line inline bootstrap that still applies the saved authorship filter before first paint, so filtered items do not flash in.
+- Dropped the Netlify Identity widget from the global layout; only `/admin/` uses it and loads its own.
+
 ### Fixed
+- Accessibility: named the copy-markdown dropdown button, gave `/more/` directory links descriptive labels, replaced the stray spans in the workouts `<dl>` with `dt`/`dd`, and gave mobile footer links a 48px tap target.
 - Tool cards in list view no longer link their keyword badges to `/tags/<keyword>/` pages that do not exist; they render as plain badges, matching the grid card.
 - Repaired four stale internal links: two posts pointed at `/prompts/…` after the prompts moved to `/ai/prompts/…`, and three snippet references dropped the `.html` their canonical URLs use.
 

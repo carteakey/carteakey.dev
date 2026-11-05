@@ -2085,6 +2085,15 @@ picture img {
     color: var(--accent-color);
   }
 
+  /* Mobile footer links are the only place these targets appear at touch size:
+     give them a 48px row so Lighthouse's tap-target audit has room to pass. */
+  @media (max-width: 767px) {
+    .footer-nav-link {
+      min-height: 3rem;
+      padding-block: 0.5rem;
+    }
+  }
+
   .dark .footer-nav-link {
     color: rgb(212 212 216 / 1);
   }

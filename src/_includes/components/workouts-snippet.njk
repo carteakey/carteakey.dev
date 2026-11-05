@@ -24,17 +24,17 @@
 
             <dl class="grid grid-cols-2 gap-2">
               <div class="flex flex-col gap-0.5">
-                <span class="meta-text text-[0.78rem] uppercase text-gray-400 dark:text-gray-500">Distance</span>
-                <span class="editorial-title-compact">{{ activity.distance }} mi</span>
+                <dt class="meta-text text-[0.78rem] uppercase text-gray-400 dark:text-gray-500">Distance</dt>
+                <dd class="editorial-title-compact m-0">{{ activity.distance }} mi</dd>
               </div>
               <div class="flex flex-col gap-0.5">
-                <span class="meta-text text-[0.78rem] uppercase text-gray-400 dark:text-gray-500">Time</span>
-                <span class="editorial-title-compact">{{ activity.moving_time }} min</span>
+                <dt class="meta-text text-[0.78rem] uppercase text-gray-400 dark:text-gray-500">Time</dt>
+                <dd class="editorial-title-compact m-0">{{ activity.moving_time }} min</dd>
               </div>
               {% if activity.total_elevation_gain %}
                 <div class="flex flex-col gap-0.5">
-                  <span class="meta-text text-[0.78rem] uppercase text-gray-400 dark:text-gray-500">Elevation</span>
-                  <span class="editorial-title-compact">{{ activity.total_elevation_gain }} ft</span>
+                  <dt class="meta-text text-[0.78rem] uppercase text-gray-400 dark:text-gray-500">Elevation</dt>
+                  <dd class="editorial-title-compact m-0">{{ activity.total_elevation_gain }} ft</dd>
                 </div>
               {% endif %}
             </dl>
