@@ -25,6 +25,14 @@
           });
         };
 
+        // Measure once before the first paint. The grid starts on 16px auto
+        // rows, so waiting for rAF paints the collapsed layout and then shifts
+        // every card into place, which is pure CLS. Skip grids that are
+        // hidden behind a view toggle; feed:layout re-measures those.
+        if (grid.getClientRects().length) {
+          grid.querySelectorAll('.feed-card').forEach(setRowSpan);
+        }
+
         const resizeObserver = new ResizeObserver(() => layout());
         grid.querySelectorAll('.feed-card').forEach((card) => resizeObserver.observe(card));
 

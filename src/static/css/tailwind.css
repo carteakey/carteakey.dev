@@ -3673,6 +3673,31 @@ picture img {
     opacity: 0;
   }
 
+  /* The intro grid holds the LCP element, so it has to paint on the first
+     frame. A transform-only entrance keeps the rise without hiding the
+     content behind an opacity animation the LCP clock has to wait for. */
+  .home-intro-grid.animate-enter {
+    opacity: 1;
+    animation-name: enterUpTransform;
+  }
+
+  @keyframes enterUpTransform {
+    from {
+      transform: translateY(20px);
+    }
+
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-enter {
+      animation: none;
+      opacity: 1;
+    }
+  }
+
   @keyframes enterUp {
     from {
       opacity: 0;

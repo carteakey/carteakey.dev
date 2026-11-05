@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.9.7] - 2026-11-05
+### Changed
+- The home intro grid no longer starts at `opacity: 0`. It holds the LCP element, so the entrance animation now moves it with `transform` only and paints on the first frame; the staggered panels below keep the fade. Entrance animations are skipped entirely under `prefers-reduced-motion`.
+- Feed masonry measures card heights once during parse instead of waiting for `requestAnimationFrame`, so the grid is never painted collapsed and then reflowed into place.
+
+### Fixed
+- Photo and vibe cards in the feed now declare the image `width`/`height` they already carry in their data, reserving the aspect ratio before the file loads.
+
 ## [2.9.6] - 2026-11-04
 ### Added
 - Snippet tag index (`/snippets/tags/`): the archive landing page the breadcrumb on every `/snippets/tags/<tag>/` page already pointed at, so that crumb no longer 404s.
