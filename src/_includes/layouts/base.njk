@@ -25,8 +25,10 @@
 
   {# Site fonts are self-hosted via src/static/fonts/. #}
   <meta name="generator" content="Eleventy">
-  {# Syntax highlighting is only needed where a code block rendered. #}
-  {% if content and "<pre" in content %}
+  {# Prism's theme only styles code[class*="language-"], so ship it only where
+     such an element rendered. Checking for <pre missed inline code, which
+     markdown-it also emits as <code class="language-">. #}
+  {% if content and 'class="language-' in content %}
   <link id="prism-theme" href="/static/css/prism/prism-light.css?v={{ versions.version }}" rel="stylesheet"/>
   {% endif %}
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-DKK1XXJY42"></script>
