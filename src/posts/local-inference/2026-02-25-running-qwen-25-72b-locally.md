@@ -71,7 +71,7 @@ headless-mode
 
 This runs `sudo systemctl isolate multi-user.target` which stops sddm, kwin_wayland, plasmashell and all graphical services - typically freeing 1.5–2GB. Kill your browser and electron apps on top of that for another 1–2GB.
 
-See the [headless mode snippet](/snippets/headless-mode-cachyos) for setup.
+See the [headless mode snippet](/snippets/headless-mode-cachyos.html) for setup.
 
 ## Performance
 

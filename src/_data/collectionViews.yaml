@@ -123,6 +123,15 @@ snippets:
     Search and Saved serve that task. The old grid duplicated the list as cards
     without serving a different reader task.
 
+snippetTags:
+  page: src/snippet-tags-list.njk
+  archetype: ledger
+  engine: false
+  why: >-
+    The landing page for the snippet tag archive, reached from the breadcrumb on
+    every /snippets/tags/<tag>/ page. Three tags fit on one line, so it is a bare
+    list with no controls.
+
 til:
   page: src/til.njk
   archetype: index

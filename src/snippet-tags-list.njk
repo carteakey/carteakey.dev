@@ -1,0 +1,25 @@
+---
+permalink: /snippets/tags/
+layout: layouts/base.njk
+title: Snippet Tags
+description: Every topic the snippet library is filed under.
+collectionArchetype: ledger
+---
+
+{% include "components/breadcrumbs.njk" %}
+
+{% set pageEyebrow = "Tag Archive" %}
+{% set pageTitle = "Snippet Tags" %}
+{% set pageDescription = "Every topic the snippet library is filed under." %}
+
+{% include "components/page-header.njk" %}
+
+<ul class="not-prose grid grid-cols-2 gap-x-6 gap-y-2 sm:grid-cols-3">
+{% for tag in collections.snippetTags | sort %}
+  <li>
+    <a href="/snippets/tags/{{ tag | slugify }}/" class="post-tag accent-link">#{{ tag }}</a>
+  </li>
+{% endfor %}
+</ul>
+
+<p class="mt-6 text-sm"><a href="/snippets/" class="accent-link">← Back to all snippets</a></p>

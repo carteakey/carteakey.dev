@@ -60,4 +60,4 @@ sudo pacman -S openssh
 sudo systemctl enable --now sshd
 ```
 
-> See [Enable SSH on CachyOS](/snippets/enable-ssh-cachyos) for full SSH setup including firewall config.
+> See [Enable SSH on CachyOS](/snippets/enable-ssh-cachyos.html) for full SSH setup including firewall config.

@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.9.6] - 2026-11-04
+### Added
+- Snippet tag index (`/snippets/tags/`): the archive landing page the breadcrumb on every `/snippets/tags/<tag>/` page already pointed at, so that crumb no longer 404s.
+
+### Fixed
+- Tool cards in list view no longer link their keyword badges to `/tags/<keyword>/` pages that do not exist; they render as plain badges, matching the grid card.
+- Repaired four stale internal links: two posts pointed at `/prompts/…` after the prompts moved to `/ai/prompts/…`, and three snippet references dropped the `.html` their canonical URLs use.
+
 ## [2.9.5] - 2026-10-30
 ### Added
 - Sheets collection (`/sheets/`): visual reference and cheat sheets with grid and list views, wired into the feed engine and footer nav; `src/sheets` is registered with the content and design checks. First entry is the App Swaps reference sheet. The retired `/infographics/` URLs 301 to their `/sheets/` equivalents.

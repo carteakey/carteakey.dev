@@ -265,7 +265,7 @@
       {% if item.featured %}
         <span class="badge badge-featured badge-compact" title="Featured" aria-label="Featured">★ Featured</span>
       {% endif %}
-      {% if (opts.rich or opts.showTags) %}{% for tag in item.tags | default([]) | filterTagList %}<a href="{{ tagBase }}{{ tag | slugify }}/" class="badge badge-tag badge-compact badge-interactive hidden md:inline-flex" style="text-decoration: none;">#{{ tag }}</a>{% endfor %}{% endif %}
+      {% if (opts.rich or opts.showTags) %}{% for tag in item.tags | default([]) | filterTagList %}{% if item.type == 'tool' %}<span class="badge badge-tag badge-compact hidden md:inline-flex">#{{ tag }}</span>{% else %}<a href="{{ tagBase }}{{ tag | slugify }}/" class="badge badge-tag badge-compact badge-interactive hidden md:inline-flex" style="text-decoration: none;">#{{ tag }}</a>{% endif %}{% endfor %}{% endif %}
       {% if opts.showType is not defined or opts.showType %}<span class="badge badge-type badge-compact {{ typeBadgeClass }}">{{ badgeLabel }}</span>{% endif %}
       {% if item.language %}<span class="badge badge-tag badge-compact">{{ item.language }}</span>{% endif %}
       {% if item.pricePaid %}<span class="meta-text hidden md:inline">Paid {{ item.pricePaid }}</span>{% endif %}

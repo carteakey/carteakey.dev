@@ -116,7 +116,7 @@ Based on community feedback and my own testing:
 
 Since llama-server exposes an OpenAI-compatible API, [Qwen Code](https://github.com/QwenLM/qwen-code) - the open-source terminal agent by QwenLM - can connect to it directly with no extra tooling.
 
-Full configuration steps are in the [Qwen Code local llama.cpp snippet](/snippets/qwen-code-local-llama-cpp), but the short version is a `~/.qwen/settings.json` like this:
+Full configuration steps are in the [Qwen Code local llama.cpp snippet](/snippets/qwen-code-local-llama-cpp.html), but the short version is a `~/.qwen/settings.json` like this:
 
 ```json
 {
