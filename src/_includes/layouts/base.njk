@@ -9,14 +9,22 @@
   <link rel="preload" href="/static/fonts/iosevka-aile/iosevka-aile-400-normal.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="/static/fonts/ioskeley-mono/IoskeleyMono-Regular.woff2" as="font" type="font/woff2" crossorigin />
 
-  {# Fraunces: monumental display serif, used sparingly for hero headlines #}
+  {# Fraunces: monumental display serif, used sparingly for hero headlines.
+     Loaded off the critical path: the stylesheet is fetched at low priority and
+     promoted once it arrives, so a slow fonts.googleapis.com never blocks paint.
+     Both families declare display=swap, so text renders in the fallback first. #}
+  {% set googleFontsHref = "https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Press+Start+2P&display=swap" %}
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Press+Start+2P&display=swap" />
+  <link rel="stylesheet" href="{{ googleFontsHref }}" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="{{ googleFontsHref }}" /></noscript>
 
   {# Site fonts are self-hosted via src/static/fonts/. #}
   <meta name="generator" content="Eleventy">
+  {# Syntax highlighting is only needed where a code block rendered. #}
+  {% if content and "<pre" in content %}
   <link id="prism-theme" href="/static/css/prism/prism-light.css?v={{ versions.version }}" rel="stylesheet"/>
+  {% endif %}
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-DKK1XXJY42"></script>
   <script>
     window.dataLayer = window.dataLayer || [];

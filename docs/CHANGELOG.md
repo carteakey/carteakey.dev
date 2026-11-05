@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.9.8] - 2026-11-05
+### Changed
+- Post hero sketches now go through `eleventy-img` as AVIF/WebP at 288/576px with `fetchpriority="high"` and explicit dimensions. The source PNGs averaged ~400 KB and were served raw; the painted 288px AVIF is ~31 KB.
+- Google Fonts no longer blocks rendering: the stylesheet loads at low priority and is promoted on arrival, with a `<noscript>` fallback.
+- Prism's theme stylesheet ships only on pages that actually rendered a code block (55 of 266 pages), instead of every page.
+
+### Fixed
+- Upvote and reaction widgets logged `console.error` when their Netlify functions were unreachable, which shows up as a browser console error in Lighthouse. They now log at debug level and keep the existing inline error messages.
+
 ## [2.9.7] - 2026-11-05
 ### Changed
 - The home intro grid no longer starts at `opacity: 0`. It holds the LCP element, so the entrance animation now moves it with `transform` only and paints on the first frame; the staggered panels below keep the fade. Entrance animations are skipped entirely under `prefers-reduced-motion`.

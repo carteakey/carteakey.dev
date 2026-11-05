@@ -528,6 +528,36 @@ async function postThumbnailShortcode(src, alt, css, displayWidth = 96) {
   return postThumbnailMarkup(metadata, alt, css, displayWidth);
 }
 
+// The hero sketch at the top of a post is the LCP candidate on every article
+// page, and the source PNGs average ~400 KB. Serve AVIF/WebP at the size the
+// layout actually paints (max-height 18rem) and fetch it at high priority.
+async function postHeroShortcode(src, alt, css) {
+  const sourcePath = src.startsWith("/img/") ? `./src/static${src}` : src;
+
+  const metadata = await cachedImage(sourcePath, {
+    widths: [288, 576],
+    // No PNG fallback: at 576px it was 594 KB, almost the weight of the source
+    // it replaces. Every browser that runs this site's JS-free baseline reads
+    // WebP, and AVIF covers the rest of the modern set.
+    formats: ["avif", "webp"],
+    outputDir: `${IMAGE_CACHE_DIR}/heroes/posts/`,
+    urlPath: "/img/heroes/posts/",
+  });
+
+  return generateHTML(
+    metadata,
+    {
+      class: css ?? "",
+      alt,
+      sizes: "(min-width: 768px) 288px, 60vw",
+      loading: "eager",
+      decoding: "async",
+      fetchpriority: "high",
+    },
+    { whitespaceMode: "inline" },
+  );
+}
+
 function remoteImageShortcode(src, alt, css) {
   return buildRemoteImageMarkup(src, alt, css);
 }
@@ -825,6 +855,7 @@ export default function (eleventyConfig) {
   eleventyConfig.addAsyncShortcode("image_cc", imageShortcodeWithCaptions);
   eleventyConfig.addAsyncShortcode("gallery", galleryShortcode);
   eleventyConfig.addAsyncShortcode("post_thumbnail", postThumbnailShortcode);
+  eleventyConfig.addAsyncShortcode("post_hero", postHeroShortcode);
   eleventyConfig.addShortcode("post_thumbnail_markup", postThumbnailMarkup);
   eleventyConfig.addShortcode("remote_image", remoteImageShortcode);
   eleventyConfig.addShortcode(
