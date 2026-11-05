@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [2.9.5] - 2026-10-30
 ### Added
-- Infographics collection (`/infographics/`): poster-style visual references with grid and list views, wired into the feed engine and footer nav; `src/infographics` is registered with the content and design checks. First entry is the App Swaps poster.
+- Sheets collection (`/sheets/`): visual reference and cheat sheets with grid and list views, wired into the feed engine and footer nav; `src/sheets` is registered with the content and design checks. First entry is the App Swaps reference sheet. The retired `/infographics/` URLs 301 to their `/sheets/` equivalents.
 - Folio 004, App Swaps (`/folio/app-swaps/`): heavy apps and their smaller replacements, with per-row memory and disk bars, measured numbers marked apart from typical figures, and what each swap gives up. Data lives in `src/_data/lightweightApps.yaml`.
 - CI gate: `build.yml` now runs `pnpm audit --prod --audit-level=high` after install, so a stale lockfile or a new production advisory fails the build instead of drifting silently.
 

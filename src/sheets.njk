@@ -1,0 +1,23 @@
+---
+layout: layouts/base.njk
+title: Sheets
+description: Reference sheets, cheat sheets, and visual benchmark breakdowns.
+permalink: /sheets/
+eleventyNavigation:
+  key: Sheets
+  order: 8
+collectionArchetype: index
+---
+
+{% include "components/breadcrumbs.njk" %}
+
+{% set pageEyebrow = "Visual Reference" %}
+{% set pageTitle = "Sheets" %}
+{% set pageDescription = "Reference sheets, cheat sheets, and technical breakdowns designed to communicate complex setups and benchmarks at a glance." %}
+{% set itemCount = collections.sheets | length %}
+{% set itemLabel = "sheets" %}
+
+{% include "components/page-header.njk" %}
+
+{% set collectionKey = "sheets" %}
+{% include "components/collection-index.njk" %}

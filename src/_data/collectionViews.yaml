@@ -85,15 +85,15 @@ notes:
     finding an old note by title. No wall: at this size it repeats the stream in
     columns. No search: the collection fits on one screen of titles.
 
-infographics:
-  page: src/infographics.njk
+sheets:
+  page: src/sheets.njk
   archetype: index
   engine: true
-  types: [infographic]
+  types: [sheet]
   views: [grid, list]
   row: { showType: false, showSummary: true, showTags: true }
   why: >-
-    Visual posters and technical reference sheets. Grid showcases the poster
+    Visual reference sheets, cheat sheets, and technical breakdowns. Grid showcases the sheet
     imagery directly, while list view enables scanning titles and topics.
 
 lexicon:

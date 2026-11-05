@@ -8,9 +8,9 @@ layout: layouts/base.njk
 <article class="site-content note-content">
   <header class="not-prose mb-4">
     <div class="flex items-center gap-2 mb-1 flex-wrap">
-      <span class="meta-text text-xs uppercase tracking-wide">Infographic</span>
+      <span class="meta-text text-xs uppercase tracking-wide">Sheet</span>
       <time datetime="{{ page.date | htmlDateString }}" class="meta-text text-xs">· {{ page.date | readableDate }}</time>
-      <span class="post-meta-chip" data-view-counter data-view-slug="infographic:{{ page.fileSlug }}">
+      <span class="post-meta-chip" data-view-counter data-view-slug="sheet:{{ page.fileSlug }}">
         {% feather "eye", class="w-3.5 h-3.5 opacity-60" %}
         <span data-view-count>-</span> views
       </span>
@@ -27,7 +27,7 @@ layout: layouts/base.njk
       <a href="{{ image }}" target="_blank" rel="noopener noreferrer" class="surface block overflow-hidden">
         <img src="{{ image }}" alt="{{ imageAlt or title }}" class="w-full h-auto block m-0" loading="eager">
       </a>
-      <p class="feed-summary text-center mt-2 italic">Click image to view or download full-resolution asset (1200 × 1540 px)</p>
+      <p class="feed-summary text-center mt-2 italic">Click image to view or download full-resolution asset (1200 × 1200 px)</p>
     {% endif %}
   </div>
 
@@ -36,6 +36,6 @@ layout: layouts/base.njk
   </div>
 
   <footer class="not-prose mt-8 pt-4 border-t border-gray-200 dark:border-gray-800">
-    <a href="{{ '/infographics/' | url }}" class="note-entry-backlink">← All Infographics</a>
+    <a href="{{ '/sheets/' | url }}" class="note-entry-backlink">← All Sheets</a>
   </footer>
 </article>

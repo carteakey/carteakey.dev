@@ -134,3 +134,8 @@
 /blogroll/ /bookmarks/#blogroll 301!
 /blogroll /bookmarks/#blogroll 301!
 /blogroll/* /bookmarks/#blogroll 301!
+
+# Infographics collection renamed to Sheets (same slugs, new prefix)
+/infographics/ /sheets/ 301!
+/infographics /sheets/ 301!
+/infographics/:splat /sheets/:splat 301!

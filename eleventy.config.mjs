@@ -1562,11 +1562,11 @@ export default function (eleventyConfig) {
       .sort((a, b) => b.date - a.date);
   });
 
-  // Infographics collection
-  eleventyConfig.addCollection("infographics", function (collectionApi) {
+  // Sheets collection
+  eleventyConfig.addCollection("sheets", function (collectionApi) {
     const now = new Date();
     return collectionApi
-      .getFilteredByGlob("./src/infographics/**/*.md")
+      .getFilteredByGlob("./src/sheets/**/*.md")
       .filter((entry) => isVisibleContent(entry, now))
       .sort((a, b) => b.date - a.date);
   });
@@ -1728,12 +1728,12 @@ export default function (eleventyConfig) {
         };
       });
 
-    const infographics = await Promise.all(
+    const sheets = await Promise.all(
       collectionApi
-        .getFilteredByGlob("./src/infographics/**/*.md")
+        .getFilteredByGlob("./src/sheets/**/*.md")
         .filter((entry) => isVisibleContent(entry, now))
         .map(async (entry) => {
-          entry.data.feedType = "infographic";
+          entry.data.feedType = "sheet";
           const summarySource =
             entry.data.description || entry.data.excerpt || "";
           const summary = summarySource
@@ -1741,13 +1741,13 @@ export default function (eleventyConfig) {
             : null;
           const image = entry.data.image ?? null;
           return {
-            type: "infographic",
-            title: entry.data.title || "Infographic",
+            type: "sheet",
+            title: entry.data.title || "Sheet",
             date: entry.date,
             url: entry.url && entry.url !== false ? entry.url : null,
             summary,
             tags: (entry.data.tags || []).filter(
-              (tag) => tag !== "infographics" && tag !== "infographic",
+              (tag) => tag !== "sheets" && tag !== "sheet",
             ),
             pinned: !!entry.data.pinned,
             original: entry,
@@ -1951,7 +1951,7 @@ export default function (eleventyConfig) {
       ...reviews,
       ...snippets,
       ...notes,
-      ...infographics,
+      ...sheets,
       ...tilEntries,
       ...folioEntries,
       ...nowUpdates,

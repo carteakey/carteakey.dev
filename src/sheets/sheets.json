@@ -1,0 +1,7 @@
+{
+  "layout": "layouts/sheet.njk",
+  "tags": ["sheets"],
+  "eleventyComputed": {
+    "permalink": "/sheets/{{ page.fileSlug }}/"
+  }
+}
