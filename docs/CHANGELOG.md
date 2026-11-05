@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [2.9.10] - 2026-11-05
 ### Fixed
+- Prism's theme gate from 2.9.8 keyed on `<pre>` and missed inline code, which markdown-it also emits as `<code class="language-">`; 26 pages lost their inline-code styling. It now keys on the selector the stylesheet actually uses, so 79 of 267 pages load it and the rest still skip it.
 - Fixed the flash of stacked/overlapping grid cards on page refresh: `.feed-masonry` now gates `grid-auto-rows: 16px` behind `[data-masonry-ready]`, and the script executes synchronously for already-parsed grids, calculating spans before activating row heights.
 - Dropped Homepage CLS to 0.003 by replacing `translateY` entrance animation on `.home-recent-panel` with a fade and setting `min-height: 2.75rem` on `.home-typing-line` to handle typewriter wrapping on mobile viewports.
 - Preloaded post hero AVIF sketches in `<head>` via `post_hero_preload` shortcode with `imagesrcset` and `fetchpriority="high"`, accelerating throttled mobile post LCP by 2.4s.
