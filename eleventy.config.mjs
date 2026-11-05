@@ -881,7 +881,10 @@ export default function (eleventyConfig) {
   eleventyConfig.addAsyncShortcode("gallery", galleryShortcode);
   eleventyConfig.addAsyncShortcode("post_thumbnail", postThumbnailShortcode);
   eleventyConfig.addAsyncShortcode("post_hero", postHeroShortcode);
-  eleventyConfig.addAsyncShortcode("post_hero_preload", postHeroPreloadShortcode);
+  eleventyConfig.addAsyncShortcode(
+    "post_hero_preload",
+    postHeroPreloadShortcode,
+  );
   eleventyConfig.addShortcode("post_thumbnail_markup", postThumbnailMarkup);
   eleventyConfig.addShortcode("remote_image", remoteImageShortcode);
   eleventyConfig.addShortcode(
