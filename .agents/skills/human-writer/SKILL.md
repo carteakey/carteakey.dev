@@ -4,7 +4,9 @@ description: >
   The author's measured writing fingerprint (calibrated against human-authored posts,
   zero em dashes, high contraction rate) combined with the upstream humanizer engine (v3.1.0)
   and optional local Humanizer-12B weight-level acceleration (via l3ms) to remove AI writing tropes,
-  synthetic framing, and formulaic patterns.
+  synthetic framing, and formulaic patterns. Models own technical detail, tables, and formatting;
+  the author owns the voice. On story posts, point at model-sounding prose and hand it back
+  instead of rewriting it.
 ---
 
 # Human Writer & Humanizer Skill
@@ -13,6 +15,27 @@ This skill governs all written prose on `carteakey.dev`. It combines three compl
 1. **Part 1: The Author's Voice & Fingerprint (`carteakey.dev`)**: The author's measured style, hard metrics, cadence, and personal conventions.
 2. **Part 2: The General Humanizer Engine (Upstream v3.1.0)**: The complete 26-pattern structural ruleset for stripping synthetic AI framing, formulaic staging, and chatbot residue.
 3. **Optional Substrate: Local Humanizer-12B Acceleration (`l3ms`)**: Weight-level rewrite pass to break robotic syntax and uniform cadence before applying the author's fingerprint (active only when the local endpoint is up and output passes quality comparison).
+
+---
+
+## Who Writes What (read this first)
+
+**The author writes the voice. Models do the technical work.** No model writes the author's language better than the author does, and this skill does not pretend otherwise. Rewriting with a model gets prose to *clean*, not to *his*. So the split is:
+
+| Models own | The author owns |
+|---|---|
+| Technical accuracy, commands, numbers, and identifiers | Opinions, reactions, jokes, and what the post is *about* |
+| Tables, timelines, and comparison matrices | The opening, the ending, and every heading |
+| Formatting, shortcodes, frontmatter, links, and checks | Image captions and asides |
+| De-stuffing: cutting repeats, moving soup into tables | Any sentence that tells a story or carries a feeling |
+| **Flagging** prose that reads like a model | Rewriting that prose |
+
+In practice:
+
+- **On narrative and story posts, flag; don't rewrite.** Read the post against §27–§34 and the fingerprint, then hand the author the lines that read like a model, with a one-line reason each. This is a reading convention, not a checklist to pass: no script decides it. Do not "fix" a flagged sentence by generating a new one. A model-written replacement for a model-sounding sentence is still a model sentence.
+- **A model may still delete.** Cutting a setup sentence, a duplicated fact, a second metaphor, or a punchline caption is allowed, because deleting adds no voice. Adding words is the author's job.
+- **The author's raw words outrank polish.** Pasted chat quotes, typos-in-quotes, "bruv", slang at real peaks: keep them verbatim. They are the most human thing in a model-assisted post, and the first thing a polish pass wrecks.
+- **Say who did what.** In `ai-assisted` posts, "we" usually means "the author and a model". Use "I" for what the author wanted, decided, or did by hand, and name the model for what it did ("GLM found…"). Honesty about the split *is* the voice.
 
 ---
 
@@ -159,6 +182,13 @@ When overhauling an older AI-assisted technical post that is stuffed with specs,
 #### Mode C — Human Post Proofread (`authored_by: human`)
 - **Strictly typo and grammar fixes only.** Never rewrite the author's voice, cut sections, or run de-stuffing/humanizer passes unless explicitly asked.
 
+#### Mode D — Flag Only (Default for story, project, and build-log posts)
+Use this when the post is a narrative (something happened, the author was there), even if it is `ai-assisted`. The fingerprint metrics in Part 1 can all pass while the post still reads like a report, because the tells here are structural (§27–§34), not lexical.
+1. Read the whole post once as a reader would, then again against §27–§34.
+2. Do the deletions yourself: duplicated facts, setup sentences, second metaphors, most punchline captions.
+3. Hand the author a short list of what is left, by line, grouped by tell, with the reason. Suggest *what* to put there ("say what you felt when it failed", "name what happened in this section"), never the sentence itself.
+4. Leave technical sections, tables, and code exactly as they are unless they repeat each other.
+
 ---
 
 ### Workflow 2: Side-by-Side Diffing & Review Workflow (`carteakey.dev`)
@@ -229,6 +259,7 @@ Once unnecessary technicalities are pruned from a prose paragraph, you may optio
 
 ### Final Editing Checklist (Apply to Both Light Fine-Tuning & Full Rewrites)
 
+0. **Read for narrative tells.** The scorecard misses §27–§34; only reading finds them. On story posts, stop here and switch to Mode D.
 1. **Mark the tells.** Read the text once and mark every pattern below (§1 contrasts, §2 one-line closers, §6 triads, §8 em dashes, §19 bold labels).
 2. **Edit or rewrite.** Keep every supported claim and measured fact. Do not invent numbers, dates, quotes, or citations.
 3. **Verify voice & scorecard.** Run `node utils/snapshot-post.mjs --diff <post.md>` and confirm zero em dashes, lower `numbersPer1k` / `boldPer1k` / `codePer1k`, and natural contractions.
@@ -468,6 +499,36 @@ The fact underneath is usually sound. Keep it and remove the dressing.
 
 **Watch for:** A reply that walks through the entire background, diagnosis, and evidence before stating the decision.
 **Problem:** The reader already has the context. Lead with the decision and state only the new information needed to act.
+
+---
+
+## G. Narrative Tells (carteakey.dev conventions, not upstream)
+
+These show up in long `ai-assisted` story posts and pass every per-1k metric in Part 1. They are conventions for reading, not rules to satisfy: there is deliberately no script for them, because a model told to pass a checker learns the checker, not the voice. The examples come from the alvidaa post (Nov 2026); the next post will fail in its own way, so read for the *kind* of problem, not these exact words. When the author spots a new kind while reading, add it here with the post it came from.
+
+### 27. Stacked Metaphors
+A hotel phone, then a bouncer, then a security guard, then a cage, all in one post. Each one alone is fine. Stacked, they read as a model explaining. Keep the single best comparison in the post.
+
+### 28. Punchline Captions
+Every image caption ends on a quip. The author's captions are mostly plain, and a joke lands because it's rare. Two or three per post at most; the rest describe the image.
+
+### 29. Mic-Drop Section Endings
+Every section closes on a short, quotable line after the facts are done. This is §2 at section scale. End the section on the last fact.
+
+### 30. Setup Sentences
+Sentences that announce the next sentence ("Then came the comedy.", "Here's how it worked.") instead of saying something. Start with the fact.
+
+### 31. Same Fact, Three Homes
+The same steps told in prose, again in a table, again in a timeline. Pick one home for each fact: tables hold detail, prose holds why, timelines hold order.
+
+### 32. Headings That Sound Good
+Headings a skimmer learns nothing from ("The same door, walked further"). A heading should say what happened in its section.
+
+### 33. "We" Hiding Who Did What
+In model-assisted posts "we" blurs the author's decisions with the model's execution. Use "I" for what the author wanted or decided, and name the model for what it did. In human tutorials "we" (author and reader) is fine.
+
+### 34. The Frictionless Arc
+Every obstacle falls on the next try, nobody gets bored or annoyed, and there's no doubt anywhere. Real build logs have dead ends. Point to where the author was probably stuck and ask him what it was like. Never invent the frustration.
 
 ---
 

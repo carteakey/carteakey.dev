@@ -57,6 +57,7 @@ Intentionally committed implementation work is tracked in Linear: [carteakey.dev
   - Curated lists (bookmarks, projects, uses, quotes, now highlights and updates, random facts) support `enabled: false` on any entry: it stays in the file as a draft and never renders. Loop through the shared `enabled` filter (`{% for x in list | enabled %}`, and `| enabled | length` for counts) in any new template that renders such a list. Now-page items may be plain strings or `{ text, enabled }`. The repo is public, so a disabled entry is still readable on GitHub.
 * ❌ **No Marketing Hype or Tier Branding**:
   - All posts must pass through the `human-writer` skill, even when declared `authored_by: ai-assisted` or `ai-generated`.
+  - Models own technical detail, tables, and formatting; the author owns the voice. On story and build-log posts, point at the lines that read like a model and hand them back to the author instead of rewriting them (human-writer Mode D). Human writing is guided by conventions, not scripts: a checker becomes the target and the voice gets lost.
   - Never invent artificial tier names like "Platinum tier", "Gold tier", or "Gold master". Describe setups plainly by engine and model (e.g. `Strata (dynamic expert cache)`, `llama.cpp plain master`, `llama.cpp + MTP draft`).
   - Avoid AI-generated marketing tropes: "game-changer", "changed the game", "blazing", "holy grail", "shatters the ceiling", or "takes the throne". State measured numbers (tok/s, prefill, VRAM) directly with natural skepticism.
 
