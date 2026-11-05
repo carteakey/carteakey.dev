@@ -219,8 +219,8 @@
                 {% endif %}
               </div>
               {% if itemImage and isPostLike %}
-                <a href="{{ item.url | url }}" class="hidden sm:block shrink-0" style="text-decoration: none;">
-                  {% post_thumbnail_markup item.imageMetadata, itemImageAlt, "stamp-cobalt block h-16 w-16 object-contain", 64 %}
+                <a href="{{ item.url | url }}" class="hidden sm:block shrink-0 w-16 h-16 aspect-square" style="text-decoration: none;">
+                  {% post_thumbnail_markup item.imageMetadata, itemImageAlt, "stamp-cobalt block h-16 w-16 aspect-square object-contain", 64 %}
                 </a>
               {% endif %}
             </div>
@@ -379,8 +379,8 @@
       {% if itemImage and isPostLike %}
         <div class="mt-2 flex items-start gap-3">
           <p class="min-w-0 flex-1 editorial-support-compact m-0">{{ item.summary }}</p>
-          <a href="{{ item.url | url }}" class="shrink-0" style="text-decoration: none;">
-            {% post_thumbnail_markup item.imageMetadata, itemImageAlt, "stamp-cobalt block h-16 w-16 object-contain", 64 %}
+          <a href="{{ item.url | url }}" class="shrink-0 w-16 h-16 block aspect-square" style="text-decoration: none;">
+            {% post_thumbnail_markup item.imageMetadata, itemImageAlt, "stamp-cobalt block h-16 w-16 aspect-square object-contain", 64 %}
           </a>
         </div>
       {% else %}

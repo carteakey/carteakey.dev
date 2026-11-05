@@ -1,6 +1,7 @@
 <script>
   (() => {
     const initMasonry = () => {
+      if (window.matchMedia('(max-width: 767px)').matches) return;
       const grids = document.querySelectorAll('[data-feed-masonry]');
       if (!grids.length) return;
 

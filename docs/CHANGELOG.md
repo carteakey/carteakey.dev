@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.9.9] - 2026-11-05
+### Changed
+- Self-hosted the pixel font `Press Start 2P` in WOFF2 (4.6 KB) with preload and `@font-face`, removing the render-blocking Google Fonts request.
+- Reserved feed card post thumbnail dimensions and aspect ratio to eliminate layout shift on home and archive feeds.
+- Scoped masonry auto-rows to desktop viewports (`md:` / 768px+) so mobile single-column feeds don't suffer row crushing or reflow during parse.
+
+### Fixed
+- Added hidden descriptive text (`<span class="sr-only">sections</span>`) to the header navigation "More" link, raising the SEO score to 100.
+
 ## [2.9.8] - 2026-11-05
 ### Changed
 - Post hero sketches now go through `eleventy-img` as AVIF/WebP at 288/576px with `fetchpriority="high"` and explicit dimensions. The source PNGs averaged ~400 KB and were served raw; the painted 288px AVIF is ~31 KB.
