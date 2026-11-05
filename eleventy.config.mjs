@@ -558,6 +558,31 @@ async function postHeroShortcode(src, alt, css) {
   );
 }
 
+async function postHeroPreloadShortcode(src) {
+  if (!src) return "";
+  const sourcePath = src.startsWith("/img/") ? `./src/static${src}` : src;
+
+  try {
+    const metadata = await cachedImage(sourcePath, {
+      widths: [288, 576],
+      formats: ["avif", "webp"],
+      outputDir: `${IMAGE_CACHE_DIR}/heroes/posts/`,
+      urlPath: "/img/heroes/posts/",
+    });
+
+    const format = metadata.avif || metadata.webp;
+    if (format && format.length) {
+      const srcset = format.map((entry) => entry.srcset).join(", ");
+      const fallback = format[format.length - 1].url;
+      const type = metadata.avif ? "image/avif" : "image/webp";
+      return `<link rel="preload" as="image" href="${fallback}" imagesrcset="${srcset}" imagesizes="(min-width: 768px) 288px, 60vw" type="${type}" fetchpriority="high">`;
+    }
+  } catch (_e) {
+    return "";
+  }
+  return "";
+}
+
 function remoteImageShortcode(src, alt, css) {
   return buildRemoteImageMarkup(src, alt, css);
 }
@@ -856,6 +881,7 @@ export default function (eleventyConfig) {
   eleventyConfig.addAsyncShortcode("gallery", galleryShortcode);
   eleventyConfig.addAsyncShortcode("post_thumbnail", postThumbnailShortcode);
   eleventyConfig.addAsyncShortcode("post_hero", postHeroShortcode);
+  eleventyConfig.addAsyncShortcode("post_hero_preload", postHeroPreloadShortcode);
   eleventyConfig.addShortcode("post_thumbnail_markup", postThumbnailMarkup);
   eleventyConfig.addShortcode("remote_image", remoteImageShortcode);
   eleventyConfig.addShortcode(

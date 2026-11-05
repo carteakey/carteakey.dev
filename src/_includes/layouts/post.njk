@@ -285,8 +285,9 @@ hasEthicalAds: false
       </section>
       <!-- Upvote Section -->
       <div class="upvote-section flex items-center">
-        <button id="upvoteButton" class="upvote-button post-action-button" aria-label="Upvote this post" aria-busy="false">
+        <button id="upvoteButton" class="upvote-button post-action-button" aria-busy="false">
           {% feather "thumbs-up", class="w-4 h-4 text-gray-500 dark:text-gray-400" %}
+          <span class="sr-only">Upvote this post: </span>
           <span id="upvoteCount" class="text-[0.78rem] font-medium text-gray-600 dark:text-gray-300">
             {{ upvotes.posts[page.fileSlug] | default(0) }}
           </span>

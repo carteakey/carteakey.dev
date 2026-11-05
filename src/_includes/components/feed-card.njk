@@ -301,7 +301,7 @@
       {% if item.pinned %}
         <span class="badge badge-accent badge-compact flex items-center gap-1" title="Pinned" aria-label="Pinned">{% feather "bookmark", class="w-3 h-3" %} Pinned</span>
       {% endif %}
-      <time datetime="{{ (opts.date or item.date) | htmlDateString }}" class="meta-text text-[0.78rem] text-gray-400 dark:text-gray-500 ml-auto">{{ (opts.date or item.date) | readableDate }}</time>
+      <time datetime="{{ (opts.date or item.date) | htmlDateString }}" class="meta-text text-[0.78rem] text-stone-600 dark:text-stone-400 ml-auto">{{ (opts.date or item.date) | readableDate }}</time>
     </div>
 
     {# Title #}

@@ -6,6 +6,9 @@
       if (!grids.length) return;
 
       grids.forEach((grid) => {
+        if (grid.dataset.masonryInitialized) return;
+        grid.dataset.masonryInitialized = 'true';
+
         const getMetrics = () => {
           const styles = window.getComputedStyle(grid);
           const rowGap = parseFloat(styles.getPropertyValue('row-gap')) || 0;
@@ -20,18 +23,18 @@
           card.style.gridRowEnd = `span ${span}`;
         };
 
-        const layout = () => {
-          window.requestAnimationFrame(() => {
-            grid.querySelectorAll('.feed-card').forEach(setRowSpan);
-          });
+        const applyLayout = () => {
+          grid.querySelectorAll('.feed-card').forEach(setRowSpan);
+          grid.setAttribute('data-masonry-ready', '');
         };
 
-        // Measure once before the first paint. The grid starts on 16px auto
-        // rows, so waiting for rAF paints the collapsed layout and then shifts
-        // every card into place, which is pure CLS. Skip grids that are
-        // hidden behind a view toggle; feed:layout re-measures those.
+        const layout = () => {
+          window.requestAnimationFrame(applyLayout);
+        };
+
+        // Measure synchronously before the first paint so cards don't flash stacked.
         if (grid.getClientRects().length) {
-          grid.querySelectorAll('.feed-card').forEach(setRowSpan);
+          applyLayout();
         }
 
         const resizeObserver = new ResizeObserver(() => layout());
@@ -58,14 +61,14 @@
 
         window.addEventListener('resize', layout, { passive: true });
         grid.addEventListener('feed:layout', () => layout());
-        layout();
       });
     };
 
+    // Execute immediately for elements already parsed in the DOM,
+    // and also listen for DOMContentLoaded for any deferred elements.
+    initMasonry();
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', initMasonry);
-    } else {
-      initMasonry();
     }
   })();
 </script>

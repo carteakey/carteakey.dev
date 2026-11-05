@@ -580,7 +580,7 @@ picture img {
   }
 
   @media (min-width: 768px) {
-    .feed-masonry {
+    .feed-masonry[data-masonry-ready] {
       grid-auto-rows: var(--feed-row-height, 16px);
       grid-auto-flow: dense;
     }
@@ -1868,7 +1868,11 @@ picture img {
     font-size: 0.78rem;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: rgb(156 163 175 / 1);
+    color: rgb(87 83 78 / 1);
+  }
+
+  .dark .page-header-meta-label {
+    color: rgb(168 162 158 / 1);
   }
 
   .page-header-meta-value {
@@ -2500,12 +2504,19 @@ picture img {
   .home-typing-line {
     margin: 0.95rem 0 0;
     max-width: 44rem;
+    min-height: 2.75rem;
     font-family: "Press Start 2P", var(--font-monument);
     font-size: 0.78rem;
     line-height: 1.7;
     letter-spacing: 0;
     font-weight: normal;
     color: rgb(39 39 42 / 1);
+  }
+
+  @media (min-width: 640px) {
+    .home-typing-line {
+      min-height: 1.4rem;
+    }
   }
 
   .home-typed-topic {
@@ -3689,6 +3700,21 @@ picture img {
   .home-intro-grid.animate-enter {
     opacity: 1;
     animation-name: enterUpTransform;
+  }
+
+  /* Secondary home panels fade in without translateY to eliminate layout shift (CLS). */
+  .home-recent-panel.animate-enter {
+    animation-name: enterFade;
+  }
+
+  @keyframes enterFade {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
   }
 
   @keyframes enterUpTransform {

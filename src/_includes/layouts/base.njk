@@ -9,6 +9,9 @@
   <link rel="preload" href="/static/fonts/iosevka-aile/iosevka-aile-400-normal.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="/static/fonts/ioskeley-mono/IoskeleyMono-Regular.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="/static/fonts/press-start-2p/press-start-2p.woff2" as="font" type="font/woff2" crossorigin />
+  {% if image and (layout == "layouts/post.njk" or layout == "post") %}
+    {% post_hero_preload image %}
+  {% endif %}
 
   {# Fraunces: monumental display serif, used sparingly for hero headlines.
      Loaded off the critical path: the stylesheet is fetched at low priority and
@@ -373,7 +376,7 @@
         {# Mobile: 2-col compact grid with category headings + icons #}
         <div class="grid grid-cols-2 gap-x-4 gap-y-3 text-xs md:hidden">
           <div>
-            <h4 class="footer-nav-heading">Read</h4>
+            <h2 class="footer-nav-heading">Read</h2>
             <ul class="space-y-1 list-none m-0 p-0">
               <li><a href="{{ '/now' | url }}" class="footer-nav-link">{% feather "clock", class="w-3 h-3 shrink-0" %} Now</a></li>
               <li><a href="{{ '/feed' | url }}" class="footer-nav-link">{% feather "activity", class="w-3 h-3 shrink-0" %} Feed</a></li>
@@ -385,7 +388,7 @@
             </ul>
           </div>
           <div>
-            <h4 class="footer-nav-heading">Explore</h4>
+            <h2 class="footer-nav-heading">Explore</h2>
             <ul class="space-y-1 list-none m-0 p-0">
               <li><a href="{{ '/projects' | url }}" class="footer-nav-link">{% feather "box", class="w-3 h-3 shrink-0" %} Projects</a></li>
               <li><a href="{{ '/ai/' | url }}" class="footer-nav-link">{% feather "cpu", class="w-3 h-3 shrink-0" %} AI</a></li>
@@ -407,7 +410,7 @@
           
           {# Read - content for others #}
           <div>
-            <h4 class="footer-nav-heading">Read</h4>
+            <h2 class="footer-nav-heading">Read</h2>
             <ul class="space-y-0.5 list-none m-0 p-0">
               <li><a href="{{ '/now' | url }}" class="footer-nav-link">{% feather "clock", class="w-3 h-3 shrink-0" %} Now</a></li>
               <li><a href="{{ '/feed' | url }}" class="footer-nav-link">{% feather "activity", class="w-3 h-3 shrink-0" %} Feed</a></li>
@@ -423,7 +426,7 @@
 
           {# Explore - creative & fun #}
           <div>
-            <h4 class="footer-nav-heading">Explore</h4>
+            <h2 class="footer-nav-heading">Explore</h2>
             <ul class="space-y-0.5 list-none m-0 p-0">
               <li><a href="{{ '/projects' | url }}" class="footer-nav-link">{% feather "box", class="w-3 h-3 shrink-0" %} Projects</a></li>
               <li><a href="{{ '/ai/' | url }}" class="footer-nav-link">{% feather "cpu", class="w-3 h-3 shrink-0" %} AI</a></li>
@@ -438,7 +441,7 @@
 
           {# About Me - personal & professional #}
           <div>
-            <h4 class="footer-nav-heading">About Me</h4>
+            <h2 class="footer-nav-heading">About Me</h2>
             <ul class="space-y-0.5 list-none m-0 p-0">
               <li><a href="{{ '/about' | url }}" class="footer-nav-link">{% feather "user", class="w-3 h-3 shrink-0" %} About</a></li>
               <li><a href="{{ '/cv' | url }}" class="footer-nav-link">{% feather "briefcase", class="w-3 h-3 shrink-0" %} CV</a></li>
@@ -453,7 +456,7 @@
 
           {# Meta - site utilities & links #}
           <div>
-            <h4 class="footer-nav-heading">Meta</h4>
+            <h2 class="footer-nav-heading">Meta</h2>
             <ul class="space-y-0.5 list-none m-0 p-0">
               <li><a href="{{ '/search' | url }}" class="footer-nav-link">{% feather "search", class="w-3 h-3 shrink-0" %} Search</a></li>
               <li><a href="{{ '/stats' | url }}" class="footer-nav-link">{% feather "bar-chart", class="w-3 h-3 shrink-0" %} Stats</a></li>

@@ -88,9 +88,10 @@
       {% set isEarlier = loop.index0 < (breadcrumbItems.length - 2) %}
       <li class="{% if isEarlier %}hidden md:flex{% else %}flex{% endif %} items-center">
         {% if not item.isLast %}
-          <a href="{{ item.url | url }}" class="breadcrumb-link flex items-center gap-1">
+          <a href="{{ item.url | url }}" class="breadcrumb-link flex items-center gap-1"{% if item.isHome %} aria-label="Home"{% endif %}>
             {% if item.isHome %}
               {% feather "home", class="w-4 h-4" %}
+              <span class="sr-only">Home</span>
             {% else %}
               {{ item.label }}
             {% endif %}

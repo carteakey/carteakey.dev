@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.9.10] - 2026-11-05
+### Fixed
+- Fixed the flash of stacked/overlapping grid cards on page refresh: `.feed-masonry` now gates `grid-auto-rows: 16px` behind `[data-masonry-ready]`, and the script executes synchronously for already-parsed grids, calculating spans before activating row heights.
+- Dropped Homepage CLS to 0.003 by replacing `translateY` entrance animation on `.home-recent-panel` with a fade and setting `min-height: 2.75rem` on `.home-typing-line` to handle typewriter wrapping on mobile viewports.
+- Preloaded post hero AVIF sketches in `<head>` via `post_hero_preload` shortcode with `imagesrcset` and `fetchpriority="high"`, accelerating throttled mobile post LCP by 2.4s.
+- Corrected accessibility violations across the site: added accessible name to breadcrumbs Home icon, fixed WCAG 2.5.3 visible label-in-name compliance on post upvote button, elevated footer navigation headings from `h4` to `h2` to eliminate skipped heading levels, and boosted metadata label contrast to WCAG AA.
+
 ## [2.9.9] - 2026-11-05
 ### Changed
 - Self-hosted the pixel font `Press Start 2P` in WOFF2 (4.6 KB) with preload and `@font-face`, removing the render-blocking Google Fonts request.
