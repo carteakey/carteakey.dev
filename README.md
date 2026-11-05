@@ -2,63 +2,60 @@
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/08c07e6f-a368-433c-908f-be5c7b37c60e/deploy-status)](https://app.netlify.com/sites/starlit-brigadeiros-b87f35/deploys)
 
-Welcome to my personal website and digital playground!  
-This site is where I write about stuff, and share projects, code snippets, and thoughts on tech and life.
+My personal website, blog, and digital workbench. A home for technical notes, local AI benchmarks, hardware setups, half-built tools, and thoughts worth saving.
 
-## What is this?
+Live at [carteakey.dev](https://carteakey.dev).
 
-- **A personal blog and portfolio**: Posts, project showcases, and a /now page.
-- **Built for speed and simplicity**: No heavy frameworks, just static files and a sprinkle of JavaScript.
-- **A living experiment**: I’m always adding new features, automations, and integrations.
+---
+
+## The Philosophy
+
+- **Digital workbench over generic dashboard**: dense editorial typography, `.surface` containers, hand-drawn sketches, and an intentional paper-and-ink aesthetic.
+- **Fast and lightweight**: built on the **TEA stack** (Tailwind CSS v4, Eleventy v3, Alpine.js). No heavy client frameworks, minimal runtime JS, instant paints, and clean 100s across Lighthouse.
+- **Living personal feeds**: automated syndication and cached readers for Goodreads, Letterboxd, Spotify, Steam, and notes.
+- **Terminal Q&A**: [`agentcart`](https://carteakey.dev/ask/) — an on-site AI terminal grounded on the site's own corpus, powered by Netlify Edge Functions.
 
 ## Tech Stack
 
-- **[Eleventy (11ty)](https://www.11ty.dev/)** — Static site generator for flexible content and templating.
-- **[Tailwind CSS](https://tailwindcss.com/)** — Utility-first CSS for rapid, maintainable styling.
-- **[Alpine.js](https://alpinejs.dev/)** — Minimal JavaScript for interactivity (dropdowns, dark mode, etc).
-- **[Netlify](https://www.netlify.com/)** — Hosting, serverless functions, and continuous deployment.
-- **Netlify CMS** — For editing posts and pages via a friendly UI.
-- **PrismJS** — Syntax highlighting for code blocks.
-- **Giscus** — GitHub-powered comments.
-- **Upstash Redis** — For fun features like upvotes.
-- **OpenAI/Ollama** — For dynamic content like the "quote of the day".
+| Layer | Technology |
+| :--- | :--- |
+| **SSG** | [Eleventy 3](https://www.11ty.dev/) (ESM, async data cascade) |
+| **Styling** | [Tailwind CSS v4](https://tailwindcss.com/) (`@theme` tokens, CLI build, zero runtime CSS) |
+| **Interactivity** | [Alpine.js](https://alpinejs.dev/) (view toggles, navigation, theme persistence) |
+| **Edge & Functions** | [Netlify](https://www.netlify.com/) (Edge Functions for `/ask/`, serverless upvotes) |
+| **Fonts & Assets** | Self-hosted *Iosevka Aile*, *Ioskeley Mono*, and *Press Start 2P*; responsive AVIF/WebP heroes via `eleventy-img` |
+| **Comments** | [Giscus](https://giscus.app/) (backed by GitHub Discussions) |
 
 ## Features
 
-- ✍️ **Markdown-based blogging** with drafts, tags, and archives
-- 🏷️ **Code snippets** and search
-- 🖼️ **Image optimization** and responsive images
-- 🌗 **Dark mode** toggle (remembers your preference)
-- 💬 **Comments** via Giscus (GitHub Issues)
-- 📈 **Upvotes** and dynamic counters (via Netlify Functions + Redis)
-- 📊 **Sampled Core Web Vitals** through a privacy-limited first-party collector
-- 🎵 **Now playing** integration with Spotify
-- 📚 **Reading shelf** synced from Goodreads with manual physical-book/progress overrides and cover thumbnails
-- 🎬 **Film diary** synced from dated Letterboxd entries with poster thumbnails
-- ⚡ **Fast, accessible, and mobile-friendly** by default
+- ✍️ **Writing & Sheets**: markdown posts, technical notes, tool comparisons, and curated reading feeds.
+- 🎨 **Editorial visual language**: unique per-post sketch stamps, halftone photography, and interactive toys.
+- ⚡ **Sub-second performance**: pre-rendered HTML, preloaded self-hosted WOFF2 fonts, optimized AVIF thumbnails, and deferred non-critical assets.
+- 💬 **Ask the Blog (`/ask/`)**: local/edge semantic search across posts and notes.
+- 🌗 **Dark Mode**: automatic system theme detection with manual override and instant, flicker-free theme bootstrapping.
 
 ## Local Development
 
 ```sh
-npm install
-npm run start
+# Install dependencies
+pnpm install
+
+# Start local dev server (Eleventy + Tailwind watcher)
+pnpm start
 ```
-- Visit [http://localhost:8080](http://localhost:8080) to view the site locally.
-- Edit content in `src/` (posts, pages, data, etc).
-- After a production build, run `npm run verify:ui` to smoke-check generated metadata, responsive archive markup, social images, and easter-egg wiring.
 
-## Deploy
+Visit [http://localhost:8080](http://localhost:8080).
 
-- Pushed to `main` branch → auto-deployed to Netlify.
+### Verification & Pre-commit
+
+```sh
+# Run content, design baseline, version, and smoke checks
+pnpm run check
+
+# Production build
+pnpm run build
+```
+
 ## Credits
 
-- Built and maintained by [Kartikey Chauhan](https://carteakey.dev)
-- Inspired by the [TEA stack](src/posts/2025-05-25-understanding-the-neat-framework.md): Tailwind, Eleventy, Alpine.js
-
----
-
-Feel free to fork, learn, or reach out if you have questions!
-
-## Build cache
-
-Responsive image variants live in `.cache/image-output`, outside the cleaned `_site` publish directory. Eleventy Image hashes the source contents and encoding options, so unchanged images are reused; only derivatives requested by the current build are published. Netlify's existing `.cache` plugin and the CI image cache retain this work between builds. A cold build still encodes every image; delete `.cache/image-output` to force re-encoding. Large Git history affects full clone time, while CI checks out only the latest tree.
+Built and maintained by [Kartikey Chauhan](https://carteakey.dev).
