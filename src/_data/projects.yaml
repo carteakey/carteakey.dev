@@ -182,15 +182,6 @@ projects:
       - quartz
       - markdown
 
-  - title: cv.carteakey.dev
-    description: "A minimal, auto-generated CV rendered from YAML. Because keeping a PDF up to date is a solved problem."
-    image_path: "./src/static/img/projects/cv.png"
-    url: https://cv.carteakey.dev
-    github: https://github.com/carteakey/cv.carteakey.dev
-    tags:
-      - next.js
-      - react
-
   - title: carteakey.github.io
     description: My old blog.
     image_path: "./src/static/img/projects/carteakey.github.png"
