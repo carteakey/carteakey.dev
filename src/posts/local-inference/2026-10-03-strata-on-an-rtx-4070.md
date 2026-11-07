@@ -5,7 +5,7 @@ image: /img/blog-sketches/unique/strata-on-an-rtx-4070-stamp-trim.png
 imageAlt: "Monochrome pencil sketch of a graphics card beside a tray of cached chips, a larger chip pile, a RAM stick, and a stopwatch"
 date: 2026-10-03
 giscusTerm: "/blog/local-inference/strata-on-an-rtx-4070/"
-updated: 2026-10-18
+updated: 2026-11-07
 authored_by: ai-assisted
 draft: true
 tags:
@@ -15,6 +15,14 @@ tags:
 
 {% update "2026-10-18", "October 2026 Update: 74.8 tok/s at 128k Context with Q8_0 PLE & DDR5-5800" %}
 Since my initial 53.2 tok/s run, three changes pushed Strata to **74.8 tok/s** with a preallocated **128k context window** on this exact same 12 GB card. Upgrading Strata and clocking my dual-channel RAM to DDR5-5800 lifted steady code generation to 65.8 tok/s. Swapping the NVMe-mapped n-gram table shard from IQ4_NL to uncompressed Q8_0 cost zero extra VRAM and jumped steady decode to **74.8 tok/s on text** (and 73.3 tok/s on vision), because cleaner embeddings raised speculative draft acceptance to 78.2%. Finally, enforcing official Thinking Mode sampling server-side instead of greedy decoding costs under 5% decode speed while stopping `<think>` repetition loops.
+{% endupdate %}
+
+{% update "2026-11-07", "November 2026 Update: A Smarter Quant at 70 tok/s" %}
+The 74.8 tok/s number above belongs to the IQ3_XXS era. In early November I moved the serving tier to Unsloth's Dynamic V3.1 UD-IQ2_XS, which scores 11.5 points higher on DeepSWE (58.4 against 46.9) at the same 43.8 GB fast-memory footprint. The bill arrives in decode speed: it fell to about 59.7 tok/s.
+
+Two changes bought most of it back. Raising the CPU prefill share limit from 1,024 to 3,072 tokens took 2K prefill from 939 to 1,116 tok/s with no 8K or decode cost, and it is one line in the run config. Porting upstream's `STRATA_ADAPT_FETCH` switch, which copies a fetched expert into the slot of an idle resident expert instead of discarding it, took decode from 55.6 to 70.4 tok/s and the decode cache hit rate from 46.6% to 67.2%.
+
+So the smarter model now runs at about 70 tok/s, roughly 3.5 tok/s below the old quant and 11.5 points ahead of it on DeepSWE. The switch changes cache residency, not routing or weights; the engine's [cache-parity test](https://github.com/Niko1221/Strata/blob/30ec18ec7094550fcc594fd948220d511d80464e/bench/results/2026-09-27-cache-parity/README.md) measured that class of change as accuracy-neutral (perplexity identical within one standard error over 2,557 tokens).
 {% endupdate %}
 
 ## Where I was
@@ -41,24 +49,31 @@ Same card, same box, with a 128k KV cache preallocated and a 60k-token prompt lo
 
 Against my best llama.cpp setup, Strata is **more than twice as fast** in sustained decode out of the box, and **nearly 3.6× faster** once the n-gram table is swapped to full precision:
 
-| Strata setup (128k KV preallocated) | Decode (tok/s) | vs llama.cpp master (20.8) | vs llama.cpp MTP (27.06) |
+| Checkpoint | Decode (tok/s) | vs llama.cpp master (20.8) | vs llama.cpp MTP (27.06) |
 | --- | ---: | ---: | ---: |
-| 60k-context sweep (IQ4_NL PLE) | 53.2 | 2.6× | 2.0× |
-| Sustained code (DDR5-5600, IQ4_NL PLE) | 62.2 | 3.0× | 2.3× |
-| Sustained code (DDR5-5800, IQ4_NL PLE) | 65.8 | 3.2× | 2.4× |
-| **Full Q8_0 PLE (DDR5-5800)** | **74.8** | **3.6×** | **2.8×** |
+| llama.cpp master, AD-4.27bpw | 20.8 | 1.0× | 0.8× |
+| llama.cpp MTP + NVMe row prefetch | 27.06 | 1.3× | 1.0× |
+| Strata, 60k-context sweep (IQ4_NL PLE) | 53.2 | 2.6× | 2.0× |
+| Strata, sustained code (DDR5-5600, IQ4_NL PLE) | 62.2 | 3.0× | 2.3× |
+| Strata, sustained code (DDR5-5800, IQ4_NL PLE) | 65.8 | 3.2× | 2.4× |
+| Strata, full Q8_0 PLE (DDR5-5800) | 74.8 | 3.6× | 2.8× |
+| lean 4070 fork, sm_89 MMVQ table (DDR5-5200) | 69.6 | 3.3× | 2.6× |
+| lean fork + `--kv-grow` (DDR5-5200) | 73.5 | 3.5× | 2.7× |
+| **UD-IQ2_XS + CPU share + `ADAPT_FETCH` (current)** | **70.4** | **3.4×** | **2.6×** |
+
+The fork checkpoints are the ones I maintain myself (`carteakey/strata-lean`). It prunes the Metal, SYCL and ROCm backends, pins `CMAKE_CUDA_ARCHITECTURES=89`, and carries the Ada sm_89 MMVQ table, the fused QSA RMSNorm + RoPE, and strict routing (`STRATA_ROUTE_TAIL_SKIP=0`). `--kv-grow` then hands the unmapped KV pages to the expert cache, and `ADAPT_FETCH` admits fetched experts into it instead of discarding them. The last three rows are the same fork at three points, not three different engines.
 
 Context length makes that gap even wider in practice. Both llama.cpp baselines were recorded on short prompts, and the llama.cpp MTP setup drops below plain master once you widen the context window past 16k. Strata preallocates the full 128k `k8v4` KV cache in VRAM at startup, and its 53.2 tok/s sweep run had nearly sixty thousand tokens actively sitting in context.
 
-One important caveat to keep in mind throughout this post: **Strata and llama.cpp aren't running the same quantization**. Strata runs ISTA-DASLab's 3-bit IQ3_XXS build while my llama.cpp baseline uses AtomicChat's 4.27-bit build, so they don't move the same number of bytes per token and won't produce identical outputs. This is a comparison of two complete serving setups, not a single-variable test.
+One important caveat to keep in mind throughout this post: **the rows aren't all the same quantization**. The llama.cpp baselines use AtomicChat's 4.27-bit build, the Strata rows through 2026-10-18 use ISTA-DASLab's 3-bit IQ3_XXS, and the current row uses Unsloth's UD-IQ2_XS. They don't move the same number of bytes per token and won't produce identical outputs, so this is a comparison of complete serving setups, not a single-variable test.
 
 {% diagram_card {
   src: "./src/static/img/diagrams/qwen38-flash-next-throughput-comparison.png",
-  alt: "Bar chart of decode throughput on an RTX 4070 12GB: llama.cpp master 20.8 tok/s, llama.cpp MTP V2 27.06, Strata at 60k context 53.2, DDR5-5800 65.8, Full Q8_0 PLE 74.8, 4070-main-lite fork on stable DDR5-5200 at 69.6, and --kv-grow on stable DDR5-5200 at 73.5 tok/s.",
+  alt: "Bar chart of decode throughput on an RTX 4070 12GB: llama.cpp master 20.8 tok/s, llama.cpp MTP V2 27.06, Strata at 60k context 53.2, DDR5-5800 65.8, Full Q8_0 PLE 74.8, 4070-main-lite fork on stable DDR5-5200 at 69.6, --kv-grow on stable DDR5-5200 at 73.5, and UD-IQ2_XS with ADAPT_FETCH at 70.4 tok/s.",
   kicker: "Decode · RTX 4070 12GB + 64GB DDR5",
   title: "Measured Serving Setups",
   badge: "20.8 → 74.8 tok/s",
-  caption: "Comparing serving setups and fork checkpoints. After reverting from DDR5-5800 to stock DDR5-5200 for stability, the lean 4070 fork reaches 69.6 t/s with the calibrated sm_89 MMVQ table, and --kv-grow reaches 73.5 t/s with a 3,277-slot cache."
+  caption: "Comparing serving setups and fork checkpoints. After reverting from DDR5-5800 to stock DDR5-5200 for stability, the lean 4070 fork reaches 69.6 t/s with the calibrated sm_89 MMVQ table, and --kv-grow reaches 73.5 t/s with a 3,277-slot cache. The current tier runs the smarter UD-IQ2_XS quant at 70.4 t/s with ADAPT_FETCH, which is 11.5 DeepSWE points ahead of the 74.8 row at about the same speed."
 } %}
 
 ## How to run it in Strata
@@ -192,6 +207,7 @@ What it does show: on this exact card, Strata serves a 176B model at 53 to 75 to
 
 | Date | Note |
 | --- | --- |
+| 2026-11-07 | Moved to UD-IQ2_XS (+11.5 pt DeepSWE, decode 59.7 tok/s), raised the CPU prefill share to 3,072 tokens (2K prefill 939 → 1,116 tok/s), and ported `STRATA_ADAPT_FETCH=1` (decode 55.6 → 70.4 tok/s, hit rate 46.6% → 67.2%). |
 | 2026-10-18 | Added DDR5-5800 scaling (65.8 tok/s) and uncompressed Q8_0 PLE on NVMe (74.8 tok/s text, 73.3 tok/s vision, 0 MiB extra VRAM). |
 | 2026-10-16 | Measured Thinking Mode sampling vs greedy decoding (57.3 → 54.5 tok/s, -4.9% penalty) and enforced sampling defaults server-side. |
 | 2026-10-14 | Refreshed to Strata v0.1.44.1 (62.2 tok/s steady decode, 1,992 tok/s 8k prefill on IQ3_XXS). |
