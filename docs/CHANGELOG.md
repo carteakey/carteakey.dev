@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.9.11] - 2026-11-07
+### Added
+- Projects: Herding (native Rust + GPUI client for Herdr) and alvidaa (self-installing VIDAA launcher and root path) cards in Current work, each with new card art (`alvidaa.png` flattened from the post sketch, `herding.png` composited on paper).
+- Blog: added hidden post "Herding: Designing Multi-Agent Teams That Self-Improve Across Any Harness" (`src/posts/2026-11-03-herding-multi-agent-teams.md`) documenting the Herdr UI multi-agent architecture, the 29-commit self-improvement sprint, and the product roadmap.
+
+### Changed
+- Gallery: masonry tiles now carry explicit pixel heights (184/278 px for 2- and 3-row spans) and a new unlayered `figure.gallery-figure` rule that opts them out of the global `figure { display: table }` caption styling. Tables content-size their height, which Firefox honoured and Chrome masked, so gallery tiles rendered short with images bleeding across rows in Firefox.
+- More page: directory rows dropped the description truncation, and descriptions now wrap with slightly larger paths, looser row spacing, and a hairline divider for readability.
+- App Swaps poster: the ledger now fills the poster height evenly instead of leaving a dead band between the masthead and the table; the 1200×1200 PNG was re-rendered from the fixed source.
+
+### Fixed
+- Changelog: months open collapsed, showing only the summary and release counts until a month's releases toggle is expanded.
+- Vibes: removed the "Welcome to Auda City" and "Conquered vs Conquering" memes from the board.
+
 ## [2.9.10] - 2026-11-05
 ### Fixed
 - Prism's theme gate from 2.9.8 keyed on `<pre>` and missed inline code, which markdown-it also emits as `<code class="language-">`; 26 pages lost their inline-code styling. It now keys on the selector the stylesheet actually uses, so 79 of 267 pages load it and the rest still skip it.
