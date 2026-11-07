@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Changelog: months open collapsed, showing only the summary and release counts until a month's releases toggle is expanded.
-- Vibes: removed the "Welcome to Auda City" and "Conquered vs Conquering" memes from the board.
+- Vibes: removed the "Welcome to Auda City", "Conquered vs Conquering", and Samay Raina UPI-scam-chat memes from the board.
 
 ## [2.9.10] - 2026-11-05
 ### Fixed
