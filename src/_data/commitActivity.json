@@ -1,0 +1,109 @@
+{
+  "generated": "2026-11-07",
+  "author": "Kartikey",
+  "repos": 15,
+  "total": 2000,
+  "sourceLabel": "git log --author, 15 repos",
+  "months": [
+    {
+      "month": "2025-10",
+      "commits": 42
+    },
+    {
+      "month": "2025-11",
+      "commits": 0
+    },
+    {
+      "month": "2025-12",
+      "commits": 1
+    },
+    {
+      "month": "2026-01",
+      "commits": 25
+    },
+    {
+      "month": "2026-02",
+      "commits": 110
+    },
+    {
+      "month": "2026-03",
+      "commits": 108
+    },
+    {
+      "month": "2026-04",
+      "commits": 126
+    },
+    {
+      "month": "2026-05",
+      "commits": 41
+    },
+    {
+      "month": "2026-06",
+      "commits": 79
+    },
+    {
+      "month": "2026-07",
+      "commits": 219
+    },
+    {
+      "month": "2026-08",
+      "commits": 119
+    },
+    {
+      "month": "2026-09",
+      "commits": 280
+    },
+    {
+      "month": "2026-10",
+      "commits": 436
+    },
+    {
+      "month": "2026-11",
+      "commits": 91
+    }
+  ],
+  "monthsLabel": "2025-10 to 2026-11",
+  "top": [
+    {
+      "repo": "carteakey.dev",
+      "commits": 957
+    },
+    {
+      "repo": "l3ms",
+      "commits": 392
+    },
+    {
+      "repo": "homelabbr",
+      "commits": 213
+    },
+    {
+      "repo": "tokemon",
+      "commits": 112
+    },
+    {
+      "repo": "lytte",
+      "commits": 105
+    },
+    {
+      "repo": "crt-cabinet",
+      "commits": 51
+    },
+    {
+      "repo": "agentdex",
+      "commits": 30
+    },
+    {
+      "repo": "sortling",
+      "commits": 26
+    },
+    {
+      "repo": "18-dawns",
+      "commits": 24
+    },
+    {
+      "repo": "qualms",
+      "commits": 22
+    }
+  ],
+  "topTotal": 1932
+}

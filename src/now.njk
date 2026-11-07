@@ -58,6 +58,42 @@ collectionArchetype: ledger
 </section>
 {% endif %}
 
+<section class="mt-10 not-prose">
+  <div class="flex items-baseline justify-between gap-4 border-b border-gray-200 pb-2 dark:border-gray-800">
+    <h2 class="editorial-kicker">Shipping</h2>
+  </div>
+  <p class="editorial-support mt-3 mb-6">Commits I made across my own repos, by month. The counts include private repos; the code stays on the machine.</p>
+
+  {% chart {
+    type: "line",
+    data: commitActivity.months,
+    x: "month",
+    y: "commits",
+    kicker: "All repos · commits by month",
+    title: "October was the heaviest month at 436 commits",
+    highlight: ["2026-10"],
+    source: commitActivity.sourceLabel,
+    n: commitActivity.total,
+    range: commitActivity.monthsLabel,
+    xLabel: "month"
+  } %}
+
+  {% chart {
+    type: "rank",
+    data: commitActivity.top,
+    x: "repo",
+    y: "commits",
+    limit: 8,
+    highlight: [0, 1],
+    kicker: "Where the commits went",
+    title: "The blog and l3ms are two thirds of the work",
+    source: "git log --author, all time",
+    total: commitActivity.total,
+    n: commitActivity.total,
+    range: "Oct 2022 – Nov 2026"
+  } %}
+</section>
+
 <section class="mt-10 space-y-8 not-prose">
   <div class="flex items-baseline justify-between gap-4 border-b border-gray-200 pb-2 dark:border-gray-800">
     <h2 class="editorial-kicker">Activity Pulls</h2>
