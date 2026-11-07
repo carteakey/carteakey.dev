@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Changelog: months open collapsed, showing only the summary and release counts until a month's releases toggle is expanded.
-- Vibes: removed the "Welcome to Auda City", "Conquered vs Conquering", Samay Raina UPI-scam-chat, unpaid-domestic-work-definition, Google Drive 2026-drafts, and GTA VI vs real-life Miami screenshots from the board.
+- Vibes: removed the "Welcome to Auda City", "Conquered vs Conquering", Samay Raina UPI-scam-chat, unpaid-domestic-work-definition, Google Drive 2026-drafts, GTA VI vs real-life Miami, and verification-expiring screenshots from the board.
 
 ## [2.9.10] - 2026-11-05
 ### Fixed
