@@ -356,6 +356,15 @@ figure.data-card {
   max-width: none;
 }
 
+/* Gallery masonry figures must fill their fixed-height grid cell. Tables content-size
+   their height, so the global figure rule above breaks the fill in Firefox (Chrome
+   stretches, Firefox does not). Unlayered so it beats the global figure rule. */
+figure.gallery-figure {
+  display: block;
+  margin: 0;
+  max-width: none;
+}
+
 /* medium-zoom's overlay is dark, but .sketch-draw ink is black in light mode, so a
    zoomed diagram vanished. Use a light overlay while a sketch is zoomed in light
    mode; in dark mode the inverted (white) ink already reads on the dark overlay. */

@@ -33,11 +33,11 @@ collectionArchetype: wall
     <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] auto-rows-[90px] gap-1 w-full mb-6" id="gallery">
       {% for photo in photos %}
       {% if photo.height > photo.width %}
-      <div class="relative w-full h-full row-span-3">
+      <div class="relative w-full h-[278px] row-span-3">
       {% else %}
-      <div class="relative w-full h-full row-span-2">
+      <div class="relative w-full h-[184px] row-span-2">
       {% endif %}
-        <figure class="relative isolate overflow-hidden rounded-sm cursor-pointer group transition-all duration-300 h-full" 
+        <figure class="gallery-figure relative isolate overflow-hidden rounded-sm cursor-pointer group transition-all duration-300 h-full"
             data-pswp-src="{{ photo.path }}"
             data-pswp-width="{{ photo.width }}"
             data-pswp-height="{{ photo.height }}"
