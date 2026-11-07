@@ -18,7 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Changelog: months open collapsed, showing only the summary and release counts until a month's releases toggle is expanded.
 - Vibes: removed the "Welcome to Auda City", "Conquered vs Conquering", Samay Raina UPI-scam-chat, unpaid-domestic-work-definition, Google Drive 2026-drafts, GTA VI vs real-life Miami, and verification-expiring screenshots from the board.
-- Projects: took MicroHMS and cv.carteakey.dev off the selected projects wall, and renamed the notes.carteakey.dev card to wiki.carteakey.dev with a code link.
+- Projects: took MicroHMS and cv.carteakey.dev off the selected projects wall, renamed the notes.carteakey.dev card to wiki.carteakey.dev with a code link, and swapped folderal for sortling with the pixel wizard mascot as its card art.
 
 ## [2.9.10] - 2026-11-05
 ### Fixed

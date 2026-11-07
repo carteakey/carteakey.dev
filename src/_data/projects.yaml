@@ -156,14 +156,13 @@ projects:
       - react
       - fastapi
 
-  - title: folderal
-    description: "Local-first PDF organizer that uses Ollama to classify and sort documents without touching the cloud."
-    image_path: "./src/static/img/projects/folderal.png"
-    github: https://github.com/carteakey/folderal
+  - title: sortling
+    description: "Tidy screenshots, downloads and documents with decision models. One Python file, no dependencies."
+    image_path: "./src/static/img/projects/sortling.png"
+    github: https://github.com/carteakey/sortling
     tags:
       - python
-      - ollama
-      - ai
+      - local-first
 
   - title: cartebase
     description: "Personal SQLite workspace - a single database for browsing history, bookmarks, music, games, and purchases. Powers the public data dashboard."
