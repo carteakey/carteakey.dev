@@ -24,11 +24,18 @@ current:
     image_path: "./src/static/img/projects/lytte.png"
     status: In development
 
-  - title: Assethetic
-    description: "Reusable Codex skills and workflows for generating, validating, and packaging visual assets."
-    image_path: "./src/static/img/projects/assethetic.png"
+  - title: Herding
+    description: "Native Rust + GPUI client for Herdr: terminal sessions, workspaces, Git worktrees, and agent activity from your local Herdr daemon."
+    image_path: "./src/static/img/projects/herding.png"
     status: Building
-    github: https://github.com/carteakey/assethetic
+    github: https://github.com/carteakey/herding
+
+  - title: alvidaa
+    description: "A self-installing home-screen launcher for Hisense VIDAA TVs, and the path to root on 2024+ VIDAA firmware."
+    image_path: "./src/static/img/projects/alvidaa.png"
+    status: Ongoing
+    url: /blog/alvidaa/
+    github: https://github.com/carteakey/alvidaa
 
 coming_soon:
   - title: Tokemon
@@ -148,14 +155,6 @@ projects:
     tags:
       - python
       - speech-to-text
-
-  - title: assethetic
-    description: "Reusable Codex skills and workflows for generating, validating, and packaging AI-created visual assets."
-    image_path: "./src/static/img/projects/assethetic.png"
-    github: https://github.com/carteakey/assethetic
-    tags:
-      - codex
-      - image-generation
 
   - title: clawfin
     description: "Canadian-first personal finance dashboard. Self-hosted, AI-native, built for people who want to own their money data."
