@@ -92,6 +92,12 @@ The telemetry is one layer. The layers under it are the reason any of this was p
 
 And the counter-example, because there is always one: on the 09.60 firmware generation, writing the app registry is refused with `client request permission check error, please check appconfig` while reads of the same path succeed. That's a per-app identity gate at the API layer, not file permissions. It closes the launcher's self-install on that generation, and no amount of path work gets around it. Four units now, one of them reported independently this week.
 
+**The gate has a hole, and the shape of the hole is the lesson.** A Novatek unit added this week calls the same gated services from *inside* the phoenix process, and the identity check sees `origintype='service'` and returns true. The identifier gate is real, but it only guards the HTTP path. Anything executing in the bridge's own process is already past it. That is the difference between a lock and a lock on one door, and no amount of HTTP-layer hardening closes it.
+
+**The vendor's debug framework is a root door.** The same unit ships a PFM debug framework: a `DebugPowerup` gate flag makes `start-kilby` run `pfm-manager.sh` as root, which `eval`s each line of `/var/local/pfmParse/PFMCheck` at every boot. A file on a writable partition, evaluated as root, by the vendor's own code. The way in is a forged `checkAccessCode` (md5 of the device code plus HMAC-SHA1) to security level 9, then `setDebugPort(1)`.
+
+The family keeps growing in the same shape: MTK9602, MTK9603, MTK9618, MT9655, MT53xx, MTK9900, and now Novatek NT72690 on aarch64. Seven roots, seven different chips, thirteen catalogued methods. The five-lock Dropbear gauntlet transferred from the MediaTek write-up to the Novatek unit one-for-one, which is the strongest evidence yet that it is a platform property rather than a quirk of one chip.
+
 ## The fix, in layers
 
 DNS blocking alone was never going to work, because the TV doesn't ask my resolver for the domains it cares about. So:
