@@ -88,12 +88,12 @@ collectionArchetype: index
         <h2 id="section-{{ group.title | slugify }}" class="editorial-kicker">{{ group.title }}</h2>
         <span class="meta-line">{{ group.items.length }} pages</span>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-1.5">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-3">
         {% for item in group.items %}
-          <div class="flex items-baseline gap-2 py-0.5 min-w-0">
-            <a href="{{ item.path | url }}" class="font-mono text-[0.78rem] font-semibold accent-link shrink-0" aria-label="{{ item.path }} — {{ item.desc }}">{{ item.path }}</a>
+          <div class="flex items-baseline gap-2.5 py-1 min-w-0 border-b border-gray-100 dark:border-gray-900">
+            <a href="{{ item.path | url }}" class="font-mono text-[0.85rem] font-semibold accent-link shrink-0" aria-label="{{ item.path }} — {{ item.desc }}">{{ item.path }}</a>
             <span class="meta-line text-xs opacity-40 shrink-0">·</span>
-            <span class="editorial-support-compact truncate sm:overflow-visible">{{ item.desc }}</span>
+            <span class="editorial-support-compact min-w-0">{{ item.desc }}</span>
           </div>
         {% endfor %}
       </div>
