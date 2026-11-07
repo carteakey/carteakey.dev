@@ -113,14 +113,6 @@ projects:
       - python
       - streamlit
 
-  - title: vizima.in
-    description: Website for a hospitality company. Featured in Chakra UI.
-    image_path: "./src/static/img/projects/vizima.png"
-    url: https://www.vizima.in
-    tags:
-      - next.js
-      - firebase
-
   - title: nanoghibli
     description: "Multimodal AI pipeline that transforms video clips into Studio Ghibli-style anime trailers using Gemini and Veo."
     image_path: "./src/static/img/projects/nanoghibli.png"
