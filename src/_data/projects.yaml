@@ -174,10 +174,11 @@ projects:
       - sqlite
       - datasette
 
-  - title: notes.carteakey.dev
+  - title: wiki.carteakey.dev
     description: "A public digital garden. Evolving notes, half-formed ideas, and working thinking - built with Quartz."
     image_path: "./src/static/img/projects/notes.png"
-    url: https://notes.carteakey.dev
+    url: https://wiki.carteakey.dev
+    github: https://github.com/carteakey/wiki.carteakey.dev
     tags:
       - quartz
       - markdown
