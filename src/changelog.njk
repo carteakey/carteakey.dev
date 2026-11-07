@@ -18,7 +18,7 @@ collectionArchetype: index
 
 {% set marks = { Added: "+", Changed: "~", Fixed: "⚑", Removed: "−" } %}
 
-{# Months: summary always visible, releases folded. Only the newest month starts open. #}
+{# Months: summary always visible, releases folded. Every month starts collapsed. #}
 <ol class="not-prose changelog">
   {% for month in changelog %}
   {% set c = month.counts %}
@@ -28,7 +28,7 @@ collectionArchetype: index
       <p class="editorial-support changelog-summary">{{ month.summary | safe }}</p>
     {% endif %}
 
-    <details class="changelog-releases"{% if loop.first %} open{% endif %}>
+    <details class="changelog-releases">
       <summary class="meta-text changelog-count">
         {%- if c.releases -%}
           {{ c.releases }} release{% if c.releases != 1 %}s{% endif %}
