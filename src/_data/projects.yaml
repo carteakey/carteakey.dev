@@ -113,15 +113,6 @@ projects:
       - python
       - streamlit
 
-  - title: MicroHMS
-    description: Hotel Management System to track bookings and generate invoices.
-    image_path: "./src/static/img/projects/microhms.png"
-    url: https://microhms.onrender.com
-    github: https://github.com/carteakey/microhms
-    tags:
-      - flask
-      - postgresql
-
   - title: vizima.in
     description: Website for a hospitality company. Featured in Chakra UI.
     image_path: "./src/static/img/projects/vizima.png"
