@@ -11,6 +11,8 @@ description: >
 
 # Human Writer & Humanizer Skill
 
+> **Guidelines, not scripts:** Every convention in this skill is a reading and editing lens, never a mechanical checklist or regex target. When a rule becomes a script, a model optimizes for the checker and the author's voice gets lost.
+
 This skill governs all written prose on `carteakey.dev`. It combines three complementary capabilities:
 1. **Part 1: The Author's Voice & Fingerprint (`carteakey.dev`)**: The author's measured style, hard metrics, cadence, and personal conventions.
 2. **Part 2: The General Humanizer Engine (Upstream v3.1.0)**: The complete 26-pattern structural ruleset for stripping synthetic AI framing, formulaic staging, and chatbot residue.
@@ -178,9 +180,11 @@ When overhauling an older AI-assisted technical post that is stuffed with specs,
 2. **Evict Commit-Hash, Build-Tag, and PR-Number Soup from Narrative Sentences**: Move git SHAs (`b11241`), build tags (`build 11268`), local worktree paths, and raw sampling strings out of narrative paragraphs and into the setup table or `Run` block.
 3. **Collapse Stacked `{% update %}` Towers & Bloated Changelogs**: Fold older updates into the body or collapse into **at most one** concise `{% update %}` callout at the top (noting clearly if the post's scope shifted, e.g. originally written for `llama.cpp` with a link to the newer Strata guide). Keep the bottom `## Changelog` to one-line milestone rows.
 4. **Un-backtick & Un-bold Prose**: Reserve `` `...` `` for CLI flags, file paths, and code identifiers (`--fit on`, `-ub 2048`), not every mention of a model or quant in prose.
+5. **Sanity-Check Fleet Hardware Against Autocomplete Drift**: Models casually upgrade local hardware in examples (e.g. writing `RTX 4090` when the author's rig is an `RTX 4070` 12 GB + `Ryzen 7 5700X` 64 GB DDR4). Verify hardware mentions against actual homelab specs.
 
 #### Mode C — Human Post Proofread (`authored_by: human`)
 - **Strictly typo and grammar fixes only.** Never rewrite the author's voice, cut sections, or run de-stuffing/humanizer passes unless explicitly asked.
+- **Mislabeled Frontmatter Check**: If a post marked `authored_by: human` reads like an AI draft (e.g. startup `"we"` on a solo project, `Not X, but Y` openers, trailing `## Why this matters` essay sections, and very low contraction/first-person rates), do not silently skip or rewrite it — ask the author whether `authored_by` should be `ai-assisted` first.
 
 #### Mode D — Flag Only (Default for story, project, and build-log posts)
 Use this when the post is a narrative (something happened, the author was there), even if it is `ai-assisted`. The fingerprint metrics in Part 1 can all pass while the post still reads like a report, because the tells here are structural (§27–§34), not lexical.
@@ -512,8 +516,8 @@ A hotel phone, then a bouncer, then a security guard, then a cage, all in one po
 ### 28. Punchline Captions
 Every image caption ends on a quip. The author's captions are mostly plain, and a joke lands because it's rare. Two or three per post at most; the rest describe the image.
 
-### 29. Mic-Drop Section Endings
-Every section closes on a short, quotable line after the facts are done. This is §2 at section scale. End the section on the last fact.
+### 29. Mic-Drop Section Endings and Essay Closers
+Every section closes on a short, quotable line after the facts are done, or the post tacks on a whole trailing `## Why this matters` / `## What This Proves` section lecturing about "the AI industry" after the build log is already finished. End each section on the last fact, and end the post on the last benchmark, roadmap item, or `Run` block.
 
 ### 30. Setup Sentences and Staged-Candor Prefixes
 Sentences or prefixes that announce the next sentence or stage candor ("Then came the comedy.", "Here's how it worked.", "Worth saying plainly:", "To put it plainly:") instead of saying something. Delete the prefix and start with the fact.
@@ -521,11 +525,11 @@ Sentences or prefixes that announce the next sentence or stage candor ("Then cam
 ### 31. Same Fact, Three Homes
 The same steps told in prose, again in a table, again in a timeline. Pick one home for each fact: tables hold detail, prose holds why, timelines hold order.
 
-### 32. Headings That Sound Good
-Headings a skimmer learns nothing from ("The same door, walked further"). A heading should say what happened in its section.
+### 32. Cryptic Headings (Without Flattening Personality Into Changelog Labels)
+Only fix a heading when a reader has no idea what the section is about ("The same door, walked further", "Close"). **Never** flatten lively, natural headings that already have personality and a clear hook ("Of course we ran Doom", "What if it breaks?", "The Temptation of 'Cheating' Benchmarks", "The firmware is more legible than it should be") into dry, over-literal index labels ("Doom on the framebuffer", "Rollback and brick risk", "Sweep 1: catching `STRATA_ROUTE_PRIOR`").
 
-### 33. "We" Hiding Who Did What
-In model-assisted posts "we" blurs the author's decisions with the model's execution. Use "I" for what the author wanted or decided, and name the model for what it did. In human tutorials "we" (author and reader) is fine.
+### 33. "We" Hiding Who Did What (or Startup "We" on Solo Projects)
+In model-assisted posts "we" blurs the author's decisions with the model's execution, or slips into launch-post press-release voice ("When we designed Herding", "Our roadmap focuses on") on a solo tool. Use "I" / "my" for solo projects and what the author decided, and name the model/agent for what it did. In human tutorials "we" (author and reader) is fine.
 
 ### 34. The Frictionless Arc
 Every obstacle falls on the next try, nobody gets bored or annoyed, and there's no doubt anywhere. Real build logs have dead ends. Point to where the author was probably stuck and ask him what it was like. Never invent the frustration.

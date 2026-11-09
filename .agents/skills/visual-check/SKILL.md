@@ -59,8 +59,8 @@ Look at all three renderings of every page you touched.
 
 ## Pages to cover by change type
 
-- Layout/CSS: `/`, `/blog/`, one post, `/notes/`, `/feed/`, `/newsletter/`.
-- Post primitives (callout, gallery, diagram, sketch): the post using it.
+- Layout/CSS: `/`, `/blog/`, `/blog/template/` (canonical internal stress-test post for tables, `{% wide %}`, callouts, diagrams, and code), one live post, `/notes/`, `/feed/`, `/newsletter/`.
+- Post primitives (callout, gallery, diagram, sketch, table): `/blog/template/` plus the post using it.
 - Feed card: `/` and `/feed/` (stream, list, and grid views).
 - New collection page: the page plus `/` if it links there.
 
