@@ -24,6 +24,8 @@ The first thing to understand about Unsloth's Dynamic quants is that the naming 
 
 Because of this mixed layout, you have to compare quants by their total on-disk and in-memory footprint rather than the label on the file:
 
+{% image_cc "./src/static/img/local-inference/qwen38-flash-next-unsloth-v31-vs-gsq-benchmarks.webp", "Four-panel benchmark comparison of Qwen3.8-Flash-Next under Unsloth V3.1 dynamic quants vs GSQ-RCO across total model size in GB. Panels show 12-benchmark average recovery, DeepSWE v1.1, Terminal Bench 2.1, and LiveCodeBench v6.", "", "Unsloth's published benchmarks across total model size. At ~76 GB total footprint, UD-IQ2_XS recovers 99.4% of the 12-benchmark BF16 baseline and hits 58.4 on DeepSWE v1.1, outperforming GSQ-RCO IQ3_XXS (46.9)." %}
+
 | Total Model Size | GSQ-RCO Quant | Unsloth Dynamic V3.1 | Non-PLE Fast RAM | DeepSWE v1.1 | 12-Bench Avg Recovery |
 | :--- | :--- | :--- | :---: | :---: | :---: |
 | **~68.0 GB** | `IQ2_XS` | `UD-IQ1_M` | ~45.7 GB | 39.8 vs **49.6** | 89.5% vs **97.4%** |
