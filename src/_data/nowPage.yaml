@@ -2,9 +2,20 @@
 # src/now/archive/YYYY-MM-DD.md. Every refresh must preserve the previous /now/
 # page as an archive entry.
 #
-# The reading section is populated separately from Goodreads plus
-# src/_data/reading-manual.yaml.
+# Structure:
+#   - `life`: Personal / off-screen updates written in your own words.
+#             Agent refreshes leave `enabled: false` placeholders here so fake
+#             personal updates never publish; write your line and flip `enabled: true`.
+#   - `highlights` & `updates`: Crisp 1-liner dev/project updates rendered under
+#             "Building", gathered from git, Forge, commitActivity.json, and posts.
+#   - Reading, watching, workouts, and games populate automatically below.
 lastUpdated: 2026-11-09T14:45:00-05:00
+
+life:
+  - text: "TODO (personal): Recent trip / travel or what life outside the terminal looks like right now."
+    enabled: false
+  - text: "TODO (off-screen): Routine, Toronto fall/winter, or what I'm spending time on away from keyboards."
+    enabled: false
 
 highlights:
   - 'Rooted my Hisense TV (<a href="/blog/alvidaa/alvidaa/">alvidaa</a>) to block its telemetry, run Doom, and replace the ad home screen with an on-TV Go launcher - plus logged my first vendor advisory (<code>VIDAA-PSIRT-2026-005</code>).'
@@ -12,6 +23,6 @@ highlights:
 
 updates:
   - 'Pushed <a href="/blog/local-inference/strata-on-an-rtx-4070/">Strata on the 12 GB 4070</a> from 53 up to <strong>70.4 tok/s</strong> on Qwen3.8-Flash-Next with <code>UD-IQ2_XS</code> and adaptive expert fetching.'
-  - 'Built a live Before/After readability diff workbench into this site and switched my writing skill from scripts to conventions (models Goodhart every script you give them).'
-  - 'Moved off Linear and my local vault: open dev work now lives in GitHub Issues, and shared agent context lives in Notion Forge with daily git snapshots.'
+  - "Built a live Before/After readability diff workbench into this site and switched my writing skill from scripts to conventions (models Goodhart every script you give them)."
+  - "Moved off Linear and my local vault: open dev work now lives in GitHub Issues, and shared agent context lives in Notion Forge with daily git snapshots."
   - 'Added the Shipping charts below to plot monthly commits and top repos across 17 local checkouts, and put <a href="/projects/">Sortling</a> on the projects wall.'

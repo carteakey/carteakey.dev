@@ -32,12 +32,27 @@ collectionArchetype: ledger
   </div>
 </section>
 
+{% set nowLife = (nowPage.life or []) | enabled %}
 {% set nowHighlights = nowPage.highlights | enabled %}
 {% set nowUpdates = nowPage.updates | enabled %}
-{% set hasWrittenNow = (nowHighlights and nowHighlights.length > 0) or (nowUpdates and nowUpdates.length > 0) %}
-{% if hasWrittenNow %}
+{% set hasBuildingNow = (nowHighlights and nowHighlights.length > 0) or (nowUpdates and nowUpdates.length > 0) %}
+
+{% if nowLife and nowLife.length > 0 %}
 <section class="not-prose mb-10">
-  <h2 class="editorial-kicker mb-3">Updates</h2>
+  <h2 class="editorial-kicker mb-3">Life</h2>
+  <div class="surface surface-padding">
+    <ul class="now-log">
+      {% for item in nowLife %}
+      <li>{{ (item.text if item.text else item) | safe }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+{% endif %}
+
+{% if hasBuildingNow %}
+<section class="not-prose mb-10">
+  <h2 class="editorial-kicker mb-3">Building</h2>
   <div class="surface surface-padding">
     {% if nowHighlights and nowHighlights.length > 0 %}
     <ul class="now-log">
