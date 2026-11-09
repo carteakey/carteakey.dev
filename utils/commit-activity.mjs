@@ -25,7 +25,9 @@ const out = path.resolve("src/_data/commitActivity.json");
 
 const repos = fs
   .readdirSync(root, { withFileTypes: true })
-  .filter((d) => d.isDirectory() && fs.existsSync(path.join(root, d.name, ".git")))
+  .filter(
+    (d) => d.isDirectory() && fs.existsSync(path.join(root, d.name, ".git")),
+  )
   .map((d) => d.name)
   .sort();
 
@@ -35,18 +37,28 @@ for (const repo of repos) {
   try {
     text = execFileSync(
       "git",
-      ["-C", path.join(root, repo), "log", `--author=${author}`, "--date=format:%Y-%m", "--format=%ad"],
+      [
+        "-C",
+        path.join(root, repo),
+        "log",
+        `--author=${author}`,
+        "--date=format:%Y-%m",
+        "--format=%ad",
+      ],
       { encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] },
     );
   } catch {
     continue;
   }
   const counts = new Map();
-  for (const m of text.split(/\s+/).filter(Boolean)) counts.set(m, (counts.get(m) || 0) + 1);
+  for (const m of text.split(/\s+/).filter(Boolean))
+    counts.set(m, (counts.get(m) || 0) + 1);
   if (counts.size) perRepo.set(repo, counts);
 }
 
-const allMonths = [...new Set([...perRepo.values()].flatMap((c) => [...c.keys()]))].sort();
+const allMonths = [
+  ...new Set([...perRepo.values()].flatMap((c) => [...c.keys()])),
+].sort();
 if (!allMonths.length) {
   console.error("commit-activity: no commits found under", root);
   process.exit(1);
@@ -56,14 +68,24 @@ if (!allMonths.length) {
 const monthly = [];
 const [sy, sm] = allMonths[0].split("-").map(Number);
 const [ey, em] = allMonths[allMonths.length - 1].split("-").map(Number);
-for (let y = sy, m = sm; y < ey || (y === ey && m <= em); m === 12 ? ((y += 1), (m = 1)) : (m += 1)) {
+for (
+  let y = sy, m = sm;
+  y < ey || (y === ey && m <= em);
+  m === 12 ? ((y += 1), (m = 1)) : (m += 1)
+) {
   const key = `${y}-${String(m).padStart(2, "0")}`;
-  const commits = [...perRepo.values()].reduce((n, c) => n + (c.get(key) || 0), 0);
+  const commits = [...perRepo.values()].reduce(
+    (n, c) => n + (c.get(key) || 0),
+    0,
+  );
   monthly.push({ month: key, commits });
 }
 
 const top = [...perRepo.entries()]
-  .map(([repo, c]) => ({ repo, commits: [...c.values()].reduce((a, b) => a + b, 0) }))
+  .map(([repo, c]) => ({
+    repo,
+    commits: [...c.values()].reduce((a, b) => a + b, 0),
+  }))
   .sort((a, b) => b.commits - a.commits)
   .slice(0, 10);
 
