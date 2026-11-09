@@ -1,0 +1,204 @@
+{
+  "last_updated": "2026-11-09T23:41:06Z",
+  "movies_total": 4583,
+  "avg_imdb_rating": 7.51,
+  "avg_runtime_min": 118.5,
+  "watched_count": 0,
+  "backlog_count": 0,
+  "top_genres": [
+    {
+      "genre": "Drama",
+      "count": 342,
+      "avg_rating": 7.6
+    },
+    {
+      "genre": "Comedy,Drama",
+      "count": 224,
+      "avg_rating": 7.46
+    },
+    {
+      "genre": "Comedy,Drama,Romance",
+      "count": 200,
+      "avg_rating": 7.44
+    },
+    {
+      "genre": "Drama,Romance",
+      "count": 196,
+      "avg_rating": 7.49
+    },
+    {
+      "genre": "Crime,Drama,Thriller",
+      "count": 147,
+      "avg_rating": 7.48
+    },
+    {
+      "genre": "Action,Crime,Drama",
+      "count": 136,
+      "avg_rating": 7.52
+    },
+    {
+      "genre": "Crime,Drama,Mystery",
+      "count": 110,
+      "avg_rating": 7.51
+    },
+    {
+      "genre": "Biography,Drama,History",
+      "count": 105,
+      "avg_rating": 7.51
+    },
+    {
+      "genre": "Crime,Drama",
+      "count": 96,
+      "avg_rating": 7.63
+    },
+    {
+      "genre": "Adventure,Animation,Comedy",
+      "count": 85,
+      "avg_rating": 7.49
+    },
+    {
+      "genre": "Comedy",
+      "count": 76,
+      "avg_rating": 7.53
+    },
+    {
+      "genre": "Action,Adventure,Animation",
+      "count": 76,
+      "avg_rating": 7.6
+    },
+    {
+      "genre": "Comedy,Crime,Drama",
+      "count": 68,
+      "avg_rating": 7.49
+    },
+    {
+      "genre": "Biography,Drama",
+      "count": 68,
+      "avg_rating": 7.51
+    },
+    {
+      "genre": "Drama,Thriller",
+      "count": 66,
+      "avg_rating": 7.45
+    }
+  ],
+  "top_directors": [
+    {
+      "director": "Woody Allen",
+      "count": 25,
+      "avg_rating": 7.41
+    },
+    {
+      "director": "Steven Spielberg",
+      "count": 25,
+      "avg_rating": 7.7
+    },
+    {
+      "director": "Martin Scorsese",
+      "count": 25,
+      "avg_rating": 7.69
+    },
+    {
+      "director": "Clint Eastwood",
+      "count": 19,
+      "avg_rating": 7.53
+    },
+    {
+      "director": "Ingmar Bergman",
+      "count": 17,
+      "avg_rating": 7.88
+    },
+    {
+      "director": "Roman Polanski",
+      "count": 16,
+      "avg_rating": 7.42
+    },
+    {
+      "director": "Pedro Almod\u00f3var",
+      "count": 16,
+      "avg_rating": 7.32
+    },
+    {
+      "director": "Ethan Coen,Joel Coen",
+      "count": 15,
+      "avg_rating": 7.54
+    },
+    {
+      "director": "Billy Wilder",
+      "count": 15,
+      "avg_rating": 7.64
+    },
+    {
+      "director": "Alfred Hitchcock",
+      "count": 15,
+      "avg_rating": 7.67
+    },
+    {
+      "director": "Werner Herzog",
+      "count": 14,
+      "avg_rating": 7.49
+    },
+    {
+      "director": "Sidney Lumet",
+      "count": 14,
+      "avg_rating": 7.67
+    },
+    {
+      "director": "Ridley Scott",
+      "count": 13,
+      "avg_rating": 7.65
+    },
+    {
+      "director": "Akira Kurosawa",
+      "count": 13,
+      "avg_rating": 8.16
+    },
+    {
+      "director": "Hayao Miyazaki",
+      "count": 12,
+      "avg_rating": 7.92
+    }
+  ],
+  "decades": [
+    {
+      "decade": 2020,
+      "count": 570,
+      "avg_rating": 7.51
+    },
+    {
+      "decade": 2010,
+      "count": 1263,
+      "avg_rating": 7.48
+    },
+    {
+      "decade": 2000,
+      "count": 987,
+      "avg_rating": 7.48
+    },
+    {
+      "decade": 1990,
+      "count": 580,
+      "avg_rating": 7.51
+    },
+    {
+      "decade": 1980,
+      "count": 381,
+      "avg_rating": 7.5
+    },
+    {
+      "decade": 1970,
+      "count": 311,
+      "avg_rating": 7.59
+    },
+    {
+      "decade": 1960,
+      "count": 280,
+      "avg_rating": 7.61
+    },
+    {
+      "decade": 1950,
+      "count": 211,
+      "avg_rating": 7.61
+    }
+  ]
+}

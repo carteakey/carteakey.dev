@@ -197,6 +197,30 @@ collectionArchetype: ledger
   query: "SELECT overall_aesthetic_score FROM photos_assets WHERE " ~ cartebase.photo_aesthetics.sql.filter ~ " AND COALESCE(is_screenshot, 0) = 0"
 } %}
 
+{% if cartebase.agents and cartebase.agents.sessions_total %}
+{{ cb.section_header("AI & Autonomous Agents", "Agent pair programming across homelab fleet - " + (cartebase.agents.sessions_total | localeNumber) + " sessions logged", "cpu") }}
+
+<div class="not-prose grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
+  {{ cb.stat_tile("Agent sessions", cartebase.agents.sessions_total | localeNumber) }}
+  {{ cb.stat_tile("Agent turns", cartebase.agents.turns_total | localeNumber) }}
+  {{ cb.stat_tile("Tool calls", cartebase.agents.tool_calls_total | localeNumber) }}
+  {{ cb.stat_tile("Primary harness", cartebase.agents.harnesses[0].harness) }}
+</div>
+
+{% chart {
+  type: "rank",
+  data: cartebase.agents.top_tools,
+  x: "tool",
+  y: "count",
+  total: cartebase.agents.tool_calls_total,
+  limit: 10,
+  kicker: "Top agent tools invoked",
+  title: "Most frequent tools executed by autonomous coding agents",
+  source: src ~ "agent_trajectories",
+  n: cartebase.agents.tool_calls_total
+} %}
+{% endif %}
+
 <div class="mt-12 border-t border-gray-200 dark:border-zinc-800/80 pt-8 not-prose">
   <h3 class="editorial-kicker mb-3">About this page</h3>
   <p class="editorial-support mb-3">

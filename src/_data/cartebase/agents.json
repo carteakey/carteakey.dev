@@ -1,0 +1,146 @@
+{
+  "last_updated": "2026-11-09T23:41:06Z",
+  "sessions_total": 180,
+  "turns_total": 72145,
+  "tool_calls_total": 34366,
+  "harnesses": [
+    {
+      "harness": "antigravity",
+      "sessions": 144,
+      "turns": 72145,
+      "tool_calls": 34366
+    },
+    {
+      "harness": "opencode",
+      "sessions": 36,
+      "turns": 0,
+      "tool_calls": 0
+    }
+  ],
+  "models": [
+    {
+      "model": "gemini-3.8-flash",
+      "sessions": 144,
+      "turns": 72145,
+      "tool_calls": 34366
+    },
+    {
+      "model": "glm-5.3-flash",
+      "sessions": 23,
+      "turns": 0,
+      "tool_calls": 0
+    },
+    {
+      "model": "space-bunny-free",
+      "sessions": 9,
+      "turns": 0,
+      "tool_calls": 0
+    },
+    {
+      "model": "big-pickle",
+      "sessions": 2,
+      "turns": 0,
+      "tool_calls": 0
+    },
+    {
+      "model": "gpt-5.6-luna",
+      "sessions": 1,
+      "turns": 0,
+      "tool_calls": 0
+    },
+    {
+      "model": "muse-spark-1.2-contributor-free",
+      "sessions": 1,
+      "turns": 0,
+      "tool_calls": 0
+    }
+  ],
+  "sessions_per_month": [
+    {
+      "month": "2026-08",
+      "sessions": 20,
+      "turns": 96,
+      "tool_calls": 43
+    },
+    {
+      "month": "2026-09",
+      "sessions": 68,
+      "turns": 24200,
+      "tool_calls": 11511
+    },
+    {
+      "month": "2026-10",
+      "sessions": 73,
+      "turns": 33697,
+      "tool_calls": 15935
+    },
+    {
+      "month": "2026-11",
+      "sessions": 19,
+      "turns": 14152,
+      "tool_calls": 6877
+    }
+  ],
+  "top_tools": [
+    {
+      "tool": "run_command",
+      "count": 21480
+    },
+    {
+      "tool": "view_file",
+      "count": 4602
+    },
+    {
+      "tool": "manage_task",
+      "count": 2799
+    },
+    {
+      "tool": "read_file",
+      "count": 1687
+    },
+    {
+      "tool": "replace_file_content",
+      "count": 1342
+    },
+    {
+      "tool": "edit_file",
+      "count": 728
+    },
+    {
+      "tool": "write_to_file",
+      "count": 482
+    },
+    {
+      "tool": "schedule",
+      "count": 443
+    },
+    {
+      "tool": "grep_search",
+      "count": 271
+    },
+    {
+      "tool": "search_web",
+      "count": 222
+    },
+    {
+      "tool": "write_file",
+      "count": 139
+    },
+    {
+      "tool": "find_by_name",
+      "count": 33
+    },
+    {
+      "tool": "list_dir",
+      "count": 31
+    },
+    {
+      "tool": "ask_question",
+      "count": 25
+    },
+    {
+      "tool": "read_url_content",
+      "count": 21
+    }
+  ]
+}

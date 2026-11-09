@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-04-16T23:34:02Z",
+  "last_updated": "2026-11-09T23:41:06Z",
   "plays_total": 120413,
   "minutes_total": 185005.0,
   "plays_per_month": [
@@ -756,16 +756,16 @@
       "minutes": 462.4
     },
     {
-      "album": "The Wall",
-      "artist": "Pink Floyd",
-      "plays": 445,
-      "minutes": 953.1
-    },
-    {
       "album": "Wish You Were Here",
       "artist": "Pink Floyd",
       "plays": 445,
       "minutes": 1314.0
+    },
+    {
+      "album": "The Wall",
+      "artist": "Pink Floyd",
+      "plays": 445,
+      "minutes": 953.1
     },
     {
       "album": "Evolve",
@@ -786,16 +786,16 @@
       "minutes": 565.9
     },
     {
-      "album": "Cry",
-      "artist": "Cigarettes After Sex",
-      "plays": 353,
-      "minutes": 1044.3
-    },
-    {
       "album": "Low Roar",
       "artist": "Low Roar",
       "plays": 353,
       "minutes": 717.3
+    },
+    {
+      "album": "Cry",
+      "artist": "Cigarettes After Sex",
+      "plays": 353,
+      "minutes": 1044.3
     },
     {
       "album": "Love Aaj Kal",
@@ -992,16 +992,16 @@
       "minutes": 165.4
     },
     {
-      "track": "Bullet Proof ... I Wish I Was",
-      "artist": "Radiohead",
-      "plays": 175,
-      "minutes": 445.2
-    },
-    {
       "track": "Lovers Rock",
       "artist": "TV Girl",
       "plays": 175,
       "minutes": 244.9
+    },
+    {
+      "track": "Bullet Proof ... I Wish I Was",
+      "artist": "Radiohead",
+      "plays": 175,
+      "minutes": 445.2
     },
     {
       "track": "Sparks",
@@ -1033,25 +1033,17 @@
         "plays": 1
       },
       {
-        "artist": "Morodo",
+        "artist": "Strings",
         "plays": 1
       },
       {
-        "artist": "Strings",
+        "artist": "Morodo",
         "plays": 1
       }
     ],
     "2017": [
       {
-        "artist": "Adrenalize",
-        "plays": 2
-      },
-      {
-        "artist": "Calvin Harris",
-        "plays": 2
-      },
-      {
-        "artist": "Florian Picasso",
+        "artist": "Mall Grab",
         "plays": 2
       },
       {
@@ -1059,16 +1051,20 @@
         "plays": 2
       },
       {
-        "artist": "Mall Grab",
-        "plays": 2
-      },
-      {
         "artist": "Young Guns",
         "plays": 2
       },
       {
-        "artist": "Diskord",
-        "plays": 1
+        "artist": "Calvin Harris",
+        "plays": 2
+      },
+      {
+        "artist": "Adrenalize",
+        "plays": 2
+      },
+      {
+        "artist": "Florian Picasso",
+        "plays": 2
       },
       {
         "artist": "Eric Clapton",
@@ -1079,7 +1075,11 @@
         "plays": 1
       },
       {
-        "artist": "Lost Sky",
+        "artist": "Diskord",
+        "plays": 1
+      },
+      {
+        "artist": "blackbear",
         "plays": 1
       }
     ],
@@ -1087,6 +1087,10 @@
       {
         "artist": "Coldplay",
         "plays": 3
+      },
+      {
+        "artist": "The Best Team",
+        "plays": 2
       },
       {
         "artist": "David Bowie",
@@ -1101,27 +1105,23 @@
         "plays": 2
       },
       {
-        "artist": "The Best Team",
-        "plays": 2
+        "artist": "Guns N' Roses",
+        "plays": 1
+      },
+      {
+        "artist": "Marshmello",
+        "plays": 1
       },
       {
         "artist": "Champions League Orchestra",
         "plays": 1
       },
       {
-        "artist": "David Sides",
+        "artist": "Plaf",
         "plays": 1
       },
       {
-        "artist": "Double Zero",
-        "plays": 1
-      },
-      {
-        "artist": "Green Day",
-        "plays": 1
-      },
-      {
-        "artist": "Guns N' Roses",
+        "artist": "Zack Knight",
         "plays": 1
       }
     ],
@@ -1470,13 +1470,13 @@
         "plays": 2
       },
       {
-        "track": "Channa Mereya (From \"Ae Dil Hai Mushkil\")",
-        "artist": "Pritam",
+        "track": "Dhaani",
+        "artist": "Strings",
         "plays": 1
       },
       {
-        "track": "Dhaani",
-        "artist": "Strings",
+        "track": "Faded",
+        "artist": "Alan Walker",
         "plays": 1
       },
       {
@@ -1485,22 +1485,12 @@
         "plays": 1
       },
       {
-        "track": "Faded",
-        "artist": "Alan Walker",
+        "track": "Channa Mereya (From \"Ae Dil Hai Mushkil\")",
+        "artist": "Pritam",
         "plays": 1
       }
     ],
     "2017": [
-      {
-        "track": "Broadfields",
-        "artist": "Young Guns",
-        "plays": 2
-      },
-      {
-        "track": "Drive",
-        "artist": "Mall Grab",
-        "plays": 2
-      },
       {
         "track": "Feels (feat. Pharrell Williams, Katy Perry & Big Sean)",
         "artist": "Calvin Harris",
@@ -1509,6 +1499,16 @@
       {
         "track": "Guns Down",
         "artist": "Florian Picasso",
+        "plays": 2
+      },
+      {
+        "track": "Drive",
+        "artist": "Mall Grab",
+        "plays": 2
+      },
+      {
+        "track": "Broadfields",
+        "artist": "Young Guns",
         "plays": 2
       },
       {
@@ -1522,23 +1522,23 @@
         "plays": 1
       },
       {
-        "track": "Bell Bottom Blues - Live at Staples Center, Los Angeles, CA, 8/18-19/2001",
-        "artist": "Eric Clapton",
-        "plays": 1
-      },
-      {
-        "track": "Channa Mereya (From \"Ae Dil Hai Mushkil\")",
-        "artist": "Pritam",
-        "plays": 1
-      },
-      {
         "track": "Faith",
         "artist": "T-Mass",
         "plays": 1
       },
       {
+        "track": "Let You Go",
+        "artist": "ILLENIUM",
+        "plays": 1
+      },
+      {
         "track": "Fearless",
         "artist": "Lost Sky",
+        "plays": 1
+      },
+      {
+        "track": "Bell Bottom Blues - Live at Staples Center, Los Angeles, CA, 8/18-19/2001",
+        "artist": "Eric Clapton",
         "plays": 1
       }
     ],
@@ -1554,23 +1554,23 @@
         "plays": 2
       },
       {
-        "track": "Thunder",
-        "artist": "Imagine Dragons",
-        "plays": 2
-      },
-      {
         "track": "Viva La Vida - Live from Spotify London",
         "artist": "Coldplay",
         "plays": 2
       },
       {
-        "track": "Bom Diggy",
-        "artist": "Zack Knight",
+        "track": "Thunder",
+        "artist": "Imagine Dragons",
+        "plays": 2
+      },
+      {
+        "track": "Champions League Theme",
+        "artist": "Champions League Orchestra",
         "plays": 1
       },
       {
-        "track": "Champions League - Remix",
-        "artist": "Double Zero",
+        "track": "The Chain (F1 Theme) [From \"Formula 1 Motor Racing\"]",
+        "artist": "London Music Works",
         "plays": 1
       },
       {
@@ -1579,18 +1579,18 @@
         "plays": 1
       },
       {
-        "track": "Champions League Theme",
-        "artist": "Champions League Orchestra",
+        "track": "Starman - Single Mix",
+        "artist": "David Bowie",
         "plays": 1
       },
       {
-        "track": "Living Football - Official FIFA Theme",
-        "artist": "Hans Zimmer",
+        "track": "This Is Me",
+        "artist": "Keala Settle",
         "plays": 1
       },
       {
-        "track": "Silence",
-        "artist": "Marshmello",
+        "track": "Sweet Child O' Mine",
+        "artist": "Guns N' Roses",
         "plays": 1
       }
     ],
@@ -1616,13 +1616,13 @@
         "plays": 72
       },
       {
-        "track": "Aldrig Mer",
-        "artist": "Kasbo",
+        "track": "Dhaani",
+        "artist": "Strings",
         "plays": 67
       },
       {
-        "track": "Dhaani",
-        "artist": "Strings",
+        "track": "Aldrig Mer",
+        "artist": "Kasbo",
         "plays": 67
       },
       {
@@ -1720,13 +1720,13 @@
         "plays": 64
       },
       {
-        "track": "Khudi",
-        "artist": "The Local Train",
+        "track": "Ranjha (From \"Shershaah\")",
+        "artist": "Jasleen Royal",
         "plays": 62
       },
       {
-        "track": "Ranjha (From \"Shershaah\")",
-        "artist": "Jasleen Royal",
+        "track": "Khudi",
+        "artist": "The Local Train",
         "plays": 62
       },
       {
@@ -1834,13 +1834,13 @@
         "plays": 54
       },
       {
-        "track": "Sail",
-        "artist": "AWOLNATION",
+        "track": "Unstoppable",
+        "artist": "Sia",
         "plays": 49
       },
       {
-        "track": "Unstoppable",
-        "artist": "Sia",
+        "track": "Sail",
+        "artist": "AWOLNATION",
         "plays": 49
       },
       {
@@ -1970,13 +1970,13 @@
         "plays": 34
       },
       {
-        "track": "Airbag",
-        "artist": "Radiohead",
+        "track": "Not The Same Anymore",
+        "artist": "The Strokes",
         "plays": 32
       },
       {
-        "track": "Not The Same Anymore",
-        "artist": "The Strokes",
+        "track": "Airbag",
+        "artist": "Radiohead",
         "plays": 32
       },
       {
@@ -1985,13 +1985,13 @@
         "plays": 30
       },
       {
-        "track": "8TEEN",
-        "artist": "Khalid",
+        "track": "Ishq Jalakar - Karvaan",
+        "artist": "Shashwat Sachdev",
         "plays": 27
       },
       {
-        "track": "Ishq Jalakar - Karvaan",
-        "artist": "Shashwat Sachdev",
+        "track": "8TEEN",
+        "artist": "Khalid",
         "plays": 27
       },
       {
@@ -2000,13 +2000,13 @@
         "plays": 27
       },
       {
-        "track": "Kaho Na Kaho - From \"Murder\"",
-        "artist": "Amir Jamal",
+        "track": "Kazinama - Yaad Kiya Dil Ne",
+        "artist": "Kazinama",
         "plays": 26
       },
       {
-        "track": "Kazinama - Yaad Kiya Dil Ne",
-        "artist": "Kazinama",
+        "track": "Kaho Na Kaho - From \"Murder\"",
+        "artist": "Amir Jamal",
         "plays": 26
       }
     ]
@@ -2865,12 +2865,12 @@
     {
       "year": "2017",
       "top_artist": {
-        "artist": "Adrenalize",
+        "artist": "Mall Grab",
         "plays": 2
       },
       "top_track": {
-        "track": "Broadfields",
-        "artist": "Young Guns",
+        "track": "Feels (feat. Pharrell Williams, Katy Perry & Big Sean)",
+        "artist": "Calvin Harris",
         "plays": 2
       }
     },
