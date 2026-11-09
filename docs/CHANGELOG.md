@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Strata post: November checkpoint (UD-IQ2_XS, CPU prefill share limit, `STRATA_ADAPT_FETCH` port taking decode from 55.6 to 70.4 tok/s) and the full decode progression table.
 
 ### Changed
+- alvidaa posts: tightened `alvidaa` (`4,426 → 3,590 words`) and `alvidaa-firmware-telemetry` (`1,685 → 1,383 words`) for readability, folded in the on-TV Go launcher daemon (`alvidaa-bridge`), Cobalt `<canvas>` cache findings, and the 16-model / 7-SoC matrix, and aligned the top callout with `VIDAA-PSIRT-2026-005` and the OTA update tradeoff.
+- Readability Diff Workbench & `human-writer`: added body-overlap section alignment when H2 headings are renamed in `post-diff-workbench.njk`, and documented staged-candor prefixes (`"Worth saying plainly:"`) in the `human-writer` skill.
 - Gallery: masonry tiles now carry explicit pixel heights (184/278 px for 2- and 3-row spans) and a new unlayered `figure.gallery-figure` rule that opts them out of the global `figure { display: table }` caption styling. Tables content-size their height, which Firefox honoured and Chrome masked, so gallery tiles rendered short with images bleeding across rows in Firefox.
 - More page: directory rows dropped the description truncation, and descriptions now wrap with slightly larger paths, looser row spacing, and a hairline divider for readability.
 - App Swaps poster: the ledger now fills the poster height evenly instead of leaving a dead band between the masthead and the table; the 1200×1200 PNG was re-rendered from the fixed source.
