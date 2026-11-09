@@ -61,11 +61,11 @@ Context length widens that gap further: both llama.cpp baselines were recorded o
 
 {% diagram_card {
   src: "./src/static/img/diagrams/qwen38-flash-next-throughput-comparison.png",
-  alt: "Bar chart of decode throughput on an RTX 4070 12GB: llama.cpp master 20.8 tok/s, llama.cpp MTP V2 27.06, Strata at 60k context 53.2, DDR5-5800 65.8, Full Q8_0 PLE 74.8, 4070-main-lite fork on stable DDR5-5200 at 69.6, --kv-grow on stable DDR5-5200 at 73.5, and UD-IQ2_XS with ADAPT_FETCH at 70.4 tok/s.",
+  alt: "Bar chart of decode throughput on an RTX 4070 12GB: llama.cpp master 20.8 tok/s, llama.cpp MTP V2 27.06, Strata at 60k context 53.2, DDR5-5800 65.8, strata-lean fork on stable DDR5-5200 at 69.6, --kv-grow on stable DDR5-5200 at 73.5, Full Q8_0 PLE on DDR5-5800 at 74.8, and UD-IQ2_XS with ADAPT_FETCH at 70.4 tok/s.",
   kicker: "Decode · RTX 4070 12GB + 64GB DDR5",
   title: "Measured Serving Setups",
-  badge: "20.8 → 74.8 tok/s",
-  caption: "Comparing serving setups and fork checkpoints. After reverting from DDR5-5800 to stock DDR5-5200 for stability, the lean 4070 fork reaches 69.6 t/s with the calibrated sm_89 MMVQ table, and --kv-grow reaches 73.5 t/s with a 3,277-slot cache. The current tier runs the smarter UD-IQ2_XS quant at 70.4 t/s with ADAPT_FETCH, which is 11.5 DeepSWE points ahead of the 74.8 row at about the same speed."
+  badge: "20.8 → 74.8 tok/s (70.4 served)",
+  caption: "Comparing serving setups and fork checkpoints. After reverting from DDR5-5800 to stock DDR5-5200 for stability, the strata-lean fork reaches 69.6 t/s with the calibrated sm_89 MMVQ table, and --kv-grow reaches 73.5 t/s with a 3,277-slot cache. The current served tier runs Unsloth Dynamic UD-IQ2_XS at 70.4 t/s with ADAPT_FETCH (+11.5 DeepSWE over IQ3_XXS at virtually the same speed)."
 } %}
 
 ## How to run it in Strata

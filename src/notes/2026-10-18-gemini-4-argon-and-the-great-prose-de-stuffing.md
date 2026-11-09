@@ -1,5 +1,5 @@
 ---
-title: "Gemini 4 Argon and the Great Prose De-Stuffing"
+title: "Making AI Content Readable, Part 1: De-Stuffing Benchmark Logs"
 layout: layouts/note.njk
 permalink: /notes/{{ page.fileSlug }}/
 description: "A local diff workbench plus Gemini 4 Argon cleaned up a year of commit-hash soup in my local inference posts."
@@ -31,4 +31,4 @@ The guide is the one post where I still have the before snapshot, so here's its 
 | Contractions / 1k words | 2.1 | 6.6 |
 | Em dashes | 0 | 0 |
 
-A full post on the workbench and the prose fingerprint behind it is coming later.
+A full post on the workbench and the prose fingerprint behind it is coming later. See [Part 2: Guidelines, Not Scripts](/notes/2026-11-09-prose-de-stuffing-round-two/) for what happened on the second pass across seven more posts.

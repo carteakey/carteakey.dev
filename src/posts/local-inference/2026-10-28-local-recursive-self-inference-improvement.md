@@ -14,51 +14,33 @@ tags:
 pinned: false
 ---
 
-There is a fascinating physical paradox in running an autonomous coding agent on a single local GPU.
+My local coding agent runs on Qwen3.8-Flash-Next (a 125B MoE) served through my `strata-lean` fork and `llama-swap` on {% device "yeti-cachy" %}. On a 12 GB RTX 4070, that model fills almost the entire card. When I asked the agent to help tune its own inference engine, we hit an immediate wall: the agent and the benchmark share the same GPU.
 
-My agent runs on a 125B mixture-of-experts model (Qwen3.8-Flash-Next) served through Strata and llama-swap. On a 12 GB RTX 4070, that model fills 11.5 GB of VRAM. If I want the agent to help make its own inference engine faster, we run into a brick wall: the agent and the benchmark share the exact same silicon.
+In the cloud, an agent can spin up a separate VM while profiling. On a single homelab card, the moment the agent runs a benchmark script, it stops `llama-swap.service` and kills the server generating the agent's next token.
 
-In the cloud, an agent can spin up parallel VMs or call hosted APIs while running profiling scripts. In a homelab, the moment the agent runs a benchmark, the server generating its next thought gets terminated.
-
-This is the reality of Local Recursive Self Inference Improvement (LRSII). For an agent to improve its own engine locally, it has to orchestrate its own temporary blackout, survive session teardown, wake back up, and evaluate what happened without hallucinating fake speedups.
-
-Here is the loop we built, the traps the model fell into, and how it found a genuine speedup without losing an ounce of quality.
+For the agent to benchmark and tune its own runtime locally, I needed it to schedule its own temporary blackout, survive session teardown, wake back up on the next turn, and grade the logs without falling for switches that trade away accuracy.
 
 ## The Homelab Blackout Problem
 
-The core challenge of self-tuning is surviving the test itself. 
+If the agent runs a benchmark directly in its shell tool, the connection drops mid-turn and nothing gets evaluated. To close the loop, I had the agent use a five-step detached handoff:
 
-When you test serving switches or memory allocators, you have to benchmark the engine under full load. On a single GPU, that means killing `llama-swap.service`. If the agent runs `bench.sh` directly in its shell session, the script immediately kills the server hosting the agent. The connection drops mid-token, the process hangs, and nothing gets evaluated.
-
-To close the loop, the agent had to design a detached execution pattern:
-
-1. **Audit and propose**: The agent inspects its own boot logs and configuration to identify candidate flags and memory levers.
-2. **Arm the timer**: It packages the entire A/B ladder into a self-contained script and spawns it using `setsid nohup` with a 75-second initial delay.
-3. **Graceful exit**: The agent yields control back to me and finishes its turn before the delay expires.
-4. **The blackout**: The background script cleanly stops the model server, reclaims the GPU, runs the benchmark ladder with strict telemetry, logs everything to structured JSONL files, and restarts the serving unit.
-5. **Wakeup and triage**: On the next turn, the agent wakes up with the server healthy, reads the logs, parses the telemetry, and grades the results.
-
-The loop works because the agent doesn't try to watch itself sleep. It builds the test harness, steps aside, and inspects the evidence after the fact.
+1. **Audit and propose:** Inspect its own startup logs and serving config to pick candidate flags, env vars, or upstream commits.
+2. **Arm the timer:** Package the A/B benchmark ladder (bookended by a control run at the start and end) into a self-contained script and spawn it via `setsid nohup` with a 75-second delay.
+3. **Yield the turn:** Finish its response and return control before the timer fires.
+4. **Run in the dark:** The background script stops `llama-swap`, checks that the GPU is idle, runs the benchmark ladder, saves per-arm engine logs and config metadata, and restarts `llama-swap`.
+5. **Wake up and grade:** On the next turn, the agent wakes up on the restarted server, reads the JSONL telemetry, and compares every arm against the bookended control pair.
 
 ## The Temptation of "Cheating" Benchmarks
 
-When an LLM explores its own engine switches, its first instinct is often to maximize raw tokens per second. But on mixture-of-experts models, raw throughput is dangerously easy to game.
+On MoE models, raw tokens per second is easy to game if you don't check how the router picked its experts.
 
-In our 9-arm sweep, one candidate switch looked unbelievable on paper: `STRATA_ROUTE_PRIOR=1.5`.
+In my first nine-arm sweep, one candidate flag looked huge on paper: `STRATA_ROUTE_PRIOR=1.5`. Decode speed jumped from 71.1 to **102.2 tok/s sustained**, the VRAM expert cache hit rate climbed from 57% to 93%, and PCIe traffic dropped near zero.
 
-When the script ran that arm, decode throughput exploded from 70.7 t/s to **102.2 t/s sustained** (peaking at 109.3 t/s). VRAM cache hit rate shot up from 57% to 93%, and PCIe bus traffic dropped to near zero. 
-
-If this were an automated leaderboard benchmark, it would look like a 45% breakthrough. But when we inspected what the switch actually did in the engine code, the truth was ugly: it added an artificial numerical bias to the router's softmax for any expert already sitting in GPU VRAM. 
-
-In other words, the model was cheating. It stopped routing tokens to the smartest experts for the job, and instead routed tokens to whatever happened to be cached on the graphics card. Upstream benchmarks showed that on agent coding tasks, pass rates collapsed from 56% down to 45%. At higher values, the model couldn't even generate valid Python syntax.
-
-A self-improving loop is only as good as its quality guardrails. If you only optimize for the stopwatch, your agent will happily make itself stupider if it means answering faster. We discarded `Route Prior` immediately.
+Reading `route_prior.cu` showed why: the switch adds a logit bonus during top-k selection to whichever experts are already sitting in GPU VRAM. Instead of routing tokens strictly to the highest-scoring experts, the model favored whatever happened to be cached on the card. Upstream's own release notes showed agent task completion dropping from 56% to 45% with that bias enabled, and higher values broke code syntax altogether. Even though upstream later turned it on by default for 12 GB NVIDIA cards, I pinned it off alongside `STRATA_ROUTE_TAIL_SKIP=0`.
 
 ## Finding Real Headroom: The Elastic KV Cache
 
-So where did the real, quality-preserving win come from?
-
-The agent found it by reading its own startup log:
+The first clean win came from three lines in the agent's startup log:
 
 ```text
 expert cache 2583 slots, 4.24 GiB of VRAM
@@ -66,55 +48,50 @@ serve: WARNING: only 410 MiB of VRAM free at start of request
 decode expert cache hit rate: 58.6%
 ```
 
-The 125B model splits its weights between GPU VRAM and host system RAM. The more MoE experts we can fit in VRAM, the fewer times the GPU has to pause and fetch weights over the slow PCIe bus.
+At full 128k context with quantized KV (`--kv k8v4`), Strata reserves **1.32 GiB** of VRAM up front. Enabling `--kv-grow` switches that buffer to CUDA virtual memory management (VMM): it maps only a small initial slice at startup and hands the remaining **1.11 GiB** straight to the expert cache without altering routing or math:
 
-Normally, the engine pre-allocates the entire KV cache buffer up front for the full 128,000-token context window. That reserved roughly 4 GB of VRAM, holding it empty just in case a prompt reached 128k tokens. Because that memory was tied up, the expert cache was capped at 2,583 expert slots.
+| Metric (`IQ3_XXS`, DDR5-5200) | Static 128k KV (`base`) | Elastic KV (`--kv-grow`) |
+| --- | :---: | :---: |
+| **VRAM expert slots at load** | 2,583 (`4.24 GiB`) | **3,277** (`5.35 GiB`, +694 slots) |
+| **VRAM cache hit rate** | 57.4% | **62.1%** |
+| **Steady decode** | 71.1 tok/s | **73.5 tok/s** (78.9 peak) |
+| **Slots held at 114k context** | 2,581 | **2,642** (after returning 634 slots to KV) |
 
-The model proposed testing a switch: `--kv-grow`.
-
-### What does `--kv-grow` actually do?
-
-Unlike speculative decoding tweaks or routing biases, `--kv-grow` does not alter model math, weights, or token selections. It is purely a virtual memory management (CUDA VMM) allocation strategy.
-
-Instead of locking down 4 GB of physical VRAM on boot, `--kv-grow` reserves the virtual address space once, but only maps physical GPU memory pages as actual tokens enter the context. 
-
-All that unmapped VRAM is immediately handed over to the dynamic expert cache:
-
-- **Expert slots on GPU**: Jumped from 2,583 to **3,277 slots** (+694 experts, +1.11 GiB of VRAM).
-- **VRAM cache hit rate**: Rose from 57.4% to **62.1%**.
-- **Decode speed**: Jumped from 70.7 t/s to **73.53 t/s** (peaking at 78.9 t/s).
-- **Quality loss**: **Zero**.
-
-Because the computation, weights, and expert routing decisions are 100% bit-for-bit identical, the model gets a free 2.8 t/s speedup on every generation with zero trade-offs. 
-
-And what happens if a prompt actually reaches 32k or 64k tokens? Does the engine run out of memory? No. The expert cache is an elastic pool: as active context expands and requires more physical VRAM pages, the engine smoothly unmaps cold expert slots back to host RAM. At short-to-medium contexts you get the full 3,277 slots (73.5 t/s); at deep contexts it gracefully dials back toward the baseline (~70 t/s) without crashing or OOMing.
-
-Furthermore, this test was conducted after stepping down from an aggressive DDR5-5800 memory overclock back to stock **DDR5-5200 for long-term system stability**. Even with slower host RAM clocks, reclaiming that VRAM allowed software architecture to beat raw hardware frequency.
+As a live coding session grows, the expert cache returns physical pages to the KV cache step by step. Even past 114k tokens in my own session, the card still held more experts in VRAM than the static config, only dipping below static near the full 128k ceiling.
 
 {% diagram_card {
   src: "./src/static/img/diagrams/qwen38-flash-next-throughput-progression.png",
-  alt: "Line chart showing decode throughput progression on an RTX 4070 up to the 4070-main-lite fork at 69.6 t/s and --kv-grow at 73.5 t/s on stable DDR5-5200.",
+  alt: "Line chart showing decode throughput progression on an RTX 4070 up to the strata-lean fork at 69.6 t/s, --kv-grow at 73.5 t/s, and UD-IQ2_XS + ADAPT_FETCH at 70.4 t/s.",
   kicker: "Inference Uplift · RTX 4070 12GB + 64GB DDR5",
-  title: "Decode Throughput Progression to 73.5 t/s",
-  badge: "6.5 → 73.5 tok/s steady",
-  caption: "<strong>Uplift Progression:</strong> Early unoptimized baseline (6.5 t/s) → llama.cpp MTP (27.1 t/s) → Strata dynamic cache on DDR5-5800 (65.8 t/s) → lean 4070 fork on stable DDR5-5200 (69.6 t/s) → elastic --kv-grow cache expansion reaching <strong>73.5 t/s steady</strong> (peaking near 79 t/s) with zero quality loss."
+  title: "Qwen3.8-Flash-Next Decode Throughput Progression",
+  badge: "6.5 → 73.5 tok/s (70.4 UD-IQ2_XS)",
+  caption: "Early unoptimized baseline (6.5 t/s) → llama.cpp MTP (27.06 t/s) → Strata dynamic cache (60.3 t/s) → DDR5-5800 tuning (65.8 t/s) → strata-lean fork on stable DDR5-5200 (69.6 t/s) → elastic --kv-grow cache expansion (73.5 t/s) → Unsloth Dynamic UD-IQ2_XS + ADAPT_FETCH (70.4 t/s, +11.5 DeepSWE)."
 } %}
 
-## The Promotion Lifecycle
+## When the Benchmark Harness Lies
 
-The final step in recursive improvement is promotion: turning a benchmark finding into production reality.
+Once the agent started running multi-arm ladders on its own, the biggest bugs turned out to be in our measurement harness:
 
-In our setup, the agent doesn't write directly to live system configs while running experiments. The workflow follows strict gates:
+- **Why greedy identity checks fail on hybrid MoE:** For the second sweep, the agent built a seven-prompt greedy identity gate (`temperature 0`). The control arm failed against *itself* on three of seven prompts inside the same boot. Because only a fraction of the model's experts sit in VRAM, which experts are resident shifts between passes; GPU tensor cores and CPU AVX2 threads accumulate floating-point sums in a different order, flipping near-tie tokens. On a hybrid GPU/CPU cache, quality gates have to compare against the control pair's own cross-boot divergence floor rather than bitwise text equality.
+- **Warm-up climb and log collisions:** Three warm-up probes weren't enough to warm the expert cache before timing started, leaving a wide spread between the opening and closing controls. Worse, naming both bookends `base` caused the closing control to append to the opening control's log file. Doubling the warm-up pass and sequence-prefixing every arm's log stopped false promotions.
+- **Disproving the Lamina draft head:** Using the hardened harness across three paired ladders, the agent tested the trimmed Lamina MTP draft head (40,525 tokens vs 106,299 stock). Its claimed draft-acceptance gain didn't reproduce on my Unsloth Dynamic pack (**81.4% vs 80.8%**, inside standard error). What *did* hold up was the **132 MiB** VRAM savings, which I banked in reserve in case I ever need a higher VRAM floor.
 
-1. **Hypothesis and A/B Sweep**: Test candidate switches against a paired baseline control (which proved drift was under 0.9 t/s across the 20-minute run).
-2. **Quality Verification**: Check needle retrieval tests and code generation samples to guarantee zero degradation.
-3. **Rejection with evidence**: Flag and document why tempting options failed (like `spec 5` dropping throughput to 61 t/s due to draft rejections, or `route prior` corrupting reasoning).
-4. **Configuration promotion**: Update the serving config (`strata-iq3_xxs-ple_q8.json`) with `--kv-grow` and reload `llama-swap`.
+## Rejecting an Upstream Rebase and Cherry-Picking the Wins
 
-## What This Proves
+After I switched the primary tier to Unsloth Dynamic V3.1 (`UD-IQ2_XS` + `Q8_0` PLE, which raised DeepSWE from 46.9% to 58.4% at the same 43.8 GB RAM footprint), upstream Strata reached `v0.2.12` - over 3,500 commits ahead of my `strata-lean` base.
 
-When people talk about AI self-improvement, the discussion usually jumps straight to recursive self-coding superintelligence.
+Instead of rebasing blind, the agent built `v0.2.12` as a reference arm and ran paired ladders against `strata-lean`:
 
-The reality on consumer hardware is much more grounded, but just as interesting. An agent running locally can inspect its own system constraints, write test scripts that safely handle its own temporary shutdown, navigate the trade-offs between synthetic throughput and actual reasoning quality, and promote verified architectural wins back into its daily environment.
+| Arm (`UD-IQ2_XS` + `Q8_0` PLE) | Steady Decode | 2k Prefill | 8k Prefill | VRAM Slots | Verdict |
+| :--- | :---: | :---: | :---: | :---: | :--- |
+| **`strata-lean` baseline** | 55.6 - 62.6 tok/s | 939 tok/s | 1,866 tok/s | 2,711 | Baseline |
+| **Upstream `v0.2.12` re-slice** | 62.6 tok/s | 1,096 tok/s | 1,571 tok/s (-12%) | 2,527 (-184) | **Rejected** (extra 256 MiB reserve shrinks cache & 8k chunk) |
+| **`strata-lean` + `CPU_SHARE_MAX=3072`** | 58.5 tok/s | **1,116 tok/s (+19%)** | 1,860 tok/s | 2,711 | **Promoted** (`env` config) |
+| **`strata-lean` + `STRATA_ADAPT_FETCH=1`** | **70.4 tok/s (+27%)** | **1,116 tok/s** | **1,884 tok/s** | 2,711 | **Promoted** (cherry-picked `24c6c2f6` → `20c19b89`) |
 
-The model made itself faster today. Not by rewriting its neural network, but by understanding its own memory footprint.
+Rebasing onto `v0.2.12` wholesale would've cost 184 expert slots and 12% of 8k prefill throughput for zero decode gain. Instead, I had the agent extract the two changes that actually helped on a 12 GB card:
+
+1. **Wider CPU prefill sharing (`STRATA_PREFILL_CPU_SHARE_MAX=3072`):** Raises the prompt threshold where idle CPU threads help evaluate uncached experts from 1k to 3k tokens, lifting 2k prefill by **+19%** without shrinking the 8k GPU chunk.
+2. **Adaptive PCIe miss admission (`STRATA_ADAPT_FETCH=1`):** Ported upstream's PCIe admission patch into `strata-lean`. Previously, when a verify window fetched a missed expert over PCIe, those weights were discarded after the step. With `STRATA_ADAPT_FETCH=1`, the engine copies that fetched expert into an unrouted slot in the GPU cache and updates the lookahead table. Cache hit rate jumped from **46.6% to 67.2%** in the benchmark window (and **81.5%** in live sessions), bringing `UD-IQ2_XS` decode from **55.6 to 70.4 tok/s** while keeping `strata-lean`'s 8k prefill advantage.
+
+

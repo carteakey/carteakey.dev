@@ -18,7 +18,7 @@ tags:
 The [first post](/blog/alvidaa/alvidaa/) covers how root was gained. This one covers what I did with it: read the firmware, then watch the TV run.
 {% endcallout %}
 
-## 26 hours of kernel logs with every toggle off
+## How I could see any of this
 
 I turned off every privacy and telemetry toggle in my TV's menus. Then I added one iptables rule that logs every new outbound connection to the kernel log, plus an hourly collector, and left it alone for 26 hours.
 
@@ -30,7 +30,7 @@ It also opened **14 connections** to `ter-jrnl-na.vidaahub.com`, which resolves 
 
 I didn't have to guess at any of this, because the TV ships a config file that names its own telemetry infrastructure. Root gave me two things nothing else could: the ability to read the firmware's own files, and the ability to watch connections at the kernel layer instead of trusting a settings screen (destinations and frequency only, no payload capture or TLS interception).
 
-## The TV's own endpoint map
+## The firmware documents its own telemetry
 
 `/APPS/domain/domain_list.json` is the TV's runtime endpoint map, fetched from `domain.vidaahub.com`. It ships this:
 
@@ -43,7 +43,7 @@ The TV carries its own DNS-over-HTTPS client config, and it marks its own teleme
 
 The same file names the rest of the stack: `rsc-ads` for monetization, `evt` for the event sink, `dvcstatus-dataretrv` for device status, and `file-ul` for uploads, with per-region variants and an md5 stamp. That's not inference from traffic patterns; it's the vendor's own map, sitting on a writable partition.
 
-## The 26-hour baseline table
+## What the kernel log proved
 
 | Destination | Hits | What it is |
 | --- | --- | --- |
@@ -56,7 +56,7 @@ The same file names the rest of the stack: `rsc-ads` for monetization, `evt` for
 
 The Fluentd line is the one I keep coming back to. A log collector isn't a heartbeat; it's a destination for structured events, and the TV was reaching it while sitting on a home screen with everything disabled. The CDNs are in the table for honesty - they're UI and content delivery, not the ads feed, and I left them unblocked.
 
-## The consent toggles are just an INI file
+## The switches are just a file
 
 `/APPS/euladpp/` holds a tarball plus a `current/` directory with `eula_dpp_status.ini` and seven consent sections (`pn1_hbbtv` through `pn7_registration`). Root-run boot scripts repair and upgrade it from the tarball on every boot.
 
@@ -64,7 +64,7 @@ So "off" is a value in a file that a boot script can rewrite. It isn't a contrac
 
 I don't have the other half of this yet. The next experiment flips those seven sections on for two days, captures the delta, and flips them back. Until it runs, I can tell you what the TV does with them off; I can't tell you what turning them on adds.
 
-## Seven firmware patterns across the tested TVs
+## The firmware is more legible than it should be
 
 The telemetry is one layer. The firmware patterns underneath it are the same across the models in our [compatibility matrix](https://github.com/carteakey/alvidaa/blob/main/docs/research/TESTED-MODELS.md):
 
@@ -78,7 +78,7 @@ The telemetry is one layer. The firmware patterns underneath it are the same acr
 
 The matrix now spans sixteen models across seven chip families (MediaTek and Novatek), with ten models rooted and thirteen catalogued methods in [EXPLOITS.md](https://github.com/carteakey/alvidaa/blob/main/docs/research/EXPLOITS.md). The five-lock Dropbear gauntlet transferred from MediaTek to Novatek one-for-one.
 
-## Blocking it in layers (and three traps our own scripts hit)
+## The fix, in layers
 
 DNS blocking alone wasn't going to work, because the TV doesn't ask my resolver for the domains it cares about. The fix combines three layers (`firmware/adguard-blocklist.txt` and `firmware/tvfw`), checked via `alvidaa privacy status`:
 

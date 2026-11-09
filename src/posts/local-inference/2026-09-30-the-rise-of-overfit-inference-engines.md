@@ -61,11 +61,11 @@ My unfiltered reaction was: *what in the fuck?*
 
 {% diagram_card {
   src: "./src/static/img/diagrams/qwen38-flash-next-throughput-progression.png",
-  alt: "Line chart of Qwen3.8-Flash-Next decode throughput on an RTX 4070 12GB across tuning steps up to Strata fork 69.6 and --kv-grow 73.5 tok/s.",
+  alt: "Line chart of Qwen3.8-Flash-Next decode throughput on an RTX 4070 12GB across tuning steps up to strata-lean 69.6, --kv-grow 73.5, and UD-IQ2_XS + ADAPT_FETCH at 70.4 tok/s.",
   kicker: "Decode · RTX 4070 12GB + 64GB DDR5",
   title: "Seven Tuning Steps, Then One Runtime Swap",
-  badge: "27.06 → 53.2 tok/s at 60k",
-  caption: "The first seven points are tuning steps on llama.cpp. Strata dynamic cache pushed past 60 t/s, our lean 4070 fork reached 69.6 t/s, and --kv-grow hit 73.5 t/s steady decode with zero quality loss."
+  badge: "27.06 → 73.5 tok/s (70.4 UD-IQ2_XS)",
+  caption: "The first seven points are tuning steps on llama.cpp. Strata dynamic cache pushed past 60 t/s, my strata-lean fork reached 69.6 t/s, --kv-grow hit 73.5 t/s, and the current UD-IQ2_XS + ADAPT_FETCH tier runs at 70.4 t/s (+11.5 DeepSWE)."
 } %}
 
 Quants and settings differ between the two engines, so that's a comparison of complete serving setups, not a controlled experiment. The measurements, memory layout and caveats are in the technical write-up, [Strata on an RTX 4070](/blog/local-inference/strata-on-an-rtx-4070/). This post is about what I think it means.
@@ -129,13 +129,9 @@ It isn't fully specified, though. Prefill latency, power, concurrency, context l
 
 ## The twist: general engines become the parts bin
 
-It would be easy to frame this as napkin runtimes versus general runtimes. The engines themselves suggest something messier.
-
 DwarfStar borrows kernels and quant formats from llama.cpp's GGML. llamAmpere is a llama.cpp fork. The GGUF format, the quant types and many of the kernels these projects start from came out of years of general-purpose work.
 
 So the more likely future isn't one replacing the other. General engines keep doing the slow, broad work: formats, quantization research, correct reference kernels for every backend. Napkin runtimes take those parts, bolt them into something overfit for one model and one card, and throw the assembly away when the next model arrives.
-
-General engines become the parts bin. Napkin runtimes are what power users build from it.
 
 ## The console analogy
 
