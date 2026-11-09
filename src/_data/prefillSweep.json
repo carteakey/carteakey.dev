@@ -1,0 +1,14 @@
+{
+  "points": [
+    { "label": "1K", "value": 585.5 },
+    { "label": "2K", "value": 1088.8 },
+    { "label": "3.8K", "value": 1690.9 },
+    { "label": "7.3K", "value": 1944.3 },
+    { "label": "10.7K", "value": 1809.2 },
+    { "label": "13.3K", "value": 1972.0 },
+    { "label": "30K", "value": 2004.3 },
+    { "label": "60K", "value": 2013.0 },
+    { "label": "2K IQ2", "value": 1116 },
+    { "label": "8K IQ2", "value": 1884 }
+  ]
+}

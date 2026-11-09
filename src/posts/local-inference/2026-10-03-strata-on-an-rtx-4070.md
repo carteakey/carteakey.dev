@@ -5,7 +5,7 @@ image: /img/blog-sketches/unique/strata-on-an-rtx-4070-stamp-trim.png
 imageAlt: "Monochrome pencil sketch of a graphics card beside a tray of cached chips, a larger chip pile, a RAM stick, and a stopwatch"
 date: 2026-10-03
 giscusTerm: "/blog/local-inference/strata-on-an-rtx-4070/"
-updated: 2026-11-07
+updated: 2026-11-09
 authored_by: ai-assisted
 draft: true
 tags:
@@ -13,16 +13,10 @@ tags:
   - Self-Host
 ---
 
-{% update "2026-10-18", "October 2026 Update: 74.8 tok/s at 128k Context with Q8_0 PLE & DDR5-5800" %}
-Since my initial 53.2 tok/s run, three changes pushed Strata to **74.8 tok/s** with a preallocated **128k context window** on this exact same 12 GB card. Upgrading Strata and clocking my dual-channel RAM to DDR5-5800 lifted steady code generation to 65.8 tok/s. Swapping the NVMe-mapped n-gram table shard from IQ4_NL to uncompressed Q8_0 cost zero extra VRAM and jumped steady decode to **74.8 tok/s on text** (and 73.3 tok/s on vision), because cleaner embeddings raised speculative draft acceptance to 78.2%. Finally, enforcing official Thinking Mode sampling server-side instead of greedy decoding costs under 5% decode speed while stopping `<think>` repetition loops.
-{% endupdate %}
-
-{% update "2026-11-07", "November 2026 Update: A Smarter Quant at 70 tok/s" %}
-The 74.8 tok/s number above belongs to the IQ3_XXS era. In early November I moved the serving tier to Unsloth's Dynamic V3.1 UD-IQ2_XS, which scores 11.5 points higher on DeepSWE (58.4 against 46.9) at the same 43.8 GB fast-memory footprint. The bill arrives in decode speed: it fell to about 59.7 tok/s.
-
-Two changes bought most of it back. Raising the CPU prefill share limit from 1,024 to 3,072 tokens took 2K prefill from 939 to 1,116 tok/s with no 8K or decode cost, and it is one line in the run config. Porting upstream's `STRATA_ADAPT_FETCH` switch, which copies a fetched expert into the slot of an idle resident expert instead of discarding it, took decode from 55.6 to 70.4 tok/s and the decode cache hit rate from 46.6% to 67.2%.
-
-So the smarter model now runs at about 70 tok/s, roughly 3.5 tok/s below the old quant and 11.5 points ahead of it on DeepSWE. The switch changes cache residency, not routing or weights; the engine's [cache-parity test](https://github.com/Niko1221/Strata/blob/30ec18ec7094550fcc594fd948220d511d80464e/bench/results/2026-09-27-cache-parity/README.md) measured that class of change as accuracy-neutral (perplexity identical within one standard error over 2,557 tokens).
+{% update "2026-11-07", "November 2026 Checkpoint: Q8_0 PLE (74.8 tok/s) & Unsloth UD-IQ2_XS (70.4 tok/s)" %}
+Since my initial 53.2 tok/s run, two waves of tuning landed on this same 12 GB card:
+- **October (IQ3_XXS + uncompressed Q8_0 PLE):** Swapping the NVMe-mapped n-gram table shard from IQ4_NL to uncompressed Q8_0 cost zero extra VRAM and lifted steady decode to **74.8 tok/s** (and **73.5 tok/s** on stock DDR5-5200 with [elastic `--kv-grow`](/blog/local-inference/local-recursive-self-inference-improvement/)) while enforcing Thinking Mode sampling server-side.
+- **November ([Unsloth Dynamic V3.1 UD-IQ2_XS](/blog/local-inference/unsloth-dynamic-vs-gsq-quants/)):** Moving to UD-IQ2_XS gained **+11.5 points on DeepSWE** (58.4 vs 46.9) at the same fast-RAM budget. Raising the CPU prefill share limit to 3,072 tokens and porting upstream's `STRATA_ADAPT_FETCH` switch (which admits fetched experts into idle resident slots) brought decode back from 55.6 to **70.4 tok/s** and the cache hit rate from 46.6% to 67.2%. The switch changes cache residency, not routing or weights; Strata's [cache-parity test](https://github.com/Niko1221/Strata/blob/30ec18ec7094550fcc594fd948220d511d80464e/bench/results/2026-09-27-cache-parity/README.md) measured that class of change as accuracy-neutral.
 {% endupdate %}
 
 ## Where I was
@@ -43,11 +37,11 @@ strata serve:
     (174835 hits / 236824 lookups)
 ```
 
-Same card, same box, with a 128k KV cache preallocated and a 60k-token prompt loaded: **53.2 tok/s decode** and **2,013 tok/s prefill** out of the box, climbing to **74.8 tok/s** on regular coding sessions after my October tuning. Here's how I run it in Strata, how its per-expert memory cache works, how greedy decoding compares against real Thinking Mode sampling, and what I still can't conclude. The broader argument about why single-model engines like this are showing up is in the companion essay, [The Rise of Overfit Inference Engines](/blog/local-inference/the-rise-of-overfit-inference-engines/).
+Same card, same box, with a 128k KV cache preallocated and a 60k-token prompt loaded: **53.2 tok/s decode** and **2,013 tok/s prefill** out of the box, climbing past **70 tok/s** on regular coding sessions after tuning. The broader argument about why single-model engines like this are showing up is in the companion essay, [The Rise of Overfit Inference Engines](/blog/local-inference/the-rise-of-overfit-inference-engines/).
 
 ## The headline numbers
 
-Against my best llama.cpp setup, Strata is **more than twice as fast** in sustained decode out of the box, and **nearly 3.6× faster** once the n-gram table is swapped to full precision:
+Against my best llama.cpp setup, Strata is **more than twice as fast** in sustained decode out of the box, and **over 3× faster** once the n-gram table is swapped to full precision:
 
 | Checkpoint | Decode (tok/s) | vs llama.cpp master (20.8) | vs llama.cpp MTP (27.06) |
 | --- | ---: | ---: | ---: |
@@ -61,11 +55,9 @@ Against my best llama.cpp setup, Strata is **more than twice as fast** in sustai
 | lean fork + `--kv-grow` (DDR5-5200) | 73.5 | 3.5× | 2.7× |
 | **UD-IQ2_XS + CPU share + `ADAPT_FETCH` (current)** | **70.4** | **3.4×** | **2.6×** |
 
-The fork checkpoints are the ones I maintain myself (`carteakey/strata-lean`). It prunes the Metal, SYCL and ROCm backends, pins `CMAKE_CUDA_ARCHITECTURES=89`, and carries the Ada sm_89 MMVQ table, the fused QSA RMSNorm + RoPE, and strict routing (`STRATA_ROUTE_TAIL_SKIP=0`). `--kv-grow` then hands the unmapped KV pages to the expert cache, and `ADAPT_FETCH` admits fetched experts into it instead of discarding them. The last three rows are the same fork at three points, not three different engines.
+The last three rows run on my `carteakey/strata-lean` fork, which prunes non-CUDA backends, pins Ada `sm_89`, and adds [`--kv-grow`](/blog/local-inference/local-recursive-self-inference-improvement/) (handing unmapped KV pages to the expert cache) and `ADAPT_FETCH` (admitting fetched experts into idle cache slots).
 
-Context length makes that gap even wider in practice. Both llama.cpp baselines were recorded on short prompts, and the llama.cpp MTP setup drops below plain master once you widen the context window past 16k. Strata preallocates the full 128k `k8v4` KV cache in VRAM at startup, and its 53.2 tok/s sweep run had nearly sixty thousand tokens actively sitting in context.
-
-One important caveat to keep in mind throughout this post: **the rows aren't all the same quantization**. The llama.cpp baselines use AtomicChat's 4.27-bit build, the Strata rows through 2026-10-18 use ISTA-DASLab's 3-bit IQ3_XXS, and the current row uses Unsloth's UD-IQ2_XS. They don't move the same number of bytes per token and won't produce identical outputs, so this is a comparison of complete serving setups, not a single-variable test.
+Context length widens that gap further: both llama.cpp baselines were recorded on short prompts, and the llama.cpp MTP branch drops below plain master past 16k context, whereas Strata's 53.2 tok/s sweep had nearly 60,000 tokens sitting in context. Note that **the rows don't all use the same quantization** (AtomicChat 4.27-bit on llama.cpp vs ISTA-DASLab IQ3_XXS and [Unsloth UD-IQ2_XS](/blog/local-inference/unsloth-dynamic-vs-gsq-quants/) on Strata), so this compares complete serving setups rather than a single isolated variable.
 
 {% diagram_card {
   src: "./src/static/img/diagrams/qwen38-flash-next-throughput-comparison.png",
@@ -119,13 +111,12 @@ engine/strata \
   --kv k8v4
 ```
 
-Here's what those flags actually do:
 - `--expert-cache auto` and `--expert-profile` seed VRAM with the hottest experts across all layers and adapt residency online while you chat.
 - `--ple-gguf` memory-maps Shard 2 straight from NVMe so the n-gram table doesn't touch GPU VRAM.
 - `--kv k8v4 --max-context 131072` quantizes keys to 8-bit and values to 4-bit, preallocating a full 128k context window inside the card's VRAM budget.
 - `--spec 4 --mtp` runs the model's native MTP head in VRAM to verify up to three draft tokens in a single forward pass.
 
-Also keep in mind that Strata is a young solo-developer project that pins host RAM and runs custom CUDA kernels. I build it from a local source checkout rather than running a downloaded binary as an opaque appliance. If you try it, pin a commit hash and read the diff before updating.
+Strata is a young solo-developer project that pins host RAM and runs custom CUDA kernels. I build it from a local source checkout rather than running a downloaded binary as an opaque appliance; if you try it, pin a commit hash and read the diff before updating.
 
 ## How Strata lays out memory (vs `llama.cpp`)
 
@@ -145,11 +136,9 @@ That works because MoE routing isn't uniform. Caching just 13% of the total expe
 
 ### What a 75% cache hit rate actually means
 
-A common misconception is that a 75% cache hit rate means three out of four tokens run purely on the GPU. It doesn't.
+A 75% cache hit rate doesn't mean three out of four tokens run purely on the GPU. Because Qwen routes ten experts per layer across all 48 layers, every token requires **480 individual expert lookups** (~800 MiB of expert weights). A 75% hit rate means about 360 of those lookups happen directly in VRAM while the remaining ~120 misses fall back to host DDR5. Almost every token still touches the CPU - it just moves about a quarter of the weight bytes it used to, while Strata overlaps CPU worker threads and async PCIe streaming with GPU compute.
 
-Because Qwen routes ten experts per layer across all 48 layers, every single token requires **480 individual expert lookups** (roughly 800 MiB of expert weights). A 75% hit rate means about 360 of those lookups happen directly in fast VRAM, while the remaining ~120 misses fall back to host DDR5. Almost every token still touches the CPU - it just moves about a quarter of the weight bytes it used to, while Strata overlaps CPU worker threads and async PCIe streaming with GPU compute.
-
-Watch your host RAM headroom, though. The pinned arena in DDR5 holds the full copy of every expert (the hot set in VRAM is a duplicate), and the page-cached n-gram rows bring total host memory in use to **52.5 GB** during real tool calls, leaving about 11.5 GB for the OS and desktop.
+Watch your host RAM headroom: the pinned arena in DDR5 holds the full copy of every expert (the hot set in VRAM is a duplicate), and the page-cached n-gram rows bring total host memory in use to **52.5 GB** during real tool calls, leaving about 11.5 GB for the OS and desktop.
 
 {% image_cc "./src/static/img/local-inference/strata-qwen38-flash-next-dashboard.png", "Live Strata runtime telemetry dashboard running Qwen3.8-Flash-Next on an NVIDIA GeForce RTX 4070 with 12GB VRAM", "w-full border border-surface-border my-6", "Live Strata telemetry on the RTX 4070: 67.6 tok/s decode, 1,959 tok/s prefill, 3,086 experts cached in VRAM (5.0 GB), and 52.5 GB of host RAM in use during a real agentic session." %}
 
@@ -171,19 +160,35 @@ Short-prompt benchmarks are easy to fake, so I wrote a long-context harness (sav
 | 59,787 | 2,013.0 | 512 | 53.2 | 73.7% | 73.8% | Not saved | 11,710 MiB |
 {% endwide %}
 
-Decode stays remarkably flat across the entire sweep, and VRAM never budges because the 128k KV cache is preallocated at startup. Prefill actually speeds up on longer prompts because Strata evaluates context in 8,192-token chunks, climbing to **over 2,000 tok/s** by the end of the sweep (reading the full 60k prompt in under 30 seconds).
+Decode stays flat across the sweep, and VRAM never budges because the 128k KV cache is preallocated at startup. Prefill speeds up on longer prompts because Strata evaluates context in 8,192-token chunks, climbing past **2,000 tok/s** by the end of the sweep (reading the full 60k prompt in under 30 seconds). My earlier guess that the expert cache hit rate would climb as a conversation's vocabulary settled didn't pan out - the hit rate at 60k is slightly below the first row's.
 
-My earlier guess that the expert cache hit rate would climb as a conversation's vocabulary settled didn't pan out here - the hit rate at 60k is slightly below the first row's.
+The same numbers as a picture, with the November tier at the two sizes I re-measured on UD-IQ2_XS:
+
+{% chart {
+  type: "bars",
+  data: prefillSweep.points,
+  x: "label",
+  y: "value",
+  highlight: ["max", "2K IQ2", "8K IQ2"],
+  xTicks: 10,
+  kicker: "Prefill · RTX 4070 12GB",
+  title: "Prefill climbs to about 2,000 t/s and holds it",
+  source: "post sweep + 2026-11-07 refresh A/B",
+  n: 10,
+  range: "1K to 60K prompt tokens",
+  xLabel: "prompt tokens",
+  yLabel: "t/s"
+} %}
+
+The two IQ2 bars are the current tier at the same prompt sizes. At 2K it reads 1,116 tok/s against the old sweep's 1,089, because the CPU prefill share now covers chunks up to 3,072 tokens instead of 1,024. At 8K it reads 1,884 against 1,944, which is the cost of the smarter quant and the smaller expert cache, not the prompt path.
 
 ## Greedy decoding vs Thinking Mode sampling
 
-All of my initial context-sweep numbers above were recorded at temperature 0. That flatters speculative decoding, and it's worth understanding why before you copy a benchmark setup into daily coding use.
+All of my initial context-sweep numbers above were recorded at temperature 0, which flatters speculative decoding: under greedy decoding, a draft token is accepted whenever it matches the main model's top pick, and on deterministic code or technical prose the model's own MTP head matches that top pick constantly.
 
-Under greedy decoding, a draft token is accepted only if it matches the main model's single top pick. That sounds strict, but when the drafts come from the model's own trained MTP head on deterministic code or technical prose, they match that top pick constantly.
+Once you turn on non-zero temperature, [exact speculative sampling](https://arxiv.org/abs/2211.17192) uses rejection sampling to keep the output distribution identical to running the main model alone. Widening the sampling distribution lowers overlap and rejects more draft tokens, while running purely greedy on a reasoning model risks getting trapped in repetitive loops inside `<think>` blocks.
 
-Once you turn on non-zero temperature, [exact speculative sampling](https://arxiv.org/abs/2211.17192) uses rejection sampling to keep the output distribution mathematically identical to running the main model alone. A draft token is accepted with probability tied to how closely the draft and main-model distributions overlap. Widening the sampling distribution lowers that overlap and rejects more draft tokens, while running purely greedy on a reasoning model risks getting trapped in repetitive loops inside thinking blocks.
-
-To measure the real cost of proper sampling, I ran a head-to-head on a standardized four-prompt coding and reasoning harness comparing greedy decoding against Qwen's official Thinking Mode sampling (temperature 1.0, top-p 0.95, top-k 20, min-p 0.0):
+I ran a four-prompt coding and reasoning harness comparing greedy decoding against Qwen's official Thinking Mode sampling (temperature 1.0, top-p 0.95, top-k 20, min-p 0.0):
 
 | Decoding Mode | Steady Decode | MTP Draft Acceptance | Reasoning Behavior |
 | :--- | :---: | :---: | :--- |
@@ -191,9 +196,7 @@ To measure the real cost of proper sampling, I ran a head-to-head on a standardi
 | **Thinking Mode (temp 1.0, IQ4_NL PLE)** | 54.5 tok/s | 55.7% | Clean reasoning chains (-4.9% speed cost) |
 | **Thinking Mode (temp 1.0, Full Q8_0 PLE)** | **74.8 tok/s** | **78.2%** | Clean reasoning + higher draft agreement |
 
-Two takeaways stood out from that test:
-1. **Proper sampling only costs ~4.9% throughput** (2.8 tok/s), caused entirely by draft acceptance dropping from 68.9% to 55.7% against the wider stochastic distribution. Because Strata defaults to greedy whenever an API client omits sampling parameters, I enforce the Thinking Mode sampling block server-side in `strata-iq3_xxs.json`.
-2. **Swapping the n-gram PLE shard on NVMe from IQ4_NL to uncompressed Q8_0 more than makes up for it.** Cleaner per-layer n-gram embeddings keep the main model and the MTP draft head aligned even under temperature 1.0, pushing MTP draft acceptance up to **78.2%** and lifting steady decode to **74.8 tok/s** with zero extra VRAM.
+Because Strata defaults to greedy whenever an API client omits sampling parameters, I enforce the Thinking Mode sampling block server-side in `strata-iq3_xxs.json`. Swapping the n-gram PLE shard on NVMe from IQ4_NL to uncompressed Q8_0 more than recovers the small sampling cost, because cleaner per-layer n-gram embeddings keep the main model and the MTP draft head aligned even under temperature 1.0.
 
 {% callout "note", "What this does not prove yet" %}
 - **Different quants:** Part of Strata's speed comes from moving 3-bit weights instead of 4.27-bit weights. Both passed my five-question coding and math smoke test, and [Strata's upstream cache-parity test](https://github.com/Niko1221/Strata/blob/30ec18ec7094550fcc594fd948220d511d80464e/bench/results/2026-09-27-cache-parity/README.md) reports high top-1 agreement on an RTX 5070, but I haven't run a matched perplexity or KL-divergence test across both engines yet.
@@ -207,6 +210,7 @@ What it does show: on this exact card, Strata serves a 176B model at 53 to 75 to
 
 | Date | Note |
 | --- | --- |
+| 2026-11-09 | Added the prefill chart: the 1K to 60K sweep with the current tier at 2K and 8K. |
 | 2026-11-07 | Moved to UD-IQ2_XS (+11.5 pt DeepSWE, decode 59.7 tok/s), raised the CPU prefill share to 3,072 tokens (2K prefill 939 → 1,116 tok/s), and ported `STRATA_ADAPT_FETCH=1` (decode 55.6 → 70.4 tok/s, hit rate 46.6% → 67.2%). |
 | 2026-10-18 | Added DDR5-5800 scaling (65.8 tok/s) and uncompressed Q8_0 PLE on NVMe (74.8 tok/s text, 73.3 tok/s vision, 0 MiB extra VRAM). |
 | 2026-10-16 | Measured Thinking Mode sampling vs greedy decoding (57.3 → 54.5 tok/s, -4.9% penalty) and enforced sampling defaults server-side. |
