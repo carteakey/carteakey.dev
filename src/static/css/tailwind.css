@@ -2108,15 +2108,6 @@ picture img {
     color: var(--accent-color);
   }
 
-  /* Mobile footer links are the only place these targets appear at touch size:
-     give them a 48px row so Lighthouse's tap-target audit has room to pass. */
-  @media (max-width: 767px) {
-    .footer-nav-link {
-      min-height: 3rem;
-      padding-block: 0.5rem;
-    }
-  }
-
   .dark .footer-nav-link {
     color: rgb(212 212 216 / 1);
   }
@@ -4273,6 +4264,7 @@ picture img {
     font-weight: 700;
     color: rgb(17 24 39);
     width: 1%;
+    max-width: none;
     white-space: nowrap;
   }
 
@@ -4363,50 +4355,34 @@ picture img {
   @media (max-width: 767px) {
     .site-content .table-scroll {
       background:
-        linear-gradient(90deg, rgb(251 250 246) 30%, rgb(251 250 246 / 0)) left center / 1.8rem 100% no-repeat,
-        linear-gradient(270deg, rgb(251 250 246) 30%, rgb(251 250 246 / 0)) right center / 1.8rem 100% no-repeat;
+        linear-gradient(90deg, rgb(251 250 246) 30%, rgb(251 250 246 / 0)) left center / 1.2rem 100% no-repeat,
+        linear-gradient(270deg, rgb(251 250 246) 30%, rgb(251 250 246 / 0)) right center / 1.2rem 100% no-repeat;
     }
 
     .dark .site-content .table-scroll {
       background:
-        linear-gradient(90deg, rgb(20 20 20) 30%, rgb(20 20 20 / 0)) left center / 1.8rem 100% no-repeat,
-        linear-gradient(270deg, rgb(20 20 20) 30%, rgb(20 20 20 / 0)) right center / 1.8rem 100% no-repeat;
+        linear-gradient(90deg, rgb(20 20 20) 30%, rgb(20 20 20 / 0)) left center / 1.2rem 100% no-repeat,
+        linear-gradient(270deg, rgb(20 20 20) 30%, rgb(20 20 20 / 0)) right center / 1.2rem 100% no-repeat;
     }
 
     .site-content .table-scroll > table {
-      width: 100%;
-      min-width: 36rem;
+      min-width: 100%;
+      width: max-content;
+      font-size: 0.78rem;
     }
 
     .site-content th,
     .site-content td {
-      max-width: 18rem;
+      padding: 0.45em 0.65em;
+      max-width: 20rem;
       white-space: normal;
       vertical-align: top;
     }
 
     .site-content th,
-    .site-content td:first-child {
+    .site-content tbody td:first-child {
+      max-width: none;
       white-space: nowrap;
-    }
-
-    .site-content th:first-child,
-    .site-content td:first-child {
-      position: sticky;
-      left: 0;
-      z-index: 1;
-      background: rgb(251 250 246);
-      box-shadow: 1px 0 0 rgb(229 223 211 / 0.95);
-    }
-
-    .site-content th:first-child {
-      z-index: 2;
-    }
-
-    .dark .site-content th:first-child,
-    .dark .site-content td:first-child {
-      background: rgb(20 20 20);
-      box-shadow: 1px 0 0 rgb(63 63 70 / 0.95);
     }
   }
 
@@ -4935,11 +4911,12 @@ picture img {
 
   .dark .wide-wrap { background: rgb(20 20 20); }
 
-  /* Table sizes to its content, capped at the scroll container's padding-box */
+  /* Table sizes to its content inside the scrollable wrapper */
   .wide-wrap table {
     margin: 1em auto;
-    width: auto;
-    max-width: 100%;
+    width: max-content;
+    min-width: 100%;
+    max-width: none;
     border-collapse: separate;
     border-spacing: 0;
     font-size: 0.82rem;
@@ -4958,7 +4935,7 @@ picture img {
     padding: 0.58em 0.85em;
     vertical-align: top;
     max-width: 22rem;           /* cap any single cell so long prose wraps */
-    overflow-wrap: break-word;
+    overflow-wrap: normal;
   }
 
   .wide-wrap table th {
@@ -4971,6 +4948,7 @@ picture img {
     border-bottom: 1px solid rgb(214 207 193 / 0.95);
     color: rgb(82 82 91);
     background: rgb(251 250 246 / 0.94);
+    max-width: none;
     white-space: nowrap;        /* headers stay on one line */
   }
 
@@ -4984,6 +4962,7 @@ picture img {
     font-weight: 700;
     color: rgb(17 24 39);
     width: 1%;
+    max-width: none;
     white-space: nowrap;
   }
 
@@ -5009,47 +4988,34 @@ picture img {
       padding: 0;
       border: 1px solid rgb(229 223 211 / 0.95);
       background:
-        linear-gradient(90deg, rgb(251 250 246) 30%, rgb(251 250 246 / 0)) left center / 1.8rem 100% no-repeat,
-        linear-gradient(270deg, rgb(251 250 246) 30%, rgb(251 250 246 / 0)) right center / 1.8rem 100% no-repeat;
+        linear-gradient(90deg, rgb(251 250 246) 30%, rgb(251 250 246 / 0)) left center / 1.2rem 100% no-repeat,
+        linear-gradient(270deg, rgb(251 250 246) 30%, rgb(251 250 246 / 0)) right center / 1.2rem 100% no-repeat;
     }
 
     .dark .wide-wrap {
       border-color: rgb(63 63 70 / 0.95);
       background:
-        linear-gradient(90deg, rgb(20 20 20) 30%, rgb(20 20 20 / 0)) left center / 1.8rem 100% no-repeat,
-        linear-gradient(270deg, rgb(20 20 20) 30%, rgb(20 20 20 / 0)) right center / 1.8rem 100% no-repeat;
+        linear-gradient(90deg, rgb(20 20 20) 30%, rgb(20 20 20 / 0)) left center / 1.2rem 100% no-repeat,
+        linear-gradient(270deg, rgb(20 20 20) 30%, rgb(20 20 20 / 0)) right center / 1.2rem 100% no-repeat;
     }
 
     .wide-wrap table {
       margin: 0;
       max-width: none;
-      min-width: max-content;
+      min-width: 100%;
+      width: max-content;
       font-size: 0.78rem;
     }
 
     .wide-wrap table th,
     .wide-wrap table td {
-      max-width: 18rem;
-      padding: 0.48em 0.7em;
+      max-width: 20rem;
+      padding: 0.45em 0.65em;
     }
 
-    .wide-wrap table th:first-child,
-    .wide-wrap table td:first-child {
-      position: sticky;
-      left: 0;
-      z-index: 1;
-      background: rgb(251 250 246);
-      box-shadow: 1px 0 0 rgb(229 223 211 / 0.95);
-    }
-
-    .wide-wrap table th:first-child {
-      z-index: 2;
-    }
-
-    .dark .wide-wrap table th:first-child,
-    .dark .wide-wrap table td:first-child {
-      background: rgb(20 20 20);
-      box-shadow: 1px 0 0 rgb(63 63 70 / 0.95);
+    .wide-wrap table th,
+    .wide-wrap table tbody td:first-child {
+      max-width: none;
     }
   }
 

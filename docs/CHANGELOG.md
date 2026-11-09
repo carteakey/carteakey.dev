@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.9.12] - 2026-11-09
+### Fixed
+- Footer: removed the 48px touch-target height rule from `.footer-nav-link` under `@media (max-width: 767px)`, restoring compact, dense navigation rows on mobile.
+
+### Changed
+- Tables: polished mobile `.table-scroll` and `.wide-wrap` styling with `width: max-content`, `min-width: 100%`, refined cell padding, and tighter edge fades without awkward sticky columns on mobile.
+- Prose de-stuffing: completed round two across technical posts (`herding-multi-agent-teams`, `alvidaa`, `running-qwen3-8-flash-next-locally`, `the-rise-of-overfit-inference-engines`, `strata-on-an-rtx-4070`, `local-recursive-self-inference-improvement`, and `unsloth-dynamic-vs-gsq-quants`), evicting commit-hash soup, collapsing stacked updates, and removing formulaic closers.
+- Skills & testing: updated `human-writer` and `visual-check` skills with guidelines against synthetic closers and mislabeled frontmatter, and brought `1990-01-01-template.md` up to date as the canonical stress-test post for all site features.
+
 ## [2.9.11] - 2026-11-07
 ### Added
 - Projects: Herding (native Rust + GPUI client for Herdr) and alvidaa (self-installing VIDAA launcher and root path) cards in Current work, each with new card art (`alvidaa.png` flattened from the post sketch, `herding.png` composited on paper).
