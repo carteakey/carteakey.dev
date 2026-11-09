@@ -338,6 +338,14 @@ Spatial structure in a post (tiers, pipelines, loops, comparisons) is drawn, not
 
 Charts and structured figures render through the shared `.data-card` / `.chart-*` classes: flat, square, accent-led, mono kicker, display title. Do not hand-write them in post markdown. Pages and posts share one renderer, `{% chart %}` (build-time SVG, no Chart.js). Its grammar is "ink and dots": grey context, one accent for the point, hairline axes, halftone dots for areas and heatmaps, and Fraunces italic notes on a hand-drawn leader. The title states the finding, and the footer gives source, n and range. `/lab/charts/` shows every type.
 
+#### Working Guideline: Native SVG vs. Excalidraw Sketches (Lab Ledger vs. Whiteboard)
+
+We use both build-time SVG (`{% chart %}`) and hand-drawn Excalidraw (`chart-to-excalidraw.mjs`), sometimes interchangeably. The split is still evolving, so treat this as a practical guideline rather than a strict boundary:
+
+- **Reach for Native SVG (`{% chart %}`)** when presenting empirical measurements, benchmark tables, hardware evaluations, or dense time series where reader inspection, selectable text, and raw data tables add rigor.
+- **Reach for Excalidraw sketches** when presenting mental models, decision trees, architecture pipelines, conceptual curves, or personal workbench snapshots (like the `/now/` shipping section) where whiteboard marker lines and authored hand-feel fit the narrative.
+- **Pairing consistency:** When placing visual data elements side-by-side or within a single card block, keep them in the same medium so their proportions, titles, and baselines stay balanced.
+
 ### Lists
 
 Lists are first-class.

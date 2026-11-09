@@ -62,36 +62,21 @@ collectionArchetype: ledger
   <div class="flex items-baseline justify-between gap-4 border-b border-gray-200 pb-2 dark:border-gray-800">
     <h2 class="editorial-kicker">Shipping</h2>
   </div>
-  <p class="editorial-support mt-3 mb-6">Commits I made across my own repos, by month. The counts include private repos; the code stays on the machine.</p>
+  <p class="editorial-support mt-3 mb-6">Commits and pull requests across my own repos, by month. The counts include private repos; the code stays on the machine.</p>
 
-  {% chart {
-    type: "line",
-    data: commitActivity.months,
-    x: "month",
-    y: "commits",
-    kicker: "All repos · commits by month",
-    title: "October was the heaviest month at 436 commits",
-    highlight: ["2026-10"],
-    source: commitActivity.sourceLabel,
-    n: commitActivity.total,
-    range: commitActivity.monthsLabel,
-    xLabel: "month"
-  } %}
-
-  {% chart {
-    type: "rank",
-    data: commitActivity.top,
-    x: "repo",
-    y: "commits",
-    limit: 8,
-    highlight: [0, 1],
-    kicker: "Where the commits went",
-    title: "The blog and l3ms are two thirds of the work",
-    source: "git log --author, all time",
-    total: commitActivity.total,
-    n: commitActivity.total,
-    range: "Oct 2022 – Nov 2026"
-  } %}
+  {%- set ca = commitActivity -%}
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+    <div>
+      {%- set shipAlt = "Hand-drawn line charts, " ~ ca.monthsLabel ~ ". Top: commits per month, peaking in " ~ ca.peak.name ~ " at " ~ ca.peak.commits ~ ", " ~ ca.monthsCommits ~ " in total. Bottom: pull requests opened per month, " ~ ca.monthsPrs ~ " in total. The current month is drawn dashed because it is still in progress." -%}
+      {%- set shipCaption = ca.peak.name ~ " was the heaviest month at " ~ ca.peak.commits ~ " commits. PRs stay low because most of this lands straight on main; the dashed tail is the month so far." -%}
+      {% image_cc "./src/static/img/diagrams/now-shipping-trend.png", shipAlt, "sketch-draw", shipCaption %}
+    </div>
+    <div>
+      {%- set reposAlt = "Hand-drawn horizontal bar chart showing commits by repository for " ~ ca.latestMonth.name ~ (", so far." if ca.latestMonth.partial else ".") ~ " Led by " ~ ca.latestMonth.top[0].repo ~ " with " ~ ca.latestMonth.top[0].commits ~ " commits." -%}
+      {%- set reposCaption = ca.latestMonth.name ~ (" so far: " if ca.latestMonth.partial else ": ") ~ ca.latestMonth.total ~ " commits across " ~ ca.latestMonth.top.length ~ " active repos. Led by " ~ ca.latestMonth.top[0].repo ~ " (" ~ ca.latestMonth.top[0].commits ~ ") and " ~ ca.latestMonth.top[1].repo ~ " (" ~ ca.latestMonth.top[1].commits ~ ")." -%}
+      {% image_cc "./src/static/img/diagrams/now-shipping-repos.png", reposAlt, "sketch-draw", reposCaption %}
+    </div>
+  </div>
 </section>
 
 <section class="mt-10 space-y-8 not-prose">

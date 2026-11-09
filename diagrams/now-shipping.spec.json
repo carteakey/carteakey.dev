@@ -1,0 +1,106 @@
+{
+  "title": "Shipping activity · 14-month trend",
+  "width": 780,
+  "panelHeight": 250,
+  "gap": 100,
+  "labels": [
+    {
+      "lbl": "Oct",
+      "sub": "2025"
+    },
+    {
+      "lbl": "Nov"
+    },
+    {
+      "lbl": "Dec"
+    },
+    {
+      "lbl": "Jan",
+      "sub": "2026"
+    },
+    {
+      "lbl": "Feb"
+    },
+    {
+      "lbl": "Mar"
+    },
+    {
+      "lbl": "Apr"
+    },
+    {
+      "lbl": "May"
+    },
+    {
+      "lbl": "Jun"
+    },
+    {
+      "lbl": "Jul"
+    },
+    {
+      "lbl": "Aug"
+    },
+    {
+      "lbl": "Sep"
+    },
+    {
+      "lbl": "Oct"
+    },
+    {
+      "lbl": "Nov",
+      "sub": "so far"
+    }
+  ],
+  "panels": [
+    {
+      "name": "commits / month",
+      "maxY": 600,
+      "step": 100,
+      "values": [
+        42,
+        0,
+        1,
+        25,
+        110,
+        108,
+        126,
+        41,
+        79,
+        219,
+        119,
+        280,
+        436,
+        154
+      ],
+      "accent": true,
+      "highlight": [
+        12
+      ],
+      "partialLast": true
+    },
+    {
+      "name": "pull requests opened / month",
+      "maxY": 40,
+      "step": 10,
+      "values": [
+        10,
+        0,
+        2,
+        1,
+        1,
+        0,
+        15,
+        3,
+        2,
+        6,
+        34,
+        6,
+        19,
+        6
+      ],
+      "highlight": [
+        10
+      ],
+      "partialLast": true
+    }
+  ]
+}

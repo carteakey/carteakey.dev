@@ -549,6 +549,8 @@ drift the way they do with an image model.
 Tried and verified on the Qwen3.8-27B vs Flash-Next post: a 7-box/6-arrow
 decision tree and a 5-bar speed chart, both correct on the first run.
 
+> **Working Guideline (Native SVG vs. Excalidraw):** The split between native SVG (`{% chart %}`) and Excalidraw is a practical rule of thumb, not a hard barrier. Lean toward Native SVG for empirical measurements, dense time series, and collapsible data tables; lean toward Excalidraw for architecture diagrams, mental model curves, and personal workbench summaries (like the `/now/` shipping charts). When charts appear side-by-side, keep them in the same medium so their proportions and titles balance.
+
 ## Setup (no install, no MCP config, no GPU)
 
 Pin the version; `npx -y` otherwise runs whatever is latest. Run from a scratch

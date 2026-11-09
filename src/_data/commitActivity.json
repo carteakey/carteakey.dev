@@ -1,76 +1,140 @@
 {
-  "generated": "2026-11-07",
+  "generated": "2026-11-09",
   "author": "Kartikey",
-  "repos": 15,
-  "total": 2000,
-  "sourceLabel": "git log --author, 15 repos",
+  "repos": 17,
+  "total": 2063,
+  "since": "Oct 2022",
+  "sourceLabel": "git log --author, 17 repos",
   "months": [
     {
       "month": "2025-10",
-      "commits": 42
+      "commits": 42,
+      "prs": 10
     },
     {
       "month": "2025-11",
-      "commits": 0
+      "commits": 0,
+      "prs": 0
     },
     {
       "month": "2025-12",
-      "commits": 1
+      "commits": 1,
+      "prs": 2
     },
     {
       "month": "2026-01",
-      "commits": 25
+      "commits": 25,
+      "prs": 1
     },
     {
       "month": "2026-02",
-      "commits": 110
+      "commits": 110,
+      "prs": 1
     },
     {
       "month": "2026-03",
-      "commits": 108
+      "commits": 108,
+      "prs": 0
     },
     {
       "month": "2026-04",
-      "commits": 126
+      "commits": 126,
+      "prs": 15
     },
     {
       "month": "2026-05",
-      "commits": 41
+      "commits": 41,
+      "prs": 3
     },
     {
       "month": "2026-06",
-      "commits": 79
+      "commits": 79,
+      "prs": 2
     },
     {
       "month": "2026-07",
-      "commits": 219
+      "commits": 219,
+      "prs": 6
     },
     {
       "month": "2026-08",
-      "commits": 119
+      "commits": 119,
+      "prs": 34
     },
     {
       "month": "2026-09",
-      "commits": 280
+      "commits": 280,
+      "prs": 6
     },
     {
       "month": "2026-10",
-      "commits": 436
+      "commits": 436,
+      "prs": 19
     },
     {
       "month": "2026-11",
-      "commits": 91
+      "commits": 154,
+      "prs": 6,
+      "partial": true
     }
   ],
   "monthsLabel": "2025-10 to 2026-11",
+  "monthsCommits": 1740,
+  "monthsPrs": 105,
+  "peak": {
+    "month": "2026-10",
+    "name": "October",
+    "commits": 436
+  },
+  "latestMonth": {
+    "month": "2026-11",
+    "name": "November",
+    "partial": true,
+    "total": 154,
+    "top": [
+      {
+        "repo": "alvidaa",
+        "commits": 47
+      },
+      {
+        "repo": "carteakey.dev",
+        "commits": 43
+      },
+      {
+        "repo": "crt-cabinet",
+        "commits": 27
+      },
+      {
+        "repo": "lytte",
+        "commits": 14
+      },
+      {
+        "repo": "context-backup",
+        "commits": 11
+      },
+      {
+        "repo": "l3ms",
+        "commits": 9
+      },
+      {
+        "repo": "l2m2-nsfw",
+        "commits": 2
+      },
+      {
+        "repo": "tokemon",
+        "commits": 1
+      }
+    ],
+    "topTwoShare": 58
+  },
   "top": [
     {
       "repo": "carteakey.dev",
-      "commits": 957
+      "commits": 960
     },
     {
       "repo": "l3ms",
-      "commits": 392
+      "commits": 394
     },
     {
       "repo": "homelabbr",
@@ -89,6 +153,10 @@
       "commits": 51
     },
     {
+      "repo": "alvidaa",
+      "commits": 47
+    },
+    {
       "repo": "agentdex",
       "commits": 30
     },
@@ -99,11 +167,8 @@
     {
       "repo": "18-dawns",
       "commits": 24
-    },
-    {
-      "repo": "qualms",
-      "commits": 22
     }
   ],
-  "topTotal": 1932
+  "topTotal": 1962,
+  "topTwoShare": 66
 }

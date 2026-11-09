@@ -9,8 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Projects: Herding (native Rust + GPUI client for Herdr) and alvidaa (self-installing VIDAA launcher and root path) cards in Current work, each with new card art (`alvidaa.png` flattened from the post sketch, `herding.png` composited on paper).
 - Blog: added hidden post "Herding: Designing Multi-Agent Teams That Self-Improve Across Any Harness" (`src/posts/2026-11-03-herding-multi-agent-teams.md`) documenting the Herdr UI multi-agent architecture, the 29-commit self-improvement sprint, and the product roadmap.
-- Now: a "Shipping" section with a monthly commit-activity line chart and a top-repos rank chart, fed by `src/_data/commitActivity.json` from the new `utils/commit-activity.mjs` generator (counts only, run locally).
+- Now: a "Shipping" section with side-by-side hand-drawn Excalidraw charts for 14-month commit/PR trends and latest-month repo breakdown, fed by `src/_data/commitActivity.json` from the new `utils/commit-activity.mjs` generator and rendered via headless Excalidraw.
 - Strata post: November checkpoint (UD-IQ2_XS, CPU prefill share limit, `STRATA_ADAPT_FETCH` port taking decode from 55.6 to 70.4 tok/s) and the full decode progression table.
+- Design: documented the working guideline for Native SVG (`{% chart %}`) vs Excalidraw sketches (Lab Ledger vs Whiteboard) across `DESIGN_LANGUAGE.md`, `dataviz`, and `sketches` skills.
 
 ### Changed
 - alvidaa posts: tightened `alvidaa` (`4,426 → 3,590 words`) and `alvidaa-firmware-telemetry` (`1,685 → 1,383 words`) for readability, folded in the on-TV Go launcher daemon (`alvidaa-bridge`), Cobalt `<canvas>` cache findings, and the 16-model / 7-SoC matrix, and aligned the top callout with `VIDAA-PSIRT-2026-005` and the OTA update tradeoff.

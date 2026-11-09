@@ -30,6 +30,12 @@ All charts on `carteakey.dev` render at build time as pure SVG through `utils/ch
    - Axis ticks and metadata: Mono (`ui-monospace, SFMono-Regular, Menlo, monospace`).
    - Annotations & Notes: Fraunces italic on a hand-drawn leader line and ink ring.
 
+### 🧭 Working Guideline: Native SVG vs. Excalidraw Sketches
+We use both Native SVG (`{% chart %}`) and hand-drawn Excalidraw (`chart-to-excalidraw.mjs`). Treat this as a flexible guide, not a rigid boundary:
+- **Native SVG (`{% chart %}`):** Lean toward this for empirical benchmarks, data tables, multi-seed metrics, or large datasets where reader verification, copyable text, and collapsible data tables matter.
+- **Excalidraw sketches:** Lean toward this for conceptual curves, architecture mental models, decision trees, and authored workbench moments (like `/now/`).
+- **Visual parity:** When placing charts side-by-side, keep them in the same medium so their titles, baselines, and heights balance naturally.
+
 ---
 
 ## 🛠 Usage in Templates and Posts

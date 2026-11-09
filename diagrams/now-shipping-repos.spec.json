@@ -1,0 +1,46 @@
+{
+  "title": "November so far · commits by repo",
+  "unit": "commits",
+  "max": 60,
+  "step": 10,
+  "scale": 5.833333333333333,
+  "ax": 240,
+  "bars": [
+    {
+      "label": "alvidaa",
+      "value": 47,
+      "text": "47",
+      "accent": true
+    },
+    {
+      "label": "carteakey.dev",
+      "value": 43,
+      "text": "43",
+      "accent": true
+    },
+    {
+      "label": "crt-cabinet",
+      "value": 27,
+      "text": "27",
+      "accent": false
+    },
+    {
+      "label": "lytte",
+      "value": 14,
+      "text": "14",
+      "accent": false
+    },
+    {
+      "label": "context-backup",
+      "value": 11,
+      "text": "11",
+      "accent": false
+    },
+    {
+      "label": "l3ms",
+      "value": 9,
+      "text": "9",
+      "accent": false
+    }
+  ]
+}
