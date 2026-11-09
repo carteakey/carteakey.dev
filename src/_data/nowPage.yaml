@@ -4,14 +4,14 @@
 #
 # The reading section is populated separately from Goodreads plus
 # src/_data/reading-manual.yaml.
-lastUpdated: 2026-10-16T12:00:00-04:00
+lastUpdated: 2026-11-09T14:45:00-05:00
 
-highlights: []
+highlights:
+  - 'Rooted my Hisense TV (<a href="/blog/alvidaa/alvidaa/">alvidaa</a>) to block its telemetry, run Doom, and replace the ad home screen with an on-TV Go launcher - plus logged my first vendor advisory (<code>VIDAA-PSIRT-2026-005</code>).'
+  - 'Building <a href="/projects/">Herding</a>, a native Rust + GPUI desktop client for Herdr to run multi-agent workspaces and git worktrees without Electron.'
 
 updates:
-  - "Gave this site another coat of paint: Iosevka Aile for reading and Fraunces for titles, picked in a font lab that swaps fonts on the live pages."
-  - 'Still squeezing big models into a 12 GB RTX 4070. <a href="/blog/local-inference/strata-on-an-rtx-4070/">Strata</a> got Qwen3.8-Flash-Next to 53 tok/s at 60k context.'
-  - '<a href="/notes/gpu-longevity-and-clock-capping/">Capped the 4070</a> at 165 W and 2610 MHz to help it last: 6 °C cooler, no tok/s lost.'
-  - "Pushing L3MS, my keyboard-first local model workbench, toward a real release."
-  - "Sortling, the little wizard that sorts my WhatsApp media, just learned to tell illustrations apart."
-  - 'Setting up <a href="/devices/glowdesk/">Glowdesk</a>, a Batocera retro box under the TV.'
+  - 'Pushed <a href="/blog/local-inference/strata-on-an-rtx-4070/">Strata on the 12 GB 4070</a> from 53 up to <strong>70.4 tok/s</strong> on Qwen3.8-Flash-Next with <code>UD-IQ2_XS</code> and adaptive expert fetching.'
+  - 'Built a live Before/After readability diff workbench into this site and switched my writing skill from scripts to conventions (models Goodhart every script you give them).'
+  - 'Moved off Linear and my local vault: open dev work now lives in GitHub Issues, and shared agent context lives in Notion Forge with daily git snapshots.'
+  - 'Added the Shipping charts below to plot monthly commits and top repos across 17 local checkouts, and put <a href="/projects/">Sortling</a> on the projects wall.'
