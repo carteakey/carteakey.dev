@@ -323,16 +323,16 @@ These are the strongest and most frequent tells in current model prose. Act on o
 
 ### 4. Staged Run-Up Before the Point
 
-**Watch for:** Let's dive in, let's explore, let's break this down, here's what you need to know, now let's look at, without further ado, heads up, quick note, Honestly?, Look, Here's the thing, The thing is, Let's be honest, Real talk, and casual versions such as "one thing that bit me, so pay attention"
+**Watch for:** Worth saying plainly:, Worth noting:, To state it plainly:, To put it plainly:, Let's dive in, let's explore, let's break this down, here's what you need to know, now let's look at, without further ado, heads up, quick note, Honestly?, Look, Here's the thing, The thing is, Let's be honest, Real talk, and casual versions such as "one thing that bit me, so pay attention"
 **Problem:** The writer announces the point or stages a moment of candor instead of making the point. Remove the run-up.
 **Before:**
 > Let's dive into how caching works in Next.js. Here's what you need to know.
 **After:**
 > Next.js caches data at multiple layers, including request memoization, the data cache, and the router cache.
 **Before (staged candor):**
-> Is it worth the price? Honestly? It depends on how often you'll use it.
+> Worth saying plainly: they responded with a ticket number, an assessment of each finding, and a plan.
 **After:**
-> Whether it's worth the price depends on how often you'll use it.
+> They responded with a ticket number, an assessment of each finding, and a plan.
 
 ### 5. Arguing with No One
 
@@ -515,8 +515,8 @@ Every image caption ends on a quip. The author's captions are mostly plain, and 
 ### 29. Mic-Drop Section Endings
 Every section closes on a short, quotable line after the facts are done. This is §2 at section scale. End the section on the last fact.
 
-### 30. Setup Sentences
-Sentences that announce the next sentence ("Then came the comedy.", "Here's how it worked.") instead of saying something. Start with the fact.
+### 30. Setup Sentences and Staged-Candor Prefixes
+Sentences or prefixes that announce the next sentence or stage candor ("Then came the comedy.", "Here's how it worked.", "Worth saying plainly:", "To put it plainly:") instead of saying something. Delete the prefix and start with the fact.
 
 ### 31. Same Fact, Three Homes
 The same steps told in prose, again in a table, again in a timeline. Pick one home for each fact: tables hold detail, prose holds why, timelines hold order.

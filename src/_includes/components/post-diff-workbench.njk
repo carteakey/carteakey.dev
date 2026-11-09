@@ -348,7 +348,7 @@
         beforeSecs.forEach((bSec) => {
           let matchIdx = afterSecs.findIndex((aSec, idx) => !usedAfter.has(idx) && aSec.key === bSec.key);
           if (matchIdx === -1) {
-            // Try word overlap
+            // Try word overlap on heading titles
             const bWords = new Set(bSec.title.toLowerCase().split(/\W+/).filter((w) => w.length > 2));
             let bestScore = 0;
             afterSecs.forEach((aSec, idx) => {
@@ -357,6 +357,24 @@
               const overlap = aWords.filter((w) => bWords.has(w)).length;
               if (overlap > bestScore) {
                 bestScore = overlap;
+                matchIdx = idx;
+              }
+            });
+          }
+          if (matchIdx === -1) {
+            // Fall back to body content overlap when a vague heading was renamed
+            const bBody = new Set((bSec.text || "").toLowerCase().split(/\W+/).filter((w) => w.length > 4));
+            let bestRatio = 0.22;
+            afterSecs.forEach((aSec, idx) => {
+              if (usedAfter.has(idx)) return;
+              const aBody = new Set((aSec.text || "").toLowerCase().split(/\W+/).filter((w) => w.length > 4));
+              let shared = 0;
+              aBody.forEach((w) => {
+                if (bBody.has(w)) shared++;
+              });
+              const ratio = shared / Math.max(1, Math.min(bBody.size, aBody.size));
+              if (ratio > bestRatio) {
+                bestRatio = ratio;
                 matchIdx = idx;
               }
             });
