@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Projects: Herding (native Rust + GPUI client for Herdr) and alvidaa (self-installing VIDAA launcher and root path) cards in Current work, each with new card art (`alvidaa.png` flattened from the post sketch, `herding.png` composited on paper).
 - Blog: added hidden post "Herding: Designing Multi-Agent Teams That Self-Improve Across Any Harness" (`src/posts/2026-11-03-herding-multi-agent-teams.md`) documenting the Herdr UI multi-agent architecture, the 29-commit self-improvement sprint, and the product roadmap.
+- Now: a "Shipping" section with a monthly commit-activity line chart and a top-repos rank chart, fed by `src/_data/commitActivity.json` from the new `utils/commit-activity.mjs` generator (counts only, run locally).
+- Strata post: November checkpoint (UD-IQ2_XS, CPU prefill share limit, `STRATA_ADAPT_FETCH` port taking decode from 55.6 to 70.4 tok/s) and the full decode progression table.
 
 ### Changed
 - Gallery: masonry tiles now carry explicit pixel heights (184/278 px for 2- and 3-row spans) and a new unlayered `figure.gallery-figure` rule that opts them out of the global `figure { display: table }` caption styling. Tables content-size their height, which Firefox honoured and Chrome masked, so gallery tiles rendered short with images bleeding across rows in Firefox.
