@@ -27,9 +27,9 @@
       "accent": true
     },
     {
-      "label": "4070 fork · DDR5-5200 (stable)",
+      "label": "strata-lean · DDR5-5200 (stable)",
       "value": 69.6,
-      "text": "69.6 (PR #3453)",
+      "text": "69.6 (sm_89 MMVQ)",
       "accent": true
     },
     {
@@ -41,7 +41,13 @@
     {
       "label": "Full Q8_0 PLE · DDR5-5800 (OC)",
       "value": 74.8,
-      "text": "74.8 (uncompressed)",
+      "text": "74.8 (IQ3_XXS peak)",
+      "accent": true
+    },
+    {
+      "label": "UD-IQ2_XS + ADAPT_FETCH (served)",
+      "value": 70.4,
+      "text": "70.4 (+11.5 DeepSWE)",
       "accent": true
     }
   ]
