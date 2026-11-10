@@ -1,12 +1,12 @@
 # Rows for /ai/ (src/ai.njk). Three tiers by cost and capability:
-# A is a frontier subscription, B is cheap or free hosted usage, C is local.
-# `rank` is the model's grade on /folio/model-tier-list/; leave it out when
-# the model is not on the list. Supports `enabled: false`.
+# S is a frontier (SOTA) subscription, A is cheap or free hosted usage, B is local.
+# `rank` is the model's grade, matching /folio/model-tier-list/ where the
+# model is on it. Supports `enabled: false`.
 
 monthly: ~$35 / mo + free + local
 
 tiers:
-  - tier: A
+  - tier: S
     label: SOTA
     service: Claude Pro
     cost: $20 / mo
@@ -16,16 +16,17 @@ tiers:
         rank: S+
     harness: Claude Code
 
-  - tier: B
+  - tier: A
     label: Cheap hosted
     service: Mistral Vibe Pro
     cost: $15 / mo
     role: Main builder. The plan covers roughly $150–300 of API-equivalent usage, better value than OpenCode Go was, but the uptime is bad.
     models:
       - name: DeepSeek V4.1 Flash
+        rank: A
     harness: Vibe CLI
 
-  - tier: B
+  - tier: A
     label: Cheap hosted
     service: ZCode (global build)
     cost: Free daily tokens
@@ -35,7 +36,7 @@ tiers:
         rank: A
     harness: ZCode CLI
 
-  - tier: C
+  - tier: B
     label: Local
     service: Local Node (yeti-cachy)
     href: /devices/yeti-cachy/

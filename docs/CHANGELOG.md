@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [2.10.0] - 2026-11-10
 ### Changed
-- `/ai/` now describes the current workflow: three model tiers (Claude Opus 5.5 as orchestrator and reviewer, Mistral Vibe with DeepSeek V4.1 Flash and ZCode with GLM-5.3 Flash as cheap hosted workers, pi on the local Qwen3.8-Flash-Next as fallback), the Herding team-workflow experiment, and both Hermes agents with their fallback chains. ChatGPT Plus, Google AI Pro and OpenCode Go are gone from the stack.
+- `/ai/` now describes the current workflow: three model tiers, S, A and B (Claude Opus 5.5 as orchestrator and reviewer, Mistral Vibe with DeepSeek V4.1 Flash and ZCode with GLM-5.3 Flash as cheap hosted workers, pi on the local Qwen3.8-Flash-Next as fallback), the Herding team-workflow experiment, and both Hermes agents with their fallback chains. ChatGPT Plus, Google AI Pro and OpenCode Go are gone from the stack.
 - The stack table's rows moved out of hardcoded markup into `src/_data/aiStack.yaml`.
 
 ## [2.9.12] - 2026-11-09
