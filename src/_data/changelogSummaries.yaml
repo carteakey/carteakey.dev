@@ -3,8 +3,10 @@
 # summary show only the generated counts. src/_data/changelog.js reads this.
 
 2026-11: >-
-  Herding multi-agent teams on Herdr UI: cross-harness coordination across terminal panes,
-  durable SQLite state, and multi-agent self-improvement.
+  Herding multi-agent teams on Herdr UI (cross-harness coordination across terminal panes,
+  durable SQLite state, multi-agent self-improvement), plus a performance month: self-hosted
+  pixel font, AVIF post heroes, and layout-shift fixes on the feeds. The AI page was rewritten
+  around a three-tier model stack and the Hermes agents.
 
 2026-10: >-
   Charts moved to one build-time SVG renderer, so `/data/` and `/listening/` dropped Chart.js,

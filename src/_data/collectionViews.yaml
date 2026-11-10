@@ -303,7 +303,7 @@ ai:
   page: src/ai.njk
   archetype: ledger
   engine: false
-  why: An operating ledger of subscriptions, stack, prompts and skills.
+  why: An operating ledger of model tiers, team workflow, Hermes fallback chains, prompts and skills.
 
 bookmarks:
   page: src/bookmarks.njk

@@ -1,7 +1,7 @@
 ---
 layout: layouts/base.njk
 title: AI
-description: How I use AI in practice - subscriptions, local models, evaluation prompts, and skills.
+description: How I use AI in practice - model tiers, team workflow, Hermes agents, prompts, and skills.
 permalink: /ai/
 eleventyNavigation:
   key: AI
@@ -12,24 +12,26 @@ collectionArchetype: ledger
 {% include "components/breadcrumbs.njk" %}
 
 {% set pageTitle = "AI" %}
-{% set pageDescription = "How I actually use AI across engineering, writing, and local systems: my active subscriptions, local inference models on my <a href=\"/devices/yeti-cachy/\" class=\"accent-link\">RTX 4070 rig</a>, evaluation prompts, and skills." %}
+{% set pageDescription = "How I actually use AI across engineering, writing, and local systems: a three-tier model stack, a team workflow I'm testing, two Hermes agents with fallback chains, local inference on my <a href=\"/devices/yeti-cachy/\" class=\"accent-link\">RTX 4070 rig</a>, evaluation prompts, and skills." %}
 {% set pageActions = [
   { label: "Model Tier List →", href: "/folio/model-tier-list/", accent: true }
 ] %}
 {% include "components/page-header.njk" %}
 
-{# ── 1. Active Subscriptions & Operating Stack ── #}
-<section class="not-prose mb-12" aria-labelledby="subscriptions-heading">
+{# ── 1. Model tiers (rows in _data/aiStack.yaml) ── #}
+<section class="not-prose mb-12" aria-labelledby="tiers-heading">
   <div class="flex items-baseline justify-between gap-4 mb-3">
-    <h2 id="subscriptions-heading" class="editorial-title">Subscriptions & Daily Stack</h2>
-    <span class="meta-line">~$40 / mo + Local</span>
+    <h2 id="tiers-heading" class="editorial-title">Model Tiers</h2>
+    <span class="meta-line">{{ aiStack.monthly }}</span>
   </div>
+  <p class="editorial-support-compact mb-3">Three tiers by cost. A frontier model plans and reviews, cheap hosted models do the building, and a local model catches whatever falls through.</p>
 
   <div class="surface overflow-hidden">
     <div class="overflow-x-auto">
       <table class="w-full text-left border-collapse text-xs md:text-sm font-sans">
         <thead>
           <tr class="border-b border-gray-200 dark:border-gray-800 bg-stone-100/60 dark:bg-stone-900/60 font-mono text-[0.78rem] uppercase tracking-wider text-stone-600 dark:text-stone-400">
+            <th class="py-2.5 px-3 md:px-4 font-semibold">Tier</th>
             <th class="py-2.5 px-3 md:px-4 font-semibold">Service</th>
             <th class="py-2.5 px-3 md:px-4 font-semibold">Cost</th>
             <th class="py-2.5 px-3 md:px-4 font-semibold">Role</th>
@@ -38,62 +40,72 @@ collectionArchetype: ledger
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-200 dark:divide-gray-800">
+          {% for row in aiStack.tiers | enabled %}
           <tr>
-            <td class="py-3 px-3 md:px-4 font-mono font-semibold">ChatGPT Plus & Codex</td>
-            <td class="py-3 px-3 md:px-4 meta-text">$20 / mo</td>
-            <td class="py-3 px-3 md:px-4 editorial-support-compact">Multi-file refactoring, repo migrations, root-cause debugging</td>
+            <td class="py-3 px-3 md:px-4 font-mono whitespace-nowrap"><strong>{{ row.tier }}</strong> <span class="meta-text">{{ row.label }}</span></td>
+            <td class="py-3 px-3 md:px-4 font-mono font-semibold">{% if row.href %}<a href="{{ row.href }}" class="accent-link">{{ row.service }}</a>{% else %}{{ row.service }}{% endif %}</td>
+            <td class="py-3 px-3 md:px-4 meta-text">{{ row.cost }}</td>
+            <td class="py-3 px-3 md:px-4 editorial-support-compact">{{ row.role }}</td>
             <td class="py-3 px-3 md:px-4 font-mono text-[0.8rem]">
-              <strong>GPT-6 Astra</strong> <span class="meta-text">(S+)</span>, GPT-6.1 Sol <span class="meta-text">(S)</span>, GPT-6 Luna <span class="meta-text">(B)</span>
+              {% for m in row.models %}{% if loop.first %}<strong>{{ m.name }}</strong>{% else %}, {{ m.name }}{% endif %}{% if m.rank %} <span class="meta-text">({{ m.rank }})</span>{% endif %}{% endfor %}
             </td>
-            <td class="py-3 px-3 md:px-4 meta-text">Codex CLI</td>
+            <td class="py-3 px-3 md:px-4 meta-text">{{ row.harness }}</td>
           </tr>
-          <tr>
-            <td class="py-3 px-3 md:px-4 font-mono font-semibold">Claude Pro</td>
-            <td class="py-3 px-3 md:px-4 meta-text">$20 / mo</td>
-            <td class="py-3 px-3 md:px-4 editorial-support-compact">Pair programming, architecture design, code review</td>
-            <td class="py-3 px-3 md:px-4 font-mono text-[0.8rem]">
-              <strong>Claude Sonnet 5.5</strong> <span class="meta-text">(S)</span>, Claude Opus 5.5 <span class="meta-text">(S+)</span>, Claude Fable 5.1 <span class="meta-text">(S+)</span>
-            </td>
-            <td class="py-3 px-3 md:px-4 meta-text">Claude Code</td>
-          </tr>
-          <tr>
-            <td class="py-3 px-3 md:px-4 font-mono font-semibold">
-              Google AI Pro <span class="badge badge-accent badge-compact ml-1">Favorite</span>
-            </td>
-            <td class="py-3 px-3 md:px-4 meta-text">Included</td>
-            <td class="py-3 px-3 md:px-4 editorial-support-compact">Fast skill loops, rapid iterations, Antigravity tasks</td>
-            <td class="py-3 px-3 md:px-4 font-mono text-[0.8rem]">
-              <strong>Gemini 3.8 Flash</strong> <span class="meta-text">(S)</span>
-            </td>
-            <td class="py-3 px-3 md:px-4 meta-text">Antigravity CLI</td>
-          </tr>
-          <tr>
-            <td class="py-3 px-3 md:px-4 font-mono font-semibold">OpenCode Go</td>
-            <td class="py-3 px-3 md:px-4 meta-text">PAYG</td>
-            <td class="py-3 px-3 md:px-4 editorial-support-compact">Testing open-weight models and utility routing</td>
-            <td class="py-3 px-3 md:px-4 font-mono text-[0.8rem]">
-              GLM-5.3 <span class="meta-text">(A)</span>, GLM-5.3 Flash <span class="meta-text">(A)</span>, DeepSeek V4 Pro <span class="meta-text">(A)</span>
-            </td>
-            <td class="py-3 px-3 md:px-4 meta-text">Terminal</td>
-          </tr>
-          <tr>
-            <td class="py-3 px-3 md:px-4 font-mono font-semibold">
-              <a href="/devices/yeti-cachy/" class="accent-link">Local Node (yeti-cachy)</a>
-            </td>
-            <td class="py-3 px-3 md:px-4 meta-text">$0 / Local</td>
-            <td class="py-3 px-3 md:px-4 editorial-support-compact">Offline coding, local benchmarks, RTX 4070 12GB + 64GB DDR5</td>
-            <td class="py-3 px-3 md:px-4 font-mono text-[0.8rem]">
-              <strong>Qwen3.8-Flash-Next</strong> <span class="meta-text">(125B MoE)</span>, Qwen3.8-27B
-            </td>
-            <td class="py-3 px-3 md:px-4 meta-text">Strata & llama.cpp</td>
-          </tr>
+          {% endfor %}
         </tbody>
       </table>
     </div>
   </div>
 </section>
 
-{# ── 2. Nested Prompts & Skills ── #}
+{# ── 2. Team workflow ── #}
+<section class="not-prose mb-12" aria-labelledby="herding-heading">
+  <div class="flex items-baseline justify-between gap-4 mb-3">
+    <h2 id="herding-heading" class="editorial-title">Team Workflow</h2>
+    <span class="meta-line">Experimenting</span>
+  </div>
+  <div class="surface surface-padding">
+    <p class="editorial-support-compact m-0">
+      I'm trying out Herding for team-based work. Opus runs as the supervisor in one pane: it breaks a goal into bounded tasks on a shared board and assigns them to worker panes, each in its own git worktree. DeepSeek through Vibe takes the build tasks, ZCode workers take the grunt work, and pi on the local model picks up anything left when the hosted quotas run dry. Opus reviews the findings and diffs before anything merges.
+    </p>
+  </div>
+</section>
+
+{# ── 3. Hermes agents (rows in _data/aiStack.yaml) ── #}
+<section class="not-prose mb-12" aria-labelledby="hermes-heading">
+  <div class="flex items-baseline justify-between gap-4 mb-3">
+    <h2 id="hermes-heading" class="editorial-title">Hermes Agents</h2>
+    <span class="meta-line">{{ aiStack.hermes | enabled | length }} machines</span>
+  </div>
+  <p class="editorial-support-compact mb-3">Two always-on Hermes agents, one for life admin and one for the lab. Each runs on a cheap default and falls back down the chain in order when a provider fails or runs out.</p>
+
+  <div class="surface overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="w-full text-left border-collapse text-xs md:text-sm font-sans">
+        <thead>
+          <tr class="border-b border-gray-200 dark:border-gray-800 bg-stone-100/60 dark:bg-stone-900/60 font-mono text-[0.78rem] uppercase tracking-wider text-stone-600 dark:text-stone-400">
+            <th class="py-2.5 px-3 md:px-4 font-semibold">Host</th>
+            <th class="py-2.5 px-3 md:px-4 font-semibold">Work</th>
+            <th class="py-2.5 px-3 md:px-4 font-semibold">Primary</th>
+            <th class="py-2.5 px-3 md:px-4 font-semibold">Fallbacks, in order</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200 dark:divide-gray-800">
+          {% for agent in aiStack.hermes | enabled %}
+          <tr>
+            <td class="py-3 px-3 md:px-4 font-mono font-semibold">{{ agent.host }}</td>
+            <td class="py-3 px-3 md:px-4 meta-text">{{ agent.work }}</td>
+            <td class="py-3 px-3 md:px-4 font-mono text-[0.8rem]"><strong>{{ agent.primary }}</strong></td>
+            <td class="py-3 px-3 md:px-4 font-mono text-[0.8rem]">{% for f in agent.fallbacks %}{{ loop.index }}. {{ f }}{% if not loop.last %}<br>{% endif %}{% endfor %}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+{# ── 4. Nested Prompts & Skills ── #}
 <section class="not-prose mb-12" aria-label="Prompts and Skills">
   <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 

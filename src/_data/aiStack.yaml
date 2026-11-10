@@ -1,0 +1,65 @@
+# Rows for /ai/ (src/ai.njk). Three tiers by cost and capability:
+# A is a frontier subscription, B is cheap or free hosted usage, C is local.
+# `rank` is the model's grade on /folio/model-tier-list/; leave it out when
+# the model is not on the list. Supports `enabled: false`.
+
+monthly: ~$35 / mo + free + local
+
+tiers:
+  - tier: A
+    label: SOTA
+    service: Claude Pro
+    cost: $20 / mo
+    role: Orchestrator and reviewer. Plans the work, splits it into tasks, hands them out, and reviews every diff before it lands.
+    models:
+      - name: Claude Opus 5.5
+        rank: S+
+    harness: Claude Code
+
+  - tier: B
+    label: Cheap hosted
+    service: Mistral Vibe Pro
+    cost: $15 / mo
+    role: Main builder. The plan covers roughly $150–300 of API-equivalent usage, better value than OpenCode Go was, but the uptime is bad.
+    models:
+      - name: DeepSeek V4.1 Flash
+    harness: Vibe CLI
+
+  - tier: B
+    label: Cheap hosted
+    service: ZCode (global build)
+    cost: Free daily tokens
+    role: Grunt workers on bounded tasks. Usually more than one running at a time.
+    models:
+      - name: GLM-5.3 Flash
+        rank: A
+    harness: ZCode CLI
+
+  - tier: C
+    label: Local
+    service: Local Node (yeti-cachy)
+    href: /devices/yeti-cachy/
+    cost: $0 / Local
+    role: Fallback for grunt work and for both Hermes agents. Covers running out of usage everywhere, insurance against price increases, and the things hosted models refuse.
+    models:
+      - name: Qwen3.8-Flash-Next
+        rank: A
+    harness: pi on llama-swap
+
+# Hermes agents: one per machine, each with its own fallback chain.
+hermes:
+  - host: m1
+    work: Life
+    primary: DeepSeek V4.1 Flash (Mistral)
+    fallbacks:
+      - Nemotron 3.5 Super VL 120B (NVIDIA NIM)
+      - Qwen3.8-Flash-Next (local, yeti-cachy)
+      - GLM-5.3 Flash (OpenCode Zen, free)
+
+  - host: fx505
+    work: Lab
+    primary: DeepSeek V4.1 Flash (OpenCode Zen, free)
+    fallbacks:
+      - Nemotron 3.5 Super VL 120B (NVIDIA NIM)
+      - Qwen3.8-Flash-Next (local, yeti-cachy)
+      - GLM-5.3 Flash (OpenCode Zen, free)

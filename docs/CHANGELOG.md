@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.10.0] - 2026-11-10
+### Changed
+- `/ai/` now describes the current workflow: three model tiers (Claude Opus 5.5 as orchestrator and reviewer, Mistral Vibe with DeepSeek V4.1 Flash and ZCode with GLM-5.3 Flash as cheap hosted workers, pi on the local Qwen3.8-Flash-Next as fallback), the Herding team-workflow experiment, and both Hermes agents with their fallback chains. ChatGPT Plus, Google AI Pro and OpenCode Go are gone from the stack.
+- The stack table's rows moved out of hardcoded markup into `src/_data/aiStack.yaml`.
+
 ## [2.9.12] - 2026-11-09
 ### Fixed
 - Footer: removed the 48px touch-target height rule from `.footer-nav-link` under `@media (max-width: 767px)`, restoring compact, dense navigation rows on mobile.
