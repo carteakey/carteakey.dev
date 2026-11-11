@@ -79,6 +79,11 @@ collectionArchetype: ledger
         </article>
       {% endfor %}
     </div>
+    <details class="mt-5">
+      <summary class="editorial-title-sm cursor-pointer">All self-hosted services</summary>
+      <p class="editorial-support-compact mt-2 mb-3">Generated from the tracked Docker Compose and systemd files in my homelab repo, per machine. <a href="/img/homelab/casakey-overview.svg" class="accent-link">Open full size</a>.</p>
+      <img src="/img/homelab/casakey-overview.svg" alt="CasaKey homelab overview: every Docker Compose stack and systemd unit on Mac Server, FX505, Glowdesk, Raspberry Pi and Yeti, grouped by machine" loading="lazy" decoding="async" class="w-full h-auto">
+    </details>
     <div class="mt-5 flex flex-wrap justify-center gap-x-5 gap-y-2 meta-line">
       {% for link in uses.homelab.links | enabled %}
         <span>{{ link }}</span>

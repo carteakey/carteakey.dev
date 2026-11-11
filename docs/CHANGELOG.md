@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.14.1] - 2026-11-10
+### Added
+- `/uses/#homelab`: a collapsible "All self-hosted services" diagram (the anonymised CasaKey overview generated in homelabbr, with one leaked LAN IP scrubbed).
+- `docs/TODO.md`: homelab automation post and diagram refresh.
+
 ## [2.14.0] - 2026-11-10
 ### Added
 - Backlinks: posts, notes, TIL, lexicon, sheets and device pages show "Linked from" for content that links to them, and each quotation on `/quotations/` lists pages that link to its anchor. Built once per build in `utils/backlinks.mjs`; index pages are not counted as sources.

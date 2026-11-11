@@ -4,6 +4,11 @@
 
 - [ ] Post a 2026 in review. (added 2026-11-10)
 
+## Homelab
+
+- [ ] Write a post on how the homelab is automated (diagram generator, state sync, update handoffs), linking the earlier Reddit write-up. Author-written; link it from `/uses/#homelab`.
+- [ ] Refresh the CasaKey service diagram in homelabbr: it predates Forgejo on the M1, labels the M1 as "Mac Server", and the anon copy leaked a LAN IP (scrubbed by hand in `src/static/img/homelab/casakey-overview.svg`). Fix the anonymiser, regenerate, recopy.
+
 ## Page pruning (2026-11)
 
 - [ ] Fold the Reading Tracker (`/learning/`) into `/blog/` as a collection-engine `read` filter (Unread/Read + progress count), mirroring the `saved` filter. Reuse `learning-progress.js` storage (`carteakey.learningProgress.v1`) so existing progress survives; then 301 `/learning/` to `/blog/`.
