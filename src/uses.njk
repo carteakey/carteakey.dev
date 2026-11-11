@@ -120,6 +120,9 @@ collectionArchetype: ledger
         <h3 class="editorial-title mb-4 flex items-center gap-2">
           <span>{{ category.emoji }}</span> {{ category.name }}
         </h3>
+        {% if category.note %}
+          <p class="editorial-support-compact mb-4">{{ category.note }} <a href="{{ category.note_link }}" class="accent-link">{{ category.note_link_label }}</a>.</p>
+        {% endif %}
         <div class="space-y-4">
           {% for item in category.items | enabled %}
             <div class="group">

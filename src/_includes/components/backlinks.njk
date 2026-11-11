@@ -1,0 +1,12 @@
+{# "Linked from": content pages that link here. Set backlinkUrl to override page.url (e.g. a quotation anchor). #}
+{% set _bl = (backlinkUrl or page.url) | backlinks(collections.all) %}
+{% if _bl.length %}
+<aside class="backlinks not-prose mt-8" aria-label="Linked from">
+  <p class="editorial-kicker mb-2">Linked from</p>
+  <ul class="list-none p-0 m-0 space-y-1">
+    {% for b in _bl %}
+      <li class="editorial-support-compact"><a href="{{ b.url }}" class="accent-link">{{ b.title }}</a></li>
+    {% endfor %}
+  </ul>
+</aside>
+{% endif %}

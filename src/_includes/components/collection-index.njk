@@ -85,6 +85,7 @@
           {% set attrs = 'data-collection-item data-type="' ~ item.type ~ '" data-search="' ~ (item | collectionSearchText) ~ '"' %}
           {% if cv.anchors and item.original %}{% set attrs = attrs ~ ' id="' ~ item.original.fileSlug ~ '"' %}{% endif %}
           {{ feedCard(item, { variant: 'stream', showType: cvRow.showType, date: item | collectionDate(cv), outerAttrs: attrs }) }}
+          {% if cv.anchors %}{% set backlinkUrl = item.url %}{% include "components/backlinks.njk" %}{% set backlinkUrl = null %}{% endif %}
         {% endfor %}
       </div>
 

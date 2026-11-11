@@ -133,6 +133,9 @@ categories:
 
   - name: Development Tools
     emoji: "⚡"
+    note: Coding agents and models live on
+    note_link: /ai/
+    note_link_label: /ai/
     items:
       - name: Zed
         emoji: "📝"
@@ -144,26 +147,15 @@ categories:
         description: Terminal.
         link: https://ghostty.org/
 
-      - name: Codex
-        emoji: "🤖"
-        description: Personal coding agent.
-
-      - name: Claude
-        emoji: "🤖"
-        description: Work coding agent.
-
-      - name: Antigravity
-        emoji: "🛰️"
-        description: Another coding environment in the rotation.
-
-      - name: OpenCode Go
-        emoji: "🛟"
-        description: Fallback coding agent.
-
       - name: Docker Desktop
         emoji: "🐳"
         description: Container platform for running isolated development environments.
         link: https://www.docker.com/products/docker-desktop/
+
+      - name: Forgejo
+        emoji: "🦊"
+        description: Self-hosted git forge for private repos.
+        link: https://forgejo.org/
 
   - name: Languages & Frameworks
     emoji: "🧩"
@@ -305,71 +297,6 @@ retired:
     description: Decluttered.
     retired_date: "2026"
 
-  - name: Neck Fan
-    emoji: "💨"
-    description: Decluttered.
-    retired_date: "2026"
-
-  - name: Miyoo
-    emoji: "🎮"
-    description: Decluttered.
-    retired_date: "2026"
-
-  - name: Older PlayStation 4 consoles
-    emoji: "🎮"
-    description: Decluttered.
-    retired_date: "2026"
-
-  - name: Dell U2722D Monitor
-    emoji: "🖥️"
-    description: Replaced by Dell P3424WEB ultrawide.
-    retired_date: "2026"
-
-  - name: Keychron K2
-    emoji: "⌨️"
-    description: Replaced by Apple Magic Keyboard + Redragon Kumara.
-    retired_date: "2026"
-
-  - name: Logitech MX Master 3
-    emoji: "🖱️"
-    description: Replaced by Logitech M720 Triathlon for multi-device support.
-    retired_date: "2026"
-
-  - name: Sony WH-1000XM4
-    emoji: "🎧"
-    description: Replaced by AirPods Pro 2 as primary + Sennheiser HD 4.50 BTNC as alt.
-    retired_date: "2026"
-
-  - name: Arc Browser
-    emoji: "🌐"
-    description: Switched to Safari/Edge as primary browsers.
-    retired_date: "2026"
-
-  - name: 1Password
-    emoji: "🔐"
-    description: Moved to Bitwarden for open-source, cross-platform password management.
-    retired_date: "2026"
-
-  - name: Sublime Text
-    emoji: "📝"
-    description: Switched to VS Code for better extension support.
-    retired_date: "2021"
-
-  - name: Chrome
-    emoji: "🌐"
-    description: Moved to Arc Browser for better tab management.
-    retired_date: "2023"
-
-  - name: Alfred
-    emoji: "🎩"
-    description: Replaced by Raycast - faster and more extensible.
-    retired_date: "2023"
-
-  - name: Postman
-    emoji: "📮"
-    description: Switched to Thunder Client in VS Code.
-    retired_date: "2024"
-
 changelog:
   - date: "2026-09"
     change: "Named and mapped the two workstation desks: Arch-Nemesis (Steam Deck, FX505, Yeti) and Big mAc (M1, M2, M3 Pro)."
@@ -388,9 +315,6 @@ changelog:
 
   - date: "2024-11"
     change: "Upgraded to MacBook Pro M3 Pro from M2"
-
-  - date: "2024-08"
-    change: "Switched from Alfred to Raycast"
 
   - date: "2024-03"
     change: "Started using Polars alongside Pandas"
@@ -429,8 +353,8 @@ homelab:
     - name: "M1 Air"
       emoji: "💻"
       station: "Big mAc"
-      role: "Personal cloud"
-      description: "Docker, MCP servers, agents, photos, and documents."
+      role: "Dev and agent machine"
+      description: "Development, Docker, MCP servers and coding agents."
 
     - name: "FX505"
       emoji: "🗄️"

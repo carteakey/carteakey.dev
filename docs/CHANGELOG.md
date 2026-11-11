@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.14.0] - 2026-11-10
+### Added
+- Backlinks: posts, notes, TIL, lexicon, sheets and device pages show "Linked from" for content that links to them, and each quotation on `/quotations/` lists pages that link to its anchor. Built once per build in `utils/backlinks.mjs`; index pages are not counted as sources.
+
+### Changed
+- `/uses/`: coding agents moved out of Development Tools to a note pointing at `/ai/`; Forgejo added; M1 Air relabelled as the dev and agent machine; Retired trimmed to four items; removed a changelog line that never happened (Alfred → Raycast).
+- `/more/`: Quotes (life lessons) and Quotations (words saved and referenced) described as the two different things they are.
+- Footer: dropped the duplicate Colophon link from the grid; it stays in the bottom line.
+
 ## [2.13.2] - 2026-11-10
 ### Changed
 - Page pruning, part 6: the `/devices/` index (a duplicate of `/uses/#hardware`) is removed and 301s there. Device pages (`/devices/glowdesk/`, `/devices/yeti-cachy/`) are unchanged.
