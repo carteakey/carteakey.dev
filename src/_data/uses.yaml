@@ -147,10 +147,10 @@ categories:
         description: Terminal.
         link: https://ghostty.org/
 
-      - name: Docker Desktop
+      - name: OrbStack
         emoji: "🐳"
-        description: Container platform for running isolated development environments.
-        link: https://www.docker.com/products/docker-desktop/
+        description: Lightweight Docker and Linux VMs on macOS.
+        link: https://orbstack.dev/
 
       - name: Forgejo
         emoji: "🦊"

@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.16.1] - 2026-11-10
+### Fixed
+- `/uses/`: Docker Desktop replaced with OrbStack, which is what I actually run.
+
 ## [2.16.0] - 2026-11-10
 ### Changed
 - `/reading/`, `/watching/`, `/listening/`, `/games/` and `/workouts/` folded into `/data/` as sections under a sticky section nav. Each page's markup moved verbatim into `components/data/<feed>.njk` (only the header changed); built HTML for Reading, Watching and Listening matches the old pages. Old URLs 301 to `/data/#<feed>`, and `/now/`, the homepage snippets and `/stats/#status` link to the new anchors. Sections instead of hidden tabs, because the charts share SVG pattern ids that break inside hidden panels.
