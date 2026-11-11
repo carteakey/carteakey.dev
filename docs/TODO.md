@@ -4,6 +4,10 @@
 
 - [ ] Post a 2026 in review. (added 2026-11-10)
 
+## App Swaps
+
+- [ ] Add Docker Desktop → OrbStack to App Swaps (`/folio/app-swaps/` + poster + sheet count). Needs real RSS/disk numbers measured on the M3 Pro like the other 11 entries.
+
 ## Homelab
 
 - [ ] Write a post on how the homelab is automated (diagram generator, state sync, update handoffs), linking the earlier Reddit write-up. Author-written; link it from `/uses/#homelab`.

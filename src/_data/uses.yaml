@@ -27,6 +27,9 @@ categories:
         emoji: "🍓"
         description: Low-power always-on server for self-hosted services.
 
+  - name: Peripherals
+    emoji: "⌨️"
+    items:
       - name: Dell P3424WEB Monitor
         emoji: "🖥️"
         description: 34" curved ultrawide USB-C monitor.
@@ -49,6 +52,11 @@ categories:
       - name: Redragon Gaming Mouse
         emoji: "🖱️"
         description: Gaming mouse for Yeti's Windows side.
+
+      - name: Logitech G Pro X Superlight
+        emoji: "🖱️"
+        description: Lightweight wireless gaming mouse.
+        link: https://www.logitechg.com/products/gaming-mice/pro-x-superlight-wireless-mouse.html
 
       - name: Logitech M720 Triathlon
         emoji: "🖱️"
