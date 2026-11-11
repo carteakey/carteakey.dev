@@ -12,7 +12,7 @@
 ## Page pruning (2026-11)
 
 - [x] Fold the Reading Tracker (`/learning/`) into `/blog/` as a collection-engine `read` filter (Unread/Read + progress count), mirroring the `saved` filter. Reuse `learning-progress.js` storage (`carteakey.learningProgress.v1`) so existing progress survives; then 301 `/learning/` to `/blog/`.
-- [ ] Merge Reading, Watching, Listening, Games and Workouts into `/data/` tabs. Move markup verbatim into includes, parity-check each section, 301 old URLs to `/data/#<feed>`. Listening may stay standalone if it is too rich for a tab.
+- [x] Merge Reading, Watching, Listening, Games and Workouts into `/data/` (as sections, not tabs). Move markup verbatim into includes, parity-check each section, 301 old URLs to `/data/#<feed>`. Listening may stay standalone if it is too rich for a tab.
 
 ## Repo Review (2026-10-10)
 

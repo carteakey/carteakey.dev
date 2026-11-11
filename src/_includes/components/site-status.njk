@@ -70,13 +70,13 @@
           "Goodreads",
           readingState,
           reading.in_progress.length ~ " current, " ~ reading.read.length ~ " read, " ~ reading.want_to_read.length ~ " queued",
-          "/reading/"
+          "/data/#reading"
         ) }}
         {{ serviceRow(
           "Letterboxd",
           letterboxdState,
           letterboxdDetail,
-          "/watching/"
+          "/data/#watching"
         ) }}
         {{ serviceRow(
           "GitHub repos",
@@ -94,19 +94,19 @@
           "Spotify",
           spotifyState,
           spotify.nowPlaying.title ~ " by " ~ spotify.nowPlaying.artist,
-          "/listening/"
+          "/data/#listening"
         ) }}
         {{ serviceRow(
           "Steam",
           steamState,
           steam.length ~ " recent games",
-          "/games/"
+          "/data/#games"
         ) }}
         {{ serviceRow(
           "Strava",
           stravaState,
           stravaDetail,
-          "/workouts/"
+          "/data/#workouts"
         ) }}
         {{ serviceRow(
           "Site counters",

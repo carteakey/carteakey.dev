@@ -1,16 +1,10 @@
----
-layout: layouts/base.njk
-title: Games
-description: Recently played video games and playtime stats pulled live from Steam.
-collectionArchetype: shelf
----
-
-{% set pageTitle = title %}
+{# Moved verbatim from the old /games/ page (2026-11 pruning); only the header changed. #}
+{% set pageEyebrow = null %}{% set pageMeta = null %}
+{% set pageTitle = "Games" %}
 {% set pageDescription = "Here are my recently played games from Steam" %}
 
-{% include "components/breadcrumbs.njk" %}
 
-{% include "components/page-header.njk" %}
+{% include "components/data-panel-header.njk" %}
 
 <div class="not-prose grid gap-3 md:grid-cols-3">
     {% for game in steam | head(8) %}

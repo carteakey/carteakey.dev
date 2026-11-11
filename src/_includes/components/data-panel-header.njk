@@ -1,0 +1,7 @@
+{# Section header for a feed folded into /data/; replaces each old page's page-header. #}
+<div class="not-prose mb-6">
+  {% if pageEyebrow %}<p class="page-eyebrow">{{ pageEyebrow }}</p>{% endif %}
+  <h2 class="editorial-title">{{ pageTitle }}</h2>
+  {% if pageMeta %}<p class="meta-line mt-1">{{ pageMeta }}</p>{% endif %}
+  {% if pageDescription %}<p class="editorial-support mt-2">{{ pageDescription | safe }}</p>{% endif %}
+</div>

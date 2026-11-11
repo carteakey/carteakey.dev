@@ -209,30 +209,6 @@ vibes:
   engine: false
   why: A client-side canvas with shuffle; the layout is the point.
 
-games:
-  page: src/games.njk
-  archetype: shelf
-  engine: false
-  why: Cover-led shelf from Steam data; equal-sized media matters more than text.
-
-listening:
-  page: src/listening.njk
-  archetype: shelf
-  engine: false
-  why: Spotify listening summary; top artists, albums and tracks are ranked, not dated.
-
-reading:
-  page: src/reading.njk
-  archetype: shelf
-  engine: false
-  why: Currently reading with progress, then a cover shelf from Goodreads.
-
-watching:
-  page: src/watching.njk
-  archetype: shelf
-  engine: false
-  why: Letterboxd diary with poster thumbnails.
-
 ai:
   page: src/ai.njk
   archetype: ledger
@@ -304,9 +280,3 @@ uses:
   archetype: ledger
   engine: false
   why: Gear and software ledger.
-
-workouts:
-  page: src/workouts.njk
-  archetype: ledger
-  engine: false
-  why: Workout log ledger.

@@ -2724,6 +2724,26 @@ picture img {
     color: var(--accent-color);
   }
 
+  /* /data/ section nav: the five feed pages folded in as sections (2026-11). */
+  .data-section-nav {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    padding: 0.5rem 0;
+    margin-bottom: 1.5rem;
+    background: var(--bg-color, inherit);
+  }
+
+  .data-section {
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid currentColor;
+    border-top-color: color-mix(in srgb, currentColor 15%, transparent);
+  }
+
   /* /blog/ Read filter (read-filter.js); replaced the /learning/ tracker page. */
   .collection-read-filter {
     display: inline-flex;

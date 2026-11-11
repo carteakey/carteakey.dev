@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.16.0] - 2026-11-10
+### Changed
+- `/reading/`, `/watching/`, `/listening/`, `/games/` and `/workouts/` folded into `/data/` as sections under a sticky section nav. Each page's markup moved verbatim into `components/data/<feed>.njk` (only the header changed); built HTML for Reading, Watching and Listening matches the old pages. Old URLs 301 to `/data/#<feed>`, and `/now/`, the homepage snippets and `/stats/#status` link to the new anchors. Sections instead of hidden tabs, because the charts share SVG pattern ids that break inside hidden panels.
+- Footer rebuilt from one list with the same four groups as `/more/` (Read, Me, Logs, Site), so mobile and desktop can no longer drift; drops stale links to removed pages (`/skills-radar/`, the feed pages).
+
 ## [2.15.0] - 2026-11-10
 ### Changed
 - The Reading Tracker moved into `/blog/` as an All / Unread / Read filter with an "x/79 read" count, built on the collection engine (`read` filter, `read-filter.js`). It uses the same browser storage as the per-post "Mark as read" button, so existing progress carries over. `/learning/` 301s to `/blog/`; its footer links and dead CSS are gone.

@@ -1,21 +1,10 @@
----
-layout: layouts/base.njk
-title: Watching
-description: Films I've recently watched and rated.
-date: 2026-06-24
-permalink: /watching/
-eleventyNavigation:
-  key: Watching
-  order: 9
-collectionArchetype: shelf
----
-
-{% include "components/breadcrumbs.njk" %}
+{# Moved verbatim from the old /watching/ page (2026-11 pruning); only the header changed. #}
+{% set pageEyebrow = null %}{% set pageMeta = null %}
 
 {% set pageEyebrow = "Film Diary" %}
 {% set pageTitle = "Watching" %}
 {% set pageDescription = 'Recent films, ratings, and notes synced from <a href="' ~ watching.profileUrl ~ '" class="accent-link">Letterboxd</a>.' %}
-{% include "components/page-header.njk" %}
+{% include "components/data-panel-header.njk" %}
 
 {% from "components/halftone.njk" import halftone with context %}
 <section class="surface surface-padding not-prose mb-6">

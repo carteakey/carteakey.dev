@@ -1,10 +1,5 @@
----
-layout: layouts/base.njk
-title: Workouts
-description: A log of recent fitness activities and movement tracked via Strava.
-collectionArchetype: ledger
----
-{% include "components/breadcrumbs.njk" %}
+{# Moved verbatim from the old /workouts/ page (2026-11 pruning); only the header changed. #}
+{% set pageEyebrow = null %}{% set pageMeta = null %}
 
 {% set pageEyebrow = "Movement Log" %}
 {% set pageTitle = "Recent Workouts" %}
@@ -12,7 +7,7 @@ collectionArchetype: ledger
 {% set itemCount = strava | length %}
 {% set itemLabel = "activities" %}
 
-{% include "components/page-header.njk" %}
+{% include "components/data-panel-header.njk" %}
 
 <div class="not-prose grid gap-3 md:grid-cols-2">
     {% for activity in strava %}

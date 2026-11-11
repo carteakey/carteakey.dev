@@ -373,97 +373,51 @@
            hard way on the footer illustration earlier this session). #}
         <p class="footer-wordmark" aria-hidden="true">carteakey</p>
 
-        {# Categorized footer navigation - 4-col on md+; flat link list on mobile #}
-
-        {# Mobile: 2-col compact grid with category headings + icons #}
-        <div class="grid grid-cols-2 gap-x-4 gap-y-3 text-xs md:hidden">
-          <div>
-            <h2 class="footer-nav-heading">Read</h2>
-            <ul class="space-y-1 list-none m-0 p-0">
-              <li><a href="{{ '/now' | url }}" class="footer-nav-link">{% feather "clock", class="w-3 h-3 shrink-0" %} Now</a></li>
-              <li><a href="{{ '/feed' | url }}" class="footer-nav-link">{% feather "activity", class="w-3 h-3 shrink-0" %} Feed</a></li>
-              <li><a href="{{ '/blog' | url }}" class="footer-nav-link">{% feather "edit-3", class="w-3 h-3 shrink-0" %} Writing</a></li>
-              <li><a href="{{ '/snippets' | url }}" class="footer-nav-link">{% feather "code", class="w-3 h-3 shrink-0" %} Snippets</a></li>
-              <li><a href="{{ '/about' | url }}" class="footer-nav-link">{% feather "user", class="w-3 h-3 shrink-0" %} About</a></li>
-              <li><a href="{{ '/quotations' | url }}" class="footer-nav-link">{% feather "message-circle", class="w-3 h-3 shrink-0" %} Quotations</a></li>
-            </ul>
-          </div>
-          <div>
-            <h2 class="footer-nav-heading">Explore</h2>
-            <ul class="space-y-1 list-none m-0 p-0">
-              <li><a href="{{ '/projects' | url }}" class="footer-nav-link">{% feather "box", class="w-3 h-3 shrink-0" %} Projects</a></li>
-              <li><a href="{{ '/ai/' | url }}" class="footer-nav-link">{% feather "cpu", class="w-3 h-3 shrink-0" %} AI</a></li>
-              <li><a href="{{ '/gallery' | url }}" class="footer-nav-link">{% feather "image", class="w-3 h-3 shrink-0" %} Gallery</a></li>
-              <li><a href="{{ '/folio' | url }}" class="footer-nav-link">{% feather "layers", class="w-3 h-3 shrink-0" %} Folio</a></li>
-              <li><a href="{{ '/data' | url }}" class="footer-nav-link">{% feather "bar-chart-2", class="w-3 h-3 shrink-0" %} Data</a></li>
-              <li><a href="{{ '/listening' | url }}" class="footer-nav-link">{% feather "headphones", class="w-3 h-3 shrink-0" %} Listening</a></li>
-              <li><a href="{{ '/search' | url }}" class="footer-nav-link">{% feather "search", class="w-3 h-3 shrink-0" %} Search</a></li>
-              <li><a href="{{ '/stats' | url }}" class="footer-nav-link">{% feather "bar-chart", class="w-3 h-3 shrink-0" %} Stats</a></li>
-              <li><a href="{{ '/guestbook' | url }}" class="footer-nav-link">{% feather "message-square", class="w-3 h-3 shrink-0" %} Guestbook</a></li>
-              <li><a href="{{ '/support' | url }}" class="footer-nav-link">{% feather "coffee", class="w-3 h-3 shrink-0" %} Support</a></li>
-            </ul>
-          </div>
-        </div>
-
-        {# Desktop: 4-column categorized grid #}
-        <div class="hidden md:grid grid-cols-4 gap-x-4 gap-y-2 text-xs">
-          
-          {# Read - content for others #}
-          <div>
-            <h2 class="footer-nav-heading">Read</h2>
-            <ul class="space-y-0.5 list-none m-0 p-0">
-              <li><a href="{{ '/now' | url }}" class="footer-nav-link">{% feather "clock", class="w-3 h-3 shrink-0" %} Now</a></li>
-              <li><a href="{{ '/feed' | url }}" class="footer-nav-link">{% feather "activity", class="w-3 h-3 shrink-0" %} Feed</a></li>
-              <li><a href="{{ '/blog' | url }}" class="footer-nav-link">{% feather "edit-3", class="w-3 h-3 shrink-0" %} Writing</a></li>
-              <li><a href="{{ '/snippets' | url }}" class="footer-nav-link">{% feather "code", class="w-3 h-3 shrink-0" %} Snippets</a></li>
-              <li><a href="{{ '/notes' | url }}" class="footer-nav-link">{% feather "file-text", class="w-3 h-3 shrink-0" %} Notes</a></li>
-              <li><a href="{{ '/reading' | url }}" class="footer-nav-link">{% feather "book-open", class="w-3 h-3 shrink-0" %} Reading</a></li>
-              <li><a href="{{ '/quotations' | url }}" class="footer-nav-link">{% feather "message-circle", class="w-3 h-3 shrink-0" %} Quotations</a></li>
-            </ul>
-          </div>
-
-          {# Explore - creative & fun #}
-          <div>
-            <h2 class="footer-nav-heading">Explore</h2>
-            <ul class="space-y-0.5 list-none m-0 p-0">
-              <li><a href="{{ '/projects' | url }}" class="footer-nav-link">{% feather "box", class="w-3 h-3 shrink-0" %} Projects</a></li>
-              <li><a href="{{ '/ai/' | url }}" class="footer-nav-link">{% feather "cpu", class="w-3 h-3 shrink-0" %} AI</a></li>
-              <li><a href="{{ '/gallery' | url }}" class="footer-nav-link">{% feather "image", class="w-3 h-3 shrink-0" %} Gallery</a></li>
-              <li><a href="{{ '/folio' | url }}" class="footer-nav-link">{% feather "layers", class="w-3 h-3 shrink-0" %} Folio</a></li>
-              <li><a href="{{ '/vibes' | url }}" class="footer-nav-link">{% feather "image", class="w-3 h-3 shrink-0" %} Vibes</a></li>
-              <li><a href="{{ '/quotes' | url }}" class="footer-nav-link">{% feather "book-open", class="w-3 h-3 shrink-0" %} Quotes</a></li>
-            </ul>
-          </div>
-
-          {# About Me - personal & professional #}
-          <div>
-            <h2 class="footer-nav-heading">About Me</h2>
-            <ul class="space-y-0.5 list-none m-0 p-0">
-              <li><a href="{{ '/about' | url }}" class="footer-nav-link">{% feather "user", class="w-3 h-3 shrink-0" %} About</a></li>
-              <li><a href="{{ '/cv' | url }}" class="footer-nav-link">{% feather "briefcase", class="w-3 h-3 shrink-0" %} CV</a></li>
-              <li><a href="{{ '/skills-radar/' | url }}" class="footer-nav-link">{% feather "bar-chart-2", class="w-3 h-3 shrink-0" %} Skills</a></li>
-              <li><a href="{{ '/uses' | url }}" class="footer-nav-link">{% feather "cpu", class="w-3 h-3 shrink-0" %} Uses</a></li>
-              <li><a href="{{ '/games' | url }}" class="footer-nav-link">{% feather "monitor", class="w-3 h-3 shrink-0" %} Games</a></li>
-              <li><a href="{{ '/workouts' | url }}" class="footer-nav-link">{% feather "activity", class="w-3 h-3 shrink-0" %} Workouts</a></li>
-              <li><a href="{{ '/listening' | url }}" class="footer-nav-link">{% feather "headphones", class="w-3 h-3 shrink-0" %} Listening</a></li>
-              <li><a href="{{ '/data' | url }}" class="footer-nav-link">{% feather "bar-chart-2", class="w-3 h-3 shrink-0" %} Life in data</a></li>
-            </ul>
-          </div>
-
-          {# Meta - site utilities & links #}
-          <div>
-            <h2 class="footer-nav-heading">Meta</h2>
-            <ul class="space-y-0.5 list-none m-0 p-0">
-              <li><a href="{{ '/search' | url }}" class="footer-nav-link">{% feather "search", class="w-3 h-3 shrink-0" %} Search</a></li>
-              <li><a href="{{ '/stats' | url }}" class="footer-nav-link">{% feather "bar-chart", class="w-3 h-3 shrink-0" %} Stats</a></li>
-              <li><a href="{{ '/changelog' | url }}" class="footer-nav-link">{% feather "list", class="w-3 h-3 shrink-0" %} Changelog</a></li>
-              <li><a href="{{ '/bookmarks' | url }}" class="footer-nav-link">{% feather "bookmark", class="w-3 h-3 shrink-0" %} Bookmarks</a></li>
-              <li><a href="{{ '/newsletter' | url }}" class="footer-nav-link">{% feather "mail", class="w-3 h-3 shrink-0" %} Newsletter</a></li>
-              <li><a href="{{ '/guestbook' | url }}" class="footer-nav-link">{% feather "message-square", class="w-3 h-3 shrink-0" %} Guestbook</a></li>
-              <li><a href="{{ '/support' | url }}" class="footer-nav-link">{% feather "coffee", class="w-3 h-3 shrink-0" %} Support</a></li>
-            </ul>
-          </div>
-
+        {# Footer navigation: one list, same groups as /more/, rendered 2-col on mobile and 4-col on md+. #}
+        {% set footerGroups = [
+          { title: "Read", links: [
+            { url: "/blog/", label: "Writing", icon: "edit-3" },
+            { url: "/notes/", label: "Notes", icon: "file-text" },
+            { url: "/snippets/", label: "Snippets", icon: "code" },
+            { url: "/folio/", label: "Folio", icon: "layers" },
+            { url: "/quotations/", label: "Quotations", icon: "message-circle" },
+            { url: "/feed/", label: "Feed", icon: "activity" }
+          ] },
+          { title: "Me", links: [
+            { url: "/about/", label: "About", icon: "user" },
+            { url: "/now/", label: "Now", icon: "clock" },
+            { url: "/cv/", label: "CV", icon: "briefcase" },
+            { url: "/projects/", label: "Projects", icon: "box" },
+            { url: "/ai/", label: "AI", icon: "cpu" },
+            { url: "/uses/", label: "Uses", icon: "tool" }
+          ] },
+          { title: "Logs", links: [
+            { url: "/data/", label: "Life in data", icon: "bar-chart-2" },
+            { url: "/gallery/", label: "Gallery", icon: "image" },
+            { url: "/vibes/", label: "Vibes", icon: "image" },
+            { url: "/quotes/", label: "Quotes", icon: "book-open" }
+          ] },
+          { title: "Site", links: [
+            { url: "/search/", label: "Search", icon: "search" },
+            { url: "/stats/", label: "Stats", icon: "bar-chart" },
+            { url: "/changelog/", label: "Changelog", icon: "list" },
+            { url: "/bookmarks/", label: "Bookmarks", icon: "bookmark" },
+            { url: "/newsletter/", label: "Newsletter", icon: "mail" },
+            { url: "/guestbook/", label: "Guestbook", icon: "message-square" },
+            { url: "/support/", label: "Support", icon: "coffee" }
+          ] }
+        ] %}
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-3 md:gap-y-2 text-xs">
+          {% for group in footerGroups %}
+            <div>
+              <h2 class="footer-nav-heading">{{ group.title }}</h2>
+              <ul class="space-y-1 md:space-y-0.5 list-none m-0 p-0">
+                {% for link in group.links %}
+                  <li><a href="{{ link.url | url }}" class="footer-nav-link">{% feather link.icon, class="w-3 h-3 shrink-0" %} {{ link.label }}</a></li>
+                {% endfor %}
+              </ul>
+            </div>
+          {% endfor %}
         </div>
 
         {# Made with love section #}

@@ -1,13 +1,5 @@
----
-layout: layouts/base.njk
-title: Listening
-description: My Spotify listening wrapped - top artists, albums, tracks, year in review.
-permalink: /listening/
-eleventyExcludeFromCollections: true
-collectionArchetype: shelf
----
-
-{% include "components/breadcrumbs.njk" %}
+{# Moved verbatim from the old /listening/ page (2026-11 pruning); only the header changed. #}
+{% set pageEyebrow = null %}{% set pageMeta = null %}
 {% import "components/cartebase-charts.njk" as cb %}
 
 {% set listening = cartebase.listening %}
@@ -21,8 +13,8 @@ collectionArchetype: shelf
 
 {% set pageTitle = "Listening, wrapped" %}
 {% set pageMeta = "Updated " ~ (listening.last_updated | split('T'))[0] %}
-{% set pageDescription = "My whole Spotify listening history, all-time - not just the last year. Pulled from <a href=\"https://github.com/carteakey/cartebase\" class=\"accent-link\">cartebase</a>. <a href=\"/data/\" class=\"accent-link\">Back to /data/ →</a>" %}
-{% include "components/page-header.njk" %}
+{% set pageDescription = "My whole Spotify listening history, all-time - not just the last year. Pulled from <a href=\"https://github.com/carteakey/cartebase\" class=\"accent-link\">cartebase</a>." %}
+{% include "components/data-panel-header.njk" %}
 
 {% from "components/halftone.njk" import halftone with context %}
 <div class="halftone-feature not-prose mb-4">

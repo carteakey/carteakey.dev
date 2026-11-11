@@ -23,6 +23,20 @@ collectionArchetype: ledger
 {% set pageDescription = "A scrollable dashboard generated from <a href=\"https://github.com/carteakey/cartebase\" class=\"accent-link\">cartebase</a>, a Dogsheep-style SQLite warehouse of my personal data, spanning <strong>" ~ startYear ~ "–" ~ endYear ~ "</strong>. Inspired by <a href=\"https://howisfelix.today/\" class=\"accent-link\">howisFelix.today</a>. Finance, health, shopping, and private domains are deliberately excluded." %}
 {% include "components/page-header.njk" %}
 
+{% set dataSections = [
+  { id: "overview", label: "Overview" },
+  { id: "reading", label: "Reading" },
+  { id: "watching", label: "Watching" },
+  { id: "listening", label: "Listening" },
+  { id: "games", label: "Games" },
+  { id: "workouts", label: "Workouts" }
+] %}
+<nav class="data-section-nav not-prose" aria-label="Data sections">
+  {% for sec in dataSections %}<a href="#{{ sec.id }}" class="badge badge-filter badge-compact">{{ sec.label }}</a>{% endfor %}
+</nav>
+
+<section id="overview" class="scroll-mt-28">
+
 <div class="not-prose grid grid-cols-2 md:grid-cols-4 gap-3 mb-10">
   {{ cb.stat_tile("Spotify plays", cartebase.summary.plays_total | localeNumber, "since " + startYear, chartSvg({ type: "spark", data: cartebase.listening.plays_per_month, x: "month", y: "plays" })) }}
   {{ cb.stat_tile("Minutes listened", totalMinutes | round(0) | localeNumber) }}
@@ -87,7 +101,7 @@ collectionArchetype: ledger
 } %}
 
 <p class="editorial-support mt-2 not-prose">
-  <a href="/listening/" class="editorial-meta-link">Top albums, tracks, year-in-review → /listening/</a>
+  <a href="#listening" class="editorial-meta-link">Top albums, tracks, year-in-review → Listening</a>
 </p>
 
 {{ cb.section_header("Web", "Browsing history + bookmarks", "globe") }}
@@ -239,3 +253,24 @@ collectionArchetype: ledger
     A public Datasette instance at <code>datasette.carteakey.dev</code> is a planned follow-up.
   </p>
 </div>
+</section>
+
+<section id="reading" class="data-section scroll-mt-28">
+{% include "components/data/reading.njk" %}
+</section>
+
+<section id="watching" class="data-section scroll-mt-28">
+{% include "components/data/watching.njk" %}
+</section>
+
+<section id="listening" class="data-section scroll-mt-28">
+{% include "components/data/listening.njk" %}
+</section>
+
+<section id="games" class="data-section scroll-mt-28">
+{% include "components/data/games.njk" %}
+</section>
+
+<section id="workouts" class="data-section scroll-mt-28">
+{% include "components/data/workouts.njk" %}
+</section>

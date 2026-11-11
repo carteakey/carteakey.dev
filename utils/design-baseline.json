@@ -9,6 +9,21 @@
       "off-palette-colour": 1,
       "inline-style": 1
     },
+    "src/_includes/components/data/games.njk": {
+      "inline-style": 1
+    },
+    "src/_includes/components/data/listening.njk": {
+      "utility-text-stack": 1
+    },
+    "src/_includes/components/data/reading.njk": {
+      "inline-style": 1
+    },
+    "src/_includes/components/data/watching.njk": {
+      "inline-style": 1
+    },
+    "src/_includes/components/data/workouts.njk": {
+      "inline-style": 2
+    },
     "src/_includes/components/editorial-sidebar.njk": {
       "utility-text-stack": 1
     },
@@ -69,9 +84,6 @@
     "src/gallery.njk": {
       "inline-style": 1
     },
-    "src/games.njk": {
-      "inline-style": 1
-    },
     "src/guestbook.njk": {
       "pill-or-circle": 1,
       "utility-text-stack": 3,
@@ -79,9 +91,6 @@
     },
     "src/index.njk": {
       "inline-style": 1
-    },
-    "src/listening.njk": {
-      "utility-text-stack": 1
     },
     "src/newsletter.njk": {
       "pill-or-circle": 1,
@@ -171,9 +180,6 @@
     "src/quotes.njk": {
       "inline-style": 2
     },
-    "src/reading.njk": {
-      "inline-style": 1
-    },
     "src/search.njk": {
       "pill-or-circle": 1,
       "off-palette-colour": 4,
@@ -193,12 +199,6 @@
     },
     "src/vibes.njk": {
       "off-palette-colour": 1
-    },
-    "src/watching.njk": {
-      "inline-style": 1
-    },
-    "src/workouts.njk": {
-      "inline-style": 2
     }
   },
   "knownTags": [
