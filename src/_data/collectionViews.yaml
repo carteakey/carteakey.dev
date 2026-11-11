@@ -96,18 +96,6 @@ sheets:
     Visual reference sheets, cheat sheets, and technical breakdowns. Grid showcases the sheet
     imagery directly, while list view enables scanning titles and topics.
 
-lexicon:
-  page: src/lexicon.njk
-  archetype: index
-  engine: true
-  types: [lexicon]
-  views: [stream]
-  row: { showType: false }
-  why: >-
-    A glossary is a page of definitions you read, so the full-definition stream
-    is the only view. A handful of entries needs no toggle, wall or search;
-    revisit (alpha groups + list) if it grows past a screen.
-
 snippets:
   page: src/snippets.njk
   archetype: index
@@ -132,17 +120,6 @@ snippetTags:
     every /snippets/tags/<tag>/ page. Three tags fit on one line, so it is a bare
     list with no controls.
 
-til:
-  page: src/til.njk
-  archetype: index
-  engine: true
-  types: [til]
-  views: [list]
-  row: { showType: false, showSummary: true, showTags: true }
-  why: >-
-    Titles carry each TIL, so a list is enough. Search returns when there are
-    more entries than fit on a screen.
-
 quotations:
   page: src/quotations.njk
   archetype: index
@@ -154,28 +131,6 @@ quotations:
   why: >-
     A quotation is its text; a list row would reduce it to "Quotation from X".
     Stream shows the words, and anchors keep /feed links to /quotations/#slug working.
-
-reviews:
-  page: src/reviews.njk
-  archetype: index
-  engine: true
-  types: [review]
-  views: [list]
-  row:
-    {
-      rich: true,
-      showType: false,
-      showSummary: true,
-      showTags: true,
-      dateFormat: "MMM d",
-    }
-  why: >-
-    Reviews read like posts (stamp, title, one-line summary), so they use the
-    Writing row; price paid and rating sit with the tags when a review sets
-    them. The house-philosophy note stays above as page copy. One list, no
-    search, until there are enough reviews to scan.
-
-# ── Bespoke pages (engine: false) ────────────────────────────────────────────
 
 projects:
   page: src/projects.njk

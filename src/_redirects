@@ -139,3 +139,13 @@
 /infographics/ /sheets/ 301!
 /infographics /sheets/ 301!
 /infographics/:splat /sheets/:splat 301!
+
+# 2026-11 pruning: index pages became tag pages; entries keep their URLs
+/til/ /tags/til/ 301!
+/til /tags/til/ 301!
+/lexicon/ /tags/lexicon/ 301!
+/lexicon /tags/lexicon/ 301!
+/reviews/ /tags/reviews/ 301!
+/reviews /tags/reviews/ 301!
+/portfolio/ /projects/ 301!
+/portfolio /projects/ 301!

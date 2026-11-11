@@ -935,8 +935,6 @@ export default function (eleventyConfig) {
           "agent-skills",
           "prompts",
           "quotations",
-          "lexicon",
-          "til",
           "now",
         ].indexOf(tag) === -1,
     );

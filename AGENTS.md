@@ -17,6 +17,7 @@ Intentionally committed implementation work is tracked in Linear: [carteakey.dev
 ## 🧭 Guiding Principles
 
 1. **Simplicity First**: Use a minimal approach. Avoid unnecessary complexity, libraries, or build tools.
+   - **New pages are a last resort.** Before adding a page, extend an existing one, add a tag, or add a section. Every page is upkeep, a check target, and one more line in `/more/`; the 2026-11 pruning pass undid a lot of single-purpose pages.
 2. **Dense Editorial / Workbench UI**: The site is a personal workbench. Prioritize `.surface` containers, document-oriented typography, mono labels, and high-density layouts over generic "dashboard" cards with heavy shadows and padding.
    - Collection pages must declare a clear archetype from `docs/DESIGN_LANGUAGE.md`: index, wall, shelf, or ledger.
    - Use the shared page header, view-toggle macro, persistent collection-view helper, surfaces, and editorial type primitives before adding local equivalents.

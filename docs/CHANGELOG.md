@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.12.0] - 2026-11-10
+### Changed
+- Page pruning, part 1: `/til/`, `/lexicon/` and `/reviews/` index pages are gone; each now 301s to its tag page (`/tags/til/`, `/tags/lexicon/`, `/tags/reviews/`). Entries keep their URLs and layouts, and backlinks plus the `t` shortcut point at the tag pages.
+- `/portfolio` now redirects through `src/_redirects`; the old `redirect_from` template (`portfolio.njk` + `layouts/redirect.njk`) is removed, leaving one redirect system.
+- `AGENTS.md`: new pages are a last resort under Simplicity First.
+
 ## [2.11.0] - 2026-11-10
 ### Added
 - `/CARTEAKEY.md`: operating heuristics as a raw markdown file, CLAUDE.md but for me. Rules live in `src/_data/heuristics.yaml`, served as plain text via `netlify.toml`, and linked from `/more/`.
