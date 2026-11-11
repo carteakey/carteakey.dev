@@ -1,0 +1,72 @@
+# External sources the writing skills are built from.
+#
+# One entry per upstream. `pinned` is what this repo currently reflects; the
+# checker (npm run check:upstreams) compares it against upstream and reports
+# drift. It never edits anything: merging an upstream change is a judgment
+# call, made with .agents/skills/update-skill/SKILL.md.
+#
+# kind:
+#   git-tag   - a repo with release tags; `tag_prefix` filters monorepo tags
+#   gist      - a GitHub gist; pinned is its `updated_at` timestamp
+#
+# use:
+#   vendored  - copied in unmodified, replace wholesale on update
+#   adapted   - rewritten into one of our skills, merge by hand
+#   partial   - only the listed parts are used, the rest was rejected on purpose
+
+sources:
+  - id: humanizer
+    name: blader/humanizer
+    kind: git-tag
+    repo: blader/humanizer
+    pinned: v4.0.0
+    license: MIT
+    use: adapted
+    used_in: .agents/skills/human-writer/SKILL.md (Part 2)
+    local_overrides:
+      - Keeps the v3.1.0 no-invention rule. 4.0.0 lets rewrites add facts; we don't.
+      - §14 and §17 examples from 4.0.0 not merged (they add facts not in the source).
+    refresh: git diff <pinned> <new> -- SKILL.md, merge into Part 2 by hand
+
+  - id: declauding
+    name: oaustegard/claude-skills declauding
+    kind: git-tag
+    repo: oaustegard/claude-skills
+    tag_prefix: declauding-v
+    pinned: declauding-v0.14.0
+    license: MIT
+    use: vendored
+    used_in: .agents/skills/declauding/ (called by human-writer Part 3)
+    local_overrides:
+      - Stop hook (hooks/hooks.json) intentionally inert; not installed as a plugin.
+      - Linter is advisory; category table in human-writer Part 3 (measured 2026-11-10).
+    refresh: replace directory wholesale, then re-check entry numbers named in Part 3
+
+  - id: tropes-fyi
+    name: tropes.fyi "AI Writing Tropes to Avoid" (Ossama Chaib)
+    kind: gist
+    gist: f3baa9d25154c33095e22272c631f5a1
+    homepage: https://tropes.fyi
+    pinned: 2026-11-09T20:14:42Z
+    license: CC BY 4.0
+    use: partial
+    used_in: .agents/skills/human-writer/SKILL.md (Part 2, section H)
+    notes: Mostly overlaps humanizer and declauding. Only entries that never appear in the author's human posts were adopted.
+
+  - id: writing-whip
+    name: writing-whip skill (Ossama Chaib, tropes.fyi)
+    kind: gist
+    gist: dae6f9571534f3fbd1266a384be00e11
+    homepage: https://tropes.fyi
+    pinned: 2026-11-10T23:43:58Z
+    license: CC BY 4.0
+    use: partial
+    used_in: .agents/skills/human-writer/SKILL.md (Part 2, section H)
+    rejected:
+      # Measured against authored_by: human vs ai-assisted posts on 2026-11-10 (per 1k words).
+      - "No 'we': author 3.9 vs AI-assisted 1.4. Author's voice."
+      - "No short standalone paragraphs: author 1.06 vs 0.66. Author's voice."
+      - "'Not X. Not Y.', 'think of it as', '<noun> trap': appear only or mostly in human posts."
+      - "No What/Why/How headers: 0.72 vs 0.83, no signal."
+      - "Ban on ecosystem/framework/gated: 0.30 vs 0.29, normal technical vocabulary here."
+      - "'How to respond' section: about chat replies, not blog prose."

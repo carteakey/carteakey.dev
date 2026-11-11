@@ -22,6 +22,7 @@
     "check:content": "node ./utils/check-content.mjs",
     "check:design": "node ./utils/check-design.mjs",
     "check:version": "node ./utils/check-version.mjs",
+    "check:upstreams": "node ./utils/check-upstreams.mjs",
     "verify": "node ./utils/verify-ui.mjs",
     "lint": "prettier --check \"*.{js,mjs,cjs,json}\" \"utils/**/*.{js,mjs,cjs}\" \"netlify/functions/**/*.{js,mjs}\" \"src/_data/**/*.{js,yaml}\"",
     "format": "prettier --write \"*.{js,mjs,cjs,json}\" \"utils/**/*.{js,mjs,cjs}\" \"netlify/functions/**/*.{js,mjs}\" \"src/_data/**/*.{js,yaml}\"",
