@@ -8,6 +8,8 @@ description: >
 
 # Updating skills
 
+Start with `npm run check:upstreams`. It compares every source in `.agents/sources.yaml` against upstream and prints what drifted, with a compare link. After merging a change, bump that entry's `pinned` value. Add new external sources to the manifest when you first use them, including the parts you chose not to adopt.
+
 Skills in `.agents/skills/` fall into three categories:
 
 | Category | Example | How to update |
@@ -15,6 +17,7 @@ Skills in `.agents/skills/` fall into three categories:
 | **Author voice & baseline** | `human-writer` (Part 1) | Run `python3 .agents/skills/human-writer/scripts/calibrate.py` to re-measure posts (`authored_by: human`). |
 | **Upstream humanizer engine** | `human-writer` (Part 2) | Clone `blader/humanizer` upstream, review changelog, and merge new patterns into Part 2. |
 | **Vendored skills** | Upstream repos (MIT) | Clone upstream into scratchpad, copy in pristine with `LICENSE`. |
+| **Declauding (vendored, called by human-writer)** | `declauding` (human-writer Part 3) | Monorepo subdirectory with `declauding-vX.Y.Z` tags. Follow "To refresh Part 3" in `human-writer/SKILL.md`, then re-check the entry numbers Part 3 names. |
 
 ---
 
@@ -39,7 +42,7 @@ The `human-writer` skill is composed of two parts:
    git clone --depth 1 https://github.com/blader/humanizer.git /tmp/humanizer-up
    git -C /tmp/humanizer-up log -1 --format='%h %ad %s'
    ```
-2. **Inspect changes:** Check `CHANGELOG.md` or diff `SKILL.md` in upstream against Part 2 of `human-writer/SKILL.md`.
+2. **Inspect changes:** Check `CHANGELOG.md` or diff `SKILL.md` tag to tag upstream (`git diff v4.0.0 vX.Y.Z -- SKILL.md`). Do not merge changes that let the rewrite add facts; Part 2 keeps a local no-invention override.
 3. **Merge new patterns** into Part 2 while keeping Part 1's author-specific overrides (zero em dashes, Indian context, local style).
 4. **Clean up:** `rm -rf /tmp/humanizer-up`.
 
