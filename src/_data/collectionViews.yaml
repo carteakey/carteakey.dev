@@ -326,12 +326,6 @@ tags-list:
   engine: false
   why: Tag directory with counts.
 
-tools:
-  page: src/tools.njk
-  archetype: ledger
-  engine: false
-  why: Tools ledger from tools.yaml.
-
 uses:
   page: src/uses.njk
   archetype: ledger
