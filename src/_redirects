@@ -157,3 +157,5 @@
 /status /stats/#status 301!
 /sheets/ /tags/sheets/ 301!
 /sheets /tags/sheets/ 301!
+/devices/ /uses/#hardware 301!
+/devices /uses/#hardware 301!

@@ -156,12 +156,6 @@ changelog:
   engine: false
   why: Months are the structure. A written summary stays visible and the releases fold into a native <details> (newest month open, no JS), so the page scans by month without hiding the detail.
 
-devices:
-  page: src/devices.njk
-  archetype: index
-  engine: false
-  why: A directory of machines, each with its own page of specs and timeline; not dated content.
-
 learning:
   page: src/learning.njk
   archetype: index

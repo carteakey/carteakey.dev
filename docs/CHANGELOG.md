@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.13.2] - 2026-11-10
+### Changed
+- Page pruning, part 6: the `/devices/` index (a duplicate of `/uses/#hardware`) is removed and 301s there. Device pages (`/devices/glowdesk/`, `/devices/yeti-cachy/`) are unchanged.
+
 ## [2.13.1] - 2026-11-10
 ### Changed
 - Page pruning, part 5: `/sheets/` (one entry) became `/tags/sheets/`; App Swaps keeps its URL and poster layout, and `/uses/#software` links to it. `/infographics` now redirects straight to the tag page.
