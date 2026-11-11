@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.15.0] - 2026-11-10
+### Changed
+- The Reading Tracker moved into `/blog/` as an All / Unread / Read filter with an "x/79 read" count, built on the collection engine (`read` filter, `read-filter.js`). It uses the same browser storage as the per-post "Mark as read" button, so existing progress carries over. `/learning/` 301s to `/blog/`; its footer links and dead CSS are gone.
+
 ## [2.14.1] - 2026-11-10
 ### Added
 - `/uses/#homelab`: a collapsible "All self-hosted services" diagram (the anonymised CasaKey overview generated in homelabbr, with one leaked LAN IP scrubbed).

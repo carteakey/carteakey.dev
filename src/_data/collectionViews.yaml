@@ -32,7 +32,7 @@ blog:
   group: year
   jump: true
   search: true
-  filters: [authorship]
+  filters: [authorship, read]
   row:
     {
       rich: true,
@@ -44,7 +44,9 @@ blog:
   why: >-
     The reference index. 70+ long posts need year groups, jump pills and search
     to stay scannable; the wall exists because the thumbnails make browsing by
-    picture a different task from scanning titles.
+    picture a different task from scanning titles. The Read filter replaced the
+    old /learning/ Reading Tracker: progress is per-browser and shared with the
+    "Mark as read" button on each post.
 
 feed:
   page: src/feed.njk
@@ -155,12 +157,6 @@ changelog:
   archetype: index
   engine: false
   why: Months are the structure. A written summary stays visible and the releases fold into a native <details> (newest month open, no JS), so the page scans by month without hiding the detail.
-
-learning:
-  page: src/learning.njk
-  archetype: index
-  engine: false
-  why: A private, browser-local reading tracker for site guides; per-reader state, not a collection.
 
 now-archive:
   page: src/now-archive.njk

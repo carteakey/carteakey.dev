@@ -9,7 +9,7 @@ import { load } from "js-yaml";
 const REGISTRY = "src/_data/collectionViews.yaml";
 const VIEWS = new Set(["stream", "list", "grid"]);
 const GROUPS = new Set([undefined, "none", "year", "alpha"]);
-const FILTERS = new Set(["authorship", "saved", "type"]);
+const FILTERS = new Set(["authorship", "read", "saved", "type"]);
 
 const registry = load(await readFile(REGISTRY, "utf8"));
 const errors = [];

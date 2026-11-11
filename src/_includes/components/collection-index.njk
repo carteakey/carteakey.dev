@@ -37,6 +37,17 @@
         {% if 'authorship' in cvFilters %}
           {% include "components/authorship-filter.njk" %}
         {% endif %}
+        {% if 'read' in cvFilters %}
+          <div class="collection-read-filter" role="group" aria-label="Filter by read progress" data-collection-read>
+            <button type="button" class="snippet-filter-button accent-focus is-active" data-read-filter="all" aria-pressed="true">All</button>
+            <button type="button" class="snippet-filter-button accent-focus" data-read-filter="unread" aria-pressed="false">Unread</button>
+            <button type="button" class="snippet-filter-button accent-focus" data-read-filter="read" aria-pressed="false">
+              {% feather "check", class="w-3.5 h-3.5" %}
+              <span>Read</span>
+              <span data-collection-read-count class="snippet-filter-count">0</span>
+            </button>
+          </div>
+        {% endif %}
         {% if 'saved' in cvFilters %}
           <button type="button" data-collection-saved class="snippet-filter-button accent-focus" aria-pressed="false">
             {% feather "bookmark", class="w-3.5 h-3.5" %}
@@ -82,7 +93,7 @@
     {% if v == 'stream' %}
       <div class="collection-stream" data-collection-view x-show="view === 'stream'"{{ cloak | safe }}>
         {% for item in cvItems %}
-          {% set attrs = 'data-collection-item data-type="' ~ item.type ~ '" data-search="' ~ (item | collectionSearchText) ~ '"' %}
+          {% set attrs = 'data-collection-item data-type="' ~ item.type ~ '" data-url="' ~ item.url ~ '" data-search="' ~ (item | collectionSearchText) ~ '"' %}
           {% if cv.anchors and item.original %}{% set attrs = attrs ~ ' id="' ~ item.original.fileSlug ~ '"' %}{% endif %}
           {{ feedCard(item, { variant: 'stream', showType: cvRow.showType, date: item | collectionDate(cv), outerAttrs: attrs }) }}
           {% if cv.anchors %}{% set backlinkUrl = item.url %}{% include "components/backlinks.njk" %}{% set backlinkUrl = null %}{% endif %}
@@ -110,7 +121,7 @@
                 date: item | collectionDate(cv),
                 dateFormat: 'MMM d' if (group.kind == 'year' or group.kind == 'pinned') else cvRow.dateFormat,
                 saveable: 'saved' in cvFilters,
-                outerAttrs: 'data-collection-item data-type="' ~ item.type ~ '" data-search="' ~ (item | collectionSearchText) ~ '"'
+                outerAttrs: 'data-collection-item data-type="' ~ item.type ~ '" data-url="' ~ item.url ~ '" data-search="' ~ (item | collectionSearchText) ~ '"'
               }) }}
             {% endfor %}
           </ul>
@@ -124,7 +135,7 @@
             extraClasses: 'feed-card',
             showType: cvRow.showType,
             date: item | collectionDate(cv),
-            outerAttrs: 'data-collection-item data-type="' ~ item.type ~ '" data-search="' ~ (item | collectionSearchText) ~ '"'
+            outerAttrs: 'data-collection-item data-type="' ~ item.type ~ '" data-url="' ~ item.url ~ '" data-search="' ~ (item | collectionSearchText) ~ '"'
           }) }}
         {% endfor %}
       </div>
@@ -136,4 +147,5 @@
 
 {% if 'grid' in cvViews %}{% include "components/feed-masonry-script.njk" %}{% endif %}
 <script defer src="/static/js/collection-index.js?v={{ versions.version }}"></script>
+{% if 'read' in cvFilters %}<script defer src="/static/js/read-filter.js?v={{ versions.version }}"></script>{% endif %}
 {% if 'saved' in cvFilters %}<script defer src="/static/js/snippet-favorites.js?v={{ versions.version }}"></script>{% endif %}
