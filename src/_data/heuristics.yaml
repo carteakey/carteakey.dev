@@ -1,0 +1,15 @@
+# Single source for CARTEAKEY.md: rendered on /about/ and served raw at /CARTEAKEY.md.
+intro: >-
+  CLAUDE.md tells an AI agent how to work in a repo. CARTEAKEY.md is the same
+  thing, written for me.
+rules:
+  - Be briefer. Less is more.
+  - Push back.
+  - No one knows jack.
+  - Save your ctx len.
+  - Write natural emails. They work better.
+  - If it has a website, don't download the app.
+  - Don't trust how you feel about your life after 9pm.
+  - Write it down, or you start over.
+  - Social skills atrophy. Use them.
+  - Do it like no one's watching.

@@ -6,6 +6,11 @@
   ignore = "test \"$HEAD\" != \"${HEAD#dependabot/}\""
 
 [[headers]]
+  for = "/CARTEAKEY.md"
+  [headers.values]
+    Content-Type = "text/plain; charset=utf-8"
+
+[[headers]]
   for = "/css/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"

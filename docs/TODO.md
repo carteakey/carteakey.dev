@@ -1,5 +1,9 @@
 # Site Improvement TODO List
 
+## Content
+
+- [ ] Post a 2026 in review. (added 2026-11-10)
+
 ## Repo Review (2026-10-10)
 
 Findings from the 2026-10-10 review, roughly in priority order. Promote items to Linear when committing to them.

@@ -1,0 +1,11 @@
+---
+permalink: /CARTEAKEY.md
+eleventyExcludeFromCollections: true
+---
+# CARTEAKEY.md
+
+{{ heuristics.intro | safe }}
+
+{% for rule in heuristics.rules -%}
+- {{ rule | safe }}
+{% endfor %}

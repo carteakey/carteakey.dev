@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.11.0] - 2026-11-10
+### Added
+- `/CARTEAKEY.md`: operating heuristics as a raw markdown file, CLAUDE.md but for me. Rules live in `src/_data/heuristics.yaml`, served as plain text via `netlify.toml`, and linked from `/more/`.
+
+### Changed
+- `/about/` gains an Operating Heuristics section rendered from the same data; Things I've Learned keeps the three beliefs.
+
 ## [2.10.0] - 2026-11-10
 ### Changed
 - `/ai/` now describes the current workflow: three model tiers, S, A and B (Claude Opus 5.5 as orchestrator and reviewer, Mistral Vibe with DeepSeek V4.1 Flash and ZCode with GLM-5.3 Flash as cheap hosted workers, pi on the local Qwen3.8-Flash-Next as fallback), the Herding team-workflow experiment, and both Hermes agents with their fallback chains. ChatGPT Plus, Google AI Pro and OpenCode Go are gone from the stack.
