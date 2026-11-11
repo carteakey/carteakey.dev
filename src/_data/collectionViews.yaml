@@ -302,12 +302,6 @@ skill-library:
   engine: false
   why: Agent skills reference with install details.
 
-skills-radar:
-  page: src/skills-radar.njk
-  archetype: ledger
-  engine: false
-  why: Radar visual of skills; a diagram, not a list.
-
 snippet-tags:
   page: src/snippet-tags.njk
   archetype: ledger
