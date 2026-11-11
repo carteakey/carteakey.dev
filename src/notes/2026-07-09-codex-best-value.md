@@ -4,7 +4,7 @@ layout: layouts/note.njk
 permalink: /notes/{{ page.fileSlug }}/
 description: After using Claude Code at work and Codex + Antigravity for personal dev, Codex on the $20 plan is clearly the best bang for the buck right now.
 date: 2026-07-09
-authored_by: human
+authored_by: ai-assisted
 tags:
   - AI
   - Agents
