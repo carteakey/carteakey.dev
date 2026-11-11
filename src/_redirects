@@ -136,8 +136,8 @@
 /blogroll/* /bookmarks/#blogroll 301!
 
 # Infographics collection renamed to Sheets (same slugs, new prefix)
-/infographics/ /sheets/ 301!
-/infographics /sheets/ 301!
+/infographics/ /tags/sheets/ 301!
+/infographics /tags/sheets/ 301!
 /infographics/:splat /sheets/:splat 301!
 
 # 2026-11 pruning: index pages became tag pages; entries keep their URLs
@@ -155,3 +155,5 @@
 /tools /uses/#tools 301!
 /status/ /stats/#status 301!
 /status /stats/#status 301!
+/sheets/ /tags/sheets/ 301!
+/sheets /tags/sheets/ 301!

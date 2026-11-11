@@ -85,17 +85,6 @@ notes:
     finding an old note by title. No wall: at this size it repeats the stream in
     columns. No search: the collection fits on one screen of titles.
 
-sheets:
-  page: src/sheets.njk
-  archetype: index
-  engine: true
-  types: [sheet]
-  views: [grid, list]
-  row: { showType: false, showSummary: true, showTags: true }
-  why: >-
-    Visual reference sheets, cheat sheets, and technical breakdowns. Grid showcases the sheet
-    imagery directly, while list view enables scanning titles and topics.
-
 snippets:
   page: src/snippets.njk
   archetype: index
