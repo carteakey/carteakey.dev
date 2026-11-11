@@ -23,6 +23,9 @@
     "src/_includes/components/github-contributions.njk": {
       "utility-text-stack": 1
     },
+    "src/_includes/components/site-status.njk": {
+      "off-palette-colour": 10
+    },
     "src/_includes/components/skills-radar.njk": {
       "inline-style": 2
     },
@@ -187,9 +190,6 @@
       "pill-or-circle": 4,
       "utility-text-stack": 4,
       "inline-style": 10
-    },
-    "src/status.njk": {
-      "off-palette-colour": 10
     },
     "src/vibes.njk": {
       "off-palette-colour": 1

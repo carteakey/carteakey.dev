@@ -1,22 +1,3 @@
----
-layout: layouts/base.njk
-title: Status
-description: A public health summary for the external data sources that power carteakey.dev.
-permalink: /status/
-eleventyNavigation:
-  key: Status
-  order: 20
-collectionArchetype: ledger
----
-{% include "components/breadcrumbs.njk" %}
-
-{% set pageEyebrow = "Site Health" %}
-{% set pageTitle = "Status" %}
-{% set pageDescription = "A build-time snapshot of the public data sources used around the site." %}
-{% set pageMetaLabel = "Checked" %}
-{% set pageMeta = status.checkedAt | readableDate %}
-{% include "components/page-header.njk" %}
-
 {% set readingCount = reading.in_progress.length + reading.read.length + reading.want_to_read.length %}
 {% set readingState = "warn" %}
 {% if readingCount > 0 %}{% set readingState = "ok" %}{% endif %}

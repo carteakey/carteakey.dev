@@ -314,12 +314,6 @@ stats:
   engine: false
   why: Site statistics; charts and numbers. Lighthouse shows the latest monthly run per page from src/_data/lighthouse.json.
 
-status:
-  page: src/status.njk
-  archetype: ledger
-  engine: false
-  why: Health summary of the external data sources behind the site.
-
 tags-list:
   page: src/tags-list.njk
   archetype: ledger

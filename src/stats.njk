@@ -292,6 +292,12 @@ collectionArchetype: ledger
   </div>
 </div>
 
+{# ── Site status (moved verbatim from the old /status/ page) ── #}
+<div id="status" class="scroll-mt-20">
+{{ cb.section_header("Status", "Data sources and builds · checked " ~ (status.checkedAt | readableDate), "activity") }}
+{% include "components/site-status.njk" %}
+</div>
+
 {# ── Stack ── #}
 {{ cb.section_header("Stack", "Architecture and services", "server") }}
 
