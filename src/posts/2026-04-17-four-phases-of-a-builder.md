@@ -6,7 +6,7 @@ imageAlt: "Transparent monochrome sketch of four stages of building software aro
 date: 2026-04-17
 giscusTerm: "/blog/four-phases-of-a-builder/"
 authored_by: ai-assisted
-hidden: true
+hidden: false
 draft: false
 tags:
   - Personal
@@ -41,8 +41,6 @@ The problem is that finishing is a different skill than starting, and you haven'
 
 My Phase 2 repos are scattered with things that almost work. Recomovi had real promise - it was doing NLP-based movie recommendation before that was a normal thing to do. vizima.in got shipped and looked good. spendalyzr was the first version of something I'd spend years trying to build right (it eventually became clawfin). But there's also a graveyard: half-finished tools, repos with a single commit, projects that stalled at the 80% mark because the last 20% was just not as fun as the first 80%.
 
-The thing Phase 2 teaches you, eventually, is that the last 20% is where the actual product is.
-
 There's also something else happening in this phase: you're building for hypothetical users. You imagine someone who wants what you're making. But you don't really know if they exist, and you're not one of them yet. The work is still more about proving you can build than about actually solving a problem you feel.
 
 ## Phase 3: Shipping
@@ -51,13 +49,13 @@ Something shifted. I'm not sure exactly when.
 
 The best marker I have is carteakey.dev - this website. Not because it's technically impressive. It's an Eleventy site with Tailwind CSS, nothing groundbreaking. But the act of building it, maintaining it, adding to it over years, pointing people at it - that's a different relationship to work than anything I'd had before. It's mine in a way that a Kaggle notebook isn't.
 
-Around the same time: cinemattr.ca launched and actually worked. server-compose quietly accumulated 179 GitHub stars, which is the kind of thing that happens when you build something you personally needed and turns out other people needed it too. 
+Around the same time: cinemattr.ca launched and actually worked. server-compose quietly accumulated 185 GitHub stars, which is the kind of thing that happens when you build something you personally needed and turns out other people needed it too.
 
 The defining feature of Phase 3 is that you have users. Even if the only user is you. Especially if the only user is you. Building for yourself is the most honest form of product development - there's no way to lie to yourself about whether it actually solves the problem.
 
 Phase 3 is also when taste develops. You've seen enough bad software to know what makes software bad. You've maintained enough of your own code to know what makes it painful. You start making different choices - simpler architectures, less magic, more control. You stop adding features because they're fun to build and start only adding them when you actually need them.
 
-The other thing Phase 3 teaches: finishing is a habit, not a talent. The projects that ship are the ones you show up for every day even when they're not interesting. The graveyard from Phase 2 starts to feel less like failure and more like evidence of a skill you hadn't built yet.
+The projects that ship are the ones you show up for every day even when they're not interesting. The graveyard from Phase 2 starts to feel less like failure and more like evidence of a skill you hadn't built yet.
 
 ## Phase 4: AI-Native
 
@@ -67,16 +65,12 @@ The difference between someone who uses AI in their projects and someone who is 
 
 Look at what I've been building lately: truthshield is a fact-checking extension that works on any webpage in real time - that's only possible with modern LLMs. nanoghibli transforms video footage into Studio Ghibli-style anime using Gemini and Veo - you couldn't have made that two years ago. chirptype is offline, on-device voice transcription that drops text into any input field on macOS - the model is the product. muninn is a personal AI copilot that knows my context and lives locally.
 
-These aren't "apps with AI." They're things that didn't exist as a category before the last few years.
-
 There's also a change in how I approach building. The iteration speed is different. Tools like Claude Code have collapsed the time between "I wonder if..." and "okay, that works." The bottleneck has shifted from implementation to taste - the question is less "can I build this" and more "should I build this, and what's the right shape for it."
 
 What Phase 4 has in common with Phase 1 is that feeling of being slightly lost in a landscape that's changing faster than you can map it. In Phase 1, you were learning the fundamentals. In Phase 4, nobody has fully worked out the fundamentals yet. The difference is that you've got enough experience to make useful progress even without a complete map.
-
----
 
 I don't know what Phase 5 looks like yet. Maybe the phases don't work as a metaphor past a certain point - maybe it's just "building" from here, without the scaffold of learning stages.
 
 But when I look at the arc from those sklearn classifiers to real-time AI pipelines, I don't feel embarrassed about the early stuff. I feel grateful for it. The slow part was the only path to here.
 
-The graveyard is evidence you tried. The ones that shipped are evidence you learned.
+I keep the running version of this list on the [projects page](/projects/), where each one is labelled by how it was built.

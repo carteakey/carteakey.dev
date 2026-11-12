@@ -3,37 +3,43 @@ current:
   - title: Aidar
     description: "AI-writing signal tracker being calibrated against benchmark and hardened corpora."
     image_path: "./src/static/img/projects/aidar.png"
-    status: Calibrating
+    authored_by: ai-generated
+    status: Active
     url: /blog/aidar-tracking-ai-writing-drift/
     github: https://github.com/carteakey/aidar
 
   - title: L3MS
     description: "Keyboard-first local LLM workbench moving through its Rust parity and verification pass."
     image_path: "./src/static/img/projects/l3ms.png"
-    status: Building
+    authored_by: ai-assisted
+    status: Active
     url: https://l3ms.carteakey.dev
     github: https://github.com/carteakey/l3ms
 
   - title: Placedex
     description: "Location-first checklists with mapped quests and flexible items for anything worth doing."
     image_path: "./src/static/img/projects/placedex.png"
-    status: Building
+    authored_by: ai-assisted
+    status: Active
 
   - title: Lytte
     description: "Private, local-first meeting transcription and summarization across web and desktop surfaces."
     image_path: "./src/static/img/projects/lytte.png"
-    status: In development
+    authored_by: ai-assisted
+    status: Active
 
   - title: Herding
-    description: "Native Rust + GPUI client for Herdr: terminal sessions, workspaces, Git worktrees, and agent activity from your local Herdr daemon."
+    description: "My fork of sheprd-labs/sheprd: a native Rust + GPUI client for Herdr. Terminal sessions, workspaces, Git worktrees, and agent activity from your local Herdr daemon."
     image_path: "./src/static/img/projects/herding.png"
-    status: Building
+    authored_by: ai-assisted
+    status: Alpha
     github: https://github.com/carteakey/herding
 
   - title: alvidaa
     description: "A self-installing home-screen launcher for Hisense VIDAA TVs, and the path to root on 2024+ VIDAA firmware."
     image_path: "./src/static/img/projects/alvidaa.png"
-    status: Ongoing
+    authored_by: ai-assisted
+    status: Active
     url: /blog/alvidaa/
     github: https://github.com/carteakey/alvidaa
 
@@ -41,27 +47,21 @@ coming_soon:
   - title: Tokemon
     description: "A local-first token garden that turns coding-agent usage metadata into an evolving creature and dashboard."
     image_path: "./src/static/img/projects/tokemon.png"
+    authored_by: ai-generated
     status: Coming soon
 
   - title: Eighteen Dawns
     description: "A finite side-scrolling pixel-action campaign set across the eighteen days of the Kurukshetra War."
     image_path: "./src/static/img/projects/eighteen-dawns.png"
+    authored_by: ai-generated
     status: Playtesting
 
 projects:
-  - title: aidar
-    description: "Detects AI-era writing signals in web content. Scans sites and measures stylistic drift associated with LLM-generated text."
-    image_path: "./src/static/img/projects/aidar.png"
-    url: /blog/aidar-tracking-ai-writing-drift/
-    github: https://github.com/carteakey/aidar
-    tags:
-      - python
-      - nlp
-      - ai
-
   - title: window.carteakey.dev
     description: "A live window to Toronto. Raspberry Pi 4B + Pi camera streaming an HLS feed via Cloudflare Tunnel - weather, viewer count, music, timelapse."
     image_path: "./src/static/img/window-site.png"
+    authored_by: ai-assisted
+    status: Active
     url: https://window.carteakey.dev
     github: https://github.com/carteakey/window.carteakey.dev
     tags:
@@ -72,68 +72,30 @@ projects:
   - title: carteakey.dev
     description: "This website!"
     image_path: "./src/static/img/projects/carteakey.png"
+    authored_by: ai-assisted
+    status: Active
     url: https://carteakey.dev
     github: https://github.com/carteakey/carteakey.dev
     tags:
       - eleventy
       - tailwind
 
-  - title: world-energy-stats
-    description: World Energy Statistics using various data tools.
-    image_path: "./src/static/img/projects/world-energy-stats.png"
-    url: https://world-energy-stats.fly.dev
-    github: https://github.com/carteakey/world-energy-stats
-    tags:
-      - spark
-      - dash
-
-  - title: cinemattr.ca
-    description: Search movies using AI and vector databases.
-    image_path: "./src/static/img/projects/cinemattr.png"
-    url: https://cinemattr.ca
-    github: https://github.com/carteakey/cinemattr.ca
-    tags:
-      - langchain
-      - sveltekit
-
-  - title: server-compose
-    description: A collection of sample docker compose files for self-hosted applications.
-    image_path: "./src/static/img/projects/server-compose.png"
-    github: https://github.com/carteakey/server-compose
-    tags:
-      - docker
-      - linux
-
-  - title: recomovi
-    description: Movie Recommender & IMDb Dataset Generator.
-    image_path: "./src/static/img/projects/recomovi.png"
-    url: https://recomovi.streamlit.app
-    github: https://github.com/carteakey/recomovi
-    tags:
-      - python
-      - streamlit
-
   - title: nanoghibli
     description: "Multimodal AI pipeline that transforms video clips into Studio Ghibli-style anime trailers using Gemini and Veo."
     image_path: "./src/static/img/projects/nanoghibli.png"
+    authored_by: ai-generated
+    status: Active
     github: https://github.com/carteakey/nanoghibli
     tags:
       - python
       - gemini
       - ai
 
-  - title: L3MS
-    description: "Keyboard-first toolkit for local LLM workflows: model downloads, llama.cpp runs, benchmarks, chat, and runtime telemetry."
-    image_path: "./src/static/img/projects/l3ms.png"
-    url: https://l3ms.carteakey.dev
-    github: https://github.com/carteakey/l3ms
-    tags:
-      - rust
-      - local-ai
-
   - title: ChirpType
     description: "On-device voice-to-text hotkey app for macOS and Windows. Transcribes locally and pastes words into any focused app."
     image_path: "./src/static/img/projects/chirptype.png"
+    authored_by: ai-generated
+    status: Dormant
     github: https://github.com/carteakey/chirptype
     tags:
       - python
@@ -142,6 +104,8 @@ projects:
   - title: clawfin
     description: "Canadian-first personal finance dashboard. Self-hosted, AI-native, built for people who want to own their money data."
     image_path: "./src/static/img/projects/clawfin.png"
+    authored_by: ai-generated
+    status: Dormant
     github: https://github.com/carteakey/clawfin
     tags:
       - python
@@ -151,6 +115,8 @@ projects:
   - title: sortling
     description: "Tidy screenshots, downloads and documents with decision models. One Python file, no dependencies."
     image_path: "./src/static/img/projects/sortling.png"
+    authored_by: ai-generated
+    status: Active
     github: https://github.com/carteakey/sortling
     tags:
       - python
@@ -159,6 +125,8 @@ projects:
   - title: cartebase
     description: "Personal SQLite workspace - a single database for browsing history, bookmarks, music, games, and purchases. Powers the public data dashboard."
     image_path: "./src/static/img/projects/cartebase.png"
+    authored_by: ai-assisted
+    status: Active
     url: /data/
     tags:
       - python
@@ -168,17 +136,113 @@ projects:
   - title: wiki.carteakey.dev
     description: "A public digital garden. Evolving notes, half-formed ideas, and working thinking - built with Quartz."
     image_path: "./src/static/img/projects/notes.png"
+    authored_by: ai-assisted
+    status: Dormant
     url: https://wiki.carteakey.dev
     github: https://github.com/carteakey/wiki.carteakey.dev
     tags:
       - quartz
       - markdown
 
-  - title: carteakey.github.io
-    description: My old blog.
-    image_path: "./src/static/img/projects/carteakey.github.png"
-    url: https://carteakey.github.io
-    github: https://github.com/carteakey/carteakey.github.io
-    tags:
-      - jekyll
-      - github pages
+# "How I got here": older projects grouped by the phases in
+# /blog/four-phases-of-a-builder/. `authored_by` is how the code was originally
+# built (human, ai-assisted, ai-generated), not the prose around it, and not later
+# maintenance. `status` is the state today: Alpha (usable, rough), Active (pushed
+# in the last couple of months), Dormant (no recent push), Archived (repo
+# archived), Learning (practice work, not a product). Coming soon and Playtesting
+# are the two pre-release states. Phase 4 has no items: most of the wall above
+# belongs to it.
+past:
+  - phase: "Phase 1"
+    title: Early stupid
+    blurb: "Building to learn, not to ship. Tutorials, textbook datasets and Kaggle, all by hand."
+    items:
+      - title: ml-experiments
+        description: "PyTorch crack detection and MNIST, Keras regression, and a scikit-learn loan classifier, collected into one repo."
+        authored_by: human
+        status: Learning
+        github: https://github.com/carteakey/ml-experiments
+        tags: [pytorch, keras, scikit-learn]
+  - phase: "Phase 2"
+    title: Products emerging
+    blurb: "Real scope and a real UI, and a habit of stalling at 80%. All written by hand, before AI tools were part of how I worked."
+    items:
+      - title: recomovi
+        year: 2021
+        description: "Movie recommender and IMDb dataset generator. NLP-based recommendations before that was a normal thing to do."
+        image_path: "./src/static/img/projects/recomovi.png"
+        authored_by: human
+        status: Archived
+        github: https://github.com/carteakey/recomovi
+        tags: [python, streamlit]
+      - title: carteakey.github.io
+        year: 2021
+        description: "My first blog, on Jekyll and GitHub Pages. It's where this site started."
+        image_path: "./src/static/img/projects/carteakey.github.png"
+        authored_by: human
+        status: Archived
+        github: https://github.com/carteakey/carteakey.github.io
+        tags: [jekyll, github pages]
+      - title: MicroHMS
+        year: 2022
+        description: "Hotel management system to track bookings and generate invoices."
+        image_path: "./src/static/img/projects/microhms.png"
+        authored_by: human
+        status: Archived
+        github: https://github.com/carteakey/microhms
+        tags: [flask, postgresql]
+      - title: vizima.in
+        year: 2022
+        description: "Website for a hospitality company. Featured in Chakra UI's showcase."
+        image_path: "./src/static/img/projects/vizima.png"
+        authored_by: human
+        url: https://www.vizima.in
+        tags: [next.js, firebase]
+  - phase: "Phase 3"
+    title: Shipping
+    blurb: "Things that worked and had users, starting with me. The first LLM features show up here, so I count these as the transition, not pre-AI."
+    items:
+      - title: cinemattr
+        year: 2023
+        description: "Search movies by plot in plain English. FastAPI and DuckDB vector search behind a SvelteKit frontend, still live."
+        image_path: "./src/static/img/projects/cinemattr.png"
+        authored_by: ai-assisted
+        status: Active
+        url: https://cinemattr-ca.vercel.app
+        github: https://github.com/carteakey/cinemattr
+        tags: [langchain, sveltekit]
+      - title: server-compose
+        year: 2023
+        description: "A collection of sample docker compose files for self-hosted applications."
+        image_path: "./src/static/img/projects/server-compose.png"
+        authored_by: human
+        status: Active
+        github: https://github.com/carteakey/server-compose
+        tags: [docker, linux]
+      - title: world-energy-stats
+        year: 2023
+        description: "World energy statistics explored with Spark and Dash."
+        image_path: "./src/static/img/projects/world-energy-stats.png"
+        authored_by: human
+        status: Dormant
+        url: https://world-energy-stats.fly.dev
+        github: https://github.com/carteakey/world-energy-stats
+        tags: [spark, dash]
+      - title: data-pipeline-compose
+        year: 2023
+        description: "Docker Compose stack for big data processing with Hadoop, Hive, PySpark, Spark, Jupyter and Airflow."
+        authored_by: human
+        status: Archived
+        github: https://github.com/carteakey/data-pipeline-compose
+        tags: [docker, spark, airflow]
+      - title: LAKR
+        year: 2024
+        description: "LLM-augmented, knowledge-graph-based recommendation system, from my data science master's."
+        authored_by: ai-assisted
+        status: Dormant
+        github: https://github.com/carteakey/LAKR
+        tags: [llm, knowledge-graph]
+  - phase: "Phase 4"
+    title: AI-native
+    blurb: "Still in progress. Most of the wall above belongs here, and the labels there show how much of each one an agent wrote."
+    items: []

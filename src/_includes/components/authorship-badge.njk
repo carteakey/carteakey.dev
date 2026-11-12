@@ -1,16 +1,19 @@
-{% macro authorshipBadge(authored_by, compact=false) %}
+{% macro authorshipBadge(authored_by, compact=false, kind="writing") %}
   {% if authored_by == 'human' %}
     {% set icon = "edit-2" %}
     {% set label = "Human" %}
     {% set title = "Human - Written without AI assistance" %}
+    {% if kind == "project" %}{% set title = "Human - Built without AI assistance" %}{% endif %}
   {% elif authored_by == 'ai-assisted' %}
     {% set icon = "zap" %}
     {% set label = "AI Assisted" %}
     {% set title = "AI Assisted - Written with AI as a creative partner" %}
+    {% if kind == "project" %}{% set title = "AI Assisted - Built with AI as a pairing partner; I direct and review the code" %}{% endif %}
   {% elif authored_by == 'ai-generated' %}
     {% set icon = "cpu" %}
     {% set label = "AI Generated" %}
     {% set title = "AI Generated - Primarily created by AI with human oversight" %}
+    {% if kind == "project" %}{% set title = "AI Generated - Most of the code was written by an agent; I specify, test and review" %}{% endif %}
   {% else %}
     {% set icon = "help-circle" %}
     {% set label = "Unclassified" %}

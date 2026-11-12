@@ -1,3 +1,4 @@
+{% from "components/authorship-badge.njk" import authorshipBadge %}
 {% set projectHref = null %}
 {% if project.url %}
   {% set projectHref = project.url %}
@@ -16,9 +17,10 @@
       {% else %}
         <h4 class="editorial-title-compact m-0">{{ project.title }}</h4>
       {% endif %}
-      {% if project.status %}
+      {% if project.status and project.status != 'Active' %}
         <span class="badge badge-compact badge-status">{{ project.status }}</span>
       {% endif %}
+      {{ authorshipBadge(project.authored_by, false, "project") }}
     </div>
     <p class="editorial-support-compact mt-2 m-0">{{ project.description }}</p>
   </div>
