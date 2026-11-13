@@ -623,7 +623,9 @@ export default function (eleventyConfig) {
   // Backlinks: "Linked from" lists, built once per build from content entries.
   const backlinks = createBacklinks({ shouldHide: shouldHideContent });
   eleventyConfig.on("eleventy.before", () => backlinks.reset());
-  eleventyConfig.addFilter("backlinks", (url, all) => backlinks.lookup(url, all));
+  eleventyConfig.addFilter("backlinks", (url, all) =>
+    backlinks.lookup(url, all),
+  );
   eleventyConfig.addGlobalData("isDev", !IS_PRODUCTION_BUILD);
   eleventyConfig.addGlobalData("currentYear", new Date().getFullYear());
   eleventyConfig.addGlobalData("showHiddenContent", SHOW_HIDDEN_CONTENT);

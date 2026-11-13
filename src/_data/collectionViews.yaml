@@ -130,7 +130,8 @@ projects:
   why: >-
     Driven by projects.yaml, not feed items: rows lead with a project image
     instead of a date. Already uses the shared toggle, collectionView() and
-    masonry; only the item markup is its own.
+    masonry; only the item markup is its own. Carries the authorship filter
+    and a phased "How I got here" list (projects.yaml `past`).
 
 more:
   page: src/more.njk

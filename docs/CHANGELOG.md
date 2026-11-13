@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.17.0] - 2026-11-12
+### Added
+- Projects: a "How I got here" section grouping older projects by the phases in "Four Phases of a Builder" (`past` in `src/_data/projects.yaml`), with the authorship filter on `/projects`.
+- Projects: a `status` badge (Alpha, Active, Dormant, Archived, Learning) on wall tiles and past rows, and Phase 1 to 4 groups in the past list with ml-experiments, data-pipeline-compose and LAKR added.
+- Projects: every card and row carries an `authored_by` label (Human, AI Assisted, AI Generated) for how the code was built; `authorshipBadge` takes a `kind="project"` variant for the wording.
+- Projects: a one-line status legend under the authorship filter, so Alpha, Dormant and the pre-release states are explained without hovering.
+
+### Changed
+- Projects: recomovi, carteakey.github.io, MicroHMS, vizima.in, cinemattr and world-energy-stats moved off the selected wall into the phased list. cinemattr now links to the live Vercel site and the moved `carteakey/cinemattr` repo; Herding is described as a fork of sheprd-labs/sheprd and marked Alpha.
+- Projects: current work uses the same status vocabulary as the wall and past rows (Active, Alpha, Coming soon, Playtesting), and `Active` is not repeated on current cards. Aidar and L3MS are no longer duplicated on the wall, and server-compose moved to Phase 3, where the post already puts it. The Phase 4 blurb now says most of the wall belongs there.
+- Projects: `carteakey.github.io` links to the repo only, because the GitHub Pages site returns 404.
+- Projects: Current work and the wall hide when the authorship filter leaves none of their items visible, instead of leaving an empty section.
+- Projects: the header count reads "selected projects" instead of "public projects", since it counts the wall only.
+- Four Phases of a Builder: cut four restated or closer lines, refreshed the server-compose star count to 185, cross-linked `/projects/`, and unhid the post.
+
 ## [2.16.2] - 2026-11-10
 ### Changed
 - `/uses/`: new Peripherals category split out of Hardware (monitor, keyboards, trackpad, mice, MIDI); added the Logitech G Pro X Superlight.
