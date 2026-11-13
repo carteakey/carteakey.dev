@@ -1,5 +1,19 @@
 # Site Improvement TODO List
 
+## Fable site review (2026-11-12)
+
+Findings from an external model review of the built site: [docs/reviews/2026-11-12-fable-site-review.md](./reviews/2026-11-12-fable-site-review.md). Covers homepage, `/blog/`, one post, `/now/`, `/about/`, `/more/`, 404. Nothing actioned yet.
+
+- [ ] Trim the top of posts: keep the AI badge, collapse or drop the AI banner, move the checkpoint below the intro.
+- [ ] Mark draft cards on the feed, or drop the work-in-progress notice on long-lived drafts.
+- [ ] Label the homepage card date as "updated" where it differs from `/blog/`.
+- [ ] Give clipped note cards a fade or "more" cue.
+- [ ] Reconcile newsletter copy between the homepage and `/more/`.
+- [ ] Fix the 404: no rounded pill buttons, and the empty scene box above the heading.
+- [ ] Track down the ~5px horizontal overflow on post pages at 1024px (likely a wide table).
+- [ ] Stop `[[wikilink]]` chips splitting across lines on mobile.
+- [ ] Check the blank mobile homepage gap and the late-painting avatar on a real phone.
+
 ## Content
 
 - [ ] Post a 2026 in review. (added 2026-11-10)
