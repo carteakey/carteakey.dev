@@ -2,17 +2,38 @@
 
 ## Fable site review (2026-11-12)
 
-Findings from an external model review of the built site: [docs/reviews/2026-11-12-fable-site-review.md](./reviews/2026-11-12-fable-site-review.md). Covers homepage, `/blog/`, one post, `/now/`, `/about/`, `/more/`, 404. Nothing actioned yet.
+Work order from an external model review of the live site: [docs/reviews/2026-11-12-fable-site-review.md](./reviews/2026-11-12-fable-site-review.md). Each item there has evidence, a file to start in, and a "done when" check. Task IDs below match the file. Nothing actioned yet.
 
-- [ ] Trim the top of posts: keep the AI badge, collapse or drop the AI banner, move the checkpoint below the intro.
-- [ ] Mark draft cards on the feed, or drop the work-in-progress notice on long-lived drafts.
-- [ ] Label the homepage card date as "updated" where it differs from `/blog/`.
-- [ ] Give clipped note cards a fade or "more" cue.
-- [ ] Reconcile newsletter copy between the homepage and `/more/`.
-- [ ] Fix the 404: no rounded pill buttons, and the empty scene box above the heading.
-- [ ] Track down the ~5px horizontal overflow on post pages at 1024px (likely a wide table).
-- [ ] Stop `[[wikilink]]` chips splitting across lines on mobile.
-- [ ] Check the blank mobile homepage gap and the late-painting avatar on a real phone.
+Ready to do (no decision needed):
+
+- [ ] B2: label homepage card dates as "Updated" when they differ from `/blog/`.
+- [ ] B3: fade the bottom of clipped note cards.
+- [ ] C2: 404 pill buttons to square, and fix its `/posts/` link.
+- [ ] C3: remove the decorative circles on `/data/`.
+- [ ] C4: stop `.wide-wrap` overflowing the viewport (`100vw` includes the scrollbar).
+- [ ] C5: show 2024 as a zero bar on the `/stats/` cadence chart.
+- [ ] C6: `/search/` onto the shared page header; align headers on `/gallery/`, `/vibes/`, `/quotes/`.
+- [ ] C7: keep wikilink chip brackets attached when wrapping.
+- [ ] A2: let table cells wrap on mobile.
+- [ ] D1: subset Ioskeley Mono (four files at 94 KB each).
+- [ ] D3: stop JetBrains Mono downloading as a fallback.
+- [ ] D4: self-host Fraunces.
+- [ ] E1: raise dark-mode contrast of small grey labels to 4.5:1.
+
+Needs an owner decision first:
+
+- [ ] A1: drop or shrink the AI Assisted banner on posts.
+- [ ] A3: chart min-width on mobile.
+- [ ] A4: body text size (try 16–17px in the font lab).
+- [ ] A5: long-lived drafts on the homepage.
+- [ ] B1: pinned cards filling the homepage's first row.
+- [ ] C1: newsletter copy, weekly or when ready.
+- [ ] C8: which `/blog/` controls collapse on mobile.
+- [ ] C9: badge families on `/projects/`.
+- [ ] C10: `/quotes/` vs `/quotations/` naming.
+- [ ] D2: how many mono weights to load.
+- [ ] D5: size of `/feed/` and `/data/`.
+- [ ] D6: one analytics script or two.
 
 ## Content
 
