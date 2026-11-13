@@ -725,6 +725,14 @@ export default function (eleventyConfig) {
       : items,
   );
 
+  // /projects: the GitHub table lists the repos that are not already curated above.
+  eleventyConfig.addFilter("excludeRepos", (repos, names = []) => {
+    const curated = new Set(names.map((name) => name.toLowerCase()));
+    return (repos || []).filter(
+      (repo) => !curated.has((repo.repo_name || "").toLowerCase()),
+    );
+  });
+
   // agentcart (/ask/) retrieval corpus: public Markdown chunks + inverted index.
   eleventyConfig.addFilter("askCorpus", (items) =>
     JSON.stringify(buildAskCorpus(items)),
