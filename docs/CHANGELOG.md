@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Projects: a `status` badge (Alpha, Active, Dormant, Archived, Learning) on wall tiles and past rows, and Phase 1 to 4 groups in the past list with ml-experiments, data-pipeline-compose and LAKR added.
 - Projects: every card and row carries an `authored_by` label (Human, AI Assisted, AI Generated) for how the code was built; `authorshipBadge` takes a `kind="project"` variant for the wording.
 - Projects: a one-line status legend under the authorship filter, so Alpha, Dormant and the pre-release states are explained without hovering.
+- Projects: status badges carry the same explanation as a tooltip, through one shared `statusBadge` macro.
 
 ### Changed
 - Projects: recomovi, carteakey.github.io, MicroHMS, vizima.in, cinemattr and world-energy-stats moved off the selected wall into the phased list. cinemattr now links to the live Vercel site and the moved `carteakey/cinemattr` repo; Herding is described as a fork of sheprd-labs/sheprd and marked Alpha.
@@ -18,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Projects: `carteakey.github.io` links to the repo only, because the GitHub Pages site returns 404.
 - Projects: Current work and the wall hide when the authorship filter leaves none of their items visible, instead of leaving an empty section.
 - Projects: the header count reads "selected projects" instead of "public projects", since it counts the wall only.
+- Projects: every surface uses the same badge order (title, status, authorship; year before status in past rows), Current work says everything is Active unless a badge says otherwise, and the "Projects on GitHub" table lists only repos that are not already curated above.
 - Four Phases of a Builder: cut four restated or closer lines, refreshed the server-compose star count to 185, cross-linked `/projects/`, and unhid the post.
 
 ## [2.16.2] - 2026-11-10

@@ -11,6 +11,7 @@ collectionArchetype: wall
 
 {% from "components/view-toggle.njk" import viewToggle %}
 {% from "components/authorship-badge.njk" import authorshipBadge %}
+{% from "components/status-badge.njk" import statusBadge %}
 
 {% set pageEyebrow = "Things I Build" %}
 {% set pageTitle = "Projects" %}
@@ -30,7 +31,7 @@ collectionArchetype: wall
     <section class="mb-12" aria-labelledby="current-work-heading" data-ai-filter-section>
       <div class="mb-4">
         <h2 id="current-work-heading" class="editorial-kicker">Current work</h2>
-        <p class="editorial-support-compact mt-1">Projects in active development, playtesting, or getting ready for a public release.</p>
+        <p class="editorial-support-compact mt-1">Projects in active development, playtesting, or getting ready for a public release. Everything here is Active unless a badge says otherwise.</p>
       </div>
 
       <div class="projects-collection-grid">
@@ -90,8 +91,8 @@ collectionArchetype: wall
                 {{ project.title }}
                 {% feather "arrow-up-right", class="w-3.5 h-3.5 opacity-40 group-hover:opacity-100 transition-opacity" %}
               </a>
+              {{ statusBadge(project.status) }}
               {{ authorshipBadge(project.authored_by, false, "project") }}
-              {% if project.status %}<span class="badge badge-compact badge-status">{{ project.status }}</span>{% endif %}
             </div>
             <p class="mt-1 editorial-support-compact">{{ project.description }}</p>
             <div class="flex flex-wrap items-center gap-1 mt-2">
@@ -116,6 +117,8 @@ collectionArchetype: wall
           </span>
           <div>
             <a href="{% if project.url %}{{ project.url }}{% else %}{{ project.github }}{% endif %}" class="feed-list-title title-hover" style="text-decoration: none;">{{ project.title }}</a>
+            {{ statusBadge(project.status) }}
+            {{ authorshipBadge(project.authored_by, false, "project") }}
             <p class="feed-list-desc">{{ project.description }}</p>
           </div>
           <div class="flex items-center gap-1.5 shrink-0 justify-end">
@@ -145,8 +148,8 @@ collectionArchetype: wall
           <div>
             <a href="{% if project.url %}{{ project.url }}{% else %}{{ project.github }}{% endif %}" class="feed-list-title title-hover">{{ project.title }}</a>
             {% if project.year %}<span class="meta-text text-[0.78rem]">{{ project.year }}</span>{% endif %}
+            {{ statusBadge(project.status) }}
             {{ authorshipBadge(project.authored_by, false, "project") }}
-            {% if project.status %}<span class="badge badge-compact badge-status">{{ project.status }}</span>{% endif %}
             <p class="feed-list-desc">{{ project.description }}</p>
           </div>
           <div class="flex items-center gap-1.5 shrink-0 justify-end">
@@ -271,7 +274,7 @@ collectionArchetype: wall
       </tr>
     </thead>
     <tbody class="divide-y divide-gray-200 dark:divide-gray-800">
-      {% for repo in github.repos %}
+      {% for repo in github.repos | excludeRepos(curatedRepos) %}
       <tr class="hover:bg-gray-50 dark:hover:bg-gray-900/50 transition-colors">
         <td class="px-3 py-2 meta-text whitespace-nowrap">
           <time datetime="{{ repo.repo_updated | htmlDateString }}">{{ repo.repo_updated | readableDate }}</time>
