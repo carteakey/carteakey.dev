@@ -1,0 +1,22 @@
+{% macro statusBadge(status, hideActive=false) %}
+  {% if status and not (hideActive and status == 'Active') %}
+    {% if status == 'Active' %}
+      {% set title = "Active - pushed in the last couple of months" %}
+    {% elif status == 'Alpha' %}
+      {% set title = "Alpha - usable but rough" %}
+    {% elif status == 'Dormant' %}
+      {% set title = "Dormant - no recent push" %}
+    {% elif status == 'Archived' %}
+      {% set title = "Archived - repo archived" %}
+    {% elif status == 'Learning' %}
+      {% set title = "Learning - practice work, not a product" %}
+    {% elif status == 'Coming soon' %}
+      {% set title = "Coming soon - pre-release" %}
+    {% elif status == 'Playtesting' %}
+      {% set title = "Playtesting - pre-release" %}
+    {% else %}
+      {% set title = status %}
+    {% endif %}
+    <span class="badge badge-compact badge-status" title="{{ title }}">{{ status }}</span>
+  {% endif %}
+{% endmacro %}
