@@ -65,7 +65,7 @@
     "markdown-it-anchor": "^10.1.0",
     "markdown-it-emoji": "^3.0.0",
     "npm-run-all": "^4.1.5",
-    "openai": "^7.55.0",
+    "openai": "^7.60.0",
     "sharp": "^0.35.5",
     "twitter-api-v2": "^1.31.0",
     "yargs": "^18.2.0"
@@ -73,9 +73,9 @@
   "devDependencies": {
     "@tailwindcss/postcss": "^4.3.5",
     "@tailwindcss/typography": "^0.5.20",
-    "eleventy-plugin-feathericons": "^2.1.0",
+    "eleventy-plugin-feathericons": "^2.2.0",
     "netlify-plugin-cache": "^1.0.3",
-    "postcss": "^8.5.32",
+    "postcss": "^8.5.33",
     "prettier": "^3.10.1",
     "tailwindcss": "^4.3.5"
   }
