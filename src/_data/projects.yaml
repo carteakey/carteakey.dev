@@ -44,12 +44,6 @@ current:
     github: https://github.com/carteakey/alvidaa
 
 coming_soon:
-  - title: Tokemon
-    description: "A local-first token garden that turns coding-agent usage metadata into an evolving creature and dashboard."
-    image_path: "./src/static/img/projects/tokemon.png"
-    authored_by: ai-generated
-    status: Coming soon
-
   - title: Eighteen Dawns
     description: "A finite side-scrolling pixel-action campaign set across the eighteen days of the Kurukshetra War."
     image_path: "./src/static/img/projects/eighteen-dawns.png"
@@ -57,6 +51,18 @@ coming_soon:
     status: Playtesting
 
 projects:
+  - title: Tokemon
+    description: "A local-first token garden that turns coding-agent usage metadata into an evolving creature and dashboard."
+    image_path: "./src/static/img/projects/tokemon.png"
+    authored_by: ai-generated
+    status: Active
+    url: https://tokemon-liart.vercel.app
+    github: https://github.com/carteakey/tokemon
+    tags:
+      - go
+      - sqlite
+      - local-ai
+
   - title: window.carteakey.dev
     description: "A live window to Toronto. Raspberry Pi 4B + Pi camera streaming an HLS feed via Cloudflare Tunnel - weather, viewer count, music, timelapse."
     image_path: "./src/static/img/window-site.png"
