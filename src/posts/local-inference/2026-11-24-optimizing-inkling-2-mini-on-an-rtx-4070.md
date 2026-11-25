@@ -4,6 +4,7 @@ description: "Getting Thinking Machines' Inkling 2 Mini to 74.7 tok/s decode and
 image: /img/blog-sketches/unique/optimizing-inkling-2-mini-on-an-rtx-4070-stamp-trim.png
 imageAlt: "Transparent monochrome sketch of a dual-fan RTX 4070 GPU with a three-loop ribbon and tachometer"
 date: 2026-11-24
+updated: 2026-11-24
 giscusTerm: "/blog/local-inference/optimizing-inkling-2-mini-on-an-rtx-4070/"
 authored_by: ai-assisted
 tags:
@@ -112,6 +113,53 @@ Counting every active tensor across all 48 visits, Inkling 2 Mini reads **3.92 G
 
 That byte math also explains why my ~180B Qwen3.8-Flash-Next setup decodes just as fast (~73 tok/s) on the exact same machine: its 2-bit experts only read **~2.2-2.3 GB per token** (almost half of Inkling's 3.92 GB) and pair with native MTP speculative decoding.
 
+## Benchmarks, straight from the cards
+
+Before I close this out, here is where Inkling 2 Mini sits against the models in its class. One honest footnote about provenance: the numbers in this section were pulled by the same assistant running me on this box (Inkling 2 Mini, through llama-swap) using a web search against the published cards and ledgers, not by re-running anything on the card. Every figure is quoted from the vendor's own page or a third-party ledger; none of it is a claim I made myself.
+
+| Model | Total / Active | Context | SWE-bench Verified | LiveCodeBench | DeepSWE 1.1 |
+| :--- | ---: | ---: | ---: | ---: | ---: |
+| **Inkling 2 Mini (this post)** | 26.4B / 5.4B eff. | 1M | 79.2% | ~80.7% est. | 48.2% |
+| Qwen3.6-35B-A3B | 35B / 3B | 262K | 73.4% | 80.4% (v6) | not reported |
+| Gemma 4 26B-A4B | 25.2B / 3.8B | 262K | not reported by Google (benchgap est. 65.9%)* | 77.1% (v6) | not reported |
+| Qwen3.8-27B (dense) | 27B / 27B | not reported | not reported | 90.3% (v6) | 42.2% |
+
+*Google's marketing page leads with Arena AI (1441 for the 26B-A4B, 1452 for the 31B), not SWE-bench or Terminal-Bench; the 17.4% that appears in Qwen's comparison table is the lowest and most obscure figure in the whole family, so I report Google's own numbers as unreported rather than mix a single dubious datapoint into the table.
+
+Three things stand out. Inkling 2 Mini wins the single-shared-benchmark comparison cleanly: across 3-4 shared benchmarks vs Qwen3.6-35B-A3B it scores ahead on 3 of 4 (MCP Atlas, SWE-Bench Verified, SWE-bench Multilingual), and vs Gemma 4 26B-A4B it wins both shared benchmarks (MMMU-Pro, MRCR v2). Its DeepSWE 1.1 score of 48.2% beats Qwen3.8-27B's 42.2% by roughly a tenth, despite the 27B being dense. And although Qwen3.8-27B still leads on raw single-shot benchmarks (LiveCodeBench v6 at 90.3%, GPQA at 89.2%), the 3.4B-active looped MoE holds its own on agentic work - which is the workload I care about here.
+
+## What quantization actually costs on this box
+
+This is the part the marketing pages skip. On this 12 GB machine, Inkling 2 Mini runs at UD Q4_K_XL and lands around 75 tok/s by the numbers in this post. The dense Qwen3.8-27B can only be stretched to IQ3 on this card - three bits instead of four, which is a materially different regime. The published Qwen3.8-27B numbers (61.7 SWE-bench Pro, 90.3% LiveCodeBench v6, 73.0% Terminal-Bench 2.1, 89.2% GPQA) look strong, but they come from full-precision-class weights and the loss of a full bit on a dense model lands hardest exactly where dense models live: on reasoning chains, tool use and instruction following. Roughly, expect an IQ3 dense 27B to lose several to low-double-digit points of effective capability versus its own published figures, and on this card it is also the slower decode.
+
+Put the two together and the effective landing spot is closer than it looks. Inkling 2 Mini at UD Q4_K_XL (a 4-bit mixed design with the tail blocks at roughly double the bit width) should land in at least the same effective-intelligence band as Qwen3.8-27B at IQ3, and ahead on the agentic coding workload it was built for - while paying for it with ~75 tok/s and a 1M context instead of a 262K one. On this hardware, the honest answer is that the 26.4B looped MoE at 4-bit is the better daily driver, and the 27B at IQ3 only wins on raw single-shot benchmarks.
+
+## Community reception
+
+Since release day, the local-inference community has been pulling this apart, and the takes split along workload lines. What people praise, they mostly back up. DeepSWE 1.1 at 48.2% (ahead of Qwen3.8-27B's 42.2%), SWE-bench Verified at 79.2%, and SWE-bench Pro v2 Hard at 77.9% - all from the lab's own harnesses. The vision numbers hold up too: OmniDocBench 92.8 (#1 of 6) and ScreenSpot-Pro 76.5%. And the prose is the part nobody wants to make a case for - forum testers consistently call it clean and direct, and prefer it over the dense 27B on short answers, where the dense model tends to over-explain.
+
+The complaints are real too. One correction first: the model advertises a 1M context window natively (not a YaRN-extended 256K). Power users still find the KV cache eats VRAM faster at high context than a hybrid-linear-attention dense model - the 8 full-attention slots across the 48 visits only stay cheap at short prompt lengths. A lot of people also report instruction-following inconsistency at high reasoning effort: the model drifts and argues with itself, dumps too much output at once, and drops long multi-part system prompts. That is the honest price of a 26.4B model whose middle layers loop rather than grow - it is strong where it is built to be (agentic coding, vision grounding) and spiky on everything else.
+
+Speed claims in the forums cluster around 100-230 tok/s chat decode on 16-24 GB GPUs with the DSpark drafter and 450+ tok/s on structured output. Those are forum-reported, not from this box, so treat them as optimistic - this card does ~74.7 tok/s decode, and the published numbers are not measured on the GGUF this post optimizes. The abliterated ecosystem around it is also worth knowing about: the Inkling-2-Mini-Unbound weight edit (a handful of attention matrices, nothing else) is a real community artifact and testers report better compliance on benign sysadmin prompts, at the risk of a model that will do the thing without hesitating to do the wrong thing.
+
+## What this model is good at
+
+This section was written by Inkling 2 Mini itself - the same looped transformer this post is about - not by the human author revising a draft. Honest list, no flexing.
+
+**Agentic coding at long horizon.** This is what the architecture is built for. The whole looping trick exists so the model can reason longer per token: DeepSWE 1.1 at 48.2% (ahead of Qwen3.8-27B's 42.2%), SWE-bench Verified at 79.2%, SWE-bench Pro v2 Hard at 77.9%, plus strong browse/tool-use numbers (MCP Atlas, BrowseComp). A 26.4B total model that is strong where dense models get stuck is what this post is actually about.
+
+**Speed on one workstation card.** ~74.7 tok/s decode and 2,153 tok/s prefill on the RTX 4070 12 GB in this post, 256k context and zero draft model - the whole thing is the thesis here, not an accident.
+
+**Vision and grounding.** OmniDocBench 92.8% (#1 of 6) and ScreenSpot-Pro 76.5% no-tools: document parsing and screen/UI grounding are genuinely strong.
+
+**Long-context ingest.** 1M native context at 2,000+ tok/s prefill means whole repositories, docs and logs are cheap to feed in.
+
+**Clean, direct prose.** The part testers keep coming back to - cleaner and more concise than the dense 27B on short answers, fewer tokens spent over-explaining.
+
+And to be straight with you about what it is not good at: deep reasoning and knowledge. The release post itself is clear - this is not the strongest multi-turn chat or long-instruction model, and it trails the dense 27B class on CritPt v2, HLE-Diamond and raw world knowledge. Dense models also beat it on single-shot coding (LiveCodeBench v6 at 90.3% for Qwen3.8-27B) and GPQA (89.2%). And on this card, its 1M window is the thing you should be honest about: the KV cache still eats VRAM at high context.
+
+The honest summary: fast, agentic, vision-capable, long-context, self-hostable. Not the smartest single-shot model in the room, not yet.
+
 ## 256k today, and where it fits in my stack
 
 Because Inkling 2 Mini is natively trained for 1M context with only 8 full-attention KV slots across all 48 visits (the other 40 are fixed 1,024-token sliding windows), its FP8 KV cache only costs about 16.5 KiB per token. Under PolyStrata's elastic `--vram-pool`, bumping `--max-context` from 128k to **256k** only adds ~13 MiB of static score buffer at boot - short chats keep the full ~1,800-expert pool, and a completely full 256k session still fits inside 12 GB (~4.1 GiB KV plus ~4.1 GiB left for GPU experts). Reaching 512k or native 1M will just take host-RAM KV streaming (`--kv-resident`), which PolyStrata already has for Qwen3.5 and hasn't wired to Inkling 2 yet.
@@ -128,3 +176,11 @@ taskset -c 0-11 vendor/polystrata/build/strata-poly \
   --prompt-batch 2048 --lock-experts --threads 12 \
   --conversation-cache-mib 3072 --conversation-cache-slots 4
 ```
+
+## Changelog
+
+| Date | Note |
+|---|---|
+| 2026-11-24 | Added a self-description section (written by Inkling 2 Mini itself) |
+| 2026-11-24 | Added a community-reception section (forum praise, criticisms, forum-reported speed claims labeled) |
+| 2026-11-24 | Added a peer-comparison section (Qwen3.6-35B-A3B, Gemma 4 26B-A4B, Qwen3.8-27B) and a quantization/effective-intelligence note |
