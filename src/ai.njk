@@ -33,7 +33,7 @@ collectionArchetype: ledger
           <tr class="border-b border-gray-200 dark:border-gray-800 bg-stone-100/60 dark:bg-stone-900/60 font-mono text-[0.78rem] uppercase tracking-wider text-stone-600 dark:text-stone-400">
             <th class="py-2.5 px-3 md:px-4 font-semibold">Tier</th>
             <th class="py-2.5 px-3 md:px-4 font-semibold">Service</th>
-            <th class="py-2.5 px-3 md:px-4 font-semibold">Cost</th>
+            <th class="py-2.5 px-3 md:px-4 font-semibold">Access</th>
             <th class="py-2.5 px-3 md:px-4 font-semibold">Role</th>
             <th class="py-2.5 px-3 md:px-4 font-semibold">Models</th>
             <th class="py-2.5 px-3 md:px-4 font-semibold">Harness</th>
@@ -59,14 +59,17 @@ collectionArchetype: ledger
 </section>
 
 {# ── 2. Team workflow ── #}
-<section class="not-prose mb-12" aria-labelledby="herding-heading">
+<section class="not-prose mb-12" aria-labelledby="orcherd-heading">
   <div class="flex items-baseline justify-between gap-4 mb-3">
-    <h2 id="herding-heading" class="editorial-title">Team Workflow</h2>
-    <span class="meta-line">Experimenting</span>
+    <h2 id="orcherd-heading" class="editorial-title">Team Workflow</h2>
+    <span class="meta-line">Orcherd</span>
   </div>
   <div class="surface surface-padding">
     <p class="editorial-support-compact m-0">
-      I'm trying out Herding for team-based work. Opus runs as the supervisor in one pane: it breaks a goal into bounded tasks on a shared board and assigns them to worker panes, each in its own git worktree. DeepSeek through Vibe takes the build tasks, ZCode workers take the grunt work, and pi on the local model picks up anything left when the hosted quotas run dry. Opus reviews the findings and diffs before anything merges.
+      Team work runs on <a href="https://github.com/carteakey/orcherd" class="accent-link">Orcherd</a>: one small Rust binary over a SQLite store that holds a supervisor, worker seats, and a reviewer that cannot review its own work. Opus takes the supervisor seat and turns a goal into a task DAG on the shared board. Every seat gets its own child git worktree with <code>.env</code>, <code>.venv</code>, and <code>node_modules</code> linked in, so parallel builders never collide. DeepSeek through Vibe takes the build tasks, ZCode seats take the grunt work, and pi on the local model picks up anything left when the hosted quotas run dry.
+    </p>
+    <p class="editorial-support-compact mt-3 mb-0">
+      Each seat is an ordinary terminal on <a href="https://herdr.dev" class="accent-link">herdr</a>, so it opens as its own tab beside the one I'm typing in — on this machine or another one over SSH. Herdr and the Herdr app cover every platform the fleet runs on, which is the whole argument against bloated all-in-one IDE solutions like Orca: your editor, your harnesses, and your dotfiles stay exactly where they are, and the team layer sits on top instead of asking you to migrate into it.
     </p>
     <p class="editorial-support-compact mt-3 mb-0">
       The <a href="https://opencode.ai" class="accent-link">OpenCode</a> team is <a href="https://x.com/thdxr/status/2118755687274532893" class="accent-link">trying the same split</a>, per Dax Raad: every subagent on DeepSeek Flash, and Opus 5.5 only on the primary. His notes so far are to be strict about scope when creating a task, to "ask for proof of work instead of a summary", and to do a one-step review of the diff "to make sure it's not totally off".

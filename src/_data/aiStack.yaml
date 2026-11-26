@@ -2,25 +2,37 @@
 # S is a frontier (SOTA) subscription, A is cheap or free hosted usage, B is local.
 # `rank` is the model's grade, matching /folio/model-tier-list/ where the
 # model is on it. Supports `enabled: false`.
+#
+# Access is deliberately qualitative: plan prices and discount eligibility are
+# not published here. Keep them in the private agentdex inventory instead.
 
-monthly: ~$35 / mo + free + local
+monthly: Subscriptions + free tiers + local
 
 tiers:
   - tier: S
     label: SOTA
     service: Claude Pro
-    cost: $20 / mo
+    cost: Subscription
     role: Orchestrator and reviewer. Plans the work, splits it into tasks, hands them out, and reviews every diff before it lands.
     models:
       - name: Claude Opus 5.5
         rank: S+
     harness: Claude Code
 
+  - tier: S
+    label: SOTA
+    service: Google AI Ultra
+    cost: Trial
+    role: Frontier reasoning, creative video, and GPU compute in one bundle. Runs Antigravity agents, Flow video, and Colab jobs from separate quota pools, so a heavy week in one does not starve the others.
+    models:
+      - name: Gemini 4 Carbon
+    harness: Antigravity
+
   - tier: A
     label: Cheap hosted
-    service: Mistral Vibe Pro
-    cost: $15 / mo
-    role: Main builder. The plan covers roughly $150–300 of API-equivalent usage, better value than OpenCode Go was, but the uptime is bad.
+    service: Mistral Vibe
+    cost: Subscription
+    role: Main builder. The plan covers a large API-equivalent allowance inside Mistral's own tools, but third-party harnesses draw from a much smaller separate pool, so it is only good value through Vibe itself. The uptime is bad.
     models:
       - name: DeepSeek V4.1 Flash
         rank: A
@@ -28,19 +40,38 @@ tiers:
 
   - tier: A
     label: Cheap hosted
+    service: Google AI Pro
+    cost: Subscription
+    role: The baseline Google tier. Carries the AI Studio web quota, Antigravity, Colab compute units, and the developer plan's monthly Cloud credits that fund paid Gemini API keys.
+    models:
+      - name: Gemini 4 Neon
+    harness: AI Studio
+
+  - tier: A
+    label: Cheap hosted
     service: ZCode (global build)
-    cost: Free daily tokens
+    cost: Free
     role: Grunt workers on bounded tasks. Usually more than one running at a time.
     models:
       - name: GLM-5.3 Flash
         rank: A
     harness: ZCode CLI
 
+  - tier: A
+    label: Cheap hosted
+    service: NVIDIA NIM
+    cost: Free tier
+    role: Hosted fallback when the paid plan rate-limits. No SLA and a low rate ceiling, so it carries background turns rather than interactive ones.
+    models:
+      - name: Nemotron 3.5 Super VL 120B
+        rank: A
+    harness: Hermes fallback
+
   - tier: B
     label: Local
     service: Local Node (yeti-cachy)
     href: /devices/yeti-cachy/
-    cost: $0 / Local
+    cost: Local
     role: Fallback for grunt work and for both Hermes agents. Covers running out of usage everywhere, insurance against price increases, and the things hosted models refuse.
     models:
       - name: Qwen3.8-Flash-Next
