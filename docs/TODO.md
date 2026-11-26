@@ -38,6 +38,7 @@ Needs an owner decision first:
 ## Content
 
 - [ ] Post a 2026 in review. (added 2026-11-10)
+- [ ] Publish the Orcherd post (`src/posts/2026-11-26-orcherd-agent-teams.md`, hidden draft): generate the real stamp with the sketches skill and update `imageAlt`, confirm the binary size and the v0.1 status at publish time, then cross-link the Herding post. (added 2026-11-26)
 
 ## App Swaps
 

@@ -22,18 +22,18 @@ current:
     authored_by: ai-assisted
     status: Active
 
+  - title: Orcherd
+    description: "Runs a team of coding agents - a supervisor, workers, and a blind reviewer - across git worktrees and machines on herdr-core. One small Rust binary over SQLite."
+    image_path: "./src/static/img/projects/orcherd.png"
+    authored_by: ai-assisted
+    status: Alpha
+    github: https://github.com/carteakey/orcherd
+
   - title: Lytte
     description: "Private, local-first meeting transcription and summarization across web and desktop surfaces."
     image_path: "./src/static/img/projects/lytte.png"
     authored_by: ai-assisted
     status: Active
-
-  - title: Herding
-    description: "My fork of sheprd-labs/sheprd: a native Rust + GPUI client for Herdr. Terminal sessions, workspaces, Git worktrees, and agent activity from your local Herdr daemon."
-    image_path: "./src/static/img/projects/herding.png"
-    authored_by: ai-assisted
-    status: Alpha
-    github: https://github.com/carteakey/herding
 
   - title: alvidaa
     description: "A self-installing home-screen launcher for Hisense VIDAA TVs, and the path to root on 2024+ VIDAA firmware."
@@ -51,6 +51,13 @@ coming_soon:
     status: Playtesting
 
 projects:
+  - title: Herding
+    description: "A native Rust + GPUI client for Herdr, superseded by Orcherd. Team coordination left the desktop app and became a CLI that any harness on any machine can call."
+    image_path: "./src/static/img/projects/herding.png"
+    authored_by: ai-assisted
+    status: Archived
+    github: https://github.com/carteakey/herding
+
   - title: Tokemon
     description: "A local-first token garden that turns coding-agent usage metadata into an evolving creature and dashboard."
     image_path: "./src/static/img/projects/tokemon.png"
